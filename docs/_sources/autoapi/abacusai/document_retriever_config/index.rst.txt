@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None)
+.. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None, pruneVectors=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34,6 +34,8 @@ Classes
    :type textEncoder: str
    :param scoreMultiplierColumn: The values in this metadata column are used to modify the relevance scores of returned chunks.
    :type scoreMultiplierColumn: str
+   :param pruneVectors: Corpus specific transformation of vectors that applies dimensional reduction techniques to strip common components from the vectors.
+   :type pruneVectors: bool
 
    .. py:method:: __repr__()
 

@@ -732,12 +732,14 @@ class CustomTrainedModelTrainingConfig(TrainingConfig):
         index_output_path (str): Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.
         docker_image_uri (str): Docker image URI.
         service_port (int): Service port.
+        streaming_embeddings (bool): Flag to enable streaming embeddings.
     """
     max_catalog_size: int = dataclasses.field(default=None)
     max_dimension: int = dataclasses.field(default=None)
     index_output_path: str = dataclasses.field(default=None)
     docker_image_uri: str = dataclasses.field(default=None)
     service_port: int = dataclasses.field(default=None)
+    streaming_embeddings: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CUSTOM_TRAINED_MODEL

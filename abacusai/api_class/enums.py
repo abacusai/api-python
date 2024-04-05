@@ -184,6 +184,7 @@ class FileFormat(ApiEnum):
     PPTX = 'PPTX'
     PPT = 'PPT'
     HTML = 'HTML'
+    TXT = 'txt'
 
 
 class ExperimentationMode(ApiEnum):
@@ -411,6 +412,7 @@ class LLMName(ApiEnum):
     CLAUDE_V2_1 = 'CLAUDE_V2_1'
     CLAUDE_V3_OPUS = 'CLAUDE_V3_OPUS'
     CLAUDE_V3_SONNET = 'CLAUDE_V3_SONNET'
+    CLAUDE_V3_HAIKU = 'CLAUDE_V3_HAIKU'
     ABACUS_GIRAFFE = 'ABACUS_GIRAFFE'
     ABACUS_GIRAFFE_LARGE = 'ABACUS_GIRAFFE_LARGE'
     LLAMA2_CHAT = 'LLAMA2_CHAT'
@@ -419,6 +421,7 @@ class LLMName(ApiEnum):
     GEMINI_PRO = 'GEMINI_PRO'
     MIXTRAL_CHAT = 'MIXTRAL_CHAT'
     MISTRAL_MEDIUM = 'MISTRAL_MEDIUM'
+    ABACUS_SMAUG2 = 'ABACUS_SMAUG2'
 
 
 class MonitorAlertType(ApiEnum):

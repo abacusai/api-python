@@ -143,11 +143,27 @@ Classes
       :type timeout: int, optional
 
 
+   .. py:method:: wait_until_deployment_ready(timeout = 3600)
+
+      A waiting call until the document retriever deployment is ready to serve.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
+      :type timeout: int, optional
+
+
    .. py:method:: get_status()
 
-      Gets the status of the document retriever.
+      Gets the indexing status of the document retriever.
 
       :returns: A string describing the status of a document retriever (pending, complete, etc.).
+      :rtype: str
+
+
+   .. py:method:: get_deployment_status()
+
+      Gets the deployment status of the document retriever.
+
+      :returns: A string describing the deployment status of document retriever (pending, deploying, active, etc.).
       :rtype: str
 
 

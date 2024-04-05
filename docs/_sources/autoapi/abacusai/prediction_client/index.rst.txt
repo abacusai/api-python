@@ -287,7 +287,7 @@ Classes
       :type vector: list
       :param k: Overrideable number of items to return.
       :type k: int
-      :param distance: Specify the distance function to use when finding nearest neighbors.
+      :param distance: Specify the distance function to use. Options include “dot“, “cosine“, “euclidean“, and “manhattan“. Default = “dot“
       :type distance: str
       :param include_score: If True, will return the score alongside the resulting embedding value.
       :type include_score: bool
@@ -307,7 +307,7 @@ Classes
       :type queries: list
 
 
-   .. py:method:: get_labels(deployment_token, deployment_id, query_data)
+   .. py:method:: get_labels(deployment_token, deployment_id, query_data, return_extracted_entities = False)
 
       Returns a list of scored labels for a document.
 
@@ -317,6 +317,8 @@ Classes
       :type deployment_id: str
       :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
       :type query_data: dict
+      :param return_extracted_entities: (Optional) If True, will return the extracted entities in simpler format
+      :type return_extracted_entities: bool
 
 
    .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)

@@ -123,6 +123,7 @@ Submodules
    forecasting_monitor_summary/index.rst
    function_logs/index.rst
    generated_pit_feature_config_option/index.rst
+   global_context/index.rst
    graph_dashboard/index.rst
    holdout_analysis/index.rst
    holdout_analysis_version/index.rst
@@ -2721,6 +2722,11 @@ Attributes
 
       
 
+   .. py:attribute:: TXT
+      :value: 'txt'
+
+      
+
 
 .. py:class:: ExperimentationMode
 
@@ -3666,6 +3672,11 @@ Attributes
 
       
 
+   .. py:attribute:: CLAUDE_V3_HAIKU
+      :value: 'CLAUDE_V3_HAIKU'
+
+      
+
    .. py:attribute:: ABACUS_GIRAFFE
       :value: 'ABACUS_GIRAFFE'
 
@@ -3703,6 +3714,11 @@ Attributes
 
    .. py:attribute:: MISTRAL_MEDIUM
       :value: 'MISTRAL_MEDIUM'
+
+      
+
+   .. py:attribute:: ABACUS_SMAUG2
+      :value: 'ABACUS_SMAUG2'
 
       
 
@@ -6032,6 +6048,8 @@ Attributes
    :type docker_image_uri: str
    :param service_port: Service port.
    :type service_port: int
+   :param streaming_embeddings: Flag to enable streaming embeddings.
+   :type streaming_embeddings: bool
 
    .. py:attribute:: max_catalog_size
       :type: int
@@ -6055,6 +6073,11 @@ Attributes
 
    .. py:attribute:: service_port
       :type: int
+
+      
+
+   .. py:attribute:: streaming_embeddings
+      :type: bool
 
       
 
@@ -11140,7 +11163,7 @@ Attributes
       :type vector: list
       :param k: Overrideable number of items to return.
       :type k: int
-      :param distance: Specify the distance function to use when finding nearest neighbors.
+      :param distance: Specify the distance function to use. Options include “dot“, “cosine“, “euclidean“, and “manhattan“. Default = “dot“
       :type distance: str
       :param include_score: If True, will return the score alongside the resulting embedding value.
       :type include_score: bool
@@ -11160,7 +11183,7 @@ Attributes
       :type queries: list
 
 
-   .. py:method:: get_labels(deployment_token, deployment_id, query_data)
+   .. py:method:: get_labels(deployment_token, deployment_id, query_data, return_extracted_entities = False)
 
       Returns a list of scored labels for a document.
 
@@ -11170,6 +11193,8 @@ Attributes
       :type deployment_id: str
       :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
       :type query_data: dict
+      :param return_extracted_entities: (Optional) If True, will return the extracted entities in simpler format
+      :type return_extracted_entities: bool
 
 
    .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)
@@ -11940,96 +11965,6 @@ Attributes
 
       :param batch_prediction_id: Unique string identifier of the batch prediction.
       :type batch_prediction_id: str
-
-
-   .. py:method:: add_user_item_interaction(streaming_token, dataset_id, timestamp, user_id, item_id, event_type, additional_attributes)
-
-      Adds a user-item interaction record (data row) to a streaming dataset.
-
-      :param streaming_token: The streaming token for authenticating requests to the dataset.
-      :type streaming_token: str
-      :param dataset_id: The unique string identifier for the streaming dataset to record data to.
-      :type dataset_id: str
-      :param timestamp: The Unix timestamp of the event.
-      :type timestamp: int
-      :param user_id: The unique identifier for the user.
-      :type user_id: str
-      :param item_id: The unique identifier for the items.
-      :type item_id: list
-      :param event_type: The event type.
-      :type event_type: str
-      :param additional_attributes: Attributes of the user interaction.
-      :type additional_attributes: dict
-
-
-   .. py:method:: upsert_user_attributes(streaming_token, dataset_id, user_id, user_attributes)
-
-      Adds a user attribute record (data row) to a streaming dataset.
-
-      Either the streaming dataset ID or the project ID is required.
-
-
-      :param streaming_token: The streaming token for authenticating requests to the dataset.
-      :type streaming_token: str
-      :param dataset_id: The unique string identifier for the streaming dataset to record data to.
-      :type dataset_id: str
-      :param user_id: The unique identifier for the user.
-      :type user_id: str
-      :param user_attributes: Attributes of the user interaction.
-      :type user_attributes: dict
-
-
-   .. py:method:: upsert_item_attributes(streaming_token, dataset_id, item_id, item_attributes)
-
-      Adds an item attributes record (data row) to a streaming dataset.
-
-      Either the streaming dataset ID or the project ID is required.
-
-
-      :param streaming_token: The streaming token for authenticating requests to the dataset.
-      :type streaming_token: str
-      :param dataset_id: The unique string identifier for the streaming dataset to record data to.
-      :type dataset_id: str
-      :param item_id: The unique identifier for the item.
-      :type item_id: str
-      :param item_attributes: Attributes of the item interaction.
-      :type item_attributes: dict
-
-
-   .. py:method:: add_multiple_user_item_interactions(streaming_token, dataset_id, interactions)
-
-      Adds a user-item interaction record (data row) to a streaming dataset.
-
-      :param streaming_token: The streaming token for authenticating requests to the dataset.
-      :type streaming_token: str
-      :param dataset_id: The unique string identifier of the streaming dataset to record data to.
-      :type dataset_id: str
-      :param interactions: List of interactions, each interaction of format {'userId': userId, 'timestamp': timestamp, 'itemId': itemId, 'eventType': eventType, 'additionalAttributes': {'attribute1': 'abc', 'attribute2': 123}}.
-      :type interactions: list
-
-
-   .. py:method:: upsert_multiple_user_attributes(streaming_token, dataset_id, upserts)
-
-      Adds multiple user attributes records (data rows) to a streaming dataset.
-
-      :param streaming_token: The streaming token for authenticating requests to the dataset.
-      :type streaming_token: str
-      :param dataset_id: A unique string identifier for the streaming dataset to record data to.
-      :type dataset_id: str
-      :param upserts: List of upserts, each upsert of format {'userId': userId, 'userAttributes': {'attribute1': 'abc', 'attribute2': 123}}.
-      :type upserts: list
-
-
-   .. py:method:: upsert_multiple_item_attributes(streaming_token, dataset_id, upserts)
-
-      Adds multiple item attributes records (data rows) to a streaming dataset.
-
-      :param streaming_token: The streaming token for authenticating requests to the dataset.
-      :type streaming_token: str
-      :param dataset_id: A unique string identifier for the streaming dataset to record data to.
-      :type dataset_id: str
-      :param upserts: A list of upserts, each upsert of format {'itemId': itemId, 'itemAttributes': {'attribute1': 'abc', 'attribute2': 123}}.
-      :type upserts: list
 
 
    .. py:method:: upsert_item_embeddings(streaming_token, model_id, item_id, vector, catalog_id = None)
@@ -13363,15 +13298,19 @@ Attributes
       :type document_retriever_id: str
 
 
-   .. py:method:: get_relevant_snippets(doc_ids = None, blobs = None, query = None, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False)
+   .. py:method:: get_relevant_snippets(doc_ids = None, blobs = None, query = None, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False, text = None)
 
-      Get relevant snippets from documents with respect to the query. Document retrievers may be created on-the-fly to perform lookup.
+      Retrieves snippets relevant to a given query from specified documents. This function supports flexible input options,
+
+      allowing for retrieval from a variety of data sources including document IDs, blob data, and plain text. When multiple data
+      sources are provided, all are considered in the retrieval process. Document retrievers may be created on-the-fly to perform lookup.
+
 
       :param doc_ids: A list of document store IDs to retrieve the snippets from.
       :type doc_ids: list
       :param blobs: A dictionary mapping document names to the blob data.
       :type blobs: io.TextIOBase
-      :param query: The query that the documents are relevant to.
+      :param query: Query string to find relevant snippets in the documents.
       :type query: str
       :param document_retriever_config: If provided, used to configure the retrieval steps like chunking for embeddings.
       :type document_retriever_config: DocumentRetrieverConfig
@@ -13387,6 +13326,8 @@ Attributes
       :type end_word_index: int
       :param including_bounding_boxes: If true, will include the bounding boxes of the snippets if they are available.
       :type including_bounding_boxes: bool
+      :param text: Plain text from which to retrieve snippets.
+      :type text: str
 
       :returns: The snippets found from the documents.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -15766,7 +15707,7 @@ Attributes
       :type vector: list
       :param k: Overrideable number of items to return.
       :type k: int
-      :param distance: Specify the distance function to use when finding nearest neighbors.
+      :param distance: Specify the distance function to use. Options include “dot“, “cosine“, “euclidean“, and “manhattan“. Default = “dot“
       :type distance: str
       :param include_score: If True, will return the score alongside the resulting embedding value.
       :type include_score: bool
@@ -15786,7 +15727,7 @@ Attributes
       :type queries: list
 
 
-   .. py:method:: get_labels(deployment_token, deployment_id, query_data)
+   .. py:method:: get_labels(deployment_token, deployment_id, query_data, return_extracted_entities = False)
 
       Returns a list of scored labels for a document.
 
@@ -15796,6 +15737,8 @@ Attributes
       :type deployment_id: str
       :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
       :type query_data: dict
+      :param return_extracted_entities: (Optional) If True, will return the extracted entities in simpler format
+      :type return_extracted_entities: bool
 
 
    .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)
@@ -16492,7 +16435,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.2.0'
+   :value: '1.2.1'
 
    
 

@@ -154,6 +154,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../forecasting_monitor_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.forecasting_monitor_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated_pit_feature_config_option/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.generated_pit_feature_config_option</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../global_context/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.global_context</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../graph_dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.graph_dashboard</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../holdout_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.holdout_analysis</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../holdout_analysis_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.holdout_analysis_version</span></code></a></li>
@@ -469,12 +470,37 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.document_retriever.DocumentRetriever.wait_until_deployment_ready">
+<span class="sig-name descname"><span class="pre">wait_until_deployment_ready</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever.DocumentRetriever.wait_until_deployment_ready" title="Permalink to this definition"></a></dt>
+<dd><p>A waiting call until the document retriever deployment is ready to serve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.document_retriever.DocumentRetriever.get_status">
 <span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever.DocumentRetriever.get_status" title="Permalink to this definition"></a></dt>
-<dd><p>Gets the status of the document retriever.</p>
+<dd><p>Gets the indexing status of the document retriever.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A string describing the status of a document retriever (pending, complete, etc.).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.document_retriever.DocumentRetriever.get_deployment_status">
+<span class="sig-name descname"><span class="pre">get_deployment_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever.DocumentRetriever.get_deployment_status" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the deployment status of the document retriever.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string describing the deployment status of document retriever (pending, deploying, active, etc.).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>

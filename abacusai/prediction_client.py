@@ -233,7 +233,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             vector (list): Input vector to perform the k nearest neighbors with.
             k (int): Overrideable number of items to return.
-            distance (str): Specify the distance function to use when finding nearest neighbors.
+            distance (str): Specify the distance function to use. Options include “dot“, “cosine“, “euclidean“, and “manhattan“. Default = “dot“
             include_score (bool): If True, will return the score alongside the resulting embedding value.
             catalog_id (str): An optional parameter honored only for embeddings that provide a catalog id"""
         prediction_url = self._get_prediction_endpoint(
@@ -251,16 +251,17 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getMultipleKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queries': queries}, server_override=prediction_url)
 
-    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, return_extracted_entities: bool = False) -> Dict:
         """Returns a list of scored labels for a document.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            query_data (dict): Dictionary where key is "Content" and value is the text from which entities are to be extracted."""
+            query_data (dict): Dictionary where key is "Content" and value is the text from which entities are to be extracted.
+            return_extracted_entities (bool): (Optional) If True, will return the extracted entities in simpler format"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'returnExtractedEntities': return_extracted_entities}, server_override=prediction_url)
 
     def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False, save_extracted_features: bool = None) -> Dict:
         """Extracts text from the provided PDF and returns a list of recognized labels and their scores.

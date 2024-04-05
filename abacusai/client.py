@@ -585,7 +585,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.2.0'
+    client_version = '1.2.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -6365,7 +6365,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier to a deployment created under the project.
             vector (list): Input vector to perform the k nearest neighbors with.
             k (int): Overrideable number of items to return.
-            distance (str): Specify the distance function to use when finding nearest neighbors.
+            distance (str): Specify the distance function to use. Options include “dot“, “cosine“, “euclidean“, and “manhattan“. Default = “dot“
             include_score (bool): If True, will return the score alongside the resulting embedding value.
             catalog_id (str): An optional parameter honored only for embeddings that provide a catalog id"""
         prediction_url = self._get_prediction_endpoint(
@@ -6383,16 +6383,17 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getMultipleKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queries': queries}, server_override=prediction_url)
 
-    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, return_extracted_entities: bool = False) -> Dict:
         """Returns a list of scored labels for a document.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            query_data (dict): Dictionary where key is "Content" and value is the text from which entities are to be extracted."""
+            query_data (dict): Dictionary where key is "Content" and value is the text from which entities are to be extracted.
+            return_extracted_entities (bool): (Optional) If True, will return the extracted entities in simpler format"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'returnExtractedEntities': return_extracted_entities}, server_override=prediction_url)
 
     def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False, save_extracted_features: bool = None) -> Dict:
         """Extracts text from the provided PDF and returns a list of recognized labels and their scores.
@@ -6992,72 +6993,6 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             batch_prediction_id (str): Unique string identifier of the batch prediction."""
         return self._call_api('deleteBatchPrediction', 'DELETE', query_params={'batchPredictionId': batch_prediction_id})
-
-    def add_user_item_interaction(self, streaming_token: str, dataset_id: str, timestamp: int, user_id: str, item_id: list, event_type: str, additional_attributes: dict):
-        """Adds a user-item interaction record (data row) to a streaming dataset.
-
-        Args:
-            streaming_token (str): The streaming token for authenticating requests to the dataset.
-            dataset_id (str): The unique string identifier for the streaming dataset to record data to.
-            timestamp (int): The Unix timestamp of the event.
-            user_id (str): The unique identifier for the user.
-            item_id (list): The unique identifier for the items.
-            event_type (str): The event type.
-            additional_attributes (dict): Attributes of the user interaction."""
-        return self._call_api('addUserItemInteraction', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'timestamp': timestamp, 'userId': user_id, 'itemId': item_id, 'eventType': event_type, 'additionalAttributes': additional_attributes})
-
-    def upsert_user_attributes(self, streaming_token: str, dataset_id: str, user_id: str, user_attributes: dict):
-        """Adds a user attribute record (data row) to a streaming dataset.
-
-        Either the streaming dataset ID or the project ID is required.
-
-
-        Args:
-            streaming_token (str): The streaming token for authenticating requests to the dataset.
-            dataset_id (str): The unique string identifier for the streaming dataset to record data to.
-            user_id (str): The unique identifier for the user.
-            user_attributes (dict): Attributes of the user interaction."""
-        return self._call_api('upsertUserAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'userId': user_id, 'userAttributes': user_attributes})
-
-    def upsert_item_attributes(self, streaming_token: str, dataset_id: str, item_id: str, item_attributes: dict):
-        """Adds an item attributes record (data row) to a streaming dataset.
-
-        Either the streaming dataset ID or the project ID is required.
-
-
-        Args:
-            streaming_token (str): The streaming token for authenticating requests to the dataset.
-            dataset_id (str): The unique string identifier for the streaming dataset to record data to.
-            item_id (str): The unique identifier for the item.
-            item_attributes (dict): Attributes of the item interaction."""
-        return self._call_api('upsertItemAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'itemId': item_id, 'itemAttributes': item_attributes})
-
-    def add_multiple_user_item_interactions(self, streaming_token: str, dataset_id: str, interactions: list):
-        """Adds a user-item interaction record (data row) to a streaming dataset.
-
-        Args:
-            streaming_token (str): The streaming token for authenticating requests to the dataset.
-            dataset_id (str): The unique string identifier of the streaming dataset to record data to.
-            interactions (list): List of interactions, each interaction of format {'userId': userId, 'timestamp': timestamp, 'itemId': itemId, 'eventType': eventType, 'additionalAttributes': {'attribute1': 'abc', 'attribute2': 123}}."""
-        return self._call_api('addMultipleUserItemInteractions', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'interactions': interactions})
-
-    def upsert_multiple_user_attributes(self, streaming_token: str, dataset_id: str, upserts: list):
-        """Adds multiple user attributes records (data rows) to a streaming dataset.
-
-        Args:
-            streaming_token (str): The streaming token for authenticating requests to the dataset.
-            dataset_id (str): A unique string identifier for the streaming dataset to record data to.
-            upserts (list): List of upserts, each upsert of format {'userId': userId, 'userAttributes': {'attribute1': 'abc', 'attribute2': 123}}."""
-        return self._call_api('upsertMultipleUserAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'upserts': upserts})
-
-    def upsert_multiple_item_attributes(self, streaming_token: str, dataset_id: str, upserts: list):
-        """Adds multiple item attributes records (data rows) to a streaming dataset.
-
-        Args:
-            streaming_token (str): The streaming token for authenticating requests to the dataset.
-            dataset_id (str): A unique string identifier for the streaming dataset to record data to.
-            upserts (list): A list of upserts, each upsert of format {'itemId': itemId, 'itemAttributes': {'attribute1': 'abc', 'attribute2': 123}}."""
-        return self._call_api('upsertMultipleItemAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'upserts': upserts})
 
     def upsert_item_embeddings(self, streaming_token: str, model_id: str, item_id: str, vector: list, catalog_id: str = None):
         """Upserts an embedding vector for an item id for a model_id.
@@ -8101,13 +8036,17 @@ Creates a new feature group defined as the union of other feature group versions
             document_retriever_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('restartDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id})
 
-    def get_relevant_snippets(self, doc_ids: list = None, blobs: io.TextIOBase = None, query: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False) -> List[DocumentRetrieverLookupResult]:
-        """Get relevant snippets from documents with respect to the query. Document retrievers may be created on-the-fly to perform lookup.
+    def get_relevant_snippets(self, doc_ids: list = None, blobs: io.TextIOBase = None, query: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False, text: str = None) -> List[DocumentRetrieverLookupResult]:
+        """Retrieves snippets relevant to a given query from specified documents. This function supports flexible input options,
+
+        allowing for retrieval from a variety of data sources including document IDs, blob data, and plain text. When multiple data
+        sources are provided, all are considered in the retrieval process. Document retrievers may be created on-the-fly to perform lookup.
+
 
         Args:
             doc_ids (list): A list of document store IDs to retrieve the snippets from.
             blobs (io.TextIOBase): A dictionary mapping document names to the blob data.
-            query (str): The query that the documents are relevant to.
+            query (str): Query string to find relevant snippets in the documents.
             document_retriever_config (DocumentRetrieverConfig): If provided, used to configure the retrieval steps like chunking for embeddings.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned snippets.
             max_words_per_snippet (int): If provided, will limit the number of words in each snippet to the value specified.
@@ -8115,7 +8054,8 @@ Creates a new feature group defined as the union of other feature group versions
             start_word_index (int): If provided, will start the snippet at the index (of words in the document) specified.
             end_word_index (int): If provided, will end the snippet at the index of (of words in the document) specified.
             including_bounding_boxes (bool): If true, will include the bounding boxes of the snippets if they are available.
+            text (str): Plain text from which to retrieve snippets.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
-        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, body={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes}, files=blobs, parse_type=DocumentRetrieverLookupResult)
+        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, body={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text}, files=blobs, parse_type=DocumentRetrieverLookupResult)

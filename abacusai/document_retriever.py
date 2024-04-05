@@ -150,24 +150,61 @@ class DocumentRetriever(AbstractApiClass):
         # we set deployment to be off by default for some cases.
         # So wait for indexing is done and then call restart.
         self.client._poll(self, {'PENDING', 'INDEXING'}, timeout=timeout / 2)
-        if self.get_status() == 'STOPPED':
+        if self.get_deployment_status() == 'STOPPED':
             self.client.restart_document_retriever(self.document_retriever_id)
         version = self.describe().latest_document_retriever_version
         if not version:
             from .client import ApiException
             raise ApiException(
                 409, 'This vector store does not have any versions')
-        version.wait_until_ready(timeout=timeout)
-        return self
+        else:
+            self.wait_until_deployment_ready(timeout=timeout / 2)
+        return self.refresh()
+
+    def wait_until_deployment_ready(self, timeout: int = 3600):
+        """
+        A waiting call until the document retriever deployment is ready to serve.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
+        """
+        import time
+
+        from .client import ApiException
+        start_time = time.time()
+        while (True):
+            deployment_status = self.get_deployment_status()
+            if deployment_status in {'PENDING', 'DEPLOYING'}:
+                if timeout and time.time() - start_time > timeout:
+                    raise TimeoutError(
+                        f'Maximum wait time of {timeout}s exceeded')
+            elif deployment_status in {'STOPPED'}:
+                raise ApiException(
+                    409, f'Document retriever deployment is stopped, please restart it.')
+            elif deployment_status in {'FAILED'}:
+                raise ApiException(
+                    409, f'Document retriever deployment failed, please retry deploying it.')
+            else:
+                return self.refresh()
+            time.sleep(15)
 
     def get_status(self):
         """
-        Gets the status of the document retriever.
+        Gets the indexing status of the document retriever.
 
         Returns:
             str: A string describing the status of a document retriever (pending, complete, etc.).
         """
         return self.describe().latest_document_retriever_version.status
+
+    def get_deployment_status(self):
+        """
+        Gets the deployment status of the document retriever.
+
+        Returns:
+            str: A string describing the deployment status of document retriever (pending, deploying, active, etc.).
+        """
+        return self.describe().latest_document_retriever_version.deployment_status
 
     def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None):
         """
