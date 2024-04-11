@@ -160,6 +160,16 @@ class AbacusUsageMetricsDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
+class FreshserviceDatasetConfig(DatasetConfig):
+    """
+    Dataset config for Freshservice Application Connector
+    """
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.FRESHSERVICE
+
+
+@dataclasses.dataclass
 class _DatasetConfigFactory(_ApiClassFactory):
     config_abstract_class = DatasetConfig
     config_class_key = 'application_connector_type'
@@ -172,4 +182,5 @@ class _DatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.SHAREPOINT: SharepointDatasetConfig,
         enums.ApplicationConnectorType.ZENDESK: ZendeskDatasetConfig,
         enums.ApplicationConnectorType.ABACUSUSAGEMETRICS: AbacusUsageMetricsDatasetConfig,
+        enums.ApplicationConnectorType.FRESHSERVICE: FreshserviceDatasetConfig,
     }

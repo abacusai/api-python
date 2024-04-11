@@ -1,4 +1,5 @@
 import dataclasses
+from typing import List
 
 from .abstract import ApiClass
 from .enums import StdDevThresholdType
@@ -89,4 +90,48 @@ class ItemAttributesStdDevThreshold(ApiClass):
         return {
             'lower_bound': StdDevThreshold.from_dict(self.lower_bound).to_dict() if self.lower_bound else None,
             'upper_bound': StdDevThreshold.from_dict(self.upper_bound).to_dict() if self.upper_bound else None,
+        }
+
+
+@dataclasses.dataclass
+class RestrictFeatureMappings(ApiClass):
+    """
+    Restrict Feature Mappings for Monitor Filtering
+
+    Args:
+        feature_name (str): The name of the feature to restrict the monitor to.
+        restricted_feature_values (list): The values of the feature to restrict the monitor to.
+    """
+    feature_name: str = dataclasses.field(default=None)
+    restricted_feature_values: list = dataclasses.field(default_factory=list)
+
+    def to_dict(self):
+        return {
+            'feature_name': self.feature_name,
+            'restricted_feature_values': self.restricted_feature_values,
+        }
+
+
+@dataclasses.dataclass
+class MonitorFilteringConfig(ApiClass):
+    """
+    Monitor Filtering Configuration
+
+    Args:
+        start_time (str): The start time of the prediction time col
+        end_time (str): The end time of the prediction time col
+        restrict_feature_mapping (RestrictFeatureMappings): The feature mapping to restrict the monitor to.
+        target_class (str): The target class to restrict the monitor to.
+    """
+    start_time: str = dataclasses.field(default=None)
+    end_time: str = dataclasses.field(default=None)
+    restrict_feature_mappings: List[RestrictFeatureMappings] = dataclasses.field(default=None)
+    target_class: str = dataclasses.field(default=None)
+
+    def to_dict(self):
+        return {
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'restrict_feature_mappings': [RestrictFeatureMappings.from_dict(item).to_dict() for item in self.restrict_feature_mappings] if self.restrict_feature_mappings else None,
+            'target_class': self.target_class,
         }

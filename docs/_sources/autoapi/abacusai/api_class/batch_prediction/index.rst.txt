@@ -75,7 +75,7 @@ Classes
    :type item_attributes_to_include_in_the_result: list
    :param explain_predictions: If True, calculates explanations for the forecasted values along with predictions.
    :type explain_predictions: bool
-   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
@@ -217,7 +217,7 @@ Classes
    :type output_columns: list
    :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
    :type explain_predictions: bool
-   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
@@ -411,7 +411,7 @@ Classes
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
-   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type automate_monitoring: bool
 
    .. py:attribute:: for_eval

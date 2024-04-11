@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: MessagingConnectorResponse(client, welcomeMessage=None, defaultMessage=None, disclaimer=None, messagingBotName=None, useDefaultLabel=None, initAckReq=None)
+.. py:class:: MessagingConnectorResponse(client, welcomeMessage=None, defaultMessage=None, disclaimer=None, messagingBotName=None, useDefaultLabel=None, initAckReq=None, defaultLabels=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -38,6 +38,8 @@ Classes
    :type useDefaultLabel: bool
    :param initAckReq: Set to true if the initial Acknowledgment for the query is required by the user
    :type initAckReq: bool
+   :param defaultLabels: Dictionary of default labels, if the user-specified labels aren't set
+   :type defaultLabels: dict
 
    .. py:method:: __repr__()
 

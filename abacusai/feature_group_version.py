@@ -272,11 +272,11 @@ class FeatureGroupVersion(AbstractApiClass):
             return bytes
 
         def get_document_processing_result_infos(content_hash_list, document_processing_config, document_processing_version=None):
-            return self.client._call_api('_getDocumentProcessingResultInfos', 'POST',
-                                         body={'contentHashList': content_hash_list,
-                                               'documentProcessingConfig': document_processing_config,
-                                               'documentProcessingVersion': document_processing_version},
-                                         retry_500=True)
+            return self.client._proxy_request('_getDocumentProcessingResultInfos', 'POST',
+                                              body={'contentHashList': content_hash_list,
+                                                    'documentProcessingConfig': document_processing_config,
+                                                    'documentProcessingVersion': document_processing_version},
+                                              is_sync=True)
 
         feature_group_version = self.id
         df = self.load_as_pandas(max_workers=max_workers)

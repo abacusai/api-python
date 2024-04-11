@@ -105,6 +105,12 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold" title="abacusai.api_class.monitor.ItemAttributesStdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></p></td>
 <td><p>Item Attributes Std Dev Threshold for Monitor Alerts</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.RestrictFeatureMappings" title="abacusai.api_class.monitor.RestrictFeatureMappings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RestrictFeatureMappings</span></code></a></p></td>
+<td><p>Restrict Feature Mappings for Monitor Filtering</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.MonitorFilteringConfig" title="abacusai.api_class.monitor.MonitorFilteringConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorFilteringConfig</span></code></a></p></td>
+<td><p>Monitor Filtering Configuration</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
@@ -256,6 +262,84 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ItemAttributesStdDevThreshold.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor.</span></span><span class="sig-name descname"><span class="pre">RestrictFeatureMappings</span></span><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Restrict Feature Mappings for Monitor Filtering</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the feature to restrict the monitor to.</p></li>
+<li><p><strong>restricted_feature_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – The values of the feature to restrict the monitor to.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.feature_name">
+<span class="sig-name descname"><span class="pre">feature_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.feature_name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.restricted_feature_values">
+<span class="sig-name descname"><span class="pre">restricted_feature_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.restricted_feature_values" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor.</span></span><span class="sig-name descname"><span class="pre">MonitorFilteringConfig</span></span><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Monitor Filtering Configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start time of the prediction time col</p></li>
+<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end time of the prediction time col</p></li>
+<li><p><strong>restrict_feature_mapping</strong> (<a class="reference internal" href="#abacusai.api_class.monitor.RestrictFeatureMappings" title="abacusai.api_class.monitor.RestrictFeatureMappings"><em>RestrictFeatureMappings</em></a>) – The feature mapping to restrict the monitor to.</p></li>
+<li><p><strong>target_class</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The target class to restrict the monitor to.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.start_time">
+<span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.start_time" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.end_time">
+<span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.end_time" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.restrict_feature_mappings">
+<span class="sig-name descname"><span class="pre">restrict_feature_mappings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#abacusai.api_class.monitor.RestrictFeatureMappings" title="abacusai.api_class.monitor.RestrictFeatureMappings"><span class="pre">RestrictFeatureMappings</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.restrict_feature_mappings" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.target_class">
+<span class="sig-name descname"><span class="pre">target_class</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.target_class" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.to_dict" title="Permalink to this definition"></a></dt>
 <dd><p>Standardizes converting an ApiClass to dictionary.
 Keys of response dictionary are converted to camel case.
 This also validates the fields ( type, value, etc ) received in the dictionary.</p>

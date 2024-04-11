@@ -6,8 +6,6 @@ import tempfile
 from contextlib import contextmanager
 from typing import Any, Dict, Generator, List, Optional
 
-from pandas import DataFrame
-
 
 def validate_function_locally(client, python_function_name: str, kwargs: Dict = None) -> Any:
     """
@@ -25,6 +23,8 @@ def validate_function_locally(client, python_function_name: str, kwargs: Dict = 
         TypeError: If an Input Feature Group argument has an invalid type or argument is missing.
         Exception: If an error occurs while validating the Python function.
     """
+    from pandas import DataFrame
+
     kwargs = kwargs or {}
     # Get the function metadata from the AbacusAI client.
     function_metadata = client.describe_python_function(python_function_name)

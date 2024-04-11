@@ -390,7 +390,6 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
         test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST).
         active_labels_column (str): Entities that have been marked in a particular text
         document_format (NLPDocumentFormat): Format of the input documents.
-        include_longformer (bool): Whether to include the longformer model.
         minimum_bounding_box_overlap_ratio (float): Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.
         save_predicted_pdf (bool): Whether to save predicted PDF documents
         enhanced_ocr (bool): Enhanced text extraction from predicted digital documents
@@ -424,7 +423,6 @@ class NaturalLanguageSearchTrainingConfig(TrainingConfig):
         larger_embeddings (bool): Use a higher dimension embedding model.
         search_chunk_size (int): Chunk size for indexing the documents.
         chunk_overlap_fraction (float): Overlap in chunks while indexing the documents.
-        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         index_fraction (float): Fraction of the chunk to use for indexing.
     """
     abacus_internal_model: bool = dataclasses.field(default=None)
@@ -751,21 +749,9 @@ class CustomAlgorithmTrainingConfig(TrainingConfig):
     Training config for the CUSTOM_ALGORITHM problem type
 
     Args:
-        train_function_name (str): The name of the train function.
-        predict_many_function_name (str): The name of the predict many function.
-        training_input_tables (List[str]): List of tables to use for training.
-        predict_function_name (str): Optional name of the predict function if the predict many function is not given.
-        train_module_name (str): The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.
-        predict_module_name (str): The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.
-        test_split (int): Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
+        timeout_minutes (int): Timeout for the model training in minutes.
     """
-    train_function_name: str = dataclasses.field(default=None)
-    predict_many_function_name: str = dataclasses.field(default=None)
-    training_input_tables: List[str] = dataclasses.field(default=None)
-    predict_function_name: str = dataclasses.field(default=None)
-    train_module_name: str = dataclasses.field(default=None)
-    predict_module_name: str = dataclasses.field(default=None)
-    test_split: int = dataclasses.field(default=None)
+    timeout_minutes: int = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CUSTOM_ALGORITHM

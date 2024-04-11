@@ -113,6 +113,7 @@ Submodules
    feature_group_version/index.rst
    feature_importance/index.rst
    feature_mapping/index.rst
+   feature_performance_analysis/index.rst
    feature_record/index.rst
    file_connector/index.rst
    file_connector_instructions/index.rst
@@ -234,6 +235,11 @@ Classes
 
    abacusai.ApiClass
    abacusai.FieldDescriptor
+   abacusai.WorkflowNodeInputMapping
+   abacusai.WorkflowNodeOutputMapping
+   abacusai.WorkflowGraphNode
+   abacusai.WorkflowGraphEdge
+   abacusai.WorkflowGraph
    abacusai.HotkeyPrompt
    abacusai._ApiClassFactory
    abacusai.BatchPredictionArgs
@@ -262,6 +268,7 @@ Classes
    abacusai.SharepointDatasetConfig
    abacusai.ZendeskDatasetConfig
    abacusai.AbacusUsageMetricsDatasetConfig
+   abacusai.FreshserviceDatasetConfig
    abacusai._DatasetConfigFactory
    abacusai.PredictionArguments
    abacusai.OptimizationPredictionArguments
@@ -324,6 +331,8 @@ Classes
    abacusai.PythonFunctionType
    abacusai.EvalArtifactType
    abacusai.FieldDescriptorType
+   abacusai.WorkflowNodeInputType
+   abacusai.WorkflowNodeOutputType
    abacusai.StdDevThresholdType
    abacusai.DataType
    abacusai.SamplingConfig
@@ -362,6 +371,8 @@ Classes
    abacusai.ForecastingMonitorConfig
    abacusai.StdDevThreshold
    abacusai.ItemAttributesStdDevThreshold
+   abacusai.RestrictFeatureMappings
+   abacusai.MonitorFilteringConfig
    abacusai.AlertConditionConfig
    abacusai.AccuracyBelowThresholdConditionConfig
    abacusai.FeatureDriftConditionConfig
@@ -499,6 +510,185 @@ Attributes
       
 
 
+.. py:class:: WorkflowNodeInputMapping
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A mapping of input to a workflow node.
+
+   :param name: The name of the input.
+   :type name: str
+   :param variable_type: The type of the input.
+   :type variable_type: str
+   :param workflow_variable_source: The workflow source stage of the input.
+   :type workflow_variable_source: str
+   :param is_required: Whether the input is required.
+   :type is_required: bool
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: variable_type
+      :type: abacusai.api_class.enums.WorkflowNodeInputType
+
+      
+
+   .. py:attribute:: workflow_variable_source
+      :type: str
+
+      
+
+   .. py:attribute:: is_required
+      :type: bool
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: WorkflowNodeOutputMapping
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A mapping of output to a workflow node.
+
+   :param name: The name of the output.
+   :type name: str
+   :param variable_type: The type of the output.
+   :type variable_type: str
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: variable_type
+      :type: abacusai.api_class.enums.WorkflowNodeOutputType
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: WorkflowGraphNode(name, input_mappings, output_mappings, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, package_requirements = None)
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A node in an Agent workflow graph.
+
+   :param name: Display name of the worflow node.
+   :type name: str
+   :param input_mappings: List of input mappings for the node.
+   :type input_mappings: List[WorkflowNodeInputMapping]
+   :param output_mappings: List of output mappings for the node.
+   :type output_mappings: List[WorkflowNodeOutputMapping]
+   :param function: The callable node function reference if available.
+   :type function: callable
+   :param function_name: The name of the function if available.
+   :type function_name: str
+   :param source_code: The source code of the function if available.
+   :type source_code: str
+   :param input_schema: The react json schema for the input form if applicable.
+   :type input_schema: dict
+   :param output_schema: The react json schema for the output if applicable.
+   :type output_schema: dict
+   :param package_requirements: List of package requirements for the node.
+   :type package_requirements: list
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(node)
+      :classmethod:
+
+
+
+.. py:class:: WorkflowGraphEdge
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   An edge in an Agent workflow graph.
+
+   :param source: The source node of the edge.
+   :type source: str
+   :param target: The target node of the edge.
+   :type target: str
+   :param details: Additional details about the edge.
+   :type details: dict
+
+   .. py:attribute:: source
+      :type: str
+
+      
+
+   .. py:attribute:: target
+      :type: str
+
+      
+
+   .. py:attribute:: details
+      :type: dict
+
+      
+
+   .. py:method:: to_nx_edge()
+
+
+
+.. py:class:: WorkflowGraph
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   An Agent workflow graph.
+
+   :param nodes: A list of nodes in the workflow graph.
+   :type nodes: List[WorkflowGraphNode]
+   :param edges: A list of edges in the workflow graph, where each edge is a tuple of source, target and details.
+   :type edges: List[WorkflowGraphEdge]
+
+   .. py:attribute:: nodes
+      :type: List[WorkflowGraphNode]
+
+      
+
+   .. py:attribute:: edges
+      :type: List[WorkflowGraphEdge]
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(graph)
+      :classmethod:
+
+
+
 .. py:class:: HotkeyPrompt
 
 
@@ -605,7 +795,7 @@ Attributes
    :type item_attributes_to_include_in_the_result: list
    :param explain_predictions: If True, calculates explanations for the forecasted values along with predictions.
    :type explain_predictions: bool
-   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
@@ -747,7 +937,7 @@ Attributes
    :type output_columns: list
    :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
    :type explain_predictions: bool
-   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
@@ -941,7 +1131,7 @@ Attributes
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
-   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
@@ -1475,6 +1665,17 @@ Attributes
       :type: bool
 
       
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: FreshserviceDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Freshservice Application Connector
 
    .. py:method:: __post_init__()
 
@@ -3467,6 +3668,11 @@ Attributes
 
       
 
+   .. py:attribute:: FRESHSERVICE
+      :value: 'FRESHSERVICE'
+
+      
+
 
 .. py:class:: PythonFunctionArgumentType
 
@@ -3704,6 +3910,11 @@ Attributes
 
    .. py:attribute:: GEMINI_PRO
       :value: 'GEMINI_PRO'
+
+      
+
+   .. py:attribute:: GEMINI_1_5_PRO
+      :value: 'GEMINI_1_5_PRO'
 
       
 
@@ -3979,6 +4190,66 @@ Attributes
 
    .. py:attribute:: DATE
       :value: 'DATE'
+
+      
+
+
+.. py:class:: WorkflowNodeInputType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: USER_INPUT
+      :value: 'USER_INPUT'
+
+      
+
+   .. py:attribute:: WORKFLOW_VARIABLE
+      :value: 'WORKFLOW_VARIABLE'
+
+      
+
+
+.. py:class:: WorkflowNodeOutputType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: INTEGER
+      :value: 'INTEGER'
+
+      
+
+   .. py:attribute:: STRING
+      :value: 'STRING'
+
+      
+
+   .. py:attribute:: BOOLEAN
+      :value: 'BOOLEAN'
+
+      
+
+   .. py:attribute:: FLOAT
+      :value: 'FLOAT'
+
+      
+
+   .. py:attribute:: JSON
+      :value: 'JSON'
+
+      
+
+   .. py:attribute:: LIST
+      :value: 'LIST'
 
       
 
@@ -5342,8 +5613,6 @@ Attributes
    :type active_labels_column: str
    :param document_format: Format of the input documents.
    :type document_format: NLPDocumentFormat
-   :param include_longformer: Whether to include the longformer model.
-   :type include_longformer: bool
    :param minimum_bounding_box_overlap_ratio: Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.
    :type minimum_bounding_box_overlap_ratio: float
    :param save_predicted_pdf: Whether to save predicted PDF documents
@@ -5425,8 +5694,6 @@ Attributes
    :type search_chunk_size: int
    :param chunk_overlap_fraction: Overlap in chunks while indexing the documents.
    :type chunk_overlap_fraction: float
-   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-   :type test_split: int
    :param index_fraction: Fraction of the chunk to use for indexing.
    :type index_fraction: float
 
@@ -6092,52 +6359,10 @@ Attributes
 
    Training config for the CUSTOM_ALGORITHM problem type
 
-   :param train_function_name: The name of the train function.
-   :type train_function_name: str
-   :param predict_many_function_name: The name of the predict many function.
-   :type predict_many_function_name: str
-   :param training_input_tables: List of tables to use for training.
-   :type training_input_tables: List[str]
-   :param predict_function_name: Optional name of the predict function if the predict many function is not given.
-   :type predict_function_name: str
-   :param train_module_name: The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.
-   :type train_module_name: str
-   :param predict_module_name: The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.
-   :type predict_module_name: str
-   :param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
-   :type test_split: int
+   :param timeout_minutes: Timeout for the model training in minutes.
+   :type timeout_minutes: int
 
-   .. py:attribute:: train_function_name
-      :type: str
-
-      
-
-   .. py:attribute:: predict_many_function_name
-      :type: str
-
-      
-
-   .. py:attribute:: training_input_tables
-      :type: List[str]
-
-      
-
-   .. py:attribute:: predict_function_name
-      :type: str
-
-      
-
-   .. py:attribute:: train_module_name
-      :type: str
-
-      
-
-   .. py:attribute:: predict_module_name
-      :type: str
-
-      
-
-   .. py:attribute:: test_split
+   .. py:attribute:: timeout_minutes
       :type: int
 
       
@@ -6368,6 +6593,80 @@ Attributes
 
    .. py:attribute:: upper_bound
       :type: StdDevThreshold
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: RestrictFeatureMappings
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Restrict Feature Mappings for Monitor Filtering
+
+   :param feature_name: The name of the feature to restrict the monitor to.
+   :type feature_name: str
+   :param restricted_feature_values: The values of the feature to restrict the monitor to.
+   :type restricted_feature_values: list
+
+   .. py:attribute:: feature_name
+      :type: str
+
+      
+
+   .. py:attribute:: restricted_feature_values
+      :type: list
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: MonitorFilteringConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Monitor Filtering Configuration
+
+   :param start_time: The start time of the prediction time col
+   :type start_time: str
+   :param end_time: The end time of the prediction time col
+   :type end_time: str
+   :param restrict_feature_mapping: The feature mapping to restrict the monitor to.
+   :type restrict_feature_mapping: RestrictFeatureMappings
+   :param target_class: The target class to restrict the monitor to.
+   :type target_class: str
+
+   .. py:attribute:: start_time
+      :type: str
+
+      
+
+   .. py:attribute:: end_time
+      :type: str
+
+      
+
+   .. py:attribute:: restrict_feature_mappings
+      :type: List[RestrictFeatureMappings]
+
+      
+
+   .. py:attribute:: target_class
+      :type: str
 
       
 
@@ -7809,7 +8108,7 @@ Attributes
    .. py:method:: _get_doc_retriever_deployment_info(document_retriever_id)
 
 
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -7838,6 +8137,8 @@ Attributes
       :type score_multiplier_column: str
       :param min_score: If provided, will filter out the results with score lower than the value specified.
       :type min_score: float
+      :param required_phrases: If provided, each result will have at least one of the phrases.
+      :type required_phrases: list
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -8346,7 +8647,7 @@ Attributes
       :type use_original_csv_names: bool
       :param python_function_name: Name of Python Function that contains the source code and function arguments.
       :type python_function_name: str
-      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of python function arguments.
       :type python_function_bindings: list
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
@@ -9015,11 +9316,11 @@ Attributes
 
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
-      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of python function arguments.
       :type python_function_bindings: list
 
 
-   .. py:method:: update_feature_group_python_function(feature_group_id, python_function_name, python_function_bindings = [])
+   .. py:method:: update_feature_group_python_function(feature_group_id, python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None)
 
       Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -9031,8 +9332,14 @@ Attributes
       :type feature_group_id: str
       :param python_function_name: The name of the python function to be associated with the feature group.
       :type python_function_name: str
-      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of python function arguments.
       :type python_function_bindings: list
+      :param cpu_size: Size of the CPU for the feature group python function.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group python function.
+      :type memory: int
+      :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
+      :type use_gpu: bool
 
 
    .. py:method:: update_feature_group_sql_definition(feature_group_id, sql)
@@ -9081,7 +9388,7 @@ Attributes
       :type package_requirements: list
       :param use_original_csv_names: If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
       :type use_original_csv_names: bool
-      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of PythonFunctionArgument objects that represent the bindings for the Python function.
       :type python_function_bindings: list
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
@@ -9897,7 +10204,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: update_python_model(model_id, function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None, is_thread_safe = None)
+   .. py:method:: update_python_model(model_id, function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None, is_thread_safe = None, training_config = None)
 
       Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
@@ -9928,6 +10235,8 @@ Attributes
       :type use_gpu: bool
       :param is_thread_safe: Whether this model is thread safe
       :type is_thread_safe: bool
+      :param training_config: The training config used to train this model.
+      :type training_config: TrainingConfig
 
       :returns: The updated model.
       :rtype: Model
@@ -11527,7 +11836,7 @@ Attributes
       :type include_all_assignments: bool
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None, best_alternate_only = False)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -11537,10 +11846,12 @@ Attributes
       :type deployment_id: str
       :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
       :type query_data: dict
-      :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
+      :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignment variables involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value. 4. coefficient_column (str): Column in Assignment feature group to be used as coefficient for the assignment variables, optional and defaults to 1
       :type add_constraints: list
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param best_alternate_only: When True only the best alternate will be returned, when False multiple alternates are returned
+      :type best_alternate_only: bool
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -11739,7 +12050,7 @@ Attributes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -11770,6 +12081,8 @@ Attributes
       :type score_multiplier_column: str
       :param min_score: If provided, will filter out the results with score less than the value specified.
       :type min_score: float
+      :param required_phrases: If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
+      :type required_phrases: list
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -12072,19 +12385,6 @@ Attributes
       :type primary_key: str
 
 
-   .. py:method:: add_feature_group_document(feature_group_id, document)
-
-      Adds a document to the feature group.
-
-      :param feature_group_id: The unique ID associated with the feature group.
-      :type feature_group_id: str
-      :param document: The multipart/form-data of the document to add to the feature group.
-      :type document: io.TextIOBase
-
-      :returns: The feature group document that was added.
-      :rtype: FeatureGroupDocument
-
-
    .. py:method:: describe_feature_group_row_process_by_key(deployment_id, primary_key_value)
 
       Gets the feature group row process.
@@ -12332,7 +12632,7 @@ Attributes
       :type source_code: str
       :param step_input_mappings: List of Python function arguments.
       :type step_input_mappings: list
-      :param output_variable_mappings: List of Python function ouputs.
+      :param output_variable_mappings: List of Python function outputs.
       :type output_variable_mappings: list
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: list
@@ -12369,7 +12669,7 @@ Attributes
       :type source_code: str
       :param step_input_mappings: List of Python function arguments.
       :type step_input_mappings: list
-      :param output_variable_mappings: List of Python function ouputs.
+      :param output_variable_mappings: List of Python function outputs.
       :type output_variable_mappings: list
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: list
@@ -13056,7 +13356,7 @@ Attributes
       :type external_application_id: str
 
 
-   .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
 
       Creates a new AI agent.
 
@@ -13082,12 +13382,14 @@ Attributes
       :type agent_input_schema: dict
       :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_output_schema: dict
+      :param workflow_graph: The workflow graph for the agent.
+      :type workflow_graph: WorkflowGraph
 
       :returns: The new agent
       :rtype: Agent
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, agent_input_schema = None, agent_output_schema = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -13109,6 +13411,8 @@ Attributes
       :type agent_input_schema: dict
       :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_output_schema: dict
+      :param workflow_graph: The workflow graph for the agent.
+      :type workflow_graph: WorkflowGraph
 
       :returns: The updated agent
       :rtype: Agent
@@ -14916,17 +15220,6 @@ Attributes
       :rtype: list[FeatureGroupRow]
 
 
-   .. py:method:: list_pending_feature_group_documents(feature_group_id)
-
-      Lists all pending documents added to feature group.
-
-      :param feature_group_id: The unique ID associated with the feature group.
-      :type feature_group_id: str
-
-      :returns: A list of pending feature group documents.
-      :rtype: list[FeatureGroupDocument]
-
-
    .. py:method:: describe_python_function(name)
 
       Describe a Python Function.
@@ -15367,6 +15660,32 @@ Attributes
 
       :returns: A list of search results, each containing the retrieved object and its relevance score
       :rtype: list[OrganizationSearchResult]
+
+
+   .. py:method:: list_agents(project_id)
+
+      Retrieves the list of agents in the specified project.
+
+      :param project_id: The unique identifier associated with the project.
+      :type project_id: str
+
+      :returns: A list of agents in the project.
+      :rtype: list[Agent]
+
+
+   .. py:method:: list_agent_versions(agent_id, limit = 100, start_after_version = None)
+
+      List all versions of an agent.
+
+      :param agent_id: The unique identifier associated with the agent.
+      :type agent_id: str
+      :param limit: If provided, limits the number of agent versions returned.
+      :type limit: int
+      :param start_after_version: Unique string identifier of the version after which the list starts.
+      :type start_after_version: str
+
+      :returns: An array of Agent versions.
+      :rtype: list[AgentVersion]
 
 
    .. py:method:: list_document_retrievers(project_id, limit = 100, start_after_id = None)
@@ -16071,7 +16390,7 @@ Attributes
       :type include_all_assignments: bool
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None, best_alternate_only = False)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -16081,10 +16400,12 @@ Attributes
       :type deployment_id: str
       :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
       :type query_data: dict
-      :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
+      :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignment variables involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value. 4. coefficient_column (str): Column in Assignment feature group to be used as coefficient for the assignment variables, optional and defaults to 1
       :type add_constraints: list
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param best_alternate_only: When True only the best alternate will be returned, when False multiple alternates are returned
+      :type best_alternate_only: bool
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -16283,7 +16604,7 @@ Attributes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -16314,6 +16635,8 @@ Attributes
       :type score_multiplier_column: str
       :param min_score: If provided, will filter out the results with score less than the value specified.
       :type min_score: float
+      :param required_phrases: If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
+      :type required_phrases: list
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -16435,7 +16758,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.2.1'
+   :value: '1.2.2'
 
    
 

@@ -810,11 +810,11 @@ Classes
 
       Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
-      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of python function arguments.
       :type python_function_bindings: list
 
 
-   .. py:method:: update_python_function(python_function_name, python_function_bindings = [])
+   .. py:method:: update_python_function(python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None)
 
       Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -824,8 +824,14 @@ Classes
 
       :param python_function_name: The name of the python function to be associated with the feature group.
       :type python_function_name: str
-      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of python function arguments.
       :type python_function_bindings: list
+      :param cpu_size: Size of the CPU for the feature group python function.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group python function.
+      :type memory: int
+      :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
+      :type use_gpu: bool
 
 
    .. py:method:: update_sql_definition(sql)
@@ -868,7 +874,7 @@ Classes
       :type package_requirements: list
       :param use_original_csv_names: If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
       :type use_original_csv_names: bool
-      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of PythonFunctionArgument objects that represent the bindings for the Python function.
       :type python_function_bindings: list
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
@@ -1103,28 +1109,6 @@ Classes
 
       :returns: A list of feature group rows.
       :rtype: list[FeatureGroupRow]
-
-
-   .. py:method:: add_document(document)
-
-      Adds a document to the feature group.
-
-      :param document: The multipart/form-data of the document to add to the feature group.
-      :type document: io.TextIOBase
-
-      :returns: The feature group document that was added.
-      :rtype: FeatureGroupDocument
-
-
-   .. py:method:: list_pending_documents()
-
-      Lists all pending documents added to feature group.
-
-      :param feature_group_id: The unique ID associated with the feature group.
-      :type feature_group_id: str
-
-      :returns: A list of pending feature group documents.
-      :rtype: list[FeatureGroupDocument]
 
 
    .. py:method:: get_natural_language_explanation(feature_group_version = None, model_id = None)

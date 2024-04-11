@@ -16,6 +16,8 @@ Classes
    abacusai.api_class.monitor.ForecastingMonitorConfig
    abacusai.api_class.monitor.StdDevThreshold
    abacusai.api_class.monitor.ItemAttributesStdDevThreshold
+   abacusai.api_class.monitor.RestrictFeatureMappings
+   abacusai.api_class.monitor.MonitorFilteringConfig
 
 
 
@@ -157,6 +159,80 @@ Classes
 
    .. py:attribute:: upper_bound
       :type: StdDevThreshold
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: RestrictFeatureMappings
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Restrict Feature Mappings for Monitor Filtering
+
+   :param feature_name: The name of the feature to restrict the monitor to.
+   :type feature_name: str
+   :param restricted_feature_values: The values of the feature to restrict the monitor to.
+   :type restricted_feature_values: list
+
+   .. py:attribute:: feature_name
+      :type: str
+
+      
+
+   .. py:attribute:: restricted_feature_values
+      :type: list
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: MonitorFilteringConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Monitor Filtering Configuration
+
+   :param start_time: The start time of the prediction time col
+   :type start_time: str
+   :param end_time: The end time of the prediction time col
+   :type end_time: str
+   :param restrict_feature_mapping: The feature mapping to restrict the monitor to.
+   :type restrict_feature_mapping: RestrictFeatureMappings
+   :param target_class: The target class to restrict the monitor to.
+   :type target_class: str
+
+   .. py:attribute:: start_time
+      :type: str
+
+      
+
+   .. py:attribute:: end_time
+      :type: str
+
+      
+
+   .. py:attribute:: restrict_feature_mappings
+      :type: List[RestrictFeatureMappings]
+
+      
+
+   .. py:attribute:: target_class
+      :type: str
 
       
 

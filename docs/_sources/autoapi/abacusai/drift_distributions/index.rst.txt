@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DriftDistributions(client, labelDrift={}, predictionDrift={})
+.. py:class:: DriftDistributions(client, labelDrift={}, predictionDrift={}, bpPredictionDrift={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -30,6 +30,8 @@ Classes
    :type labelDrift: DriftDistribution
    :param predictionDrift: A DriftDistribution describing column names and the range of values for prediction drift.
    :type predictionDrift: DriftDistribution
+   :param bpPredictionDrift: A DriftDistribution describing column names and the range of values for prediction drift, when the predictions come from BP.
+   :type bpPredictionDrift: DriftDistribution
 
    .. py:method:: __repr__()
 

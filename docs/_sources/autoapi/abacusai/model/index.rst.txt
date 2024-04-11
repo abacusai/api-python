@@ -144,7 +144,7 @@ Classes
       :type name: str
 
 
-   .. py:method:: update_python(function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None, is_thread_safe = None)
+   .. py:method:: update_python(function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None, is_thread_safe = None, training_config = None)
 
       Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
@@ -173,6 +173,8 @@ Classes
       :type use_gpu: bool
       :param is_thread_safe: Whether this model is thread safe
       :type is_thread_safe: bool
+      :param training_config: The training config used to train this model.
+      :type training_config: TrainingConfig
 
       :returns: The updated model.
       :rtype: Model
@@ -370,7 +372,7 @@ Classes
       :rtype: ModelTrainingTypeForDeployment
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, agent_input_schema = None, agent_output_schema = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -390,6 +392,8 @@ Classes
       :type agent_input_schema: dict
       :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_output_schema: dict
+      :param workflow_graph: The workflow graph for the agent.
+      :type workflow_graph: WorkflowGraph
 
       :returns: The updated agent
       :rtype: Agent

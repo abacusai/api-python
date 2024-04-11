@@ -651,7 +651,7 @@ Classes
       :type include_all_assignments: bool
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None, best_alternate_only = False)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -661,10 +661,12 @@ Classes
       :type deployment_id: str
       :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
       :type query_data: dict
-      :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
+      :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignment variables involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value. 4. coefficient_column (str): Column in Assignment feature group to be used as coefficient for the assignment variables, optional and defaults to 1
       :type add_constraints: list
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param best_alternate_only: When True only the best alternate will be returned, when False multiple alternates are returned
+      :type best_alternate_only: bool
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -863,7 +865,7 @@ Classes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -894,6 +896,8 @@ Classes
       :type score_multiplier_column: str
       :param min_score: If provided, will filter out the results with score less than the value specified.
       :type min_score: float
+      :param required_phrases: If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
+      :type required_phrases: list
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

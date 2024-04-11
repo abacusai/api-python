@@ -653,7 +653,7 @@ Classes
       :rtype: ChatSession
 
 
-   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None)
+   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
 
       Creates a new AI agent.
 
@@ -677,9 +677,22 @@ Classes
       :type agent_input_schema: dict
       :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_output_schema: dict
+      :param workflow_graph: The workflow graph for the agent.
+      :type workflow_graph: WorkflowGraph
 
       :returns: The new agent
       :rtype: Agent
+
+
+   .. py:method:: list_agents()
+
+      Retrieves the list of agents in the specified project.
+
+      :param project_id: The unique identifier associated with the project.
+      :type project_id: str
+
+      :returns: A list of agents in the project.
+      :rtype: list[Agent]
 
 
    .. py:method:: create_document_retriever(name, feature_group_id, document_retriever_config = None)

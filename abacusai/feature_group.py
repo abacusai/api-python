@@ -790,11 +790,11 @@ class FeatureGroup(AbstractApiClass):
         Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
         Args:
-            python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            python_function_bindings (list): List of python function arguments.
         """
         return self.client.update_feature_group_python_function_bindings(self.feature_group_id, python_function_bindings)
 
-    def update_python_function(self, python_function_name: str, python_function_bindings: list = []):
+    def update_python_function(self, python_function_name: str, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None):
         """
         Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -804,9 +804,12 @@ class FeatureGroup(AbstractApiClass):
 
         Args:
             python_function_name (str): The name of the python function to be associated with the feature group.
-            python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            python_function_bindings (list): List of python function arguments.
+            cpu_size (str): Size of the CPU for the feature group python function.
+            memory (int): Memory (in GB) for the feature group python function.
+            use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
         """
-        return self.client.update_feature_group_python_function(self.feature_group_id, python_function_name, python_function_bindings)
+        return self.client.update_feature_group_python_function(self.feature_group_id, python_function_name, python_function_bindings, cpu_size, memory, use_gpu)
 
     def update_sql_definition(self, sql: str):
         """
@@ -844,7 +847,7 @@ class FeatureGroup(AbstractApiClass):
             memory (int): Memory (in GB) for the feature group function.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             use_original_csv_names (bool): If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
-            python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            python_function_bindings (list): List of PythonFunctionArgument objects that represent the bindings for the Python function.
             use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
 
         Returns:
@@ -1087,30 +1090,6 @@ class FeatureGroup(AbstractApiClass):
             list[FeatureGroupRow]: A list of feature group rows.
         """
         return self.client.get_data(self.feature_group_id, primary_key, num_rows)
-
-    def add_document(self, document: io.TextIOBase):
-        """
-        Adds a document to the feature group.
-
-        Args:
-            document (io.TextIOBase): The multipart/form-data of the document to add to the feature group.
-
-        Returns:
-            FeatureGroupDocument: The feature group document that was added.
-        """
-        return self.client.add_feature_group_document(self.feature_group_id, document)
-
-    def list_pending_documents(self):
-        """
-        Lists all pending documents added to feature group.
-
-        Args:
-            feature_group_id (str): The unique ID associated with the feature group.
-
-        Returns:
-            list[FeatureGroupDocument]: A list of pending feature group documents.
-        """
-        return self.client.list_pending_feature_group_documents(self.feature_group_id)
 
     def get_natural_language_explanation(self, feature_group_version: str = None, model_id: str = None):
         """

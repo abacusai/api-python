@@ -240,6 +240,12 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.FieldDescriptorType" title="abacusai.api_class.enums.FieldDescriptorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FieldDescriptorType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.WorkflowNodeInputType" title="abacusai.api_class.enums.WorkflowNodeInputType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeInputType</span></code></a></p></td>
+<td><p>Generic enumeration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.WorkflowNodeOutputType" title="abacusai.api_class.enums.WorkflowNodeOutputType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeOutputType</span></code></a></p></td>
+<td><p>Generic enumeration.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.OcrMode" title="abacusai.api_class.enums.OcrMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OcrMode</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
@@ -1692,6 +1698,11 @@
 <span class="sig-name descname"><span class="pre">MICROSOFTAUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MICROSOFTAUTH'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.MICROSOFTAUTH" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ApplicationConnectorType.FRESHSERVICE">
+<span class="sig-name descname"><span class="pre">FRESHSERVICE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FRESHSERVICE'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.FRESHSERVICE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1955,6 +1966,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.GEMINI_1_5_PRO">
+<span class="sig-name descname"><span class="pre">GEMINI_1_5_PRO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI_1_5_PRO'</span></em><a class="headerlink" href="#abacusai.api_class.enums.LLMName.GEMINI_1_5_PRO" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.MIXTRAL_CHAT">
 <span class="sig-name descname"><span class="pre">MIXTRAL_CHAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MIXTRAL_CHAT'</span></em><a class="headerlink" href="#abacusai.api_class.enums.LLMName.MIXTRAL_CHAT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2211,6 +2227,62 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.FieldDescriptorType.DATE">
 <span class="sig-name descname"><span class="pre">DATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DATE'</span></em><a class="headerlink" href="#abacusai.api_class.enums.FieldDescriptorType.DATE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeInputType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">WorkflowNodeInputType</span></span><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeInputType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.enums.ApiEnum" title="abacusai.api_class.enums.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
+<p>Generic enumeration.</p>
+<p>Derive from this class to define new enumerations.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeInputType.USER_INPUT">
+<span class="sig-name descname"><span class="pre">USER_INPUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'USER_INPUT'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeInputType.USER_INPUT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeInputType.WORKFLOW_VARIABLE">
+<span class="sig-name descname"><span class="pre">WORKFLOW_VARIABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'WORKFLOW_VARIABLE'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeInputType.WORKFLOW_VARIABLE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeOutputType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">WorkflowNodeOutputType</span></span><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.enums.ApiEnum" title="abacusai.api_class.enums.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
+<p>Generic enumeration.</p>
+<p>Derive from this class to define new enumerations.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeOutputType.INTEGER">
+<span class="sig-name descname"><span class="pre">INTEGER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INTEGER'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType.INTEGER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeOutputType.STRING">
+<span class="sig-name descname"><span class="pre">STRING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STRING'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType.STRING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeOutputType.BOOLEAN">
+<span class="sig-name descname"><span class="pre">BOOLEAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BOOLEAN'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType.BOOLEAN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeOutputType.FLOAT">
+<span class="sig-name descname"><span class="pre">FLOAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FLOAT'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType.FLOAT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeOutputType.JSON">
+<span class="sig-name descname"><span class="pre">JSON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'JSON'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType.JSON" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeOutputType.LIST">
+<span class="sig-name descname"><span class="pre">LIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LIST'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType.LIST" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

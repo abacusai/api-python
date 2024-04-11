@@ -144,6 +144,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_mapping/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_mapping</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_performance_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_performance_analysis</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_record/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_record</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_instructions</span></code></a></li>
@@ -1273,14 +1274,14 @@
 <dd><p>Updates an existing Feature Group’s Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of arguments to be supplied to the function as parameters in the format [{‘name’: ‘function_argument’, ‘variable_type’: ‘FEATURE_GROUP’, ‘value’: ‘name_of_feature_group’}].</p>
+<dd class="field-odd"><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of python function arguments.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.update_python_function">
-<span class="sig-name descname"><span class="pre">update_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">python_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.update_python_function" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">python_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.update_python_function" title="Permalink to this definition"></a></dt>
 <dd><p>Updates an existing Feature Group’s python function from a user provided Python Function. If a list of feature groups are supplied within the python function</p>
 <p>bindings, we will provide as arguments to the function DataFrame’s (pandas in the case of Python) with the materialized
 feature groups for those input feature groups.</p>
@@ -1288,7 +1289,10 @@ feature groups for those input feature groups.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>python_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the python function to be associated with the feature group.</p></li>
-<li><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of arguments to be supplied to the function as parameters in the format [{‘name’: ‘function_argument’, ‘variable_type’: ‘FEATURE_GROUP’, ‘value’: ‘name_of_feature_group’}].</p></li>
+<li><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of python function arguments.</p></li>
+<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Size of the CPU for the feature group python function.</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the feature group python function.</p></li>
+<li><p><strong>use_gpu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the feature group needs a gpu or not. Otherwise default to CPU.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1342,7 +1346,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the feature group function.</p></li>
 <li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
 <li><p><strong>use_original_csv_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If set to <cite>True</cite>, feature group uses the original column names for input feature groups from CSV datasets.</p></li>
-<li><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of arguments to be supplied to the function as parameters in the format [{‘name’: ‘function_argument’, ‘variable_type’: ‘FEATURE_GROUP’, ‘value’: ‘name_of_feature_group’}].</p></li>
+<li><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of PythonFunctionArgument objects that represent the bindings for the Python function.</p></li>
 <li><p><strong>use_gpu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the feature group needs a gpu or not. Otherwise default to CPU.</p></li>
 </ul>
 </dd>
@@ -1673,40 +1677,6 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../feature_group_row/index.html#abacusai.feature_group_row.FeatureGroupRow" title="abacusai.feature_group_row.FeatureGroupRow">FeatureGroupRow</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.add_document">
-<span class="sig-name descname"><span class="pre">add_document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.add_document" title="Permalink to this definition"></a></dt>
-<dd><p>Adds a document to the feature group.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>document</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.12)"><em>io.TextIOBase</em></a>) – The multipart/form-data of the document to add to the feature group.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The feature group document that was added.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group_document/index.html#abacusai.feature_group_document.FeatureGroupDocument" title="abacusai.feature_group_document.FeatureGroupDocument">FeatureGroupDocument</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.list_pending_documents">
-<span class="sig-name descname"><span class="pre">list_pending_documents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.list_pending_documents" title="Permalink to this definition"></a></dt>
-<dd><p>Lists all pending documents added to feature group.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique ID associated with the feature group.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of pending feature group documents.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../feature_group_document/index.html#abacusai.feature_group_document.FeatureGroupDocument" title="abacusai.feature_group_document.FeatureGroupDocument">FeatureGroupDocument</a>]</p>
 </dd>
 </dl>
 </dd></dl>

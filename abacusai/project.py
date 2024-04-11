@@ -2,7 +2,7 @@ from typing import Union
 
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, DocumentRetrieverConfig,
-    ForecastingMonitorConfig, TrainingConfig
+    ForecastingMonitorConfig, TrainingConfig, WorkflowGraph
 )
 from .return_class import AbstractApiClass
 
@@ -604,7 +604,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_chat_session(self.project_id, name)
 
-    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None):
+    def create_agent(self, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None):
         """
         Creates a new AI agent.
 
@@ -619,11 +619,24 @@ class Project(AbstractApiClass):
             evaluation_feature_group_id (str): The ID of the feature group to use for evaluation.
             agent_input_schema (dict): The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
             agent_output_schema (dict): The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
+            workflow_graph (WorkflowGraph): The workflow graph for the agent.
 
         Returns:
             Agent: The new agent
         """
-        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id, agent_input_schema, agent_output_schema)
+        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id, agent_input_schema, agent_output_schema, workflow_graph)
+
+    def list_agents(self):
+        """
+        Retrieves the list of agents in the specified project.
+
+        Args:
+            project_id (str): The unique identifier associated with the project.
+
+        Returns:
+            list[Agent]: A list of agents in the project.
+        """
+        return self.client.list_agents(self.project_id)
 
     def create_document_retriever(self, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
         """

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={})
+.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, workflowGraph={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -83,6 +83,19 @@ Classes
 
       :returns: Description of the agent.
       :rtype: Agent
+
+
+   .. py:method:: list_versions(limit = 100, start_after_version = None)
+
+      List all versions of an agent.
+
+      :param limit: If provided, limits the number of agent versions returned.
+      :type limit: int
+      :param start_after_version: Unique string identifier of the version after which the list starts.
+      :type start_after_version: str
+
+      :returns: An array of Agent versions.
+      :rtype: list[AgentVersion]
 
 
    .. py:method:: wait_for_publish(timeout=None)

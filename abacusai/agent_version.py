@@ -1,3 +1,4 @@
+from .api_class import WorkflowGraph
 from .code_source import CodeSource
 from .return_class import AbstractApiClass
 
@@ -21,7 +22,7 @@ class AgentVersion(AbstractApiClass):
             codeSource (CodeSource): If a python model, information on where the source code is located.
     """
 
-    def __init__(self, client, agentVersion=None, status=None, agentId=None, agentConfig=None, publishingStartedAt=None, publishingCompletedAt=None, pendingDeploymentIds=None, failedDeploymentIds=None, error=None, agentExecutionConfig=None, codeSource={}):
+    def __init__(self, client, agentVersion=None, status=None, agentId=None, agentConfig=None, publishingStartedAt=None, publishingCompletedAt=None, pendingDeploymentIds=None, failedDeploymentIds=None, error=None, agentExecutionConfig=None, codeSource={}, workflowGraph={}):
         super().__init__(client, agentVersion)
         self.agent_version = agentVersion
         self.status = status
@@ -34,11 +35,12 @@ class AgentVersion(AbstractApiClass):
         self.error = error
         self.agent_execution_config = agentExecutionConfig
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.workflow_graph = client._build_class(WorkflowGraph, workflowGraph)
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'agent_version': repr(self.agent_version), f'status': repr(self.status), f'agent_id': repr(self.agent_id), f'agent_config': repr(self.agent_config), f'publishing_started_at': repr(self.publishing_started_at), f'publishing_completed_at': repr(
-            self.publishing_completed_at), f'pending_deployment_ids': repr(self.pending_deployment_ids), f'failed_deployment_ids': repr(self.failed_deployment_ids), f'error': repr(self.error), f'agent_execution_config': repr(self.agent_execution_config), f'code_source': repr(self.code_source)}
+        repr_dict = {f'agent_version': repr(self.agent_version), f'status': repr(self.status), f'agent_id': repr(self.agent_id), f'agent_config': repr(self.agent_config), f'publishing_started_at': repr(self.publishing_started_at), f'publishing_completed_at': repr(self.publishing_completed_at), f'pending_deployment_ids': repr(
+            self.pending_deployment_ids), f'failed_deployment_ids': repr(self.failed_deployment_ids), f'error': repr(self.error), f'agent_execution_config': repr(self.agent_execution_config), f'code_source': repr(self.code_source), f'workflow_graph': repr(self.workflow_graph)}
         class_name = "AgentVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -51,8 +53,8 @@ class AgentVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'agent_version': self.agent_version, 'status': self.status, 'agent_id': self.agent_id, 'agent_config': self.agent_config, 'publishing_started_at': self.publishing_started_at, 'publishing_completed_at': self.publishing_completed_at,
-                'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'error': self.error, 'agent_execution_config': self.agent_execution_config, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'agent_version': self.agent_version, 'status': self.status, 'agent_id': self.agent_id, 'agent_config': self.agent_config, 'publishing_started_at': self.publishing_started_at, 'publishing_completed_at': self.publishing_completed_at, 'pending_deployment_ids': self.pending_deployment_ids,
+                'failed_deployment_ids': self.failed_deployment_ids, 'error': self.error, 'agent_execution_config': self.agent_execution_config, 'code_source': self._get_attribute_as_dict(self.code_source), 'workflow_graph': self._get_attribute_as_dict(self.workflow_graph)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):

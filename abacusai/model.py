@@ -1,6 +1,6 @@
 from typing import Union
 
-from .api_class import TrainingConfig
+from .api_class import TrainingConfig, WorkflowGraph
 from .code_source import CodeSource
 from .database_connector import DatabaseConnector
 from .model_location import ModelLocation
@@ -153,7 +153,7 @@ class Model(AbstractApiClass):
         """
         return self.client.rename_model(self.model_id, name)
 
-    def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None, is_thread_safe: bool = None):
+    def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None, is_thread_safe: bool = None, training_config: Union[dict, TrainingConfig] = None):
         """
         Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
@@ -172,11 +172,12 @@ class Model(AbstractApiClass):
             package_requirements (list): List of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
             use_gpu (bool): Whether this model needs gpu
             is_thread_safe (bool): Whether this model is thread safe
+            training_config (TrainingConfig): The training config used to train this model.
 
         Returns:
             Model: The updated model.
         """
-        return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name, training_input_tables, cpu_size, memory, package_requirements, use_gpu, is_thread_safe)
+        return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name, training_input_tables, cpu_size, memory, package_requirements, use_gpu, is_thread_safe, training_config)
 
     def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None):
         """
@@ -347,7 +348,7 @@ class Model(AbstractApiClass):
         """
         return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
 
-    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, agent_input_schema: dict = None, agent_output_schema: dict = None):
+    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None):
         """
         Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -360,11 +361,12 @@ class Model(AbstractApiClass):
             enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
             agent_input_schema (dict): The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
             agent_output_schema (dict): The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
+            workflow_graph (WorkflowGraph): The workflow graph for the agent.
 
         Returns:
             Agent: The updated agent
         """
-        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input, agent_input_schema, agent_output_schema)
+        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input, agent_input_schema, agent_output_schema, workflow_graph)
 
     def wait_for_training(self, timeout=None):
         """

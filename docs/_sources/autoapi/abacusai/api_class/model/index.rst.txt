@@ -1112,8 +1112,6 @@ Classes
    :type active_labels_column: str
    :param document_format: Format of the input documents.
    :type document_format: NLPDocumentFormat
-   :param include_longformer: Whether to include the longformer model.
-   :type include_longformer: bool
    :param minimum_bounding_box_overlap_ratio: Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.
    :type minimum_bounding_box_overlap_ratio: float
    :param save_predicted_pdf: Whether to save predicted PDF documents
@@ -1195,8 +1193,6 @@ Classes
    :type search_chunk_size: int
    :param chunk_overlap_fraction: Overlap in chunks while indexing the documents.
    :type chunk_overlap_fraction: float
-   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-   :type test_split: int
    :param index_fraction: Fraction of the chunk to use for indexing.
    :type index_fraction: float
 
@@ -1862,52 +1858,10 @@ Classes
 
    Training config for the CUSTOM_ALGORITHM problem type
 
-   :param train_function_name: The name of the train function.
-   :type train_function_name: str
-   :param predict_many_function_name: The name of the predict many function.
-   :type predict_many_function_name: str
-   :param training_input_tables: List of tables to use for training.
-   :type training_input_tables: List[str]
-   :param predict_function_name: Optional name of the predict function if the predict many function is not given.
-   :type predict_function_name: str
-   :param train_module_name: The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.
-   :type train_module_name: str
-   :param predict_module_name: The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.
-   :type predict_module_name: str
-   :param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
-   :type test_split: int
+   :param timeout_minutes: Timeout for the model training in minutes.
+   :type timeout_minutes: int
 
-   .. py:attribute:: train_function_name
-      :type: str
-
-      
-
-   .. py:attribute:: predict_many_function_name
-      :type: str
-
-      
-
-   .. py:attribute:: training_input_tables
-      :type: List[str]
-
-      
-
-   .. py:attribute:: predict_function_name
-      :type: str
-
-      
-
-   .. py:attribute:: train_module_name
-      :type: str
-
-      
-
-   .. py:attribute:: predict_module_name
-      :type: str
-
-      
-
-   .. py:attribute:: test_split
+   .. py:attribute:: timeout_minutes
       :type: int
 
       

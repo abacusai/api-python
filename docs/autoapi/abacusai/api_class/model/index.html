@@ -1114,7 +1114,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>test_row_indicator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Column indicating which rows to use for training (TRAIN) and testing (TEST).</p></li>
 <li><p><strong>active_labels_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Entities that have been marked in a particular text</p></li>
 <li><p><strong>document_format</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NLPDocumentFormat" title="abacusai.api_class.enums.NLPDocumentFormat"><em>NLPDocumentFormat</em></a>) – Format of the input documents.</p></li>
-<li><p><strong>include_longformer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to include the longformer model.</p></li>
 <li><p><strong>minimum_bounding_box_overlap_ratio</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.</p></li>
 <li><p><strong>save_predicted_pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to save predicted PDF documents</p></li>
 <li><p><strong>enhanced_ocr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enhanced text extraction from predicted digital documents</p></li>
@@ -1191,7 +1190,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>larger_embeddings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use a higher dimension embedding model.</p></li>
 <li><p><strong>search_chunk_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Chunk size for indexing the documents.</p></li>
 <li><p><strong>chunk_overlap_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Overlap in chunks while indexing the documents.</p></li>
-<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
 <li><p><strong>index_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Fraction of the chunk to use for indexing.</p></li>
 </ul>
 </dd>
@@ -1872,50 +1870,12 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <p>Training config for the CUSTOM_ALGORITHM problem type</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the train function.</p></li>
-<li><p><strong>predict_many_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the predict many function.</p></li>
-<li><p><strong>training_input_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use for training.</p></li>
-<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Optional name of the predict function if the predict many function is not given.</p></li>
-<li><p><strong>train_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.</p></li>
-<li><p><strong>predict_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.</p></li>
-<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>timeout_minutes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Timeout for the model training in minutes.</p>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.train_function_name">
-<span class="sig-name descname"><span class="pre">train_function_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.train_function_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.predict_many_function_name">
-<span class="sig-name descname"><span class="pre">predict_many_function_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.predict_many_function_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.training_input_tables">
-<span class="sig-name descname"><span class="pre">training_input_tables</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.training_input_tables" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.predict_function_name">
-<span class="sig-name descname"><span class="pre">predict_function_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.predict_function_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.train_module_name">
-<span class="sig-name descname"><span class="pre">train_module_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.train_module_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.predict_module_name">
-<span class="sig-name descname"><span class="pre">predict_module_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.predict_module_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.test_split">
-<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.timeout_minutes">
+<span class="sig-name descname"><span class="pre">timeout_minutes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.timeout_minutes" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

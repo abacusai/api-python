@@ -361,6 +361,7 @@ class ApplicationConnectorType(ApiEnum):
     TEAMS = 'TEAMS'
     ABACUSUSAGEMETRICS = 'ABACUSUSAGEMETRICS'
     MICROSOFTAUTH = 'MICROSOFTAUTH'
+    FRESHSERVICE = 'FRESHSERVICE'
 
 
 class PythonFunctionArgumentType(ApiEnum):
@@ -419,6 +420,7 @@ class LLMName(ApiEnum):
     PALM = 'PALM'
     PALM_TEXT = 'PALM_TEXT'
     GEMINI_PRO = 'GEMINI_PRO'
+    GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'
     MIXTRAL_CHAT = 'MIXTRAL_CHAT'
     MISTRAL_MEDIUM = 'MISTRAL_MEDIUM'
     ABACUS_SMAUG2 = 'ABACUS_SMAUG2'
@@ -482,6 +484,20 @@ class FieldDescriptorType(ApiEnum):
     BOOLEAN = 'BOOLEAN'
     DATETIME = 'DATETIME'
     DATE = 'DATE'
+
+
+class WorkflowNodeInputType(ApiEnum):
+    USER_INPUT = 'USER_INPUT'
+    WORKFLOW_VARIABLE = 'WORKFLOW_VARIABLE'
+
+
+class WorkflowNodeOutputType(ApiEnum):
+    INTEGER = 'INTEGER'
+    STRING = 'STRING'
+    BOOLEAN = 'BOOLEAN'
+    FLOAT = 'FLOAT'
+    JSON = 'JSON'
+    LIST = 'LIST'
 
 
 class OcrMode(ApiEnum):

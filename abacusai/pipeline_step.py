@@ -78,7 +78,7 @@ class PipelineStep(AbstractApiClass):
             function_name (str): The name of the Python function.
             source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
             step_input_mappings (list): List of Python function arguments.
-            output_variable_mappings (list): List of Python function ouputs.
+            output_variable_mappings (list): List of Python function outputs.
             step_dependencies (list): List of step names this step depends on.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.
