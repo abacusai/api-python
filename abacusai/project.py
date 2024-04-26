@@ -261,7 +261,7 @@ class Project(AbstractApiClass):
             cpu_size (str): Size of the CPU for the model training function
             memory (int): Memory (in GB) for the model training function
             training_config (TrainingConfig): Training configuration
-            exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.ai algorithms
+            exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.AI algorithms
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_gpu (bool): Whether this model needs gpu
             is_thread_safe (bool): Whether this model is thread safe
@@ -290,7 +290,7 @@ class Project(AbstractApiClass):
         Args:
             feature_group_names_for_training (list): A list of feature group table names to be used for training.
             training_data_parameter_name_override (dict): Override from feature group type to parameter name in the train function.
-            training_config (TrainingConfig): Training config for the options supported by the Abacus.ai platform.
+            training_config (TrainingConfig): Training config for the options supported by the Abacus.AI platform.
             custom_algorithm_config (dict): User-defined config that can be serialized by JSON.
 
         Returns:
@@ -607,6 +607,14 @@ class Project(AbstractApiClass):
     def create_agent(self, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None):
         """
         Creates a new AI agent.
+
+        The Agents are of the following three types -
+        i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
+        ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
+                                Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
+        iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
+                                  For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
+
 
         Args:
             function_source_code (str): The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.

@@ -124,7 +124,7 @@
 <li><p><strong>field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The field to be extracted. This will be used as the key in the response.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The description of this field. If not included, the response_field will be used.</p></li>
 <li><p><strong>example_extraction</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>]</em>) – An example of this extracted field.</p></li>
-<li><p><strong>type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.FieldDescriptorType" title="abacusai.api_class.enums.FieldDescriptorType"><em>enums.FieldDescriptorType</em></a>) – The type of this field. If not provided, the default type is STRING.</p></li>
+<li><p><strong>type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.FieldDescriptorType" title="abacusai.api_class.enums.FieldDescriptorType"><em>FieldDescriptorType</em></a>) – The type of this field. If not provided, the default type is STRING.</p></li>
 </ul>
 </dd>
 </dl>
@@ -159,8 +159,11 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the input.</p></li>
-<li><p><strong>variable_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of the input.</p></li>
-<li><p><strong>workflow_variable_source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The workflow source stage of the input.</p></li>
+<li><p><strong>variable_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.WorkflowNodeInputType" title="abacusai.api_class.enums.WorkflowNodeInputType"><em>WorkflowNodeInputType</em></a>) – The type of the input.</p></li>
+<li><p><strong>variable_source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the node this variable is sourced from.
+If the type is <cite>WORKFLOW_VARIABLE</cite>, the value given by the source node will be directly used.
+If the type is <cite>USER_INPUT</cite>, the value given by the source node will be used as the default initial value before user edits it.
+Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable doesn’t need a pre-filled initial value.</p></li>
 <li><p><strong>is_required</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the input is required.</p></li>
 </ul>
 </dd>
@@ -176,8 +179,8 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping.workflow_variable_source">
-<span class="sig-name descname"><span class="pre">workflow_variable_source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping.workflow_variable_source" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping.variable_source">
+<span class="sig-name descname"><span class="pre">variable_source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping.variable_source" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -204,7 +207,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the output.</p></li>
-<li><p><strong>variable_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of the output.</p></li>
+<li><p><strong>variable_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.WorkflowNodeOutputType" title="abacusai.api_class.enums.WorkflowNodeOutputType"><em>WorkflowNodeOutputType</em></a>) – The type of the output.</p></li>
 </ul>
 </dd>
 </dl>
@@ -236,15 +239,15 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Display name of the worflow node.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique name for the workflow node.</p></li>
 <li><p><strong>input_mappings</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em>) – List of input mappings for the node.</p></li>
 <li><p><strong>output_mappings</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping"><em>WorkflowNodeOutputMapping</em></a><em>]</em>) – List of output mappings for the node.</p></li>
-<li><p><strong>function</strong> (<em>callable</em>) – The callable node function reference if available.</p></li>
-<li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the function if available.</p></li>
-<li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The source code of the function if available.</p></li>
+<li><p><strong>function</strong> (<em>callable</em>) – The callable node function reference.</p></li>
 <li><p><strong>input_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The react json schema for the input form if applicable.</p></li>
 <li><p><strong>output_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The react json schema for the output if applicable.</p></li>
 <li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of package requirements for the node.</p></li>
+<li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
+<li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -276,8 +279,8 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The source node of the edge.</p></li>
-<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The target node of the edge.</p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the source node of the edge.</p></li>
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the target node of the edge.</p></li>
 <li><p><strong>details</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Additional details about the edge.</p></li>
 </ul>
 </dd>

@@ -167,7 +167,7 @@ Classes
       :rtype: str
 
 
-   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
+   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -196,6 +196,8 @@ Classes
       :type min_score: float
       :param required_phrases: If provided, each result will have at least one of the phrases.
       :type required_phrases: list
+      :param filter_clause: If provided, filter the results of the query using this sql where clause.
+      :type filter_clause: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

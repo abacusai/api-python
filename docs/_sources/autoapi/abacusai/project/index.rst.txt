@@ -276,7 +276,7 @@ Classes
       :type memory: int
       :param training_config: Training configuration
       :type training_config: TrainingConfig
-      :param exclusive_run: Decides if this model will be run exclusively or along with other Abacus.ai algorithms
+      :param exclusive_run: Decides if this model will be run exclusively or along with other Abacus.AI algorithms
       :type exclusive_run: bool
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
@@ -308,7 +308,7 @@ Classes
       :type feature_group_names_for_training: list
       :param training_data_parameter_name_override: Override from feature group type to parameter name in the train function.
       :type training_data_parameter_name_override: dict
-      :param training_config: Training config for the options supported by the Abacus.ai platform.
+      :param training_config: Training config for the options supported by the Abacus.AI platform.
       :type training_config: TrainingConfig
       :param custom_algorithm_config: User-defined config that can be serialized by JSON.
       :type custom_algorithm_config: dict
@@ -656,6 +656,14 @@ Classes
    .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
 
       Creates a new AI agent.
+
+      The Agents are of the following three types -
+      i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
+      ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
+                              Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
+      iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
+                                For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
+
 
       :param function_source_code: The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
       :type function_source_code: str

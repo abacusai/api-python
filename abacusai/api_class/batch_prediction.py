@@ -32,7 +32,7 @@ class ForecastingBatchPredictionArgs(BatchPredictionArgs):
        forecasting_horizon (int): The number of timestamps to predict in the future. Range: [1, 1000].
        item_attributes_to_include_in_the_result (list): List of columns to include in the prediction output.
        explain_predictions (bool): If True, calculates explanations for the forecasted values along with predictions.
-       automate_monitoring (bool): Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+       create_monitor (bool): Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
     """
     for_eval: bool = dataclasses.field(default=None)
     predictions_start_date: str = dataclasses.field(default=None)
@@ -41,7 +41,7 @@ class ForecastingBatchPredictionArgs(BatchPredictionArgs):
     forecasting_horizon: int = dataclasses.field(default=None)
     item_attributes_to_include_in_the_result: list = dataclasses.field(default=None)
     explain_predictions: bool = dataclasses.field(default=None)
-    automate_monitoring: bool = dataclasses.field(default=None)
+    create_monitor: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.FORECASTING
@@ -100,7 +100,7 @@ class PredictiveModelingBatchPredictionArgs(BatchPredictionArgs):
        explanation_filter_label (str): For classification problems specifies the label to which the explanation bounds are applied.
        output_columns (list): A list of column names to include in the prediction result.
        explain_predictions (bool): If True, calculates explanations for the predicted values along with predictions.
-       automate_monitoring (bool): Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+       create_monitor (bool): Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
     """
     for_eval: bool = dataclasses.field(default=None)
     explainer_type: enums.ExplainerType = dataclasses.field(default=None)
@@ -113,7 +113,7 @@ class PredictiveModelingBatchPredictionArgs(BatchPredictionArgs):
     explanation_filter_label: str = dataclasses.field(default=None)
     output_columns: list = dataclasses.field(default=None)
     explain_predictions: bool = dataclasses.field(default=None)
-    automate_monitoring: bool = dataclasses.field(default=None)
+    create_monitor: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.PREDICTIVE_MODELING
@@ -194,10 +194,10 @@ class TrainablePlugAndPlayBatchPredictionArgs(BatchPredictionArgs):
 
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-        automate_monitoring (bool): Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+        create_monitor (bool): Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
     """
     for_eval: bool = dataclasses.field(default=None)
-    automate_monitoring: bool = dataclasses.field(default=None)
+    create_monitor: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CUSTOM_ALGORITHM

@@ -20,6 +20,7 @@ class PipelineVersion(AbstractApiClass):
             error (str): The relevant error, if the status is FAILED.
             stepVersions (PipelineStepVersion): A list of the pipeline step versions.
             codeSource (CodeSource): information on the source code
+            pipelineVariableMappings (PythonFunctionArgument): A description of the function variables into the pipeline.
     """
 
     def __init__(self, client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, stepVersions={}, codeSource={}, pipelineVariableMappings={}):

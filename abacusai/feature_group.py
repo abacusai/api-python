@@ -23,7 +23,7 @@ class FeatureGroup(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             featureGroupId (str): Unique identifier for this feature group.
             modificationLock (bool): If feature group is locked against a change or not.
-            name (str): 
+            name (str): Unique name of this feature group.
             featureGroupSourceType (str): The source type of the feature group
             tableName (str): Unique table name of this feature group.
             sql (str): SQL definition creating this feature group.
@@ -673,18 +673,19 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_point_in_time_group_feature(self.feature_group_id, group_name, name, expression)
 
-    def set_feature_type(self, feature: str, feature_type: str):
+    def set_feature_type(self, feature: str, feature_type: str, project_id: str = None):
         """
         Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.
 
         Args:
             feature (str): The name of the feature.
             feature_type (str): The machine learning type of the data in the feature.
+            project_id (str): Optional unique ID associated with the project.
 
         Returns:
             Schema: The feature group after the data_type is applied.
         """
-        return self.client.set_feature_type(self.feature_group_id, feature, feature_type)
+        return self.client.set_feature_type(self.feature_group_id, feature, feature_type, project_id)
 
     def invalidate_streaming_data(self, invalid_before_timestamp: int):
         """
@@ -794,7 +795,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_python_function_bindings(self.feature_group_id, python_function_bindings)
 
-    def update_python_function(self, python_function_name: str, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None):
+    def update_python_function(self, python_function_name: str, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None, use_original_csv_names: bool = None):
         """
         Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -808,8 +809,9 @@ class FeatureGroup(AbstractApiClass):
             cpu_size (str): Size of the CPU for the feature group python function.
             memory (int): Memory (in GB) for the feature group python function.
             use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
+            use_original_csv_names (bool): If enabled, it uses the original column names for input feature groups from CSV datasets.
         """
-        return self.client.update_feature_group_python_function(self.feature_group_id, python_function_name, python_function_bindings, cpu_size, memory, use_gpu)
+        return self.client.update_feature_group_python_function(self.feature_group_id, python_function_name, python_function_bindings, cpu_size, memory, use_gpu, use_original_csv_names)
 
     def update_sql_definition(self, sql: str):
         """
@@ -834,26 +836,6 @@ class FeatureGroup(AbstractApiClass):
             FeatureGroup: The updated feature group.
         """
         return self.client.update_dataset_feature_group_feature_expression(self.feature_group_id, feature_expression)
-
-    def update_function_definition(self, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_bindings: list = None, use_gpu: bool = None):
-        """
-        Updates the function definition for a feature group
-
-        Args:
-            function_source_code (str): Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called `function_name`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-            function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized DataFrames (same type as the functions return value).
-            cpu_size (str): Size of the CPU for the feature group function.
-            memory (int): Memory (in GB) for the feature group function.
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-            use_original_csv_names (bool): If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
-            python_function_bindings (list): List of PythonFunctionArgument objects that represent the bindings for the Python function.
-            use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
-
-        Returns:
-            FeatureGroup: The updated feature group.
-        """
-        return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups, cpu_size, memory, package_requirements, use_original_csv_names, python_function_bindings, use_gpu)
 
     def update_feature(self, name: str, select_expression: str = None, new_name: str = None):
         """
@@ -1031,16 +1013,6 @@ class FeatureGroup(AbstractApiClass):
             data (dict): The data to record as a JSON object.
         """
         return self.client.append_data(self.feature_group_id, streaming_token, data)
-
-    def upsert_multiple_data(self, streaming_token: str, data: list):
-        """
-        Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
-
-        Args:
-            streaming_token (str): The streaming token for authenticating requests.
-            data (list): The data to record, as a list of JSON objects.
-        """
-        return self.client.upsert_multiple_data(self.feature_group_id, streaming_token, data)
 
     def append_multiple_data(self, streaming_token: str, data: list):
         """

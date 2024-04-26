@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, sourceDatasetVersions=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, indexingConfigWarningMsg=None, features={}, pointInTimeGroups={}, codeSource={}, annotationConfig={}, indexingConfig={})
+.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, sourceDatasetVersions=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, indexingConfigWarningMsg=None, materializationStartedAt=None, materializationCompletedAt=None, columns=None, features={}, pointInTimeGroups={}, codeSource={}, annotationConfig={}, indexingConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54,6 +54,12 @@ Classes
    :type pythonFunctionBindings: list
    :param indexingConfigWarningMsg: The warning message related to indexing keys.
    :type indexingConfigWarningMsg: str
+   :param materializationStartedAt: The timestamp at which the feature group materialization started.
+   :type materializationStartedAt: str
+   :param materializationCompletedAt: The timestamp at which the feature group materialization completed.
+   :type materializationCompletedAt: str
+   :param columns: List of resolved columns.
+   :type columns: list[feature]
    :param features: List of features.
    :type features: Feature
    :param pointInTimeGroups: List of Point In Time Groups
@@ -181,6 +187,17 @@ Classes
 
       :returns: The metrics for the specified feature group version.
       :rtype: DataMetrics
+
+
+   .. py:method:: get_logs()
+
+      Retrieves the feature group materialization logs.
+
+      :param feature_group_version: The unique version ID of the feature group version.
+      :type feature_group_version: str
+
+      :returns: The logs for the specified feature group version.
+      :rtype: FeatureGroupVersionLogs
 
 
    .. py:method:: wait_for_results(timeout=3600)

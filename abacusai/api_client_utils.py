@@ -1,10 +1,9 @@
 import importlib
-import inspect
 import json
 import os
 import re
 import string
-from textwrap import dedent
+from enum import Enum
 from typing import IO, Callable, List
 
 
@@ -17,16 +16,6 @@ def clean_column_name(column):
     if cleaned_col and cleaned_col[0] not in string.ascii_letters:
         cleaned_col = 'Column_' + cleaned_col
     return cleaned_col
-
-
-def get_clean_function_source_code(func: Callable):
-    sample_lambda = (lambda: 0)
-    if isinstance(func, type(sample_lambda)) and func.__name__ == sample_lambda.__name__:
-        raise ValueError('Lambda function not allowed.')
-    source_code = inspect.getsource(func)
-    # If function source code has some initial indentation, remove it (Ex - can happen if the functor was defined inside a function)
-    source_code = dedent(source_code)
-    return source_code
 
 
 def avro_to_pandas_dtype(avro_type):
@@ -61,7 +50,7 @@ def get_non_nullable_type(types):
 
 
 class StreamingHandler(str):
-    def __new__(cls, value, context, section_key=None, data_type='text/plain'):
+    def __new__(cls, value, context=None, section_key=None, data_type='text/plain'):
         if context:
             cls.process_streaming_data(value, context, section_key, data_type)
         return str.__new__(cls, value)
@@ -184,6 +173,11 @@ def load_as_pandas_from_avro_files(files: List[str], download_method: Callable, 
         data_df = pd.concat(df_parts, ignore_index=True)
 
     return data_df
+
+
+class StreamType(Enum):
+    MESSAGE = 'message'
+    SECTION_OUTPUT = 'section_output'
 
 
 class DocstoreUtils:

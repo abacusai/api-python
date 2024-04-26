@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, batchPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -40,8 +40,6 @@ Classes
    :type databaseConnectorId: str
    :param databaseOutputConfiguration: Contains information about where the batch predictions are written to.
    :type databaseOutputConfiguration: dict
-   :param explanations:
-   :type explanations: bool
    :param fileOutputFormat: The format of the batch prediction output (CSV or JSON).
    :type fileOutputFormat: str
    :param connectorType: Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR.
@@ -74,6 +72,8 @@ Classes
    :type bpAcrossVersionsMonitorId: str
    :param algorithm: The algorithm that is currently deployed.
    :type algorithm: str
+   :param batchPredictionArgsType: The type of batch prediction arguments used for this batch prediction.
+   :type batchPredictionArgsType: str
    :param batchInputs: Inputs to the batch prediction.
    :type batchInputs: PredictionInput
    :param latestBatchPredictionVersion: The latest batch prediction version.
@@ -82,6 +82,8 @@ Classes
    :type refreshSchedules: RefreshSchedule
    :param inputFeatureGroups: List of prediction feature groups.
    :type inputFeatureGroups: PredictionFeatureGroup
+   :param batchPredictionArgs: Argument(s) passed to every prediction call.
+   :type batchPredictionArgs: BatchPredictionArgs
 
    .. py:method:: __repr__()
 

@@ -12,7 +12,7 @@ class DocumentStore(AbstractApiClass):
             name (str): The name of the document store.
             documentType (str): The type of documents stored in the document store, as an enumerated string.
             documentCount (int): The number of documents in the document store.
-            approximateSize (int): An approximate count of bytes for all documents stored in the document store.
+            approximateSize (int): An approximate count of bytes for all documents stored in the document store. Description: A document store is a repository for storing documents.
     """
 
     def __init__(self, client, documentStoreId=None, createdAt=None, name=None, documentType=None, documentCount=None, approximateSize=None):

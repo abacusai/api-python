@@ -407,9 +407,11 @@ class LLMName(ApiEnum):
     OPENAI_GPT4 = 'OPENAI_GPT4'
     OPENAI_GPT4_32K = 'OPENAI_GPT4_32K'
     OPENAI_GPT4_128K = 'OPENAI_GPT4_128K'
+    OPENAI_GPT4_128K_LATEST = 'OPENAI_GPT4_128K_LATEST'
     OPENAI_GPT4_VISION = 'OPENAI_GPT4_VISION'
     OPENAI_GPT3_5 = 'OPENAI_GPT3_5'
     OPENAI_GPT3_5_TEXT = 'OPENAI_GPT3_5_TEXT'
+    LLAMA3_LARGE_CHAT = 'LLAMA3_LARGE_CHAT'
     CLAUDE_V2_1 = 'CLAUDE_V2_1'
     CLAUDE_V3_OPUS = 'CLAUDE_V3_OPUS'
     CLAUDE_V3_SONNET = 'CLAUDE_V3_SONNET'
@@ -448,7 +450,6 @@ class FeatureDriftType(ApiEnum):
 
 class DataIntegrityViolationType(ApiEnum):
     NULL_VIOLATIONS = 'null_violations'
-    TYPE_MISMATCH_VIOLATIONS = 'type_mismatch_violations'
     RANGE_VIOLATIONS = 'range_violations'
     CATEGORICAL_RANGE_VIOLATION = 'categorical_range_violations'
     TOTAL_VIOLATIONS = 'total_violations'

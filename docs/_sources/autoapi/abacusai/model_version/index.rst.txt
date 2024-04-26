@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingDocumentRetrieverVersions=None, documentRetrieverMappings=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, trainingConfigUpdated=None, codeSource={}, modelConfig={}, deployableAlgorithms={})
+.. py:class:: ModelVersion(client, modelVersion=None, modelConfigType=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingDocumentRetrieverVersions=None, documentRetrieverMappings=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, trainingConfigUpdated=None, codeSource={}, modelConfig={}, deployableAlgorithms={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -28,6 +28,8 @@ Classes
    :type client: ApiClient
    :param modelVersion: The unique identifier of a model version.
    :type modelVersion: str
+   :param modelConfigType: Name of the TrainingConfig class of the model_config.
+   :type modelConfigType: str
    :param status: The current status of the model.
    :type status: str
    :param modelId: A reference to the model this version belongs to.
@@ -80,6 +82,10 @@ Classes
    :type trainingConfigUpdated: bool
    :param codeSource: If a python model, information on where the source code is located.
    :type codeSource: CodeSource
+   :param modelConfig: The training config options used to train this model.
+   :type modelConfig: TrainingConfig
+   :param deployableAlgorithms: List of deployable algorithms.
+   :type deployableAlgorithms: DeployableAlgorithm
 
    .. py:method:: __repr__()
 

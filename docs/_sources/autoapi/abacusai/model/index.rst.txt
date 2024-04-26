@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, dataLlmFeatureGroups=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, latestModelVersion={}, modelConfig={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, dataLlmFeatureGroups=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, latestModelVersion={}, modelConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -30,6 +30,8 @@ Classes
    :type name: str
    :param modelId: The unique identifier of the model.
    :type modelId: str
+   :param modelConfigType: Name of the TrainingConfig class of the model_config.
+   :type modelConfigType: str
    :param modelPredictionConfig: The prediction config options for the model.
    :type modelPredictionConfig: dict
    :param createdAt: Date and time at which the model was created.
@@ -92,6 +94,8 @@ Classes
    :type codeSource: CodeSource
    :param databaseConnector: Database connector used by the model.
    :type databaseConnector: DatabaseConnector
+   :param modelConfig: The training config options used to train this model.
+   :type modelConfig: TrainingConfig
 
    .. py:method:: __repr__()
 
@@ -375,6 +379,14 @@ Classes
    .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
+
+      The Agents are of the following three types -
+      i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
+      ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
+                              Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
+      iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
+                                For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
+
 
       :param function_source_code: Contents of a valid Python source code file. The source code should contain the functions named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
       :type function_source_code: str

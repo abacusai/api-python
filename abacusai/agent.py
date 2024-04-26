@@ -23,6 +23,7 @@ class Agent(AbstractApiClass):
             agentExecutionConfig (dict): The config for arguments used to execute the agent.
             latestAgentVersion (AgentVersion): The latest agent version.
             codeSource (CodeSource): If a python model, information on the source code
+            workflowGraph (WorkflowGraph): The workflow graph for the agent.
     """
 
     def __init__(self, client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, workflowGraph={}):

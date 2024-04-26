@@ -38,11 +38,13 @@ from .api_class import (
     DocumentRetrieverConfig, EvalArtifactType, FeatureGroupExportConfig,
     ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
     MergeConfig, ParsingConfig, PredictionArguments, ProblemType,
-    PythonFunctionType, SamplingConfig, TrainingConfig, WorkflowGraph
+    PythonFunctionType, SamplingConfig, TrainingConfig, WorkflowGraph,
+    get_clean_function_source_code
 )
+from .api_class.abstract import get_clean_function_source_code, snake_case
 from .api_client_utils import (
-    INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, clean_column_name,
-    get_clean_function_source_code, get_object_from_context
+    INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, StreamType,
+    clean_column_name, get_object_from_context
 )
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
@@ -98,6 +100,7 @@ from .feature_group_row_process_logs import FeatureGroupRowProcessLogs
 from .feature_group_row_process_summary import FeatureGroupRowProcessSummary
 from .feature_group_template import FeatureGroupTemplate
 from .feature_group_version import FeatureGroupVersion
+from .feature_group_version_logs import FeatureGroupVersionLogs
 from .feature_importance import FeatureImportance
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
@@ -187,6 +190,24 @@ def _is_json_serializable(object: any):
         return True
     except TypeError:
         return False
+
+
+async def sse_asynchronous_generator(endpoint: str, body: dict):
+    try:
+        import aiohttp
+    except Exception:
+        raise Exception('Please install aiohttp to use this functionality')
+    async with aiohttp.ClientSession() as session:
+        async with session.post(endpoint, json=body) as response:
+            async for lines, _ in response.content.iter_chunks():
+                lines = lines.decode('utf-8').split('\n\n')
+                for line in lines:
+                    if line:
+                        line = line.strip()
+                        line = json.loads(line)
+                        line = {snake_case(key): value for key,
+                                value in line.items()}
+                        yield line
 
 
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 503, 504), session=None, retry_500: bool = False):
@@ -584,7 +605,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.2.2'
+    client_version = '1.2.4'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -601,6 +622,8 @@ class BaseApiClient:
                 'ABACUS_API_SERVER')) if os.getenv('ABACUS_API_SERVER') else ClientOptions()
         self.client_options = client_options
         self.server = server or self.client_options.server
+        self.cache_scope = None
+        self._cache = {}
         # Deprecated
         self.service_discovery_url = None
         # Connection and version check
@@ -640,6 +663,18 @@ class BaseApiClient:
                                            'deploymentId': deployment_id, 'deploymentToken': deployment_token})
             _cached_endpoints[cache_key] = endpoint_info
         return endpoint_info.get('predictEndpoint')
+
+    def _get_proxy_endpoint(self, deployment_id: str, deployment_token: str):
+        if self.proxy_endpoint:
+            return self.proxy_endpoint
+        global _cached_endpoints
+        cache_key = deployment_id + '|' + deployment_token
+        endpoint_info = _cached_endpoints.get(cache_key)
+        if not endpoint_info:
+            endpoint_info = self._call_api('getApiEndpoint', 'GET', query_params={
+                                           'deploymentId': deployment_id, 'deploymentToken': deployment_token})
+            _cached_endpoints[cache_key] = endpoint_info
+        return endpoint_info.get('proxyEndpoint')
 
     def _get_streaming_endpoint(self, streaming_token: str, model_id: str = None, feature_group_id: str = None):
         if self.prediction_endpoint:
@@ -1247,6 +1282,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DataMetrics: The metrics for the specified feature group version."""
         return self._call_api('getFeatureGroupVersionMetrics', 'GET', query_params={'featureGroupVersion': feature_group_version, 'selectedColumns': selected_columns, 'includeCharts': include_charts, 'includeStatistics': include_statistics}, parse_type=DataMetrics)
+
+    def get_feature_group_version_logs(self, feature_group_version: str) -> FeatureGroupVersionLogs:
+        """Retrieves the feature group materialization logs.
+
+        Args:
+            feature_group_version (str): The unique version ID of the feature group version.
+
+        Returns:
+            FeatureGroupVersionLogs: The logs for the specified feature group version."""
+        return self._call_api('getFeatureGroupVersionLogs', 'GET', query_params={'featureGroupVersion': feature_group_version}, parse_type=FeatureGroupVersionLogs)
 
     def describe_feature_group_template(self, feature_group_template_id: str) -> FeatureGroupTemplate:
         """Describe a Feature Group Template.
@@ -3657,8 +3702,10 @@ class ApiClient(ReadOnlyClient):
         caller = self._get_agent_async_app_caller()
         proxy_caller = self._is_proxy_app_caller()
         if request_id and caller:
+            extra_args = {'stream_type': StreamType.MESSAGE.value,
+                          'response_version': '1.0'}
             self._call_aiagent_app_send_message(
-                request_id, caller, message=message, proxy_caller=proxy_caller)
+                request_id, caller, message=message, extra_args=extra_args, proxy_caller=proxy_caller)
         return StreamingHandler(message, _request_context)
 
     def stream_section_output(self, section_key: str, value, value_type: str = 'text/plain') -> None:
@@ -3679,8 +3726,10 @@ class ApiClient(ReadOnlyClient):
         else:
             raise ValueError('The value is not json serializable')
         if request_id and caller:
+            extra_args = {
+                'stream_type': StreamType.SECTION_OUTPUT.value, 'response_version': '2.0'}
             self._call_aiagent_app_send_message(
-                request_id, caller, message=value, message_args=message_args, version='2.0', proxy_caller=proxy_caller)
+                request_id, caller, message=value, message_args=message_args, extra_args=extra_args, proxy_caller=proxy_caller)
         return StreamingHandler(value, _request_context, section_key=section_key, data_type=value_type)
 
     def _stream_llm_call(self, section_key=None, **kwargs):
@@ -3691,13 +3740,15 @@ class ApiClient(ReadOnlyClient):
             logging.info('Please use evaluate_prompt for local testing.')
             return
         message_args = {}
-        version = None
+        extra_args = {'stream_type': StreamType.MESSAGE.value,
+                      'response_version': '1.0'}
         if section_key:
-            version = '2.0'
+            extra_args = {
+                'stream_type': StreamType.SECTION_OUTPUT.value, 'response_version': '2.0'}
             message_args = {'id': section_key, 'mime_type': 'text/plain'}
-        return self._call_aiagent_app_send_message(request_id, caller, llm_args=kwargs, message_args=message_args, version=version, proxy_caller=proxy_caller)
+        return self._call_aiagent_app_send_message(request_id, caller, llm_args=kwargs, message_args=message_args, extra_args=extra_args, proxy_caller=proxy_caller)
 
-    def _call_aiagent_app_send_message(self, request_id, caller, message=None, llm_args=None, message_args=None, version=None, proxy_caller=False):
+    def _call_aiagent_app_send_message(self, request_id, caller, message=None, llm_args=None, message_args=None, extra_args=None, proxy_caller=False):
         """
         Calls the AI Agent app send message endpoint.
 
@@ -3725,8 +3776,8 @@ class ApiClient(ReadOnlyClient):
             raise Exception('Either message or llm_args must be provided.')
         if message_args:
             body['messageArgs'] = message_args
-        if version:
-            body['version'] = version
+        if extra_args:
+            body['extraArgs'] = extra_args
         headers = {'APIKEY': self.api_key}
         body['connectionId'] = uuid4().hex
         for _ in range(3):
@@ -3804,7 +3855,8 @@ class ApiClient(ReadOnlyClient):
         return _cached_doc_retriever_deployment_info(document_retriever_id, ttl_hash=time.time() // ttl_seconds)
 
     def get_matching_documents(self, document_retriever_id: str, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None,
-                               max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None) -> List[DocumentRetrieverLookupResult]:
+                               max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None,
+                               filter_clause: str = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -3824,13 +3876,13 @@ class ApiClient(ReadOnlyClient):
             score_multiplier_column (str): If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
             min_score (float): If provided, will filter out the results with score lower than the value specified.
             required_phrases (list): If provided, each result will have at least one of the phrases.
-
+            filter_clause (str): If provided, filter the results of the query using this sql where clause.
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
 
         deployment_token, deployment_id = self._get_doc_retriever_deployment_info(
             document_retriever_id)
-        return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column, min_score, required_phrases)
+        return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column, min_score, required_phrases, filter_clause)
 
     def create_model_from_files(self, project_id: str, location: str, name: str = None, custom_artifact_filenames: dict = {}, model_config: dict = {}) -> Model:
         """Creates a new Model and returns Upload IDs for uploading the model artifacts.
@@ -3885,6 +3937,155 @@ class ApiClient(ReadOnlyClient):
         Returns:
             ModelUpload: Collection of upload IDs to upload the model artifacts."""
         return self._call_api('createModelVersionFromLocalFiles', 'POST', query_params={}, body={'modelId': model_id, 'optionalArtifacts': optional_artifacts}, parse_type=ModelUpload)
+
+    def get_streaming_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False):
+        """Return an asynchronous generator which continues the conversation based on the input messages and search results.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
+            llm_name (str): Name of the specific LLM backend to use to power the chat experience
+            num_completion_tokens (int): Default for maximum number of tokens for chat answers
+            system_message (str): The generative LLM system message
+            temperature (float): The generative LLM temperature
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
+            chat_config (dict): A dictionary specifying the query chat config override.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response. """
+        body = {
+            'deploymentToken': deployment_token,
+            'deploymentId': deployment_id,
+            'messages': messages,
+            'llmName': llm_name,
+            'numCompletionTokens': num_completion_tokens,
+            'systemMessage': system_message,
+            'temperature': temperature,
+            'filterKeyValues': filter_key_values,
+            'searchScoreCutoff': search_score_cutoff,
+            'chatConfig': chat_config,
+            'ignoreDocuments': ignore_documents
+        }
+        endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
+        if endpoint is None:
+            raise Exception(
+                'API not supported, Please contact Abacus.ai support')
+        return sse_asynchronous_generator(f'{endpoint}/api/getStreamingChatResponse', body)
+
+    def get_streaming_conversation_response(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False):
+        """Return an asynchronous generator which continues the conversation based on the input messages and search results.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            message (str): A message from the user
+            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+            external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+            llm_name (str): Name of the specific LLM backend to use to power the chat experience
+            num_completion_tokens (int): Default for maximum number of tokens for chat answers
+            system_message (str): The generative LLM system message
+            temperature (float): The generative LLM temperature
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
+            chat_config (dict): A dictionary specifying the query chat config override.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response. """
+        body = {
+            'deploymentToken': deployment_token,
+            'deploymentId': deployment_id,
+            'message': message,
+            'deploymentConversationId': deployment_conversation_id,
+            'externalSessionId': external_session_id,
+            'llmName': llm_name,
+            'numCompletionTokens': num_completion_tokens,
+            'systemMessage': system_message,
+            'temperature': temperature,
+            'filterKeyValues': filter_key_values,
+            'searchScoreCutoff': search_score_cutoff,
+            'chatConfig': chat_config,
+            'ignoreDocuments': ignore_documents
+        }
+        endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
+        if endpoint is None:
+            raise Exception(
+                'API not supported, Please contact Abacus.ai support')
+        return sse_asynchronous_generator(f'{endpoint}/api/getStreamingConversationResponse', body)
+
+    def set_cache_scope(self, scope: str):
+        """
+        Set the scope of the cache, for example, deployment id.
+
+        Args:
+            scope (String): The key of the cache entry.
+        Returns:
+            None
+        """
+        self.cache_scope = scope
+
+    def clear_cache_scope(self):
+        """
+        Clear the scope set before, and let it to automatically figure out the scope to use. If nothing found, will run in local.
+        """
+        self.cache_scope = None
+
+    def set_scoped_cache_value(self, key: str, value: str, expiration_time: int = 21600):
+        """
+        Set the value to key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+        If no scope found, will run in local.
+
+        Args:
+            key (String): The key of the cache entry.
+            value (String): The value of the cache entry. Only string, integer and float numbers are supported now.
+            expiration_time (int): How long to keep the cache key before expire, in seconds. Default is 6h.
+        Returns:
+            None
+        Raises:
+            InvalidParameterError: If key, value or expiration_time is invalid.
+        """
+        scope = self.cache_scope or os.getenv('ABACUS_DEPLOYMENT_ID')
+        if scope:
+            return self._proxy_request('_setScopedCacheValue', 'POST', body={'key': key, 'value': value, 'scope': scope, 'expirationTime': expiration_time}, is_sync=True)
+        else:
+            warnings.warn(
+                'Using local cache as no deployment id set, expected for non-deployment environment.')
+            self._cache[key] = value
+
+    def get_scoped_cache_value(self, key: str):
+        """
+        Get the value of the key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+        If no scope found, will run in local.
+
+        Args:
+            key (String): The key of the cache entry.
+        Returns:
+            value (String): The value of the key
+        Raises:
+            Generic404Error: if the key doesn't exist.
+        """
+        scope = self.cache_scope or os.getenv('ABACUS_DEPLOYMENT_ID')
+        if scope:
+            return self._proxy_request('_getScopedCacheValue', 'GET', query_params={'key': key, 'scope': scope}, is_sync=True)
+        else:
+            warnings.warn(
+                'Using local cache as no deployment id set, expected for non-deployment environment.')
+            return self._cache.get(key)
+
+    def delete_scoped_cache_key(self, key: str):
+        """
+        Delete the value of the key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+        If no scope found, will run in local.
+
+        Args:
+            key (String): The key of the cache entry.
+        Returns:
+            None
+        """
+        scope = self.cache_scope or os.getenv('ABACUS_DEPLOYMENT_ID')
+        if scope:
+            return self._proxy_request('_deleteScopedCacheKey', 'POST', query_params={'key': key, 'scope': scope}, is_sync=True)
+        else:
+            warnings.warn(
+                'Using local cache as no deployment id set, expected for non-deployment environment.')
+            self._cache.pop(key, None)
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -4631,17 +4832,18 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: The feature group after the update has been applied."""
         return self._call_api('updatePointInTimeGroupFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'name': name, 'expression': expression}, parse_type=FeatureGroup)
 
-    def set_feature_type(self, feature_group_id: str, feature: str, feature_type: str) -> Schema:
+    def set_feature_type(self, feature_group_id: str, feature: str, feature_type: str, project_id: str = None) -> Schema:
         """Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.
 
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
             feature (str): The name of the feature.
             feature_type (str): The machine learning type of the data in the feature.
+            project_id (str): Optional unique ID associated with the project.
 
         Returns:
             Schema: The feature group after the data_type is applied."""
-        return self._call_api('setFeatureType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'feature': feature, 'featureType': feature_type}, parse_type=Schema)
+        return self._call_api('setFeatureType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'feature': feature, 'featureType': feature_type, 'projectId': project_id}, parse_type=Schema)
 
     def invalidate_streaming_feature_group_data(self, feature_group_id: str, invalid_before_timestamp: int):
         """Invalidates all streaming data with timestamp before invalidBeforeTimestamp
@@ -4740,7 +4942,7 @@ Creates a new feature group defined as the union of other feature group versions
             python_function_bindings (list): List of python function arguments."""
         return self._call_api('updateFeatureGroupPythonFunctionBindings', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'pythonFunctionBindings': python_function_bindings})
 
-    def update_feature_group_python_function(self, feature_group_id: str, python_function_name: str, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None):
+    def update_feature_group_python_function(self, feature_group_id: str, python_function_name: str, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None, use_original_csv_names: bool = None):
         """Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
         bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
@@ -4753,8 +4955,9 @@ Creates a new feature group defined as the union of other feature group versions
             python_function_bindings (list): List of python function arguments.
             cpu_size (str): Size of the CPU for the feature group python function.
             memory (int): Memory (in GB) for the feature group python function.
-            use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU."""
-        return self._call_api('updateFeatureGroupPythonFunction', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings, 'cpuSize': cpu_size, 'memory': memory, 'useGpu': use_gpu})
+            use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
+            use_original_csv_names (bool): If enabled, it uses the original column names for input feature groups from CSV datasets."""
+        return self._call_api('updateFeatureGroupPythonFunction', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings, 'cpuSize': cpu_size, 'memory': memory, 'useGpu': use_gpu, 'useOriginalCsvNames': use_original_csv_names})
 
     def update_feature_group_sql_definition(self, feature_group_id: str, sql: str) -> FeatureGroup:
         """Updates the SQL statement for a feature group.
@@ -4777,25 +4980,6 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             FeatureGroup: The updated feature group."""
         return self._call_api('updateDatasetFeatureGroupFeatureExpression', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'featureExpression': feature_expression}, parse_type=FeatureGroup)
-
-    def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_bindings: list = None, use_gpu: bool = None) -> FeatureGroup:
-        """Updates the function definition for a feature group
-
-        Args:
-            feature_group_id (str): The unique ID associated with the feature group.
-            function_source_code (str): Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called `function_name`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-            function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized DataFrames (same type as the functions return value).
-            cpu_size (str): Size of the CPU for the feature group function.
-            memory (int): Memory (in GB) for the feature group function.
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-            use_original_csv_names (bool): If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
-            python_function_bindings (list): List of PythonFunctionArgument objects that represent the bindings for the Python function.
-            use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
-
-        Returns:
-            FeatureGroup: The updated feature group."""
-        return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names, 'pythonFunctionBindings': python_function_bindings, 'useGpu': use_gpu}, parse_type=FeatureGroup)
 
     def update_feature(self, feature_group_id: str, name: str, select_expression: str = None, new_name: str = None) -> FeatureGroup:
         """Modifies an existing feature in a feature group.
@@ -5398,7 +5582,7 @@ Creates a new feature group defined as the union of other feature group versions
             cpu_size (str): Size of the CPU for the model training function
             memory (int): Memory (in GB) for the model training function
             training_config (TrainingConfig): Training configuration
-            exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.ai algorithms
+            exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.AI algorithms
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_gpu (bool): Whether this model needs gpu
             is_thread_safe (bool): Whether this model is thread safe
@@ -5583,7 +5767,7 @@ Creates a new feature group defined as the union of other feature group versions
             project_id (str): The unique version ID of the project.
             feature_group_names_for_training (list): A list of feature group table names to be used for training.
             training_data_parameter_name_override (dict): Override from feature group type to parameter name in the train function.
-            training_config (TrainingConfig): Training config for the options supported by the Abacus.ai platform.
+            training_config (TrainingConfig): Training config for the options supported by the Abacus.AI platform.
             custom_algorithm_config (dict): User-defined config that can be serialized by JSON.
 
         Returns:
@@ -6532,7 +6716,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'ignoreDocuments': json.dumps(ignore_documents) if (ignore_documents is not None and not isinstance(ignore_documents, str)) else ignore_documents}, files=attachments, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, deployment_token: str = None) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, deployment_token: str = None, doc_infos: list = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -6548,10 +6732,11 @@ Creates a new feature group defined as the union of other feature group versions
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
-            deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website."""
+            deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
+        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents, 'docInfos': doc_infos}, server_override=prediction_url)
 
     def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
@@ -6705,7 +6890,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'categories': json.dumps(categories) if (categories is not None and not isinstance(categories, str)) else categories, 'topN': json.dumps(top_n) if (top_n is not None and not isinstance(top_n, str)) else top_n}, files={'image': image}, server_override=prediction_url)
 
-    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None, adjust_doc_orientation: bool = False, return_detected_images: bool = False, save_predicted_pdf: bool = False, save_extracted_features: bool = False) -> Dict:
+    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None, adjust_doc_orientation: bool = False, save_predicted_pdf: bool = False, save_extracted_features: bool = False) -> Dict:
         """Generate text from a document
 
         Args:
@@ -6713,12 +6898,11 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): Unique identifier of a deployment created under the project.
             document (io.TextIOBase): Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
             adjust_doc_orientation (bool): (Optional) whether to detect the document page orientation and rotate it if needed.
-            return_detected_images (bool): whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
             save_predicted_pdf (bool): (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
             save_extracted_features (bool): (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'adjustDocOrientation': json.dumps(adjust_doc_orientation) if (adjust_doc_orientation is not None and not isinstance(adjust_doc_orientation, str)) else adjust_doc_orientation, 'returnDetectedImages': json.dumps(return_detected_images) if (return_detected_images is not None and not isinstance(return_detected_images, str)) else return_detected_images, 'savePredictedPdf': json.dumps(save_predicted_pdf) if (save_predicted_pdf is not None and not isinstance(save_predicted_pdf, str)) else save_predicted_pdf, 'saveExtractedFeatures': json.dumps(save_extracted_features) if (save_extracted_features is not None and not isinstance(save_extracted_features, str)) else save_extracted_features}, files={'document': document}, server_override=prediction_url)
+        return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'adjustDocOrientation': json.dumps(adjust_doc_orientation) if (adjust_doc_orientation is not None and not isinstance(adjust_doc_orientation, str)) else adjust_doc_orientation, 'savePredictedPdf': json.dumps(save_predicted_pdf) if (save_predicted_pdf is not None and not isinstance(save_predicted_pdf, str)) else save_predicted_pdf, 'saveExtractedFeatures': json.dumps(save_extracted_features) if (save_extracted_features is not None and not isinstance(save_extracted_features, str)) else save_extracted_features}, files={'document': document}, server_override=prediction_url)
 
     def transcribe_audio(self, deployment_token: str, deployment_id: str, audio: io.TextIOBase) -> Dict:
         """Transcribe the audio
@@ -6838,7 +7022,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos}, server_override=prediction_url)
 
-    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None) -> List[DocumentRetrieverLookupResult]:
+    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -6859,12 +7043,13 @@ Creates a new feature group defined as the union of other feature group versions
             score_multiplier_column (str): If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
             min_score (float): If provided, will filter out the results with score less than the value specified.
             required_phrases (list): If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
+            filter_clause (str): If provided, filter the results of the query using this sql where clause.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column, 'minScore': min_score, 'requiredPhrases': required_phrases}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
+        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column, 'minScore': min_score, 'requiredPhrases': required_phrases, 'filterClause': filter_clause}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
 
     def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, blobs: None = None) -> Dict:
         """Executes a deployed AI agent function with binary data as inputs.
@@ -7059,17 +7244,6 @@ Creates a new feature group defined as the union of other feature group versions
         prediction_url = self._get_streaming_endpoint(
             streaming_token, feature_group_id=feature_group_id)
         return self._call_api('appendData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
-
-    def upsert_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
-        """Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
-
-        Args:
-            feature_group_id (str): Unique string identifier for the streaming feature group to record data to.
-            streaming_token (str): The streaming token for authenticating requests.
-            data (list): The data to record, as a list of JSON objects."""
-        prediction_url = self._get_streaming_endpoint(
-            streaming_token, feature_group_id=feature_group_id)
-        return self._call_api('upsertMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
     def append_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
         """Appends new data into the feature group for a given lookup key recordId.
@@ -7868,6 +8042,14 @@ Creates a new feature group defined as the union of other feature group versions
     def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None) -> Agent:
         """Creates a new AI agent.
 
+        The Agents are of the following three types -
+        i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
+        ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
+                                Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
+        iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
+                                  For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
+
+
         Args:
             project_id (str): The unique ID associated with the project.
             function_source_code (str): The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
@@ -7888,6 +8070,14 @@ Creates a new feature group defined as the union of other feature group versions
 
     def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None) -> Agent:
         """Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
+
+        The Agents are of the following three types -
+        i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
+        ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
+                                Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
+        iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
+                                  For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
+
 
         Args:
             model_id (str): The unique ID associated with the AI Agent to be changed.

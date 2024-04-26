@@ -111,6 +111,7 @@ Submodules
    feature_group_template/index.rst
    feature_group_template_variable_options/index.rst
    feature_group_version/index.rst
+   feature_group_version_logs/index.rst
    feature_importance/index.rst
    feature_mapping/index.rst
    feature_performance_analysis/index.rst
@@ -215,7 +216,6 @@ Submodules
    streaming_sample_code/index.rst
    test_point_predictions/index.rst
    training_config_options/index.rst
-   type_violation/index.rst
    upload/index.rst
    upload_part/index.rst
    use_case/index.rst
@@ -403,6 +403,14 @@ Classes
 
 
 
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.get_clean_function_source_code
+
+
 
 Attributes
 ~~~~~~~~~~
@@ -473,6 +481,9 @@ Attributes
 
 
 
+.. py:function:: get_clean_function_source_code(func)
+
+
 .. py:class:: FieldDescriptor
 
 
@@ -487,7 +498,7 @@ Attributes
    :param example_extraction: An example of this extracted field.
    :type example_extraction: Union[str, int, bool, float]
    :param type: The type of this field. If not provided, the default type is STRING.
-   :type type: enums.FieldDescriptorType
+   :type type: FieldDescriptorType
 
    .. py:attribute:: field
       :type: str
@@ -520,9 +531,12 @@ Attributes
    :param name: The name of the input.
    :type name: str
    :param variable_type: The type of the input.
-   :type variable_type: str
-   :param workflow_variable_source: The workflow source stage of the input.
-   :type workflow_variable_source: str
+   :type variable_type: WorkflowNodeInputType
+   :param variable_source: The name of the node this variable is sourced from.
+                           If the type is `WORKFLOW_VARIABLE`, the value given by the source node will be directly used.
+                           If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before user edits it.
+                           Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
+   :type variable_source: str
    :param is_required: Whether the input is required.
    :type is_required: bool
 
@@ -536,7 +550,7 @@ Attributes
 
       
 
-   .. py:attribute:: workflow_variable_source
+   .. py:attribute:: variable_source
       :type: str
 
       
@@ -564,7 +578,7 @@ Attributes
    :param name: The name of the output.
    :type name: str
    :param variable_type: The type of the output.
-   :type variable_type: str
+   :type variable_type: WorkflowNodeOutputType
 
    .. py:attribute:: name
       :type: str
@@ -591,18 +605,14 @@ Attributes
 
    A node in an Agent workflow graph.
 
-   :param name: Display name of the worflow node.
+   :param name: A unique name for the workflow node.
    :type name: str
    :param input_mappings: List of input mappings for the node.
    :type input_mappings: List[WorkflowNodeInputMapping]
    :param output_mappings: List of output mappings for the node.
    :type output_mappings: List[WorkflowNodeOutputMapping]
-   :param function: The callable node function reference if available.
+   :param function: The callable node function reference.
    :type function: callable
-   :param function_name: The name of the function if available.
-   :type function_name: str
-   :param source_code: The source code of the function if available.
-   :type source_code: str
    :param input_schema: The react json schema for the input form if applicable.
    :type input_schema: dict
    :param output_schema: The react json schema for the output if applicable.
@@ -629,9 +639,9 @@ Attributes
 
    An edge in an Agent workflow graph.
 
-   :param source: The source node of the edge.
+   :param source: The name of the source node of the edge.
    :type source: str
-   :param target: The target node of the edge.
+   :param target: The name of the target node of the edge.
    :type target: str
    :param details: Additional details about the edge.
    :type details: dict
@@ -795,8 +805,8 @@ Attributes
    :type item_attributes_to_include_in_the_result: list
    :param explain_predictions: If True, calculates explanations for the forecasted values along with predictions.
    :type explain_predictions: bool
-   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
-   :type automate_monitoring: bool
+   :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+   :type create_monitor: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -833,7 +843,7 @@ Attributes
 
       
 
-   .. py:attribute:: automate_monitoring
+   .. py:attribute:: create_monitor
       :type: bool
 
       
@@ -937,8 +947,8 @@ Attributes
    :type output_columns: list
    :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
    :type explain_predictions: bool
-   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
-   :type automate_monitoring: bool
+   :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+   :type create_monitor: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -995,7 +1005,7 @@ Attributes
 
       
 
-   .. py:attribute:: automate_monitoring
+   .. py:attribute:: create_monitor
       :type: bool
 
       
@@ -1131,15 +1141,15 @@ Attributes
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
-   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
-   :type automate_monitoring: bool
+   :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+   :type create_monitor: bool
 
    .. py:attribute:: for_eval
       :type: bool
 
       
 
-   .. py:attribute:: automate_monitoring
+   .. py:attribute:: create_monitor
       :type: bool
 
       
@@ -1391,8 +1401,18 @@ Attributes
 
    An abstract class for dataset configs specific to application connectors.
 
+   :param application_connector_type: The type of application connector
+   :type application_connector_type: enums.ApplicationConnectorType
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+
    .. py:attribute:: application_connector_type
       :type: abacusai.api_class.enums.ApplicationConnectorType
+
+      
+
+   .. py:attribute:: is_documentset
+      :type: bool
 
       
 
@@ -1407,10 +1427,19 @@ Attributes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Confluence Application Connector
+   :param location: The location of the pages to fetch
+   :type location: str
    :param pull_attachments: Whether to pull attachments for each page
    :type pull_attachments: bool, optional
    :param space_key: The space key to fetch pages from
    :type space_key: str, optional
+   :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
+   :type extract_bounding_boxes: bool, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
 
    .. py:attribute:: pull_attachments
       :type: bool
@@ -1419,6 +1448,11 @@ Attributes
 
    .. py:attribute:: space_key
       :type: str
+
+      
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
 
       
 
@@ -1468,8 +1502,6 @@ Attributes
 
    :param location: The regex location of the files to fetch
    :type location: str
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
    :type csv_delimiter: str, optional
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
@@ -1479,11 +1511,6 @@ Attributes
 
    .. py:attribute:: location
       :type: str
-
-      
-
-   .. py:attribute:: is_documentset
-      :type: bool
 
       
 
@@ -1555,8 +1582,6 @@ Attributes
 
    :param location: The regex location of the files to fetch
    :type location: str
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
    :type csv_delimiter: str, optional
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
@@ -1566,11 +1591,6 @@ Attributes
 
    .. py:attribute:: location
       :type: str
-
-      
-
-   .. py:attribute:: is_documentset
-      :type: bool
 
       
 
@@ -1616,11 +1636,6 @@ Attributes
 
       
 
-   .. py:attribute:: is_documentset
-      :type: bool
-
-      
-
    .. py:attribute:: csv_delimiter
       :type: str
 
@@ -1660,8 +1675,15 @@ Attributes
 
    :param include_entire_conversation_history: Whether to show the entire history for this deployment conversation
    :type include_entire_conversation_history: bool
+   :param include_all_feedback: Whether to include all feedback for this deployment conversation
+   :type include_all_feedback: bool
 
    .. py:attribute:: include_entire_conversation_history
+      :type: bool
+
+      
+
+   .. py:attribute:: include_all_feedback
       :type: bool
 
       
@@ -2151,7 +2173,7 @@ Attributes
 
    Bases: :py:obj:`VectorStoreConfig`
 
-   Configs for document retriever. If any configuration value is not explicitly provided, Abacus will automatically infer default values based on the data.
+   Configs for document retriever. If any configuration value is not explicitly provided, Abacus.AI will automatically infer default values based on the data.
 
 
 .. py:class:: ApiEnum
@@ -3848,6 +3870,11 @@ Attributes
 
       
 
+   .. py:attribute:: OPENAI_GPT4_128K_LATEST
+      :value: 'OPENAI_GPT4_128K_LATEST'
+
+      
+
    .. py:attribute:: OPENAI_GPT4_VISION
       :value: 'OPENAI_GPT4_VISION'
 
@@ -3860,6 +3887,11 @@ Attributes
 
    .. py:attribute:: OPENAI_GPT3_5_TEXT
       :value: 'OPENAI_GPT3_5_TEXT'
+
+      
+
+   .. py:attribute:: LLAMA3_LARGE_CHAT
+      :value: 'LLAMA3_LARGE_CHAT'
 
       
 
@@ -4035,11 +4067,6 @@ Attributes
 
    .. py:attribute:: NULL_VIOLATIONS
       :value: 'null_violations'
-
-      
-
-   .. py:attribute:: TYPE_MISMATCH_VIOLATIONS
-      :value: 'type_mismatch_violations'
 
       
 
@@ -5599,10 +5626,6 @@ Attributes
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
 
-   :param objective: Ranking scheme used to select final best model.
-   :type objective: NERObjective
-   :param sort_objective: Ranking scheme used to sort models on the metrics page.
-   :type sort_objective: NERObjective
    :param llm_for_ner: LLM to use for NER from among available LLM
    :type llm_for_ner: NERForLLM
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -5619,16 +5642,6 @@ Attributes
    :type save_predicted_pdf: bool
    :param enhanced_ocr: Enhanced text extraction from predicted digital documents
    :type enhanced_ocr: bool
-
-   .. py:attribute:: objective
-      :type: abacusai.api_class.enums.NERObjective
-
-      
-
-   .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.NERObjective
-
-      
 
    .. py:attribute:: llm_for_ner
       :type: abacusai.api_class.enums.LLMName
@@ -6649,6 +6662,10 @@ Attributes
    :type restrict_feature_mapping: RestrictFeatureMappings
    :param target_class: The target class to restrict the monitor to.
    :type target_class: str
+   :param train_target_feature: Set the target feature for the training data.
+   :type train_target_feature: str
+   :param prediction_target_feature: Set the target feature for the prediction data.
+   :type prediction_target_feature: str
 
    .. py:attribute:: start_time
       :type: str
@@ -6666,6 +6683,16 @@ Attributes
       
 
    .. py:attribute:: target_class
+      :type: str
+
+      
+
+   .. py:attribute:: train_target_feature
+      :type: str
+
+      
+
+   .. py:attribute:: prediction_target_feature
       :type: str
 
       
@@ -8062,7 +8089,7 @@ Attributes
    .. py:method:: _stream_llm_call(section_key=None, **kwargs)
 
 
-   .. py:method:: _call_aiagent_app_send_message(request_id, caller, message=None, llm_args=None, message_args=None, version=None, proxy_caller=False)
+   .. py:method:: _call_aiagent_app_send_message(request_id, caller, message=None, llm_args=None, message_args=None, extra_args=None, proxy_caller=False)
 
       Calls the AI Agent app send message endpoint.
 
@@ -8108,7 +8135,7 @@ Attributes
    .. py:method:: _get_doc_retriever_deployment_info(document_retriever_id)
 
 
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -8139,6 +8166,8 @@ Attributes
       :type min_score: float
       :param required_phrases: If provided, each result will have at least one of the phrases.
       :type required_phrases: list
+      :param filter_clause: If provided, filter the results of the query using this sql where clause.
+      :type filter_clause: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -8208,6 +8237,123 @@ Attributes
 
       :returns: Collection of upload IDs to upload the model artifacts.
       :rtype: ModelUpload
+
+
+   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+
+      Return an asynchronous generator which continues the conversation based on the input messages and search results.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
+      :type messages: list
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifying the query chat config override.
+      :type chat_config: dict
+      :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
+      :type ignore_documents: bool
+
+
+   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+
+      Return an asynchronous generator which continues the conversation based on the input messages and search results.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param message: A message from the user
+      :type message: str
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+      :type deployment_conversation_id: str
+      :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+      :type external_session_id: str
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifying the query chat config override.
+      :type chat_config: dict
+      :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
+      :type ignore_documents: bool
+
+
+   .. py:method:: set_cache_scope(scope)
+
+      Set the scope of the cache, for example, deployment id.
+
+      :param scope: The key of the cache entry.
+      :type scope: String
+
+      :returns: None
+
+
+   .. py:method:: clear_cache_scope()
+
+      Clear the scope set before, and let it to automatically figure out the scope to use. If nothing found, will run in local.
+
+
+   .. py:method:: set_scoped_cache_value(key, value, expiration_time = 21600)
+
+      Set the value to key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+      If no scope found, will run in local.
+
+      :param key: The key of the cache entry.
+      :type key: String
+      :param value: The value of the cache entry. Only string, integer and float numbers are supported now.
+      :type value: String
+      :param expiration_time: How long to keep the cache key before expire, in seconds. Default is 6h.
+      :type expiration_time: int
+
+      :returns: None
+
+      :raises InvalidParameterError: If key, value or expiration_time is invalid.
+
+
+   .. py:method:: get_scoped_cache_value(key)
+
+      Get the value of the key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+      If no scope found, will run in local.
+
+      :param key: The key of the cache entry.
+      :type key: String
+
+      :returns: The value of the key
+      :rtype: value (String)
+
+      :raises Generic404Error: if the key doesn't exist.
+
+
+   .. py:method:: delete_scoped_cache_key(key)
+
+      Delete the value of the key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+      If no scope found, will run in local.
+
+      :param key: The key of the cache entry.
+      :type key: String
+
+      :returns: None
 
 
    .. py:method:: add_user_to_organization(email)
@@ -9186,7 +9332,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_type(feature_group_id, feature, feature_type)
+   .. py:method:: set_feature_type(feature_group_id, feature, feature_type, project_id = None)
 
       Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.
 
@@ -9196,6 +9342,8 @@ Attributes
       :type feature: str
       :param feature_type: The machine learning type of the data in the feature.
       :type feature_type: str
+      :param project_id: Optional unique ID associated with the project.
+      :type project_id: str
 
       :returns: The feature group after the data_type is applied.
       :rtype: Schema
@@ -9320,7 +9468,7 @@ Attributes
       :type python_function_bindings: list
 
 
-   .. py:method:: update_feature_group_python_function(feature_group_id, python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None)
+   .. py:method:: update_feature_group_python_function(feature_group_id, python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None, use_original_csv_names = None)
 
       Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -9340,6 +9488,8 @@ Attributes
       :type memory: int
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
+      :param use_original_csv_names: If enabled, it uses the original column names for input feature groups from CSV datasets.
+      :type use_original_csv_names: bool
 
 
    .. py:method:: update_feature_group_sql_definition(feature_group_id, sql)
@@ -9363,35 +9513,6 @@ Attributes
       :type feature_group_id: str
       :param feature_expression: The input SQL statement for the feature group.
       :type feature_expression: str
-
-      :returns: The updated feature group.
-      :rtype: FeatureGroup
-
-
-   .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None, use_gpu = None)
-
-      Updates the function definition for a feature group
-
-      :param feature_group_id: The unique ID associated with the feature group.
-      :type feature_group_id: str
-      :param function_source_code: Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called `function_name`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-      :type function_source_code: str
-      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized DataFrames (same type as the functions return value).
-      :type input_feature_groups: list
-      :param cpu_size: Size of the CPU for the feature group function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the feature group function.
-      :type memory: int
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
-      :param use_original_csv_names: If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
-      :type use_original_csv_names: bool
-      :param python_function_bindings: List of PythonFunctionArgument objects that represent the bindings for the Python function.
-      :type python_function_bindings: list
-      :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
-      :type use_gpu: bool
 
       :returns: The updated feature group.
       :rtype: FeatureGroup
@@ -10181,7 +10302,7 @@ Attributes
       :type memory: int
       :param training_config: Training configuration
       :type training_config: TrainingConfig
-      :param exclusive_run: Decides if this model will be run exclusively or along with other Abacus.ai algorithms
+      :param exclusive_run: Decides if this model will be run exclusively or along with other Abacus.AI algorithms
       :type exclusive_run: bool
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
@@ -10437,7 +10558,7 @@ Attributes
       :type feature_group_names_for_training: list
       :param training_data_parameter_name_override: Override from feature group type to parameter name in the train function.
       :type training_data_parameter_name_override: dict
-      :param training_config: Training config for the options supported by the Abacus.ai platform.
+      :param training_config: Training config for the options supported by the Abacus.AI platform.
       :type training_config: TrainingConfig
       :param custom_algorithm_config: User-defined config that can be serialized by JSON.
       :type custom_algorithm_config: dict
@@ -11678,7 +11799,7 @@ Attributes
       :type attachments: None
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None, doc_infos = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -11708,6 +11829,8 @@ Attributes
       :type ignore_documents: bool
       :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
+      :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
+      :type doc_infos: list
 
 
    .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
@@ -11894,7 +12017,7 @@ Attributes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, save_predicted_pdf = False, save_extracted_features = False)
 
       Generate text from a document
 
@@ -11906,8 +12029,6 @@ Attributes
       :type document: io.TextIOBase
       :param adjust_doc_orientation: (Optional) whether to detect the document page orientation and rotate it if needed.
       :type adjust_doc_orientation: bool
-      :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
-      :type return_detected_images: bool
       :param save_predicted_pdf: (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
       :type save_predicted_pdf: bool
       :param save_extracted_features: (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.
@@ -12050,7 +12171,7 @@ Attributes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -12083,6 +12204,8 @@ Attributes
       :type min_score: float
       :param required_phrases: If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
       :type required_phrases: list
+      :param filter_clause: If provided, filter the results of the query using this sql where clause.
+      :type filter_clause: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -12334,18 +12457,6 @@ Attributes
       :type streaming_token: str
       :param data: The data to record as a JSON object.
       :type data: dict
-
-
-   .. py:method:: upsert_multiple_data(feature_group_id, streaming_token, data)
-
-      Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
-
-      :param feature_group_id: Unique string identifier for the streaming feature group to record data to.
-      :type feature_group_id: str
-      :param streaming_token: The streaming token for authenticating requests.
-      :type streaming_token: str
-      :param data: The data to record, as a list of JSON objects.
-      :type data: list
 
 
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
@@ -13360,6 +13471,14 @@ Attributes
 
       Creates a new AI agent.
 
+      The Agents are of the following three types -
+      i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
+      ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
+                              Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
+      iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
+                                For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
+
+
       :param project_id: The unique ID associated with the project.
       :type project_id: str
       :param function_source_code: The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
@@ -13392,6 +13511,14 @@ Attributes
    .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
+
+      The Agents are of the following three types -
+      i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
+      ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
+                              Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
+      iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
+                                For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
+
 
       :param model_id: The unique ID associated with the AI Agent to be changed.
       :type model_id: str
@@ -14110,6 +14237,17 @@ Attributes
 
       :returns: The metrics for the specified feature group version.
       :rtype: DataMetrics
+
+
+   .. py:method:: get_feature_group_version_logs(feature_group_version)
+
+      Retrieves the feature group materialization logs.
+
+      :param feature_group_version: The unique version ID of the feature group version.
+      :type feature_group_version: str
+
+      :returns: The logs for the specified feature group version.
+      :rtype: FeatureGroupVersionLogs
 
 
    .. py:method:: describe_feature_group_template(feature_group_template_id)
@@ -16232,7 +16370,7 @@ Attributes
       :type attachments: None
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None, doc_infos = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -16262,6 +16400,8 @@ Attributes
       :type ignore_documents: bool
       :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
+      :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
+      :type doc_infos: list
 
 
    .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
@@ -16448,7 +16588,7 @@ Attributes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, save_predicted_pdf = False, save_extracted_features = False)
 
       Generate text from a document
 
@@ -16460,8 +16600,6 @@ Attributes
       :type document: io.TextIOBase
       :param adjust_doc_orientation: (Optional) whether to detect the document page orientation and rotate it if needed.
       :type adjust_doc_orientation: bool
-      :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
-      :type return_detected_images: bool
       :param save_predicted_pdf: (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
       :type save_predicted_pdf: bool
       :param save_extracted_features: (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.
@@ -16604,7 +16742,7 @@ Attributes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -16637,6 +16775,8 @@ Attributes
       :type min_score: float
       :param required_phrases: If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
       :type required_phrases: list
+      :param filter_clause: If provided, filter the results of the query using this sql where clause.
+      :type filter_clause: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -16732,18 +16872,6 @@ Attributes
       :type data: dict
 
 
-   .. py:method:: upsert_multiple_data(feature_group_id, streaming_token, data)
-
-      Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
-
-      :param feature_group_id: Unique string identifier for the streaming feature group to record data to.
-      :type feature_group_id: str
-      :param streaming_token: The streaming token for authenticating requests.
-      :type streaming_token: str
-      :param data: The data to record, as a list of JSON objects.
-      :type data: list
-
-
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
@@ -16758,7 +16886,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.2.2'
+   :value: '1.2.4'
 
    
 

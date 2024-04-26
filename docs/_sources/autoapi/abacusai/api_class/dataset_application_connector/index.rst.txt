@@ -34,8 +34,18 @@ Classes
 
    An abstract class for dataset configs specific to application connectors.
 
+   :param application_connector_type: The type of application connector
+   :type application_connector_type: enums.ApplicationConnectorType
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+
    .. py:attribute:: application_connector_type
       :type: abacusai.api_class.enums.ApplicationConnectorType
+
+      
+
+   .. py:attribute:: is_documentset
+      :type: bool
 
       
 
@@ -50,10 +60,19 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Confluence Application Connector
+   :param location: The location of the pages to fetch
+   :type location: str
    :param pull_attachments: Whether to pull attachments for each page
    :type pull_attachments: bool, optional
    :param space_key: The space key to fetch pages from
    :type space_key: str, optional
+   :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
+   :type extract_bounding_boxes: bool, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
 
    .. py:attribute:: pull_attachments
       :type: bool
@@ -62,6 +81,11 @@ Classes
 
    .. py:attribute:: space_key
       :type: str
+
+      
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
 
       
 
@@ -111,8 +135,6 @@ Classes
 
    :param location: The regex location of the files to fetch
    :type location: str
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
    :type csv_delimiter: str, optional
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
@@ -122,11 +144,6 @@ Classes
 
    .. py:attribute:: location
       :type: str
-
-      
-
-   .. py:attribute:: is_documentset
-      :type: bool
 
       
 
@@ -198,8 +215,6 @@ Classes
 
    :param location: The regex location of the files to fetch
    :type location: str
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
    :type csv_delimiter: str, optional
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
@@ -209,11 +224,6 @@ Classes
 
    .. py:attribute:: location
       :type: str
-
-      
-
-   .. py:attribute:: is_documentset
-      :type: bool
 
       
 
@@ -259,11 +269,6 @@ Classes
 
       
 
-   .. py:attribute:: is_documentset
-      :type: bool
-
-      
-
    .. py:attribute:: csv_delimiter
       :type: str
 
@@ -303,8 +308,15 @@ Classes
 
    :param include_entire_conversation_history: Whether to show the entire history for this deployment conversation
    :type include_entire_conversation_history: bool
+   :param include_all_feedback: Whether to include all feedback for this deployment conversation
+   :type include_all_feedback: bool
 
    .. py:attribute:: include_entire_conversation_history
+      :type: bool
+
+      
+
+   .. py:attribute:: include_all_feedback
       :type: bool
 
       

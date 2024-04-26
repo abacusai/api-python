@@ -13,6 +13,7 @@ Classes
 .. autoapisummary::
 
    abacusai.api_client_utils.StreamingHandler
+   abacusai.api_client_utils.StreamType
    abacusai.api_client_utils.DocstoreUtils
 
 
@@ -23,7 +24,6 @@ Functions
 .. autoapisummary::
 
    abacusai.api_client_utils.clean_column_name
-   abacusai.api_client_utils.get_clean_function_source_code
    abacusai.api_client_utils.avro_to_pandas_dtype
    abacusai.api_client_utils.get_non_nullable_type
    abacusai.api_client_utils.get_object_from_context
@@ -47,9 +47,6 @@ Attributes
    
 
 .. py:function:: clean_column_name(column)
-
-
-.. py:function:: get_clean_function_source_code(func)
 
 
 .. py:function:: avro_to_pandas_dtype(avro_type)
@@ -86,6 +83,26 @@ Attributes
 
 
 .. py:function:: load_as_pandas_from_avro_files(files, download_method, max_workers = 10)
+
+
+.. py:class:: StreamType
+
+
+   Bases: :py:obj:`enum.Enum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: MESSAGE
+      :value: 'message'
+
+      
+
+   .. py:attribute:: SECTION_OUTPUT
+      :value: 'section_output'
+
+      
 
 
 .. py:class:: DocstoreUtils

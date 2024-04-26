@@ -139,6 +139,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template_variable_options</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_version_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_mapping/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_mapping</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_performance_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_performance_analysis</span></code></a></li>
@@ -246,7 +247,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../streaming_sample_code/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_sample_code</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.test_point_predictions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.training_config_options</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../type_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.type_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload_part/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../use_case/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case</span></code></a></li>
@@ -368,21 +368,6 @@
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the streaming feature group to record data to.</p></li>
 <li><p><strong>streaming_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The streaming token for authenticating requests.</p></li>
 <li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The data to record as a JSON object.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.streaming_client.StreamingClient.upsert_multiple_data">
-<span class="sig-name descname"><span class="pre">upsert_multiple_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streaming_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.streaming_client.StreamingClient.upsert_multiple_data" title="Permalink to this definition"></a></dt>
-<dd><p>Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the streaming feature group to record data to.</p></li>
-<li><p><strong>streaming_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The streaming token for authenticating requests.</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – The data to record, as a list of JSON objects.</p></li>
 </ul>
 </dd>
 </dl>

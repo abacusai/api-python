@@ -25,6 +25,7 @@ class Pipeline(AbstractApiClass):
             pipelineReferences (PipelineReference): A list of references from the pipeline to other objects
             latestPipelineVersion (PipelineVersion): The latest version of the pipeline.
             codeSource (CodeSource): information on the source code
+            pipelineVariableMappings (PythonFunctionArgument): A description of the function variables into the pipeline.
     """
 
     def __init__(self, client, pipelineName=None, pipelineId=None, createdAt=None, notebookId=None, cron=None, nextRunTime=None, isProd=None, warning=None, createdBy=None, steps={}, pipelineReferences={}, latestPipelineVersion={}, codeSource={}, pipelineVariableMappings={}):

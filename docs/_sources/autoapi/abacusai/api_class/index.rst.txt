@@ -224,6 +224,14 @@ Classes
 
 
 
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.get_clean_function_source_code
+
+
 
 .. py:class:: ApiClass
 
@@ -285,6 +293,9 @@ Classes
 
 
 
+.. py:function:: get_clean_function_source_code(func)
+
+
 .. py:class:: FieldDescriptor
 
 
@@ -299,7 +310,7 @@ Classes
    :param example_extraction: An example of this extracted field.
    :type example_extraction: Union[str, int, bool, float]
    :param type: The type of this field. If not provided, the default type is STRING.
-   :type type: enums.FieldDescriptorType
+   :type type: FieldDescriptorType
 
    .. py:attribute:: field
       :type: str
@@ -332,9 +343,12 @@ Classes
    :param name: The name of the input.
    :type name: str
    :param variable_type: The type of the input.
-   :type variable_type: str
-   :param workflow_variable_source: The workflow source stage of the input.
-   :type workflow_variable_source: str
+   :type variable_type: WorkflowNodeInputType
+   :param variable_source: The name of the node this variable is sourced from.
+                           If the type is `WORKFLOW_VARIABLE`, the value given by the source node will be directly used.
+                           If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before user edits it.
+                           Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
+   :type variable_source: str
    :param is_required: Whether the input is required.
    :type is_required: bool
 
@@ -348,7 +362,7 @@ Classes
 
       
 
-   .. py:attribute:: workflow_variable_source
+   .. py:attribute:: variable_source
       :type: str
 
       
@@ -376,7 +390,7 @@ Classes
    :param name: The name of the output.
    :type name: str
    :param variable_type: The type of the output.
-   :type variable_type: str
+   :type variable_type: WorkflowNodeOutputType
 
    .. py:attribute:: name
       :type: str
@@ -403,18 +417,14 @@ Classes
 
    A node in an Agent workflow graph.
 
-   :param name: Display name of the worflow node.
+   :param name: A unique name for the workflow node.
    :type name: str
    :param input_mappings: List of input mappings for the node.
    :type input_mappings: List[WorkflowNodeInputMapping]
    :param output_mappings: List of output mappings for the node.
    :type output_mappings: List[WorkflowNodeOutputMapping]
-   :param function: The callable node function reference if available.
+   :param function: The callable node function reference.
    :type function: callable
-   :param function_name: The name of the function if available.
-   :type function_name: str
-   :param source_code: The source code of the function if available.
-   :type source_code: str
    :param input_schema: The react json schema for the input form if applicable.
    :type input_schema: dict
    :param output_schema: The react json schema for the output if applicable.
@@ -441,9 +451,9 @@ Classes
 
    An edge in an Agent workflow graph.
 
-   :param source: The source node of the edge.
+   :param source: The name of the source node of the edge.
    :type source: str
-   :param target: The target node of the edge.
+   :param target: The name of the target node of the edge.
    :type target: str
    :param details: Additional details about the edge.
    :type details: dict
@@ -727,8 +737,8 @@ Classes
    :type item_attributes_to_include_in_the_result: list
    :param explain_predictions: If True, calculates explanations for the forecasted values along with predictions.
    :type explain_predictions: bool
-   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
-   :type automate_monitoring: bool
+   :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+   :type create_monitor: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -765,7 +775,7 @@ Classes
 
       
 
-   .. py:attribute:: automate_monitoring
+   .. py:attribute:: create_monitor
       :type: bool
 
       
@@ -869,8 +879,8 @@ Classes
    :type output_columns: list
    :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
    :type explain_predictions: bool
-   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
-   :type automate_monitoring: bool
+   :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+   :type create_monitor: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -927,7 +937,7 @@ Classes
 
       
 
-   .. py:attribute:: automate_monitoring
+   .. py:attribute:: create_monitor
       :type: bool
 
       
@@ -1063,15 +1073,15 @@ Classes
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
-   :param automate_monitoring: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
-   :type automate_monitoring: bool
+   :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
+   :type create_monitor: bool
 
    .. py:attribute:: for_eval
       :type: bool
 
       
 
-   .. py:attribute:: automate_monitoring
+   .. py:attribute:: create_monitor
       :type: bool
 
       
@@ -1528,8 +1538,18 @@ Classes
 
    An abstract class for dataset configs specific to application connectors.
 
+   :param application_connector_type: The type of application connector
+   :type application_connector_type: enums.ApplicationConnectorType
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+
    .. py:attribute:: application_connector_type
       :type: abacusai.api_class.enums.ApplicationConnectorType
+
+      
+
+   .. py:attribute:: is_documentset
+      :type: bool
 
       
 
@@ -1544,10 +1564,19 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Confluence Application Connector
+   :param location: The location of the pages to fetch
+   :type location: str
    :param pull_attachments: Whether to pull attachments for each page
    :type pull_attachments: bool, optional
    :param space_key: The space key to fetch pages from
    :type space_key: str, optional
+   :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
+   :type extract_bounding_boxes: bool, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
 
    .. py:attribute:: pull_attachments
       :type: bool
@@ -1556,6 +1585,11 @@ Classes
 
    .. py:attribute:: space_key
       :type: str
+
+      
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
 
       
 
@@ -1605,8 +1639,6 @@ Classes
 
    :param location: The regex location of the files to fetch
    :type location: str
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
    :type csv_delimiter: str, optional
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
@@ -1616,11 +1648,6 @@ Classes
 
    .. py:attribute:: location
       :type: str
-
-      
-
-   .. py:attribute:: is_documentset
-      :type: bool
 
       
 
@@ -1692,8 +1719,6 @@ Classes
 
    :param location: The regex location of the files to fetch
    :type location: str
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
    :type csv_delimiter: str, optional
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
@@ -1703,11 +1728,6 @@ Classes
 
    .. py:attribute:: location
       :type: str
-
-      
-
-   .. py:attribute:: is_documentset
-      :type: bool
 
       
 
@@ -1753,11 +1773,6 @@ Classes
 
       
 
-   .. py:attribute:: is_documentset
-      :type: bool
-
-      
-
    .. py:attribute:: csv_delimiter
       :type: str
 
@@ -1797,8 +1812,15 @@ Classes
 
    :param include_entire_conversation_history: Whether to show the entire history for this deployment conversation
    :type include_entire_conversation_history: bool
+   :param include_all_feedback: Whether to include all feedback for this deployment conversation
+   :type include_all_feedback: bool
 
    .. py:attribute:: include_entire_conversation_history
+      :type: bool
+
+      
+
+   .. py:attribute:: include_all_feedback
       :type: bool
 
       
@@ -2433,7 +2455,7 @@ Classes
 
    Bases: :py:obj:`VectorStoreConfig`
 
-   Configs for document retriever. If any configuration value is not explicitly provided, Abacus will automatically infer default values based on the data.
+   Configs for document retriever. If any configuration value is not explicitly provided, Abacus.AI will automatically infer default values based on the data.
 
 
 .. py:class:: ApiEnum
@@ -4160,6 +4182,11 @@ Classes
 
       
 
+   .. py:attribute:: OPENAI_GPT4_128K_LATEST
+      :value: 'OPENAI_GPT4_128K_LATEST'
+
+      
+
    .. py:attribute:: OPENAI_GPT4_VISION
       :value: 'OPENAI_GPT4_VISION'
 
@@ -4172,6 +4199,11 @@ Classes
 
    .. py:attribute:: OPENAI_GPT3_5_TEXT
       :value: 'OPENAI_GPT3_5_TEXT'
+
+      
+
+   .. py:attribute:: LLAMA3_LARGE_CHAT
+      :value: 'LLAMA3_LARGE_CHAT'
 
       
 
@@ -4347,11 +4379,6 @@ Classes
 
    .. py:attribute:: NULL_VIOLATIONS
       :value: 'null_violations'
-
-      
-
-   .. py:attribute:: TYPE_MISMATCH_VIOLATIONS
-      :value: 'type_mismatch_violations'
 
       
 
@@ -6121,10 +6148,6 @@ Classes
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
 
-   :param objective: Ranking scheme used to select final best model.
-   :type objective: NERObjective
-   :param sort_objective: Ranking scheme used to sort models on the metrics page.
-   :type sort_objective: NERObjective
    :param llm_for_ner: LLM to use for NER from among available LLM
    :type llm_for_ner: NERForLLM
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -6141,16 +6164,6 @@ Classes
    :type save_predicted_pdf: bool
    :param enhanced_ocr: Enhanced text extraction from predicted digital documents
    :type enhanced_ocr: bool
-
-   .. py:attribute:: objective
-      :type: abacusai.api_class.enums.NERObjective
-
-      
-
-   .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.NERObjective
-
-      
 
    .. py:attribute:: llm_for_ner
       :type: abacusai.api_class.enums.LLMName
@@ -7256,6 +7269,10 @@ Classes
    :type restrict_feature_mapping: RestrictFeatureMappings
    :param target_class: The target class to restrict the monitor to.
    :type target_class: str
+   :param train_target_feature: Set the target feature for the training data.
+   :type train_target_feature: str
+   :param prediction_target_feature: Set the target feature for the prediction data.
+   :type prediction_target_feature: str
 
    .. py:attribute:: start_time
       :type: str
@@ -7273,6 +7290,16 @@ Classes
       
 
    .. py:attribute:: target_class
+      :type: str
+
+      
+
+   .. py:attribute:: train_target_feature
+      :type: str
+
+      
+
+   .. py:attribute:: prediction_target_feature
       :type: str
 
       

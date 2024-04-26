@@ -1,4 +1,3 @@
-from .agent_data_document_info import AgentDataDocumentInfo
 from .return_class import AbstractApiClass
 
 
@@ -8,12 +7,12 @@ class AgentDataUploadResult(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            docInfos (AgentDataDocumentInfo): A list of dict for information on the documents uploaded to agent.
+            docInfos (list[agentdatadocumentinfo]): A list of dict for information on the documents uploaded to agent.
     """
 
-    def __init__(self, client, docInfos={}):
+    def __init__(self, client, docInfos=None):
         super().__init__(client, None)
-        self.doc_infos = client._build_class(AgentDataDocumentInfo, docInfos)
+        self.doc_infos = docInfos
         self.deprecated_keys = {}
 
     def __repr__(self):
@@ -30,5 +29,5 @@ class AgentDataUploadResult(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'doc_infos': self._get_attribute_as_dict(self.doc_infos)}
+        resp = {'doc_infos': self.doc_infos}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

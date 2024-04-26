@@ -142,6 +142,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template_variable_options</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_version_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_mapping/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_mapping</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_performance_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_performance_analysis</span></code></a></li>
@@ -246,7 +247,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../streaming_sample_code/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_sample_code</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.test_point_predictions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.training_config_options</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../type_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.type_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload_part/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../use_case/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case</span></code></a></li>
@@ -325,19 +325,22 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.client._is_json_serializable" title="abacusai.client._is_json_serializable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_is_json_serializable</span></code></a>(object)</p></td>
 <td><p>Tests if an object is JSON serializable.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.client._requests_retry_session" title="abacusai.client._requests_retry_session"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_requests_retry_session</span></code></a>([retries, backoff_factor, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.client.sse_asynchronous_generator" title="abacusai.client.sse_asynchronous_generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sse_asynchronous_generator</span></code></a>(endpoint, body)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.client._discover_service_url" title="abacusai.client._discover_service_url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_discover_service_url</span></code></a>(service_discovery_url, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.client._requests_retry_session" title="abacusai.client._requests_retry_session"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_requests_retry_session</span></code></a>([retries, backoff_factor, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.client.get_source_code_info" title="abacusai.client.get_source_code_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_source_code_info</span></code></a>(train_function[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.client._discover_service_url" title="abacusai.client._discover_service_url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_discover_service_url</span></code></a>(service_discovery_url, ...)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.client.get_module_code_from_notebook" title="abacusai.client.get_module_code_from_notebook"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_module_code_from_notebook</span></code></a>(file_path)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.client.get_source_code_info" title="abacusai.client.get_source_code_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_source_code_info</span></code></a>(train_function[, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.client.include_modules" title="abacusai.client.include_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">include_modules</span></code></a>(source_code, included_modules)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.client.get_module_code_from_notebook" title="abacusai.client.get_module_code_from_notebook"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_module_code_from_notebook</span></code></a>(file_path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.client.include_modules" title="abacusai.client.include_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">include_modules</span></code></a>(source_code, included_modules)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -381,6 +384,19 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.client.sse_asynchronous_generator">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.client.</span></span><span class="sig-name descname"><span class="pre">sse_asynchronous_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.sse_asynchronous_generator" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
+<li><p><strong>body</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -841,12 +857,25 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.2.2'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.2.4'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient._get_prediction_endpoint">
 <span class="sig-name descname"><span class="pre">_get_prediction_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.BaseApiClient._get_prediction_endpoint" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.BaseApiClient._get_proxy_endpoint">
+<span class="sig-name descname"><span class="pre">_get_proxy_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.BaseApiClient._get_proxy_endpoint" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1619,6 +1648,23 @@ encounters an unexpected error while processing the request.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../data_metrics/index.html#abacusai.data_metrics.DataMetrics" title="abacusai.data_metrics.DataMetrics">DataMetrics</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_feature_group_version_logs">
+<span class="sig-name descname"><span class="pre">get_feature_group_version_logs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_feature_group_version_logs" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the feature group materialization logs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>feature_group_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique version ID of the feature group version.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The logs for the specified feature group version.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../feature_group_version_logs/index.html#abacusai.feature_group_version_logs.FeatureGroupVersionLogs" title="abacusai.feature_group_version_logs.FeatureGroupVersionLogs">FeatureGroupVersionLogs</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -5032,7 +5078,7 @@ If the request is from the abacus.ai app, the response will be streamed to the U
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient._call_aiagent_app_send_message">
-<span class="sig-name descname"><span class="pre">_call_aiagent_app_send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_caller</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient._call_aiagent_app_send_message" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_call_aiagent_app_send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_caller</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient._call_aiagent_app_send_message" title="Permalink to this definition"></a></dt>
 <dd><p>Calls the AI Agent app send message endpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -5107,7 +5153,7 @@ If the request is from the abacus.ai app, the response will be streamed to the U
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.get_matching_documents">
-<span class="sig-name descname"><span class="pre">get_matching_documents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words_per_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_multiplier_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_phrases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_matching_documents" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_matching_documents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words_per_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_multiplier_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_phrases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_clause</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_matching_documents" title="Permalink to this definition"></a></dt>
 <dd><p>Lookup document retrievers and return the matching documents from the document retriever deployed with given query.</p>
 <p>Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
 from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
@@ -5126,6 +5172,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>score_multiplier_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.</p></li>
 <li><p><strong>min_score</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – If provided, will filter out the results with score lower than the value specified.</p></li>
 <li><p><strong>required_phrases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – If provided, each result will have at least one of the phrases.</p></li>
+<li><p><strong>filter_clause</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If provided, filter the results of the query using this sql where clause.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -5217,6 +5264,132 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../model_upload/index.html#abacusai.model_upload.ModelUpload" title="abacusai.model_upload.ModelUpload">ModelUpload</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_streaming_chat_response">
+<span class="sig-name descname"><span class="pre">get_streaming_chat_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_completion_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_key_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_score_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_documents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_streaming_chat_response" title="Permalink to this definition"></a></dt>
+<dd><p>Return an asynchronous generator which continues the conversation based on the input messages and search results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
+<li><p><strong>messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message’s text.</p></li>
+<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the specific LLM backend to use to power the chat experience</p></li>
+<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Default for maximum number of tokens for chat answers</p></li>
+<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The generative LLM system message</p></li>
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The generative LLM temperature</p></li>
+<li><p><strong>filter_key_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrieved search results.</p></li>
+<li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Cutoff for the document retriever score. Matching search results below this score will be ignored.</p></li>
+<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary specifying the query chat config override.</p></li>
+<li><p><strong>ignore_documents</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, will ignore any documents and search results, and only use the messages to generate a response.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_streaming_conversation_response">
+<span class="sig-name descname"><span class="pre">get_streaming_conversation_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_session_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_completion_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_key_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_score_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_documents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_streaming_conversation_response" title="Permalink to this definition"></a></dt>
+<dd><p>Return an asynchronous generator which continues the conversation based on the input messages and search results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A message from the user</p></li>
+<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.</p></li>
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.</p></li>
+<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the specific LLM backend to use to power the chat experience</p></li>
+<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Default for maximum number of tokens for chat answers</p></li>
+<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The generative LLM system message</p></li>
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The generative LLM temperature</p></li>
+<li><p><strong>filter_key_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrieved search results.</p></li>
+<li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Cutoff for the document retriever score. Matching search results below this score will be ignored.</p></li>
+<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary specifying the query chat config override.</p></li>
+<li><p><strong>ignore_documents</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, will ignore any documents and search results, and only use the messages to generate a response.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.set_cache_scope">
+<span class="sig-name descname"><span class="pre">set_cache_scope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scope</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_cache_scope" title="Permalink to this definition"></a></dt>
+<dd><p>Set the scope of the cache, for example, deployment id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scope</strong> (<em>String</em>) – The key of the cache entry.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.clear_cache_scope">
+<span class="sig-name descname"><span class="pre">clear_cache_scope</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.clear_cache_scope" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the scope set before, and let it to automatically figure out the scope to use. If nothing found, will run in local.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.set_scoped_cache_value">
+<span class="sig-name descname"><span class="pre">set_scoped_cache_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expiration_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21600</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_scoped_cache_value" title="Permalink to this definition"></a></dt>
+<dd><p>Set the value to key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+If no scope found, will run in local.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>String</em>) – The key of the cache entry.</p></li>
+<li><p><strong>value</strong> (<em>String</em>) – The value of the cache entry. Only string, integer and float numbers are supported now.</p></li>
+<li><p><strong>expiration_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – How long to keep the cache key before expire, in seconds. Default is 6h.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#abacusai.client.InvalidParameterError" title="abacusai.client.InvalidParameterError"><strong>InvalidParameterError</strong></a> – If key, value or expiration_time is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_scoped_cache_value">
+<span class="sig-name descname"><span class="pre">get_scoped_cache_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_scoped_cache_value" title="Permalink to this definition"></a></dt>
+<dd><p>Get the value of the key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+If no scope found, will run in local.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>String</em>) – The key of the cache entry.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The value of the key</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>value (String)</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#abacusai.client.Generic404Error" title="abacusai.client.Generic404Error"><strong>Generic404Error</strong></a> – if the key doesn’t exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.delete_scoped_cache_key">
+<span class="sig-name descname"><span class="pre">delete_scoped_cache_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.delete_scoped_cache_key" title="Permalink to this definition"></a></dt>
+<dd><p>Delete the value of the key in the cache scope. Scope will be automatically figured out inside a deployment, or set with set_cache_scope.
+If no scope found, will run in local.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>String</em>) – The key of the cache entry.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -6439,7 +6612,7 @@ Creates a new feature group defined as the union of other feature group versions
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.set_feature_type">
-<span class="sig-name descname"><span class="pre">set_feature_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_feature_type" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_feature_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_feature_type" title="Permalink to this definition"></a></dt>
 <dd><p>Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -6447,6 +6620,7 @@ Creates a new feature group defined as the union of other feature group versions
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique ID associated with the feature group.</p></li>
 <li><p><strong>feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the feature.</p></li>
 <li><p><strong>feature_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The machine learning type of the data in the feature.</p></li>
+<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Optional unique ID associated with the project.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -6626,7 +6800,7 @@ Creates a new feature group defined as the union of other feature group versions
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.update_feature_group_python_function">
-<span class="sig-name descname"><span class="pre">update_feature_group_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_feature_group_python_function" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_feature_group_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_original_csv_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_feature_group_python_function" title="Permalink to this definition"></a></dt>
 <dd><p>Updates an existing Feature Group’s python function from a user provided Python Function. If a list of feature groups are supplied within the python function</p>
 <p>bindings, we will provide as arguments to the function DataFrame’s (pandas in the case of Python) with the materialized
 feature groups for those input feature groups.</p>
@@ -6639,6 +6813,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Size of the CPU for the feature group python function.</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the feature group python function.</p></li>
 <li><p><strong>use_gpu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the feature group needs a gpu or not. Otherwise default to CPU.</p></li>
+<li><p><strong>use_original_csv_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If enabled, it uses the original column names for input feature groups from CSV datasets.</p></li>
 </ul>
 </dd>
 </dl>
@@ -6673,34 +6848,6 @@ feature groups for those input feature groups.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier associated with the feature group.</p></li>
 <li><p><strong>feature_expression</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The input SQL statement for the feature group.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The updated feature group.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.update_feature_group_function_definition">
-<span class="sig-name descname"><span class="pre">update_feature_group_function_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_feature_groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_original_csv_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_feature_group_function_definition" title="Permalink to this definition"></a></dt>
-<dd><p>Updates the function definition for a feature group</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique ID associated with the feature group.</p></li>
-<li><p><strong>function_source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called <cite>function_name</cite>. A list of allowed import and system libraries for each language is specified in the user functions documentation section.</p></li>
-<li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.</p></li>
-<li><p><strong>input_feature_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized DataFrames (same type as the functions return value).</p></li>
-<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Size of the CPU for the feature group function.</p></li>
-<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the feature group function.</p></li>
-<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
-<li><p><strong>use_original_csv_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If set to <cite>True</cite>, feature group uses the original column names for input feature groups from CSV datasets.</p></li>
-<li><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of PythonFunctionArgument objects that represent the bindings for the Python function.</p></li>
-<li><p><strong>use_gpu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the feature group needs a gpu or not. Otherwise default to CPU.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -7696,7 +7843,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Size of the CPU for the model training function</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
 <li><p><strong>training_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><em>TrainingConfig</em></a>) – Training configuration</p></li>
-<li><p><strong>exclusive_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Decides if this model will be run exclusively or along with other Abacus.ai algorithms</p></li>
+<li><p><strong>exclusive_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Decides if this model will be run exclusively or along with other Abacus.AI algorithms</p></li>
 <li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’]</p></li>
 <li><p><strong>use_gpu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether this model needs gpu</p></li>
 <li><p><strong>is_thread_safe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether this model is thread safe</p></li>
@@ -7971,7 +8118,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique version ID of the project.</p></li>
 <li><p><strong>feature_group_names_for_training</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of feature group table names to be used for training.</p></li>
 <li><p><strong>training_data_parameter_name_override</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Override from feature group type to parameter name in the train function.</p></li>
-<li><p><strong>training_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><em>TrainingConfig</em></a>) – Training config for the options supported by the Abacus.ai platform.</p></li>
+<li><p><strong>training_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><em>TrainingConfig</em></a>) – Training config for the options supported by the Abacus.AI platform.</p></li>
 <li><p><strong>custom_algorithm_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – User-defined config that can be serialized by JSON.</p></li>
 </ul>
 </dd>
@@ -9436,7 +9583,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.get_conversation_response">
-<span class="sig-name descname"><span class="pre">get_conversation_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_session_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_completion_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_key_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_score_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_documents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_conversation_response" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_conversation_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_session_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_completion_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_key_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_score_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_documents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_infos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_conversation_response" title="Permalink to this definition"></a></dt>
 <dd><p>Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -9454,6 +9601,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary specifiying the query chat config override.</p></li>
 <li><p><strong>ignore_documents</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.</p></li>
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
+<li><p><strong>doc_infos</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – An optional list of documents use for the conversation. A keyword ‘doc_id’ is expected to be present in each document for retrieving contents from docstore.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -9700,7 +9848,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.get_text_from_document">
-<span class="sig-name descname"><span class="pre">get_text_from_document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_doc_orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_detected_images</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_predicted_pdf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_text_from_document" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_text_from_document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_doc_orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_predicted_pdf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_text_from_document" title="Permalink to this definition"></a></dt>
 <dd><p>Generate text from a document</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -9709,7 +9857,6 @@ feature groups for those input feature groups.</p>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique identifier of a deployment created under the project.</p></li>
 <li><p><strong>document</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.12)"><em>io.TextIOBase</em></a>) – Input document which can be an image, pdf, or word document (Some formats might not be supported yet)</p></li>
 <li><p><strong>adjust_doc_orientation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – (Optional) whether to detect the document page orientation and rotate it if needed.</p></li>
-<li><p><strong>return_detected_images</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))</p></li>
 <li><p><strong>save_predicted_pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.</p></li>
 <li><p><strong>save_extracted_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.</p></li>
 </ul>
@@ -9910,7 +10057,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.lookup_matches">
-<span class="sig-name descname"><span class="pre">lookup_matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words_per_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_multiplier_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_phrases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.lookup_matches" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">lookup_matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words_per_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_multiplier_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_phrases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_clause</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.lookup_matches" title="Permalink to this definition"></a></dt>
 <dd><p>Lookup document retrievers and return the matching documents from the document retriever deployed with given query.</p>
 <p>Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
 from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
@@ -9930,6 +10077,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>score_multiplier_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.</p></li>
 <li><p><strong>min_score</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – If provided, will filter out the results with score less than the value specified.</p></li>
 <li><p><strong>required_phrases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.</p></li>
+<li><p><strong>filter_clause</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If provided, filter the results of the query using this sql where clause.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -10238,21 +10386,6 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the streaming feature group to record data to.</p></li>
 <li><p><strong>streaming_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The streaming token for authenticating requests.</p></li>
 <li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The data to record as a JSON object.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.upsert_multiple_data">
-<span class="sig-name descname"><span class="pre">upsert_multiple_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streaming_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.upsert_multiple_data" title="Permalink to this definition"></a></dt>
-<dd><p>Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the streaming feature group to record data to.</p></li>
-<li><p><strong>streaming_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The streaming token for authenticating requests.</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – The data to record, as a list of JSON objects.</p></li>
 </ul>
 </dd>
 </dl>
@@ -11579,6 +11712,19 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_agent">
 <span class="sig-name descname"><span class="pre">create_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_binary_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation_feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_agent" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a new AI agent.</p>
+<p>The Agents are of the following three types -
+i. Normal AI Agents - These are general conversational agents which don’t need any input/output schemas to be defined.
+ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.</p>
+<blockquote>
+<div><p>Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.</p>
+</div></blockquote>
+<ol class="lowerroman simple" start="3">
+<li><dl class="simple">
+<dt>Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.</dt><dd><p>For these, we don’t need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.</p>
+</dd>
+</dl>
+</li>
+</ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -11609,6 +11755,19 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.update_agent">
 <span class="sig-name descname"><span class="pre">update_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_binary_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_agent" title="Permalink to this definition"></a></dt>
 <dd><p>Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.</p>
+<p>The Agents are of the following three types -
+i. Normal AI Agents - These are general conversational agents which don’t need any input/output schemas to be defined.
+ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.</p>
+<blockquote>
+<div><p>Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.</p>
+</div></blockquote>
+<ol class="lowerroman simple" start="3">
+<li><dl class="simple">
+<dt>Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.</dt><dd><p>For these, we don’t need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.</p>
+</dd>
+</dl>
+</li>
+</ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

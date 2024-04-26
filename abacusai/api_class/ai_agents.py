@@ -2,7 +2,7 @@ import dataclasses
 from typing import List, Union
 
 from . import enums
-from .abstract import ApiClass
+from .abstract import ApiClass, get_clean_function_source_code
 
 
 @dataclasses.dataclass
@@ -14,7 +14,7 @@ class FieldDescriptor(ApiClass):
         field (str): The field to be extracted. This will be used as the key in the response.
         description (str): The description of this field. If not included, the response_field will be used.
         example_extraction (Union[str, int, bool, float]): An example of this extracted field.
-        type (enums.FieldDescriptorType): The type of this field. If not provided, the default type is STRING.
+        type (FieldDescriptorType): The type of this field. If not provided, the default type is STRING.
     """
     field: str = dataclasses.field()
     description: str = dataclasses.field(default=None)
@@ -29,20 +29,23 @@ class WorkflowNodeInputMapping(ApiClass):
 
     Args:
         name (str): The name of the input.
-        variable_type (str): The type of the input.
-        workflow_variable_source (str): The workflow source stage of the input.
+        variable_type (WorkflowNodeInputType): The type of the input.
+        variable_source (str): The name of the node this variable is sourced from.
+                               If the type is `WORKFLOW_VARIABLE`, the value given by the source node will be directly used.
+                               If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before user edits it.
+                               Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
         is_required (bool): Whether the input is required.
     """
     name: str
     variable_type: enums.WorkflowNodeInputType
-    workflow_variable_source: str = dataclasses.field(default=None)
+    variable_source: str = dataclasses.field(default=None)
     is_required: bool = dataclasses.field(default=True)
 
     def to_dict(self):
         return {
             'name': self.name,
             'variable_type': self.variable_type,
-            'workflow_variable_source': self.workflow_variable_source,
+            'variable_source': self.variable_source,
             'is_required': self.is_required
         }
 
@@ -54,7 +57,7 @@ class WorkflowNodeOutputMapping(ApiClass):
 
     Args:
         name (str): The name of the output.
-        variable_type (str): The type of the output.
+        variable_type (WorkflowNodeOutputType): The type of the output.
     """
     name: str
     variable_type: enums.WorkflowNodeOutputType = dataclasses.field(default=enums.WorkflowNodeOutputType.STRING)
@@ -72,12 +75,10 @@ class WorkflowGraphNode(ApiClass):
     A node in an Agent workflow graph.
 
     Args:
-        name (str): Display name of the worflow node.
+        name (str): A unique name for the workflow node.
         input_mappings (List[WorkflowNodeInputMapping]): List of input mappings for the node.
         output_mappings (List[WorkflowNodeOutputMapping]): List of output mappings for the node.
-        function (callable): The callable node function reference if available.
-        function_name (str): The name of the function if available.
-        source_code (str): The source code of the function if available.
+        function (callable): The callable node function reference.
         input_schema (dict): The react json schema for the input form if applicable.
         output_schema (dict): The react json schema for the output if applicable.
         package_requirements (list): List of package requirements for the node.
@@ -85,9 +86,8 @@ class WorkflowGraphNode(ApiClass):
 
     def __init__(self, name: str, input_mappings: List[WorkflowNodeInputMapping], output_mappings: List[WorkflowNodeOutputMapping], function: callable = None, function_name: str = None, source_code: str = None, input_schema: dict = None, output_schema: dict = None, package_requirements: list = None):
         if function:
-            import inspect
             self.function_name = function.__name__
-            self.source_code = inspect.getsource(function)
+            self.source_code = get_clean_function_source_code(function)
         elif function_name and source_code:
             self.function_name = function_name
             self.source_code = source_code
@@ -133,8 +133,8 @@ class WorkflowGraphEdge(ApiClass):
     An edge in an Agent workflow graph.
 
     Args:
-        source (str): The source node of the edge.
-        target (str): The target node of the edge.
+        source (str): The name of the source node of the edge.
+        target (str): The name of the target node of the edge.
         details (dict): Additional details about the edge.
     """
     source: str

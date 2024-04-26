@@ -30,7 +30,7 @@ Classes
    :type featureGroupId: str
    :param modificationLock: If feature group is locked against a change or not.
    :type modificationLock: bool
-   :param name:
+   :param name: Unique name of this feature group.
    :type name: str
    :param featureGroupSourceType: The source type of the feature group
    :type featureGroupSourceType: str
@@ -699,7 +699,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_type(feature, feature_type)
+   .. py:method:: set_feature_type(feature, feature_type, project_id = None)
 
       Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.
 
@@ -707,6 +707,8 @@ Classes
       :type feature: str
       :param feature_type: The machine learning type of the data in the feature.
       :type feature_type: str
+      :param project_id: Optional unique ID associated with the project.
+      :type project_id: str
 
       :returns: The feature group after the data_type is applied.
       :rtype: Schema
@@ -814,7 +816,7 @@ Classes
       :type python_function_bindings: list
 
 
-   .. py:method:: update_python_function(python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None)
+   .. py:method:: update_python_function(python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None, use_original_csv_names = None)
 
       Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -832,6 +834,8 @@ Classes
       :type memory: int
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
+      :param use_original_csv_names: If enabled, it uses the original column names for input feature groups from CSV datasets.
+      :type use_original_csv_names: bool
 
 
    .. py:method:: update_sql_definition(sql)
@@ -851,33 +855,6 @@ Classes
 
       :param feature_expression: The input SQL statement for the feature group.
       :type feature_expression: str
-
-      :returns: The updated feature group.
-      :rtype: FeatureGroup
-
-
-   .. py:method:: update_function_definition(function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None, use_gpu = None)
-
-      Updates the function definition for a feature group
-
-      :param function_source_code: Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called `function_name`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-      :type function_source_code: str
-      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized DataFrames (same type as the functions return value).
-      :type input_feature_groups: list
-      :param cpu_size: Size of the CPU for the feature group function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the feature group function.
-      :type memory: int
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
-      :param use_original_csv_names: If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
-      :type use_original_csv_names: bool
-      :param python_function_bindings: List of PythonFunctionArgument objects that represent the bindings for the Python function.
-      :type python_function_bindings: list
-      :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
-      :type use_gpu: bool
 
       :returns: The updated feature group.
       :rtype: FeatureGroup
@@ -1051,16 +1028,6 @@ Classes
       :type streaming_token: str
       :param data: The data to record as a JSON object.
       :type data: dict
-
-
-   .. py:method:: upsert_multiple_data(streaming_token, data)
-
-      Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
-
-      :param streaming_token: The streaming token for authenticating requests.
-      :type streaming_token: str
-      :param data: The data to record, as a list of JSON objects.
-      :type data: list
 
 
    .. py:method:: append_multiple_data(streaming_token, data)

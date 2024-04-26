@@ -14,7 +14,7 @@ class Schema(AbstractApiClass):
             detectedFeatureMapping (str): Detected feature mapping for this feature
             featureType (str): The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  ENTITY_LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL,  PAGE_INFOS.
             detectedFeatureType (str): The detected feature type for this feature
-            dataType (str): The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL.
+            dataType (str): The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL,  BINARY.
             detectedDataType (str): The detected data type for this feature
             nestedFeatures (NestedFeatureSchema): List of features of nested feature
             pointInTimeInfo (PointInTimeFeatureInfo): Point in time information for this feature

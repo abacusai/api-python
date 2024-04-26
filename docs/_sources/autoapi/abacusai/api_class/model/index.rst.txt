@@ -1098,10 +1098,6 @@ Classes
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
 
-   :param objective: Ranking scheme used to select final best model.
-   :type objective: NERObjective
-   :param sort_objective: Ranking scheme used to sort models on the metrics page.
-   :type sort_objective: NERObjective
    :param llm_for_ner: LLM to use for NER from among available LLM
    :type llm_for_ner: NERForLLM
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -1118,16 +1114,6 @@ Classes
    :type save_predicted_pdf: bool
    :param enhanced_ocr: Enhanced text extraction from predicted digital documents
    :type enhanced_ocr: bool
-
-   .. py:attribute:: objective
-      :type: abacusai.api_class.enums.NERObjective
-
-      
-
-   .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.NERObjective
-
-      
 
    .. py:attribute:: llm_for_ner
       :type: abacusai.api_class.enums.LLMName

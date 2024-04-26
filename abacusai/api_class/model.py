@@ -383,8 +383,6 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     Training config for the NAMED_ENTITY_EXTRACTION problem type
 
     Args:
-        objective (NERObjective): Ranking scheme used to select final best model.
-        sort_objective (NERObjective): Ranking scheme used to sort models on the metrics page.
         llm_for_ner (NERForLLM) : LLM to use for NER from among available LLM
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST).
@@ -394,15 +392,13 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
         save_predicted_pdf (bool): Whether to save predicted PDF documents
         enhanced_ocr (bool): Enhanced text extraction from predicted digital documents
     """
-    objective: enums.NERObjective = dataclasses.field(default=None)
-    sort_objective: enums.NERObjective = dataclasses.field(default=None)
-    llm_for_ner: enums.LLMName = dataclasses.field(default=None)
+    llm_for_ner: enums.LLMName = None
     # Data Split Params
-    test_split: int = dataclasses.field(default=None)
-    test_row_indicator: str = dataclasses.field(default=None)
+    test_split: int = None
+    test_row_indicator: str = None
     # Named Entity Recognition
-    active_labels_column: str = dataclasses.field(default=None)
-    document_format: enums.NLPDocumentFormat = dataclasses.field(default=None)
+    active_labels_column: str = None
+    document_format: enums.NLPDocumentFormat = None
     minimum_bounding_box_overlap_ratio: float = 0.0
     # OCR
     save_predicted_pdf: bool = True

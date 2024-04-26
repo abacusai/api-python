@@ -21,7 +21,7 @@ class ProjectFeatureGroup(FeatureGroup):
             client (ApiClient): An authenticated API Client instance
             featureGroupId (str): Unique identifier for this feature group.
             modificationLock (bool): If feature group is locked against a change or not.
-            name (str): 
+            name (str): Unique name of this feature group.
             featureGroupSourceType (str): The source type of the feature group
             tableName (str): Unique table name of this feature group.
             sql (str): SQL definition creating this feature group.

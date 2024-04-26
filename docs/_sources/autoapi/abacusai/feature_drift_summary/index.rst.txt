@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, predictionDrift=None, targetColumn=None, dataIntegrityTimeseries=None, nestedSummary=None, psi=None, csi=None, chiSquare=None, nullViolations={}, typeViolations={}, rangeViolations={}, catViolations={})
+.. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, predictionDrift=None, targetColumn=None, dataIntegrityTimeseries=None, nestedSummary=None, psi=None, csi=None, chiSquare=None, nullViolations={}, rangeViolations={}, catViolations={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54,8 +54,6 @@ Classes
    :type chiSquare: float
    :param nullViolations: A list of dicts of feature names and a description of corresponding null violations.
    :type nullViolations: NullViolation
-   :param typeViolations: A list of dicts of feature names and corresponding type mismatches.
-   :type typeViolations: TypeViolation
    :param rangeViolations: A list of dicts of numerical feature names and corresponding prediction range discrepancies.
    :type rangeViolations: RangeViolation
    :param catViolations: A list of dicts of categorical feature names and corresponding prediction range discrepancies.

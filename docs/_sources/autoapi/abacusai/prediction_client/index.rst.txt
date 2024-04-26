@@ -493,7 +493,7 @@ Classes
       :type attachments: None
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None, doc_infos = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -523,6 +523,8 @@ Classes
       :type ignore_documents: bool
       :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
+      :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
+      :type doc_infos: list
 
 
    .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
@@ -709,7 +711,7 @@ Classes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, save_predicted_pdf = False, save_extracted_features = False)
 
       Generate text from a document
 
@@ -721,8 +723,6 @@ Classes
       :type document: io.TextIOBase
       :param adjust_doc_orientation: (Optional) whether to detect the document page orientation and rotate it if needed.
       :type adjust_doc_orientation: bool
-      :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
-      :type return_detected_images: bool
       :param save_predicted_pdf: (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
       :type save_predicted_pdf: bool
       :param save_extracted_features: (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.
@@ -865,7 +865,7 @@ Classes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -898,6 +898,8 @@ Classes
       :type min_score: float
       :param required_phrases: If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
       :type required_phrases: list
+      :param filter_clause: If provided, filter the results of the query using this sql where clause.
+      :type filter_clause: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

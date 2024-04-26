@@ -139,6 +139,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template_variable_options</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_version_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_mapping/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_mapping</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_performance_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_performance_analysis</span></code></a></li>
@@ -246,7 +247,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../streaming_sample_code/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_sample_code</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.test_point_predictions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.training_config_options</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../type_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.type_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload_part/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload_part</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../use_case/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case</span></code></a></li>
@@ -618,7 +618,7 @@
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Size of the CPU for the model training function</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
 <li><p><strong>training_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><em>TrainingConfig</em></a>) – Training configuration</p></li>
-<li><p><strong>exclusive_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Decides if this model will be run exclusively or along with other Abacus.ai algorithms</p></li>
+<li><p><strong>exclusive_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Decides if this model will be run exclusively or along with other Abacus.AI algorithms</p></li>
 <li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’]</p></li>
 <li><p><strong>use_gpu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether this model needs gpu</p></li>
 <li><p><strong>is_thread_safe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether this model is thread safe</p></li>
@@ -659,7 +659,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>feature_group_names_for_training</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of feature group table names to be used for training.</p></li>
 <li><p><strong>training_data_parameter_name_override</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Override from feature group type to parameter name in the train function.</p></li>
-<li><p><strong>training_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><em>TrainingConfig</em></a>) – Training config for the options supported by the Abacus.ai platform.</p></li>
+<li><p><strong>training_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><em>TrainingConfig</em></a>) – Training config for the options supported by the Abacus.AI platform.</p></li>
 <li><p><strong>custom_algorithm_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – User-defined config that can be serialized by JSON.</p></li>
 </ul>
 </dd>
@@ -1103,6 +1103,19 @@
 <dt class="sig sig-object py" id="abacusai.project.Project.create_agent">
 <span class="sig-name descname"><span class="pre">create_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_binary_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation_feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_agent" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a new AI agent.</p>
+<p>The Agents are of the following three types -
+i. Normal AI Agents - These are general conversational agents which don’t need any input/output schemas to be defined.
+ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.</p>
+<blockquote>
+<div><p>Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.</p>
+</div></blockquote>
+<ol class="lowerroman simple" start="3">
+<li><dl class="simple">
+<dt>Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.</dt><dd><p>For these, we don’t need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.</p>
+</dd>
+</dl>
+</li>
+</ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

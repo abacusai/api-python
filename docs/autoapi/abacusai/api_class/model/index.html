@@ -1107,8 +1107,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><em>NERObjective</em></a>) – Ranking scheme used to select final best model.</p></li>
-<li><p><strong>sort_objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><em>NERObjective</em></a>) – Ranking scheme used to sort models on the metrics page.</p></li>
 <li><p><strong>llm_for_ner</strong> (<em>NERForLLM</em>) – LLM to use for NER from among available LLM</p></li>
 <li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
 <li><p><strong>test_row_indicator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Column indicating which rows to use for training (TRAIN) and testing (TEST).</p></li>
@@ -1120,16 +1118,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.objective">
-<span class="sig-name descname"><span class="pre">objective</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><span class="pre">abacusai.api_class.enums.NERObjective</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.objective" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.sort_objective">
-<span class="sig-name descname"><span class="pre">sort_objective</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><span class="pre">abacusai.api_class.enums.NERObjective</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.sort_objective" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.llm_for_ner">
 <span class="sig-name descname"><span class="pre">llm_for_ner</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.LLMName" title="abacusai.api_class.enums.LLMName"><span class="pre">abacusai.api_class.enums.LLMName</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.llm_for_ner" title="Permalink to this definition"></a></dt>

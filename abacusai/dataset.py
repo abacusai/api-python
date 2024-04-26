@@ -34,6 +34,8 @@ class Dataset(AbstractApiClass):
             latestDatasetVersion (DatasetVersion): The latest version of this dataset.
             schema (DatasetColumn): List of resolved columns.
             refreshSchedules (RefreshSchedule): List of schedules that determines when the next version of the dataset will be created.
+            parsingConfig (ParsingConfig): The parsing config used for dataset.
+            documentProcessingConfig (DocumentProcessingConfig): The document processing config used for dataset (when is_documentset is True).
     """
 
     def __init__(self, client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}):

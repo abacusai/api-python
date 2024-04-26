@@ -28,5 +28,5 @@ class VectorStoreConfig(ApiClass):
 @dataclasses.dataclass
 class DocumentRetrieverConfig(VectorStoreConfig):
     """
-    Configs for document retriever. If any configuration value is not explicitly provided, Abacus will automatically infer default values based on the data.
+    Configs for document retriever. If any configuration value is not explicitly provided, Abacus.AI will automatically infer default values based on the data.
     """

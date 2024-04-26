@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelArtifactsExport(client, modelArtifactsExportId=None, modelVersion=None, outputLocation=None, status=None, createdAt=None, exportCompletedAt=None)
+.. py:class:: ModelArtifactsExport(client, modelArtifactsExportId=None, modelVersion=None, outputLocation=None, status=None, createdAt=None, exportCompletedAt=None, error=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -38,6 +38,8 @@ Classes
    :type createdAt: str
    :param exportCompletedAt: Timestamp at which the export completed (ISO-8601 format).
    :type exportCompletedAt: str
+   :param error: If `status` is `FAILED`, this field will be populated with an error.
+   :type error: str
 
    .. py:method:: __repr__()
 

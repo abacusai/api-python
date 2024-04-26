@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, fileInspectMetadata=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, invalidRecords=None)
+.. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, fileInspectMetadata=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, databaseConnectorConfig=None, applicationConnectorConfig=None, invalidRecords=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -48,6 +48,10 @@ Classes
    :type uploadId: str
    :param mergeFileSchemas: If the merge file schemas policy is enabled.
    :type mergeFileSchemas: bool
+   :param databaseConnectorConfig: The database connector query used to retrieve data for this version.
+   :type databaseConnectorConfig: dict
+   :param applicationConnectorConfig: The application connector used to retrieve data for this version.
+   :type applicationConnectorConfig: dict
    :param invalidRecords: Invalid records in the dataset version
    :type invalidRecords: str
 

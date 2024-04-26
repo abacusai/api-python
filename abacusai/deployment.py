@@ -44,6 +44,7 @@ class Deployment(AbstractApiClass):
             realtimeMonitorId (id): The realtime monitor ID of the realtime-monitor that is associated with the deployment
             refreshSchedules (RefreshSchedule): A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
             featureGroupExportConfig (FeatureGroupExportConfig): The export config (file connector or database connector information) for feature group deployment exports.
+            defaultPredictionArguments (PredictionArguments): The default prediction arguments for prediction APIs
     """
 
     def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={}):
@@ -326,7 +327,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_realtime_monitor(self.deployment_id, realtime_monitor_schedule, lookback_time)
 
-    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, deployment_token: str = None):
+    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, deployment_token: str = None, doc_infos: list = None):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -343,8 +344,9 @@ class Deployment(AbstractApiClass):
             chat_config (dict): A dictionary specifiying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
             deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
         """
-        return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents, deployment_token)
+        return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents, deployment_token, doc_infos)
 
     def get_conversation_response_with_binary_data(self, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None):
         """

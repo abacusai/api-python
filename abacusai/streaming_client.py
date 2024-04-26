@@ -63,17 +63,6 @@ class StreamingClient(BaseApiClient):
             streaming_token, feature_group_id=feature_group_id)
         return self._call_api('appendData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
-    def upsert_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
-        """Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
-
-        Args:
-            feature_group_id (str): Unique string identifier for the streaming feature group to record data to.
-            streaming_token (str): The streaming token for authenticating requests.
-            data (list): The data to record, as a list of JSON objects."""
-        prediction_url = self._get_streaming_endpoint(
-            streaming_token, feature_group_id=feature_group_id)
-        return self._call_api('upsertMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
-
     def append_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
         """Appends new data into the feature group for a given lookup key recordId.
 

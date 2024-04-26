@@ -8,8 +8,13 @@ from .abstract import ApiClass, _ApiClassFactory
 class DatasetConfig(ApiClass):
     """
     An abstract class for dataset configs specific to application connectors.
+
+    Args:
+        application_connector_type(enums.ApplicationConnectorType): The type of application connector
+        is_documentset (bool): Whether the dataset is a document set
     """
     application_connector_type: enums.ApplicationConnectorType = dataclasses.field(default=None, repr=False, init=False)
+    is_documentset: bool = dataclasses.field(default=None)
 
     @classmethod
     def _get_builder(cls):
@@ -21,12 +26,16 @@ class ConfluenceDatasetConfig(DatasetConfig):
     """
     Dataset config for Confluence Application Connector
     Args:
+        location (str): The location of the pages to fetch
         pull_attachments (bool, optional): Whether to pull attachments for each page
         space_key (str, optional): The space key to fetch pages from
+        extract_bounding_boxes (bool, optional): Whether to extract bounding boxes from the documents
 
     """
+    location: str = dataclasses.field(default=None)
     pull_attachments: bool = dataclasses.field(default=False)
     space_key: str = dataclasses.field(default=None)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.CONFLUENCE
@@ -57,13 +66,11 @@ class GoogleDriveDatasetConfig(DatasetConfig):
 
     Args:
         location (str): The regex location of the files to fetch
-        is_documentset (bool): Whether the dataset is a document set
         csv_delimiter (str, optional): If the file format is CSV, use a specific csv delimiter
         extract_bounding_boxes (bool, optional): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
         merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
     """
     location: str = dataclasses.field(default=None)
-    is_documentset: bool = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
     extract_bounding_boxes: bool = dataclasses.field(default=False)
     merge_file_schemas: bool = dataclasses.field(default=False)
@@ -99,13 +106,11 @@ class OneDriveDatasetConfig(DatasetConfig):
 
     Args:
         location (str): The regex location of the files to fetch
-        is_documentset (bool): Whether the dataset is a document set
         csv_delimiter (str, optional): If the file format is CSV, use a specific csv delimiter
         extract_bounding_boxes (bool, optional): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
         merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
     """
     location: str = dataclasses.field(default=None)
-    is_documentset: bool = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
     extract_bounding_boxes: bool = dataclasses.field(default=False)
     merge_file_schemas: bool = dataclasses.field(default=False)
@@ -127,7 +132,6 @@ class SharepointDatasetConfig(DatasetConfig):
         merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
     """
     location: str = dataclasses.field(default=None)
-    is_documentset: bool = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
     extract_bounding_boxes: bool = dataclasses.field(default=False)
     merge_file_schemas: bool = dataclasses.field(default=False)
@@ -152,11 +156,14 @@ class AbacusUsageMetricsDatasetConfig(DatasetConfig):
 
     Args:
         include_entire_conversation_history (bool): Whether to show the entire history for this deployment conversation
+        include_all_feedback (bool): Whether to include all feedback for this deployment conversation
     """
     include_entire_conversation_history: bool = dataclasses.field(default=False)
+    include_all_feedback: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.ABACUSUSAGEMETRICS
+        self.is_documentset = False
 
 
 @dataclasses.dataclass

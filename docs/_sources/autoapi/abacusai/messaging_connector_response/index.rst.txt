@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: MessagingConnectorResponse(client, welcomeMessage=None, defaultMessage=None, disclaimer=None, messagingBotName=None, useDefaultLabel=None, initAckReq=None, defaultLabels=None)
+.. py:class:: MessagingConnectorResponse(client, welcomeMessage=None, defaultMessage=None, disclaimer=None, messagingBotName=None, useDefaultLabel=None, initAckReq=None, defaultLabels=None, enabledExternalLinks=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -32,14 +32,16 @@ Classes
    :type defaultMessage: str
    :param disclaimer: given along with every bot response
    :type disclaimer: str
-   :param messagingBotName: the name you want to see at various places instead of Abacus.ai
+   :param messagingBotName: the name you want to see at various places instead of Abacus.AI
    :type messagingBotName: str
-   :param useDefaultLabel: to use the default abacus.ai label in case it is set to true
+   :param useDefaultLabel: to use the default Abacus.AI label in case it is set to true
    :type useDefaultLabel: bool
    :param initAckReq: Set to true if the initial Acknowledgment for the query is required by the user
    :type initAckReq: bool
    :param defaultLabels: Dictionary of default labels, if the user-specified labels aren't set
    :type defaultLabels: dict
+   :param enabledExternalLinks: list of external application which have external links applicable
+   :type enabledExternalLinks: list
 
    .. py:method:: __repr__()
 

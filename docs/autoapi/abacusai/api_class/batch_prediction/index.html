@@ -170,7 +170,7 @@
 <li><p><strong>forecasting_horizon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of timestamps to predict in the future. Range: [1, 1000].</p></li>
 <li><p><strong>item_attributes_to_include_in_the_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of columns to include in the prediction output.</p></li>
 <li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, calculates explanations for the forecasted values along with predictions.</p></li>
-<li><p><strong>automate_monitoring</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
+<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
 </ul>
 </dd>
 </dl>
@@ -210,8 +210,8 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.automate_monitoring">
-<span class="sig-name descname"><span class="pre">automate_monitoring</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.automate_monitoring" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.create_monitor">
+<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.create_monitor" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -312,7 +312,7 @@
 <li><p><strong>explanation_filter_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – For classification problems specifies the label to which the explanation bounds are applied.</p></li>
 <li><p><strong>output_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of column names to include in the prediction result.</p></li>
 <li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, calculates explanations for the predicted values along with predictions.</p></li>
-<li><p><strong>automate_monitoring</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
+<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
 </ul>
 </dd>
 </dl>
@@ -372,8 +372,8 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.automate_monitoring">
-<span class="sig-name descname"><span class="pre">automate_monitoring</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.automate_monitoring" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.create_monitor">
+<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.create_monitor" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -522,7 +522,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
-<li><p><strong>automate_monitoring</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
+<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
 </ul>
 </dd>
 </dl>
@@ -532,8 +532,8 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.automate_monitoring">
-<span class="sig-name descname"><span class="pre">automate_monitoring</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.automate_monitoring" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.create_monitor">
+<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.create_monitor" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

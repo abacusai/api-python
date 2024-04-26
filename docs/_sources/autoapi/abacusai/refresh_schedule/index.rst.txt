@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, lifecycleMsg=None)
+.. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, error=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34,8 +34,8 @@ Classes
    :type cron: str
    :param refreshType: The type of refresh that will be run
    :type refreshType: str
-   :param lifecycleMsg: An error message for the last pipeline run of a policy
-   :type lifecycleMsg: str
+   :param error: An error message for the last pipeline run of a policy
+   :type error: str
 
    .. py:method:: __repr__()
 

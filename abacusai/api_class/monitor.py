@@ -51,7 +51,7 @@ class ForecastingMonitorConfig(ApiClass):
             'target_column': self.target_column,
             'start_time': self.start_time,
             'end_time': self.end_time,
-            'window_config': TimeWindowConfig.from_dict(self.window_config).to_dict() if self.window_config else None,
+            'window_config': self.window_config.to_dict() if self.window_config else None,
         }
 
 
@@ -88,8 +88,8 @@ class ItemAttributesStdDevThreshold(ApiClass):
 
     def to_dict(self):
         return {
-            'lower_bound': StdDevThreshold.from_dict(self.lower_bound).to_dict() if self.lower_bound else None,
-            'upper_bound': StdDevThreshold.from_dict(self.upper_bound).to_dict() if self.upper_bound else None,
+            'lower_bound': self.lower_bound.to_dict() if self.lower_bound else None,
+            'upper_bound': self.upper_bound.to_dict() if self.upper_bound else None,
         }
 
 
@@ -122,16 +122,22 @@ class MonitorFilteringConfig(ApiClass):
         end_time (str): The end time of the prediction time col
         restrict_feature_mapping (RestrictFeatureMappings): The feature mapping to restrict the monitor to.
         target_class (str): The target class to restrict the monitor to.
+        train_target_feature (str): Set the target feature for the training data.
+        prediction_target_feature (str): Set the target feature for the prediction data.
     """
     start_time: str = dataclasses.field(default=None)
     end_time: str = dataclasses.field(default=None)
     restrict_feature_mappings: List[RestrictFeatureMappings] = dataclasses.field(default=None)
     target_class: str = dataclasses.field(default=None)
+    train_target_feature: str = dataclasses.field(default=None)
+    prediction_target_feature: str = dataclasses.field(default=None)
 
     def to_dict(self):
         return {
             'start_time': self.start_time,
             'end_time': self.end_time,
-            'restrict_feature_mappings': [RestrictFeatureMappings.from_dict(item).to_dict() for item in self.restrict_feature_mappings] if self.restrict_feature_mappings else None,
+            'restrict_feature_mappings': [item.to_dict() for item in self.restrict_feature_mappings] if self.restrict_feature_mappings else None,
             'target_class': self.target_class,
+            'train_target_feature': self.train_target_feature if self.train_target_feature else None,
+            'prediction_target_feature': self.prediction_target_feature if self.prediction_target_feature else None,
         }

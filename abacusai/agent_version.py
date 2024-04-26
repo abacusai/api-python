@@ -20,6 +20,7 @@ class AgentVersion(AbstractApiClass):
             error (str): Relevant error if the status is FAILED.
             agentExecutionConfig (dict): The config for arguments used to execute the agent.
             codeSource (CodeSource): If a python model, information on where the source code is located.
+            workflowGraph (WorkflowGraph): The workflow graph for the agent.
     """
 
     def __init__(self, client, agentVersion=None, status=None, agentId=None, agentConfig=None, publishingStartedAt=None, publishingCompletedAt=None, pendingDeploymentIds=None, failedDeploymentIds=None, error=None, agentExecutionConfig=None, codeSource={}, workflowGraph={}):

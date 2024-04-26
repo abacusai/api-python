@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None)
+.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -32,6 +32,8 @@ Classes
    :type theme: dict
    :param managedUserService: The external service that is managing the user accounts.
    :type managedUserService: str
+   :param passwordsDisabled: Whether or not passwords are disabled for this organization's domain.
+   :type passwordsDisabled: bool
 
    .. py:method:: __repr__()
 

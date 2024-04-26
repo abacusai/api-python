@@ -4,7 +4,8 @@ import inspect
 import re
 from abc import ABC
 from copy import deepcopy
-from typing import Any
+from textwrap import dedent
+from typing import Any, Callable, get_origin, get_type_hints
 
 from .enums import ApiEnum
 
@@ -32,6 +33,16 @@ def snake_case(value):
         s1 = FIRST_CAP_RE.sub(r'\1_\2', value)
         return ALL_CAP_RE.sub(r'\1_\2', s1).lower()
     return value
+
+
+def get_clean_function_source_code(func: Callable):
+    sample_lambda = (lambda: 0)
+    if isinstance(func, type(sample_lambda)) and func.__name__ == sample_lambda.__name__:
+        raise ValueError('Lambda function not allowed.')
+    source_code = inspect.getsource(func)
+    # If function source code has some initial indentation, remove it (Ex - can happen if the functor was defined inside a function)
+    source_code = dedent(source_code)
+    return source_code
 
 
 @dataclasses.dataclass
@@ -111,12 +122,12 @@ class ApiClass(ABC):
             res = {}
             api_class_dict = vars(api_class_obj)
             if self._support_kwargs:
-                kwargs = api_class_dict.pop('kwargs', None)
+                kwargs = api_class_dict.get('kwargs', None)
                 api_class_dict.update(kwargs or {})
             for k, v in api_class_dict.items():
-                if not k.startswith('__'):
-                    k = upper_snake_case(k) if self._upper_snake_case_keys else camel_case(k)
-                if v is not None:
+                if v is not None and k != 'kwargs':
+                    if not k.startswith('__'):
+                        k = upper_snake_case(k) if self._upper_snake_case_keys else camel_case(k)
                     if isinstance(v, ApiClass):
                         res[k] = to_dict_helper(v)
                     elif isinstance(v, list):
@@ -125,17 +136,19 @@ class ApiClass(ABC):
                         res[k] = {key: to_dict_helper(val) if isinstance(val, ApiClass) else val for key, val in v.items()}
                     elif isinstance(v, datetime.datetime) or isinstance(v, datetime.date):
                         res[k] = v.isoformat() if v else v
+                    elif isinstance(v, ApiEnum):
+                        res[k] = v.value
                     else:
-                        if isinstance(v, ApiEnum):
-                            res[k] = v.value
-                        else:
-                            res[k] = v
+                        res[k] = v
             return res
 
         return to_dict_helper(self)
 
     @classmethod
     def from_dict(cls, input_dict: dict):
+        if input_dict is None:
+            return None
+        obj = None
         if input_dict:
             if builder := cls._get_builder():
                 config_class_key = None
@@ -152,14 +165,28 @@ class ApiClass(ABC):
                         if config_class_key not in input_dict_with_config_key and camel_case(config_class_key) not in input_dict_with_config_key:
                             input_dict_with_config_key[config_class_key] = value
 
-                return builder.from_dict(input_dict_with_config_key)
+                obj = builder.from_dict(input_dict_with_config_key)
+
             if not cls._upper_snake_case_keys:
                 input_dict = {snake_case(k): v for k, v in input_dict.items()}
             if not cls._support_kwargs:
                 # only use keys that are valid fields in the ApiClass
                 field_names = set((field.name) for field in dataclasses.fields(cls))
                 input_dict = {k: v for k, v in input_dict.items() if k in field_names}
-        return cls(**input_dict)
+        if obj is None:
+            obj = cls(**input_dict)
+
+        for attr_name, attr_type in get_type_hints(cls).items():
+            if attr_name in input_dict and inspect.isclass(attr_type) and issubclass(attr_type, ApiClass):
+                setattr(obj, attr_name, attr_type.from_dict(input_dict[attr_name]))
+            elif attr_name in input_dict and get_origin(attr_type) is list and attr_type.__args__ and inspect.isclass(attr_type.__args__[0]) and issubclass(attr_type.__args__[0], ApiClass):
+                class_type = attr_type.__args__[0]
+                if isinstance(input_dict[attr_name], list):
+                    setattr(obj, attr_name, [class_type.from_dict(item) for item in input_dict[attr_name]])
+                else:
+                    raise ValueError(f'Expected list for {attr_name} but got {type(input_dict[attr_name])}')
+
+        return obj
 
 
 @dataclasses.dataclass
