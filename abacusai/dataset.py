@@ -1,6 +1,6 @@
 from typing import Union
 
-from .api_class import DatasetConfig, DataType, DocumentProcessingConfig, ParsingConfig
+from .api_class import DatasetConfig, DatasetDocumentProcessingConfig, DataType, DocumentProcessingConfig, ParsingConfig
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
 from .refresh_schedule import RefreshSchedule
@@ -142,6 +142,18 @@ class Dataset(AbstractApiClass):
         """
         return self.client.create_dataset_version_from_upload(self.dataset_id, file_format)
 
+    def create_version_from_document_reprocessing(self, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None):
+        """
+        Creates a new dataset version for a source docstore dataset with the provided document processing configuration. This does not re-import the data but uses the same data which is imported in the latest dataset version and only performs document processing on it.
+
+        Args:
+            document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration to use for the new dataset version. If not specified, the document processing configuration from the source dataset will be used.
+
+        Returns:
+            DatasetVersion: The new dataset version created.
+        """
+        return self.client.create_dataset_version_from_document_reprocessing(self.dataset_id, document_processing_config)
+
     def snapshot_streaming_data(self):
         """
         Snapshots the current data in the streaming dataset.
@@ -252,7 +264,7 @@ class Dataset(AbstractApiClass):
         A waiting call until dataset is imported.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
 
         """
         latest_dataset_version = self.describe().latest_dataset_version
@@ -268,7 +280,7 @@ class Dataset(AbstractApiClass):
         A waiting call until dataset is completely inspected.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         latest_dataset_version = self.describe().latest_dataset_version
         if not latest_dataset_version:

@@ -50,7 +50,7 @@ def get_non_nullable_type(types):
 
 
 class StreamingHandler(str):
-    def __new__(cls, value, context=None, section_key=None, data_type='text/plain'):
+    def __new__(cls, value, context=None, section_key=None, data_type='text'):
         if context:
             cls.process_streaming_data(value, context, section_key, data_type)
         return str.__new__(cls, value)
@@ -70,7 +70,7 @@ class StreamingHandler(str):
                     break
             if not entry_exists:
                 context.streamed_section_response.append(
-                    {'id': section_key, 'type': data_type, 'contents': value})
+                    {'id': section_key, 'type': data_type, 'mime_type': 'text/plain', 'contents': value})
         elif hasattr(context, 'streamed_response') and isinstance(context.streamed_response, list) and isinstance(value, str):
             context.streamed_response.append(value)
 
@@ -190,6 +190,7 @@ class DocstoreUtils:
     LAST_PAGE = 'last_page'
     PAGE_TEXT = 'page_text'
     PAGES = 'pages'
+    CONTENT = 'content'
     TOKENS = 'tokens'
     PAGES_ZIP_METADATA = 'pages_zip_metadata'
     PAGE_DATA = 'page_data'
@@ -363,9 +364,15 @@ class DocstoreUtils:
                                  for page_no, (h, w) in enumerate(zip(height_list, width_list))]
                 result.update(
                     {cls.TOKENS: tokens, cls.METADATA: metadata_list})
+
             if cls.EXTRACTED_TEXT in group:
-                extracted_text = list(group[cls.EXTRACTED_TEXT])
-                result.update({cls.EXTRACTED_TEXT: extracted_text})
+                pagewise_extracted_text = list(group[cls.EXTRACTED_TEXT])
+                result.update({cls.EXTRACTED_TEXT: pagewise_extracted_text})
+            elif cls.TOKENS in group:
+                pagewise_extracted_text = [' '.join([(token or {}).get(
+                    cls.CONTENT) or '' for token in page_tokens or []]) for page_tokens in group[cls.TOKENS]]
+                result.update({cls.EXTRACTED_TEXT: pagewise_extracted_text})
+
             return result
 
         doc_infos = pages_df.groupby(doc_id_column).apply(

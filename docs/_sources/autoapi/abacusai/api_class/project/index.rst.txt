@@ -14,6 +14,11 @@ Classes
 
    abacusai.api_class.project.FeatureMappingConfig
    abacusai.api_class.project.ProjectFeatureGroupTypeMappingsConfig
+   abacusai.api_class.project.ConstraintConfig
+   abacusai.api_class.project.ProjectFeatureGroupConfig
+   abacusai.api_class.project.ConstraintProjectFeatureGroupConfig
+   abacusai.api_class.project.ReviewModeProjectFeatureGroupConfig
+   abacusai.api_class.project._ProjectFeatureGroupConfigFactory
 
 
 
@@ -80,5 +85,126 @@ Classes
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
+
+
+.. py:class:: ConstraintConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Constraint configuration.
+
+   :param constant: The constant value for the constraint.
+   :type constant: float
+   :param operator: The operator for the constraint. Could be 'EQ', 'LE', 'GE'
+   :type operator: str
+   :param enforcement: The enforcement for the constraint. Could be 'HARD' or 'SOFT'. Default is 'HARD'
+   :type enforcement: str
+   :param code: The code for the constraint.
+   :type code: str
+   :param penalty: The penalty for violating the constraint.
+   :type penalty: float
+
+   .. py:attribute:: constant
+      :type: float
+
+      
+
+   .. py:attribute:: operator
+      :type: str
+
+      
+
+   .. py:attribute:: enforcement
+      :type: Optional[str]
+
+      
+
+   .. py:attribute:: code
+      :type: Optional[str]
+
+      
+
+   .. py:attribute:: penalty
+      :type: Optional[float]
+
+      
+
+
+.. py:class:: ProjectFeatureGroupConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   An abstract class for project feature group configuration.
+
+   .. py:attribute:: type
+      :type: abacusai.api_class.enums.ProjectConfigType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: ConstraintProjectFeatureGroupConfig
+
+
+   Bases: :py:obj:`ProjectFeatureGroupConfig`
+
+   Constraint project feature group configuration.
+
+   :param constraints: The constraint for the feature group. Should be a list of one ConstraintConfig.
+   :type constraints: List[ConstraintConfig]
+
+   .. py:attribute:: constraints
+      :type: List[ConstraintConfig]
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ReviewModeProjectFeatureGroupConfig
+
+
+   Bases: :py:obj:`ProjectFeatureGroupConfig`
+
+   Review mode project feature group configuration.
+
+   :param is_review_mode: The review mode for the feature group.
+   :type is_review_mode: bool
+
+   .. py:attribute:: is_review_mode
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _ProjectFeatureGroupConfigFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'type'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
 
 

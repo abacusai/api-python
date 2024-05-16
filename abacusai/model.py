@@ -1,7 +1,7 @@
-from typing import Union
+from typing import List, Union
 
 from . import api_class
-from .api_class import TrainingConfig, WorkflowGraph
+from .api_class import AgentInterface, TrainingConfig, WorkflowGraph
 from .code_source import CodeSource
 from .database_connector import DatabaseConnector
 from .model_location import ModelLocation
@@ -234,13 +234,13 @@ class Model(AbstractApiClass):
         """
         return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, python_root, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, use_gpu)
 
-    def set_training_config(self, training_config: Union[dict, TrainingConfig], feature_group_ids: list = None):
+    def set_training_config(self, training_config: Union[dict, TrainingConfig], feature_group_ids: List = None):
         """
         Edits the default model training config
 
         Args:
             training_config (TrainingConfig): The training config used to train this model.
-            feature_group_ids (list): The list of feature groups used as input to the model.
+            feature_group_ids (List): The list of feature groups used as input to the model.
 
         Returns:
             Model: The model object corresponding to the updated training config.
@@ -289,13 +289,13 @@ class Model(AbstractApiClass):
         """
         return self.client.list_model_versions(self.model_id, limit, start_after_version)
 
-    def retrain(self, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, algorithm_training_configs: list = None):
+    def retrain(self, deployment_ids: List = None, feature_group_ids: List = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, algorithm_training_configs: list = None):
         """
         Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
         Args:
-            deployment_ids (list): List of unique string identifiers of deployments to automatically deploy to.
-            feature_group_ids (list): List of feature group IDs provided by the user to train the model on.
+            deployment_ids (List): List of unique string identifiers of deployments to automatically deploy to.
+            feature_group_ids (List): List of feature group IDs provided by the user to train the model on.
             custom_algorithms (list): List of user-defined algorithms to train. If not set, will honor the runs from the last time and applicable new custom algorithms.
             builtin_algorithms (list): List of algorithm names or algorithm IDs of Abacus.AI built-in algorithms to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.
             custom_algorithm_configs (dict): User-defined training configs for each custom algorithm.
@@ -353,40 +353,27 @@ class Model(AbstractApiClass):
         """
         return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
 
-    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None):
+    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = None):
         """
-        Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
-
-        The Agents are of the following three types -
-        i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
-        ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
-                                Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
-        iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
-                                  For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
-
+        Updates an existing AI Agent. A new version of the agent will be created and published.
 
         Args:
-            function_source_code (str): Contents of a valid Python source code file. The source code should contain the functions named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-            agent_function_name (str): Name of the function found in the source code that will be executed to the agent when it is deployed.
             memory (int): Memory (in GB) for the agent.
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             description (str): A description of the agent, including its purpose and instructions.
-            enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
-            agent_input_schema (dict): The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
-            agent_output_schema (dict): The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
+            agent_interface (AgentInterface): The interface that the agent will be deployed with.
 
         Returns:
-            Agent: The updated agent
+            Agent: The updated agent.
         """
-        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input, agent_input_schema, agent_output_schema, workflow_graph)
+        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input, agent_input_schema, agent_output_schema, workflow_graph, agent_interface)
 
     def wait_for_training(self, timeout=None):
         """
         A waiting call until model is trained.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         latest_model_version = self.describe().latest_model_version
         if not latest_model_version:
@@ -401,7 +388,7 @@ class Model(AbstractApiClass):
         A waiting call until model is evaluated completely.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.wait_for_training()
 
@@ -410,7 +397,7 @@ class Model(AbstractApiClass):
         A waiting call until agent is published.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.wait_for_training()
 
@@ -419,7 +406,7 @@ class Model(AbstractApiClass):
         A waiting call until full AutoML cycle is completed.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         latest_model_version = self.describe().latest_model_version
         if not latest_model_version:

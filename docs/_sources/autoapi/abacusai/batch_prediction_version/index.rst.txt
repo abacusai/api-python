@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, bpAcrossVersionsMonitorVersion=None, batchPredictionArgsType=None, batchInputs={}, inputFeatureGroups={}, batchPredictionArgs={})
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, bpAcrossVersionsMonitorVersion=None, batchPredictionArgsType=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -104,6 +104,8 @@ Classes
    :type batchInputs: PredictionInput
    :param inputFeatureGroups: List of prediction feature groups
    :type inputFeatureGroups: PredictionFeatureGroup
+   :param globalPredictionArgs:
+   :type globalPredictionArgs: BatchPredictionArgs
    :param batchPredictionArgs: Argument(s) passed to every prediction call
    :type batchPredictionArgs: BatchPredictionArgs
 
@@ -181,7 +183,7 @@ Classes
       A waiting call until batch prediction version is ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: wait_for_drift_monitor(timeout=86400)
@@ -189,7 +191,7 @@ Classes
       A waiting call until batch prediction drift monitor calculations are ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: get_status(drift_monitor_status = False)

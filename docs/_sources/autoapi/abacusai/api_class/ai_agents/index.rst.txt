@@ -13,6 +13,8 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.ai_agents.FieldDescriptor
+   abacusai.api_class.ai_agents.WorkflowNodeInputSchema
+   abacusai.api_class.ai_agents.WorkflowNodeOutputSchema
    abacusai.api_class.ai_agents.WorkflowNodeInputMapping
    abacusai.api_class.ai_agents.WorkflowNodeOutputMapping
    abacusai.api_class.ai_agents.WorkflowGraphNode
@@ -59,6 +61,67 @@ Classes
       
 
 
+.. py:class:: WorkflowNodeInputSchema
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A react-jsonschema-form conformant schema for workflow node input.
+
+   :param json_schema: The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties".
+   :type json_schema: dict
+   :param ui_schema: The ui schema for the input conformant to react-jsonschema-form specification.
+   :type ui_schema: dict
+
+   .. py:attribute:: json_schema
+      :type: dict
+
+      
+
+   .. py:attribute:: ui_schema
+      :type: dict
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(schema)
+      :classmethod:
+
+
+
+.. py:class:: WorkflowNodeOutputSchema
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A react-jsonschema-form schema for a workflow node output.
+
+   :param json_schema: The json schema for the output conformant to react-jsonschema-form specification.
+   :type json_schema: dict
+
+   .. py:attribute:: json_schema
+      :type: dict
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(schema)
+      :classmethod:
+
+
+
 .. py:class:: WorkflowNodeInputMapping
 
 
@@ -66,7 +129,7 @@ Classes
 
    A mapping of input to a workflow node.
 
-   :param name: The name of the input.
+   :param name: The name of the input variable of the node function.
    :type name: str
    :param variable_type: The type of the input.
    :type variable_type: WorkflowNodeInputType
@@ -75,7 +138,7 @@ Classes
                            If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before user edits it.
                            Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
    :type variable_source: str
-   :param is_required: Whether the input is required.
+   :param is_required: Whether the input is required. Defaults to True
    :type is_required: bool
 
    .. py:attribute:: name
@@ -103,6 +166,10 @@ Classes
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(mapping)
+      :classmethod:
 
 
 
@@ -135,6 +202,10 @@ Classes
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+   .. py:method:: from_dict(mapping)
+      :classmethod:
+
+
 
 .. py:class:: WorkflowGraphNode(name, input_mappings, output_mappings, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, package_requirements = None)
 
@@ -145,16 +216,16 @@ Classes
 
    :param name: A unique name for the workflow node.
    :type name: str
-   :param input_mappings: List of input mappings for the node.
+   :param input_mappings: List of input mappings for the node. Each arg/kwarg of the node function should have a corresponding input mapping.
    :type input_mappings: List[WorkflowNodeInputMapping]
-   :param output_mappings: List of output mappings for the node.
+   :param output_mappings: List of output mappings for the node. Each field in the returned dict/AgentResponse must have a corresponding output mapping.
    :type output_mappings: List[WorkflowNodeOutputMapping]
    :param function: The callable node function reference.
    :type function: callable
-   :param input_schema: The react json schema for the input form if applicable.
-   :type input_schema: dict
-   :param output_schema: The react json schema for the output if applicable.
-   :type output_schema: dict
+   :param input_schema: The react json schema for the user input variables.
+   :type input_schema: WorkflowNodeInputSchema
+   :param output_schema: The react json schema for the output to be shown on UI.
+   :type output_schema: WorkflowNodeOutputSchema
    :param package_requirements: List of package requirements for the node.
    :type package_requirements: list
 
@@ -208,7 +279,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   An Agent workflow graph.
+   An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
 
    :param nodes: A list of nodes in the workflow graph.
    :type nodes: List[WorkflowGraphNode]

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, history={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -40,6 +40,8 @@ Classes
    :type externalSessionId: str
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
    :type regenerateAttempt: int
+   :param externalApplicationId: The external application id associated with the deployment conversation.
+   :type externalApplicationId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
 
@@ -56,7 +58,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: get(external_session_id = None, deployment_id = None, deployment_token = None)
+   .. py:method:: get(external_session_id = None, deployment_id = None, deployment_token = None, filter_intermediate_conversation_events = True)
 
       Gets a deployment conversation.
 
@@ -66,6 +68,8 @@ Classes
       :type deployment_id: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
       :type deployment_token: str
+      :param filter_intermediate_conversation_events: If true, intermediate conversation events will be filtered out. Default is true.
+      :type filter_intermediate_conversation_events: bool
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None)
+.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, monitorDriftConfig=None, predictionDataUseMappings=None, trainingDataUseMappings=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -64,6 +64,12 @@ Classes
    :type predictionForecastConfig: dict
    :param forecastFrequency: The forecast frequency for the monitor version
    :type forecastFrequency: str
+   :param monitorDriftConfig: The monitor drift config for the monitor version
+   :type monitorDriftConfig: dict
+   :param predictionDataUseMappings: The mapping of prediction data use to feature group version
+   :type predictionDataUseMappings: dict
+   :param trainingDataUseMappings: The mapping of training data use to feature group version
+   :type trainingDataUseMappings: dict
 
    .. py:method:: __repr__()
 
@@ -168,7 +174,7 @@ Classes
       A waiting call until model monitor version is ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: get_status()

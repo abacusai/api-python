@@ -1229,16 +1229,24 @@ Classes
    :type num_completion_tokens: int
    :param temperature: The generative LLM temperature
    :type temperature: float
-   :param metadata_columns: Include the metadata column values in the retrieved search results.
-   :type metadata_columns: list
+   :param retrieval_columns: Include the metadata column values in the retrieved search results.
+   :type retrieval_columns: list
+   :param filter_columns: Allow users to filter the document retrievers on these metadata columns.
+   :type filter_columns: list
    :param include_general_knowledge: Allow the LLM to rely not just on search results, but to fall back on general knowledge.
    :type include_general_knowledge: bool
    :param behavior_instructions: Customize the overall role instructions for the LLM.
    :type behavior_instructions: str
    :param response_instructions: Customize instructions for what the LLM responses should look like.
    :type response_instructions: str
-   :param lookup_rewrite_instructions: Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
-   :type lookup_rewrite_instructions: str
+   :param enable_llm_rewrite: Enable LLM rewrite for the ChatLLM. If None, LLM rewrite will happen automatically. Defaults to False.
+   :type enable_llm_rewrite: bool
+   :param column_filtering_instructions: Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
+   :type column_filtering_instructions: str
+   :param keyword_requirement_instructions: Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.
+   :type keyword_requirement_instructions: str
+   :param query_rewrite_instructions: Instructions for a LLM call to rewrite a search query.
+   :type query_rewrite_instructions: str
    :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
    :type max_search_results: int
    :param data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
@@ -1256,6 +1264,10 @@ Classes
    :type database_connector_tables: List[str]
    :param enable_code_execution: Enable code execution in the ChatLLM.
    :type enable_code_execution: bool
+   :param metadata_columns: DEPRECATED. Include the metadata column values in the retrieved search results.
+   :type metadata_columns: list
+   :param lookup_rewrite_instructions: DEPRECATED. Instructions for a LLM call to rewrite a search query.
+   :type lookup_rewrite_instructions: str
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -1272,7 +1284,12 @@ Classes
 
       
 
-   .. py:attribute:: metadata_columns
+   .. py:attribute:: retrieval_columns
+      :type: list
+
+      
+
+   .. py:attribute:: filter_columns
       :type: list
 
       
@@ -1292,7 +1309,23 @@ Classes
 
       
 
-   .. py:attribute:: lookup_rewrite_instructions
+   .. py:attribute:: enable_llm_rewrite
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: column_filtering_instructions
+      :type: str
+
+      
+
+   .. py:attribute:: keyword_requirement_instructions
+      :type: str
+
+      
+
+   .. py:attribute:: query_rewrite_instructions
       :type: str
 
       
@@ -1339,6 +1372,16 @@ Classes
 
    .. py:attribute:: enable_code_execution
       :type: bool
+
+      
+
+   .. py:attribute:: metadata_columns
+      :type: list
+
+      
+
+   .. py:attribute:: lookup_rewrite_instructions
+      :type: str
 
       
 
@@ -1752,15 +1795,16 @@ Classes
 
    :param description: Description of the agent function.
    :type description: str
-   :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
-   :type enable_binary_input: bool
-   :param agent_input_schema: Schema for the agent input.
-   :type agent_input_schema: dict
-   :param agent_output_schema: Schema for the agent output.
-   :type agent_output_schema: dict
+   :param agent_interface: The interface that the agent will be deployed with.
+   :type agent_interface: AgentInterface
 
    .. py:attribute:: description
       :type: str
+
+      
+
+   .. py:attribute:: agent_interface
+      :type: abacusai.api_class.enums.AgentInterface
 
       
 

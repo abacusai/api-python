@@ -1,3 +1,5 @@
+from typing import List
+
 from .code_source import CodeSource
 from .prediction_operator_version import PredictionOperatorVersion
 from .refresh_schedule import RefreshSchedule
@@ -91,13 +93,13 @@ class PredictionOperator(AbstractApiClass):
         """
         return self.client.describe_prediction_operator(self.prediction_operator_id)
 
-    def update(self, name: str = None, feature_group_ids: list = None, source_code: str = None, initialize_function_name: str = None, predict_function_name: str = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None):
+    def update(self, name: str = None, feature_group_ids: List = None, source_code: str = None, initialize_function_name: str = None, predict_function_name: str = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None):
         """
         Update an existing prediction operator.
 
         Args:
             name (str): Name of the prediction operator.
-            feature_group_ids (list): List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes. The order should match the initialize function's parameters.
+            feature_group_ids (List): List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes. The order should match the initialize function's parameters.
             source_code (str): Contents of a valid Python source code file. The source code should contain the function `predictFunctionName`, and the function 'initializeFunctionName' if defined.
             initialize_function_name (str): Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
             predict_function_name (str): Name of the function found in the source code that will be executed to run predictions.

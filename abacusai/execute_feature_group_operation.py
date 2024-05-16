@@ -47,7 +47,8 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         A waiting call until query is executed.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            delay (int): Polling interval for checking timeout.
         """
         return self.client._poll(self, {'PENDING', 'GENERATING'}, timeout=timeout, delay=delay)
 
@@ -56,7 +57,8 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         A waiting call until query is executed.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            delay (int): Polling interval for checking timeout.
         """
         return self.wait_for_results(timeout, delay=delay)
 
@@ -80,6 +82,12 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         return self
 
     def describe(self):
+        """
+        Gets the description of the query execution
+
+        Returns:
+            ExecuteFeatureGroupOperation: A ExecuteFeatureGroupOperation object describing the query execution.
+        """
         return self.client.describe_async_feature_group_operation(self.feature_group_operation_run_id)
 
     def _download_avro_file(self, file_part, tmp_dir, part_index):
@@ -104,7 +112,7 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         Loads the result data into a pandas dataframe
 
         Args:
-            max_workers (int, optional): The number of threads.
+            max_workers (int): The number of threads.
 
         Returns:
             DataFrame: A pandas dataframe displaying the data from execution.

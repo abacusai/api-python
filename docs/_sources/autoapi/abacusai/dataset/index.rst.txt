@@ -144,6 +144,17 @@ Classes
       :rtype: Upload
 
 
+   .. py:method:: create_version_from_document_reprocessing(document_processing_config = None)
+
+      Creates a new dataset version for a source docstore dataset with the provided document processing configuration. This does not re-import the data but uses the same data which is imported in the latest dataset version and only performs document processing on it.
+
+      :param document_processing_config: The document processing configuration to use for the new dataset version. If not specified, the document processing configuration from the source dataset will be used.
+      :type document_processing_config: DatasetDocumentProcessingConfig
+
+      :returns: The new dataset version created.
+      :rtype: DatasetVersion
+
+
    .. py:method:: snapshot_streaming_data()
 
       Snapshots the current data in the streaming dataset.
@@ -252,7 +263,7 @@ Classes
       A waiting call until dataset is imported.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: wait_for_inspection(timeout=None)
@@ -260,7 +271,7 @@ Classes
       A waiting call until dataset is completely inspected.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: get_status()

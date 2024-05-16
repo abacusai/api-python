@@ -26,9 +26,12 @@ class ModelMonitorVersion(AbstractApiClass):
             trainingForecastConfig (dict): The training forecast config for the monitor version
             predictionForecastConfig (dict): The prediction forecast config for the monitor version
             forecastFrequency (str): The forecast frequency for the monitor version
+            monitorDriftConfig (dict): The monitor drift config for the monitor version
+            predictionDataUseMappings (dict): The mapping of prediction data use to feature group version
+            trainingDataUseMappings (dict): The mapping of training data use to feature group version
     """
 
-    def __init__(self, client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None):
+    def __init__(self, client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, monitorDriftConfig=None, predictionDataUseMappings=None, trainingDataUseMappings=None):
         super().__init__(client, modelMonitorVersion)
         self.model_monitor_version = modelMonitorVersion
         self.status = status
@@ -49,11 +52,14 @@ class ModelMonitorVersion(AbstractApiClass):
         self.training_forecast_config = trainingForecastConfig
         self.prediction_forecast_config = predictionForecastConfig
         self.forecast_frequency = forecastFrequency
+        self.monitor_drift_config = monitorDriftConfig
+        self.prediction_data_use_mappings = predictionDataUseMappings
+        self.training_data_use_mappings = trainingDataUseMappings
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'model_monitor_version': repr(self.model_monitor_version), f'status': repr(self.status), f'model_monitor_id': repr(self.model_monitor_id), f'monitoring_started_at': repr(self.monitoring_started_at), f'monitoring_completed_at': repr(self.monitoring_completed_at), f'training_feature_group_version': repr(self.training_feature_group_version), f'prediction_feature_group_version': repr(self.prediction_feature_group_version), f'error': repr(self.error), f'pending_deployment_ids': repr(self.pending_deployment_ids), f'failed_deployment_ids': repr(
-            self.failed_deployment_ids), f'metric_configs': repr(self.metric_configs), f'feature_group_monitor_configs': repr(self.feature_group_monitor_configs), f'metric_types': repr(self.metric_types), f'model_version': repr(self.model_version), f'batch_prediction_version': repr(self.batch_prediction_version), f'eda_configs': repr(self.eda_configs), f'training_forecast_config': repr(self.training_forecast_config), f'prediction_forecast_config': repr(self.prediction_forecast_config), f'forecast_frequency': repr(self.forecast_frequency)}
+        repr_dict = {f'model_monitor_version': repr(self.model_monitor_version), f'status': repr(self.status), f'model_monitor_id': repr(self.model_monitor_id), f'monitoring_started_at': repr(self.monitoring_started_at), f'monitoring_completed_at': repr(self.monitoring_completed_at), f'training_feature_group_version': repr(self.training_feature_group_version), f'prediction_feature_group_version': repr(self.prediction_feature_group_version), f'error': repr(self.error), f'pending_deployment_ids': repr(self.pending_deployment_ids), f'failed_deployment_ids': repr(self.failed_deployment_ids), f'metric_configs': repr(self.metric_configs), f'feature_group_monitor_configs': repr(
+            self.feature_group_monitor_configs), f'metric_types': repr(self.metric_types), f'model_version': repr(self.model_version), f'batch_prediction_version': repr(self.batch_prediction_version), f'eda_configs': repr(self.eda_configs), f'training_forecast_config': repr(self.training_forecast_config), f'prediction_forecast_config': repr(self.prediction_forecast_config), f'forecast_frequency': repr(self.forecast_frequency), f'monitor_drift_config': repr(self.monitor_drift_config), f'prediction_data_use_mappings': repr(self.prediction_data_use_mappings), f'training_data_use_mappings': repr(self.training_data_use_mappings)}
         class_name = "ModelMonitorVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -66,8 +72,8 @@ class ModelMonitorVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'model_monitor_version': self.model_monitor_version, 'status': self.status, 'model_monitor_id': self.model_monitor_id, 'monitoring_started_at': self.monitoring_started_at, 'monitoring_completed_at': self.monitoring_completed_at, 'training_feature_group_version': self.training_feature_group_version, 'prediction_feature_group_version': self.prediction_feature_group_version, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids,
-                'failed_deployment_ids': self.failed_deployment_ids, 'metric_configs': self.metric_configs, 'feature_group_monitor_configs': self.feature_group_monitor_configs, 'metric_types': self.metric_types, 'model_version': self.model_version, 'batch_prediction_version': self.batch_prediction_version, 'eda_configs': self.eda_configs, 'training_forecast_config': self.training_forecast_config, 'prediction_forecast_config': self.prediction_forecast_config, 'forecast_frequency': self.forecast_frequency}
+        resp = {'model_monitor_version': self.model_monitor_version, 'status': self.status, 'model_monitor_id': self.model_monitor_id, 'monitoring_started_at': self.monitoring_started_at, 'monitoring_completed_at': self.monitoring_completed_at, 'training_feature_group_version': self.training_feature_group_version, 'prediction_feature_group_version': self.prediction_feature_group_version, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'metric_configs': self.metric_configs,
+                'feature_group_monitor_configs': self.feature_group_monitor_configs, 'metric_types': self.metric_types, 'model_version': self.model_version, 'batch_prediction_version': self.batch_prediction_version, 'eda_configs': self.eda_configs, 'training_forecast_config': self.training_forecast_config, 'prediction_forecast_config': self.prediction_forecast_config, 'forecast_frequency': self.forecast_frequency, 'monitor_drift_config': self.monitor_drift_config, 'prediction_data_use_mappings': self.prediction_data_use_mappings, 'training_data_use_mappings': self.training_data_use_mappings}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def get_prediction_drift(self):
@@ -166,7 +172,7 @@ class ModelMonitorVersion(AbstractApiClass):
         A waiting call until model monitor version is ready.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'MONITORING'}, timeout=timeout)
 

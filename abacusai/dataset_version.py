@@ -1,3 +1,5 @@
+from typing import List
+
 from .return_class import AbstractApiClass
 
 
@@ -60,12 +62,12 @@ class DatasetVersion(AbstractApiClass):
                 self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas, 'database_connector_config': self.database_connector_config, 'application_connector_config': self.application_connector_config, 'invalid_records': self.invalid_records}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
-    def get_metrics(self, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True):
+    def get_metrics(self, selected_columns: List = None, include_charts: bool = False, include_statistics: bool = True):
         """
         Get metrics for a specific dataset version.
 
         Args:
-            selected_columns (list): A list of columns to order first.
+            selected_columns (List): A list of columns to order first.
             include_charts (bool): A flag indicating whether charts should be included in the response. Default is false.
             include_statistics (bool): A flag indicating whether statistics should be included in the response. Default is true.
 
@@ -113,7 +115,7 @@ class DatasetVersion(AbstractApiClass):
         A waiting call until dataset version is imported.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'IMPORTING'}, timeout=timeout)
 
@@ -122,7 +124,7 @@ class DatasetVersion(AbstractApiClass):
         A waiting call until dataset version is completely inspected.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
 
         """
         return self.client._poll(self, {'PENDING', 'UPLOADING', 'IMPORTING', 'CONVERTING', 'INSPECTING'}, timeout=timeout)

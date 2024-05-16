@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Dict, Union
 
 from .api_class import DocumentRetrieverConfig
 from .document_retriever_config import DocumentRetrieverConfig
@@ -131,7 +131,10 @@ class DocumentRetriever(AbstractApiClass):
 
     def restart(self):
         """
-        Restart the document retriever if it is stopped.
+        Restart the document retriever if it is stopped. This will start the deployment of the document retriever,
+
+        but will not wait for it to be ready. You need to call wait_until_ready to wait until the deployment is ready.
+
 
         Args:
             document_retriever_id (str): A unique string identifier associated with the document retriever.
@@ -140,10 +143,10 @@ class DocumentRetriever(AbstractApiClass):
 
     def wait_until_ready(self, timeout: int = 3600):
         """
-        A waiting call until document retriever is ready.
+        A waiting call until document retriever is ready. It restarts the document retriever if it is stopped.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
         """
         # For the first time this is called, e.g. called after createDocumentRetriever, it needs to do indexing.
         # In this case, get_status will not return STOPPED but deployment could be in STOPPED state, due to
@@ -166,7 +169,7 @@ class DocumentRetriever(AbstractApiClass):
         A waiting call until the document retriever deployment is ready to serve.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
         """
         import time
 
@@ -206,7 +209,7 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.describe().latest_document_retriever_version.deployment_status
 
-    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None):
+    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: Dict[str, int] = None):
         """
         Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -227,8 +230,9 @@ class DocumentRetriever(AbstractApiClass):
             min_score (float): If provided, will filter out the results with score lower than the value specified.
             required_phrases (list): If provided, each result will have at least one of the phrases.
             filter_clause (str): If provided, filter the results of the query using this sql where clause.
+            crowding_limits (dict): A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever.
         """
-        return self.client.get_matching_documents(self.document_retriever_id, query, filters, limit, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column, min_score, required_phrases, filter_clause)
+        return self.client.get_matching_documents(self.document_retriever_id, query, filters, limit, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column, min_score, required_phrases, filter_clause, crowding_limits)

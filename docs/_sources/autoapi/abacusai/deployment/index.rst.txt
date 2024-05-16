@@ -477,7 +477,7 @@ Classes
       :rtype: FeatureGroupRowProcessLogs
 
 
-   .. py:method:: create_conversation(name, deployment_token = None)
+   .. py:method:: create_conversation(name, deployment_token = None, external_application_id = None)
 
       Creates a deployment conversation.
 
@@ -485,17 +485,19 @@ Classes
       :type name: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
       :type deployment_token: str
+      :param external_application_id: The external application id associated with the deployment conversation.
+      :type external_application_id: str
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
 
 
-   .. py:method:: list_conversations()
+   .. py:method:: list_conversations(external_application_id = None)
 
       Lists all conversations for the given deployment and current user.
 
-      :param deployment_id: The deployment to get conversations for.
-      :type deployment_id: str
+      :param external_application_id: The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
+      :type external_application_id: str
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -531,7 +533,7 @@ Classes
       A waiting call until deployment is completed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: wait_for_pending_deployment_update(timeout=900)
@@ -539,7 +541,7 @@ Classes
       A waiting call until deployment is in a stable state, that pending model switch is completed and previous model is stopped.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
       :returns: the latest deployment object.
       :rtype: Deployment

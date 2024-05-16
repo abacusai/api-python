@@ -39,6 +39,8 @@ Classes
 
    abacusai.api_class.ApiClass
    abacusai.api_class.FieldDescriptor
+   abacusai.api_class.WorkflowNodeInputSchema
+   abacusai.api_class.WorkflowNodeOutputSchema
    abacusai.api_class.WorkflowNodeInputMapping
    abacusai.api_class.WorkflowNodeOutputMapping
    abacusai.api_class.WorkflowGraphNode
@@ -150,6 +152,8 @@ Classes
    abacusai.api_class.OcrMode
    abacusai.api_class.StdDevThresholdType
    abacusai.api_class.DataType
+   abacusai.api_class.AgentInterface
+   abacusai.api_class.ProjectConfigType
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.SamplingConfig
@@ -210,8 +214,14 @@ Classes
    abacusai.api_class._AlertActionConfigFactory
    abacusai.api_class.MonitorThresholdConfig
    abacusai.api_class.ApiClass
+   abacusai.api_class._ApiClassFactory
    abacusai.api_class.FeatureMappingConfig
    abacusai.api_class.ProjectFeatureGroupTypeMappingsConfig
+   abacusai.api_class.ConstraintConfig
+   abacusai.api_class.ProjectFeatureGroupConfig
+   abacusai.api_class.ConstraintProjectFeatureGroupConfig
+   abacusai.api_class.ReviewModeProjectFeatureGroupConfig
+   abacusai.api_class._ProjectFeatureGroupConfigFactory
    abacusai.api_class.ApiClass
    abacusai.api_class.PythonFunctionArgument
    abacusai.api_class.OutputVariableMapping
@@ -333,6 +343,67 @@ Functions
       
 
 
+.. py:class:: WorkflowNodeInputSchema
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A react-jsonschema-form conformant schema for workflow node input.
+
+   :param json_schema: The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties".
+   :type json_schema: dict
+   :param ui_schema: The ui schema for the input conformant to react-jsonschema-form specification.
+   :type ui_schema: dict
+
+   .. py:attribute:: json_schema
+      :type: dict
+
+      
+
+   .. py:attribute:: ui_schema
+      :type: dict
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(schema)
+      :classmethod:
+
+
+
+.. py:class:: WorkflowNodeOutputSchema
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A react-jsonschema-form schema for a workflow node output.
+
+   :param json_schema: The json schema for the output conformant to react-jsonschema-form specification.
+   :type json_schema: dict
+
+   .. py:attribute:: json_schema
+      :type: dict
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(schema)
+      :classmethod:
+
+
+
 .. py:class:: WorkflowNodeInputMapping
 
 
@@ -340,7 +411,7 @@ Functions
 
    A mapping of input to a workflow node.
 
-   :param name: The name of the input.
+   :param name: The name of the input variable of the node function.
    :type name: str
    :param variable_type: The type of the input.
    :type variable_type: WorkflowNodeInputType
@@ -349,7 +420,7 @@ Functions
                            If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before user edits it.
                            Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
    :type variable_source: str
-   :param is_required: Whether the input is required.
+   :param is_required: Whether the input is required. Defaults to True
    :type is_required: bool
 
    .. py:attribute:: name
@@ -377,6 +448,10 @@ Functions
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(mapping)
+      :classmethod:
 
 
 
@@ -409,6 +484,10 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+   .. py:method:: from_dict(mapping)
+      :classmethod:
+
+
 
 .. py:class:: WorkflowGraphNode(name, input_mappings, output_mappings, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, package_requirements = None)
 
@@ -419,16 +498,16 @@ Functions
 
    :param name: A unique name for the workflow node.
    :type name: str
-   :param input_mappings: List of input mappings for the node.
+   :param input_mappings: List of input mappings for the node. Each arg/kwarg of the node function should have a corresponding input mapping.
    :type input_mappings: List[WorkflowNodeInputMapping]
-   :param output_mappings: List of output mappings for the node.
+   :param output_mappings: List of output mappings for the node. Each field in the returned dict/AgentResponse must have a corresponding output mapping.
    :type output_mappings: List[WorkflowNodeOutputMapping]
    :param function: The callable node function reference.
    :type function: callable
-   :param input_schema: The react json schema for the input form if applicable.
-   :type input_schema: dict
-   :param output_schema: The react json schema for the output if applicable.
-   :type output_schema: dict
+   :param input_schema: The react json schema for the user input variables.
+   :type input_schema: WorkflowNodeInputSchema
+   :param output_schema: The react json schema for the output to be shown on UI.
+   :type output_schema: WorkflowNodeOutputSchema
    :param package_requirements: List of package requirements for the node.
    :type package_requirements: list
 
@@ -482,7 +561,7 @@ Functions
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   An Agent workflow graph.
+   An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
 
    :param nodes: A list of nodes in the workflow graph.
    :type nodes: List[WorkflowGraphNode]
@@ -725,7 +804,7 @@ Functions
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
    :type for_eval: bool
-   :param predictions_start_date: The start date for predictions.
+   :param predictions_start_date: The start date for predictions. Accepts timestamp integers and strings in many standard formats such as YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, or YYYY-MM-DDTHH:MM:SS. If not specified, the prediction start date will be automatically defined.
    :type predictions_start_date: str
    :param use_prediction_offset: If True, use prediction offset.
    :type use_prediction_offset: bool
@@ -793,15 +872,8 @@ Functions
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
-   :param verbose_predictions: Return prediction inputs, predicted annotations and token label probabilities.
-   :type verbose_predictions: bool
 
    .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: verbose_predictions
       :type: bool
 
       
@@ -1567,11 +1639,11 @@ Functions
    :param location: The location of the pages to fetch
    :type location: str
    :param pull_attachments: Whether to pull attachments for each page
-   :type pull_attachments: bool, optional
+   :type pull_attachments: bool
    :param space_key: The space key to fetch pages from
-   :type space_key: str, optional
+   :type space_key: str
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
-   :type extract_bounding_boxes: bool, optional
+   :type extract_bounding_boxes: bool
 
    .. py:attribute:: location
       :type: str
@@ -1607,9 +1679,9 @@ Functions
    :param location: The view id of the report in the connector to fetch
    :type location: str
    :param start_timestamp: Unix timestamp of the start of the period that will be queried
-   :type start_timestamp: int, optional
+   :type start_timestamp: int
    :param end_timestamp: Unix timestamp of the end of the period that will be queried
-   :type end_timestamp: int, optional
+   :type end_timestamp: int
 
    .. py:attribute:: location
       :type: str
@@ -1640,11 +1712,11 @@ Functions
    :param location: The regex location of the files to fetch
    :type location: str
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-   :type csv_delimiter: str, optional
+   :type csv_delimiter: str
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-   :type extract_bounding_boxes: bool, optional
+   :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-   :type merge_file_schemas: bool, optional
+   :type merge_file_schemas: bool
 
    .. py:attribute:: location
       :type: str
@@ -1680,11 +1752,11 @@ Functions
    :param jql: The JQL query for fetching issues
    :type jql: str
    :param custom_fields: A list of custom fields to include in the dataset
-   :type custom_fields: list, optional
+   :type custom_fields: list
    :param include_comments: Fetch comments for each issue
-   :type include_comments: bool, optional
+   :type include_comments: bool
    :param include_watchers: Fetch watchers for each issue
-   :type include_watchers: bool, optional
+   :type include_watchers: bool
 
    .. py:attribute:: jql
       :type: str
@@ -1720,11 +1792,11 @@ Functions
    :param location: The regex location of the files to fetch
    :type location: str
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-   :type csv_delimiter: str, optional
+   :type csv_delimiter: str
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-   :type extract_bounding_boxes: bool, optional
+   :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-   :type merge_file_schemas: bool, optional
+   :type merge_file_schemas: bool
 
    .. py:attribute:: location
       :type: str
@@ -1762,11 +1834,11 @@ Functions
    :param is_documentset: Whether the dataset is a document set
    :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-   :type csv_delimiter: str, optional
+   :type csv_delimiter: str
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-   :type extract_bounding_boxes: bool, optional
+   :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-   :type merge_file_schemas: bool, optional
+   :type merge_file_schemas: bool
 
    .. py:attribute:: location
       :type: str
@@ -1798,6 +1870,14 @@ Functions
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Zendesk Application Connector
+
+   :param location: The regex location of the files to fetch
+   :type location: str
+
+   .. py:attribute:: location
+      :type: str
+
+      
 
    .. py:method:: __post_init__()
 
@@ -3977,6 +4057,11 @@ Functions
 
       
 
+   .. py:attribute:: ZENDESKSUNSHINEMESSAGING
+      :value: 'zendesksunshinemessaging'
+
+      
+
 
 .. py:class:: PythonFunctionArgumentType
 
@@ -4192,6 +4277,11 @@ Functions
 
       
 
+   .. py:attribute:: OPENAI_GPT4O
+      :value: 'OPENAI_GPT4O'
+
+      
+
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
@@ -4204,6 +4294,11 @@ Functions
 
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
+
+      
+
+   .. py:attribute:: GROQ_LLAMA3_LARGE_CHAT
+      :value: 'GROQ_LLAMA3_LARGE_CHAT'
 
       
 
@@ -4562,13 +4657,8 @@ Functions
 
    Derive from this class to define new enumerations.
 
-   .. py:attribute:: INTEGER
-      :value: 'INTEGER'
-
-      
-
-   .. py:attribute:: STRING
-      :value: 'STRING'
+   .. py:attribute:: ATTACHMENT
+      :value: 'ATTACHMENT'
 
       
 
@@ -4582,13 +4672,23 @@ Functions
 
       
 
-   .. py:attribute:: JSON
-      :value: 'JSON'
+   .. py:attribute:: INTEGER
+      :value: 'INTEGER'
+
+      
+
+   .. py:attribute:: DICT
+      :value: 'DICT'
 
       
 
    .. py:attribute:: LIST
       :value: 'LIST'
+
+      
+
+   .. py:attribute:: STRING
+      :value: 'STRING'
 
       
 
@@ -4715,6 +4815,46 @@ Functions
    .. py:method:: from_str(value)
       :classmethod:
 
+
+
+.. py:class:: AgentInterface
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: DEFAULT
+      :value: 'DEFAULT'
+
+      
+
+   .. py:attribute:: CHAT
+      :value: 'CHAT'
+
+      
+
+
+.. py:class:: ProjectConfigType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: CONSTRAINTS
+      :value: 'CONSTRAINTS'
+
+      
+
+   .. py:attribute:: REVIEW_MODE
+      :value: 'REVIEW_MODE'
+
+      
 
 
 .. py:class:: ApiClass
@@ -6279,16 +6419,24 @@ Functions
    :type num_completion_tokens: int
    :param temperature: The generative LLM temperature
    :type temperature: float
-   :param metadata_columns: Include the metadata column values in the retrieved search results.
-   :type metadata_columns: list
+   :param retrieval_columns: Include the metadata column values in the retrieved search results.
+   :type retrieval_columns: list
+   :param filter_columns: Allow users to filter the document retrievers on these metadata columns.
+   :type filter_columns: list
    :param include_general_knowledge: Allow the LLM to rely not just on search results, but to fall back on general knowledge.
    :type include_general_knowledge: bool
    :param behavior_instructions: Customize the overall role instructions for the LLM.
    :type behavior_instructions: str
    :param response_instructions: Customize instructions for what the LLM responses should look like.
    :type response_instructions: str
-   :param lookup_rewrite_instructions: Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
-   :type lookup_rewrite_instructions: str
+   :param enable_llm_rewrite: Enable LLM rewrite for the ChatLLM. If None, LLM rewrite will happen automatically. Defaults to False.
+   :type enable_llm_rewrite: bool
+   :param column_filtering_instructions: Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
+   :type column_filtering_instructions: str
+   :param keyword_requirement_instructions: Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.
+   :type keyword_requirement_instructions: str
+   :param query_rewrite_instructions: Instructions for a LLM call to rewrite a search query.
+   :type query_rewrite_instructions: str
    :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
    :type max_search_results: int
    :param data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
@@ -6306,6 +6454,10 @@ Functions
    :type database_connector_tables: List[str]
    :param enable_code_execution: Enable code execution in the ChatLLM.
    :type enable_code_execution: bool
+   :param metadata_columns: DEPRECATED. Include the metadata column values in the retrieved search results.
+   :type metadata_columns: list
+   :param lookup_rewrite_instructions: DEPRECATED. Instructions for a LLM call to rewrite a search query.
+   :type lookup_rewrite_instructions: str
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -6322,7 +6474,12 @@ Functions
 
       
 
-   .. py:attribute:: metadata_columns
+   .. py:attribute:: retrieval_columns
+      :type: list
+
+      
+
+   .. py:attribute:: filter_columns
       :type: list
 
       
@@ -6342,7 +6499,23 @@ Functions
 
       
 
-   .. py:attribute:: lookup_rewrite_instructions
+   .. py:attribute:: enable_llm_rewrite
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: column_filtering_instructions
+      :type: str
+
+      
+
+   .. py:attribute:: keyword_requirement_instructions
+      :type: str
+
+      
+
+   .. py:attribute:: query_rewrite_instructions
       :type: str
 
       
@@ -6389,6 +6562,16 @@ Functions
 
    .. py:attribute:: enable_code_execution
       :type: bool
+
+      
+
+   .. py:attribute:: metadata_columns
+      :type: list
+
+      
+
+   .. py:attribute:: lookup_rewrite_instructions
+      :type: str
 
       
 
@@ -6802,15 +6985,16 @@ Functions
 
    :param description: Description of the agent function.
    :type description: str
-   :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
-   :type enable_binary_input: bool
-   :param agent_input_schema: Schema for the agent input.
-   :type agent_input_schema: dict
-   :param agent_output_schema: Schema for the agent output.
-   :type agent_output_schema: dict
+   :param agent_interface: The interface that the agent will be deployed with.
+   :type agent_interface: AgentInterface
 
    .. py:attribute:: description
       :type: str
+
+      
+
+   .. py:attribute:: agent_interface
+      :type: abacusai.api_class.enums.AgentInterface
 
       
 
@@ -7233,8 +7417,16 @@ Functions
 
    :param feature_name: The name of the feature to restrict the monitor to.
    :type feature_name: str
-   :param restricted_feature_values: The values of the feature to restrict the monitor to.
+   :param restricted_feature_values: The values of the feature to restrict the monitor to if feature is a categorical.
    :type restricted_feature_values: list
+   :param start_time: The start time of the timestamp feature to filter from
+   :type start_time: str
+   :param end_time: The end time of the timestamp feature to filter until
+   :type end_time: str
+   :param min_value: Value to filter the numerical feature above
+   :type min_value: float
+   :param max_value: Filtering the numerical feature to below this value
+   :type max_value: float
 
    .. py:attribute:: feature_name
       :type: str
@@ -7243,6 +7435,26 @@ Functions
 
    .. py:attribute:: restricted_feature_values
       :type: list
+
+      
+
+   .. py:attribute:: start_time
+      :type: str
+
+      
+
+   .. py:attribute:: end_time
+      :type: str
+
+      
+
+   .. py:attribute:: min_value
+      :type: float
+
+      
+
+   .. py:attribute:: max_value
+      :type: float
 
       
 
@@ -7265,8 +7477,8 @@ Functions
    :type start_time: str
    :param end_time: The end time of the prediction time col
    :type end_time: str
-   :param restrict_feature_mapping: The feature mapping to restrict the monitor to.
-   :type restrict_feature_mapping: RestrictFeatureMappings
+   :param restrict_feature_mappings: The feature mapping to restrict the monitor to.
+   :type restrict_feature_mappings: RestrictFeatureMappings
    :param target_class: The target class to restrict the monitor to.
    :type target_class: str
    :param train_target_feature: Set the target feature for the training data.
@@ -7803,6 +8015,31 @@ Functions
 
 
 
+.. py:class:: _ApiClassFactory
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+   .. py:method:: from_dict(config)
+      :classmethod:
+
+
+
 .. py:class:: FeatureMappingConfig
 
 
@@ -7865,6 +8102,127 @@ Functions
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
+
+
+.. py:class:: ConstraintConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Constraint configuration.
+
+   :param constant: The constant value for the constraint.
+   :type constant: float
+   :param operator: The operator for the constraint. Could be 'EQ', 'LE', 'GE'
+   :type operator: str
+   :param enforcement: The enforcement for the constraint. Could be 'HARD' or 'SOFT'. Default is 'HARD'
+   :type enforcement: str
+   :param code: The code for the constraint.
+   :type code: str
+   :param penalty: The penalty for violating the constraint.
+   :type penalty: float
+
+   .. py:attribute:: constant
+      :type: float
+
+      
+
+   .. py:attribute:: operator
+      :type: str
+
+      
+
+   .. py:attribute:: enforcement
+      :type: Optional[str]
+
+      
+
+   .. py:attribute:: code
+      :type: Optional[str]
+
+      
+
+   .. py:attribute:: penalty
+      :type: Optional[float]
+
+      
+
+
+.. py:class:: ProjectFeatureGroupConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   An abstract class for project feature group configuration.
+
+   .. py:attribute:: type
+      :type: abacusai.api_class.enums.ProjectConfigType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: ConstraintProjectFeatureGroupConfig
+
+
+   Bases: :py:obj:`ProjectFeatureGroupConfig`
+
+   Constraint project feature group configuration.
+
+   :param constraints: The constraint for the feature group. Should be a list of one ConstraintConfig.
+   :type constraints: List[ConstraintConfig]
+
+   .. py:attribute:: constraints
+      :type: List[ConstraintConfig]
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ReviewModeProjectFeatureGroupConfig
+
+
+   Bases: :py:obj:`ProjectFeatureGroupConfig`
+
+   Review mode project feature group configuration.
+
+   :param is_review_mode: The review mode for the feature group.
+   :type is_review_mode: bool
+
+   .. py:attribute:: is_review_mode
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _ProjectFeatureGroupConfigFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'type'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
 
 
 .. py:class:: ApiClass

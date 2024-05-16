@@ -123,7 +123,7 @@ class PipelineVersion(AbstractApiClass):
         A waiting call until all the stages in a pipeline version have completed.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'RUNNING'}, timeout=timeout)
 

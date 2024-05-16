@@ -30,7 +30,7 @@ Classes
    :type featureGroupId: str
    :param modificationLock: If feature group is locked against a change or not.
    :type modificationLock: bool
-   :param name: Unique name of this feature group.
+   :param name:
    :type name: str
    :param featureGroupSourceType: The source type of the feature group
    :type featureGroupSourceType: str
@@ -148,8 +148,8 @@ Classes
 
       :param project_id: Unique string identifier for the project.
       :type project_id: str
-      :param project_config: JSON object for the feature group's project configuration.
-      :type project_config: dict
+      :param project_config: Feature group's project configuration.
+      :type project_config: ProjectFeatureGroupConfig
 
 
    .. py:method:: get_project_config(project_id)
@@ -813,7 +813,7 @@ Classes
       Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
       :param python_function_bindings: List of python function arguments.
-      :type python_function_bindings: list
+      :type python_function_bindings: List
 
 
    .. py:method:: update_python_function(python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None, use_original_csv_names = None)
@@ -827,7 +827,7 @@ Classes
       :param python_function_name: The name of the python function to be associated with the feature group.
       :type python_function_name: str
       :param python_function_bindings: List of python function arguments.
-      :type python_function_bindings: list
+      :type python_function_bindings: List
       :param cpu_size: Size of the CPU for the feature group python function.
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group python function.
@@ -1109,7 +1109,7 @@ Classes
           A waiting call until the feature group's dataset, if any, is ready for use.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: wait_for_upload(timeout = 7200)
@@ -1117,7 +1117,7 @@ Classes
           Waits for a feature group created from a dataframe to be ready for materialization and version creation.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: wait_for_materialization(timeout = 7200)
@@ -1125,7 +1125,7 @@ Classes
       A waiting call until feature group is materialized.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: wait_for_streaming_ready(timeout = 600)
@@ -1133,7 +1133,7 @@ Classes
       Waits for the feature group indexing config to be applied for streaming
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 600 seconds.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: get_status(streaming_status = False)

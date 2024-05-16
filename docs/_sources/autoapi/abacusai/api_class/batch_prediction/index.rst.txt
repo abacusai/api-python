@@ -63,7 +63,7 @@ Classes
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
    :type for_eval: bool
-   :param predictions_start_date: The start date for predictions.
+   :param predictions_start_date: The start date for predictions. Accepts timestamp integers and strings in many standard formats such as YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, or YYYY-MM-DDTHH:MM:SS. If not specified, the prediction start date will be automatically defined.
    :type predictions_start_date: str
    :param use_prediction_offset: If True, use prediction offset.
    :type use_prediction_offset: bool
@@ -131,15 +131,8 @@ Classes
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
-   :param verbose_predictions: Return prediction inputs, predicted annotations and token label probabilities.
-   :type verbose_predictions: bool
 
    .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: verbose_predictions
       :type: bool
 
       

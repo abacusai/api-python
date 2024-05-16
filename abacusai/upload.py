@@ -127,9 +127,9 @@ class Upload(AbstractApiClass):
 
         Args:
             file (IOBase): A bytesIO or StringIO object to upload to Abacus.AI
-            threads (int, optional): The max number of workers to use while uploading the file
-            chunksize (int, optional): The number of bytes to use for each chunk while uploading the file. Defaults to 10 MB
-            wait_timeout (int, optional): The max number of seconds to wait for the file parts to be joined on Abacus.AI. Defaults to 600.
+            threads (int): The max number of workers to use while uploading the file
+            chunksize (int): The number of bytes to use for each chunk while uploading the file. Defaults to 10 MB
+            wait_timeout (int): The max number of seconds to wait for the file parts to be joined on Abacus.AI. Defaults to 600.
 
         Returns:
             Upload: The upload file object.
@@ -164,7 +164,7 @@ class Upload(AbstractApiClass):
         A waiting call until the upload parts are joined.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to have timed out. Defaults to 600.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to have timed out. Defaults to 600.
         """
         return self.client._poll(self, {'PENDING', 'JOINING'}, timeout=timeout)
 

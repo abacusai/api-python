@@ -66,6 +66,8 @@ Classes
    abacusai.api_class.enums.OcrMode
    abacusai.api_class.enums.StdDevThresholdType
    abacusai.api_class.enums.DataType
+   abacusai.api_class.enums.AgentInterface
+   abacusai.api_class.enums.ProjectConfigType
 
 
 
@@ -1589,6 +1591,11 @@ Classes
 
       
 
+   .. py:attribute:: ZENDESKSUNSHINEMESSAGING
+      :value: 'zendesksunshinemessaging'
+
+      
+
 
 .. py:class:: PythonFunctionArgumentType
 
@@ -1804,6 +1811,11 @@ Classes
 
       
 
+   .. py:attribute:: OPENAI_GPT4O
+      :value: 'OPENAI_GPT4O'
+
+      
+
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
@@ -1816,6 +1828,11 @@ Classes
 
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
+
+      
+
+   .. py:attribute:: GROQ_LLAMA3_LARGE_CHAT
+      :value: 'GROQ_LLAMA3_LARGE_CHAT'
 
       
 
@@ -2174,13 +2191,8 @@ Classes
 
    Derive from this class to define new enumerations.
 
-   .. py:attribute:: INTEGER
-      :value: 'INTEGER'
-
-      
-
-   .. py:attribute:: STRING
-      :value: 'STRING'
+   .. py:attribute:: ATTACHMENT
+      :value: 'ATTACHMENT'
 
       
 
@@ -2194,13 +2206,23 @@ Classes
 
       
 
-   .. py:attribute:: JSON
-      :value: 'JSON'
+   .. py:attribute:: INTEGER
+      :value: 'INTEGER'
+
+      
+
+   .. py:attribute:: DICT
+      :value: 'DICT'
 
       
 
    .. py:attribute:: LIST
       :value: 'LIST'
+
+      
+
+   .. py:attribute:: STRING
+      :value: 'STRING'
 
       
 
@@ -2327,5 +2349,45 @@ Classes
    .. py:method:: from_str(value)
       :classmethod:
 
+
+
+.. py:class:: AgentInterface
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: DEFAULT
+      :value: 'DEFAULT'
+
+      
+
+   .. py:attribute:: CHAT
+      :value: 'CHAT'
+
+      
+
+
+.. py:class:: ProjectConfigType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: CONSTRAINTS
+      :value: 'CONSTRAINTS'
+
+      
+
+   .. py:attribute:: REVIEW_MODE
+      :value: 'REVIEW_MODE'
+
+      
 
 

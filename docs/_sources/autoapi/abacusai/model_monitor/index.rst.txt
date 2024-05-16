@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, predictionFeatureGroupVersion=None, trainingFeatureGroupVersion=None, alertConfig=None, biasMetricId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, trainingFeatureGroupSampling=None, predictionFeatureGroupSampling=None, refreshSchedules={}, latestMonitorModelVersion={})
+.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, predictionFeatureGroupVersion=None, trainingFeatureGroupVersion=None, alertConfig=None, biasMetricId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, trainingFeatureGroupSampling=None, predictionFeatureGroupSampling=None, monitorDriftConfig=None, predictionDataUseMappings=None, trainingDataUseMappings=None, refreshSchedules={}, latestMonitorModelVersion={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -72,6 +72,12 @@ Classes
    :type trainingFeatureGroupSampling: bool
    :param predictionFeatureGroupSampling: Whether or not we sample from prediction feature group
    :type predictionFeatureGroupSampling: bool
+   :param monitorDriftConfig: The monitor drift config for the monitor
+   :type monitorDriftConfig: dict
+   :param predictionDataUseMappings: The data_use mapping of the prediction features
+   :type predictionDataUseMappings: dict
+   :param trainingDataUseMappings: The data_use mapping of the training features
+   :type trainingDataUseMappings: dict
    :param latestMonitorModelVersion: The latest model monitor version.
    :type latestMonitorModelVersion: ModelMonitorVersion
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.

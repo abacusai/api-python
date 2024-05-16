@@ -179,8 +179,16 @@ Classes
 
    :param feature_name: The name of the feature to restrict the monitor to.
    :type feature_name: str
-   :param restricted_feature_values: The values of the feature to restrict the monitor to.
+   :param restricted_feature_values: The values of the feature to restrict the monitor to if feature is a categorical.
    :type restricted_feature_values: list
+   :param start_time: The start time of the timestamp feature to filter from
+   :type start_time: str
+   :param end_time: The end time of the timestamp feature to filter until
+   :type end_time: str
+   :param min_value: Value to filter the numerical feature above
+   :type min_value: float
+   :param max_value: Filtering the numerical feature to below this value
+   :type max_value: float
 
    .. py:attribute:: feature_name
       :type: str
@@ -189,6 +197,26 @@ Classes
 
    .. py:attribute:: restricted_feature_values
       :type: list
+
+      
+
+   .. py:attribute:: start_time
+      :type: str
+
+      
+
+   .. py:attribute:: end_time
+      :type: str
+
+      
+
+   .. py:attribute:: min_value
+      :type: float
+
+      
+
+   .. py:attribute:: max_value
+      :type: float
 
       
 
@@ -211,8 +239,8 @@ Classes
    :type start_time: str
    :param end_time: The end time of the prediction time col
    :type end_time: str
-   :param restrict_feature_mapping: The feature mapping to restrict the monitor to.
-   :type restrict_feature_mapping: RestrictFeatureMappings
+   :param restrict_feature_mappings: The feature mapping to restrict the monitor to.
+   :type restrict_feature_mappings: RestrictFeatureMappings
    :param target_class: The target class to restrict the monitor to.
    :type target_class: str
    :param train_target_feature: Set the target feature for the training data.

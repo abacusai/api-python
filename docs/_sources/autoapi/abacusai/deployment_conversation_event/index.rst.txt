@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -66,6 +66,10 @@ Classes
    :type error: str
    :param segments: The segments of the message.
    :type segments: list
+   :param streamedData: Aggregated streamed messages from the agent.
+   :type streamedData: str
+   :param streamedSectionData: Aggregated streamed section outputs from the agent in a list.
+   :type streamedSectionData: str
 
    .. py:method:: __repr__()
 

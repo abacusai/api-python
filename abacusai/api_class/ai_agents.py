@@ -23,18 +23,66 @@ class FieldDescriptor(ApiClass):
 
 
 @dataclasses.dataclass
+class WorkflowNodeInputSchema(ApiClass):
+    """
+    A react-jsonschema-form conformant schema for workflow node input.
+
+    Args:
+        json_schema (dict): The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties".
+        ui_schema (dict): The ui schema for the input conformant to react-jsonschema-form specification.
+    """
+    json_schema: dict
+    ui_schema: dict = dataclasses.field(default_factory=dict)
+
+    def to_dict(self):
+        return {
+            'json_schema': self.json_schema,
+            'ui_schema': self.ui_schema
+        }
+
+    @classmethod
+    def from_dict(cls, schema: dict):
+        return cls(
+            json_schema=schema.get('json_schema', schema),
+            ui_schema=schema.get('ui_schema', {})
+        )
+
+
+@dataclasses.dataclass
+class WorkflowNodeOutputSchema(ApiClass):
+    """
+    A react-jsonschema-form schema for a workflow node output.
+
+    Args:
+        json_schema (dict): The json schema for the output conformant to react-jsonschema-form specification.
+    """
+    json_schema: dict
+
+    def to_dict(self):
+        return {
+            'json_schema': self.json_schema
+        }
+
+    @classmethod
+    def from_dict(cls, schema: dict):
+        return cls(
+            json_schema=schema.get('json_schema', schema)
+        )
+
+
+@dataclasses.dataclass
 class WorkflowNodeInputMapping(ApiClass):
     """
     A mapping of input to a workflow node.
 
     Args:
-        name (str): The name of the input.
+        name (str): The name of the input variable of the node function.
         variable_type (WorkflowNodeInputType): The type of the input.
         variable_source (str): The name of the node this variable is sourced from.
                                If the type is `WORKFLOW_VARIABLE`, the value given by the source node will be directly used.
                                If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before user edits it.
                                Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
-        is_required (bool): Whether the input is required.
+        is_required (bool): Whether the input is required. Defaults to True
     """
     name: str
     variable_type: enums.WorkflowNodeInputType
@@ -48,6 +96,15 @@ class WorkflowNodeInputMapping(ApiClass):
             'variable_source': self.variable_source,
             'is_required': self.is_required
         }
+
+    @classmethod
+    def from_dict(cls, mapping: dict):
+        return cls(
+            name=mapping['name'],
+            variable_type=mapping['variable_type'],
+            variable_source=mapping.get('variable_source'),
+            is_required=mapping.get('is_required', True)
+        )
 
 
 @dataclasses.dataclass
@@ -68,6 +125,13 @@ class WorkflowNodeOutputMapping(ApiClass):
             'variable_type': self.variable_type
         }
 
+    @classmethod
+    def from_dict(cls, mapping: dict):
+        return cls(
+            name=mapping['name'],
+            variable_type=mapping['variable_type']
+        )
+
 
 @dataclasses.dataclass
 class WorkflowGraphNode(ApiClass):
@@ -76,15 +140,15 @@ class WorkflowGraphNode(ApiClass):
 
     Args:
         name (str): A unique name for the workflow node.
-        input_mappings (List[WorkflowNodeInputMapping]): List of input mappings for the node.
-        output_mappings (List[WorkflowNodeOutputMapping]): List of output mappings for the node.
+        input_mappings (List[WorkflowNodeInputMapping]): List of input mappings for the node. Each arg/kwarg of the node function should have a corresponding input mapping.
+        output_mappings (List[WorkflowNodeOutputMapping]): List of output mappings for the node. Each field in the returned dict/AgentResponse must have a corresponding output mapping.
         function (callable): The callable node function reference.
-        input_schema (dict): The react json schema for the input form if applicable.
-        output_schema (dict): The react json schema for the output if applicable.
+        input_schema (WorkflowNodeInputSchema): The react json schema for the user input variables.
+        output_schema (WorkflowNodeOutputSchema): The react json schema for the output to be shown on UI.
         package_requirements (list): List of package requirements for the node.
     """
 
-    def __init__(self, name: str, input_mappings: List[WorkflowNodeInputMapping], output_mappings: List[WorkflowNodeOutputMapping], function: callable = None, function_name: str = None, source_code: str = None, input_schema: dict = None, output_schema: dict = None, package_requirements: list = None):
+    def __init__(self, name: str, input_mappings: List[WorkflowNodeInputMapping], output_mappings: List[WorkflowNodeOutputMapping], function: callable = None, function_name: str = None, source_code: str = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, package_requirements: list = None):
         if function:
             self.function_name = function.__name__
             self.source_code = get_clean_function_source_code(function)
@@ -97,8 +161,8 @@ class WorkflowGraphNode(ApiClass):
         self.name = name
         self.input_mappings = input_mappings
         self.output_mappings = output_mappings
-        self.input_schema = input_schema if input_schema else {}
-        self.output_schema = output_schema if output_schema else {}
+        self.input_schema = input_schema if input_schema else WorkflowNodeInputSchema({})
+        self.output_schema = output_schema if output_schema else WorkflowNodeOutputSchema({})
         self.package_requirements = package_requirements if package_requirements else []
 
     def to_dict(self):
@@ -108,8 +172,8 @@ class WorkflowGraphNode(ApiClass):
             'source_code': self.source_code,
             'input_mappings': [mapping.to_dict() for mapping in self.input_mappings],
             'output_mappings': [mapping.to_dict() for mapping in self.output_mappings],
-            'input_schema': self.input_schema,
-            'output_schema': self.output_schema,
+            'input_schema': self.input_schema.to_dict(),
+            'output_schema': self.output_schema.to_dict(),
             'package_requirements': self.package_requirements
         }
 
@@ -119,10 +183,10 @@ class WorkflowGraphNode(ApiClass):
             name=node['name'],
             function_name=node['function_name'],
             source_code=node['source_code'],
-            input_mappings=[WorkflowNodeInputMapping(**mapping) for mapping in node['input_mappings']],
-            output_mappings=[WorkflowNodeOutputMapping(**mapping) for mapping in node['output_mappings']],
-            input_schema=node.get('input_schema', {}),
-            output_schema=node.get('output_schema', {}),
+            input_mappings=[WorkflowNodeInputMapping.from_dict(mapping) for mapping in node['input_mappings']],
+            output_mappings=[WorkflowNodeOutputMapping.from_dict(mapping) for mapping in node['output_mappings']],
+            input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
+            output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
             package_requirements=node.get('package_requirements', [])
         )
 
@@ -148,7 +212,7 @@ class WorkflowGraphEdge(ApiClass):
 @dataclasses.dataclass
 class WorkflowGraph(ApiClass):
     """
-    An Agent workflow graph.
+    An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
 
     Args:
         nodes (List[WorkflowGraphNode]): A list of nodes in the workflow graph.

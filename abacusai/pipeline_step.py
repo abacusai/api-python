@@ -1,3 +1,5 @@
+from typing import List
+
 from .code_source import CodeSource
 from .python_function import PythonFunction
 from .return_class import AbstractApiClass
@@ -70,15 +72,15 @@ class PipelineStep(AbstractApiClass):
         """
         return self.client.delete_pipeline_step(self.pipeline_step_id)
 
-    def update(self, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None, timeout: int = None):
+    def update(self, function_name: str = None, source_code: str = None, step_input_mappings: List = None, output_variable_mappings: List = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None, timeout: int = None):
         """
         Creates a step in a given pipeline.
 
         Args:
             function_name (str): The name of the Python function.
             source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
-            step_input_mappings (list): List of Python function arguments.
-            output_variable_mappings (list): List of Python function outputs.
+            step_input_mappings (List): List of Python function arguments.
+            output_variable_mappings (List): List of Python function outputs.
             step_dependencies (list): List of step names this step depends on.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.

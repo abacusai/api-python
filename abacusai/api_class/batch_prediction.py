@@ -26,7 +26,7 @@ class ForecastingBatchPredictionArgs(BatchPredictionArgs):
 
     Args:
        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
-       predictions_start_date (str): The start date for predictions.
+       predictions_start_date (str): The start date for predictions. Accepts timestamp integers and strings in many standard formats such as YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, or YYYY-MM-DDTHH:MM:SS. If not specified, the prediction start date will be automatically defined.
        use_prediction_offset (bool): If True, use prediction offset.
        start_date_offset (int): Sets prediction start date as this offset relative to the prediction start date.
        forecasting_horizon (int): The number of timestamps to predict in the future. Range: [1, 1000].
@@ -54,10 +54,8 @@ class NamedEntityExtractionBatchPredictionArgs(BatchPredictionArgs):
 
     Args:
        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-       verbose_predictions (bool): Return prediction inputs, predicted annotations and token label probabilities.
     """
     for_eval: bool = dataclasses.field(default=None)
-    verbose_predictions: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.NAMED_ENTITY_EXTRACTION

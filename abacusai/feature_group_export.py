@@ -119,7 +119,7 @@ class FeatureGroupExport(AbstractApiClass):
         A waiting call until feature group export is created.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'EXPORTING'}, timeout=timeout)
 
@@ -128,7 +128,7 @@ class FeatureGroupExport(AbstractApiClass):
         A waiting call until feature group export is created.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.wait_for_results(timeout=timeout)
 

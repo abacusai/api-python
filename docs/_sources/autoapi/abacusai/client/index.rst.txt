@@ -492,7 +492,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '1.2.4'
+      :value: '1.2.5'
 
       
 
@@ -688,7 +688,7 @@ Attributes
       :param project_id: The unique ID associated with the project.
       :type project_id: str
       :param feature_group_ids: The list of feature group IDs to validate.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
       :rtype: ProjectValidation
@@ -964,7 +964,7 @@ Attributes
       :param feature_group_version: A unique string identifier associated with the feature group version.
       :type feature_group_version: str
       :param selected_columns: A list of columns to order first.
-      :type selected_columns: list
+      :type selected_columns: List
       :param include_charts: A flag indicating whether charts should be included in the response. Default is false.
       :type include_charts: bool
       :param include_statistics: A flag indicating whether statistics should be included in the response. Default is true.
@@ -1077,7 +1077,7 @@ Attributes
       :param dataset_version: A unique string identifier associated with the dataset version.
       :type dataset_version: str
       :param selected_columns: A list of columns to order first.
-      :type selected_columns: list
+      :type selected_columns: List
       :param include_charts: A flag indicating whether charts should be included in the response. Default is false.
       :type include_charts: bool
       :param include_statistics: A flag indicating whether statistics should be included in the response. Default is true.
@@ -1966,19 +1966,19 @@ Attributes
       :param project_id: Project ID for which we wish to see the refresh policies attached.
       :type project_id: str
       :param dataset_ids: Comma-separated list of Dataset IDs.
-      :type dataset_ids: list
+      :type dataset_ids: List
       :param feature_group_id: Feature Group ID for which we wish to see the refresh policies attached.
       :type feature_group_id: str
       :param model_ids: Comma-separated list of Model IDs.
-      :type model_ids: list
+      :type model_ids: List
       :param deployment_ids: Comma-separated list of Deployment IDs.
-      :type deployment_ids: list
+      :type deployment_ids: List
       :param batch_prediction_ids: Comma-separated list of Batch Prediction IDs.
-      :type batch_prediction_ids: list
+      :type batch_prediction_ids: List
       :param model_monitor_ids: Comma-separated list of Model Monitor IDs.
-      :type model_monitor_ids: list
+      :type model_monitor_ids: List
       :param notebook_ids: Comma-separated list of Notebook IDs.
-      :type notebook_ids: list
+      :type notebook_ids: List
 
       :returns: List of all refresh policies in the organization.
       :rtype: list[RefreshPolicy]
@@ -2415,7 +2415,7 @@ Attributes
       :rtype: ChatSession
 
 
-   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, deployment_token = None)
+   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, deployment_token = None, filter_intermediate_conversation_events = True)
 
       Gets a deployment conversation.
 
@@ -2427,17 +2427,21 @@ Attributes
       :type deployment_id: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
       :type deployment_token: str
+      :param filter_intermediate_conversation_events: If true, intermediate conversation events will be filtered out. Default is true.
+      :type filter_intermediate_conversation_events: bool
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
 
 
-   .. py:method:: list_deployment_conversations(deployment_id)
+   .. py:method:: list_deployment_conversations(deployment_id, external_application_id = None)
 
       Lists all conversations for the given deployment and current user.
 
       :param deployment_id: The deployment to get conversations for.
       :type deployment_id: str
+      :param external_application_id: The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
+      :type external_application_id: str
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -2529,7 +2533,7 @@ Attributes
       :param project_id: The ID of the project in which to restrict the search, if specified.
       :type project_id: str
       :param feature_group_ids: A list of feagure group IDs to restrict the search to.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
 
       :returns: A list of search results, each containing the retrieved object and its relevance score
       :rtype: list[OrganizationSearchResult]
@@ -2559,6 +2563,14 @@ Attributes
 
       :returns: An array of Agent versions.
       :rtype: list[AgentVersion]
+
+
+   .. py:method:: list_llm_apps()
+
+      Lists all available LLM Apps, which are LLMs tailored to achieve a specific task like code generation for a specific service's API.
+
+      :returns: A list of LLM Apps.
+      :rtype: list[LlmApp]
 
 
    .. py:method:: list_document_retrievers(project_id, limit = 100, start_after_id = None)
@@ -2727,7 +2739,7 @@ Attributes
       :param should_wait_for_upload: Wait for dataframe to upload before returning. Some FeatureGroup methods, like materialization, may not work until upload is complete.
       :type should_wait_for_upload: bool
       :param timeout: If waiting for upload, time out after this limit.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: create_spark_df_from_feature_group_version(session, feature_group_version)
@@ -2746,22 +2758,22 @@ Attributes
 
       Create a new prediction operator.
 
-      :param prediction_operator_id: The unique ID of the prediction operator.
-      :type prediction_operator_id: str
       :param name: Name of the prediction operator.
       :type name: str
-      :param function_source_code: Contents of a valid Python source code file. The source code should contain the function `predictFunctionName`, and the function 'initializeFunctionName' if defined.
-      :type function_source_code: str
-      :param predict_function_name: Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
-      :type predict_function_name: str
-      :param predict_function_name: Name of the function found in the source code that will be executed to run predictions.
-      :type predict_function_name: str
+      :param project_id: The unique ID of the associated project.
+      :type project_id: str
+      :param predict_function: The function that will be executed to run predictions.
+      :type predict_function: callable
+      :param initialize_function: The initialization function that can generate anything used by predictions, based on input feature groups.
+      :type initialize_function: callable
       :param feature_group_ids: List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes.
       :type feature_group_ids: list
       :param cpu_size: Size of the CPU for the prediction operator.
       :type cpu_size: str
       :param memory: Memory (in GB) for the  prediction operator.
       :type memory: int
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
       :param use_gpu: Whether this rediction operator needs gpu.
@@ -2775,24 +2787,24 @@ Attributes
 
       Update an existing prediction operator.
 
+      :param prediction_operator_id: The unique ID of the prediction operator.
+      :type prediction_operator_id: str
       :param name: The name of the prediction operator
       :type name: str
-      :param project_id: The project to create the prediction in
-      :type project_id: str
       :param predict_function: The predict function callable to serialize and upload
       :type predict_function: callable
       :param initialize_function: The initialize function callable to serialize and upload
       :type initialize_function: callable
-      :param initialize_input_tables: The input table names of the feature groups to pass to the train function
-      :type initialize_input_tables: list
+      :param feature_group_ids: List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes. The order should match the initialize function's parameters.
+      :type feature_group_ids: list
       :param cpu_size: Size of the cpu for the training function
       :type cpu_size: str
       :param memory: Memory (in GB) for the training function
       :type memory: int
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
-      :type included_modules: list
       :param use_gpu: Whether this prediction needs gpu
       :type use_gpu: bool
 
@@ -2817,9 +2829,13 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the training function
       :type memory: int
+      :param training_config: Training configuration
+      :type training_config: TrainingConfig
+      :param exclusive_run: Decides if this model will be run exclusively or along with other Abacus.AI algorithms
+      :type exclusive_run: bool
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
       :param name: The name of the model
       :type name: str
@@ -2851,7 +2867,7 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
       :param use_gpu: Whether this model needs gpu
       :type use_gpu: bool
@@ -2881,7 +2897,7 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the step function.
       :type memory: int
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
       :param timeout: Timeout for how long the step can run in minutes, default is 300 minutes.
       :type timeout: int
@@ -2907,7 +2923,7 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the step function.
       :type memory: int
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
       :param timeout: Timeout for the step in minutes, default is 300 minutes.
       :type timeout: int
@@ -2949,7 +2965,7 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
 
 
@@ -2965,7 +2981,7 @@ Attributes
       :type function_variable_mappings: List<PythonFunctionArguments>
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
 
       :returns: The python_function object.
@@ -2997,13 +3013,14 @@ Attributes
       :param config_options: Map dataset types and configs to train function parameter names
       :type config_options: Dict
       :param is_default_enabled: Whether train with the algorithm by default
+      :type is_default_enabled: bool
       :param project_id: The unique version ID of the project
       :type project_id: Unique String Identifier
       :param use_gpu: Whether this algorithm needs to run on GPU
       :type use_gpu: Boolean
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
 
 
@@ -3035,7 +3052,7 @@ Attributes
       :type use_gpu: Boolean
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
-      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :param included_modules: List of names of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
 
 
@@ -3183,8 +3200,9 @@ Attributes
       :rtype: module
 
 
-   .. py:method:: create_agent_from_function(project_id, agent_function, name = None, memory = None, package_requirements = None)
+   .. py:method:: create_agent_from_function(project_id, agent_function, name = None, memory = None, package_requirements = None, description = None, evaluation_feature_group_id = None, workflow_graph = None)
 
+      [Deprecated]
       Creates the agent from a python function
 
       :param project_id: The project to create the model in
@@ -3197,10 +3215,17 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
+      :param description: A description of the agent.
+      :type description: str
+      :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
+      :type evaluation_feature_group_id: str
+      :param workflow_graph: The workflow graph for the agent.
+      :type workflow_graph: WorkflowGraph
 
 
-   .. py:method:: update_agent_with_function(model_id, agent_function, memory = None, package_requirements = None, enable_binary_input = None)
+   .. py:method:: update_agent_with_function(model_id, agent_function, memory = None, package_requirements = None, enable_binary_input = None, description = None, workflow_graph = None)
 
+      [Deprecated]
       Updates the agent with a new agent function.
 
       :param model_id: The unique ID associated with the AI Agent to be changed.
@@ -3213,6 +3238,10 @@ Attributes
       :type package_requirements: List
       :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
       :type enable_binary_input: bool
+      :param description: A description of the agent.
+      :type description: str
+      :param workflow_graph: The workflow graph for the agent.
+      :type workflow_graph: WorkflowGraph
 
 
    .. py:method:: execute_feature_group_sql(sql, fix_query_on_error = False, timeout=3600, delay=2)
@@ -3387,7 +3416,7 @@ Attributes
       :type message: str
 
 
-   .. py:method:: stream_section_output(section_key, value, value_type = 'text/plain')
+   .. py:method:: stream_section_output(section_key, value, value_type = 'text')
 
       Streams value corresponding to a particular section to the current request context. Applicable within a AIAgent execute function.
       If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
@@ -3395,6 +3424,7 @@ Attributes
       :param section_key: The section key to which the output corresponds.
       :type section_key: str
       :param value: The output contents.
+      :type value: Any
       :param value_type: The mime type of the output contents.
       :type value_type: str
 
@@ -3440,6 +3470,10 @@ Attributes
       :type preview: bool
       :param schema_document_retriever_ids: A list of document retrievers to retrieve schema information for the data query. Otherwise, they are retrieved from the feature group metadata.
       :type schema_document_retriever_ids: List[str]
+      :param timeout: Time limit for the call.
+      :type timeout: int
+      :param delay: Polling interval for checking timeout.
+      :type delay: int
 
       :returns: The result of the query execution. Execution results could be loaded as pandas using 'load_as_pandas', i.e., result.execution.load_as_pandas().
       :rtype: LlmExecutionResult
@@ -3448,7 +3482,7 @@ Attributes
    .. py:method:: _get_doc_retriever_deployment_info(document_retriever_id)
 
 
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -3481,6 +3515,8 @@ Attributes
       :type required_phrases: list
       :param filter_clause: If provided, filter the results of the query using this sql where clause.
       :type filter_clause: str
+      :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
+      :type crowding_limits: dict
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -3552,7 +3588,7 @@ Attributes
       :rtype: ModelUpload
 
 
-   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -3578,9 +3614,11 @@ Attributes
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool
+      :param include_search_results: If True, will also return search results, if relevant.
+      :type include_search_results: bool
 
 
-   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -3610,6 +3648,8 @@ Attributes
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool
+      :param include_search_results: If True, will also return search results, if relevant.
+      :type include_search_results: bool
 
 
    .. py:method:: set_cache_scope(scope)
@@ -3895,8 +3935,8 @@ Attributes
       :type feature_group_id: str
       :param project_id: Unique string identifier for the project.
       :type project_id: str
-      :param project_config: JSON object for the feature group's project configuration.
-      :type project_config: dict
+      :param project_config: Feature group's project configuration.
+      :type project_config: ProjectFeatureGroupConfig
 
 
    .. py:method:: remove_feature_group_from_project(feature_group_id, project_id)
@@ -4107,7 +4147,7 @@ Attributes
       :param python_function_name: Name of Python Function that contains the source code and function arguments.
       :type python_function_name: str
       :param python_function_bindings: List of python function arguments.
-      :type python_function_bindings: list
+      :type python_function_bindings: List
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
 
@@ -4778,7 +4818,7 @@ Attributes
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
       :param python_function_bindings: List of python function arguments.
-      :type python_function_bindings: list
+      :type python_function_bindings: List
 
 
    .. py:method:: update_feature_group_python_function(feature_group_id, python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None, use_original_csv_names = None)
@@ -4794,7 +4834,7 @@ Attributes
       :param python_function_name: The name of the python function to be associated with the feature group.
       :type python_function_name: str
       :param python_function_bindings: List of python function arguments.
-      :type python_function_bindings: list
+      :type python_function_bindings: List
       :param cpu_size: Size of the CPU for the feature group python function.
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group python function.
@@ -5266,6 +5306,19 @@ Attributes
       :rtype: Upload
 
 
+   .. py:method:: create_dataset_version_from_document_reprocessing(dataset_id, document_processing_config = None)
+
+      Creates a new dataset version for a source docstore dataset with the provided document processing configuration. This does not re-import the data but uses the same data which is imported in the latest dataset version and only performs document processing on it.
+
+      :param dataset_id: The unique ID associated with the dataset to use as the source dataset.
+      :type dataset_id: str
+      :param document_processing_config: The document processing configuration to use for the new dataset version. If not specified, the document processing configuration from the source dataset will be used.
+      :type document_processing_config: DatasetDocumentProcessingConfig
+
+      :returns: The new dataset version created.
+      :rtype: DatasetVersion
+
+
    .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None)
 
       Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
@@ -5491,7 +5544,7 @@ Attributes
       :rtype: PageData
 
 
-   .. py:method:: get_docstore_document_data(doc_id, document_processing_config = None, document_processing_version = None)
+   .. py:method:: get_docstore_document_data(doc_id, document_processing_config = None, document_processing_version = None, return_extracted_page_text = False)
 
       Returns the extracted data for a document.
 
@@ -5501,12 +5554,14 @@ Attributes
       :type document_processing_config: DocumentProcessingConfig
       :param document_processing_version: The document processing version to use for returning the data. If not provided, the latest version will be used.
       :type document_processing_version: str
+      :param return_extracted_page_text: Specifies whether to include a list of extracted text for each page in the response. Defaults to false if not provided.
+      :type return_extracted_page_text: bool
 
       :returns: The extracted document data.
       :rtype: DocumentData
 
 
-   .. py:method:: extract_document_data(document = None, doc_id = None, document_processing_config = None)
+   .. py:method:: extract_document_data(document = None, doc_id = None, document_processing_config = None, start_page = None, end_page = None, return_extracted_page_text = False)
 
       Extracts data from a document.
 
@@ -5516,6 +5571,12 @@ Attributes
       :type doc_id: str
       :param document_processing_config: The document processing configuration.
       :type document_processing_config: DocumentProcessingConfig
+      :param start_page: The starting page to extract data from. Pages are indexed starting from 0. If not provided, the first page will be used.
+      :type start_page: int
+      :param end_page: The last page to extract data from. Pages are indexed starting from 0. If not provided, the last page will be used.
+      :type end_page: int
+      :param return_extracted_page_text: Specifies whether to include a list of extracted text for each page in the response. Defaults to false if not provided.
+      :type return_extracted_page_text: bool
 
       :returns: The extracted document data.
       :rtype: DocumentData
@@ -5528,7 +5589,7 @@ Attributes
       :param project_id: The unique ID associated with the project.
       :type project_id: str
       :param feature_group_ids: The feature group IDs to be used for training.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param for_retrain: Whether the training config options are used for retraining.
       :type for_retrain: bool
       :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
@@ -5547,7 +5608,7 @@ Attributes
       :param training_config: The training config used to influence how the split is calculated.
       :type training_config: TrainingConfig
       :param feature_group_ids: List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
 
       :returns: The feature group containing the training data and folds information.
       :rtype: FeatureGroup
@@ -5564,7 +5625,7 @@ Attributes
       :param training_config: The training config used to train this model.
       :type training_config: TrainingConfig
       :param feature_group_ids: List of feature group IDs provided by the user to train the model on.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
       :param custom_algorithms: List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.
@@ -5757,7 +5818,7 @@ Attributes
       :param training_config: The training config used to train this model.
       :type training_config: TrainingConfig
       :param feature_group_ids: The list of feature groups used as input to the model.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
 
       :returns: The model object corresponding to the updated training config.
       :rtype: Model
@@ -5796,9 +5857,9 @@ Attributes
       :param model_id: Unique string identifier of the model to retrain.
       :type model_id: str
       :param deployment_ids: List of unique string identifiers of deployments to automatically deploy to.
-      :type deployment_ids: list
+      :type deployment_ids: List
       :param feature_group_ids: List of feature group IDs provided by the user to train the model on.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param custom_algorithms: List of user-defined algorithms to train. If not set, will honor the runs from the last time and applicable new custom algorithms.
       :type custom_algorithms: list
       :param builtin_algorithms: List of algorithm names or algorithm IDs of Abacus.AI built-in algorithms to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.
@@ -5895,7 +5956,7 @@ Attributes
       :rtype: ModelArtifactsExport
 
 
-   .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
+   .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None, include_interactive_performance_analysis = False)
 
       Runs a model monitor for the specified project.
 
@@ -5925,6 +5986,8 @@ Attributes
       :type feature_group_base_monitor_config: dict
       :param feature_group_comparison_monitor_config: Selection strategy for the feature_group 1 with the feature group version if selected.
       :type feature_group_comparison_monitor_config: dict
+      :param include_interactive_performance_analysis: Whether to include interactive performance analysis.
+      :type include_interactive_performance_analysis: bool
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -6121,7 +6184,7 @@ Attributes
       :param model_id: ID of the model to create a holdout analysis for
       :type model_id: str
       :param feature_group_ids: List of feature group IDs to use for the holdout analysis
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param model_version: (optional) Version of the model to use for the holdout analysis
       :type model_version: str
       :param algorithm: (optional) ID of algorithm to use for the holdout analysis
@@ -6218,7 +6281,7 @@ Attributes
       :param initialize_function_name: Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
       :type initialize_function_name: str
       :param feature_group_ids: List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes. The order should match the initialize function's parameters.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param cpu_size: Size of the CPU for the prediction operator.
       :type cpu_size: str
       :param memory: Memory (in GB) for the  prediction operator.
@@ -6241,7 +6304,7 @@ Attributes
       :param name: Name of the prediction operator.
       :type name: str
       :param feature_group_ids: List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes. The order should match the initialize function's parameters.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param source_code: Contents of a valid Python source code file. The source code should contain the function `predictFunctionName`, and the function 'initializeFunctionName' if defined.
       :type source_code: str
       :param initialize_function_name: Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
@@ -6587,17 +6650,17 @@ Attributes
       :param project_id: Optionally, a project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitrs, and notebooks are captured at the instant the policy was created.
       :type project_id: str
       :param dataset_ids: Comma-separated list of dataset IDs.
-      :type dataset_ids: list
+      :type dataset_ids: List
       :param feature_group_id: Feature Group ID associated with refresh policy.
       :type feature_group_id: str
       :param model_ids: Comma-separated list of model IDs.
-      :type model_ids: list
+      :type model_ids: List
       :param deployment_ids: Comma-separated list of deployment IDs.
-      :type deployment_ids: list
+      :type deployment_ids: List
       :param batch_prediction_ids: Comma-separated list of batch prediction IDs.
-      :type batch_prediction_ids: list
+      :type batch_prediction_ids: List
       :param model_monitor_ids: Comma-separated list of model monitor IDs.
-      :type model_monitor_ids: list
+      :type model_monitor_ids: List
       :param notebook_id: Notebook ID associated with refresh policy.
       :type notebook_id: str
       :param prediction_operator_id: Prediction Operator ID associated with refresh policy.
@@ -6781,7 +6844,7 @@ Attributes
       :param threshold_class: The label upon which the threshold is added (binary labels only).
       :type threshold_class: str
       :param thresholds: Maps labels to thresholds (multi-label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5.
-      :type thresholds: list
+      :type thresholds: Dict
       :param explain_predictions: If True, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
       :param fixed_features: A set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
@@ -7484,7 +7547,7 @@ Attributes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -7519,6 +7582,8 @@ Attributes
       :type required_phrases: list
       :param filter_clause: If provided, filter the results of the query using this sql where clause.
       :type filter_clause: str
+      :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
+      :type crowding_limits: Dict
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -7885,7 +7950,7 @@ Attributes
       :param function_name: The name of the Python function.
       :type function_name: str
       :param function_variable_mappings: List of Python function arguments.
-      :type function_variable_mappings: list
+      :type function_variable_mappings: List
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
       :param function_type: Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
@@ -7906,7 +7971,7 @@ Attributes
       :param function_name: The name of the Python function within `source_code`.
       :type function_name: str
       :param function_variable_mappings: List of arguments required by `function_name`.
-      :type function_variable_mappings: list
+      :type function_variable_mappings: List
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
 
@@ -7970,7 +8035,7 @@ Attributes
       :param project_id: A unique string identifier for the pipeline.
       :type project_id: str
       :param pipeline_variable_mappings: List of Python function arguments for the pipeline.
-      :type pipeline_variable_mappings: list
+      :type pipeline_variable_mappings: List
       :param cron: A cron-like string specifying the frequency of the scheduled pipeline runs.
       :type cron: str
       :param is_prod: Whether the pipeline is a production pipeline or not.
@@ -8021,7 +8086,7 @@ Attributes
       :param pipeline_id: The ID of the pipeline to run.
       :type pipeline_id: str
       :param pipeline_variable_mappings: List of Python function arguments for the pipeline.
-      :type pipeline_variable_mappings: list
+      :type pipeline_variable_mappings: List
 
       :returns: The object describing the pipeline
       :rtype: PipelineVersion
@@ -8055,9 +8120,9 @@ Attributes
       :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
       :type source_code: str
       :param step_input_mappings: List of Python function arguments.
-      :type step_input_mappings: list
+      :type step_input_mappings: List
       :param output_variable_mappings: List of Python function outputs.
-      :type output_variable_mappings: list
+      :type output_variable_mappings: List
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
@@ -8092,9 +8157,9 @@ Attributes
       :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
       :type source_code: str
       :param step_input_mappings: List of Python function arguments.
-      :type step_input_mappings: list
+      :type step_input_mappings: List
       :param output_variable_mappings: List of Python function outputs.
-      :type output_variable_mappings: list
+      :type output_variable_mappings: List
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
@@ -8176,7 +8241,7 @@ Attributes
       :param name: The name of the dashboard.
       :type name: str
       :param python_function_ids: A list of unique string identifiers for the python functions to be used in the graph dashboard.
-      :type python_function_ids: list
+      :type python_function_ids: List
 
       :returns: An object describing the graph dashboard.
       :rtype: GraphDashboard
@@ -8199,7 +8264,7 @@ Attributes
       :param name: Name of the dashboard.
       :type name: str
       :param python_function_ids: List of unique string identifiers for the Python functions to be used in the graph dashboard.
-      :type python_function_ids: list
+      :type python_function_ids: List
 
       :returns: An object describing the graph dashboard.
       :rtype: GraphDashboard
@@ -8214,7 +8279,7 @@ Attributes
       :param graph_dashboard_id: Unique string identifier for the graph dashboard to update.
       :type graph_dashboard_id: str
       :param function_variable_mappings: List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-      :type function_variable_mappings: list
+      :type function_variable_mappings: List
       :param name: Name of the added python plot
       :type name: str
 
@@ -8229,7 +8294,7 @@ Attributes
       :param graph_reference_id: A unique string identifier for the graph reference.
       :type graph_reference_id: str
       :param function_variable_mappings: A list of arguments to be supplied to the Python function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-      :type function_variable_mappings: list
+      :type function_variable_mappings: List
       :param name: The updated name for the graph
       :type name: str
 
@@ -8330,7 +8395,7 @@ Attributes
       :param project_id: Unique string identifier associated with the project.
       :type project_id: str
       :param feature_group_ids: List of feature group IDs specifying input data.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param training_config: The training config to be used for model training.
       :type training_config: TrainingConfig
 
@@ -8560,7 +8625,7 @@ Attributes
       :rtype: list[AbacusApi]
 
 
-   .. py:method:: create_deployment_conversation(deployment_id, name, deployment_token = None)
+   .. py:method:: create_deployment_conversation(deployment_id, name, deployment_token = None, external_application_id = None)
 
       Creates a deployment conversation.
 
@@ -8570,6 +8635,8 @@ Attributes
       :type name: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
       :type deployment_token: str
+      :param external_application_id: The external application id associated with the deployment conversation.
+      :type external_application_id: str
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -8668,7 +8735,7 @@ Attributes
       :param user_group_id: The ID of the App User Group to invite the user to.
       :type user_group_id: str
       :param emails: The email addresses to invite to your user group.
-      :type emails: list
+      :type emails: List
 
       :returns: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not.
       :rtype: ExternalInvite
@@ -8780,81 +8847,45 @@ Attributes
       :type external_application_id: str
 
 
-   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT)
 
-      Creates a new AI agent.
-
-      The Agents are of the following three types -
-      i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
-      ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
-                              Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
-      iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
-                                For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
-
+      Creates a new AI agent using the given agent workflow graph definition.
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
-      :param function_source_code: The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-      :type function_source_code: str
-      :param agent_function_name: The name of the function found in the source code that will be executed when the agent is deployed.
-      :type agent_function_name: str
       :param name: The name you want your agent to have, defaults to "<Project Name> Agent".
       :type name: str
-      :param memory: The memory allocation (in GB) for the agent.
+      :param memory: Overrides the default memory allocation (in GB) for the agent.
       :type memory: int
-      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
-      :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
-      :type enable_binary_input: bool
       :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
       :type evaluation_feature_group_id: str
-      :param agent_input_schema: The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
-      :type agent_input_schema: dict
-      :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
-      :type agent_output_schema: dict
       :param workflow_graph: The workflow graph for the agent.
       :type workflow_graph: WorkflowGraph
+      :param agent_interface: The interface that the agent will be deployed with.
+      :type agent_interface: AgentInterface
 
-      :returns: The new agent
+      :returns: The new agent.
       :rtype: Agent
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None)
 
-      Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
-
-      The Agents are of the following three types -
-      i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
-      ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
-                              Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
-      iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
-                                For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
-
+      Updates an existing AI Agent. A new version of the agent will be created and published.
 
       :param model_id: The unique ID associated with the AI Agent to be changed.
       :type model_id: str
-      :param function_source_code: Contents of a valid Python source code file. The source code should contain the functions named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-      :type function_source_code: str
-      :param agent_function_name: Name of the function found in the source code that will be executed to the agent when it is deployed.
-      :type agent_function_name: str
       :param memory: Memory (in GB) for the agent.
       :type memory: int
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
-      :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
-      :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
-      :type enable_binary_input: bool
-      :param agent_input_schema: The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
-      :type agent_input_schema: dict
-      :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
-      :type agent_output_schema: dict
       :param workflow_graph: The workflow graph for the agent.
       :type workflow_graph: WorkflowGraph
+      :param agent_interface: The interface that the agent will be deployed with.
+      :type agent_interface: AgentInterface
 
-      :returns: The updated agent
+      :returns: The updated agent.
       :rtype: Agent
 
 
@@ -8888,7 +8919,7 @@ Attributes
       Encode feature groups as language model inputs.
 
       :param feature_group_ids: List of feature groups to be encoded.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param token_budget: Enforce a given budget for each encoded feature group.
       :type token_budget: int
       :param include_definition: Include the definition of the feature group in the encoding.
@@ -8905,9 +8936,9 @@ Attributes
       :param query: The natural language query to execute. The query is converted to a SQL query using the language model.
       :type query: str
       :param feature_group_ids: A list of feature group IDs that the query should be executed against.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param external_database_schemas: A list of schmeas from external database that the query should be executed against.
-      :type external_database_schemas: list
+      :type external_database_schemas: List
       :param prompt_context: The context message used to construct the prompt for the language model. If not provide, a default context message is used.
       :type prompt_context: str
       :param llm_name: The name of the language model to use. If not provided, the default language model is used.
@@ -8926,7 +8957,7 @@ Attributes
       Extract fields from a document using a large language model.
 
       :param field_descriptors: A list of fields to extract from the document.
-      :type field_descriptors: list
+      :type field_descriptors: List
       :param document_id: The ID of the document to query.
       :type document_id: str
       :param document_text: The text of the document to query. Only used if document_id is not provided.
@@ -8945,7 +8976,7 @@ Attributes
       :param current_message: Current turn message from user.
       :type current_message: str
       :param current_doc_ids: Document IDs associated with the current turn message from user.
-      :type current_doc_ids: list
+      :type current_doc_ids: List
       :param include_history: If true, include the conversation history in the generated messages.
       :type include_history: bool
       :param include_document_contents: If true, include contents from uploaded documents in the generated messages.
@@ -8959,6 +8990,19 @@ Attributes
 
       :returns: A list of ChatMessage that represents the conversation.
       :rtype: ChatMessage
+
+
+   .. py:method:: get_llm_app_response(llm_app_name, prompt)
+
+      Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
+
+      :param llm_app_name: The name of the LLM App to use for generation.
+      :type llm_app_name: str
+      :param prompt: The prompt to use for generation.
+      :type prompt: str
+
+      :returns: The response from the LLM App.
+      :rtype: LlmResponse
 
 
    .. py:method:: create_document_retriever(project_id, name, feature_group_id, document_retriever_config = None)
@@ -9036,7 +9080,10 @@ Attributes
 
    .. py:method:: restart_document_retriever(document_retriever_id)
 
-      Restart the document retriever if it is stopped.
+      Restart the document retriever if it is stopped. This will start the deployment of the document retriever,
+
+      but will not wait for it to be ready. You need to call wait_until_ready to wait until the deployment is ready.
+
 
       :param document_retriever_id: A unique string identifier associated with the document retriever.
       :type document_retriever_id: str
@@ -9051,7 +9098,7 @@ Attributes
 
 
       :param doc_ids: A list of document store IDs to retrieve the snippets from.
-      :type doc_ids: list
+      :type doc_ids: List
       :param blobs: A dictionary mapping document names to the blob data.
       :type blobs: io.TextIOBase
       :param query: Query string to find relevant snippets in the documents.

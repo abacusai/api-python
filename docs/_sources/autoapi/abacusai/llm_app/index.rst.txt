@@ -1,0 +1,59 @@
+:py:mod:`abacusai.llm_app`
+==========================
+
+.. py:module:: abacusai.llm_app
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.llm_app.LlmApp
+
+
+
+
+.. py:class:: LlmApp(client, llmAppId=None, name=None, description=None, projectId=None, deploymentId=None, createdAt=None, updatedAt=None, status=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An LLM App that can be used for generation. LLM Apps are specifically crafted to help with certain tasks like code generation or question answering.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param llmAppId: The unique identifier of the LLM App.
+   :type llmAppId: str
+   :param name: The name of the LLM App.
+   :type name: str
+   :param description: The description of the LLM App.
+   :type description: str
+   :param projectId: The project ID of the deployment associated with the LLM App.
+   :type projectId: str
+   :param deploymentId: The deployment ID associated with the LLM App.
+   :type deploymentId: str
+   :param createdAt: The timestamp at which the LLM App was created.
+   :type createdAt: str
+   :param updatedAt: The timestamp at which the LLM App was updated.
+   :type updatedAt: str
+   :param status: The status of the LLM App's deployment.
+   :type status: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

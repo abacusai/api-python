@@ -1,8 +1,8 @@
 import io
-from typing import Union
+from typing import List, Union
 
 from .annotation_config import AnnotationConfig
-from .api_class import MergeConfig, SamplingConfig
+from .api_class import MergeConfig, ProjectFeatureGroupConfig, SamplingConfig
 from .code_source import CodeSource
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature
@@ -23,7 +23,7 @@ class FeatureGroup(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             featureGroupId (str): Unique identifier for this feature group.
             modificationLock (bool): If feature group is locked against a change or not.
-            name (str): Unique name of this feature group.
+            name (str): 
             featureGroupSourceType (str): The source type of the feature group
             tableName (str): Unique table name of this feature group.
             sql (str): SQL definition creating this feature group.
@@ -157,13 +157,13 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.add_feature_group_to_project(self.feature_group_id, project_id, feature_group_type)
 
-    def set_project_config(self, project_id: str, project_config: dict = None):
+    def set_project_config(self, project_id: str, project_config: Union[dict, ProjectFeatureGroupConfig] = None):
         """
         Sets a feature group's project config
 
         Args:
             project_id (str): Unique string identifier for the project.
-            project_config (dict): JSON object for the feature group's project configuration.
+            project_config (ProjectFeatureGroupConfig): Feature group's project configuration.
         """
         return self.client.set_project_feature_group_config(self.feature_group_id, project_id, project_config)
 
@@ -786,16 +786,16 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_template_bindings(self.feature_group_id, template_bindings)
 
-    def update_python_function_bindings(self, python_function_bindings: list):
+    def update_python_function_bindings(self, python_function_bindings: List):
         """
         Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
         Args:
-            python_function_bindings (list): List of python function arguments.
+            python_function_bindings (List): List of python function arguments.
         """
         return self.client.update_feature_group_python_function_bindings(self.feature_group_id, python_function_bindings)
 
-    def update_python_function(self, python_function_name: str, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None, use_original_csv_names: bool = None):
+    def update_python_function(self, python_function_name: str, python_function_bindings: List = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None, use_original_csv_names: bool = None):
         """
         Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -805,7 +805,7 @@ class FeatureGroup(AbstractApiClass):
 
         Args:
             python_function_name (str): The name of the python function to be associated with the feature group.
-            python_function_bindings (list): List of python function arguments.
+            python_function_bindings (List): List of python function arguments.
             cpu_size (str): Size of the CPU for the feature group python function.
             memory (int): Memory (in GB) for the feature group python function.
             use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
@@ -1094,7 +1094,7 @@ class FeatureGroup(AbstractApiClass):
             A waiting call until the feature group's dataset, if any, is ready for use.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
         """
         dataset_id = self.dataset_id
         if not dataset_id:
@@ -1108,7 +1108,7 @@ class FeatureGroup(AbstractApiClass):
             Waits for a feature group created from a dataframe to be ready for materialization and version creation.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
         """
         self.wait_for_dataset(timeout=timeout)
         return self.refresh()
@@ -1118,7 +1118,7 @@ class FeatureGroup(AbstractApiClass):
         A waiting call until feature group is materialized.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
         """
         latest_feature_group_version = self.describe().latest_feature_group_version
         if not latest_feature_group_version:
@@ -1134,7 +1134,7 @@ class FeatureGroup(AbstractApiClass):
         Waits for the feature group indexing config to be applied for streaming
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 600 seconds.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 600 seconds.
         """
         if not self.streaming_enabled:
             from .client import ApiException

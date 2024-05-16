@@ -455,30 +455,31 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_feature_group_row_process_logs_by_key(self.deployment_id, primary_key_value)
 
-    def create_conversation(self, name: str, deployment_token: str = None):
+    def create_conversation(self, name: str, deployment_token: str = None, external_application_id: str = None):
         """
         Creates a deployment conversation.
 
         Args:
             name (str): The name of the conversation.
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
+            external_application_id (str): The external application id associated with the deployment conversation.
 
         Returns:
             DeploymentConversation: The deployment conversation.
         """
-        return self.client.create_deployment_conversation(self.deployment_id, name, deployment_token)
+        return self.client.create_deployment_conversation(self.deployment_id, name, deployment_token, external_application_id)
 
-    def list_conversations(self):
+    def list_conversations(self, external_application_id: str = None):
         """
         Lists all conversations for the given deployment and current user.
 
         Args:
-            deployment_id (str): The deployment to get conversations for.
+            external_application_id (str): The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
 
         Returns:
             list[DeploymentConversation]: The deployment conversations.
         """
-        return self.client.list_deployment_conversations(self.deployment_id)
+        return self.client.list_deployment_conversations(self.deployment_id, external_application_id)
 
     def create_external_application(self, name: str = None, description: str = None, logo: str = None, theme: dict = None):
         """
@@ -509,7 +510,7 @@ class Deployment(AbstractApiClass):
         A waiting call until deployment is completed.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, wait_states, timeout=timeout)
 
@@ -518,7 +519,7 @@ class Deployment(AbstractApiClass):
         A waiting call until deployment is in a stable state, that pending model switch is completed and previous model is stopped.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
 
         Returns:
             Deployment: the latest deployment object.

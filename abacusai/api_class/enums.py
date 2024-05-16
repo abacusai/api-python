@@ -362,6 +362,7 @@ class ApplicationConnectorType(ApiEnum):
     ABACUSUSAGEMETRICS = 'ABACUSUSAGEMETRICS'
     MICROSOFTAUTH = 'MICROSOFTAUTH'
     FRESHSERVICE = 'FRESHSERVICE'
+    ZENDESKSUNSHINEMESSAGING = 'zendesksunshinemessaging'
 
 
 class PythonFunctionArgumentType(ApiEnum):
@@ -409,9 +410,11 @@ class LLMName(ApiEnum):
     OPENAI_GPT4_128K = 'OPENAI_GPT4_128K'
     OPENAI_GPT4_128K_LATEST = 'OPENAI_GPT4_128K_LATEST'
     OPENAI_GPT4_VISION = 'OPENAI_GPT4_VISION'
+    OPENAI_GPT4O = 'OPENAI_GPT4O'
     OPENAI_GPT3_5 = 'OPENAI_GPT3_5'
     OPENAI_GPT3_5_TEXT = 'OPENAI_GPT3_5_TEXT'
     LLAMA3_LARGE_CHAT = 'LLAMA3_LARGE_CHAT'
+    GROQ_LLAMA3_LARGE_CHAT = 'GROQ_LLAMA3_LARGE_CHAT'
     CLAUDE_V2_1 = 'CLAUDE_V2_1'
     CLAUDE_V3_OPUS = 'CLAUDE_V3_OPUS'
     CLAUDE_V3_SONNET = 'CLAUDE_V3_SONNET'
@@ -488,17 +491,19 @@ class FieldDescriptorType(ApiEnum):
 
 
 class WorkflowNodeInputType(ApiEnum):
+    # Duplicated in reainternal.enums, both should be kept in sync
     USER_INPUT = 'USER_INPUT'
     WORKFLOW_VARIABLE = 'WORKFLOW_VARIABLE'
 
 
 class WorkflowNodeOutputType(ApiEnum):
-    INTEGER = 'INTEGER'
-    STRING = 'STRING'
+    ATTACHMENT = 'ATTACHMENT'
     BOOLEAN = 'BOOLEAN'
     FLOAT = 'FLOAT'
-    JSON = 'JSON'
+    INTEGER = 'INTEGER'
+    DICT = 'DICT'
     LIST = 'LIST'
+    STRING = 'STRING'
 
 
 class OcrMode(ApiEnum):
@@ -533,3 +538,14 @@ class DataType(ApiEnum):
             return None
         default_map = {val.value: val for val in DataType}
         return default_map[value.lower()]
+
+
+class AgentInterface(ApiEnum):
+    # Duplicated in reainternal.enums, both should be kept in sync
+    DEFAULT = 'DEFAULT'
+    CHAT = 'CHAT'
+
+
+class ProjectConfigType(ApiEnum):
+    CONSTRAINTS = 'CONSTRAINTS'
+    REVIEW_MODE = 'REVIEW_MODE'

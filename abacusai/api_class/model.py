@@ -69,7 +69,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
     # top-level params
     objective: enums.PersonalizationObjective = dataclasses.field(default=None)
     sort_objective: enums.PersonalizationObjective = dataclasses.field(default=None)
-    training_mode: enums.PersonalizationTrainingMode = dataclasses.field(default=enums.PersonalizationTrainingMode.EXPERIMENTAL)
+    training_mode: enums.PersonalizationTrainingMode = dataclasses.field(default=None)
 
     # advanced options
     # interactions
@@ -173,7 +173,7 @@ class RegressionTrainingConfig(TrainingConfig):
     """
     objective: enums.RegressionObjective = dataclasses.field(default=None)
     sort_objective: enums.RegressionObjective = dataclasses.field(default=None)
-    tree_hpo_mode: enums.RegressionTreeHPOMode = dataclasses.field(default=enums.RegressionTreeHPOMode.THOROUGH)
+    tree_hpo_mode: enums.RegressionTreeHPOMode = dataclasses.field(default=None)
     partial_dependence_analysis: enums.PartialDependenceAnalysis = dataclasses.field(default=None)
 
     # data split related
@@ -441,11 +441,15 @@ class ChatLLMTrainingConfig(TrainingConfig):
         document_retrievers (List[str]): List of document retriever names to use for the feature stores this model was trained with.
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
         temperature (float): The generative LLM temperature
-        metadata_columns (list): Include the metadata column values in the retrieved search results.
+        retrieval_columns (list): Include the metadata column values in the retrieved search results.
+        filter_columns (list): Allow users to filter the document retrievers on these metadata columns.
         include_general_knowledge (bool): Allow the LLM to rely not just on search results, but to fall back on general knowledge.
         behavior_instructions (str): Customize the overall role instructions for the LLM.
         response_instructions (str): Customize instructions for what the LLM responses should look like.
-        lookup_rewrite_instructions (str): Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
+        enable_llm_rewrite (bool): Enable LLM rewrite for the ChatLLM. If None, LLM rewrite will happen automatically. Defaults to False.
+        column_filtering_instructions (str): Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
+        keyword_requirement_instructions (str): Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.
+        query_rewrite_instructions (str): Instructions for a LLM call to rewrite a search query.
         max_search_results (int): Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
         data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
         data_prompt_context (str): Prompt context for the data feature group IDs.
@@ -455,15 +459,21 @@ class ChatLLMTrainingConfig(TrainingConfig):
         database_connector_id (str): Database connector ID to use for the ChatLLM.
         database_connector_tables (List[str]): List of tables to use from the database connector for the ChatLLM.
         enable_code_execution (bool): Enable code execution in the ChatLLM.
+        metadata_columns (list): DEPRECATED. Include the metadata column values in the retrieved search results.
+        lookup_rewrite_instructions (str): DEPRECATED. Instructions for a LLM call to rewrite a search query.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
     temperature: float = None
-    metadata_columns: list = None
+    retrieval_columns: list = None
+    filter_columns: list = None
     include_general_knowledge: bool = None
     behavior_instructions: str = None
     response_instructions: str = None
-    lookup_rewrite_instructions: str = None
+    enable_llm_rewrite: bool = False
+    column_filtering_instructions: str = None
+    keyword_requirement_instructions: str = None
+    query_rewrite_instructions: str = None
     max_search_results: int = None
     data_feature_group_ids: List[str] = None
     data_prompt_context: str = None
@@ -473,6 +483,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
     database_connector_id: str = None
     database_connector_tables: List[str] = None
     enable_code_execution: bool = None
+    metadata_columns: list = None
+    lookup_rewrite_instructions: str = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM
@@ -702,14 +714,13 @@ class AIAgentTrainingConfig(TrainingConfig):
 
     Args:
         description (str): Description of the agent function.
-        enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
-        agent_input_schema (dict): Schema for the agent input.
-        agent_output_schema (dict): Schema for the agent output.
+        agent_interface (AgentInterface): The interface that the agent will be deployed with.
     """
     description: str = dataclasses.field(default=None)
-    enable_binary_input: bool = dataclasses.field(default=None)
-    agent_input_schema: dict = dataclasses.field(default=None)
-    agent_output_schema: dict = dataclasses.field(default=None)
+    agent_interface: enums.AgentInterface = dataclasses.field(default=None)
+    enable_binary_input: bool = dataclasses.field(default=None, metadata={'deprecated': True})
+    agent_input_schema: dict = dataclasses.field(default=None, metadata={'deprecated': True})
+    agent_output_schema: dict = dataclasses.field(default=None, metadata={'deprecated': True})
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.AI_AGENT

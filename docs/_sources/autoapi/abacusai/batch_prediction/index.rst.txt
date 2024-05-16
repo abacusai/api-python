@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, batchPredictionArgs={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -82,6 +82,8 @@ Classes
    :type refreshSchedules: RefreshSchedule
    :param inputFeatureGroups: List of prediction feature groups.
    :type inputFeatureGroups: PredictionFeatureGroup
+   :param globalPredictionArgs:
+   :type globalPredictionArgs: BatchPredictionArgs
    :param batchPredictionArgs: Argument(s) passed to every prediction call.
    :type batchPredictionArgs: BatchPredictionArgs
 
@@ -253,7 +255,7 @@ Classes
       A waiting call until batch predictions are ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: wait_for_drift_monitor(timeout=86400)
@@ -261,7 +263,7 @@ Classes
       A waiting call until batch prediction drift monitor calculations are ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: get_status()

@@ -53,7 +53,9 @@ Classes
       A waiting call until query is executed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
+      :param delay: Polling interval for checking timeout.
+      :type delay: int
 
 
    .. py:method:: wait_for_execution(timeout=3600, delay=2)
@@ -61,7 +63,9 @@ Classes
       A waiting call until query is executed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
+      :param delay: Polling interval for checking timeout.
+      :type delay: int
 
 
    .. py:method:: get_status()
@@ -82,6 +86,11 @@ Classes
 
    .. py:method:: describe()
 
+      Gets the description of the query execution
+
+      :returns: A ExecuteFeatureGroupOperation object describing the query execution.
+      :rtype: ExecuteFeatureGroupOperation
+
 
    .. py:method:: _download_avro_file(file_part, tmp_dir, part_index)
 
@@ -91,7 +100,7 @@ Classes
       Loads the result data into a pandas dataframe
 
       :param max_workers: The number of threads.
-      :type max_workers: int, optional
+      :type max_workers: int
 
       :returns: A pandas dataframe displaying the data from execution.
       :rtype: DataFrame

@@ -126,11 +126,11 @@ Classes
       :param file: A bytesIO or StringIO object to upload to Abacus.AI
       :type file: IOBase
       :param threads: The max number of workers to use while uploading the file
-      :type threads: int, optional
+      :type threads: int
       :param chunksize: The number of bytes to use for each chunk while uploading the file. Defaults to 10 MB
-      :type chunksize: int, optional
+      :type chunksize: int
       :param wait_timeout: The max number of seconds to wait for the file parts to be joined on Abacus.AI. Defaults to 600.
-      :type wait_timeout: int, optional
+      :type wait_timeout: int
 
       :returns: The upload file object.
       :rtype: Upload
@@ -144,7 +144,7 @@ Classes
       A waiting call until the upload parts are joined.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to have timed out. Defaults to 600.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: get_status()

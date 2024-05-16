@@ -100,15 +100,27 @@ class RestrictFeatureMappings(ApiClass):
 
     Args:
         feature_name (str): The name of the feature to restrict the monitor to.
-        restricted_feature_values (list): The values of the feature to restrict the monitor to.
+        restricted_feature_values (list): The values of the feature to restrict the monitor to if feature is a categorical.
+        start_time (str): The start time of the timestamp feature to filter from
+        end_time (str): The end time of the timestamp feature to filter until
+        min_value (float): Value to filter the numerical feature above
+        max_value (float): Filtering the numerical feature to below this value
     """
     feature_name: str = dataclasses.field(default=None)
     restricted_feature_values: list = dataclasses.field(default_factory=list)
+    start_time: str = dataclasses.field(default=None)
+    end_time: str = dataclasses.field(default=None)
+    min_value: float = dataclasses.field(default=None)
+    max_value: float = dataclasses.field(default=None)
 
     def to_dict(self):
         return {
             'feature_name': self.feature_name,
             'restricted_feature_values': self.restricted_feature_values,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'min_value': self.min_value,
+            'max_value': self.max_value,
         }
 
 
@@ -120,7 +132,7 @@ class MonitorFilteringConfig(ApiClass):
     Args:
         start_time (str): The start time of the prediction time col
         end_time (str): The end time of the prediction time col
-        restrict_feature_mapping (RestrictFeatureMappings): The feature mapping to restrict the monitor to.
+        restrict_feature_mappings (RestrictFeatureMappings): The feature mapping to restrict the monitor to.
         target_class (str): The target class to restrict the monitor to.
         train_target_feature (str): Set the target feature for the training data.
         prediction_target_feature (str): Set the target feature for the prediction data.

@@ -94,7 +94,7 @@ Classes
       :param project_id: A unique string identifier for the pipeline.
       :type project_id: str
       :param pipeline_variable_mappings: List of Python function arguments for the pipeline.
-      :type pipeline_variable_mappings: list
+      :type pipeline_variable_mappings: List
       :param cron: A cron-like string specifying the frequency of the scheduled pipeline runs.
       :type cron: str
       :param is_prod: Whether the pipeline is a production pipeline or not.
@@ -139,7 +139,7 @@ Classes
       Runs a specified pipeline with the arguments provided.
 
       :param pipeline_variable_mappings: List of Python function arguments for the pipeline.
-      :type pipeline_variable_mappings: list
+      :type pipeline_variable_mappings: List
 
       :returns: The object describing the pipeline
       :rtype: PipelineVersion
@@ -156,9 +156,9 @@ Classes
       :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
       :type source_code: str
       :param step_input_mappings: List of Python function arguments.
-      :type step_input_mappings: list
+      :type step_input_mappings: List
       :param output_variable_mappings: List of Python function outputs.
-      :type output_variable_mappings: list
+      :type output_variable_mappings: List
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
@@ -245,7 +245,7 @@ Classes
       A waiting call until all the stages of the latest pipeline version is completed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int, optional
+      :type timeout: int
 
 
    .. py:method:: get_status()

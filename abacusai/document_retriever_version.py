@@ -86,7 +86,7 @@ class DocumentRetrieverVersion(AbstractApiClass):
         A waiting call until document retriever version is complete.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         self.client._poll(self, {'PENDING', 'INDEXING'}, timeout=timeout / 2)
         if self.get_deployment_status() == 'STOPPED':
@@ -96,10 +96,10 @@ class DocumentRetrieverVersion(AbstractApiClass):
 
     def wait_until_ready(self, timeout=3600):
         """
-        A waiting call until the document retriever version is ready.
+        A waiting call until the document retriever version is ready.  It restarts the document retriever if it is stopped.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.wait_for_results(timeout)
 
@@ -108,7 +108,7 @@ class DocumentRetrieverVersion(AbstractApiClass):
         A waiting call until the document retriever deployment is ready to serve.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
         """
         import time
 

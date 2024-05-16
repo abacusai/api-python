@@ -1,3 +1,5 @@
+from typing import List
+
 from .api_class import PythonFunctionArgument
 from .code_source import CodeSource
 from .pipeline_reference import PipelineReference
@@ -90,13 +92,13 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.describe_pipeline(self.pipeline_id)
 
-    def update(self, project_id: str = None, pipeline_variable_mappings: list = None, cron: str = None, is_prod: bool = None):
+    def update(self, project_id: str = None, pipeline_variable_mappings: List = None, cron: str = None, is_prod: bool = None):
         """
         Updates a pipeline for executing multiple steps.
 
         Args:
             project_id (str): A unique string identifier for the pipeline.
-            pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
+            pipeline_variable_mappings (List): List of Python function arguments for the pipeline.
             cron (str): A cron-like string specifying the frequency of the scheduled pipeline runs.
             is_prod (bool): Whether the pipeline is a production pipeline or not.
 
@@ -138,19 +140,19 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.list_pipeline_versions(self.pipeline_id, limit)
 
-    def run(self, pipeline_variable_mappings: list = None):
+    def run(self, pipeline_variable_mappings: List = None):
         """
         Runs a specified pipeline with the arguments provided.
 
         Args:
-            pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
+            pipeline_variable_mappings (List): List of Python function arguments for the pipeline.
 
         Returns:
             PipelineVersion: The object describing the pipeline
         """
         return self.client.run_pipeline(self.pipeline_id, pipeline_variable_mappings)
 
-    def create_step(self, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None, timeout: int = None):
+    def create_step(self, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: List = None, output_variable_mappings: List = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None, timeout: int = None):
         """
         Creates a step in a given pipeline.
 
@@ -158,8 +160,8 @@ class Pipeline(AbstractApiClass):
             step_name (str): The name of the step.
             function_name (str): The name of the Python function.
             source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
-            step_input_mappings (list): List of Python function arguments.
-            output_variable_mappings (list): List of Python function outputs.
+            step_input_mappings (List): List of Python function arguments.
+            output_variable_mappings (List): List of Python function outputs.
             step_dependencies (list): List of step names this step depends on.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.
@@ -256,7 +258,7 @@ class Pipeline(AbstractApiClass):
         A waiting call until all the stages of the latest pipeline version is completed.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'RUNNING'}, timeout=timeout)
 

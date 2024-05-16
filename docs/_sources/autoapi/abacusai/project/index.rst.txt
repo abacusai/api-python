@@ -132,7 +132,7 @@ Classes
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
       :param feature_group_ids: The list of feature group IDs to validate.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
       :rtype: ProjectValidation
@@ -195,7 +195,7 @@ Classes
       Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
       :param feature_group_ids: The feature group IDs to be used for training.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param for_retrain: Whether the training config options are used for retraining.
       :type for_retrain: bool
       :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
@@ -212,7 +212,7 @@ Classes
       :param training_config: The training config used to influence how the split is calculated.
       :type training_config: TrainingConfig
       :param feature_group_ids: List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
 
       :returns: The feature group containing the training data and folds information.
       :rtype: FeatureGroup
@@ -227,7 +227,7 @@ Classes
       :param training_config: The training config used to train this model.
       :type training_config: TrainingConfig
       :param feature_group_ids: List of feature group IDs provided by the user to train the model on.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
       :param custom_algorithms: List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.
@@ -317,7 +317,7 @@ Classes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
+   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None, include_interactive_performance_analysis = False)
 
       Runs a model monitor for the specified project.
 
@@ -345,6 +345,8 @@ Classes
       :type feature_group_base_monitor_config: dict
       :param feature_group_comparison_monitor_config: Selection strategy for the feature_group 1 with the feature group version if selected.
       :type feature_group_comparison_monitor_config: dict
+      :param include_interactive_performance_analysis: Whether to include interactive performance analysis.
+      :type include_interactive_performance_analysis: bool
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -565,19 +567,19 @@ Classes
       List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
       :param dataset_ids: Comma-separated list of Dataset IDs.
-      :type dataset_ids: list
+      :type dataset_ids: List
       :param feature_group_id: Feature Group ID for which we wish to see the refresh policies attached.
       :type feature_group_id: str
       :param model_ids: Comma-separated list of Model IDs.
-      :type model_ids: list
+      :type model_ids: List
       :param deployment_ids: Comma-separated list of Deployment IDs.
-      :type deployment_ids: list
+      :type deployment_ids: List
       :param batch_prediction_ids: Comma-separated list of Batch Prediction IDs.
-      :type batch_prediction_ids: list
+      :type batch_prediction_ids: List
       :param model_monitor_ids: Comma-separated list of Model Monitor IDs.
-      :type model_monitor_ids: list
+      :type model_monitor_ids: List
       :param notebook_ids: Comma-separated list of Notebook IDs.
-      :type notebook_ids: list
+      :type notebook_ids: List
 
       :returns: List of all refresh policies in the organization.
       :rtype: list[RefreshPolicy]
@@ -612,7 +614,7 @@ Classes
       :param name: The name of the dashboard.
       :type name: str
       :param python_function_ids: A list of unique string identifiers for the python functions to be used in the graph dashboard.
-      :type python_function_ids: list
+      :type python_function_ids: List
 
       :returns: An object describing the graph dashboard.
       :rtype: GraphDashboard
@@ -634,7 +636,7 @@ Classes
       Return list of built-in algorithms based on given input data and training config.
 
       :param feature_group_ids: List of feature group IDs specifying input data.
-      :type feature_group_ids: list
+      :type feature_group_ids: List
       :param training_config: The training config to be used for model training.
       :type training_config: TrainingConfig
 
@@ -653,42 +655,24 @@ Classes
       :rtype: ChatSession
 
 
-   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None)
+   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT)
 
-      Creates a new AI agent.
+      Creates a new AI agent using the given agent workflow graph definition.
 
-      The Agents are of the following three types -
-      i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
-      ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
-                              Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
-      iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
-                                For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
-
-
-      :param function_source_code: The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-      :type function_source_code: str
-      :param agent_function_name: The name of the function found in the source code that will be executed when the agent is deployed.
-      :type agent_function_name: str
       :param name: The name you want your agent to have, defaults to "<Project Name> Agent".
       :type name: str
-      :param memory: The memory allocation (in GB) for the agent.
+      :param memory: Overrides the default memory allocation (in GB) for the agent.
       :type memory: int
-      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
-      :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
-      :type enable_binary_input: bool
       :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
       :type evaluation_feature_group_id: str
-      :param agent_input_schema: The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
-      :type agent_input_schema: dict
-      :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
-      :type agent_output_schema: dict
       :param workflow_graph: The workflow graph for the agent.
       :type workflow_graph: WorkflowGraph
+      :param agent_interface: The interface that the agent will be deployed with.
+      :type agent_interface: AgentInterface
 
-      :returns: The new agent
+      :returns: The new agent.
       :rtype: Agent
 
 
@@ -743,7 +727,7 @@ Classes
       :param predict_function: The prediction function is passed.
       :type predict_function: callable
       :param training_input_tables: The input tables to be used for training the model. Defaults to None.
-      :type training_input_tables: list, optional
+      :type training_input_tables: list
       :param predict_many_function: Prediction function for batch input
       :type predict_many_function: callable
       :param cpu_size: Size of the cpu for the feature group function

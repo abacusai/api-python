@@ -162,7 +162,7 @@ Classes
       :param threshold_class: The label upon which the threshold is added (binary labels only).
       :type threshold_class: str
       :param thresholds: Maps labels to thresholds (multi-label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5.
-      :type thresholds: list
+      :type thresholds: Dict
       :param explain_predictions: If True, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
       :param fixed_features: A set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
@@ -865,7 +865,7 @@ Classes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -900,6 +900,8 @@ Classes
       :type required_phrases: list
       :param filter_clause: If provided, filter the results of the query using this sql where clause.
       :type filter_clause: str
+      :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
+      :type crowding_limits: Dict
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

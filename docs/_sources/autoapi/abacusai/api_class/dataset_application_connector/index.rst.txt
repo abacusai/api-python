@@ -63,11 +63,11 @@ Classes
    :param location: The location of the pages to fetch
    :type location: str
    :param pull_attachments: Whether to pull attachments for each page
-   :type pull_attachments: bool, optional
+   :type pull_attachments: bool
    :param space_key: The space key to fetch pages from
-   :type space_key: str, optional
+   :type space_key: str
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
-   :type extract_bounding_boxes: bool, optional
+   :type extract_bounding_boxes: bool
 
    .. py:attribute:: location
       :type: str
@@ -103,9 +103,9 @@ Classes
    :param location: The view id of the report in the connector to fetch
    :type location: str
    :param start_timestamp: Unix timestamp of the start of the period that will be queried
-   :type start_timestamp: int, optional
+   :type start_timestamp: int
    :param end_timestamp: Unix timestamp of the end of the period that will be queried
-   :type end_timestamp: int, optional
+   :type end_timestamp: int
 
    .. py:attribute:: location
       :type: str
@@ -136,11 +136,11 @@ Classes
    :param location: The regex location of the files to fetch
    :type location: str
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-   :type csv_delimiter: str, optional
+   :type csv_delimiter: str
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-   :type extract_bounding_boxes: bool, optional
+   :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-   :type merge_file_schemas: bool, optional
+   :type merge_file_schemas: bool
 
    .. py:attribute:: location
       :type: str
@@ -176,11 +176,11 @@ Classes
    :param jql: The JQL query for fetching issues
    :type jql: str
    :param custom_fields: A list of custom fields to include in the dataset
-   :type custom_fields: list, optional
+   :type custom_fields: list
    :param include_comments: Fetch comments for each issue
-   :type include_comments: bool, optional
+   :type include_comments: bool
    :param include_watchers: Fetch watchers for each issue
-   :type include_watchers: bool, optional
+   :type include_watchers: bool
 
    .. py:attribute:: jql
       :type: str
@@ -216,11 +216,11 @@ Classes
    :param location: The regex location of the files to fetch
    :type location: str
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-   :type csv_delimiter: str, optional
+   :type csv_delimiter: str
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-   :type extract_bounding_boxes: bool, optional
+   :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-   :type merge_file_schemas: bool, optional
+   :type merge_file_schemas: bool
 
    .. py:attribute:: location
       :type: str
@@ -258,11 +258,11 @@ Classes
    :param is_documentset: Whether the dataset is a document set
    :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-   :type csv_delimiter: str, optional
+   :type csv_delimiter: str
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-   :type extract_bounding_boxes: bool, optional
+   :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-   :type merge_file_schemas: bool, optional
+   :type merge_file_schemas: bool
 
    .. py:attribute:: location
       :type: str
@@ -294,6 +294,14 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Zendesk Application Connector
+
+   :param location: The regex location of the files to fetch
+   :type location: str
+
+   .. py:attribute:: location
+      :type: str
+
+      
 
    .. py:method:: __post_init__()
 

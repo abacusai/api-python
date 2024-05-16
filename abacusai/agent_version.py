@@ -85,7 +85,7 @@ class AgentVersion(AbstractApiClass):
         A waiting call until agent gets published.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'PUBLISHING'}, delay=30, timeout=timeout)
 

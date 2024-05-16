@@ -1,3 +1,5 @@
+from typing import List
+
 from .return_class import AbstractApiClass
 
 
@@ -81,13 +83,13 @@ class GraphDashboard(AbstractApiClass):
         """
         return self.client.delete_graph_dashboard(self.graph_dashboard_id)
 
-    def update(self, name: str = None, python_function_ids: list = None):
+    def update(self, name: str = None, python_function_ids: List = None):
         """
         Updates a graph dashboard
 
         Args:
             name (str): Name of the dashboard.
-            python_function_ids (list): List of unique string identifiers for the Python functions to be used in the graph dashboard.
+            python_function_ids (List): List of unique string identifiers for the Python functions to be used in the graph dashboard.
 
         Returns:
             GraphDashboard: An object describing the graph dashboard.

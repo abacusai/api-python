@@ -171,20 +171,22 @@ class ApiClass(ABC):
                 input_dict = {snake_case(k): v for k, v in input_dict.items()}
             if not cls._support_kwargs:
                 # only use keys that are valid fields in the ApiClass
-                field_names = set((field.name) for field in dataclasses.fields(cls))
+                field_names = set((field.name) for field in dataclasses.fields(type(obj) if obj else cls))
                 input_dict = {k: v for k, v in input_dict.items() if k in field_names}
         if obj is None:
             obj = cls(**input_dict)
 
-        for attr_name, attr_type in get_type_hints(cls).items():
-            if attr_name in input_dict and inspect.isclass(attr_type) and issubclass(attr_type, ApiClass):
+        for attr_name, attr_type in get_type_hints(type(obj)).items():
+            if attr_name in input_dict and isinstance(input_dict[attr_name], dict) and inspect.isclass(attr_type) and issubclass(attr_type, ApiClass):
                 setattr(obj, attr_name, attr_type.from_dict(input_dict[attr_name]))
             elif attr_name in input_dict and get_origin(attr_type) is list and attr_type.__args__ and inspect.isclass(attr_type.__args__[0]) and issubclass(attr_type.__args__[0], ApiClass):
                 class_type = attr_type.__args__[0]
                 if isinstance(input_dict[attr_name], list):
-                    setattr(obj, attr_name, [class_type.from_dict(item) for item in input_dict[attr_name]])
+                    if not all(isinstance(item, dict) or isinstance(item, class_type) for item in input_dict[attr_name]):
+                        raise ValueError(attr_name, f'Expected list of {class_type} or dictionary for {attr_name}')
+                    setattr(obj, attr_name, [item if isinstance(item, class_type) else class_type.from_dict(item) for item in input_dict[attr_name]])
                 else:
-                    raise ValueError(f'Expected list for {attr_name} but got {type(input_dict[attr_name])}')
+                    raise ValueError(attr_name, f'Expected list for {attr_name} but got {type(input_dict[attr_name])}')
 
         return obj
 
@@ -200,7 +202,7 @@ class _ApiClassFactory(ABC):
         support_kwargs = cls.config_abstract_class and cls.config_abstract_class._support_kwargs
         is_upper_snake_case_keys = cls.config_abstract_class and cls.config_abstract_class._upper_snake_case_keys
         config_class_key = upper_snake_case(cls.config_class_key) if is_upper_snake_case_keys else cls.config_class_key
-        # Logic here is that the we keep the config_class_key in snake_case if _upper_snake_case_keys is False else we convert it to upper_snake_case
+        # Logic here is that the we keep the config_class_key in snake_case if _upper_snake_case_keys False else we convert it to upper_snake_case
         # if _upper_snake_case_keys is False then we check in both casing: 1. snake_case and 2. camel_case
         if not is_upper_snake_case_keys and config_class_key not in config and camel_case(config_class_key) in config:
             config_class_key = camel_case(config_class_key)

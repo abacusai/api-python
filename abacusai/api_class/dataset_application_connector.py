@@ -27,9 +27,9 @@ class ConfluenceDatasetConfig(DatasetConfig):
     Dataset config for Confluence Application Connector
     Args:
         location (str): The location of the pages to fetch
-        pull_attachments (bool, optional): Whether to pull attachments for each page
-        space_key (str, optional): The space key to fetch pages from
-        extract_bounding_boxes (bool, optional): Whether to extract bounding boxes from the documents
+        pull_attachments (bool): Whether to pull attachments for each page
+        space_key (str): The space key to fetch pages from
+        extract_bounding_boxes (bool): Whether to extract bounding boxes from the documents
 
     """
     location: str = dataclasses.field(default=None)
@@ -48,8 +48,8 @@ class GoogleAnalyticsDatasetConfig(DatasetConfig):
 
     Args:
         location (str): The view id of the report in the connector to fetch
-        start_timestamp (int, optional): Unix timestamp of the start of the period that will be queried
-        end_timestamp (int, optional): Unix timestamp of the end of the period that will be queried
+        start_timestamp (int): Unix timestamp of the start of the period that will be queried
+        end_timestamp (int): Unix timestamp of the end of the period that will be queried
     """
     location: str = dataclasses.field(default=None)
     start_timestamp: int = dataclasses.field(default=None)
@@ -66,9 +66,9 @@ class GoogleDriveDatasetConfig(DatasetConfig):
 
     Args:
         location (str): The regex location of the files to fetch
-        csv_delimiter (str, optional): If the file format is CSV, use a specific csv delimiter
-        extract_bounding_boxes (bool, optional): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-        merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+        csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
+        extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+        merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
@@ -86,9 +86,9 @@ class JiraDatasetConfig(DatasetConfig):
 
     Args:
         jql (str): The JQL query for fetching issues
-        custom_fields (list, optional): A list of custom fields to include in the dataset
-        include_comments (bool, optional): Fetch comments for each issue
-        include_watchers (bool, optional): Fetch watchers for each issue
+        custom_fields (list): A list of custom fields to include in the dataset
+        include_comments (bool): Fetch comments for each issue
+        include_watchers (bool): Fetch watchers for each issue
     """
     jql: str = dataclasses.field(default=None)
     custom_fields: list = dataclasses.field(default=None)
@@ -106,9 +106,9 @@ class OneDriveDatasetConfig(DatasetConfig):
 
     Args:
         location (str): The regex location of the files to fetch
-        csv_delimiter (str, optional): If the file format is CSV, use a specific csv delimiter
-        extract_bounding_boxes (bool, optional): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-        merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+        csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
+        extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+        merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
@@ -127,9 +127,9 @@ class SharepointDatasetConfig(DatasetConfig):
     Args:
         location (str): The regex location of the files to fetch
         is_documentset (bool): Whether the dataset is a document set
-        csv_delimiter (str, optional): If the file format is CSV, use a specific csv delimiter
-        extract_bounding_boxes (bool, optional): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-        merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+        csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
+        extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+        merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
@@ -144,7 +144,12 @@ class SharepointDatasetConfig(DatasetConfig):
 class ZendeskDatasetConfig(DatasetConfig):
     """
     Dataset config for Zendesk Application Connector
+
+    Args:
+        location (str): The regex location of the files to fetch
     """
+    location: str = dataclasses.field(default=None)
+
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.ZENDESK
 

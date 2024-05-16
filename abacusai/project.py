@@ -1,8 +1,9 @@
-from typing import Union
+from typing import List, Union
 
 from .api_class import (
-    AlertActionConfig, AlertConditionConfig, DocumentRetrieverConfig,
-    ForecastingMonitorConfig, TrainingConfig, WorkflowGraph
+    AgentInterface, AlertActionConfig, AlertConditionConfig,
+    DocumentRetrieverConfig, ForecastingMonitorConfig, TrainingConfig,
+    WorkflowGraph
 )
 from .return_class import AbstractApiClass
 
@@ -130,12 +131,12 @@ class Project(AbstractApiClass):
         """
         return self.client.set_feature_mapping(self.project_id, feature_group_id, feature_name, feature_mapping, nested_column_name)
 
-    def validate(self, feature_group_ids: list = None):
+    def validate(self, feature_group_ids: List = None):
         """
         Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
         Args:
-            feature_group_ids (list): The list of feature group IDs to validate.
+            feature_group_ids (List): The list of feature group IDs to validate.
 
         Returns:
             ProjectValidation: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
@@ -194,12 +195,12 @@ class Project(AbstractApiClass):
         """
         return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id, should_include_all_system_templates)
 
-    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None):
+    def get_training_config_options(self, feature_group_ids: List = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None):
         """
         Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
         Args:
-            feature_group_ids (list): The feature group IDs to be used for training.
+            feature_group_ids (List): The feature group IDs to be used for training.
             for_retrain (bool): Whether the training config options are used for retraining.
             current_training_config (TrainingConfig): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
 
@@ -208,27 +209,27 @@ class Project(AbstractApiClass):
         """
         return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config)
 
-    def create_train_test_data_split_feature_group(self, training_config: Union[dict, TrainingConfig], feature_group_ids: list):
+    def create_train_test_data_split_feature_group(self, training_config: Union[dict, TrainingConfig], feature_group_ids: List):
         """
         Get the train and test data split without training the model. Only supported for models with custom algorithms.
 
         Args:
             training_config (TrainingConfig): The training config used to influence how the split is calculated.
-            feature_group_ids (list): List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
+            feature_group_ids (List): List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
 
         Returns:
             FeatureGroup: The feature group containing the training data and folds information.
         """
         return self.client.create_train_test_data_split_feature_group(self.project_id, training_config, feature_group_ids)
 
-    def train_model(self, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None, algorithm_training_configs: list = None):
+    def train_model(self, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: List = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None, algorithm_training_configs: list = None):
         """
         Create a new model and start its training in the given project.
 
         Args:
             name (str): The name of the model. Defaults to "<Project Name> Model".
             training_config (TrainingConfig): The training config used to train this model.
-            feature_group_ids (list): List of feature group IDs provided by the user to train the model on.
+            feature_group_ids (List): List of feature group IDs provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
             custom_algorithms (list): List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.
             custom_algorithms_only (bool): Whether to only run custom algorithms.
@@ -298,7 +299,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override, training_config, custom_algorithm_config)
 
-    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None):
+    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None, include_interactive_performance_analysis: bool = False):
         """
         Runs a model monitor for the specified project.
 
@@ -315,11 +316,12 @@ class Project(AbstractApiClass):
             training_feature_mappings (dict): A JSON map to override features for training_fature_group, where keys are column names and the values are feature data use types.
             feature_group_base_monitor_config (dict): Selection strategy for the feature_group 1 with the feature group version if selected.
             feature_group_comparison_monitor_config (dict): Selection strategy for the feature_group 1 with the feature group version if selected.
+            include_interactive_performance_analysis (bool): Whether to include interactive performance analysis.
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, target_value_bias, target_value_performance, feature_mappings, model_id, training_feature_mappings, feature_group_base_monitor_config, feature_group_comparison_monitor_config)
+        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, target_value_bias, target_value_performance, feature_mappings, model_id, training_feature_mappings, feature_group_base_monitor_config, feature_group_comparison_monitor_config, include_interactive_performance_analysis)
 
     def list_model_monitors(self):
         """
@@ -512,18 +514,18 @@ class Project(AbstractApiClass):
         """
         return self.client.list_realtime_monitors(self.project_id)
 
-    def list_refresh_policies(self, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], notebook_ids: list = []):
+    def list_refresh_policies(self, dataset_ids: List = [], feature_group_id: str = None, model_ids: List = [], deployment_ids: List = [], batch_prediction_ids: List = [], model_monitor_ids: List = [], notebook_ids: List = []):
         """
         List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
         Args:
-            dataset_ids (list): Comma-separated list of Dataset IDs.
+            dataset_ids (List): Comma-separated list of Dataset IDs.
             feature_group_id (str): Feature Group ID for which we wish to see the refresh policies attached.
-            model_ids (list): Comma-separated list of Model IDs.
-            deployment_ids (list): Comma-separated list of Deployment IDs.
-            batch_prediction_ids (list): Comma-separated list of Batch Prediction IDs.
-            model_monitor_ids (list): Comma-separated list of Model Monitor IDs.
-            notebook_ids (list): Comma-separated list of Notebook IDs.
+            model_ids (List): Comma-separated list of Model IDs.
+            deployment_ids (List): Comma-separated list of Deployment IDs.
+            batch_prediction_ids (List): Comma-separated list of Batch Prediction IDs.
+            model_monitor_ids (List): Comma-separated list of Model Monitor IDs.
+            notebook_ids (List): Comma-separated list of Notebook IDs.
 
         Returns:
             list[RefreshPolicy]: List of all refresh policies in the organization.
@@ -554,13 +556,13 @@ class Project(AbstractApiClass):
         """
         return self.client.list_pipelines(self.project_id)
 
-    def create_graph_dashboard(self, name: str, python_function_ids: list = None):
+    def create_graph_dashboard(self, name: str, python_function_ids: List = None):
         """
         Create a plot dashboard given selected python plots
 
         Args:
             name (str): The name of the dashboard.
-            python_function_ids (list): A list of unique string identifiers for the python functions to be used in the graph dashboard.
+            python_function_ids (List): A list of unique string identifiers for the python functions to be used in the graph dashboard.
 
         Returns:
             GraphDashboard: An object describing the graph dashboard.
@@ -579,12 +581,12 @@ class Project(AbstractApiClass):
         """
         return self.client.list_graph_dashboards(self.project_id)
 
-    def list_builtin_algorithms(self, feature_group_ids: list, training_config: Union[dict, TrainingConfig] = None):
+    def list_builtin_algorithms(self, feature_group_ids: List, training_config: Union[dict, TrainingConfig] = None):
         """
         Return list of built-in algorithms based on given input data and training config.
 
         Args:
-            feature_group_ids (list): List of feature group IDs specifying input data.
+            feature_group_ids (List): List of feature group IDs specifying input data.
             training_config (TrainingConfig): The training config to be used for model training.
 
         Returns:
@@ -604,35 +606,22 @@ class Project(AbstractApiClass):
         """
         return self.client.create_chat_session(self.project_id, name)
 
-    def create_agent(self, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None):
+    def create_agent(self, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = AgentInterface.DEFAULT):
         """
-        Creates a new AI agent.
-
-        The Agents are of the following three types -
-        i. Normal AI Agents - These are general conversational agents which don't need any input/output schemas to be defined.
-        ii. Complex AI Agents - These are agents which enable user to define form like agents where the input and output data is structured.
-                                Such agents need input_agent_schema and output_agent_schema to be defined and are not conversational in nature.
-        iii. Workflow AI Agents - These are agents which are created using a workflow_graph. The workflow graph defines the steps to be executed in the agent.
-                                  For these, we don't need to give source_code and function_name separately in the API, these are extracted directly from the workflow_graph param.
-
+        Creates a new AI agent using the given agent workflow graph definition.
 
         Args:
-            function_source_code (str): The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-            agent_function_name (str): The name of the function found in the source code that will be executed when the agent is deployed.
             name (str): The name you want your agent to have, defaults to "<Project Name> Agent".
-            memory (int): The memory allocation (in GB) for the agent.
-            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+            memory (int): Overrides the default memory allocation (in GB) for the agent.
             description (str): A description of the agent, including its purpose and instructions.
-            enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
             evaluation_feature_group_id (str): The ID of the feature group to use for evaluation.
-            agent_input_schema (dict): The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
-            agent_output_schema (dict): The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
+            agent_interface (AgentInterface): The interface that the agent will be deployed with.
 
         Returns:
-            Agent: The new agent
+            Agent: The new agent.
         """
-        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id, agent_input_schema, agent_output_schema, workflow_graph)
+        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id, agent_input_schema, agent_output_schema, workflow_graph, agent_interface)
 
     def list_agents(self):
         """
@@ -683,7 +672,7 @@ class Project(AbstractApiClass):
         Args:
             train_function (callable): The train function is passed.
             predict_function (callable): The prediction function is passed.
-            training_input_tables (list, optional): The input tables to be used for training the model. Defaults to None.
+            training_input_tables (list): The input tables to be used for training the model. Defaults to None.
             predict_many_function (callable): Prediction function for batch input
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function

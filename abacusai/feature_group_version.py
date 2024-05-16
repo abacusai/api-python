@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 from .annotation_config import AnnotationConfig
 from .code_source import CodeSource
@@ -176,12 +177,12 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.describe_feature_group_version(self.feature_group_version)
 
-    def get_metrics(self, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True):
+    def get_metrics(self, selected_columns: List = None, include_charts: bool = False, include_statistics: bool = True):
         """
         Get metrics for a specific feature group version.
 
         Args:
-            selected_columns (list): A list of columns to order first.
+            selected_columns (List): A list of columns to order first.
             include_charts (bool): A flag indicating whether charts should be included in the response. Default is false.
             include_statistics (bool): A flag indicating whether statistics should be included in the response. Default is true.
 
@@ -207,7 +208,7 @@ class FeatureGroupVersion(AbstractApiClass):
         A waiting call until feature group version is materialized
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'GENERATING'}, timeout=timeout)
 
@@ -216,7 +217,7 @@ class FeatureGroupVersion(AbstractApiClass):
         A waiting call until feature group version is materialized.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+            timeout (int): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.wait_for_results(timeout)
 
@@ -253,7 +254,7 @@ class FeatureGroupVersion(AbstractApiClass):
         Loads the feature group version into a pandas dataframe.
 
         Args:
-            max_workers (int, optional): The number of threads.
+            max_workers (int): The number of threads.
 
         Returns:
             DataFrame: A pandas dataframe displaying the data in the feature group version.
@@ -272,7 +273,7 @@ class FeatureGroupVersion(AbstractApiClass):
         Args:
             doc_id_feature (str): The name of the feature / column containing the document ID.
             document_feature (str): The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
-            max_workers (int, optional): The number of threads.
+            max_workers (int): The number of threads.
 
         Returns:
             DataFrame: A pandas dataframe containing the extracted document data.
