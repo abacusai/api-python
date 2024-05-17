@@ -150,7 +150,8 @@ class ApiClass(ABC):
             return None
         obj = None
         if input_dict:
-            if builder := cls._get_builder():
+            builder = cls._get_builder()
+            if builder:
                 config_class_key = None
                 value = next((key for key, val in builder.config_class_map.items() if val.__name__ == cls.__name__), None)
                 input_dict_with_config_key = input_dict

@@ -780,7 +780,8 @@ class BaseApiClient:
 
     def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
         headers = {'APIKEY': self.api_key}
-        if deployment_id := os.getenv('ABACUS_DEPLOYMENT_ID'):
+        deployment_id = os.getenv('ABACUS_DEPLOYMENT_ID')
+        if deployment_id:
             query_params = {**(query_params or {}),
                             'environmentDeploymentId': deployment_id}
         endpoint = self.proxy_endpoint
