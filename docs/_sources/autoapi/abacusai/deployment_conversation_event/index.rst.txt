@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, llmDisplayName=None, llmBotIcon=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -70,6 +70,10 @@ Classes
    :type streamedData: str
    :param streamedSectionData: Aggregated streamed section outputs from the agent in a list.
    :type streamedSectionData: str
+   :param llmDisplayName: The display name of the LLM model used to generate the response. Only used for system-created bots.
+   :type llmDisplayName: str
+   :param llmBotIcon: The icon location of the LLM model used to generate the response. Only used for system-created bots.
+   :type llmBotIcon: str
 
    .. py:method:: __repr__()
 

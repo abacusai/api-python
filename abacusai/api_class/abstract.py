@@ -2,10 +2,17 @@ import dataclasses
 import datetime
 import inspect
 import re
+import sys
 from abc import ABC
 from copy import deepcopy
 from textwrap import dedent
-from typing import Any, Callable, get_origin, get_type_hints
+from typing import Any, Callable, get_type_hints
+
+
+if sys.version_info >= (3, 8):
+    from typing import get_origin
+else:
+    from typing_inspect import get_origin
 
 from .enums import ApiEnum
 
