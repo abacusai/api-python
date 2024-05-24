@@ -46,16 +46,23 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">abacusai</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">abacusai.api_class</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="../index.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#functions">Functions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#attributes">Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#functions">Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
 </ul>
 </li>
@@ -75,9 +82,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a></li>
-          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class</span></code></a></li>
-      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class.model</span></code></li>
+          <li class="breadcrumb-item"><a href="../../index.html">abacusai</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">abacusai.api_class</a></li>
+      <li class="breadcrumb-item active">abacusai.api_class.model</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../_sources/autoapi/abacusai/api_class/model/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,13 +95,17 @@
            <div itemprop="articleBody">
              
   <section id="module-abacusai.api_class.model">
-<span id="abacusai-api-class-model"></span><h1><a class="reference internal" href="#module-abacusai.api_class.model" title="abacusai.api_class.model"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class.model</span></code></a><a class="headerlink" href="#module-abacusai.api_class.model" title="Link to this heading"></a></h1>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<span id="abacusai-api-class-model"></span><h1>abacusai.api_class.model<a class="headerlink" href="#module-abacusai.api_class.model" title="Link to this heading"></a></h1>
 <section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.ApiClass" title="abacusai.api_class.model.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model._ApiClassFactory" title="abacusai.api_class.model._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p></td>
 <td><p>An abstract class for the training config options used to train the model.</p></td>
 </tr>
@@ -169,6 +180,161 @@
 </tr>
 </tbody>
 </table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ApiClass</span></span><a class="headerlink" href="#abacusai.api_class.model.ApiClass" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass._upper_snake_case_keys">
+<span class="sig-name descname"><span class="pre">_upper_snake_case_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ApiClass._upper_snake_case_keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass._support_kwargs">
+<span class="sig-name descname"><span class="pre">_support_kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ApiClass._support_kwargs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass._get_builder">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_builder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass._get_builder" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass._repr_html_">
+<span class="sig-name descname"><span class="pre">_repr_html_</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass._repr_html_" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass.__getitem__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass.__setitem__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>value</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass._unset_item">
+<span class="sig-name descname"><span class="pre">_unset_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass._unset_item" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass.get" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>default</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NotImplemented</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass.pop" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>default</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ApiClass.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ApiClass.from_dict" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model._ApiClassFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">_ApiClassFactory</span></span><a class="headerlink" href="#abacusai.api_class.model._ApiClassFactory" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model._ApiClassFactory.config_abstract_class">
+<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model._ApiClassFactory.config_abstract_class" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model._ApiClassFactory.config_class_key">
+<span class="sig-name descname"><span class="pre">config_class_key</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model._ApiClassFactory.config_class_key" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model._ApiClassFactory.config_class_map">
+<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.model._ApiClassFactory.config_class_map" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.model._ApiClassFactory.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model._ApiClassFactory.from_dict" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#abacusai.api_class.model.ApiClass" title="abacusai.api_class.model.ApiClass">ApiClass</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.model.TrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">TrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.TrainingConfig" title="Link to this definition"></a></dt>
@@ -1122,27 +1288,27 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.llm_for_ner">
-<span class="sig-name descname"><span class="pre">llm_for_ner</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.LLMName" title="abacusai.api_class.enums.LLMName"><span class="pre">abacusai.api_class.enums.LLMName</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.llm_for_ner" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">llm_for_ner</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.LLMName" title="abacusai.api_class.enums.LLMName"><span class="pre">abacusai.api_class.enums.LLMName</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.llm_for_ner" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_split">
-<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_split" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_split" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_row_indicator">
-<span class="sig-name descname"><span class="pre">test_row_indicator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_row_indicator" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">test_row_indicator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_row_indicator" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.active_labels_column">
-<span class="sig-name descname"><span class="pre">active_labels_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.active_labels_column" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">active_labels_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.active_labels_column" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.document_format">
-<span class="sig-name descname"><span class="pre">document_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NLPDocumentFormat" title="abacusai.api_class.enums.NLPDocumentFormat"><span class="pre">abacusai.api_class.enums.NLPDocumentFormat</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.document_format" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">document_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NLPDocumentFormat" title="abacusai.api_class.enums.NLPDocumentFormat"><span class="pre">abacusai.api_class.enums.NLPDocumentFormat</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.document_format" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1229,18 +1395,19 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>document_retrievers</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of document retriever names to use for the feature stores this model was trained with.</p></li>
-<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct</p></li>
-<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The generative LLM temperature</p></li>
+<li><p><strong>document_retrievers</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of names of document retrievers to use as vector stores of information for RAG responses.</p></li>
+<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.</p></li>
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The generative LLM temperature.</p></li>
 <li><p><strong>retrieval_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Include the metadata column values in the retrieved search results.</p></li>
 <li><p><strong>filter_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Allow users to filter the document retrievers on these metadata columns.</p></li>
-<li><p><strong>include_general_knowledge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to rely not just on search results, but to fall back on general knowledge.</p></li>
+<li><p><strong>include_general_knowledge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to rely not just on RAG search results, but to fall back on general knowledge. Disabled by default.</p></li>
+<li><p><strong>enable_web_search</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to use Web Search Engines to retrieve information for better results.</p></li>
 <li><p><strong>behavior_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize the overall role instructions for the LLM.</p></li>
-<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize instructions for what the LLM responses should look like.</p></li>
-<li><p><strong>enable_llm_rewrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable LLM rewrite for the ChatLLM. If None, LLM rewrite will happen automatically. Defaults to False.</p></li>
+<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customized instructions for how the LLM should respond.</p></li>
+<li><p><strong>enable_llm_rewrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.</p></li>
 <li><p><strong>column_filtering_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.</p></li>
 <li><p><strong>keyword_requirement_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.</p></li>
-<li><p><strong>query_rewrite_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to rewrite a search query.</p></li>
+<li><p><strong>query_rewrite_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Special instructions for the LLM which rewrites the RAG query.</p></li>
 <li><p><strong>max_search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.</p></li>
 <li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.</p></li>
 <li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group IDs.</p></li>
@@ -1249,9 +1416,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Minimum search score to consider a document as a valid search result.</p></li>
 <li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Database connector ID to use for the ChatLLM.</p></li>
 <li><p><strong>database_connector_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use from the database connector for the ChatLLM.</p></li>
-<li><p><strong>enable_code_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable code execution in the ChatLLM.</p></li>
-<li><p><strong>metadata_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – DEPRECATED. Include the metadata column values in the retrieved search results.</p></li>
-<li><p><strong>lookup_rewrite_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – DEPRECATED. Instructions for a LLM call to rewrite a search query.</p></li>
+<li><p><strong>enable_code_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1286,6 +1451,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.enable_web_search">
+<span class="sig-name descname"><span class="pre">enable_web_search</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.enable_web_search" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.behavior_instructions">
 <span class="sig-name descname"><span class="pre">behavior_instructions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.behavior_instructions" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -1297,7 +1467,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.enable_llm_rewrite">
-<span class="sig-name descname"><span class="pre">enable_llm_rewrite</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.enable_llm_rewrite" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">enable_llm_rewrite</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.enable_llm_rewrite" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2004,7 +2174,6 @@ inheritance.</p>
 
 </dd></dl>
 
-</section>
 </section>
 </section>
 

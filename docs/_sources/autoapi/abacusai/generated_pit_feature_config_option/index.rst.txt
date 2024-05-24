@@ -1,26 +1,36 @@
-:py:mod:`abacusai.generated_pit_feature_config_option`
-======================================================
+abacusai.generated_pit_feature_config_option
+============================================
 
 .. py:module:: abacusai.generated_pit_feature_config_option
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.generated_pit_feature_config_option.AbstractApiClass
+   abacusai.generated_pit_feature_config_option.GeneratedPitFeatureConfigOption
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.generated_pit_feature_config_option.GeneratedPitFeatureConfigOption
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: GeneratedPitFeatureConfigOption(client, name=None, displayName=None, default=None, description=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    The options to display for possible generated PIT aggregation functions
 
@@ -35,9 +45,11 @@ Classes
    :param description: The description of the aggregation type.
    :type description: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

@@ -1,26 +1,36 @@
-:py:mod:`abacusai.model_metrics`
-================================
+abacusai.model_metrics
+======================
 
 .. py:module:: abacusai.model_metrics
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.model_metrics.AbstractApiClass
+   abacusai.model_metrics.ModelMetrics
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.model_metrics.ModelMetrics
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelMetrics(client, algoMetrics=None, selectedAlgorithm=None, selectedAlgorithmName=None, modelId=None, modelVersion=None, metricNames=None, targetColumn=None, trainValTestSplit=None, trainingCompletedAt=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Metrics of the trained model.
 
@@ -45,9 +55,11 @@ Classes
    :param trainingCompletedAt: Timestamp when training was completed
    :type trainingCompletedAt: datetime
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

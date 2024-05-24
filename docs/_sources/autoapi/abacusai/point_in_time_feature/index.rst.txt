@@ -1,26 +1,36 @@
-:py:mod:`abacusai.point_in_time_feature`
-========================================
+abacusai.point_in_time_feature
+==============================
 
 .. py:module:: abacusai.point_in_time_feature
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.point_in_time_feature.AbstractApiClass
+   abacusai.point_in_time_feature.PointInTimeFeature
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.point_in_time_feature.PointInTimeFeature
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PointInTimeFeature(client, historyTableName=None, aggregationKeys=None, timestampKey=None, historicalTimestampKey=None, lookbackWindowSeconds=None, lookbackWindowLagSeconds=None, lookbackCount=None, lookbackUntilPosition=None, expression=None, groupName=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A point-in-time feature description
 
@@ -47,9 +57,11 @@ Classes
    :param groupName: The group name this point-in-time feature belongs to.
    :type groupName: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

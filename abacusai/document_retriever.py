@@ -1,6 +1,6 @@
 from typing import Dict, Union
 
-from .api_class import DocumentRetrieverConfig
+from .api_class import DocumentRetrieverConfig, VectorStoreConfig
 from .document_retriever_config import DocumentRetrieverConfig
 from .document_retriever_version import DocumentRetrieverVersion
 from .return_class import AbstractApiClass
@@ -67,13 +67,13 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.client.rename_document_retriever(self.document_retriever_id, name)
 
-    def create_version(self, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
+    def create_version(self, feature_group_id: str = None, document_retriever_config: Union[dict, VectorStoreConfig] = None):
         """
         Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
         Args:
             feature_group_id (str): The ID of the feature group to update the document retriever with.
-            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+            document_retriever_config (VectorStoreConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
             DocumentRetrieverVersion: The newly created document retriever version.

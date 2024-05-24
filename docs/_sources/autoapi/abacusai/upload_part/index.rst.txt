@@ -1,26 +1,36 @@
-:py:mod:`abacusai.upload_part`
-==============================
+abacusai.upload_part
+====================
 
 .. py:module:: abacusai.upload_part
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.upload_part.AbstractApiClass
+   abacusai.upload_part.UploadPart
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.upload_part.UploadPart
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: UploadPart(client, etag=None, md5=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Unique identifiers for a part
 
@@ -31,9 +41,11 @@ Classes
    :param md5: The MD5 hash of this part.
    :type md5: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

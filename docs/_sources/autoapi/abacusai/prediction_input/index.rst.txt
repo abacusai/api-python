@@ -1,26 +1,110 @@
-:py:mod:`abacusai.prediction_input`
-===================================
+abacusai.prediction_input
+=========================
 
 .. py:module:: abacusai.prediction_input
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.prediction_input.PredictionDataset
+   abacusai.prediction_input.PredictionFeatureGroup
+   abacusai.prediction_input.AbstractApiClass
+   abacusai.prediction_input.PredictionInput
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: PredictionDataset(client, datasetId=None, datasetType=None, datasetVersion=None, default=None, required=None)
 
-.. autoapisummary::
-
-   abacusai.prediction_input.PredictionInput
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
+   Batch Input Datasets
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param datasetId: The unique identifier of the dataset
+   :type datasetId: str
+   :param datasetType: dataset type
+   :type datasetType: str
+   :param datasetVersion: The unique identifier of the dataset version used for predictions
+   :type datasetVersion: str
+   :param default: If true, this dataset is the default dataset in the model
+   :type default: bool
+   :param required: If true, this dataset is required for the batch prediction
+   :type required: bool
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: PredictionFeatureGroup(client, featureGroupId=None, featureGroupVersion=None, datasetType=None, default=None, required=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Batch Input Feature Group
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureGroupId: The unique identifier of the feature group
+   :type featureGroupId: str
+   :param featureGroupVersion: The unique identifier of the feature group version used for predictions
+   :type featureGroupVersion: str
+   :param datasetType: dataset type
+   :type datasetType: str
+   :param default: If true, this feature group is the default feature group in the model
+   :type default: bool
+   :param required: If true, this feature group is required for the batch prediction
+   :type required: bool
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PredictionInput(client, featureGroupDatasetIds=None, datasetIdRemap=None, featureGroups={}, datasets={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Batch inputs
 
@@ -35,9 +119,11 @@ Classes
    :param datasets: List of prediction datasets
    :type datasets: PredictionDataset
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

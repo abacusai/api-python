@@ -23,7 +23,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="abacusai.api_class.dataset_application_connector" href="../dataset_application_connector/index.html" />
-    <link rel="prev" title="abacusai.api_class.blob_input" href="../blob_input/index.html" /> 
+    <link rel="prev" title="abacusai.api_class.connectors" href="../connectors/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,16 +46,23 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">abacusai</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">abacusai.api_class</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="../index.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#functions">Functions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#attributes">Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#functions">Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
 </ul>
 </li>
@@ -75,9 +82,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a></li>
-          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class</span></code></a></li>
-      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class.dataset</span></code></li>
+          <li class="breadcrumb-item"><a href="../../index.html">abacusai</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">abacusai.api_class</a></li>
+      <li class="breadcrumb-item active">abacusai.api_class.dataset</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../_sources/autoapi/abacusai/api_class/dataset/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,27 +95,208 @@
            <div itemprop="articleBody">
              
   <section id="module-abacusai.api_class.dataset">
-<span id="abacusai-api-class-dataset"></span><h1><a class="reference internal" href="#module-abacusai.api_class.dataset" title="abacusai.api_class.dataset"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class.dataset</span></code></a><a class="headerlink" href="#module-abacusai.api_class.dataset" title="Link to this heading"></a></h1>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<span id="abacusai-api-class-dataset"></span><h1>abacusai.api_class.dataset<a class="headerlink" href="#module-abacusai.api_class.dataset" title="Link to this heading"></a></h1>
 <section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.ParsingConfig" title="abacusai.api_class.dataset.ParsingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParsingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.ApiClass" title="abacusai.api_class.dataset.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.OcrMode" title="abacusai.api_class.dataset.OcrMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OcrMode</span></code></a></p></td>
+<td><p>Generic enumeration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DatasetConfig" title="abacusai.api_class.dataset.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p></td>
+<td><p>An abstract class for dataset configs</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.ParsingConfig" title="abacusai.api_class.dataset.ParsingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParsingConfig</span></code></a></p></td>
 <td><p>Custom config for dataset parsing.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DocumentProcessingConfig" title="abacusai.api_class.dataset.DocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentProcessingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DocumentProcessingConfig" title="abacusai.api_class.dataset.DocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentProcessingConfig</span></code></a></p></td>
 <td><p>Document processing configuration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetDocumentProcessingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetDocumentProcessingConfig</span></code></a></p></td>
 <td><p>Document processing configuration for dataset imports.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig" title="abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalDatabaseConnectorConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig" title="abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalDatabaseConnectorConfig</span></code></a></p></td>
 <td><p>Config information for incremental datasets from database connectors</p></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset.</span></span><span class="sig-name descname"><span class="pre">ApiClass</span></span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass._upper_snake_case_keys">
+<span class="sig-name descname"><span class="pre">_upper_snake_case_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass._upper_snake_case_keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass._support_kwargs">
+<span class="sig-name descname"><span class="pre">_support_kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass._support_kwargs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass._get_builder">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_builder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass._get_builder" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass._repr_html_">
+<span class="sig-name descname"><span class="pre">_repr_html_</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass._repr_html_" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass.__getitem__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass.__setitem__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>value</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass._unset_item">
+<span class="sig-name descname"><span class="pre">_unset_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass._unset_item" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass.get" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>default</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NotImplemented</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass.pop" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>default</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.ApiClass.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset.ApiClass.from_dict" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.OcrMode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset.</span></span><span class="sig-name descname"><span class="pre">OcrMode</span></span><a class="headerlink" href="#abacusai.api_class.dataset.OcrMode" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></p>
+<p>Generic enumeration.</p>
+<p>Derive from this class to define new enumerations.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.OcrMode.DEFAULT">
+<span class="sig-name descname"><span class="pre">DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DEFAULT'</span></em><a class="headerlink" href="#abacusai.api_class.dataset.OcrMode.DEFAULT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.OcrMode.LAYOUT">
+<span class="sig-name descname"><span class="pre">LAYOUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LAYOUT'</span></em><a class="headerlink" href="#abacusai.api_class.dataset.OcrMode.LAYOUT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.OcrMode.SCANNED">
+<span class="sig-name descname"><span class="pre">SCANNED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SCANNED'</span></em><a class="headerlink" href="#abacusai.api_class.dataset.OcrMode.SCANNED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.OcrMode.COMPREHENSIVE">
+<span class="sig-name descname"><span class="pre">COMPREHENSIVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'COMPREHENSIVE'</span></em><a class="headerlink" href="#abacusai.api_class.dataset.OcrMode.COMPREHENSIVE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.OcrMode.COMPREHENSIVE_V2">
+<span class="sig-name descname"><span class="pre">COMPREHENSIVE_V2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'COMPREHENSIVE_V2'</span></em><a class="headerlink" href="#abacusai.api_class.dataset.OcrMode.COMPREHENSIVE_V2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.OcrMode.COMPREHENSIVE_TABLE_MD">
+<span class="sig-name descname"><span class="pre">COMPREHENSIVE_TABLE_MD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'COMPREHENSIVE_TABLE_MD'</span></em><a class="headerlink" href="#abacusai.api_class.dataset.OcrMode.COMPREHENSIVE_TABLE_MD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.DatasetConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset.</span></span><span class="sig-name descname"><span class="pre">DatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset.DatasetConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>An abstract class for dataset configs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>is_documentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the dataset is a document set</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.DatasetConfig.is_documentset">
+<span class="sig-name descname"><span class="pre">is_documentset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset.DatasetConfig.is_documentset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset.ParsingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset.</span></span><span class="sig-name descname"><span class="pre">ParsingConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset.ParsingConfig" title="Link to this definition"></a></dt>
@@ -149,7 +337,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.</p></li>
-<li><p><strong>ocr_mode</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.OcrMode" title="abacusai.api_class.enums.OcrMode"><em>OcrMode</em></a>) – OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.</p></li>
+<li><p><strong>ocr_mode</strong> (<a class="reference internal" href="#abacusai.api_class.dataset.OcrMode" title="abacusai.api_class.dataset.OcrMode"><em>OcrMode</em></a>) – OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>use_full_ocr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>remove_header_footer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>remove_watermarks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.</p></li>
@@ -169,7 +357,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset.DocumentProcessingConfig.use_full_ocr">
-<span class="sig-name descname"><span class="pre">use_full_ocr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset.DocumentProcessingConfig.use_full_ocr" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">use_full_ocr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.dataset.DocumentProcessingConfig.use_full_ocr" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -198,7 +386,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.</p></li>
-<li><p><strong>ocr_mode</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.OcrMode" title="abacusai.api_class.enums.OcrMode"><em>OcrMode</em></a>) – OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.</p></li>
+<li><p><strong>ocr_mode</strong> (<a class="reference internal" href="#abacusai.api_class.dataset.OcrMode" title="abacusai.api_class.dataset.OcrMode"><em>OcrMode</em></a>) – OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>use_full_ocr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>remove_header_footer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>remove_watermarks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.</p></li>
@@ -209,7 +397,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset.DatasetDocumentProcessingConfig.page_text_column">
-<span class="sig-name descname"><span class="pre">page_text_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset.DatasetDocumentProcessingConfig.page_text_column" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">page_text_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.dataset.DatasetDocumentProcessingConfig.page_text_column" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -233,13 +421,12 @@
 
 </section>
 </section>
-</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../blob_input/index.html" class="btn btn-neutral float-left" title="abacusai.api_class.blob_input" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../connectors/index.html" class="btn btn-neutral float-left" title="abacusai.api_class.connectors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../dataset_application_connector/index.html" class="btn btn-neutral float-right" title="abacusai.api_class.dataset_application_connector" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

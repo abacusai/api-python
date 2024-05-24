@@ -1,26 +1,36 @@
-:py:mod:`abacusai.llm_code_block`
-=================================
+abacusai.llm_code_block
+=======================
 
 .. py:module:: abacusai.llm_code_block
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.llm_code_block.AbstractApiClass
+   abacusai.llm_code_block.LlmCodeBlock
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.llm_code_block.LlmCodeBlock
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: LlmCodeBlock(client, language=None, code=None, start=None, end=None, valid=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Parsed code block from an LLM response
 
@@ -37,9 +47,11 @@ Classes
    :param valid: flag denoting whether the soruce code string is syntactically valid
    :type valid: bool
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

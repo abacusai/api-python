@@ -1,26 +1,36 @@
-:py:mod:`abacusai.prediction_dataset`
-=====================================
+abacusai.prediction_dataset
+===========================
 
 .. py:module:: abacusai.prediction_dataset
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.prediction_dataset.AbstractApiClass
+   abacusai.prediction_dataset.PredictionDataset
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.prediction_dataset.PredictionDataset
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PredictionDataset(client, datasetId=None, datasetType=None, datasetVersion=None, default=None, required=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Batch Input Datasets
 
@@ -37,9 +47,11 @@ Classes
    :param required: If true, this dataset is required for the batch prediction
    :type required: bool
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

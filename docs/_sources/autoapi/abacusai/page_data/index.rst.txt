@@ -1,26 +1,36 @@
-:py:mod:`abacusai.page_data`
-============================
+abacusai.page_data
+==================
 
 .. py:module:: abacusai.page_data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.page_data.AbstractApiClass
+   abacusai.page_data.PageData
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.page_data.PageData
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PageData(client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None, extractedText=None, rotationAngle=None, pageMarkdown=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Data extracted from a docstore page.
 
@@ -51,9 +61,11 @@ Classes
    :param pageMarkdown: The markdown text for the page.
    :type pageMarkdown: list
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

@@ -1,26 +1,36 @@
-:py:mod:`abacusai.eda_collinearity`
-===================================
+abacusai.eda_collinearity
+=========================
 
 .. py:module:: abacusai.eda_collinearity
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.eda_collinearity.AbstractApiClass
+   abacusai.eda_collinearity.EdaCollinearity
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.eda_collinearity.EdaCollinearity
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: EdaCollinearity(client, columnNames=None, collinearityMatrix=None, groupFeatureDict=None, collinearityGroups=None, columnNamesX=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Eda Collinearity of the latest version of the data between all the features.
 
@@ -37,9 +47,11 @@ Classes
    :param columnNamesX: Name of all the features in the x axis of the collinearity matrix
    :type columnNamesX: list
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

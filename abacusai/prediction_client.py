@@ -720,6 +720,17 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column, 'minScore': min_score, 'requiredPhrases': required_phrases, 'filterClause': filter_clause, 'crowdingLimits': crowding_limits}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
 
+    def get_completion(self, deployment_token: str, deployment_id: str, prompt: str) -> Dict:
+        """Returns the finetuned LLM generated completion of the prompt.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            prompt (str): The prompt given to the finetuned LLM to generate the completion."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('getCompletion', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'prompt': prompt}, server_override=prediction_url)
+
     def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, blobs: None = None) -> Dict:
         """Executes a deployed AI agent function with binary data as inputs.
 

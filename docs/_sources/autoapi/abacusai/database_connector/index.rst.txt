@@ -1,26 +1,36 @@
-:py:mod:`abacusai.database_connector`
-=====================================
+abacusai.database_connector
+===========================
 
 .. py:module:: abacusai.database_connector
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.database_connector.AbstractApiClass
+   abacusai.database_connector.DatabaseConnector
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.database_connector.DatabaseConnector
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A connector to an external service
 
@@ -39,9 +49,11 @@ Classes
    :param createdAt: The ISO-8601 string indicating when the API key was created.
    :type createdAt: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -52,12 +64,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: list_objects(fetch_raw_data = False)
 
       Lists querable objects in the database connector.
 
       :param fetch_raw_data: If true, return unfiltered objects.
       :type fetch_raw_data: bool
+
 
 
    .. py:method:: get_object_schema(object_name = None, fetch_raw_data = False)
@@ -73,12 +87,14 @@ Classes
       :rtype: DatabaseConnectorSchema
 
 
+
    .. py:method:: rename(name)
 
       Renames a Database Connector
 
       :param name: The new name for the Database Connector.
       :type name: str
+
 
 
    .. py:method:: verify()
@@ -89,12 +105,14 @@ Classes
       :type database_connector_id: str
 
 
+
    .. py:method:: delete()
 
       Delete a database connector.
 
       :param database_connector_id: The unique identifier for the database connector.
       :type database_connector_id: str
+
 
 
    .. py:method:: query(query)

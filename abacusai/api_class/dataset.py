@@ -5,6 +5,17 @@ from .enums import OcrMode
 
 
 @dataclasses.dataclass
+class DatasetConfig(ApiClass):
+    """
+    An abstract class for dataset configs
+
+    Args:
+        is_documentset (bool): Whether the dataset is a document set
+    """
+    is_documentset: bool = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
 class ParsingConfig(ApiClass):
     """
     Custom config for dataset parsing.

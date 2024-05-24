@@ -1,0 +1,121 @@
+abacusai.api_class.connectors
+=============================
+
+.. py:module:: abacusai.api_class.connectors
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.api_class.connectors._ApiClassFactory
+   abacusai.api_class.connectors.DatasetConfig
+   abacusai.api_class.connectors.StreamingConnectorDatasetConfig
+   abacusai.api_class.connectors.KafkaDatasetConfig
+   abacusai.api_class.connectors._StreamingConnectorDatasetConfigFactory
+
+
+Module Contents
+---------------
+
+.. py:class:: _ApiClassFactory
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
+
+   .. py:attribute:: config_class_key
+      :value: None
+
+
+
+   .. py:attribute:: config_class_map
+
+
+   .. py:method:: from_dict(config)
+      :classmethod:
+
+
+
+.. py:class:: DatasetConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   An abstract class for dataset configs
+
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+
+
+   .. py:attribute:: is_documentset
+      :type:  bool
+
+
+.. py:class:: StreamingConnectorDatasetConfig
+
+   Bases: :py:obj:`abacusai.api_class.dataset.DatasetConfig`
+
+
+   An abstract class for dataset configs specific to streaming connectors.
+
+   :param streaming_connector_type: The type of streaming connector
+   :type streaming_connector_type: StreamingConnectorType
+
+
+   .. py:attribute:: streaming_connector_type
+      :type:  abacusai.api_class.enums.StreamingConnectorType
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: KafkaDatasetConfig
+
+   Bases: :py:obj:`StreamingConnectorDatasetConfig`
+
+
+   Dataset config for Kafka Streaming Connector
+
+   :param topic: The kafka topic to consume
+   :type topic: str
+
+
+   .. py:attribute:: topic
+      :type:  str
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: _StreamingConnectorDatasetConfigFactory
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: config_abstract_class
+
+
+   .. py:attribute:: config_class_key
+      :value: 'streaming_connector_type'
+
+
+
+   .. py:attribute:: config_class_map
+
+

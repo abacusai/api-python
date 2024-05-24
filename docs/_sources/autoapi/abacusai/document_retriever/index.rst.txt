@@ -1,26 +1,236 @@
-:py:mod:`abacusai.document_retriever`
-=====================================
+abacusai.document_retriever
+===========================
 
 .. py:module:: abacusai.document_retriever
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.document_retriever.VectorStoreConfig
+   abacusai.document_retriever.DocumentRetrieverConfig
+   abacusai.document_retriever.DocumentRetrieverVersion
+   abacusai.document_retriever.AbstractApiClass
+   abacusai.document_retriever.DocumentRetriever
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: VectorStoreConfig
 
-.. autoapisummary::
-
-   abacusai.document_retriever.DocumentRetriever
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
+   Config for indexing options of a document retriever. Default values of optional arguments are heuristically selected by the Abacus.AI platform based on the underlying data.
+
+   :param chunk_size: The size of text chunks in the vector store.
+   :type chunk_size: int
+   :param chunk_overlap_fraction: The fraction of overlap between chunks.
+   :type chunk_overlap_fraction: float
+   :param text_encoder: Encoder used to index texts from the documents.
+   :type text_encoder: VectorStoreTextEncoder
+   :param chunk_size_factors: Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to `chunk_size`.
+   :type chunk_size_factors: list
+   :param score_multiplier_column: If provided, will use the values in this metadata column to modify the relevance score of returned chunks for all queries.
+   :type score_multiplier_column: str
+   :param prune_vectors: Transform vectors using SVD so that the average component of vectors in the corpus are removed.
+   :type prune_vectors: bool
+
+
+   .. py:attribute:: chunk_size
+      :type:  int
+
+
+   .. py:attribute:: chunk_overlap_fraction
+      :type:  float
+
+
+   .. py:attribute:: text_encoder
+      :type:  abacusai.api_class.enums.VectorStoreTextEncoder
+
+
+   .. py:attribute:: chunk_size_factors
+      :type:  list
+
+
+   .. py:attribute:: score_multiplier_column
+      :type:  str
+
+
+   .. py:attribute:: prune_vectors
+      :type:  bool
+
+
+.. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None, pruneVectors=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A config for document retriever creation.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param chunkSize: The size of chunks for vector store, i.e., maximum number of words in the chunk.
+   :type chunkSize: int
+   :param chunkOverlapFraction: The fraction of overlap between two consecutive chunks.
+   :type chunkOverlapFraction: float
+   :param textEncoder: The text encoder used to encode texts in the vector store.
+   :type textEncoder: str
+   :param scoreMultiplierColumn: The values in this metadata column are used to modify the relevance scores of returned chunks.
+   :type scoreMultiplierColumn: str
+   :param pruneVectors: Corpus specific transformation of vectors that applies dimensional reduction techniques to strip common components from the vectors.
+   :type pruneVectors: bool
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, deploymentStatus=None, featureGroupId=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A version of document retriever.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param documentRetrieverId: The unique identifier of the Document Retriever.
+   :type documentRetrieverId: str
+   :param documentRetrieverVersion: The unique identifier of the Document Retriever version.
+   :type documentRetrieverVersion: str
+   :param createdAt: When the Document Retriever was created.
+   :type createdAt: str
+   :param status: The status of creating Document Retriever version.
+   :type status: str
+   :param deploymentStatus: The status of deploying the Document Retriever version.
+   :type deploymentStatus: str
+   :param featureGroupId: The feature group id associated with the document retriever.
+   :type featureGroupId: str
+   :param featureGroupVersion: The unique identifier of the feature group version at which the Document Retriever version is created.
+   :type featureGroupVersion: str
+   :param error: The error message when it failed to create the document retriever version.
+   :type error: str
+   :param numberOfChunks: The number of chunks for the document retriever.
+   :type numberOfChunks: int
+   :param embeddingFileSize: The size of embedding file for the document retriever.
+   :type embeddingFileSize: int
+   :param warnings: The warning messages when creating the document retriever.
+   :type warnings: list
+   :param resolvedConfig: The resolved configurations, such as default settings, for indexing documents.
+   :type resolvedConfig: DocumentRetrieverConfig
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: DocumentRetrieverVersion
+
+
+
+   .. py:method:: describe()
+
+      Describe a document retriever version.
+
+      :param document_retriever_version: A unique string identifier associated with the document retriever version.
+      :type document_retriever_version: str
+
+      :returns: The document retriever version object.
+      :rtype: DocumentRetrieverVersion
+
+
+
+   .. py:method:: wait_for_results(timeout=3600)
+
+      A waiting call until document retriever version is complete.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int
+
+
+
+   .. py:method:: wait_until_ready(timeout=3600)
+
+      A waiting call until the document retriever version is ready.  It restarts the document retriever if it is stopped.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int
+
+
+
+   .. py:method:: wait_until_deployment_ready(timeout = 3600)
+
+      A waiting call until the document retriever deployment is ready to serve.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
+      :type timeout: int
+
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the document retriever version.
+
+      :returns: A string describing the status of a document retriever version (pending, complete, etc.).
+      :rtype: str
+
+
+
+   .. py:method:: get_deployment_status()
+
+      Gets the status of the document retriever version.
+
+      :returns: A string describing the deployment status of a document retriever version (pending, deploying, etc.).
+      :rtype: str
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DocumentRetriever(client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, featureGroupName=None, indexingRequired=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A vector store that stores embeddings for a list of document trunks.
 
@@ -43,9 +253,11 @@ Classes
    :param documentRetrieverConfig: The config for vector store creation.
    :type documentRetrieverConfig: DocumentRetrieverConfig
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -54,6 +266,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: rename(name)
@@ -67,6 +280,7 @@ Classes
       :rtype: DocumentRetriever
 
 
+
    .. py:method:: create_version(feature_group_id = None, document_retriever_config = None)
 
       Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
@@ -74,10 +288,11 @@ Classes
       :param feature_group_id: The ID of the feature group to update the document retriever with.
       :type feature_group_id: str
       :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
-      :type document_retriever_config: DocumentRetrieverConfig
+      :type document_retriever_config: VectorStoreConfig
 
       :returns: The newly created document retriever version.
       :rtype: DocumentRetrieverVersion
+
 
 
    .. py:method:: refresh()
@@ -86,6 +301,7 @@ Classes
 
       :returns: The current object
       :rtype: DocumentRetriever
+
 
 
    .. py:method:: describe()
@@ -99,6 +315,7 @@ Classes
       :rtype: DocumentRetriever
 
 
+
    .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       List all the document retriever versions with a given ID.
@@ -110,6 +327,7 @@ Classes
 
       :returns: All the document retriever versions associated with the document retriever.
       :rtype: list[DocumentRetrieverVersion]
+
 
 
    .. py:method:: get_document_snippet(document_id, start_word_index = None, end_word_index = None)
@@ -127,6 +345,7 @@ Classes
       :rtype: DocumentRetrieverLookupResult
 
 
+
    .. py:method:: restart()
 
       Restart the document retriever if it is stopped. This will start the deployment of the document retriever,
@@ -138,12 +357,14 @@ Classes
       :type document_retriever_id: str
 
 
+
    .. py:method:: wait_until_ready(timeout = 3600)
 
       A waiting call until document retriever is ready. It restarts the document retriever if it is stopped.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
       :type timeout: int
+
 
 
    .. py:method:: wait_until_deployment_ready(timeout = 3600)
@@ -154,6 +375,7 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status()
 
       Gets the indexing status of the document retriever.
@@ -162,12 +384,14 @@ Classes
       :rtype: str
 
 
+
    .. py:method:: get_deployment_status()
 
       Gets the deployment status of the document retriever.
 
       :returns: A string describing the deployment status of document retriever (pending, deploying, active, etc.).
       :rtype: str
+
 
 
    .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None)

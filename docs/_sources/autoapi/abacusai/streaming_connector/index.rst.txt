@@ -1,26 +1,36 @@
-:py:mod:`abacusai.streaming_connector`
-======================================
+abacusai.streaming_connector
+============================
 
 .. py:module:: abacusai.streaming_connector
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.streaming_connector.AbstractApiClass
+   abacusai.streaming_connector.StreamingConnector
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.streaming_connector.StreamingConnector
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: StreamingConnector(client, streamingConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A connector to an external service
 
@@ -39,9 +49,11 @@ Classes
    :param auth: Non-secret connection information for this connector
    :type auth: dict
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -52,6 +64,7 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: verify()
 
       Checks to see if Abacus.AI can access the streaming connector.
@@ -60,12 +73,14 @@ Classes
       :type streaming_connector_id: str
 
 
+
    .. py:method:: rename(name)
 
       Renames a Streaming Connector
 
       :param name: A new name for the streaming connector.
       :type name: str
+
 
 
    .. py:method:: delete()

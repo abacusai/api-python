@@ -28,7 +28,7 @@ class WorkflowNodeInputSchema(ApiClass):
     A react-jsonschema-form conformant schema for workflow node input.
 
     Args:
-        json_schema (dict): The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties".
+        json_schema (dict): The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties". Supported elements - Checkbox, Radio Button, Dropdown, Textarea, Number, Date, File Upload. Not supported - Nested elements, arrays and other complex types.
         ui_schema (dict): The ui schema for the input conformant to react-jsonschema-form specification.
     """
     json_schema: dict

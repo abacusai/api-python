@@ -1,18 +1,17 @@
-:py:mod:`abacusai.api_class.dataset_application_connector`
-==========================================================
+abacusai.api_class.dataset_application_connector
+================================================
 
 .. py:module:: abacusai.api_class.dataset_application_connector
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
+   abacusai.api_class.dataset_application_connector._ApiClassFactory
    abacusai.api_class.dataset_application_connector.DatasetConfig
+   abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig
    abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig
    abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig
    abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig
@@ -22,32 +21,68 @@ Classes
    abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig
    abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig
    abacusai.api_class.dataset_application_connector.FreshserviceDatasetConfig
-   abacusai.api_class.dataset_application_connector._DatasetConfigFactory
+   abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory
 
+
+Module Contents
+---------------
+
+.. py:class:: _ApiClassFactory
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
+
+   .. py:attribute:: config_class_key
+      :value: None
+
+
+
+   .. py:attribute:: config_class_map
+
+
+   .. py:method:: from_dict(config)
+      :classmethod:
 
 
 
 .. py:class:: DatasetConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   An abstract class for dataset configs
+
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+
+
+   .. py:attribute:: is_documentset
+      :type:  bool
+
+
+.. py:class:: ApplicationConnectorDatasetConfig
+
+   Bases: :py:obj:`abacusai.api_class.dataset.DatasetConfig`
+
 
    An abstract class for dataset configs specific to application connectors.
 
    :param application_connector_type: The type of application connector
    :type application_connector_type: enums.ApplicationConnectorType
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
+
 
    .. py:attribute:: application_connector_type
-      :type: abacusai.api_class.enums.ApplicationConnectorType
+      :type:  abacusai.api_class.enums.ApplicationConnectorType
 
-      
-
-   .. py:attribute:: is_documentset
-      :type: bool
-
-      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -56,8 +91,8 @@ Classes
 
 .. py:class:: ConfluenceDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Confluence Application Connector
    :param location: The location of the pages to fetch
@@ -69,34 +104,30 @@ Classes
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
    :type extract_bounding_boxes: bool
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: pull_attachments
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: space_key
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: GoogleAnalyticsDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Analytics Application Connector
 
@@ -107,29 +138,26 @@ Classes
    :param end_timestamp: Unix timestamp of the end of the period that will be queried
    :type end_timestamp: int
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: start_timestamp
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: end_timestamp
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: GoogleDriveDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Drive Application Connector
 
@@ -142,34 +170,30 @@ Classes
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: csv_delimiter
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: merge_file_schemas
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: JiraDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Jira Application Connector
 
@@ -182,34 +206,30 @@ Classes
    :param include_watchers: Fetch watchers for each issue
    :type include_watchers: bool
 
-   .. py:attribute:: jql
-      :type: str
 
-      
+   .. py:attribute:: jql
+      :type:  str
+
 
    .. py:attribute:: custom_fields
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: include_comments
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: include_watchers
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: OneDriveDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for OneDrive Application Connector
 
@@ -222,41 +242,35 @@ Classes
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: csv_delimiter
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: merge_file_schemas
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: SharepointDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Sharepoint Application Connector
 
    :param location: The regex location of the files to fetch
    :type location: str
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
    :type csv_delimiter: str
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
@@ -264,53 +278,48 @@ Classes
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: csv_delimiter
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: merge_file_schemas
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ZendeskDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Zendesk Application Connector
 
    :param location: The regex location of the files to fetch
    :type location: str
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: AbacusUsageMetricsDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Abacus Usage Metrics Application Connector
 
@@ -319,50 +328,46 @@ Classes
    :param include_all_feedback: Whether to include all feedback for this deployment conversation
    :type include_all_feedback: bool
 
-   .. py:attribute:: include_entire_conversation_history
-      :type: bool
 
-      
+   .. py:attribute:: include_entire_conversation_history
+      :type:  bool
+
 
    .. py:attribute:: include_all_feedback
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
-
 
 
 .. py:class:: FreshserviceDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Freshservice Application Connector
+
 
    .. py:method:: __post_init__()
 
 
-
-.. py:class:: _DatasetConfigFactory
-
+.. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'application_connector_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 

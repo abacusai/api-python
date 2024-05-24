@@ -1,17 +1,15 @@
-:py:mod:`abacusai.api_class.ai_agents`
-======================================
+abacusai.api_class.ai_agents
+============================
 
 .. py:module:: abacusai.api_class.ai_agents
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
+   abacusai.api_class.ai_agents.ApiClass
    abacusai.api_class.ai_agents.FieldDescriptor
    abacusai.api_class.ai_agents.WorkflowNodeInputSchema
    abacusai.api_class.ai_agents.WorkflowNodeOutputSchema
@@ -22,12 +20,85 @@ Classes
    abacusai.api_class.ai_agents.WorkflowGraph
 
 
+Functions
+---------
 
+.. autoapisummary::
+
+   abacusai.api_class.ai_agents.get_clean_function_source_code
+
+
+Module Contents
+---------------
+
+.. py:class:: ApiClass
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
+
+   .. py:attribute:: _support_kwargs
+      :type:  bool
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+   .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:function:: get_clean_function_source_code(func)
 
 .. py:class:: FieldDescriptor
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Configs for vector store indexing.
 
@@ -40,54 +111,50 @@ Classes
    :param type: The type of this field. If not provided, the default type is STRING.
    :type type: FieldDescriptorType
 
-   .. py:attribute:: field
-      :type: str
 
-      
+   .. py:attribute:: field
+      :type:  str
+
 
    .. py:attribute:: description
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: example_extraction
-      :type: Union[str, int, bool, float, list, dict]
+      :type:  Union[str, int, bool, float, list, dict]
 
-      
 
    .. py:attribute:: type
-      :type: abacusai.api_class.enums.FieldDescriptorType
-
-      
+      :type:  abacusai.api_class.enums.FieldDescriptorType
 
 
 .. py:class:: WorkflowNodeInputSchema
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A react-jsonschema-form conformant schema for workflow node input.
 
-   :param json_schema: The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties".
+   :param json_schema: The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties". Supported elements - Checkbox, Radio Button, Dropdown, Textarea, Number, Date, File Upload. Not supported - Nested elements, arrays and other complex types.
    :type json_schema: dict
    :param ui_schema: The ui schema for the input conformant to react-jsonschema-form specification.
    :type ui_schema: dict
 
-   .. py:attribute:: json_schema
-      :type: dict
 
-      
+   .. py:attribute:: json_schema
+      :type:  dict
+
 
    .. py:attribute:: ui_schema
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -97,24 +164,25 @@ Classes
 
 .. py:class:: WorkflowNodeOutputSchema
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A react-jsonschema-form schema for a workflow node output.
 
    :param json_schema: The json schema for the output conformant to react-jsonschema-form specification.
    :type json_schema: dict
 
-   .. py:attribute:: json_schema
-      :type: dict
 
-      
+   .. py:attribute:: json_schema
+      :type:  dict
+
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -124,8 +192,8 @@ Classes
 
 .. py:class:: WorkflowNodeInputMapping
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A mapping of input to a workflow node.
 
@@ -141,31 +209,29 @@ Classes
    :param is_required: Whether the input is required. Defaults to True
    :type is_required: bool
 
-   .. py:attribute:: name
-      :type: str
 
-      
+   .. py:attribute:: name
+      :type:  str
+
 
    .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.WorkflowNodeInputType
+      :type:  abacusai.api_class.enums.WorkflowNodeInputType
 
-      
 
    .. py:attribute:: variable_source
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: is_required
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -175,8 +241,8 @@ Classes
 
 .. py:class:: WorkflowNodeOutputMapping
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A mapping of output to a workflow node.
 
@@ -185,21 +251,21 @@ Classes
    :param variable_type: The type of the output.
    :type variable_type: WorkflowNodeOutputType
 
-   .. py:attribute:: name
-      :type: str
 
-      
+   .. py:attribute:: name
+      :type:  str
+
 
    .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.WorkflowNodeOutputType
+      :type:  abacusai.api_class.enums.WorkflowNodeOutputType
 
-      
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -209,8 +275,8 @@ Classes
 
 .. py:class:: WorkflowGraphNode(name, input_mappings, output_mappings, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, package_requirements = None)
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A node in an Agent workflow graph.
 
@@ -229,11 +295,13 @@ Classes
    :param package_requirements: List of package requirements for the node.
    :type package_requirements: list
 
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -243,8 +311,8 @@ Classes
 
 .. py:class:: WorkflowGraphEdge
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An edge in an Agent workflow graph.
 
@@ -255,29 +323,26 @@ Classes
    :param details: Additional details about the edge.
    :type details: dict
 
-   .. py:attribute:: source
-      :type: str
 
-      
+   .. py:attribute:: source
+      :type:  str
+
 
    .. py:attribute:: target
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: details
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:method:: to_nx_edge()
 
 
-
 .. py:class:: WorkflowGraph
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
 
@@ -286,21 +351,21 @@ Classes
    :param edges: A list of edges in the workflow graph, where each edge is a tuple of source, target and details.
    :type edges: List[WorkflowGraphEdge]
 
-   .. py:attribute:: nodes
-      :type: List[WorkflowGraphNode]
 
-      
+   .. py:attribute:: nodes
+      :type:  List[WorkflowGraphNode]
+
 
    .. py:attribute:: edges
-      :type: List[WorkflowGraphEdge]
+      :type:  List[WorkflowGraphEdge]
 
-      
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(graph)

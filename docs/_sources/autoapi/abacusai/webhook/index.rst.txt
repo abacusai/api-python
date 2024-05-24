@@ -1,26 +1,36 @@
-:py:mod:`abacusai.webhook`
-==========================
+abacusai.webhook
+================
 
 .. py:module:: abacusai.webhook
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.webhook.AbstractApiClass
+   abacusai.webhook.Webhook
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.webhook.Webhook
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: Webhook(client, webhookId=None, deploymentId=None, endpoint=None, webhookEventType=None, payloadTemplate=None, createdAt=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A Abacus.AI Webhook attached to an endpoint and event trigger for a given object.
 
@@ -39,9 +49,11 @@ Classes
    :param createdAt: The date and time this webhook was created.
    :type createdAt: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -52,12 +64,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Webhook
+
 
 
    .. py:method:: describe()
@@ -71,6 +85,7 @@ Classes
       :rtype: Webhook
 
 
+
    .. py:method:: update(endpoint = None, webhook_event_type = None, payload_template = None)
 
       Update the webhook
@@ -81,6 +96,7 @@ Classes
       :type webhook_event_type: str
       :param payload_template: If provided, changes the payload template.
       :type payload_template: dict
+
 
 
    .. py:method:: delete()

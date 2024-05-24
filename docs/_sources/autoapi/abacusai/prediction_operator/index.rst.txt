@@ -1,26 +1,184 @@
-:py:mod:`abacusai.prediction_operator`
-======================================
+abacusai.prediction_operator
+============================
 
 .. py:module:: abacusai.prediction_operator
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.prediction_operator.CodeSource
+   abacusai.prediction_operator.PredictionOperatorVersion
+   abacusai.prediction_operator.RefreshSchedule
+   abacusai.prediction_operator.AbstractApiClass
+   abacusai.prediction_operator.PredictionOperator
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
 
-.. autoapisummary::
-
-   abacusai.prediction_operator.PredictionOperator
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
+   Code source for python-based custom feature groups and models
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param sourceType: The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
+   :type sourceType: str
+   :param sourceCode: If the type of the source is TEXT, the raw text of the function
+   :type sourceCode: str
+   :param applicationConnectorId: The Application Connector to fetch the code from
+   :type applicationConnectorId: str
+   :param applicationConnectorInfo: Args passed to the application connector to fetch the code
+   :type applicationConnectorInfo: str
+   :param packageRequirements: The pip package dependencies required to run the code
+   :type packageRequirements: list
+   :param status: The status of the code and validations
+   :type status: str
+   :param error: If the status is failed, an error message describing what went wrong
+   :type error: str
+   :param publishingMsg: Warnings in the source code
+   :type publishingMsg: dict
+   :param moduleDependencies: The list of internal modules dependencies required to run the code
+   :type moduleDependencies: list
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+   .. py:method:: import_as_cell()
+
+      Adds the source code as an unexecuted cell in the notebook.
+
+
+
+.. py:class:: PredictionOperatorVersion(client, predictionOperatorId=None, predictionOperatorVersion=None, createdAt=None, updatedAt=None, sourceCode=None, memory=None, useGpu=None, featureGroupIds=None, featureGroupVersions=None, status=None, error=None, codeSource={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A prediction operator version.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param predictionOperatorId: The unique identifier of the prediction operator.
+   :type predictionOperatorId: str
+   :param predictionOperatorVersion: The unique identifier of the prediction operator version.
+   :type predictionOperatorVersion: str
+   :param createdAt: Date and time at which the prediction operator was created.
+   :type createdAt: str
+   :param updatedAt: Date and time at which the prediction operator was updated.
+   :type updatedAt: str
+   :param sourceCode: Python code used to make the prediction operator.
+   :type sourceCode: str
+   :param memory: Memory in GB specified for the prediction operator version.
+   :type memory: int
+   :param useGpu: Whether this prediction operator version is using gpu.
+   :type useGpu: bool
+   :param featureGroupIds: A list of Feature Group IDs used for initializing.
+   :type featureGroupIds: list
+   :param featureGroupVersions: A list of Feature Group version IDs used for initializing.
+   :type featureGroupVersions: list
+   :param status: The current status of the prediction operator version.
+   :type status: str
+   :param error: The error message if the status failed.
+   :type error: str
+   :param codeSource: If a python model, information on the source code.
+   :type codeSource: CodeSource
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+   .. py:method:: delete()
+
+      Delete a prediction operator version.
+
+      :param prediction_operator_version: The unique ID of the prediction operator version.
+      :type prediction_operator_version: str
+
+
+
+.. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, error=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A refresh schedule for an object. Defines when the next version of the object will be created
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param refreshPolicyId: The unique identifier of the refresh policy
+   :type refreshPolicyId: str
+   :param nextRunTime: The next run time of the refresh policy. If null, the policy is paused.
+   :type nextRunTime: str
+   :param cron: A cron-style string that describes the when this refresh policy is to be executed in UTC
+   :type cron: str
+   :param refreshType: The type of refresh that will be run
+   :type refreshType: str
+   :param error: An error message for the last pipeline run of a policy
+   :type error: str
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PredictionOperator(client, name=None, predictionOperatorId=None, createdAt=None, updatedAt=None, projectId=None, predictFunctionName=None, sourceCode=None, initializeFunctionName=None, notebookId=None, memory=None, useGpu=None, featureGroupIds=None, featureGroupTableNames=None, codeSource={}, refreshSchedules={}, latestPredictionOperatorVersion={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A prediction operator.
 
@@ -59,9 +217,11 @@ Classes
    :param refreshSchedules: List of refresh schedules that indicate when the next prediction operator version will be processed
    :type refreshSchedules: RefreshSchedule
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -72,12 +232,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: PredictionOperator
+
 
 
    .. py:method:: describe()
@@ -89,6 +251,7 @@ Classes
 
       :returns: The requested prediction operator object.
       :rtype: PredictionOperator
+
 
 
    .. py:method:: update(name = None, feature_group_ids = None, source_code = None, initialize_function_name = None, predict_function_name = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
@@ -118,12 +281,14 @@ Classes
       :rtype: PredictionOperator
 
 
+
    .. py:method:: delete()
 
       Delete an existing prediction operator.
 
       :param prediction_operator_id: The unique ID of the prediction operator.
       :type prediction_operator_id: str
+
 
 
    .. py:method:: deploy(auto_deploy = True)
@@ -137,6 +302,7 @@ Classes
       :rtype: Deployment
 
 
+
    .. py:method:: create_version()
 
       Create a new version of the prediction operator.
@@ -146,6 +312,7 @@ Classes
 
       :returns: The created prediction operator version object.
       :rtype: PredictionOperatorVersion
+
 
 
    .. py:method:: list_versions()

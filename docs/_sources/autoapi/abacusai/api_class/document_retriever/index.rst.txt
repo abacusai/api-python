@@ -1,29 +1,128 @@
-:py:mod:`abacusai.api_class.document_retriever`
-===============================================
+abacusai.api_class.document_retriever
+=====================================
 
 .. py:module:: abacusai.api_class.document_retriever
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   abacusai.api_class.document_retriever.DocumentRetrieverConfig
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.api_class.document_retriever.ApiClass
+   abacusai.api_class.document_retriever.VectorStoreTextEncoder
+   abacusai.api_class.document_retriever.VectorStoreConfig
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: ApiClass
 
-.. autoapisummary::
+   Bases: :py:obj:`abc.ABC`
 
-   abacusai.api_class.document_retriever.VectorStoreConfig
-   abacusai.api_class.document_retriever.DocumentRetrieverConfig
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
+
+   .. py:attribute:: _support_kwargs
+      :type:  bool
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+   .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: VectorStoreTextEncoder
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: E5
+      :value: 'E5'
+
+
+
+   .. py:attribute:: OPENAI
+      :value: 'OPENAI'
+
+
+
+   .. py:attribute:: SENTENCE_BERT
+      :value: 'SENTENCE_BERT'
+
+
+
+   .. py:attribute:: E5_SMALL
+      :value: 'E5_SMALL'
 
 
 
 .. py:class:: VectorStoreConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Configs for vector store indexing.
+
+   Config for indexing options of a document retriever. Default values of optional arguments are heuristically selected by the Abacus.AI platform based on the underlying data.
 
    :param chunk_size: The size of text chunks in the vector store.
    :type chunk_size: int
@@ -38,42 +137,30 @@ Classes
    :param prune_vectors: Transform vectors using SVD so that the average component of vectors in the corpus are removed.
    :type prune_vectors: bool
 
-   .. py:attribute:: chunk_size
-      :type: int
 
-      
+   .. py:attribute:: chunk_size
+      :type:  int
+
 
    .. py:attribute:: chunk_overlap_fraction
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: text_encoder
-      :type: abacusai.api_class.enums.VectorStoreTextEncoder
+      :type:  abacusai.api_class.enums.VectorStoreTextEncoder
 
-      
 
    .. py:attribute:: chunk_size_factors
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: score_multiplier_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: prune_vectors
-      :type: bool
-
-      
+      :type:  bool
 
 
-.. py:class:: DocumentRetrieverConfig
-
-
-   Bases: :py:obj:`VectorStoreConfig`
-
-   Configs for document retriever. If any configuration value is not explicitly provided, Abacus.AI will automatically infer default values based on the data.
-
+.. py:data:: DocumentRetrieverConfig
 

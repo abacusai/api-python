@@ -1,26 +1,36 @@
-:py:mod:`abacusai.feature_group_row_process`
-============================================
+abacusai.feature_group_row_process
+==================================
 
 .. py:module:: abacusai.feature_group_row_process
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.feature_group_row_process.AbstractApiClass
+   abacusai.feature_group_row_process.FeatureGroupRowProcess
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.feature_group_row_process.FeatureGroupRowProcess
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureGroupRowProcess(client, featureGroupId=None, deploymentId=None, primaryKeyValue=None, featureGroupRowProcessId=None, createdAt=None, updatedAt=None, startedAt=None, completedAt=None, timeoutAt=None, retriesRemaining=None, totalAttemptsAllowed=None, status=None, error=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A feature group row process
 
@@ -53,9 +63,11 @@ Classes
    :param error: The error message if the status is FAILED.
    :type error: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -66,12 +78,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: wait_for_process(timeout=1200)
 
       A waiting call until model monitor version is ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

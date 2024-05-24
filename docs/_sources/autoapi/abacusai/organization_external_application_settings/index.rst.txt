@@ -1,26 +1,36 @@
-:py:mod:`abacusai.organization_external_application_settings`
-=============================================================
+abacusai.organization_external_application_settings
+===================================================
 
 .. py:module:: abacusai.organization_external_application_settings
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.organization_external_application_settings.AbstractApiClass
+   abacusai.organization_external_application_settings.OrganizationExternalApplicationSettings
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.organization_external_application_settings.OrganizationExternalApplicationSettings
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    The External Application Settings for an Organization.
 
@@ -35,9 +45,11 @@ Classes
    :param passwordsDisabled: Whether or not passwords are disabled for this organization's domain.
    :type passwordsDisabled: bool
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

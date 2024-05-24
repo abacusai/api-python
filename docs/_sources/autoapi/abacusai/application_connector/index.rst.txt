@@ -1,26 +1,36 @@
-:py:mod:`abacusai.application_connector`
-========================================
+abacusai.application_connector
+==============================
 
 .. py:module:: abacusai.application_connector
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.application_connector.AbstractApiClass
+   abacusai.application_connector.ApplicationConnector
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.application_connector.ApplicationConnector
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A connector to an external service
 
@@ -39,9 +49,11 @@ Classes
    :param auth: Non-secret connection information for this connector
    :type auth: dict
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -52,12 +64,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: rename(name)
 
       Renames a Application Connector
 
       :param name: A new name for the application connector.
       :type name: str
+
 
 
    .. py:method:: delete()
@@ -68,12 +82,14 @@ Classes
       :type application_connector_id: str
 
 
+
    .. py:method:: list_objects()
 
       Lists querable objects in the application connector.
 
       :param application_connector_id: Unique string identifier for the application connector.
       :type application_connector_id: str
+
 
 
    .. py:method:: verify()

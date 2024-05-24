@@ -1,26 +1,36 @@
-:py:mod:`abacusai.refresh_schedule`
-===================================
+abacusai.refresh_schedule
+=========================
 
 .. py:module:: abacusai.refresh_schedule
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.refresh_schedule.AbstractApiClass
+   abacusai.refresh_schedule.RefreshSchedule
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.refresh_schedule.RefreshSchedule
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, error=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A refresh schedule for an object. Defines when the next version of the object will be created
 
@@ -37,9 +47,11 @@ Classes
    :param error: An error message for the last pipeline run of a policy
    :type error: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

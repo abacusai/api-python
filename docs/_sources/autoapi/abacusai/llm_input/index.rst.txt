@@ -1,26 +1,36 @@
-:py:mod:`abacusai.llm_input`
-============================
+abacusai.llm_input
+==================
 
 .. py:module:: abacusai.llm_input
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.llm_input.AbstractApiClass
+   abacusai.llm_input.LlmInput
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.llm_input.LlmInput
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: LlmInput(client, content=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    The result of encoding an object as input for a language model.
 
@@ -29,9 +39,11 @@ Classes
    :param content: Content of the response
    :type content: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

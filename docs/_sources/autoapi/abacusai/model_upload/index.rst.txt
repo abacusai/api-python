@@ -1,26 +1,36 @@
-:py:mod:`abacusai.model_upload`
-===============================
+abacusai.model_upload
+=====================
 
 .. py:module:: abacusai.model_upload
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.model_upload.AbstractApiClass
+   abacusai.model_upload.ModelUpload
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.model_upload.ModelUpload
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelUpload(client, modelId=None, modelVersion=None, status=None, createdAt=None, modelUploadId=None, embeddingsUploadId=None, artifactsUploadId=None, verificationsUploadId=None, defaultItemsUploadId=None, modelFileUploadId=None, modelStateUploadId=None, inputPreprocessorUploadId=None, requirementsUploadId=None, resourcesUploadId=None, multiCatalogEmbeddingsUploadId=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A model version that includes the upload identifiers for the various required files.
 
@@ -57,9 +67,11 @@ Classes
    :param multiCatalogEmbeddingsUploadId: An upload identifier to be used when upload the multi-catalog embeddings CSV file.
    :type multiCatalogEmbeddingsUploadId: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

@@ -1,26 +1,36 @@
-:py:mod:`abacusai.model_monitor_org_summary`
-============================================
+abacusai.model_monitor_org_summary
+==================================
 
 .. py:module:: abacusai.model_monitor_org_summary
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.model_monitor_org_summary.AbstractApiClass
+   abacusai.model_monitor_org_summary.ModelMonitorOrgSummary
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.model_monitor_org_summary.ModelMonitorOrgSummary
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelMonitorOrgSummary(client, summary=None, featureDrift=None, labelDrift=None, dataIntegrity=None, performance=None, alerts=None, monitorData=None, totalStarredMonitors=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A summary of an organization's model monitors
 
@@ -43,9 +53,11 @@ Classes
    :param totalStarredMonitors: Total number of starred monitors.
    :type totalStarredMonitors: int
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

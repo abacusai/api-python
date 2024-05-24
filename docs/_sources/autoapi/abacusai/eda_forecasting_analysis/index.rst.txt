@@ -1,26 +1,79 @@
-:py:mod:`abacusai.eda_forecasting_analysis`
-===========================================
+abacusai.eda_forecasting_analysis
+=================================
 
 .. py:module:: abacusai.eda_forecasting_analysis
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.eda_forecasting_analysis.ForecastingAnalysisGraphData
+   abacusai.eda_forecasting_analysis.AbstractApiClass
+   abacusai.eda_forecasting_analysis.EdaForecastingAnalysis
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: ForecastingAnalysisGraphData(client, data=None, xAxis=None, yAxis=None, dataColumns=None, chartName=None, chartTypes=None, itemStatistics={}, chartDescriptions={})
 
-.. autoapisummary::
-
-   abacusai.eda_forecasting_analysis.EdaForecastingAnalysis
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
+   Forecasting Analysis Graph Data representation.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param data: List of graph data
+   :type data: list
+   :param xAxis: Feature that represents the x axis
+   :type xAxis: str
+   :param yAxis: Feature that represents the y axis
+   :type yAxis: str
+   :param dataColumns: Ordered name of the column for each rowwise data
+   :type dataColumns: list
+   :param chartName: Name of the chart represented by the data
+   :type chartName: str
+   :param chartTypes: Type of charts in that can exist in the current data.
+   :type chartTypes: list
+   :param itemStatistics: In item wise charts, gives the mean, median, count, missing_percent, p10, p90, standard_deviation, min, max
+   :type itemStatistics: ItemStatistics
+   :param chartDescriptions: List of descriptions of what the chart contains
+   :type chartDescriptions: EdaChartDescription
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: EdaForecastingAnalysis(client, primaryKeys=None, forecastingTargetFeature=None, timestampFeature=None, forecastFrequency=None, salesAcrossTime={}, cummulativeContribution={}, missingValueDistribution={}, historyLength={}, numRowsHistogram={}, productMaturity={}, seasonalityYear={}, seasonalityMonth={}, seasonalityWeekOfYear={}, seasonalityDayOfYear={}, seasonalityDayOfMonth={}, seasonalityDayOfWeek={}, seasonalityQuarter={}, seasonalityHour={}, seasonalityMinute={}, seasonalitySecond={}, autocorrelation={}, partialAutocorrelation={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Eda Forecasting Analysis of the latest version of the data.
 
@@ -71,9 +124,11 @@ Classes
    :param partialAutocorrelation: Data showing the correlation of the forecasting target and its lagged values, controlling for the effects of intervening lags.
    :type partialAutocorrelation: ForecastingAnalysisGraphData
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

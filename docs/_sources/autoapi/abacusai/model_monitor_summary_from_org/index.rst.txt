@@ -1,26 +1,36 @@
-:py:mod:`abacusai.model_monitor_summary_from_org`
-=================================================
+abacusai.model_monitor_summary_from_org
+=======================================
 
 .. py:module:: abacusai.model_monitor_summary_from_org
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.model_monitor_summary_from_org.AbstractApiClass
+   abacusai.model_monitor_summary_from_org.ModelMonitorSummaryFromOrg
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.model_monitor_summary_from_org.ModelMonitorSummaryFromOrg
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelMonitorSummaryFromOrg(client, data=None, infos=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A summary of model monitor given an organization
 
@@ -31,9 +41,11 @@ Classes
    :param infos: A dictionary of model monitor information.
    :type infos: dict
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

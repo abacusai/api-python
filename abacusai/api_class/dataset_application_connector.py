@@ -1,28 +1,27 @@
 import dataclasses
 
 from . import enums
-from .abstract import ApiClass, _ApiClassFactory
+from .abstract import _ApiClassFactory
+from .dataset import DatasetConfig
 
 
 @dataclasses.dataclass
-class DatasetConfig(ApiClass):
+class ApplicationConnectorDatasetConfig(DatasetConfig):
     """
     An abstract class for dataset configs specific to application connectors.
 
     Args:
         application_connector_type(enums.ApplicationConnectorType): The type of application connector
-        is_documentset (bool): Whether the dataset is a document set
     """
     application_connector_type: enums.ApplicationConnectorType = dataclasses.field(default=None, repr=False, init=False)
-    is_documentset: bool = dataclasses.field(default=None)
 
     @classmethod
     def _get_builder(cls):
-        return _DatasetConfigFactory
+        return _ApplicationConnectorDatasetConfigFactory
 
 
 @dataclasses.dataclass
-class ConfluenceDatasetConfig(DatasetConfig):
+class ConfluenceDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Confluence Application Connector
     Args:
@@ -42,7 +41,7 @@ class ConfluenceDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class GoogleAnalyticsDatasetConfig(DatasetConfig):
+class GoogleAnalyticsDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Google Analytics Application Connector
 
@@ -60,7 +59,7 @@ class GoogleAnalyticsDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class GoogleDriveDatasetConfig(DatasetConfig):
+class GoogleDriveDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Google Drive Application Connector
 
@@ -80,7 +79,7 @@ class GoogleDriveDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class JiraDatasetConfig(DatasetConfig):
+class JiraDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Jira Application Connector
 
@@ -100,7 +99,7 @@ class JiraDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class OneDriveDatasetConfig(DatasetConfig):
+class OneDriveDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for OneDrive Application Connector
 
@@ -120,13 +119,12 @@ class OneDriveDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class SharepointDatasetConfig(DatasetConfig):
+class SharepointDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Sharepoint Application Connector
 
     Args:
         location (str): The regex location of the files to fetch
-        is_documentset (bool): Whether the dataset is a document set
         csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
         extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
         merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
@@ -141,7 +139,7 @@ class SharepointDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class ZendeskDatasetConfig(DatasetConfig):
+class ZendeskDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Zendesk Application Connector
 
@@ -155,7 +153,7 @@ class ZendeskDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class AbacusUsageMetricsDatasetConfig(DatasetConfig):
+class AbacusUsageMetricsDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Abacus Usage Metrics Application Connector
 
@@ -172,7 +170,7 @@ class AbacusUsageMetricsDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class FreshserviceDatasetConfig(DatasetConfig):
+class FreshserviceDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Freshservice Application Connector
     """
@@ -182,8 +180,8 @@ class FreshserviceDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
-class _DatasetConfigFactory(_ApiClassFactory):
-    config_abstract_class = DatasetConfig
+class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
+    config_abstract_class = ApplicationConnectorDatasetConfig
     config_class_key = 'application_connector_type'
     config_class_map = {
         enums.ApplicationConnectorType.CONFLUENCE: ConfluenceDatasetConfig,

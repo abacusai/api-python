@@ -33,13 +33,13 @@ from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
     AgentInterface, AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    BatchPredictionArgs, BlobInput, DatasetConfig,
+    ApplicationConnectorDatasetConfig, BatchPredictionArgs, BlobInput,
     DatasetDocumentProcessingConfig, DataType, DocumentProcessingConfig,
-    DocumentRetrieverConfig, EvalArtifactType, FeatureGroupExportConfig,
-    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
-    MergeConfig, ParsingConfig, PredictionArguments, ProblemType,
-    ProjectFeatureGroupConfig, PythonFunctionType, SamplingConfig,
-    TrainingConfig, WorkflowGraph, get_clean_function_source_code
+    EvalArtifactType, FeatureGroupExportConfig, ForecastingMonitorConfig,
+    IncrementalDatabaseConnectorConfig, LLMName, MergeConfig, ParsingConfig,
+    PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
+    PythonFunctionType, SamplingConfig, TrainingConfig, VectorStoreConfig,
+    WorkflowGraph, get_clean_function_source_code
 )
 from .api_class.abstract import get_clean_function_source_code, snake_case
 from .api_class.ai_agents import WorkflowGraph
@@ -74,7 +74,6 @@ from .deployment_conversation import DeploymentConversation
 from .deployment_conversation_export import DeploymentConversationExport
 from .document_data import DocumentData
 from .document_retriever import DocumentRetriever
-from .document_retriever_config import DocumentRetrieverConfig
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
 from .document_retriever_version import DocumentRetrieverVersion
 from .drift_distributions import DriftDistributions
@@ -168,6 +167,7 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
+from .web_search_response import WebSearchResponse
 from .webhook import Webhook
 
 
@@ -608,7 +608,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.2.5'
+    client_version = '1.3.2'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -5282,13 +5282,13 @@ Creates a new feature group defined as the union of other feature group versions
             Dataset: The created dataset."""
         return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'incrementalDatabaseConnectorConfig': incremental_database_connector_config}, parse_type=Dataset)
 
-    def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, DatasetConfig] = None, refresh_schedule: str = None) -> Dataset:
+    def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None, refresh_schedule: str = None) -> Dataset:
         """Creates a dataset from an Application Connector.
 
         Args:
             table_name (str): Organization-unique table name.
             application_connector_id (str): Unique string identifier of the application connector to download data from.
-            dataset_config (DatasetConfig): Dataset config for the application connector.
+            dataset_config (ApplicationConnectorDatasetConfig): Dataset config for the application connector.
             refresh_schedule (str): Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
 
         Returns:
@@ -5309,12 +5309,12 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'sqlQuery': sql_query}, parse_type=DatasetVersion)
 
-    def create_dataset_version_from_application_connector(self, dataset_id: str, dataset_config: Union[dict, DatasetConfig] = None) -> DatasetVersion:
+    def create_dataset_version_from_application_connector(self, dataset_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
 
         Args:
             dataset_id (str): The unique ID associated with the dataset.
-            dataset_config (DatasetConfig): Dataset config for the application connector. If any of the fields are not specified, the last values will be used.
+            dataset_config (ApplicationConnectorDatasetConfig): Dataset config for the application connector. If any of the fields are not specified, the last values will be used.
 
         Returns:
             DatasetVersion: The new Dataset Version created."""
@@ -7108,6 +7108,17 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column, 'minScore': min_score, 'requiredPhrases': required_phrases, 'filterClause': filter_clause, 'crowdingLimits': crowding_limits}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
 
+    def get_completion(self, deployment_token: str, deployment_id: str, prompt: str) -> Dict:
+        """Returns the finetuned LLM generated completion of the prompt.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            prompt (str): The prompt given to the finetuned LLM to generate the completion."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('getCompletion', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'prompt': prompt}, server_override=prediction_url)
+
     def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, blobs: None = None) -> Dict:
         """Executes a deployed AI agent function with binary data as inputs.
 
@@ -8185,6 +8196,28 @@ Creates a new feature group defined as the union of other feature group versions
             ExtractedFields: The response from the document query."""
         return self._call_api('extractDataUsingLLM', 'POST', query_params={}, body={'fieldDescriptors': field_descriptors, 'documentId': document_id, 'documentText': document_text, 'llmName': llm_name}, parse_type=ExtractedFields)
 
+    def search_web_for_llm(self, queries: List, search_providers: List = None, max_results: int = 1, safe: bool = True, fetch_content: bool = False, max_page_tokens: int = 8192, convert_to_markdown: bool = True) -> WebSearchResponse:
+        """Access web search providers to fetch content related to the queries for use in large language model inputs.
+
+        This method can access multiple search providers and return information from them. If the provider supplies
+        URLs for the results then this method also supports fetching the contents of those URLs, optionally converting
+        them to markdown format, and returning them as part of the response. Set a token budget to limit the amount of
+        content returned in the response.
+
+
+        Args:
+            queries (List): List of queries to send to the search providers. At most 10 queries each less than 512 characters.
+            search_providers (List): Search providers to use for the search. If not provided a default provider is used. - BING - GOOGLE
+            max_results (int): Maximum number of results to fetch per provider. Must be in [1, 100]. Defaults to 1 (I'm feeling lucky).
+            safe (bool): Whether content safety is enabled for these search request. Defaults to True.
+            fetch_content (bool): If true fetches the content from the urls in the search results. Defailts to False.
+            max_page_tokens (int): Maximum number of tokens to accumulate if fetching search result contents.
+            convert_to_markdown (bool): Whether content should be converted to markdown. Defaults to True.
+
+        Returns:
+            WebSearchResponse: Results of running the search queries."""
+        return self._proxy_request('SearchWebForLlm', 'POST', query_params={}, body={'queries': queries, 'searchProviders': search_providers, 'maxResults': max_results, 'safe': safe, 'fetchContent': fetch_content, 'maxPageTokens': max_page_tokens, 'convertToMarkdown': convert_to_markdown}, parse_type=WebSearchResponse)
+
     def construct_agent_conversation_messages_for_llm(self, current_message: str = None, current_doc_ids: List = None, include_history: bool = True, include_document_contents: bool = True, deployment_conversation_id: str = None, external_session_id: str = None, max_document_words: int = None) -> ChatMessage:
         """Returns conversation history in a format for LLM calls.
 
@@ -8212,17 +8245,17 @@ Creates a new feature group defined as the union of other feature group versions
             LlmResponse: The response from the LLM App."""
         return self._call_api('getLLMAppResponse', 'POST', query_params={}, body={'llmAppName': llm_app_name, 'prompt': prompt}, parse_type=LlmResponse)
 
-    def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
+    def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, VectorStoreConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.
 
         Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
 
 
         Args:
-            project_id (str): The ID of project that the vector store is created in.
-            name (str): The name of the vector store. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
-            feature_group_id (str): The ID of the feature group that the vector store is associated with.
-            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+            project_id (str): The ID of project that the Document Retriever is created in.
+            name (str): The name of the Document Retriever. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
+            feature_group_id (str): The ID of the feature group that the Document Retriever is associated with.
+            document_retriever_config (VectorStoreConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
             DocumentRetriever: The newly created document retriever."""
@@ -8239,13 +8272,13 @@ Creates a new feature group defined as the union of other feature group versions
             DocumentRetriever: The updated document retriever."""
         return self._call_api('renameDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'name': name}, parse_type=DocumentRetriever)
 
-    def create_document_retriever_version(self, document_retriever_id: str, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetrieverVersion:
+    def create_document_retriever_version(self, document_retriever_id: str, feature_group_id: str = None, document_retriever_config: Union[dict, VectorStoreConfig] = None) -> DocumentRetrieverVersion:
         """Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
         Args:
             document_retriever_id (str): The unique ID associated with the document retriever to create version with.
             feature_group_id (str): The ID of the feature group to update the document retriever with.
-            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+            document_retriever_config (VectorStoreConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
             DocumentRetrieverVersion: The newly created document retriever version."""
@@ -8281,7 +8314,7 @@ Creates a new feature group defined as the union of other feature group versions
             document_retriever_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('restartDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id})
 
-    def get_relevant_snippets(self, doc_ids: List = None, blobs: io.TextIOBase = None, query: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False, text: str = None) -> List[DocumentRetrieverLookupResult]:
+    def get_relevant_snippets(self, doc_ids: List = None, blobs: io.TextIOBase = None, query: str = None, document_retriever_config: Union[dict, VectorStoreConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False, text: str = None) -> List[DocumentRetrieverLookupResult]:
         """Retrieves snippets relevant to a given query from specified documents. This function supports flexible input options,
 
         allowing for retrieval from a variety of data sources including document IDs, blob data, and plain text. When multiple data
@@ -8292,7 +8325,7 @@ Creates a new feature group defined as the union of other feature group versions
             doc_ids (List): A list of document store IDs to retrieve the snippets from.
             blobs (io.TextIOBase): A dictionary mapping document names to the blob data.
             query (str): Query string to find relevant snippets in the documents.
-            document_retriever_config (DocumentRetrieverConfig): If provided, used to configure the retrieval steps like chunking for embeddings.
+            document_retriever_config (VectorStoreConfig): If provided, used to configure the retrieval steps like chunking for embeddings.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned snippets.
             max_words_per_snippet (int): If provided, will limit the number of words in each snippet to the value specified.
             max_snippets_per_document (int): If provided, will limit the number of snippets retrieved from each document to the value specified.

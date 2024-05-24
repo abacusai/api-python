@@ -1,26 +1,36 @@
-:py:mod:`abacusai.deployment_conversation_event`
-================================================
+abacusai.deployment_conversation_event
+======================================
 
 .. py:module:: abacusai.deployment_conversation_event
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.deployment_conversation_event.AbstractApiClass
+   abacusai.deployment_conversation_event.DeploymentConversationEvent
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.deployment_conversation_event.DeploymentConversationEvent
-
+      Return self==value.
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, llmDisplayName=None, llmBotIcon=None)
+   .. py:method:: _get_attribute_as_dict(attribute)
 
+
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A single deployment conversation message.
 
@@ -58,6 +68,8 @@ Classes
    :type responseVersion: str
    :param agentWorkflowNodeId: The workflow node id associated with the agent response.
    :type agentWorkflowNodeId: str
+   :param nextAgentWorkflowNodeId: The id of the workflow node to be executed next.
+   :type nextAgentWorkflowNodeId: str
    :param chatType: The type of chat llm that was run for the message.
    :type chatType: str
    :param agentResponse: Response from the agent. Only for conversation with agents.
@@ -70,14 +82,18 @@ Classes
    :type streamedData: str
    :param streamedSectionData: Aggregated streamed section outputs from the agent in a list.
    :type streamedSectionData: str
+   :param highlights: Chunks with bounding boxes for highlighting the result sources.
+   :type highlights: dict
    :param llmDisplayName: The display name of the LLM model used to generate the response. Only used for system-created bots.
    :type llmDisplayName: str
    :param llmBotIcon: The icon location of the LLM model used to generate the response. Only used for system-created bots.
    :type llmBotIcon: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

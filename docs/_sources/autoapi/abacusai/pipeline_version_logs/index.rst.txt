@@ -1,26 +1,71 @@
-:py:mod:`abacusai.pipeline_version_logs`
-========================================
+abacusai.pipeline_version_logs
+==============================
 
 .. py:module:: abacusai.pipeline_version_logs
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.pipeline_version_logs.PipelineStepVersionLogs
+   abacusai.pipeline_version_logs.AbstractApiClass
+   abacusai.pipeline_version_logs.PipelineVersionLogs
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: PipelineStepVersionLogs(client, stepName=None, pipelineStepId=None, pipelineStepVersion=None, logs=None)
 
-.. autoapisummary::
-
-   abacusai.pipeline_version_logs.PipelineVersionLogs
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
+   Logs for a given pipeline step version.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param stepName: The name of the step
+   :type stepName: str
+   :param pipelineStepId: The ID of the step
+   :type pipelineStepId: str
+   :param pipelineStepVersion: The version of the step
+   :type pipelineStepVersion: str
+   :param logs: The logs for both stdout and stderr of the step
+   :type logs: str
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PipelineVersionLogs(client, stepLogs={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Logs for a given pipeline version.
 
@@ -29,9 +74,11 @@ Classes
    :param stepLogs: A list of the pipeline step version logs.
    :type stepLogs: PipelineStepVersionLogs
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

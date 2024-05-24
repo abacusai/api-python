@@ -1,6 +1,9 @@
 from typing import Union
 
-from .api_class import DatasetConfig, DatasetDocumentProcessingConfig, DataType, DocumentProcessingConfig, ParsingConfig
+from .api_class import (
+    ApplicationConnectorDatasetConfig, DatasetDocumentProcessingConfig,
+    DataType, DocumentProcessingConfig, ParsingConfig
+)
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
 from .refresh_schedule import RefreshSchedule
@@ -118,12 +121,12 @@ class Dataset(AbstractApiClass):
         """
         return self.client.create_dataset_version_from_database_connector(self.dataset_id, object_name, columns, query_arguments, sql_query)
 
-    def create_version_from_application_connector(self, dataset_config: Union[dict, DatasetConfig] = None):
+    def create_version_from_application_connector(self, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None):
         """
         Creates a new version of the specified dataset.
 
         Args:
-            dataset_config (DatasetConfig): Dataset config for the application connector. If any of the fields are not specified, the last values will be used.
+            dataset_config (ApplicationConnectorDatasetConfig): Dataset config for the application connector. If any of the fields are not specified, the last values will be used.
 
         Returns:
             DatasetVersion: The new Dataset Version created.

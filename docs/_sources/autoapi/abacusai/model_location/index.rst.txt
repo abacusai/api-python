@@ -1,26 +1,36 @@
-:py:mod:`abacusai.model_location`
-=================================
+abacusai.model_location
+=======================
 
 .. py:module:: abacusai.model_location
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.model_location.AbstractApiClass
+   abacusai.model_location.ModelLocation
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.model_location.ModelLocation
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelLocation(client, location=None, artifactNames=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Provide location information for the plug-and-play model.
 
@@ -31,9 +41,11 @@ Classes
    :param artifactNames: Representations of the names of the artifacts used to create the model.
    :type artifactNames: dict
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

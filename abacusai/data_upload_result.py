@@ -1,7 +1,7 @@
 from .return_class import AbstractApiClass
 
 
-class AgentDataUploadResult(AbstractApiClass):
+class DataUploadResult(AbstractApiClass):
     """
         Results of uploading data to agent.
 
@@ -17,7 +17,7 @@ class AgentDataUploadResult(AbstractApiClass):
 
     def __repr__(self):
         repr_dict = {f'doc_infos': repr(self.doc_infos)}
-        class_name = "AgentDataUploadResult"
+        class_name = "DataUploadResult"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"

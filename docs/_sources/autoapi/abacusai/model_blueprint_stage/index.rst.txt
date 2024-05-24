@@ -1,26 +1,36 @@
-:py:mod:`abacusai.model_blueprint_stage`
-========================================
+abacusai.model_blueprint_stage
+==============================
 
 .. py:module:: abacusai.model_blueprint_stage
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.model_blueprint_stage.AbstractApiClass
+   abacusai.model_blueprint_stage.ModelBlueprintStage
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.model_blueprint_stage.ModelBlueprintStage
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelBlueprintStage(client, stageName=None, displayName=None, description=None, params=None, predecessors=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A stage in the model blueprint export process.
 
@@ -37,9 +47,11 @@ Classes
    :param predecessors: A list of stages that occur directly before this stage.
    :type predecessors: list
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

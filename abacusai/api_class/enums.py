@@ -362,7 +362,11 @@ class ApplicationConnectorType(ApiEnum):
     ABACUSUSAGEMETRICS = 'ABACUSUSAGEMETRICS'
     MICROSOFTAUTH = 'MICROSOFTAUTH'
     FRESHSERVICE = 'FRESHSERVICE'
-    ZENDESKSUNSHINEMESSAGING = 'zendesksunshinemessaging'
+    ZENDESKSUNSHINEMESSAGING = 'ZENDESKSUNSHINEMESSAGING'
+
+
+class StreamingConnectorType(ApiEnum):
+    KAFKA = 'KAFKA'
 
 
 class PythonFunctionArgumentType(ApiEnum):
@@ -428,7 +432,7 @@ class LLMName(ApiEnum):
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'
     MIXTRAL_CHAT = 'MIXTRAL_CHAT'
     MISTRAL_MEDIUM = 'MISTRAL_MEDIUM'
-    ABACUS_SMAUG2 = 'ABACUS_SMAUG2'
+    ABACUS_SMAUG3 = 'ABACUS_SMAUG3'
 
 
 class MonitorAlertType(ApiEnum):
@@ -531,13 +535,6 @@ class DataType(ApiEnum):
     LIST = 'list'
     STRUCT = 'struct'
     NULL = 'null'
-
-    @classmethod
-    def from_str(cls, value):
-        if not value:
-            return None
-        default_map = {val.value: val for val in DataType}
-        return default_map[value.lower()]
 
 
 class AgentInterface(ApiEnum):

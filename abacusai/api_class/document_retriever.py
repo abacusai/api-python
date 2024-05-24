@@ -7,7 +7,7 @@ from .enums import VectorStoreTextEncoder
 @dataclasses.dataclass
 class VectorStoreConfig(ApiClass):
     """
-    Configs for vector store indexing.
+    Config for indexing options of a document retriever. Default values of optional arguments are heuristically selected by the Abacus.AI platform based on the underlying data.
 
     Args:
         chunk_size (int): The size of text chunks in the vector store.
@@ -25,8 +25,4 @@ class VectorStoreConfig(ApiClass):
     prune_vectors: bool = dataclasses.field(default=None)
 
 
-@dataclasses.dataclass
-class DocumentRetrieverConfig(VectorStoreConfig):
-    """
-    Configs for document retriever. If any configuration value is not explicitly provided, Abacus.AI will automatically infer default values based on the data.
-    """
+DocumentRetrieverConfig = VectorStoreConfig

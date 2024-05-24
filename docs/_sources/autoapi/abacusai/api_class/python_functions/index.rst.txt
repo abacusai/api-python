@@ -1,27 +1,88 @@
-:py:mod:`abacusai.api_class.python_functions`
-=============================================
+abacusai.api_class.python_functions
+===================================
 
 .. py:module:: abacusai.api_class.python_functions
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.api_class.python_functions.ApiClass
+   abacusai.api_class.python_functions.PythonFunctionArgument
+   abacusai.api_class.python_functions.OutputVariableMapping
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: ApiClass
 
-.. autoapisummary::
+   Bases: :py:obj:`abc.ABC`
 
-   abacusai.api_class.python_functions.PythonFunctionArgument
-   abacusai.api_class.python_functions.OutputVariableMapping
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
+
+   .. py:attribute:: _support_kwargs
+      :type:  bool
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+   .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
 
 
 
 .. py:class:: PythonFunctionArgument
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A config class for python function arguments
 
@@ -36,36 +97,31 @@ Classes
    :param pipeline_variable: The name of the pipeline variable to use as the value
    :type pipeline_variable: str
 
-   .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.PythonFunctionArgumentType
 
-      
+   .. py:attribute:: variable_type
+      :type:  abacusai.api_class.enums.PythonFunctionArgumentType
+
 
    .. py:attribute:: name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: is_required
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: value
-      :type: Any
+      :type:  Any
 
-      
 
    .. py:attribute:: pipeline_variable
-      :type: str
-
-      
+      :type:  str
 
 
 .. py:class:: OutputVariableMapping
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A config class for python function arguments
 
@@ -74,14 +130,12 @@ Classes
    :param name: The name of the python function variable
    :type name: str
 
-   .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.PythonFunctionOutputArgumentType
 
-      
+   .. py:attribute:: variable_type
+      :type:  abacusai.api_class.enums.PythonFunctionOutputArgumentType
+
 
    .. py:attribute:: name
-      :type: str
-
-      
+      :type:  str
 
 

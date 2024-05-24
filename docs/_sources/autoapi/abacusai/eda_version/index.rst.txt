@@ -1,26 +1,36 @@
-:py:mod:`abacusai.eda_version`
-==============================
+abacusai.eda_version
+====================
 
 .. py:module:: abacusai.eda_version
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.eda_version.AbstractApiClass
+   abacusai.eda_version.EdaVersion
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.eda_version.EdaVersion
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: EdaVersion(client, edaVersion=None, status=None, edaId=None, edaStartedAt=None, edaCompletedAt=None, referenceFeatureGroupVersion=None, testFeatureGroupVersion=None, error=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of an eda object
 
@@ -43,9 +53,11 @@ Classes
    :param error: Relevant error if the status is FAILED.
    :type error: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -56,12 +68,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: EdaVersion
+
 
 
    .. py:method:: describe()
@@ -75,12 +89,14 @@ Classes
       :rtype: EdaVersion
 
 
+
    .. py:method:: delete()
 
       Deletes the specified EDA version.
 
       :param eda_version: Unique string identifier of the EDA version to delete.
       :type eda_version: str
+
 
 
    .. py:method:: get_eda_collinearity()
@@ -94,6 +110,7 @@ Classes
       :rtype: EdaCollinearity
 
 
+
    .. py:method:: get_eda_data_consistency(transformation_feature = None)
 
       Gets the data consistency for the Exploratory Data Analysis.
@@ -105,6 +122,7 @@ Classes
       :rtype: EdaDataConsistency
 
 
+
    .. py:method:: get_collinearity_for_feature(feature_name = None)
 
       Gets the Collinearity for the given feature from the Exploratory Data Analysis.
@@ -114,6 +132,7 @@ Classes
 
       :returns: Object with a record of correlations for the provided feature for an EDA.
       :rtype: EdaFeatureCollinearity
+
 
 
    .. py:method:: get_feature_association(reference_feature_name, test_feature_name)
@@ -129,6 +148,7 @@ Classes
       :rtype: EdaFeatureAssociation
 
 
+
    .. py:method:: get_eda_forecasting_analysis()
 
       Gets the Forecasting analysis for the Exploratory Data Analysis.
@@ -140,12 +160,14 @@ Classes
       :rtype: EdaForecastingAnalysis
 
 
+
    .. py:method:: wait_for_eda(timeout=1200)
 
       A waiting call until eda version is ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

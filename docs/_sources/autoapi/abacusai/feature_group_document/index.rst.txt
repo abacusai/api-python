@@ -1,26 +1,36 @@
-:py:mod:`abacusai.feature_group_document`
-=========================================
+abacusai.feature_group_document
+===============================
 
 .. py:module:: abacusai.feature_group_document
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.feature_group_document.AbstractApiClass
+   abacusai.feature_group_document.FeatureGroupDocument
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.feature_group_document.FeatureGroupDocument
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureGroupDocument(client, featureGroupId=None, docId=None, status=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A document of a feature group.
 
@@ -33,9 +43,11 @@ Classes
    :param status: The status of the document processing
    :type status: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

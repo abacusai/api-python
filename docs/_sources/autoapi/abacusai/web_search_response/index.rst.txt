@@ -1,0 +1,92 @@
+abacusai.web_search_response
+============================
+
+.. py:module:: abacusai.web_search_response
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.web_search_response.AbstractApiClass
+   abacusai.web_search_response.WebSearchResult
+   abacusai.web_search_response.WebSearchResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
+
+
+.. py:class:: WebSearchResult(client, title=None, url=None, snippet=None, content=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A single search result.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param title: The title of the search result.
+   :type title: str
+   :param url: The URL of the search result.
+   :type url: str
+   :param snippet: The snippet of the search result.
+   :type snippet: str
+   :param content: The page of content fetched from the url.
+   :type content: str
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: WebSearchResponse(client, searchResults={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Result of running a web search with optional content fetching.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param searchResults: List of search results.
+   :type searchResults: WebSearchResult
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

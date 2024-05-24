@@ -1,26 +1,99 @@
-:py:mod:`abacusai.refresh_policy`
-=================================
+abacusai.refresh_policy
+=======================
 
 .. py:module:: abacusai.refresh_policy
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.refresh_policy.FeatureGroupExportConfig
+   abacusai.refresh_policy.FeatureGroupRefreshExportConfig
+   abacusai.refresh_policy.AbstractApiClass
+   abacusai.refresh_policy.RefreshPolicy
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: FeatureGroupExportConfig
 
-.. autoapisummary::
-
-   abacusai.refresh_policy.RefreshPolicy
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
+   An abstract class for feature group exports.
+
+
+   .. py:attribute:: connector_type
+      :type:  abacusai.api_class.enums.ConnectorType
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: FeatureGroupRefreshExportConfig(client, connectorType=None, location=None, exportFileFormat=None, additionalIdColumns=None, databaseFeatureMapping=None, externalConnectionId=None, idColumn=None, objectName=None, writeMode=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A Feature Group Refresh Export Config outlines the export configuration for a feature group.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param connectorType: The type of connector the feature group is
+   :type connectorType: str
+   :param location: The file connector location of the feature group export
+   :type location: str
+   :param exportFileFormat: The file format of the feature group export
+   :type exportFileFormat: str
+   :param additionalIdColumns: Additional id columns to use for upsert operations
+   :type additionalIdColumns: list
+   :param databaseFeatureMapping: The mapping of feature names to database columns
+   :type databaseFeatureMapping: dict
+   :param externalConnectionId: The unique identifier of the external connection to write to
+   :type externalConnectionId: str
+   :param idColumn: The column to use as the id column for upsert operations
+   :type idColumn: str
+   :param objectName: The name of the object to write to
+   :type objectName: str
+   :param writeMode: The write mode to use for the export
+   :type writeMode: str
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, featureGroupId=None, modelIds=None, deploymentIds=None, batchPredictionIds=None, modelMonitorIds=None, notebookId=None, paused=None, predictionOperatorId=None, pipelineId=None, featureGroupExportConfig={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A Refresh Policy describes the frequency at which one or more datasets/models/deployments/batch_predictions can be updated.
 
@@ -63,9 +136,11 @@ Classes
    :param featureGroupExportConfig: The export configuration for the feature group. Only applicable if refresh_type is FEATUREGROUP.
    :type featureGroupExportConfig: FeatureGroupRefreshExportConfig
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -76,6 +151,7 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: delete()
 
       Delete a refresh policy.
@@ -84,12 +160,14 @@ Classes
       :type refresh_policy_id: str
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: RefreshPolicy
+
 
 
    .. py:method:: describe()
@@ -103,6 +181,7 @@ Classes
       :rtype: RefreshPolicy
 
 
+
    .. py:method:: list_refresh_pipeline_runs()
 
       List the the times that the refresh policy has been run
@@ -114,12 +193,14 @@ Classes
       :rtype: list[RefreshPipelineRun]
 
 
+
    .. py:method:: pause()
 
       Pauses a refresh policy
 
       :param refresh_policy_id: Unique identifier associated with the refresh policy to be paused.
       :type refresh_policy_id: str
+
 
 
    .. py:method:: resume()
@@ -130,12 +211,14 @@ Classes
       :type refresh_policy_id: str
 
 
+
    .. py:method:: run()
 
       Force a run of the refresh policy.
 
       :param refresh_policy_id: Unique string identifier associated with the refresh policy to be run.
       :type refresh_policy_id: str
+
 
 
    .. py:method:: update(name = None, cron = None, feature_group_export_config = None)

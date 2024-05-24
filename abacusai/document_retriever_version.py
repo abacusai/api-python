@@ -9,13 +9,13 @@ class DocumentRetrieverVersion(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            documentRetrieverId (str): The unique identifier of the vector store.
-            documentRetrieverVersion (str): The unique identifier of the vector store version.
-            createdAt (str): When the vector store was created.
-            status (str): The status of creating vector store version.
-            deploymentStatus (str): The status of deploying the vector store version.
+            documentRetrieverId (str): The unique identifier of the Document Retriever.
+            documentRetrieverVersion (str): The unique identifier of the Document Retriever version.
+            createdAt (str): When the Document Retriever was created.
+            status (str): The status of creating Document Retriever version.
+            deploymentStatus (str): The status of deploying the Document Retriever version.
             featureGroupId (str): The feature group id associated with the document retriever.
-            featureGroupVersion (str): The unique identifier of the feature group version at which the vector store version is created.
+            featureGroupVersion (str): The unique identifier of the feature group version at which the Document Retriever version is created.
             error (str): The error message when it failed to create the document retriever version.
             numberOfChunks (int): The number of chunks for the document retriever.
             embeddingFileSize (int): The size of embedding file for the document retriever.

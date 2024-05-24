@@ -1,26 +1,225 @@
-:py:mod:`abacusai.pipeline_version`
-===================================
+abacusai.pipeline_version
+=========================
 
 .. py:module:: abacusai.pipeline_version
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.pipeline_version.PythonFunctionArgument
+   abacusai.pipeline_version.CodeSource
+   abacusai.pipeline_version.PipelineStepVersion
+   abacusai.pipeline_version.AbstractApiClass
+   abacusai.pipeline_version.PipelineVersion
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: PythonFunctionArgument
 
-.. autoapisummary::
-
-   abacusai.pipeline_version.PipelineVersion
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
+   A config class for python function arguments
+
+   :param variable_type: The type of the python function argument
+   :type variable_type: PythonFunctionArgumentType
+   :param name: The name of the python function variable
+   :type name: str
+   :param is_required: Whether the argument is required
+   :type is_required: bool
+   :param value: The value of the argument
+   :type value: Any
+   :param pipeline_variable: The name of the pipeline variable to use as the value
+   :type pipeline_variable: str
+
+
+   .. py:attribute:: variable_type
+      :type:  abacusai.api_class.enums.PythonFunctionArgumentType
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: is_required
+      :type:  bool
+
+
+   .. py:attribute:: value
+      :type:  Any
+
+
+   .. py:attribute:: pipeline_variable
+      :type:  str
+
+
+.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Code source for python-based custom feature groups and models
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param sourceType: The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
+   :type sourceType: str
+   :param sourceCode: If the type of the source is TEXT, the raw text of the function
+   :type sourceCode: str
+   :param applicationConnectorId: The Application Connector to fetch the code from
+   :type applicationConnectorId: str
+   :param applicationConnectorInfo: Args passed to the application connector to fetch the code
+   :type applicationConnectorInfo: str
+   :param packageRequirements: The pip package dependencies required to run the code
+   :type packageRequirements: list
+   :param status: The status of the code and validations
+   :type status: str
+   :param error: If the status is failed, an error message describing what went wrong
+   :type error: str
+   :param publishingMsg: Warnings in the source code
+   :type publishingMsg: dict
+   :param moduleDependencies: The list of internal modules dependencies required to run the code
+   :type moduleDependencies: list
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+   .. py:method:: import_as_cell()
+
+      Adds the source code as an unexecuted cell in the notebook.
+
+
+
+.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, cpuSize=None, memory=None, timeout=None, pipelineStepVersionReferences={}, codeSource={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A version of a pipeline step.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param stepName: The name of the step.
+   :type stepName: str
+   :param pipelineStepVersion: The reference to the pipeline step version.
+   :type pipelineStepVersion: str
+   :param pipelineStepId: The reference to this step.
+   :type pipelineStepId: str
+   :param pipelineId: The reference to the pipeline this step belongs to.
+   :type pipelineId: str
+   :param pipelineVersion: The reference to the pipeline version.
+   :type pipelineVersion: str
+   :param createdAt: The date and time which this step was created.
+   :type createdAt: str
+   :param updatedAt: The date and time when this step was last updated.
+   :type updatedAt: str
+   :param status: The status of the pipeline version.
+   :type status: str
+   :param error: The error message if the pipeline step failed.
+   :type error: str
+   :param outputErrors: The error message of a pipeline step's output.
+   :type outputErrors: str
+   :param pythonFunctionId: The reference to the python function
+   :type pythonFunctionId: str
+   :param functionVariableMappings: The mappings for function parameters' names.
+   :type functionVariableMappings: dict
+   :param stepDependencies: List of steps this step depends on.
+   :type stepDependencies: list[str]
+   :param outputVariableMappings: The mappings for the output variables to the step.
+   :type outputVariableMappings: dict
+   :param cpuSize: CPU size specified for the step function.
+   :type cpuSize: str
+   :param memory: Memory in GB specified for the step function.
+   :type memory: int
+   :param timeout: The timeout in minutes for the pipeline step.
+   :type timeout: int
+   :param pipelineStepVersionReferences: A list to the output instances of the pipeline step version.
+   :type pipelineStepVersionReferences: PipelineStepVersionReference
+   :param codeSource: Information about the source code of the pipeline step version.
+   :type codeSource: CodeSource
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: PipelineStepVersion
+
+
+
+   .. py:method:: describe()
+
+      Describes a pipeline step version.
+
+      :param pipeline_step_version: The ID of the pipeline step version.
+      :type pipeline_step_version: str
+
+      :returns: An object describing the pipeline step version.
+      :rtype: PipelineStepVersion
+
+
+
+   .. py:method:: get_step_version_logs()
+
+      Gets the logs for a given step version.
+
+      :param pipeline_step_version: The id of the pipeline step version.
+      :type pipeline_step_version: str
+
+      :returns: Object describing the pipeline step logs.
+      :rtype: PipelineStepVersionLogs
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PipelineVersion(client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, stepVersions={}, codeSource={}, pipelineVariableMappings={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of a pipeline.
 
@@ -49,9 +248,11 @@ Classes
    :param pipelineVariableMappings: A description of the function variables into the pipeline.
    :type pipelineVariableMappings: PythonFunctionArgument
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -62,12 +263,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: PipelineVersion
+
 
 
    .. py:method:: describe()
@@ -79,6 +282,7 @@ Classes
 
       :returns: Object describing the pipeline version
       :rtype: PipelineVersion
+
 
 
    .. py:method:: reset(steps = None, include_downstream_steps = True)
@@ -94,6 +298,7 @@ Classes
       :rtype: PipelineVersion
 
 
+
    .. py:method:: list_logs()
 
       Gets the logs for the steps in a given pipeline version.
@@ -103,6 +308,7 @@ Classes
 
       :returns: Object describing the logs for the steps in the pipeline.
       :rtype: PipelineVersionLogs
+
 
 
    .. py:method:: skip_pending_steps()
@@ -116,12 +322,14 @@ Classes
       :rtype: PipelineVersion
 
 
+
    .. py:method:: wait_for_pipeline(timeout=1200)
 
       A waiting call until all the stages in a pipeline version have completed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

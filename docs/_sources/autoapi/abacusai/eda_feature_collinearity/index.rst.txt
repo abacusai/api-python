@@ -1,26 +1,36 @@
-:py:mod:`abacusai.eda_feature_collinearity`
-===========================================
+abacusai.eda_feature_collinearity
+=================================
 
 .. py:module:: abacusai.eda_feature_collinearity
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.eda_feature_collinearity.AbstractApiClass
+   abacusai.eda_feature_collinearity.EdaFeatureCollinearity
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.eda_feature_collinearity.EdaFeatureCollinearity
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: EdaFeatureCollinearity(client, selectedFeature=None, sortedColumnNames=None, featureCollinearity=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Eda Collinearity of the latest version of the data for a given feature.
 
@@ -33,9 +43,11 @@ Classes
    :param featureCollinearity: A dict describing the collinearity between a given feature and all the features in the data
    :type featureCollinearity: dict
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

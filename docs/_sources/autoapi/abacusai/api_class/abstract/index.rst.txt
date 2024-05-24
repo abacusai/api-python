@@ -1,24 +1,30 @@
-:py:mod:`abacusai.api_class.abstract`
-=====================================
+abacusai.api_class.abstract
+===========================
 
 .. py:module:: abacusai.api_class.abstract
 
 
-Module Contents
----------------
-
-Classes
-~~~~~~~
+Attributes
+----------
 
 .. autoapisummary::
 
+   abacusai.api_class.abstract.FIRST_CAP_RE
+   abacusai.api_class.abstract.ALL_CAP_RE
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.api_class.abstract.ApiEnum
    abacusai.api_class.abstract.ApiClass
    abacusai.api_class.abstract._ApiClassFactory
 
 
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
@@ -28,53 +34,59 @@ Functions
    abacusai.api_class.abstract.get_clean_function_source_code
 
 
+Module Contents
+---------------
 
-Attributes
-~~~~~~~~~~
+.. py:class:: ApiEnum
 
-.. autoapisummary::
+   Bases: :py:obj:`enum.Enum`
 
-   abacusai.api_class.abstract.FIRST_CAP_RE
-   abacusai.api_class.abstract.ALL_CAP_RE
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: __hash__()
+
+      Return hash(self).
+
 
 
 .. py:data:: FIRST_CAP_RE
 
-   
-
 .. py:data:: ALL_CAP_RE
-
-   
 
 .. py:function:: camel_case(value)
 
-
 .. py:function:: upper_snake_case(value)
-
 
 .. py:function:: snake_case(value)
 
-
 .. py:function:: get_clean_function_source_code(func)
-
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -83,9 +95,11 @@ Attributes
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -113,6 +127,7 @@ Attributes
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -120,23 +135,25 @@ Attributes
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:

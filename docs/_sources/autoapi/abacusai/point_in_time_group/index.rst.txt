@@ -1,26 +1,71 @@
-:py:mod:`abacusai.point_in_time_group`
-======================================
+abacusai.point_in_time_group
+============================
 
 .. py:module:: abacusai.point_in_time_group
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.point_in_time_group.PointInTimeGroupFeature
+   abacusai.point_in_time_group.AbstractApiClass
+   abacusai.point_in_time_group.PointInTimeGroup
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: PointInTimeGroupFeature(client, name=None, expression=None, pitOperationType=None, pitOperationConfig=None)
 
-.. autoapisummary::
-
-   abacusai.point_in_time_group.PointInTimeGroup
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
+   A point in time group feature
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the feature
+   :type name: str
+   :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+   :type expression: str
+   :param pitOperationType: The operation used in point in time feature generation
+   :type pitOperationType: str
+   :param pitOperationConfig: The configuration used as input to the operation type
+   :type pitOperationConfig: dict
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PointInTimeGroup(client, groupName=None, windowKey=None, aggregationKeys=None, lookbackWindow=None, lookbackWindowLag=None, lookbackCount=None, lookbackUntilPosition=None, historyTableName=None, historyWindowKey=None, historyAggregationKeys=None, features={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A point in time group containing point in time features
 
@@ -49,9 +94,11 @@ Classes
    :param features: List of features in the Point in Time group
    :type features: PointInTimeGroupFeature
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

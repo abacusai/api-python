@@ -1,26 +1,36 @@
-:py:mod:`abacusai.organization_secret`
-======================================
+abacusai.organization_secret
+============================
 
 .. py:module:: abacusai.organization_secret
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.organization_secret.AbstractApiClass
+   abacusai.organization_secret.OrganizationSecret
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.organization_secret.OrganizationSecret
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Organization secret
 
@@ -33,9 +43,11 @@ Classes
    :param createdAt: The date and time when the secret was created, in ISO-8601 format.
    :type createdAt: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

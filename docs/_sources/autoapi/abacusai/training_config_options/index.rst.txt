@@ -1,26 +1,36 @@
-:py:mod:`abacusai.training_config_options`
-==========================================
+abacusai.training_config_options
+================================
 
 .. py:module:: abacusai.training_config_options
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.training_config_options.AbstractApiClass
+   abacusai.training_config_options.TrainingConfigOptions
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.training_config_options.TrainingConfigOptions
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: TrainingConfigOptions(client, name=None, dataType=None, valueType=None, valueOptions=None, value=None, default=None, options=None, description=None, required=None, lastModelValue=None, needsRefresh=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Training options for a model
 
@@ -49,9 +59,11 @@ Classes
    :param needsRefresh: True if training config needs to be fetched again when this config option is changed
    :type needsRefresh: bool
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

@@ -1,26 +1,36 @@
-:py:mod:`abacusai.feature_performance_analysis`
-===============================================
+abacusai.feature_performance_analysis
+=====================================
 
 .. py:module:: abacusai.feature_performance_analysis
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.feature_performance_analysis.AbstractApiClass
+   abacusai.feature_performance_analysis.FeaturePerformanceAnalysis
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.feature_performance_analysis.FeaturePerformanceAnalysis
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeaturePerformanceAnalysis(client, features=None, featureMetrics=None, metricsKeys=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A feature performance analysis for Monitor
 
@@ -33,9 +43,11 @@ Classes
    :param metricsKeys: A list of the keys for the metrics.
    :type metricsKeys: list
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

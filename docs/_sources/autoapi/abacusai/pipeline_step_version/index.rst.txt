@@ -1,26 +1,138 @@
-:py:mod:`abacusai.pipeline_step_version`
-========================================
+abacusai.pipeline_step_version
+==============================
 
 .. py:module:: abacusai.pipeline_step_version
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.pipeline_step_version.CodeSource
+   abacusai.pipeline_step_version.PipelineStepVersionReference
+   abacusai.pipeline_step_version.AbstractApiClass
+   abacusai.pipeline_step_version.PipelineStepVersion
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
 
-.. autoapisummary::
-
-   abacusai.pipeline_step_version.PipelineStepVersion
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
+   Code source for python-based custom feature groups and models
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param sourceType: The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
+   :type sourceType: str
+   :param sourceCode: If the type of the source is TEXT, the raw text of the function
+   :type sourceCode: str
+   :param applicationConnectorId: The Application Connector to fetch the code from
+   :type applicationConnectorId: str
+   :param applicationConnectorInfo: Args passed to the application connector to fetch the code
+   :type applicationConnectorInfo: str
+   :param packageRequirements: The pip package dependencies required to run the code
+   :type packageRequirements: list
+   :param status: The status of the code and validations
+   :type status: str
+   :param error: If the status is failed, an error message describing what went wrong
+   :type error: str
+   :param publishingMsg: Warnings in the source code
+   :type publishingMsg: dict
+   :param moduleDependencies: The list of internal modules dependencies required to run the code
+   :type moduleDependencies: list
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+   .. py:method:: import_as_cell()
+
+      Adds the source code as an unexecuted cell in the notebook.
+
+
+
+.. py:class:: PipelineStepVersionReference(client, pipelineStepVersionReferenceId=None, pipelineStepVersion=None, objectType=None, datasetVersion=None, modelVersion=None, deploymentVersion=None, batchPredictionId=None, modelMonitorVersion=None, notebookVersion=None, featureGroupVersion=None, status=None, error=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A reference from a pipeline step version to the versions that were output from the pipeline step.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param pipelineStepVersionReferenceId: The id of the reference.
+   :type pipelineStepVersionReferenceId: str
+   :param pipelineStepVersion: The pipeline step version the reference is connected to.
+   :type pipelineStepVersion: str
+   :param objectType: The object type of the reference.
+   :type objectType: str
+   :param datasetVersion: The dataset version the reference is connected to.
+   :type datasetVersion: str
+   :param modelVersion: The model version the reference is connected to.
+   :type modelVersion: str
+   :param deploymentVersion: The deployment version the reference is connected to.
+   :type deploymentVersion: str
+   :param batchPredictionId: The batch prediction id the reference is connected to.
+   :type batchPredictionId: str
+   :param modelMonitorVersion: The model monitor version the reference is connected to.
+   :type modelMonitorVersion: str
+   :param notebookVersion: The notebook version the reference is connected to.
+   :type notebookVersion: str
+   :param featureGroupVersion: The feature group version the reference is connected to.
+   :type featureGroupVersion: str
+   :param status: The status of the reference
+   :type status: str
+   :param error: The error message if the reference is in an error state.
+   :type error: str
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, cpuSize=None, memory=None, timeout=None, pipelineStepVersionReferences={}, codeSource={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of a pipeline step.
 
@@ -65,9 +177,11 @@ Classes
    :param codeSource: Information about the source code of the pipeline step version.
    :type codeSource: CodeSource
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -78,12 +192,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: PipelineStepVersion
+
 
 
    .. py:method:: describe()
@@ -95,6 +211,7 @@ Classes
 
       :returns: An object describing the pipeline step version.
       :rtype: PipelineStepVersion
+
 
 
    .. py:method:: get_step_version_logs()

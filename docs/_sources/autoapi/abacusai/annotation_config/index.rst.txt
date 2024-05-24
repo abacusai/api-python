@@ -1,26 +1,36 @@
-:py:mod:`abacusai.annotation_config`
-====================================
+abacusai.annotation_config
+==========================
 
 .. py:module:: abacusai.annotation_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.annotation_config.AbstractApiClass
+   abacusai.annotation_config.AnnotationConfig
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.annotation_config.AnnotationConfig
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: AnnotationConfig(client, featureAnnotationConfigs=None, labels=None, statusFeature=None, commentsFeatures=None, metadataFeature=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Annotation config for a feature group
 
@@ -37,9 +47,11 @@ Classes
    :param metadataFeature: Name of the feature that contains the metadata for the annotation (Optional)
    :type metadataFeature: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

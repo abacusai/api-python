@@ -1,26 +1,36 @@
-:py:mod:`abacusai.model_monitor_version`
-========================================
+abacusai.model_monitor_version
+==============================
 
 .. py:module:: abacusai.model_monitor_version
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.model_monitor_version.AbstractApiClass
+   abacusai.model_monitor_version.ModelMonitorVersion
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.model_monitor_version.ModelMonitorVersion
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, monitorDriftConfig=None, predictionDataUseMappings=None, trainingDataUseMappings=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of a model monitor
 
@@ -71,9 +81,11 @@ Classes
    :param trainingDataUseMappings: The mapping of training data use to feature group version
    :type trainingDataUseMappings: dict
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -82,6 +94,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: get_prediction_drift()
@@ -95,12 +108,14 @@ Classes
       :rtype: DriftDistributions
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: ModelMonitorVersion
+
 
 
    .. py:method:: describe()
@@ -114,12 +129,14 @@ Classes
       :rtype: ModelMonitorVersion
 
 
+
    .. py:method:: delete()
 
       Deletes the specified model monitor version.
 
       :param model_monitor_version: Unique identifier of the model monitor version to delete.
       :type model_monitor_version: str
+
 
 
    .. py:method:: metric_data(metric_type, actual_values_to_detail = None)
@@ -135,6 +152,7 @@ Classes
       :rtype: ModelMonitorVersionMetricData
 
 
+
    .. py:method:: list_monitor_alert_versions_for_monitor_version()
 
       Retrieves the list of monitor alert versions for a specified monitor instance.
@@ -144,6 +162,7 @@ Classes
 
       :returns: A list of monitor alert versions.
       :rtype: list[MonitorAlertVersion]
+
 
 
    .. py:method:: get_drift_for_feature(feature_name, nested_feature_name = None)
@@ -159,6 +178,7 @@ Classes
       :rtype: FeatureDistribution
 
 
+
    .. py:method:: get_outliers_for_feature(feature_name = None, nested_feature_name = None)
 
       Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
@@ -169,12 +189,14 @@ Classes
       :type nested_feature_name: str
 
 
+
    .. py:method:: wait_for_monitor(timeout=1200)
 
       A waiting call until model monitor version is ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

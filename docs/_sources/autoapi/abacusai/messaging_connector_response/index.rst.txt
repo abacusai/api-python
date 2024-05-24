@@ -1,26 +1,36 @@
-:py:mod:`abacusai.messaging_connector_response`
-===============================================
+abacusai.messaging_connector_response
+=====================================
 
 .. py:module:: abacusai.messaging_connector_response
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.messaging_connector_response.AbstractApiClass
+   abacusai.messaging_connector_response.MessagingConnectorResponse
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.messaging_connector_response.MessagingConnectorResponse
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: MessagingConnectorResponse(client, welcomeMessage=None, defaultMessage=None, disclaimer=None, messagingBotName=None, useDefaultLabel=None, initAckReq=None, defaultLabels=None, enabledExternalLinks=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    The response to view label data for Teams
 
@@ -43,9 +53,11 @@ Classes
    :param enabledExternalLinks: list of external application which have external links applicable
    :type enabledExternalLinks: list
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

@@ -438,18 +438,19 @@ class ChatLLMTrainingConfig(TrainingConfig):
     Training config for the CHAT_LLM problem type
 
     Args:
-        document_retrievers (List[str]): List of document retriever names to use for the feature stores this model was trained with.
-        num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
-        temperature (float): The generative LLM temperature
+        document_retrievers (List[str]): List of names of document retrievers to use as vector stores of information for RAG responses.
+        num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
+        temperature (float): The generative LLM temperature.
         retrieval_columns (list): Include the metadata column values in the retrieved search results.
         filter_columns (list): Allow users to filter the document retrievers on these metadata columns.
-        include_general_knowledge (bool): Allow the LLM to rely not just on search results, but to fall back on general knowledge.
+        include_general_knowledge (bool): Allow the LLM to rely not just on RAG search results, but to fall back on general knowledge. Disabled by default.
+        enable_web_search (bool) : Allow the LLM to use Web Search Engines to retrieve information for better results.
         behavior_instructions (str): Customize the overall role instructions for the LLM.
-        response_instructions (str): Customize instructions for what the LLM responses should look like.
-        enable_llm_rewrite (bool): Enable LLM rewrite for the ChatLLM. If None, LLM rewrite will happen automatically. Defaults to False.
+        response_instructions (str): Customized instructions for how the LLM should respond.
+        enable_llm_rewrite (bool): If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.
         column_filtering_instructions (str): Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
         keyword_requirement_instructions (str): Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.
-        query_rewrite_instructions (str): Instructions for a LLM call to rewrite a search query.
+        query_rewrite_instructions (str): Special instructions for the LLM which rewrites the RAG query.
         max_search_results (int): Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
         data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
         data_prompt_context (str): Prompt context for the data feature group IDs.
@@ -458,33 +459,32 @@ class ChatLLMTrainingConfig(TrainingConfig):
         search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
         database_connector_id (str): Database connector ID to use for the ChatLLM.
         database_connector_tables (List[str]): List of tables to use from the database connector for the ChatLLM.
-        enable_code_execution (bool): Enable code execution in the ChatLLM.
-        metadata_columns (list): DEPRECATED. Include the metadata column values in the retrieved search results.
-        lookup_rewrite_instructions (str): DEPRECATED. Instructions for a LLM call to rewrite a search query.
+        enable_code_execution (bool): Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
     """
-    document_retrievers: List[str] = None
-    num_completion_tokens: int = None
-    temperature: float = None
-    retrieval_columns: list = None
-    filter_columns: list = None
-    include_general_knowledge: bool = None
-    behavior_instructions: str = None
-    response_instructions: str = None
-    enable_llm_rewrite: bool = False
-    column_filtering_instructions: str = None
-    keyword_requirement_instructions: str = None
-    query_rewrite_instructions: str = None
-    max_search_results: int = None
-    data_feature_group_ids: List[str] = None
-    data_prompt_context: str = None
-    hide_generated_sql: bool = None
-    disable_data_summarization: bool = None
-    search_score_cutoff: float = None
-    database_connector_id: str = None
-    database_connector_tables: List[str] = None
-    enable_code_execution: bool = None
-    metadata_columns: list = None
-    lookup_rewrite_instructions: str = None
+    document_retrievers: List[str] = dataclasses.field(default=None)
+    num_completion_tokens: int = dataclasses.field(default=None)
+    temperature: float = dataclasses.field(default=None)
+    retrieval_columns: list = dataclasses.field(default=None)
+    filter_columns: list = dataclasses.field(default=None)
+    include_general_knowledge: bool = dataclasses.field(default=None)
+    enable_web_search: bool = dataclasses.field(default=None)
+    behavior_instructions: str = dataclasses.field(default=None)
+    response_instructions: str = dataclasses.field(default=None)
+    enable_llm_rewrite: bool = dataclasses.field(default=None)
+    column_filtering_instructions: str = dataclasses.field(default=None)
+    keyword_requirement_instructions: str = dataclasses.field(default=None)
+    query_rewrite_instructions: str = dataclasses.field(default=None)
+    max_search_results: int = dataclasses.field(default=None)
+    data_feature_group_ids: List[str] = dataclasses.field(default=None)
+    data_prompt_context: str = dataclasses.field(default=None)
+    hide_generated_sql: bool = dataclasses.field(default=None)
+    disable_data_summarization: bool = dataclasses.field(default=None)
+    search_score_cutoff: float = dataclasses.field(default=None)
+    database_connector_id: str = dataclasses.field(default=None)
+    database_connector_tables: List[str] = dataclasses.field(default=None)
+    enable_code_execution: bool = dataclasses.field(default=None)
+    metadata_columns: list = dataclasses.field(default=None, metadata={'deprecated': True})
+    lookup_rewrite_instructions: str = dataclasses.field(default=None, metadata={'deprecated': True})
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

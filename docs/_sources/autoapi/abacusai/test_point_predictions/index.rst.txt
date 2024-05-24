@@ -1,26 +1,36 @@
-:py:mod:`abacusai.test_point_predictions`
-=========================================
+abacusai.test_point_predictions
+===============================
 
 .. py:module:: abacusai.test_point_predictions
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.test_point_predictions.AbstractApiClass
+   abacusai.test_point_predictions.TestPointPredictions
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.test_point_predictions.TestPointPredictions
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: TestPointPredictions(client, count=None, columns=None, data=None, metricsColumns=None, summarizedMetrics=None, errorDescription=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Test Point Predictions
 
@@ -39,9 +49,11 @@ Classes
    :param errorDescription: Description of an error in case of failure.
    :type errorDescription: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

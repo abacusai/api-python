@@ -1,26 +1,87 @@
-:py:mod:`abacusai.python_function`
-==================================
+abacusai.python_function
+========================
 
 .. py:module:: abacusai.python_function
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.python_function.CodeSource
+   abacusai.python_function.AbstractApiClass
+   abacusai.python_function.PythonFunction
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
 
-.. autoapisummary::
-
-   abacusai.python_function.PythonFunction
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
+   Code source for python-based custom feature groups and models
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param sourceType: The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
+   :type sourceType: str
+   :param sourceCode: If the type of the source is TEXT, the raw text of the function
+   :type sourceCode: str
+   :param applicationConnectorId: The Application Connector to fetch the code from
+   :type applicationConnectorId: str
+   :param applicationConnectorInfo: Args passed to the application connector to fetch the code
+   :type applicationConnectorInfo: str
+   :param packageRequirements: The pip package dependencies required to run the code
+   :type packageRequirements: list
+   :param status: The status of the code and validations
+   :type status: str
+   :param error: If the status is failed, an error message describing what went wrong
+   :type error: str
+   :param publishingMsg: Warnings in the source code
+   :type publishingMsg: dict
+   :param moduleDependencies: The list of internal modules dependencies required to run the code
+   :type moduleDependencies: list
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+   .. py:method:: import_as_cell()
+
+      Adds the source code as an unexecuted cell in the notebook.
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, codeSource={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Customer created python function
 
@@ -47,9 +108,11 @@ Classes
    :param codeSource: Information about the source code of the Python function.
    :type codeSource: CodeSource
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -58,6 +121,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: add_graph_to_dashboard(graph_dashboard_id, function_variable_mappings = None, name = None)
@@ -73,6 +137,7 @@ Classes
 
       :returns: An object describing the graph dashboard.
       :rtype: GraphDashboard
+
 
 
    .. py:method:: validate_locally(kwargs = None)

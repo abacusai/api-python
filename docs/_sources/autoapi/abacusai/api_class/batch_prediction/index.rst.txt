@@ -1,17 +1,16 @@
-:py:mod:`abacusai.api_class.batch_prediction`
-=============================================
+abacusai.api_class.batch_prediction
+===================================
 
 .. py:module:: abacusai.api_class.batch_prediction
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
+   abacusai.api_class.batch_prediction.ApiClass
+   abacusai.api_class.batch_prediction._ApiClassFactory
    abacusai.api_class.batch_prediction.BatchPredictionArgs
    abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs
    abacusai.api_class.batch_prediction.NamedEntityExtractionBatchPredictionArgs
@@ -25,29 +24,117 @@ Classes
    abacusai.api_class.batch_prediction._BatchPredictionArgsFactory
 
 
+Module Contents
+---------------
+
+.. py:class:: ApiClass
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
+
+   .. py:attribute:: _support_kwargs
+      :type:  bool
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+   .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: _ApiClassFactory
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
+
+   .. py:attribute:: config_class_key
+      :value: None
+
+
+
+   .. py:attribute:: config_class_map
+
+
+   .. py:method:: from_dict(config)
+      :classmethod:
+
 
 
 .. py:class:: BatchPredictionArgs
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for Batch Prediction args specific to problem type.
 
-   .. py:attribute:: _support_kwargs
-      :type: bool
 
-      
+   .. py:attribute:: _support_kwargs
+      :type:  bool
+
 
    .. py:attribute:: kwargs
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+      :type:  abacusai.api_class.enums.ProblemType
 
-      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -56,8 +143,8 @@ Classes
 
 .. py:class:: ForecastingBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the FORECASTING problem type
 
@@ -78,73 +165,64 @@ Classes
    :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type create_monitor: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: predictions_start_date
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: use_prediction_offset
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: start_date_offset
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: forecasting_horizon
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: item_attributes_to_include_in_the_result
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: explain_predictions
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: create_monitor
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: NamedEntityExtractionBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PersonalizationBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the PERSONALIZATION problem type
 
@@ -157,34 +235,30 @@ Classes
    :param score_field: If specified, relative item scores will be returned using a field with this name
    :type score_field: str
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: number_of_items
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: item_attributes_to_include_in_the_result
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: score_field
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PredictiveModelingBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the PREDICTIVE_MODELING problem type
 
@@ -213,74 +287,62 @@ Classes
    :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type create_monitor: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: explainer_type
-      :type: abacusai.api_class.enums.ExplainerType
+      :type:  abacusai.api_class.enums.ExplainerType
 
-      
 
    .. py:attribute:: number_of_samples_to_use_for_explainer
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: include_multi_class_explanations
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: features_considered_constant_for_explanations
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: importance_of_records_in_nested_columns
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: explanation_filter_lower_bound
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: explanation_filter_upper_bound
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: explanation_filter_label
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: output_columns
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: explain_predictions
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: create_monitor
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PretrainedModelsBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the PRETRAINED_MODELS problem type
 
@@ -291,29 +353,26 @@ Classes
    :param channel_id_to_label_map: JSON string for the map from channel ids to their labels.
    :type channel_id_to_label_map: str
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: files_output_location_prefix
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: channel_id_to_label_map
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: SentenceBoundaryDetectionBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type
 
@@ -322,24 +381,22 @@ Classes
    :param explode_output: Explode data so there is one sentence per row.
    :type explode_output: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: explode_output
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ThemeAnalysisBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the THEME_ANALYSIS problem type
 
@@ -352,53 +409,48 @@ Classes
    :param analysis_days: How many days to analyze.
    :type analysis_days: int
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: analysis_frequency
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: start_date
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: analysis_days
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ChatLLMBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the ChatLLM problem type
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: TrainablePlugAndPlayBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the TrainablePlugAndPlay problem type
 
@@ -407,39 +459,35 @@ Classes
    :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type create_monitor: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: create_monitor
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _BatchPredictionArgsFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'problem_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 

@@ -1,26 +1,73 @@
-:py:mod:`abacusai.agent_data_execution_result`
-==============================================
+abacusai.agent_data_execution_result
+====================================
 
 .. py:module:: abacusai.agent_data_execution_result
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.agent_data_execution_result.AgentDataDocumentInfo
+   abacusai.agent_data_execution_result.AbstractApiClass
+   abacusai.agent_data_execution_result.AgentDataExecutionResult
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AgentDataDocumentInfo(client, docId=None, filename=None, mimeType=None, size=None, pageCount=None)
 
-.. autoapisummary::
-
-   abacusai.agent_data_execution_result.AgentDataExecutionResult
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
+   Information for documents uploaded to agents.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param docId: The docstore Document ID of the document.
+   :type docId: str
+   :param filename: The file name of the uploaded document.
+   :type filename: str
+   :param mimeType: The mime type of the uploaded document.
+   :type mimeType: str
+   :param size: The total size of the uploaded document.
+   :type size: int
+   :param pageCount: The total number of pages in the uploaded document.
+   :type pageCount: int
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbstractApiClass(client, id)
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: AgentDataExecutionResult(client, response=None, deploymentConversationId=None, docInfos={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Results of agent execution with uploaded data.
 
@@ -33,9 +80,11 @@ Classes
    :param docInfos: A list of dict containing information on documents uploaded to agent.
    :type docInfos: AgentDataDocumentInfo
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

@@ -1,26 +1,36 @@
-:py:mod:`abacusai.agent_data_document_info`
-===========================================
+abacusai.agent_data_document_info
+=================================
 
 .. py:module:: abacusai.agent_data_document_info
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.agent_data_document_info.AbstractApiClass
+   abacusai.agent_data_document_info.AgentDataDocumentInfo
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.agent_data_document_info.AgentDataDocumentInfo
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: AgentDataDocumentInfo(client, docId=None, filename=None, mimeType=None, size=None, pageCount=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Information for documents uploaded to agents.
 
@@ -37,9 +47,11 @@ Classes
    :param pageCount: The total number of pages in the uploaded document.
    :type pageCount: int
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

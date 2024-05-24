@@ -1,26 +1,36 @@
-:py:mod:`abacusai.embedding_feature_drift_distribution`
-=======================================================
+abacusai.embedding_feature_drift_distribution
+=============================================
 
 .. py:module:: abacusai.embedding_feature_drift_distribution
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.embedding_feature_drift_distribution.AbstractApiClass
+   abacusai.embedding_feature_drift_distribution.EmbeddingFeatureDriftDistribution
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.embedding_feature_drift_distribution.EmbeddingFeatureDriftDistribution
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: EmbeddingFeatureDriftDistribution(client, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, psi=None, csi=None, chiSquare=None, averageDrift={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Feature distribution for embeddings
 
@@ -43,9 +53,11 @@ Classes
    :param averageDrift: Average drift embedding for each type of drift
    :type averageDrift: DriftTypesValue
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

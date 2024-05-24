@@ -32,6 +32,7 @@ class FeatureGroupVersion(AbstractApiClass):
             materializationStartedAt (str): The timestamp at which the feature group materialization started.
             materializationCompletedAt (str): The timestamp at which the feature group materialization completed.
             columns (list[feature]): List of resolved columns.
+            templateBindings (list): Template variable bindings used for resolving the template.
             features (Feature): List of features.
             pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups
             codeSource (CodeSource): If a python feature group, information on the source code
@@ -39,7 +40,7 @@ class FeatureGroupVersion(AbstractApiClass):
             indexingConfig (IndexingConfig): The indexing config for the feature group.
     """
 
-    def __init__(self, client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, sourceDatasetVersions=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, indexingConfigWarningMsg=None, materializationStartedAt=None, materializationCompletedAt=None, columns=None, features={}, pointInTimeGroups={}, codeSource={}, annotationConfig={}, indexingConfig={}):
+    def __init__(self, client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, sourceDatasetVersions=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, indexingConfigWarningMsg=None, materializationStartedAt=None, materializationCompletedAt=None, columns=None, templateBindings=None, features={}, pointInTimeGroups={}, codeSource={}, annotationConfig={}, indexingConfig={}):
         super().__init__(client, featureGroupVersion)
         self.feature_group_version = featureGroupVersion
         self.feature_group_id = featureGroupId
@@ -58,6 +59,7 @@ class FeatureGroupVersion(AbstractApiClass):
         self.materialization_started_at = materializationStartedAt
         self.materialization_completed_at = materializationCompletedAt
         self.columns = columns
+        self.template_bindings = templateBindings
         self.features = client._build_class(Feature, features)
         self.point_in_time_groups = client._build_class(
             PointInTimeGroup, pointInTimeGroups)
@@ -70,7 +72,7 @@ class FeatureGroupVersion(AbstractApiClass):
 
     def __repr__(self):
         repr_dict = {f'feature_group_version': repr(self.feature_group_version), f'feature_group_id': repr(self.feature_group_id), f'sql': repr(self.sql), f'source_tables': repr(self.source_tables), f'source_dataset_versions': repr(self.source_dataset_versions), f'created_at': repr(self.created_at), f'status': repr(self.status), f'error': repr(self.error), f'deployable': repr(self.deployable), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'use_original_csv_names': repr(self.use_original_csv_names), f'python_function_bindings': repr(
-            self.python_function_bindings), f'indexing_config_warning_msg': repr(self.indexing_config_warning_msg), f'materialization_started_at': repr(self.materialization_started_at), f'materialization_completed_at': repr(self.materialization_completed_at), f'columns': repr(self.columns), f'features': repr(self.features), f'point_in_time_groups': repr(self.point_in_time_groups), f'code_source': repr(self.code_source), f'annotation_config': repr(self.annotation_config), f'indexing_config': repr(self.indexing_config)}
+            self.python_function_bindings), f'indexing_config_warning_msg': repr(self.indexing_config_warning_msg), f'materialization_started_at': repr(self.materialization_started_at), f'materialization_completed_at': repr(self.materialization_completed_at), f'columns': repr(self.columns), f'template_bindings': repr(self.template_bindings), f'features': repr(self.features), f'point_in_time_groups': repr(self.point_in_time_groups), f'code_source': repr(self.code_source), f'annotation_config': repr(self.annotation_config), f'indexing_config': repr(self.indexing_config)}
         class_name = "FeatureGroupVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -84,7 +86,7 @@ class FeatureGroupVersion(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'feature_group_version': self.feature_group_version, 'feature_group_id': self.feature_group_id, 'sql': self.sql, 'source_tables': self.source_tables, 'source_dataset_versions': self.source_dataset_versions, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'cpu_size': self.cpu_size, 'memory': self.memory, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'indexing_config_warning_msg': self.indexing_config_warning_msg,
-                'materialization_started_at': self.materialization_started_at, 'materialization_completed_at': self.materialization_completed_at, 'columns': self.columns, 'features': self._get_attribute_as_dict(self.features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'code_source': self._get_attribute_as_dict(self.code_source), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config)}
+                'materialization_started_at': self.materialization_started_at, 'materialization_completed_at': self.materialization_completed_at, 'columns': self.columns, 'template_bindings': self.template_bindings, 'features': self._get_attribute_as_dict(self.features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'code_source': self._get_attribute_as_dict(self.code_source), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def create_snapshot_feature_group(self, table_name: str):

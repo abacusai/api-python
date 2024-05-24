@@ -2,8 +2,7 @@ from typing import List, Union
 
 from .api_class import (
     AgentInterface, AlertActionConfig, AlertConditionConfig,
-    DocumentRetrieverConfig, ForecastingMonitorConfig, TrainingConfig,
-    WorkflowGraph
+    ForecastingMonitorConfig, TrainingConfig, VectorStoreConfig, WorkflowGraph
 )
 from .return_class import AbstractApiClass
 
@@ -635,7 +634,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_agents(self.project_id)
 
-    def create_document_retriever(self, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
+    def create_document_retriever(self, name: str, feature_group_id: str, document_retriever_config: Union[dict, VectorStoreConfig] = None):
         """
         Returns a document retriever that stores embeddings for document chunks in a feature group.
 
@@ -643,9 +642,9 @@ class Project(AbstractApiClass):
 
 
         Args:
-            name (str): The name of the vector store. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
-            feature_group_id (str): The ID of the feature group that the vector store is associated with.
-            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+            name (str): The name of the Document Retriever. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
+            feature_group_id (str): The ID of the feature group that the Document Retriever is associated with.
+            document_retriever_config (VectorStoreConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
             DocumentRetriever: The newly created document retriever.

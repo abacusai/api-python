@@ -1,26 +1,36 @@
-:py:mod:`abacusai.api_key`
-==========================
+abacusai.api_key
+================
 
 .. py:module:: abacusai.api_key
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.api_key.AbstractApiClass
+   abacusai.api_key.ApiKey
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. py:class:: AbstractApiClass(client, id)
 
-.. autoapisummary::
+   .. py:method:: __eq__(other)
 
-   abacusai.api_key.ApiKey
+      Return self==value.
 
 
+
+   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, tag=None, createdAt=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    An API Key to authenticate requests to the Abacus.AI API
 
@@ -35,9 +45,11 @@ Classes
    :param createdAt: The timestamp when the API key was created.
    :type createdAt: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -46,6 +58,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: delete()

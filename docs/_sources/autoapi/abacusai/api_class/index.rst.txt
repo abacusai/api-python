@@ -1,39 +1,45 @@
-:py:mod:`abacusai.api_class`
-============================
+abacusai.api_class
+==================
 
 .. py:module:: abacusai.api_class
 
 
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   abstract/index.rst
-   ai_agents/index.rst
-   ai_chat/index.rst
-   batch_prediction/index.rst
-   blob_input/index.rst
-   dataset/index.rst
-   dataset_application_connector/index.rst
-   deployment/index.rst
-   document_retriever/index.rst
-   enums/index.rst
-   feature_group/index.rst
-   model/index.rst
-   monitor/index.rst
-   monitor_alert/index.rst
-   project/index.rst
-   python_functions/index.rst
-   refresh/index.rst
+   /autoapi/abacusai/api_class/abstract/index
+   /autoapi/abacusai/api_class/ai_agents/index
+   /autoapi/abacusai/api_class/ai_chat/index
+   /autoapi/abacusai/api_class/batch_prediction/index
+   /autoapi/abacusai/api_class/blob_input/index
+   /autoapi/abacusai/api_class/connectors/index
+   /autoapi/abacusai/api_class/dataset/index
+   /autoapi/abacusai/api_class/dataset_application_connector/index
+   /autoapi/abacusai/api_class/deployment/index
+   /autoapi/abacusai/api_class/document_retriever/index
+   /autoapi/abacusai/api_class/enums/index
+   /autoapi/abacusai/api_class/feature_group/index
+   /autoapi/abacusai/api_class/model/index
+   /autoapi/abacusai/api_class/monitor/index
+   /autoapi/abacusai/api_class/monitor_alert/index
+   /autoapi/abacusai/api_class/project/index
+   /autoapi/abacusai/api_class/python_functions/index
+   /autoapi/abacusai/api_class/refresh/index
 
 
-Package Contents
-----------------
+Attributes
+----------
+
+.. autoapisummary::
+
+   abacusai.api_class.DocumentRetrieverConfig
+
 
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -65,13 +71,14 @@ Classes
    abacusai.api_class.BlobInput
    abacusai.api_class.ApiClass
    abacusai.api_class.OcrMode
+   abacusai.api_class.DatasetConfig
    abacusai.api_class.ParsingConfig
    abacusai.api_class.DocumentProcessingConfig
    abacusai.api_class.DatasetDocumentProcessingConfig
    abacusai.api_class.IncrementalDatabaseConnectorConfig
-   abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.DatasetConfig
+   abacusai.api_class.ApplicationConnectorDatasetConfig
    abacusai.api_class.ConfluenceDatasetConfig
    abacusai.api_class.GoogleAnalyticsDatasetConfig
    abacusai.api_class.GoogleDriveDatasetConfig
@@ -81,7 +88,7 @@ Classes
    abacusai.api_class.ZendeskDatasetConfig
    abacusai.api_class.AbacusUsageMetricsDatasetConfig
    abacusai.api_class.FreshserviceDatasetConfig
-   abacusai.api_class._DatasetConfigFactory
+   abacusai.api_class._ApplicationConnectorDatasetConfigFactory
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.PredictionArguments
@@ -97,7 +104,6 @@ Classes
    abacusai.api_class.ApiClass
    abacusai.api_class.VectorStoreTextEncoder
    abacusai.api_class.VectorStoreConfig
-   abacusai.api_class.DocumentRetrieverConfig
    abacusai.api_class.ApiEnum
    abacusai.api_class.ProblemType
    abacusai.api_class.RegressionObjective
@@ -135,6 +141,7 @@ Classes
    abacusai.api_class.ClusteringImputationMethod
    abacusai.api_class.ConnectorType
    abacusai.api_class.ApplicationConnectorType
+   abacusai.api_class.StreamingConnectorType
    abacusai.api_class.PythonFunctionArgumentType
    abacusai.api_class.PythonFunctionOutputArgumentType
    abacusai.api_class.VectorStoreTextEncoder
@@ -233,33 +240,33 @@ Classes
    abacusai.api_class._FeatureGroupExportConfigFactory
 
 
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    abacusai.api_class.get_clean_function_source_code
 
 
+Package Contents
+----------------
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -268,9 +275,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -298,6 +307,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -305,11 +315,10 @@ Functions
 
 .. py:function:: get_clean_function_source_code(func)
 
-
 .. py:class:: FieldDescriptor
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Configs for vector store indexing.
 
@@ -322,54 +331,50 @@ Functions
    :param type: The type of this field. If not provided, the default type is STRING.
    :type type: FieldDescriptorType
 
-   .. py:attribute:: field
-      :type: str
 
-      
+   .. py:attribute:: field
+      :type:  str
+
 
    .. py:attribute:: description
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: example_extraction
-      :type: Union[str, int, bool, float, list, dict]
+      :type:  Union[str, int, bool, float, list, dict]
 
-      
 
    .. py:attribute:: type
-      :type: abacusai.api_class.enums.FieldDescriptorType
-
-      
+      :type:  abacusai.api_class.enums.FieldDescriptorType
 
 
 .. py:class:: WorkflowNodeInputSchema
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A react-jsonschema-form conformant schema for workflow node input.
 
-   :param json_schema: The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties".
+   :param json_schema: The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties". Supported elements - Checkbox, Radio Button, Dropdown, Textarea, Number, Date, File Upload. Not supported - Nested elements, arrays and other complex types.
    :type json_schema: dict
    :param ui_schema: The ui schema for the input conformant to react-jsonschema-form specification.
    :type ui_schema: dict
 
-   .. py:attribute:: json_schema
-      :type: dict
 
-      
+   .. py:attribute:: json_schema
+      :type:  dict
+
 
    .. py:attribute:: ui_schema
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -379,24 +384,25 @@ Functions
 
 .. py:class:: WorkflowNodeOutputSchema
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A react-jsonschema-form schema for a workflow node output.
 
    :param json_schema: The json schema for the output conformant to react-jsonschema-form specification.
    :type json_schema: dict
 
-   .. py:attribute:: json_schema
-      :type: dict
 
-      
+   .. py:attribute:: json_schema
+      :type:  dict
+
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -406,8 +412,8 @@ Functions
 
 .. py:class:: WorkflowNodeInputMapping
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A mapping of input to a workflow node.
 
@@ -423,31 +429,29 @@ Functions
    :param is_required: Whether the input is required. Defaults to True
    :type is_required: bool
 
-   .. py:attribute:: name
-      :type: str
 
-      
+   .. py:attribute:: name
+      :type:  str
+
 
    .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.WorkflowNodeInputType
+      :type:  abacusai.api_class.enums.WorkflowNodeInputType
 
-      
 
    .. py:attribute:: variable_source
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: is_required
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -457,8 +461,8 @@ Functions
 
 .. py:class:: WorkflowNodeOutputMapping
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A mapping of output to a workflow node.
 
@@ -467,21 +471,21 @@ Functions
    :param variable_type: The type of the output.
    :type variable_type: WorkflowNodeOutputType
 
-   .. py:attribute:: name
-      :type: str
 
-      
+   .. py:attribute:: name
+      :type:  str
+
 
    .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.WorkflowNodeOutputType
+      :type:  abacusai.api_class.enums.WorkflowNodeOutputType
 
-      
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -491,8 +495,8 @@ Functions
 
 .. py:class:: WorkflowGraphNode(name, input_mappings, output_mappings, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, package_requirements = None)
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A node in an Agent workflow graph.
 
@@ -511,11 +515,13 @@ Functions
    :param package_requirements: List of package requirements for the node.
    :type package_requirements: list
 
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -525,8 +531,8 @@ Functions
 
 .. py:class:: WorkflowGraphEdge
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An edge in an Agent workflow graph.
 
@@ -537,29 +543,26 @@ Functions
    :param details: Additional details about the edge.
    :type details: dict
 
-   .. py:attribute:: source
-      :type: str
 
-      
+   .. py:attribute:: source
+      :type:  str
+
 
    .. py:attribute:: target
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: details
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:method:: to_nx_edge()
 
 
-
 .. py:class:: WorkflowGraph
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
 
@@ -568,21 +571,21 @@ Functions
    :param edges: A list of edges in the workflow graph, where each edge is a tuple of source, target and details.
    :type edges: List[WorkflowGraphEdge]
 
-   .. py:attribute:: nodes
-      :type: List[WorkflowGraphNode]
 
-      
+   .. py:attribute:: nodes
+      :type:  List[WorkflowGraphNode]
+
 
    .. py:attribute:: edges
-      :type: List[WorkflowGraphEdge]
+      :type:  List[WorkflowGraphEdge]
 
-      
 
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(graph)
@@ -592,21 +595,20 @@ Functions
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -615,9 +617,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -643,6 +647,7 @@ Functions
       Standardizes converting an ApiClass to dictionary.
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(input_dict)
@@ -652,8 +657,8 @@ Functions
 
 .. py:class:: HotkeyPrompt
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A config class for a Data Science Co-Pilot Hotkey
 
@@ -662,44 +667,39 @@ Functions
    :param title: A short, descriptive title for the prompt. If not provided, one will be automatically generated.
    :type title: str
 
-   .. py:attribute:: prompt
-      :type: str
 
-      
+   .. py:attribute:: prompt
+      :type:  str
+
 
    .. py:attribute:: title
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: disable_problem_type_context
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: ignore_history
-      :type: bool
-
-      
+      :type:  bool
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -708,9 +708,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -738,6 +740,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -745,23 +748,25 @@ Functions
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:
@@ -770,25 +775,23 @@ Functions
 
 .. py:class:: BatchPredictionArgs
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for Batch Prediction args specific to problem type.
 
-   .. py:attribute:: _support_kwargs
-      :type: bool
 
-      
+   .. py:attribute:: _support_kwargs
+      :type:  bool
+
 
    .. py:attribute:: kwargs
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+      :type:  abacusai.api_class.enums.ProblemType
 
-      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -797,8 +800,8 @@ Functions
 
 .. py:class:: ForecastingBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the FORECASTING problem type
 
@@ -819,73 +822,64 @@ Functions
    :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type create_monitor: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: predictions_start_date
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: use_prediction_offset
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: start_date_offset
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: forecasting_horizon
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: item_attributes_to_include_in_the_result
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: explain_predictions
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: create_monitor
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: NamedEntityExtractionBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PersonalizationBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the PERSONALIZATION problem type
 
@@ -898,34 +892,30 @@ Functions
    :param score_field: If specified, relative item scores will be returned using a field with this name
    :type score_field: str
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: number_of_items
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: item_attributes_to_include_in_the_result
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: score_field
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PredictiveModelingBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the PREDICTIVE_MODELING problem type
 
@@ -954,74 +944,62 @@ Functions
    :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type create_monitor: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: explainer_type
-      :type: abacusai.api_class.enums.ExplainerType
+      :type:  abacusai.api_class.enums.ExplainerType
 
-      
 
    .. py:attribute:: number_of_samples_to_use_for_explainer
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: include_multi_class_explanations
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: features_considered_constant_for_explanations
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: importance_of_records_in_nested_columns
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: explanation_filter_lower_bound
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: explanation_filter_upper_bound
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: explanation_filter_label
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: output_columns
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: explain_predictions
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: create_monitor
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PretrainedModelsBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the PRETRAINED_MODELS problem type
 
@@ -1032,29 +1010,26 @@ Functions
    :param channel_id_to_label_map: JSON string for the map from channel ids to their labels.
    :type channel_id_to_label_map: str
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: files_output_location_prefix
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: channel_id_to_label_map
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: SentenceBoundaryDetectionBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type
 
@@ -1063,24 +1038,22 @@ Functions
    :param explode_output: Explode data so there is one sentence per row.
    :type explode_output: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: explode_output
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ThemeAnalysisBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the THEME_ANALYSIS problem type
 
@@ -1093,53 +1066,48 @@ Functions
    :param analysis_days: How many days to analyze.
    :type analysis_days: int
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: analysis_frequency
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: start_date
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: analysis_days
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ChatLLMBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the ChatLLM problem type
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: TrainablePlugAndPlayBatchPredictionArgs
 
-
    Bases: :py:obj:`BatchPredictionArgs`
+
 
    Batch Prediction Config for the TrainablePlugAndPlay problem type
 
@@ -1148,59 +1116,54 @@ Functions
    :param create_monitor: Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.
    :type create_monitor: bool
 
-   .. py:attribute:: for_eval
-      :type: bool
 
-      
+   .. py:attribute:: for_eval
+      :type:  bool
+
 
    .. py:attribute:: create_monitor
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _BatchPredictionArgsFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'problem_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -1209,9 +1172,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -1239,6 +1204,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -1246,8 +1212,8 @@ Functions
 
 .. py:class:: BlobInput
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Binary large object input data.
 
@@ -1260,28 +1226,26 @@ Functions
    :param size: The size of the blob in bytes.
    :type size: int
 
-   .. py:attribute:: filename
-      :type: str
 
-      
+   .. py:attribute:: filename
+      :type:  str
+
 
    .. py:attribute:: contents
-      :type: bytes
+      :type:  bytes
 
-      
 
    .. py:attribute:: mime_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: size
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: from_local_file(file_path)
       :classmethod:
+
 
 
    .. py:method:: from_contents(contents, filename = None, mime_type = None)
@@ -1291,21 +1255,20 @@ Functions
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -1314,9 +1277,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -1344,6 +1309,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -1351,48 +1317,63 @@ Functions
 
 .. py:class:: OcrMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: DEFAULT
       :value: 'DEFAULT'
 
-      
+
 
    .. py:attribute:: LAYOUT
       :value: 'LAYOUT'
 
-      
+
 
    .. py:attribute:: SCANNED
       :value: 'SCANNED'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE
       :value: 'COMPREHENSIVE'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE_V2
       :value: 'COMPREHENSIVE_V2'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE_TABLE_MD
       :value: 'COMPREHENSIVE_TABLE_MD'
 
-      
+
+
+.. py:class:: DatasetConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   An abstract class for dataset configs
+
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+
+
+   .. py:attribute:: is_documentset
+      :type:  bool
 
 
 .. py:class:: ParsingConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Custom config for dataset parsing.
 
@@ -1403,26 +1384,23 @@ Functions
    :param file_path_with_schema: Path to the file with schema. Defaults to None.
    :type file_path_with_schema: str
 
-   .. py:attribute:: escape
-      :type: str
 
-      
+   .. py:attribute:: escape
+      :type:  str
+
 
    .. py:attribute:: csv_delimiter
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: file_path_with_schema
-      :type: str
-
-      
+      :type:  str
 
 
 .. py:class:: DocumentProcessingConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Document processing configuration.
 
@@ -1439,45 +1417,45 @@ Functions
    :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
    :type convert_to_markdown: bool
 
+
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
       :value: False
 
-      
+
 
    .. py:attribute:: ocr_mode
-      :type: abacusai.api_class.enums.OcrMode
+      :type:  abacusai.api_class.enums.OcrMode
 
-      
 
    .. py:attribute:: use_full_ocr
-      :type: bool
+      :type:  bool
+      :value: None
 
-      
+
 
    .. py:attribute:: remove_header_footer
-      :type: bool
+      :type:  bool
       :value: False
 
-      
+
 
    .. py:attribute:: remove_watermarks
-      :type: bool
+      :type:  bool
       :value: True
 
-      
+
 
    .. py:attribute:: convert_to_markdown
-      :type: bool
+      :type:  bool
       :value: False
 
-      
 
 
 .. py:class:: DatasetDocumentProcessingConfig
 
-
    Bases: :py:obj:`DocumentProcessingConfig`
+
 
    Document processing configuration for dataset imports.
 
@@ -1496,107 +1474,49 @@ Functions
    :param page_text_column: Name of the output column which contains the extracted text for each page. If not provided, no column will be created.
    :type page_text_column: str
 
-   .. py:attribute:: page_text_column
-      :type: str
 
-      
+   .. py:attribute:: page_text_column
+      :type:  str
+      :value: None
+
 
 
 .. py:class:: IncrementalDatabaseConnectorConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Config information for incremental datasets from database connectors
 
    :param timestamp_column: If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
    :type timestamp_column: str
 
+
    .. py:attribute:: timestamp_column
-      :type: str
-
-      
-
-
-.. py:class:: ApiClass
-
-
-   Bases: :py:obj:`abc.ABC`
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
-
-      
-
-   .. py:attribute:: _support_kwargs
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-   .. py:method:: __str__()
-
-      Return str(self).
-
-
-   .. py:method:: _repr_html_()
-
-
-   .. py:method:: __getitem__(item)
-
-
-   .. py:method:: __setitem__(item, value)
-
-
-   .. py:method:: _unset_item(item)
-
-
-   .. py:method:: get(item, default = None)
-
-
-   .. py:method:: pop(item, default = NotImplemented)
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-   .. py:method:: from_dict(input_dict)
-      :classmethod:
-
+      :type:  str
 
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:
@@ -1605,25 +1525,33 @@ Functions
 
 .. py:class:: DatasetConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   An abstract class for dataset configs
+
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+
+
+   .. py:attribute:: is_documentset
+      :type:  bool
+
+
+.. py:class:: ApplicationConnectorDatasetConfig
+
+   Bases: :py:obj:`abacusai.api_class.dataset.DatasetConfig`
+
 
    An abstract class for dataset configs specific to application connectors.
 
    :param application_connector_type: The type of application connector
    :type application_connector_type: enums.ApplicationConnectorType
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
+
 
    .. py:attribute:: application_connector_type
-      :type: abacusai.api_class.enums.ApplicationConnectorType
+      :type:  abacusai.api_class.enums.ApplicationConnectorType
 
-      
-
-   .. py:attribute:: is_documentset
-      :type: bool
-
-      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -1632,8 +1560,8 @@ Functions
 
 .. py:class:: ConfluenceDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Confluence Application Connector
    :param location: The location of the pages to fetch
@@ -1645,34 +1573,30 @@ Functions
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
    :type extract_bounding_boxes: bool
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: pull_attachments
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: space_key
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: GoogleAnalyticsDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Analytics Application Connector
 
@@ -1683,29 +1607,26 @@ Functions
    :param end_timestamp: Unix timestamp of the end of the period that will be queried
    :type end_timestamp: int
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: start_timestamp
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: end_timestamp
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: GoogleDriveDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Drive Application Connector
 
@@ -1718,34 +1639,30 @@ Functions
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: csv_delimiter
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: merge_file_schemas
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: JiraDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Jira Application Connector
 
@@ -1758,34 +1675,30 @@ Functions
    :param include_watchers: Fetch watchers for each issue
    :type include_watchers: bool
 
-   .. py:attribute:: jql
-      :type: str
 
-      
+   .. py:attribute:: jql
+      :type:  str
+
 
    .. py:attribute:: custom_fields
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: include_comments
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: include_watchers
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: OneDriveDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for OneDrive Application Connector
 
@@ -1798,41 +1711,35 @@ Functions
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: csv_delimiter
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: merge_file_schemas
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: SharepointDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Sharepoint Application Connector
 
    :param location: The regex location of the files to fetch
    :type location: str
-   :param is_documentset: Whether the dataset is a document set
-   :type is_documentset: bool
    :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
    :type csv_delimiter: str
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
@@ -1840,53 +1747,48 @@ Functions
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: csv_delimiter
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: extract_bounding_boxes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: merge_file_schemas
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ZendeskDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Zendesk Application Connector
 
    :param location: The regex location of the files to fetch
    :type location: str
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: AbacusUsageMetricsDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Abacus Usage Metrics Application Connector
 
@@ -1895,70 +1797,65 @@ Functions
    :param include_all_feedback: Whether to include all feedback for this deployment conversation
    :type include_all_feedback: bool
 
-   .. py:attribute:: include_entire_conversation_history
-      :type: bool
 
-      
+   .. py:attribute:: include_entire_conversation_history
+      :type:  bool
+
 
    .. py:attribute:: include_all_feedback
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
-
 
 
 .. py:class:: FreshserviceDatasetConfig
 
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
 
-   Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Freshservice Application Connector
+
 
    .. py:method:: __post_init__()
 
 
-
-.. py:class:: _DatasetConfigFactory
-
+.. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'application_connector_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -1967,9 +1864,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -1997,6 +1896,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -2004,23 +1904,25 @@ Functions
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:
@@ -2029,25 +1931,23 @@ Functions
 
 .. py:class:: PredictionArguments
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for prediction arguments specific to problem type.
 
-   .. py:attribute:: _support_kwargs
-      :type: bool
 
-      
+   .. py:attribute:: _support_kwargs
+      :type:  bool
+
 
    .. py:attribute:: kwargs
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+      :type:  abacusai.api_class.enums.ProblemType
 
-      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -2056,8 +1956,8 @@ Functions
 
 .. py:class:: OptimizationPredictionArguments
 
-
    Bases: :py:obj:`PredictionArguments`
+
 
    Prediction arguments for the OPTIMIZATION problem type
 
@@ -2068,29 +1968,26 @@ Functions
    :param include_all_assignments: If True, will return all assignments, including assignments with value 0. Default is False.
    :type include_all_assignments: bool
 
-   .. py:attribute:: forced_assignments
-      :type: dict
 
-      
+   .. py:attribute:: forced_assignments
+      :type:  dict
+
 
    .. py:attribute:: solve_time_limit_seconds
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: include_all_assignments
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: TimeseriesAnomalyPredictionArguments
 
-
    Bases: :py:obj:`PredictionArguments`
+
 
    Prediction arguments for the TS_ANOMALY problem type
 
@@ -2101,29 +1998,26 @@ Functions
    :param get_all_item_data: If True, anomaly detection has to be performed on all the data related to input ids
    :type get_all_item_data: bool
 
-   .. py:attribute:: start_timestamp
-      :type: str
 
-      
+   .. py:attribute:: start_timestamp
+      :type:  str
+
 
    .. py:attribute:: end_timestamp
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: get_all_item_data
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ChatLLMPredictionArguments
 
-
    Bases: :py:obj:`PredictionArguments`
+
 
    Prediction arguments for the CHAT_LLM problem type
 
@@ -2140,44 +2034,38 @@ Functions
    :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
    :type ignore_documents: bool
 
-   .. py:attribute:: llm_name
-      :type: str
 
-      
+   .. py:attribute:: llm_name
+      :type:  str
+
 
    .. py:attribute:: num_completion_tokens
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: system_message
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: temperature
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: search_score_cutoff
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: ignore_documents
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: RegressionPredictionArguments
 
-
    Bases: :py:obj:`PredictionArguments`
+
 
    Prediction arguments for the PREDICTIVE_MODELING problem type
 
@@ -2186,24 +2074,22 @@ Functions
    :param explainer_type: Type of explainer to use for explanations.
    :type explainer_type: str
 
-   .. py:attribute:: explain_predictions
-      :type: bool
 
-      
+   .. py:attribute:: explain_predictions
+      :type:  bool
+
 
    .. py:attribute:: explainer_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ForecastingPredictionArguments
 
-
    Bases: :py:obj:`PredictionArguments`
+
 
    Prediction arguments for the FORECASTING problem type
 
@@ -2218,39 +2104,34 @@ Functions
    :param get_item_data: If True, will return the data corresponding to items as well.
    :type get_item_data: bool
 
-   .. py:attribute:: num_predictions
-      :type: int
 
-      
+   .. py:attribute:: num_predictions
+      :type:  int
+
 
    .. py:attribute:: prediction_start
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: explain_predictions
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: explainer_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: get_item_data
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: CumulativeForecastingPredictionArguments
 
-
    Bases: :py:obj:`PredictionArguments`
+
 
    Prediction arguments for the CUMULATIVE_FORECASTING problem type
 
@@ -2265,39 +2146,34 @@ Functions
    :param get_item_data: If True, will return the data corresponding to items as well.
    :type get_item_data: bool
 
-   .. py:attribute:: num_predictions
-      :type: int
 
-      
+   .. py:attribute:: num_predictions
+      :type:  int
+
 
    .. py:attribute:: prediction_start
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: explain_predictions
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: explainer_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: get_item_data
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: NaturalLanguageSearchPredictionArguments
 
-
    Bases: :py:obj:`PredictionArguments`
+
 
    Prediction arguments for the NATURAL_LANGUAGE_SEARCH problem type
 
@@ -2314,98 +2190,88 @@ Functions
    :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
    :type ignore_documents: bool
 
-   .. py:attribute:: llm_name
-      :type: str
 
-      
+   .. py:attribute:: llm_name
+      :type:  str
+
 
    .. py:attribute:: num_completion_tokens
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: system_message
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: temperature
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: search_score_cutoff
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: ignore_documents
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: FeatureStorePredictionArguments
 
-
    Bases: :py:obj:`PredictionArguments`
+
 
    Prediction arguments for the FEATURE_STORE problem type
 
    :param limit_results: If provided, will limit the number of results to the value specified.
    :type limit_results: int
 
-   .. py:attribute:: limit_results
-      :type: int
 
-      
+   .. py:attribute:: limit_results
+      :type:  int
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _PredictionArgumentsFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'problem_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -2414,9 +2280,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -2444,6 +2312,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -2451,40 +2320,40 @@ Functions
 
 .. py:class:: VectorStoreTextEncoder
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: E5
       :value: 'E5'
 
-      
+
 
    .. py:attribute:: OPENAI
       :value: 'OPENAI'
 
-      
+
 
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
 
-      
+
 
    .. py:attribute:: E5_SMALL
       :value: 'E5_SMALL'
 
-      
 
 
 .. py:class:: VectorStoreConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Configs for vector store indexing.
+
+   Config for indexing options of a document retriever. Default values of optional arguments are heuristically selected by the Abacus.AI platform based on the underlying data.
 
    :param chunk_size: The size of text chunks in the vector store.
    :type chunk_size: int
@@ -2499,57 +2368,47 @@ Functions
    :param prune_vectors: Transform vectors using SVD so that the average component of vectors in the corpus are removed.
    :type prune_vectors: bool
 
-   .. py:attribute:: chunk_size
-      :type: int
 
-      
+   .. py:attribute:: chunk_size
+      :type:  int
+
 
    .. py:attribute:: chunk_overlap_fraction
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: text_encoder
-      :type: abacusai.api_class.enums.VectorStoreTextEncoder
+      :type:  abacusai.api_class.enums.VectorStoreTextEncoder
 
-      
 
    .. py:attribute:: chunk_size_factors
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: score_multiplier_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: prune_vectors
-      :type: bool
-
-      
+      :type:  bool
 
 
-.. py:class:: DocumentRetrieverConfig
-
-
-   Bases: :py:obj:`VectorStoreConfig`
-
-   Configs for document retriever. If any configuration value is not explicitly provided, Abacus.AI will automatically infer default values based on the data.
-
+.. py:data:: DocumentRetrieverConfig
 
 .. py:class:: ApiEnum
 
-
    Bases: :py:obj:`enum.Enum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:method:: __eq__(other)
 
       Return self==value.
+
 
 
    .. py:method:: __hash__()
@@ -2560,2320 +2419,2330 @@ Functions
 
 .. py:class:: ProblemType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AI_AGENT
       :value: 'ai_agent'
 
-      
+
 
    .. py:attribute:: EVENT_ANOMALY
       :value: 'event_anomaly'
 
-      
+
 
    .. py:attribute:: CLUSTERING
       :value: 'clustering'
 
-      
+
 
    .. py:attribute:: CLUSTERING_TIMESERIES
       :value: 'clustering_timeseries'
 
-      
+
 
    .. py:attribute:: CUMULATIVE_FORECASTING
       :value: 'cumulative_forecasting'
 
-      
+
 
    .. py:attribute:: NAMED_ENTITY_EXTRACTION
       :value: 'nlp_ner'
 
-      
+
 
    .. py:attribute:: NATURAL_LANGUAGE_SEARCH
       :value: 'nlp_search'
 
-      
+
 
    .. py:attribute:: CHAT_LLM
       :value: 'chat_llm'
 
-      
+
 
    .. py:attribute:: SENTENCE_BOUNDARY_DETECTION
       :value: 'nlp_sentence_boundary_detection'
 
-      
+
 
    .. py:attribute:: SENTIMENT_DETECTION
       :value: 'nlp_sentiment'
 
-      
+
 
    .. py:attribute:: DOCUMENT_CLASSIFICATION
       :value: 'nlp_classification'
 
-      
+
 
    .. py:attribute:: DOCUMENT_SUMMARIZATION
       :value: 'nlp_summarization'
 
-      
+
 
    .. py:attribute:: DOCUMENT_VISUALIZATION
       :value: 'nlp_document_visualization'
 
-      
+
 
    .. py:attribute:: PERSONALIZATION
       :value: 'personalization'
 
-      
+
 
    .. py:attribute:: PREDICTIVE_MODELING
       :value: 'regression'
 
-      
+
 
    .. py:attribute:: FINETUNED_LLM
       :value: 'finetuned_llm'
 
-      
+
 
    .. py:attribute:: FORECASTING
       :value: 'forecasting'
 
-      
+
 
    .. py:attribute:: CUSTOM_TRAINED_MODEL
       :value: 'plug_and_play'
 
-      
+
 
    .. py:attribute:: CUSTOM_ALGORITHM
       :value: 'trainable_plug_and_play'
 
-      
+
 
    .. py:attribute:: FEATURE_STORE
       :value: 'feature_store'
 
-      
+
 
    .. py:attribute:: IMAGE_CLASSIFICATION
       :value: 'vision_classification'
 
-      
+
 
    .. py:attribute:: OBJECT_DETECTION
       :value: 'vision_object_detection'
 
-      
+
 
    .. py:attribute:: IMAGE_VALUE_PREDICTION
       :value: 'vision_regression'
 
-      
+
 
    .. py:attribute:: MODEL_MONITORING
       :value: 'model_monitoring'
 
-      
+
 
    .. py:attribute:: LANGUAGE_DETECTION
       :value: 'language_detection'
 
-      
+
 
    .. py:attribute:: OPTIMIZATION
       :value: 'optimization'
 
-      
+
 
    .. py:attribute:: PRETRAINED_MODELS
       :value: 'pretrained'
 
-      
+
 
    .. py:attribute:: THEME_ANALYSIS
       :value: 'theme_analysis'
 
-      
+
 
    .. py:attribute:: TS_ANOMALY
       :value: 'ts_anomaly'
 
-      
 
 
 .. py:class:: RegressionObjective
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: AUC
       :value: 'auc'
 
-      
+
 
    .. py:attribute:: ACCURACY
       :value: 'acc'
 
-      
+
 
    .. py:attribute:: LOG_LOSS
       :value: 'log_loss'
 
-      
+
 
    .. py:attribute:: PRECISION
       :value: 'precision'
 
-      
+
 
    .. py:attribute:: RECALL
       :value: 'recall'
 
-      
+
 
    .. py:attribute:: F1_SCORE
       :value: 'fscore'
 
-      
+
 
    .. py:attribute:: MAE
       :value: 'mae'
 
-      
+
 
    .. py:attribute:: MAPE
       :value: 'mape'
 
-      
+
 
    .. py:attribute:: WAPE
       :value: 'wape'
 
-      
+
 
    .. py:attribute:: RMSE
       :value: 'rmse'
 
-      
+
 
    .. py:attribute:: R_SQUARED_COEFFICIENT_OF_DETERMINATION
       :value: 'r^2'
 
-      
 
 
 .. py:class:: RegressionTreeHPOMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: RAPID
       :value: 'rapid'
 
-      
+
 
    .. py:attribute:: THOROUGH
       :value: 'thorough'
 
-      
 
 
 .. py:class:: PartialDependenceAnalysis
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: RAPID
       :value: 'rapid'
 
-      
+
 
    .. py:attribute:: THOROUGH
       :value: 'thorough'
 
-      
 
 
 .. py:class:: RegressionAugmentationStrategy
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: SMOTE
       :value: 'smote'
 
-      
+
 
    .. py:attribute:: RESAMPLE
       :value: 'resample'
 
-      
 
 
 .. py:class:: RegressionTargetTransform
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: LOG
       :value: 'log'
 
-      
+
 
    .. py:attribute:: QUANTILE
       :value: 'quantile'
 
-      
+
 
    .. py:attribute:: YEO_JOHNSON
       :value: 'yeo-johnson'
 
-      
+
 
    .. py:attribute:: BOX_COX
       :value: 'box-cox'
 
-      
 
 
 .. py:class:: RegressionTypeOfSplit
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: RANDOM
       :value: 'Random Sampling'
 
-      
+
 
    .. py:attribute:: TIMESTAMP_BASED
       :value: 'Timestamp Based'
 
-      
+
 
    .. py:attribute:: ROW_INDICATOR_BASED
       :value: 'Row Indicator Based'
 
-      
+
 
    .. py:attribute:: STRATIFIED_RANDOM_SAMPLING
       :value: 'Stratified Random Sampling'
 
-      
 
 
 .. py:class:: RegressionTimeSplitMethod
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: TEST_SPLIT_PERCENTAGE_BASED
       :value: 'Test Split Percentage Based'
 
-      
+
 
    .. py:attribute:: TEST_START_TIMESTAMP_BASED
       :value: 'Test Start Timestamp Based'
 
-      
 
 
 .. py:class:: RegressionLossFunction
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: HUBER
       :value: 'Huber'
 
-      
+
 
    .. py:attribute:: MSE
       :value: 'Mean Squared Error'
 
-      
+
 
    .. py:attribute:: MAE
       :value: 'Mean Absolute Error'
 
-      
+
 
    .. py:attribute:: MAPE
       :value: 'Mean Absolute Percentage Error'
 
-      
+
 
    .. py:attribute:: MSLE
       :value: 'Mean Squared Logarithmic Error'
 
-      
+
 
    .. py:attribute:: TWEEDIE
       :value: 'Tweedie'
 
-      
+
 
    .. py:attribute:: CROSS_ENTROPY
       :value: 'Cross Entropy'
 
-      
+
 
    .. py:attribute:: FOCAL_CROSS_ENTROPY
       :value: 'Focal Cross Entropy'
 
-      
+
 
    .. py:attribute:: AUTOMATIC
       :value: 'Automatic'
 
-      
+
 
    .. py:attribute:: CUSTOM
       :value: 'Custom'
 
-      
 
 
 .. py:class:: ExplainerType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: KERNEL_EXPLAINER
       :value: 'KERNEL_EXPLAINER'
 
-      
+
 
    .. py:attribute:: LIME_EXPLAINER
       :value: 'LIME_EXPLAINER'
 
-      
+
 
    .. py:attribute:: TREE_EXPLAINER
       :value: 'TREE_EXPLAINER'
 
-      
+
 
    .. py:attribute:: EBM_EXPLAINER
       :value: 'EBM_EXPLAINER'
 
-      
 
 
 .. py:class:: SamplingMethodType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: N_SAMPLING
       :value: 'N_SAMPLING'
 
-      
+
 
    .. py:attribute:: PERCENT_SAMPLING
       :value: 'PERCENT_SAMPLING'
 
-      
 
 
 .. py:class:: MergeMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: LAST_N
       :value: 'LAST_N'
 
-      
+
 
    .. py:attribute:: TIME_WINDOW
       :value: 'TIME_WINDOW'
 
-      
 
 
 .. py:class:: FillLogic
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AVERAGE
       :value: 'average'
 
-      
+
 
    .. py:attribute:: MAX
       :value: 'max'
 
-      
+
 
    .. py:attribute:: MEDIAN
       :value: 'median'
 
-      
+
 
    .. py:attribute:: MIN
       :value: 'min'
 
-      
+
 
    .. py:attribute:: CUSTOM
       :value: 'custom'
 
-      
+
 
    .. py:attribute:: BACKFILL
       :value: 'bfill'
 
-      
+
 
    .. py:attribute:: FORWARDFILL
       :value: 'ffill'
 
-      
+
 
    .. py:attribute:: LINEAR
       :value: 'linear'
 
-      
+
 
    .. py:attribute:: NEAREST
       :value: 'nearest'
 
-      
 
 
 .. py:class:: BatchSize
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: BATCH_8
       :value: 8
 
-      
+
 
    .. py:attribute:: BATCH_16
       :value: 16
 
-      
+
 
    .. py:attribute:: BATCH_32
       :value: 32
 
-      
+
 
    .. py:attribute:: BATCH_64
       :value: 64
 
-      
+
 
    .. py:attribute:: BATCH_128
       :value: 128
 
-      
+
 
    .. py:attribute:: BATCH_256
       :value: 256
 
-      
+
 
    .. py:attribute:: BATCH_384
       :value: 384
 
-      
+
 
    .. py:attribute:: BATCH_512
       :value: 512
 
-      
+
 
    .. py:attribute:: BATCH_740
       :value: 740
 
-      
+
 
    .. py:attribute:: BATCH_1024
       :value: 1024
 
-      
 
 
 .. py:class:: HolidayCalendars
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AU
       :value: 'AU'
 
-      
+
 
    .. py:attribute:: UK
       :value: 'UK'
 
-      
+
 
    .. py:attribute:: US
       :value: 'US'
 
-      
 
 
 .. py:class:: FileFormat
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AVRO
       :value: 'AVRO'
 
-      
+
 
    .. py:attribute:: PARQUET
       :value: 'PARQUET'
 
-      
+
 
    .. py:attribute:: TFRECORD
       :value: 'TFRECORD'
 
-      
+
 
    .. py:attribute:: TSV
       :value: 'TSV'
 
-      
+
 
    .. py:attribute:: CSV
       :value: 'CSV'
 
-      
+
 
    .. py:attribute:: ORC
       :value: 'ORC'
 
-      
+
 
    .. py:attribute:: JSON
       :value: 'JSON'
 
-      
+
 
    .. py:attribute:: ODS
       :value: 'ODS'
 
-      
+
 
    .. py:attribute:: XLS
       :value: 'XLS'
 
-      
+
 
    .. py:attribute:: GZ
       :value: 'GZ'
 
-      
+
 
    .. py:attribute:: ZIP
       :value: 'ZIP'
 
-      
+
 
    .. py:attribute:: TAR
       :value: 'TAR'
 
-      
+
 
    .. py:attribute:: DOCX
       :value: 'DOCX'
 
-      
+
 
    .. py:attribute:: PDF
       :value: 'PDF'
 
-      
+
 
    .. py:attribute:: RAR
       :value: 'RAR'
 
-      
+
 
    .. py:attribute:: JPEG
       :value: 'JPG'
 
-      
+
 
    .. py:attribute:: PNG
       :value: 'PNG'
 
-      
+
 
    .. py:attribute:: TIF
       :value: 'TIFF'
 
-      
+
 
    .. py:attribute:: NUMBERS
       :value: 'NUMBERS'
 
-      
+
 
    .. py:attribute:: PPTX
       :value: 'PPTX'
 
-      
+
 
    .. py:attribute:: PPT
       :value: 'PPT'
 
-      
+
 
    .. py:attribute:: HTML
       :value: 'HTML'
 
-      
+
 
    .. py:attribute:: TXT
       :value: 'txt'
 
-      
 
 
 .. py:class:: ExperimentationMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: RAPID
       :value: 'rapid'
 
-      
+
 
    .. py:attribute:: THOROUGH
       :value: 'thorough'
 
-      
 
 
 .. py:class:: PersonalizationTrainingMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: EXPERIMENTAL
       :value: 'EXP'
 
-      
+
 
    .. py:attribute:: PRODUCTION
       :value: 'PROD'
 
-      
 
 
 .. py:class:: PersonalizationObjective
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: NDCG
       :value: 'ndcg'
 
-      
+
 
    .. py:attribute:: NDCG_5
       :value: 'ndcg@5'
 
-      
+
 
    .. py:attribute:: NDCG_10
       :value: 'ndcg@10'
 
-      
+
 
    .. py:attribute:: MAP
       :value: 'map'
 
-      
+
 
    .. py:attribute:: MAP_5
       :value: 'map@5'
 
-      
+
 
    .. py:attribute:: MAP_10
       :value: 'map@10'
 
-      
+
 
    .. py:attribute:: MRR
       :value: 'mrr'
 
-      
+
 
    .. py:attribute:: PERSONALIZATION
       :value: 'personalization@10'
 
-      
+
 
    .. py:attribute:: COVERAGE
       :value: 'coverage'
 
-      
 
 
 .. py:class:: ForecastingObjective
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ACCURACY
       :value: 'w_c_accuracy'
 
-      
+
 
    .. py:attribute:: WAPE
       :value: 'wape'
 
-      
+
 
    .. py:attribute:: MAPE
       :value: 'mape'
 
-      
+
 
    .. py:attribute:: CMAPE
       :value: 'cmape'
 
-      
+
 
    .. py:attribute:: RMSE
       :value: 'rmse'
 
-      
+
 
    .. py:attribute:: CV
       :value: 'coefficient_of_variation'
 
-      
+
 
    .. py:attribute:: BIAS
       :value: 'bias'
 
-      
+
 
    .. py:attribute:: SRMSE
       :value: 'srmse'
 
-      
 
 
 .. py:class:: ForecastingFrequency
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: HOURLY
       :value: '1H'
 
-      
+
 
    .. py:attribute:: DAILY
       :value: '1D'
 
-      
+
 
    .. py:attribute:: WEEKLY_SUNDAY_START
       :value: '1W'
 
-      
+
 
    .. py:attribute:: WEEKLY_MONDAY_START
       :value: 'W-MON'
 
-      
+
 
    .. py:attribute:: WEEKLY_SATURDAY_START
       :value: 'W-SAT'
 
-      
+
 
    .. py:attribute:: MONTH_START
       :value: 'MS'
 
-      
+
 
    .. py:attribute:: MONTH_END
       :value: '1M'
 
-      
+
 
    .. py:attribute:: QUARTER_START
       :value: 'QS'
 
-      
+
 
    .. py:attribute:: QUARTER_END
       :value: '1Q'
 
-      
+
 
    .. py:attribute:: YEARLY
       :value: '1Y'
 
-      
 
 
 .. py:class:: ForecastingDataSplitType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: AUTO
       :value: 'Automatic Time Based'
 
-      
+
 
    .. py:attribute:: TIMESTAMP
       :value: 'Timestamp Based'
 
-      
+
 
    .. py:attribute:: ITEM
       :value: 'Item Based'
 
-      
+
 
    .. py:attribute:: PREDICTION_LENGTH
       :value: 'Force Prediction Length'
 
-      
 
 
 .. py:class:: ForecastingLossFunction
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: CUSTOM
       :value: 'Custom'
 
-      
+
 
    .. py:attribute:: MEAN_ABSOLUTE_ERROR
       :value: 'mae'
 
-      
+
 
    .. py:attribute:: NORMALIZED_MEAN_ABSOLUTE_ERROR
       :value: 'nmae'
 
-      
+
 
    .. py:attribute:: PEAKS_MEAN_ABSOLUTE_ERROR
       :value: 'peaks_mae'
 
-      
+
 
    .. py:attribute:: MEAN_ABSOLUTE_PERCENTAGE_ERROR
       :value: 'stable_mape'
 
-      
+
 
    .. py:attribute:: POINTWISE_ACCURACY
       :value: 'accuracy'
 
-      
+
 
    .. py:attribute:: ROOT_MEAN_SQUARE_ERROR
       :value: 'rmse'
 
-      
+
 
    .. py:attribute:: NORMALIZED_ROOT_MEAN_SQUARE_ERROR
       :value: 'nrmse'
 
-      
+
 
    .. py:attribute:: ASYMMETRIC_MEAN_ABSOLUTE_PERCENTAGE_ERROR
       :value: 'asymmetric_mape'
 
-      
+
 
    .. py:attribute:: STABLE_STANDARDIZED_MEAN_ABSOLUTE_PERCENTAGE_ERROR
       :value: 'stable_standardized_mape_with_cmape'
 
-      
+
 
    .. py:attribute:: GAUSSIAN
       :value: 'mle_gaussian_local'
 
-      
+
 
    .. py:attribute:: GAUSSIAN_FULL_COVARIANCE
       :value: 'mle_gaussfullcov'
 
-      
+
 
    .. py:attribute:: GUASSIAN_EXPONENTIAL
       :value: 'mle_gaussexp'
 
-      
+
 
    .. py:attribute:: MIX_GAUSSIANS
       :value: 'mle_gaussmix'
 
-      
+
 
    .. py:attribute:: WEIBULL
       :value: 'mle_weibull'
 
-      
+
 
    .. py:attribute:: NEGATIVE_BINOMIAL
       :value: 'mle_negbinom'
 
-      
+
 
    .. py:attribute:: LOG_ROOT_MEAN_SQUARE_ERROR
       :value: 'log_rmse'
 
-      
 
 
 .. py:class:: ForecastingLocalScaling
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ZSCORE
       :value: 'zscore'
 
-      
+
 
    .. py:attribute:: SLIDING_ZSCORE
       :value: 'sliding_zscore'
 
-      
+
 
    .. py:attribute:: LAST_POINT
       :value: 'lastpoint'
 
-      
+
 
    .. py:attribute:: MIN_MAX
       :value: 'minmax'
 
-      
+
 
    .. py:attribute:: MIN_STD
       :value: 'minstd'
 
-      
+
 
    .. py:attribute:: ROBUST
       :value: 'robust'
 
-      
+
 
    .. py:attribute:: ITEM
       :value: 'item'
 
-      
 
 
 .. py:class:: ForecastingFillMethod
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: BACK
       :value: 'BACK'
 
-      
+
 
    .. py:attribute:: MIDDLE
       :value: 'MIDDLE'
 
-      
+
 
    .. py:attribute:: FUTURE
       :value: 'FUTURE'
 
-      
 
 
 .. py:class:: ForecastingQuanitlesExtensionMethod
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: DIRECT
       :value: 'direct'
 
-      
+
 
    .. py:attribute:: QUADRATIC
       :value: 'quadratic'
 
-      
+
 
    .. py:attribute:: ANCESTRAL_SIMULATION
       :value: 'simulation'
 
-      
 
 
 .. py:class:: TimeseriesAnomalyDataSplitType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AUTO
       :value: 'Automatic Time Based'
 
-      
+
 
    .. py:attribute:: TIMESTAMP
       :value: 'Fixed Timestamp Based'
 
-      
 
 
 .. py:class:: TimeseriesAnomalyTypeOfAnomaly
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: HIGH_PEAK
       :value: 'high_peak'
 
-      
+
 
    .. py:attribute:: LOW_PEAK
       :value: 'low_peak'
 
-      
 
 
 .. py:class:: TimeseriesAnomalyUseHeuristic
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ENABLE
       :value: 'enable'
 
-      
+
 
    .. py:attribute:: DISABLE
       :value: 'disable'
 
-      
+
 
    .. py:attribute:: AUTOMATIC
       :value: 'automatic'
 
-      
 
 
 .. py:class:: NERObjective
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: LOG_LOSS
       :value: 'log_loss'
 
-      
+
 
    .. py:attribute:: AUC
       :value: 'auc'
 
-      
+
 
    .. py:attribute:: PRECISION
       :value: 'precision'
 
-      
+
 
    .. py:attribute:: RECALL
       :value: 'recall'
 
-      
+
 
    .. py:attribute:: ANNOTATIONS_PRECISION
       :value: 'annotations_precision'
 
-      
+
 
    .. py:attribute:: ANNOTATIONS_RECALL
       :value: 'annotations_recall'
 
-      
 
 
 .. py:class:: NERModelType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: PRETRAINED_BERT
       :value: 'pretrained_bert'
 
-      
+
 
    .. py:attribute:: PRETRAINED_ROBERTA_27
       :value: 'pretrained_roberta_27'
 
-      
+
 
    .. py:attribute:: PRETRAINED_ROBERTA_43
       :value: 'pretrained_roberta_43'
 
-      
+
 
    .. py:attribute:: PRETRAINED_MULTILINGUAL
       :value: 'pretrained_multilingual'
 
-      
+
 
    .. py:attribute:: LEARNED
       :value: 'learned'
 
-      
 
 
 .. py:class:: NLPDocumentFormat
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AUTO
       :value: 'auto'
 
-      
+
 
    .. py:attribute:: TEXT
       :value: 'text'
 
-      
+
 
    .. py:attribute:: DOC
       :value: 'doc'
 
-      
+
 
    .. py:attribute:: TOKENS
       :value: 'tokens'
 
-      
 
 
 .. py:class:: SentimentType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: VALENCE
       :value: 'valence'
 
-      
+
 
    .. py:attribute:: EMOTION
       :value: 'emotion'
 
-      
 
 
 .. py:class:: ClusteringImputationMethod
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AUTOMATIC
       :value: 'Automatic'
 
-      
+
 
    .. py:attribute:: ZEROS
       :value: 'Zeros'
 
-      
+
 
    .. py:attribute:: INTERPOLATE
       :value: 'Interpolate'
 
-      
 
 
 .. py:class:: ConnectorType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: FILE
       :value: 'FILE'
 
-      
+
 
    .. py:attribute:: DATABASE
       :value: 'DATABASE'
 
-      
+
 
    .. py:attribute:: STREAMING
       :value: 'STREAMING'
 
-      
+
 
    .. py:attribute:: APPLICATION
       :value: 'APPLICATION'
 
-      
 
 
 .. py:class:: ApplicationConnectorType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: GOOGLEANALYTICS
       :value: 'GOOGLEANALYTICS'
 
-      
+
 
    .. py:attribute:: GOOGLEDRIVE
       :value: 'GOOGLEDRIVE'
 
-      
+
 
    .. py:attribute:: GIT
       :value: 'GIT'
 
-      
+
 
    .. py:attribute:: CONFLUENCE
       :value: 'CONFLUENCE'
 
-      
+
 
    .. py:attribute:: JIRA
       :value: 'JIRA'
 
-      
+
 
    .. py:attribute:: ONEDRIVE
       :value: 'ONEDRIVE'
 
-      
+
 
    .. py:attribute:: ZENDESK
       :value: 'ZENDESK'
 
-      
+
 
    .. py:attribute:: SLACK
       :value: 'SLACK'
 
-      
+
 
    .. py:attribute:: SHAREPOINT
       :value: 'SHAREPOINT'
 
-      
+
 
    .. py:attribute:: TEAMS
       :value: 'TEAMS'
 
-      
+
 
    .. py:attribute:: ABACUSUSAGEMETRICS
       :value: 'ABACUSUSAGEMETRICS'
 
-      
+
 
    .. py:attribute:: MICROSOFTAUTH
       :value: 'MICROSOFTAUTH'
 
-      
+
 
    .. py:attribute:: FRESHSERVICE
       :value: 'FRESHSERVICE'
 
-      
+
 
    .. py:attribute:: ZENDESKSUNSHINEMESSAGING
-      :value: 'zendesksunshinemessaging'
+      :value: 'ZENDESKSUNSHINEMESSAGING'
 
-      
+
+
+.. py:class:: StreamingConnectorType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: KAFKA
+      :value: 'KAFKA'
+
 
 
 .. py:class:: PythonFunctionArgumentType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: FEATURE_GROUP
       :value: 'FEATURE_GROUP'
 
-      
+
 
    .. py:attribute:: INTEGER
       :value: 'INTEGER'
 
-      
+
 
    .. py:attribute:: STRING
       :value: 'STRING'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'BOOLEAN'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'FLOAT'
 
-      
+
 
    .. py:attribute:: JSON
       :value: 'JSON'
 
-      
+
 
    .. py:attribute:: LIST
       :value: 'LIST'
 
-      
+
 
    .. py:attribute:: DATASET_ID
       :value: 'DATASET_ID'
 
-      
+
 
    .. py:attribute:: MODEL_ID
       :value: 'MODEL_ID'
 
-      
+
 
    .. py:attribute:: FEATURE_GROUP_ID
       :value: 'FEATURE_GROUP_ID'
 
-      
+
 
    .. py:attribute:: MONITOR_ID
       :value: 'MONITOR_ID'
 
-      
+
 
    .. py:attribute:: BATCH_PREDICTION_ID
       :value: 'BATCH_PREDICTION_ID'
 
-      
+
 
    .. py:attribute:: DEPLOYMENT_ID
       :value: 'DEPLOYMENT_ID'
 
-      
 
 
 .. py:class:: PythonFunctionOutputArgumentType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: NTEGER
       :value: 'INTEGER'
 
-      
+
 
    .. py:attribute:: STRING
       :value: 'STRING'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'BOOLEAN'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'FLOAT'
 
-      
+
 
    .. py:attribute:: JSON
       :value: 'JSON'
 
-      
+
 
    .. py:attribute:: LIST
       :value: 'LIST'
 
-      
+
 
    .. py:attribute:: DATASET_ID
       :value: 'DATASET_ID'
 
-      
+
 
    .. py:attribute:: MODEL_ID
       :value: 'MODEL_ID'
 
-      
+
 
    .. py:attribute:: FEATURE_GROUP_ID
       :value: 'FEATURE_GROUP_ID'
 
-      
+
 
    .. py:attribute:: MONITOR_ID
       :value: 'MONITOR_ID'
 
-      
+
 
    .. py:attribute:: BATCH_PREDICTION_ID
       :value: 'BATCH_PREDICTION_ID'
 
-      
+
 
    .. py:attribute:: DEPLOYMENT_ID
       :value: 'DEPLOYMENT_ID'
 
-      
+
 
    .. py:attribute:: ANY
       :value: 'ANY'
 
-      
 
 
 .. py:class:: VectorStoreTextEncoder
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: E5
       :value: 'E5'
 
-      
+
 
    .. py:attribute:: OPENAI
       :value: 'OPENAI'
 
-      
+
 
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
 
-      
+
 
    .. py:attribute:: E5_SMALL
       :value: 'E5_SMALL'
 
-      
 
 
 .. py:class:: LLMName
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: OPENAI_GPT4
       :value: 'OPENAI_GPT4'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4_32K
       :value: 'OPENAI_GPT4_32K'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4_128K
       :value: 'OPENAI_GPT4_128K'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4_128K_LATEST
       :value: 'OPENAI_GPT4_128K_LATEST'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4_VISION
       :value: 'OPENAI_GPT4_VISION'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4O
       :value: 'OPENAI_GPT4O'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT3_5_TEXT
       :value: 'OPENAI_GPT3_5_TEXT'
 
-      
+
 
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
 
-      
+
 
    .. py:attribute:: GROQ_LLAMA3_LARGE_CHAT
       :value: 'GROQ_LLAMA3_LARGE_CHAT'
 
-      
+
 
    .. py:attribute:: CLAUDE_V2_1
       :value: 'CLAUDE_V2_1'
 
-      
+
 
    .. py:attribute:: CLAUDE_V3_OPUS
       :value: 'CLAUDE_V3_OPUS'
 
-      
+
 
    .. py:attribute:: CLAUDE_V3_SONNET
       :value: 'CLAUDE_V3_SONNET'
 
-      
+
 
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
-      
+
 
    .. py:attribute:: ABACUS_GIRAFFE
       :value: 'ABACUS_GIRAFFE'
 
-      
+
 
    .. py:attribute:: ABACUS_GIRAFFE_LARGE
       :value: 'ABACUS_GIRAFFE_LARGE'
 
-      
+
 
    .. py:attribute:: LLAMA2_CHAT
       :value: 'LLAMA2_CHAT'
 
-      
+
 
    .. py:attribute:: PALM
       :value: 'PALM'
 
-      
+
 
    .. py:attribute:: PALM_TEXT
       :value: 'PALM_TEXT'
 
-      
+
 
    .. py:attribute:: GEMINI_PRO
       :value: 'GEMINI_PRO'
 
-      
+
 
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
 
-      
+
 
    .. py:attribute:: MIXTRAL_CHAT
       :value: 'MIXTRAL_CHAT'
 
-      
+
 
    .. py:attribute:: MISTRAL_MEDIUM
       :value: 'MISTRAL_MEDIUM'
 
-      
 
-   .. py:attribute:: ABACUS_SMAUG2
-      :value: 'ABACUS_SMAUG2'
 
-      
+   .. py:attribute:: ABACUS_SMAUG3
+      :value: 'ABACUS_SMAUG3'
+
 
 
 .. py:class:: MonitorAlertType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ACCURACY_BELOW_THRESHOLD
       :value: 'AccuracyBelowThreshold'
 
-      
+
 
    .. py:attribute:: FEATURE_DRIFT
       :value: 'FeatureDrift'
 
-      
+
 
    .. py:attribute:: DATA_INTEGRITY_VIOLATIONS
       :value: 'DataIntegrityViolations'
 
-      
+
 
    .. py:attribute:: BIAS_VIOLATIONS
       :value: 'BiasViolations'
 
-      
+
 
    .. py:attribute:: HISTORY_LENGTH_DRIFT
       :value: 'HistoryLengthDrift'
 
-      
+
 
    .. py:attribute:: TARGET_DRIFT
       :value: 'TargetDrift'
 
-      
+
 
    .. py:attribute:: PREDICTION_COUNT
       :value: 'PredictionCount'
 
-      
 
 
 .. py:class:: FeatureDriftType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: KL
       :value: 'kl'
 
-      
+
 
    .. py:attribute:: KS
       :value: 'ks'
 
-      
+
 
    .. py:attribute:: WS
       :value: 'ws'
 
-      
+
 
    .. py:attribute:: JS
       :value: 'js'
 
-      
+
 
    .. py:attribute:: PSI
       :value: 'psi'
 
-      
+
 
    .. py:attribute:: CHI_SQUARE
       :value: 'chi_square'
 
-      
+
 
    .. py:attribute:: CSI
       :value: 'csi'
 
-      
 
 
 .. py:class:: DataIntegrityViolationType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: NULL_VIOLATIONS
       :value: 'null_violations'
 
-      
+
 
    .. py:attribute:: RANGE_VIOLATIONS
       :value: 'range_violations'
 
-      
+
 
    .. py:attribute:: CATEGORICAL_RANGE_VIOLATION
       :value: 'categorical_range_violations'
 
-      
+
 
    .. py:attribute:: TOTAL_VIOLATIONS
       :value: 'total_violations'
 
-      
 
 
 .. py:class:: BiasType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: DEMOGRAPHIC_PARITY
       :value: 'demographic_parity'
 
-      
+
 
    .. py:attribute:: EQUAL_OPPORTUNITY
       :value: 'equal_opportunity'
 
-      
+
 
    .. py:attribute:: GROUP_BENEFIT_EQUALITY
       :value: 'group_benefit'
 
-      
+
 
    .. py:attribute:: TOTAL
       :value: 'total'
 
-      
 
 
 .. py:class:: AlertActionType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: EMAIL
       :value: 'Email'
 
-      
 
 
 .. py:class:: PythonFunctionType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: FEATURE_GROUP
       :value: 'FEATURE_GROUP'
 
-      
+
 
    .. py:attribute:: PLOTLY_FIG
       :value: 'PLOTLY_FIG'
 
-      
+
 
    .. py:attribute:: STEP_FUNCTION
       :value: 'STEP_FUNCTION'
 
-      
 
 
 .. py:class:: EvalArtifactType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: FORECASTING_ACCURACY
       :value: 'bar_chart'
 
-      
+
 
    .. py:attribute:: FORECASTING_VOLUME
       :value: 'bar_chart_volume'
 
-      
+
 
    .. py:attribute:: FORECASTING_HISTORY_LENGTH_ACCURACY
       :value: 'bar_chart_accuracy_by_history'
 
-      
 
 
 .. py:class:: FieldDescriptorType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: STRING
       :value: 'STRING'
 
-      
+
 
    .. py:attribute:: INTEGER
       :value: 'INTEGER'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'FLOAT'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'BOOLEAN'
 
-      
+
 
    .. py:attribute:: DATETIME
       :value: 'DATETIME'
 
-      
+
 
    .. py:attribute:: DATE
       :value: 'DATE'
 
-      
 
 
 .. py:class:: WorkflowNodeInputType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: USER_INPUT
       :value: 'USER_INPUT'
 
-      
+
 
    .. py:attribute:: WORKFLOW_VARIABLE
       :value: 'WORKFLOW_VARIABLE'
 
-      
 
 
 .. py:class:: WorkflowNodeOutputType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ATTACHMENT
       :value: 'ATTACHMENT'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'BOOLEAN'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'FLOAT'
 
-      
+
 
    .. py:attribute:: INTEGER
       :value: 'INTEGER'
 
-      
+
 
    .. py:attribute:: DICT
       :value: 'DICT'
 
-      
+
 
    .. py:attribute:: LIST
       :value: 'LIST'
 
-      
+
 
    .. py:attribute:: STRING
       :value: 'STRING'
 
-      
 
 
 .. py:class:: OcrMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: DEFAULT
       :value: 'DEFAULT'
 
-      
+
 
    .. py:attribute:: LAYOUT
       :value: 'LAYOUT'
 
-      
+
 
    .. py:attribute:: SCANNED
       :value: 'SCANNED'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE
       :value: 'COMPREHENSIVE'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE_V2
       :value: 'COMPREHENSIVE_V2'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE_TABLE_MD
       :value: 'COMPREHENSIVE_TABLE_MD'
 
-      
 
 
 .. py:class:: StdDevThresholdType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ABSOLUTE
       :value: 'ABSOLUTE'
 
-      
+
 
    .. py:attribute:: PERCENTILE
       :value: 'PERCENTILE'
 
-      
+
 
    .. py:attribute:: STDDEV
       :value: 'STDDEV'
 
-      
 
 
 .. py:class:: DataType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: INTEGER
       :value: 'integer'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'float'
 
-      
+
 
    .. py:attribute:: STRING
       :value: 'string'
 
-      
+
 
    .. py:attribute:: DATE
       :value: 'date'
 
-      
+
 
    .. py:attribute:: DATETIME
       :value: 'datetime'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'boolean'
 
-      
+
 
    .. py:attribute:: LIST
       :value: 'list'
 
-      
+
 
    .. py:attribute:: STRUCT
       :value: 'struct'
 
-      
+
 
    .. py:attribute:: NULL
       :value: 'null'
-
-      
-
-   .. py:method:: from_str(value)
-      :classmethod:
 
 
 
 .. py:class:: AgentInterface
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: DEFAULT
       :value: 'DEFAULT'
 
-      
+
 
    .. py:attribute:: CHAT
       :value: 'CHAT'
 
-      
 
 
 .. py:class:: ProjectConfigType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: CONSTRAINTS
       :value: 'CONSTRAINTS'
 
-      
+
 
    .. py:attribute:: REVIEW_MODE
       :value: 'REVIEW_MODE'
 
-      
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -4882,9 +4751,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -4912,6 +4783,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -4919,23 +4791,25 @@ Functions
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:
@@ -4944,28 +4818,28 @@ Functions
 
 .. py:class:: SamplingConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for the sampling config of a feature group
 
-   .. py:attribute:: sampling_method
-      :type: abacusai.api_class.enums.SamplingMethodType
 
-      
+   .. py:attribute:: sampling_method
+      :type:  abacusai.api_class.enums.SamplingMethodType
+
 
    .. py:method:: _get_builder()
       :classmethod:
 
 
-   .. py:method:: __post_init__()
 
+   .. py:method:: __post_init__()
 
 
 .. py:class:: NSamplingConfig
 
-
    Bases: :py:obj:`SamplingConfig`
+
 
    The number of distinct values of the key columns to include in the sample, or number of rows if key columns not specified.
 
@@ -4976,24 +4850,22 @@ Functions
    :param key_columns: The feature(s) to use as the key(s) when sampling
    :type key_columns: List[str]
 
-   .. py:attribute:: sample_count
-      :type: int
 
-      
+   .. py:attribute:: sample_count
+      :type:  int
+
 
    .. py:attribute:: key_columns
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PercentSamplingConfig
 
-
    Bases: :py:obj:`SamplingConfig`
+
 
    The fraction of distinct values of the feature group to include in the sample.
 
@@ -5004,66 +4876,62 @@ Functions
    :param key_columns: The feature(s) to use as the key(s) when sampling
    :type key_columns: List[str]
 
-   .. py:attribute:: sample_percent
-      :type: float
 
-      
+   .. py:attribute:: sample_percent
+      :type:  float
+
 
    .. py:attribute:: key_columns
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _SamplingConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
-      
+
 
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: MergeConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for the merge config of a feature group
 
-   .. py:attribute:: merge_mode
-      :type: abacusai.api_class.enums.MergeMode
 
-      
+   .. py:attribute:: merge_mode
+      :type:  abacusai.api_class.enums.MergeMode
+
 
    .. py:method:: _get_builder()
       :classmethod:
 
 
-   .. py:method:: __post_init__()
 
+   .. py:method:: __post_init__()
 
 
 .. py:class:: LastNMergeConfig
 
-
    Bases: :py:obj:`MergeConfig`
+
 
    Merge LAST N chunks/versions of an incremental dataset.
 
@@ -5074,24 +4942,22 @@ Functions
    :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
    :type include_version_timestamp_column: bool
 
-   .. py:attribute:: num_versions
-      :type: int
 
-      
+   .. py:attribute:: num_versions
+      :type:  int
+
 
    .. py:attribute:: include_version_timestamp_column
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: TimeWindowMergeConfig
 
-
    Bases: :py:obj:`MergeConfig`
+
 
    Merge rows within a given timewindow of the most recent timestamp
 
@@ -5104,64 +4970,58 @@ Functions
    :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
    :type include_version_timestamp_column: bool
 
-   .. py:attribute:: feature_name
-      :type: str
 
-      
+   .. py:attribute:: feature_name
+      :type:  str
+
 
    .. py:attribute:: time_window_size_ms
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: include_version_timestamp_column
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _MergeConfigFactory
-
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
+
    Helper class that provides a standard way to create an ABC using
    inheritance.
+
 
    .. py:attribute:: config_class_key
       :value: 'merge_mode'
 
-      
+
 
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -5170,9 +5030,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -5200,6 +5062,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -5207,23 +5070,25 @@ Functions
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:
@@ -5232,35 +5097,31 @@ Functions
 
 .. py:class:: TrainingConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for the training config options used to train the model.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: kwargs
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+      :type:  abacusai.api_class.enums.ProblemType
 
-      
 
    .. py:attribute:: algorithm
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -5269,8 +5130,8 @@ Functions
 
 .. py:class:: PersonalizationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the PERSONALIZATION problem type
 
@@ -5349,199 +5210,162 @@ Functions
    :param item_query_column: Name of column in the item catalog that will be matched to the query column in the interactions table.
    :type item_query_column: str
 
-   .. py:attribute:: objective
-      :type: abacusai.api_class.enums.PersonalizationObjective
 
-      
+   .. py:attribute:: objective
+      :type:  abacusai.api_class.enums.PersonalizationObjective
+
 
    .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.PersonalizationObjective
+      :type:  abacusai.api_class.enums.PersonalizationObjective
 
-      
 
    .. py:attribute:: training_mode
-      :type: abacusai.api_class.enums.PersonalizationTrainingMode
+      :type:  abacusai.api_class.enums.PersonalizationTrainingMode
 
-      
 
    .. py:attribute:: target_action_types
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: target_action_weights
-      :type: Dict[str, float]
+      :type:  Dict[str, float]
 
-      
 
    .. py:attribute:: session_event_types
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: recent_days_for_training
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: training_start_date
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: test_on_user_split
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: test_split_on_last_k_items
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: test_last_items_length
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: test_window_length_hours
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: explicit_time_split
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: test_row_indicator
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: full_data_retraining
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: sequential_training
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: data_split_feature_group_table_name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: optimized_event_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:attribute:: disable_transformer
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: disable_gpu
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: filter_history
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: action_types_exclusion_days
-      :type: Dict[str, float]
+      :type:  Dict[str, float]
 
-      
 
    .. py:attribute:: max_history_length
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: compute_rerank_metrics
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: add_time_features
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: disable_timestamp_scalar_features
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: compute_session_metrics
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: query_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: item_query_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: use_user_id_feature
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: session_dedupe_mins
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: max_user_history_len_percentile
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: downsample_item_popularity_percentile
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: min_item_history
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: RegressionTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the PREDICTIVE_MODELING problem type
 
@@ -5628,219 +5452,178 @@ Functions
    :param partial_dependence_analysis: Specify whether to run partial dependence plots for all features or only some features.
    :type partial_dependence_analysis: PartialDependenceAnalysis
 
-   .. py:attribute:: objective
-      :type: abacusai.api_class.enums.RegressionObjective
 
-      
+   .. py:attribute:: objective
+      :type:  abacusai.api_class.enums.RegressionObjective
+
 
    .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.RegressionObjective
+      :type:  abacusai.api_class.enums.RegressionObjective
 
-      
 
    .. py:attribute:: tree_hpo_mode
-      :type: abacusai.api_class.enums.RegressionTreeHPOMode
+      :type:  abacusai.api_class.enums.RegressionTreeHPOMode
 
-      
 
    .. py:attribute:: partial_dependence_analysis
-      :type: abacusai.api_class.enums.PartialDependenceAnalysis
+      :type:  abacusai.api_class.enums.PartialDependenceAnalysis
 
-      
 
    .. py:attribute:: type_of_split
-      :type: abacusai.api_class.enums.RegressionTypeOfSplit
+      :type:  abacusai.api_class.enums.RegressionTypeOfSplit
 
-      
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: disable_test_val_fold
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: k_fold_cross_validation
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: num_cv_folds
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: timestamp_based_splitting_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: timestamp_based_splitting_method
-      :type: abacusai.api_class.enums.RegressionTimeSplitMethod
+      :type:  abacusai.api_class.enums.RegressionTimeSplitMethod
 
-      
 
    .. py:attribute:: test_splitting_timestamp
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: sampling_unit_keys
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: test_row_indicator
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: full_data_retraining
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: rebalance_classes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: rare_class_augmentation_threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: augmentation_strategy
-      :type: abacusai.api_class.enums.RegressionAugmentationStrategy
+      :type:  abacusai.api_class.enums.RegressionAugmentationStrategy
 
-      
 
    .. py:attribute:: training_rows_downsample_ratio
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: active_labels_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: min_categorical_count
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: sample_weight
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: numeric_clipping_percentile
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: target_transform
-      :type: abacusai.api_class.enums.RegressionTargetTransform
+      :type:  abacusai.api_class.enums.RegressionTargetTransform
 
-      
 
    .. py:attribute:: ignore_datetime_features
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: max_text_words
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: perform_feature_selection
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: feature_selection_intensity
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: pretrained_model_name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: is_multilingual
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: loss_function
-      :type: abacusai.api_class.enums.RegressionLossFunction
+      :type:  abacusai.api_class.enums.RegressionLossFunction
 
-      
 
    .. py:attribute:: loss_parameters
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: target_encode_categoricals
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: drop_original_categoricals
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: monotonically_increasing_features
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: monotonically_decreasing_features
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: data_split_feature_group_table_name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: custom_loss_functions
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: custom_metrics
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ForecastingTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the FORECASTING problem type
 
@@ -5967,324 +5750,262 @@ Functions
    :type custom_metrics: List[str]
    :param return_fractional_forecasts: Use this to return fractional forecast values while prediction
 
-   .. py:attribute:: prediction_length
-      :type: int
 
-      
+   .. py:attribute:: prediction_length
+      :type:  int
+
 
    .. py:attribute:: objective
-      :type: abacusai.api_class.enums.ForecastingObjective
+      :type:  abacusai.api_class.enums.ForecastingObjective
 
-      
 
    .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.ForecastingObjective
+      :type:  abacusai.api_class.enums.ForecastingObjective
 
-      
 
    .. py:attribute:: forecast_frequency
-      :type: abacusai.api_class.enums.ForecastingFrequency
+      :type:  abacusai.api_class.enums.ForecastingFrequency
 
-      
 
    .. py:attribute:: probability_quantiles
-      :type: List[float]
+      :type:  List[float]
 
-      
 
    .. py:attribute:: force_prediction_length
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: filter_items
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_feature_selection
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_padding
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_cold_start
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_multiple_backtests
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: num_backtesting_windows
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: backtesting_window_step_size
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: full_data_retraining
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: additional_forecast_keys
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: experimentation_mode
-      :type: abacusai.api_class.enums.ExperimentationMode
+      :type:  abacusai.api_class.enums.ExperimentationMode
 
-      
 
    .. py:attribute:: type_of_split
-      :type: abacusai.api_class.enums.ForecastingDataSplitType
+      :type:  abacusai.api_class.enums.ForecastingDataSplitType
 
-      
 
    .. py:attribute:: test_by_item
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: test_start
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: loss_function
-      :type: abacusai.api_class.enums.ForecastingLossFunction
+      :type:  abacusai.api_class.enums.ForecastingLossFunction
 
-      
 
    .. py:attribute:: underprediction_weight
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: disable_networks_without_analytic_quantiles
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: initial_learning_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: l2_regularization_factor
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: recurrent_layers
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: recurrent_units
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: convolutional_layers
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: convolution_filters
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: local_scaling_mode
-      :type: abacusai.api_class.enums.ForecastingLocalScaling
+      :type:  abacusai.api_class.enums.ForecastingLocalScaling
 
-      
 
    .. py:attribute:: zero_predictor
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: skip_missing
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:attribute:: batch_renormalization
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: history_length
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: prediction_step_size
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: training_point_overlap
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: max_scale_context
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: quantiles_extension_method
-      :type: abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
+      :type:  abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
 
-      
 
    .. py:attribute:: number_of_samples
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: symmetrize_quantiles
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: use_log_transforms
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: smooth_history
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: local_scale_target
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: use_clipping
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: timeseries_weight_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: item_attributes_weight_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: use_timeseries_weights_in_objective
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: use_item_weights_in_objective
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: skip_timeseries_weight_scaling
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: timeseries_loss_weight_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: use_item_id
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: use_all_item_totals
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: handle_zeros_as_missing_values
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: datetime_holiday_calendars
-      :type: List[abacusai.api_class.enums.HolidayCalendars]
+      :type:  List[abacusai.api_class.enums.HolidayCalendars]
 
-      
 
    .. py:attribute:: fill_missing_values
-      :type: List[dict]
+      :type:  List[dict]
 
-      
 
    .. py:attribute:: enable_clustering
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: data_split_feature_group_table_name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: custom_loss_functions
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: custom_metrics
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: return_fractional_forecasts
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: NamedEntityExtractionTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
 
@@ -6305,57 +6026,62 @@ Functions
    :param enhanced_ocr: Enhanced text extraction from predicted digital documents
    :type enhanced_ocr: bool
 
-   .. py:attribute:: llm_for_ner
-      :type: abacusai.api_class.enums.LLMName
 
-      
+   .. py:attribute:: llm_for_ner
+      :type:  abacusai.api_class.enums.LLMName
+      :value: None
+
+
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
+      :value: None
 
-      
+
 
    .. py:attribute:: test_row_indicator
-      :type: str
+      :type:  str
+      :value: None
 
-      
+
 
    .. py:attribute:: active_labels_column
-      :type: str
+      :type:  str
+      :value: None
 
-      
+
 
    .. py:attribute:: document_format
-      :type: abacusai.api_class.enums.NLPDocumentFormat
+      :type:  abacusai.api_class.enums.NLPDocumentFormat
+      :value: None
 
-      
+
 
    .. py:attribute:: minimum_bounding_box_overlap_ratio
-      :type: float
+      :type:  float
       :value: 0.0
 
-      
+
 
    .. py:attribute:: save_predicted_pdf
-      :type: bool
+      :type:  bool
       :value: True
 
-      
+
 
    .. py:attribute:: enhanced_ocr
-      :type: bool
+      :type:  bool
       :value: False
 
-      
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: NaturalLanguageSearchTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
 
@@ -6372,70 +6098,66 @@ Functions
    :param index_fraction: Fraction of the chunk to use for indexing.
    :type index_fraction: float
 
-   .. py:attribute:: abacus_internal_model
-      :type: bool
 
-      
+   .. py:attribute:: abacus_internal_model
+      :type:  bool
+
 
    .. py:attribute:: num_completion_tokens
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: larger_embeddings
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: search_chunk_size
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: index_fraction
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: chunk_overlap_fraction
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ChatLLMTrainingConfig
-
 
    Bases: :py:obj:`TrainingConfig`
 
+
    Training config for the CHAT_LLM problem type
 
-   :param document_retrievers: List of document retriever names to use for the feature stores this model was trained with.
+   :param document_retrievers: List of names of document retrievers to use as vector stores of information for RAG responses.
    :type document_retrievers: List[str]
-   :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
+   :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
    :type num_completion_tokens: int
-   :param temperature: The generative LLM temperature
+   :param temperature: The generative LLM temperature.
    :type temperature: float
    :param retrieval_columns: Include the metadata column values in the retrieved search results.
    :type retrieval_columns: list
    :param filter_columns: Allow users to filter the document retrievers on these metadata columns.
    :type filter_columns: list
-   :param include_general_knowledge: Allow the LLM to rely not just on search results, but to fall back on general knowledge.
+   :param include_general_knowledge: Allow the LLM to rely not just on RAG search results, but to fall back on general knowledge. Disabled by default.
    :type include_general_knowledge: bool
+   :param enable_web_search: Allow the LLM to use Web Search Engines to retrieve information for better results.
+   :type enable_web_search: bool
    :param behavior_instructions: Customize the overall role instructions for the LLM.
    :type behavior_instructions: str
-   :param response_instructions: Customize instructions for what the LLM responses should look like.
+   :param response_instructions: Customized instructions for how the LLM should respond.
    :type response_instructions: str
-   :param enable_llm_rewrite: Enable LLM rewrite for the ChatLLM. If None, LLM rewrite will happen automatically. Defaults to False.
+   :param enable_llm_rewrite: If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.
    :type enable_llm_rewrite: bool
    :param column_filtering_instructions: Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
    :type column_filtering_instructions: str
    :param keyword_requirement_instructions: Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.
    :type keyword_requirement_instructions: str
-   :param query_rewrite_instructions: Instructions for a LLM call to rewrite a search query.
+   :param query_rewrite_instructions: Special instructions for the LLM which rewrites the RAG query.
    :type query_rewrite_instructions: str
    :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
    :type max_search_results: int
@@ -6452,137 +6174,113 @@ Functions
    :type database_connector_id: str
    :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
    :type database_connector_tables: List[str]
-   :param enable_code_execution: Enable code execution in the ChatLLM.
+   :param enable_code_execution: Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
    :type enable_code_execution: bool
-   :param metadata_columns: DEPRECATED. Include the metadata column values in the retrieved search results.
-   :type metadata_columns: list
-   :param lookup_rewrite_instructions: DEPRECATED. Instructions for a LLM call to rewrite a search query.
-   :type lookup_rewrite_instructions: str
+
 
    .. py:attribute:: document_retrievers
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: num_completion_tokens
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: temperature
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: retrieval_columns
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: filter_columns
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: include_general_knowledge
-      :type: bool
+      :type:  bool
 
-      
+
+   .. py:attribute:: enable_web_search
+      :type:  bool
+
 
    .. py:attribute:: behavior_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: response_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: enable_llm_rewrite
-      :type: bool
-      :value: False
+      :type:  bool
 
-      
 
    .. py:attribute:: column_filtering_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: keyword_requirement_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: query_rewrite_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: max_search_results
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: data_feature_group_ids
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: data_prompt_context
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: hide_generated_sql
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: disable_data_summarization
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: search_score_cutoff
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: database_connector_id
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: database_connector_tables
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: enable_code_execution
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: metadata_columns
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: lookup_rewrite_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
 
@@ -6593,29 +6291,26 @@ Functions
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
 
-   .. py:attribute:: test_split
-      :type: int
 
-      
+   .. py:attribute:: test_split
+      :type:  int
+
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: SentimentDetectionTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the SENTIMENT_DETECTION problem type
 
@@ -6630,39 +6325,34 @@ Functions
    :param compute_metrics: Whether to compute metrics.
    :type compute_metrics: bool
 
-   .. py:attribute:: sentiment_type
-      :type: abacusai.api_class.enums.SentimentType
 
-      
+   .. py:attribute:: sentiment_type
+      :type:  abacusai.api_class.enums.SentimentType
+
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:attribute:: compute_metrics
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: DocumentClassificationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
 
@@ -6675,34 +6365,30 @@ Functions
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
 
-   .. py:attribute:: zero_shot_hypotheses
-      :type: List[str]
 
-      
+   .. py:attribute:: zero_shot_hypotheses
+      :type:  List[str]
+
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: DocumentSummarizationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
 
@@ -6713,29 +6399,26 @@ Functions
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
 
-   .. py:attribute:: test_split
-      :type: int
 
-      
+   .. py:attribute:: test_split
+      :type:  int
+
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: DocumentVisualizationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the DOCUMENT_VISUALIZATION problem type
 
@@ -6746,48 +6429,44 @@ Functions
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
 
-   .. py:attribute:: test_split
-      :type: int
 
-      
+   .. py:attribute:: test_split
+      :type:  int
+
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ClusteringTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CLUSTERING problem type
 
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
 
-   .. py:attribute:: num_clusters_selection
-      :type: int
 
-      
+   .. py:attribute:: num_clusters_selection
+      :type:  int
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ClusteringTimeseriesTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CLUSTERING_TIMESERIES problem type
 
@@ -6796,43 +6475,40 @@ Functions
    :param imputation: Imputation method for missing values.
    :type imputation: ClusteringImputationMethod
 
-   .. py:attribute:: num_clusters_selection
-      :type: int
 
-      
+   .. py:attribute:: num_clusters_selection
+      :type:  int
+
 
    .. py:attribute:: imputation
-      :type: abacusai.api_class.enums.ClusteringImputationMethod
+      :type:  abacusai.api_class.enums.ClusteringImputationMethod
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: EventAnomalyTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the EVENT_ANOMALY problem type
 
    :param anomaly_fraction: The fraction of the dataset to classify as anomalous, between 0 and 0.5
    :type anomaly_fraction: float
 
-   .. py:attribute:: anomaly_fraction
-      :type: float
 
-      
+   .. py:attribute:: anomaly_fraction
+      :type:  float
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: TimeseriesAnomalyTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the TS_ANOMALY problem type
 
@@ -6857,64 +6533,54 @@ Functions
    :param threshold_score: Threshold score for anomaly detection
    :type threshold_score: float
 
-   .. py:attribute:: type_of_split
-      :type: abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
 
-      
+   .. py:attribute:: type_of_split
+      :type:  abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
+
 
    .. py:attribute:: test_start
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: fill_missing_values
-      :type: List[dict]
+      :type:  List[dict]
 
-      
 
    .. py:attribute:: handle_zeros_as_missing_values
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: timeseries_frequency
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: min_samples_in_normal_region
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: anomaly_type
-      :type: abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
+      :type:  abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
 
-      
 
    .. py:attribute:: hyperparameter_calculation_with_heuristics
-      :type: abacusai.api_class.enums.TimeseriesAnomalyUseHeuristic
+      :type:  abacusai.api_class.enums.TimeseriesAnomalyUseHeuristic
 
-      
 
    .. py:attribute:: threshold_score
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: CumulativeForecastingTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CUMULATIVE_FORECASTING problem type
 
@@ -6931,55 +6597,49 @@ Functions
    :param predict_residuals: Predict residuals instead of totals at each prediction step.
    :type predict_residuals: bool
 
-   .. py:attribute:: test_split
-      :type: int
 
-      
+   .. py:attribute:: test_split
+      :type:  int
+
 
    .. py:attribute:: historical_frequency
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: cumulative_prediction_lengths
-      :type: List[int]
+      :type:  List[int]
 
-      
 
    .. py:attribute:: skip_input_transform
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: skip_target_transform
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: predict_residuals
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
-
 
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
 
+
    Training config for the THEME ANALYSIS problem type
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: AIAgentTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the AI_AGENT problem type
 
@@ -6988,39 +6648,34 @@ Functions
    :param agent_interface: The interface that the agent will be deployed with.
    :type agent_interface: AgentInterface
 
-   .. py:attribute:: description
-      :type: str
 
-      
+   .. py:attribute:: description
+      :type:  str
+
 
    .. py:attribute:: agent_interface
-      :type: abacusai.api_class.enums.AgentInterface
+      :type:  abacusai.api_class.enums.AgentInterface
 
-      
 
    .. py:attribute:: enable_binary_input
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: agent_input_schema
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:attribute:: agent_output_schema
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: CustomTrainedModelTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CUSTOM_TRAINED_MODEL problem type
 
@@ -7037,63 +6692,56 @@ Functions
    :param streaming_embeddings: Flag to enable streaming embeddings.
    :type streaming_embeddings: bool
 
-   .. py:attribute:: max_catalog_size
-      :type: int
 
-      
+   .. py:attribute:: max_catalog_size
+      :type:  int
+
 
    .. py:attribute:: max_dimension
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: index_output_path
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: docker_image_uri
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: service_port
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: streaming_embeddings
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: CustomAlgorithmTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CUSTOM_ALGORITHM problem type
 
    :param timeout_minutes: Timeout for the model training in minutes.
    :type timeout_minutes: int
 
-   .. py:attribute:: timeout_minutes
-      :type: int
 
-      
+   .. py:attribute:: timeout_minutes
+      :type:  int
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: OptimizationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the OPTIMIZATION problem type
 
@@ -7102,46 +6750,42 @@ Functions
    :param optimality_gap_limit: The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
    :type optimality_gap_limit: float
 
-   .. py:attribute:: solve_time_limit
-      :type: float
 
-      
+   .. py:attribute:: solve_time_limit
+      :type:  float
+
 
    .. py:attribute:: optimality_gap_limit
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _TrainingConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'problem_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: DeployableAlgorithm
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Algorithm that can be deployed to a model.
 
@@ -7154,44 +6798,39 @@ Functions
    :param trained_model_types: List of trained model types.
    :type trained_model_types: List[dict]
 
-   .. py:attribute:: algorithm
-      :type: str
 
-      
+   .. py:attribute:: algorithm
+      :type:  str
+
 
    .. py:attribute:: name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: only_offline_deployable
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: trained_model_types
-      :type: List[dict]
-
-      
+      :type:  List[dict]
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -7200,9 +6839,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -7230,6 +6871,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -7237,33 +6879,33 @@ Functions
 
 .. py:class:: StdDevThresholdType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: ABSOLUTE
       :value: 'ABSOLUTE'
 
-      
+
 
    .. py:attribute:: PERCENTILE
       :value: 'PERCENTILE'
 
-      
+
 
    .. py:attribute:: STDDEV
       :value: 'STDDEV'
 
-      
 
 
 .. py:class:: TimeWindowConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Time Window Configuration
 
@@ -7272,15 +6914,14 @@ Functions
    :param window_from_start: Whether the window should be from the start of the time series.
    :type window_from_start: bool
 
-   .. py:attribute:: window_duration
-      :type: int
 
-      
+   .. py:attribute:: window_duration
+      :type:  int
+
 
    .. py:attribute:: window_from_start
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: to_dict()
 
@@ -7292,8 +6933,8 @@ Functions
 
 .. py:class:: ForecastingMonitorConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Forecasting Monitor Configuration
 
@@ -7310,35 +6951,30 @@ Functions
    :param window_config: The windowing configuration for the time series data.
    :type window_config: TimeWindowConfig
 
-   .. py:attribute:: id_column
-      :type: str
 
-      
+   .. py:attribute:: id_column
+      :type:  str
+
 
    .. py:attribute:: timestamp_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: target_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: start_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: end_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: window_config
-      :type: TimeWindowConfig
+      :type:  TimeWindowConfig
 
-      
 
    .. py:method:: to_dict()
 
@@ -7350,8 +6986,8 @@ Functions
 
 .. py:class:: StdDevThreshold
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Std Dev Threshold types
 
@@ -7360,15 +6996,14 @@ Functions
    :param value: Value to use for the threshold.
    :type value: float
 
-   .. py:attribute:: threshold_type
-      :type: abacusai.api_class.enums.StdDevThresholdType
 
-      
+   .. py:attribute:: threshold_type
+      :type:  abacusai.api_class.enums.StdDevThresholdType
+
 
    .. py:attribute:: value
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: to_dict()
 
@@ -7380,8 +7015,8 @@ Functions
 
 .. py:class:: ItemAttributesStdDevThreshold
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Item Attributes Std Dev Threshold for Monitor Alerts
 
@@ -7390,15 +7025,14 @@ Functions
    :param upper_bound: Upper bound for the item attributes.
    :type upper_bound: StdDevThreshold
 
-   .. py:attribute:: lower_bound
-      :type: StdDevThreshold
 
-      
+   .. py:attribute:: lower_bound
+      :type:  StdDevThreshold
+
 
    .. py:attribute:: upper_bound
-      :type: StdDevThreshold
+      :type:  StdDevThreshold
 
-      
 
    .. py:method:: to_dict()
 
@@ -7410,8 +7044,8 @@ Functions
 
 .. py:class:: RestrictFeatureMappings
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Restrict Feature Mappings for Monitor Filtering
 
@@ -7428,35 +7062,30 @@ Functions
    :param max_value: Filtering the numerical feature to below this value
    :type max_value: float
 
-   .. py:attribute:: feature_name
-      :type: str
 
-      
+   .. py:attribute:: feature_name
+      :type:  str
+
 
    .. py:attribute:: restricted_feature_values
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: start_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: end_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: min_value
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: max_value
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: to_dict()
 
@@ -7468,8 +7097,8 @@ Functions
 
 .. py:class:: MonitorFilteringConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Monitor Filtering Configuration
 
@@ -7486,35 +7115,30 @@ Functions
    :param prediction_target_feature: Set the target feature for the prediction data.
    :type prediction_target_feature: str
 
-   .. py:attribute:: start_time
-      :type: str
 
-      
+   .. py:attribute:: start_time
+      :type:  str
+
 
    .. py:attribute:: end_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: restrict_feature_mappings
-      :type: List[RestrictFeatureMappings]
+      :type:  List[RestrictFeatureMappings]
 
-      
 
    .. py:attribute:: target_class
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: train_target_feature
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: prediction_target_feature
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: to_dict()
 
@@ -7526,21 +7150,20 @@ Functions
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -7549,9 +7172,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -7579,6 +7204,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -7586,23 +7212,25 @@ Functions
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:
@@ -7611,15 +7239,15 @@ Functions
 
 .. py:class:: AlertConditionConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for alert condition configs
 
-   .. py:attribute:: alert_type
-      :type: abacusai.api_class.enums.MonitorAlertType
 
-      
+   .. py:attribute:: alert_type
+      :type:  abacusai.api_class.enums.MonitorAlertType
+
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -7628,27 +7256,26 @@ Functions
 
 .. py:class:: AccuracyBelowThresholdConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Accuracy Below Threshold Condition Config for Monitor Alerts
 
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
-   .. py:attribute:: threshold
-      :type: float
 
-      
+   .. py:attribute:: threshold
+      :type:  float
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: FeatureDriftConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Feature Drift Condition Config for Monitor Alerts
 
@@ -7661,34 +7288,30 @@ Functions
    :param feature_names: List of feature names to monitor for this alert.
    :type feature_names: List[str]
 
-   .. py:attribute:: feature_drift_type
-      :type: abacusai.api_class.enums.FeatureDriftType
 
-      
+   .. py:attribute:: feature_drift_type
+      :type:  abacusai.api_class.enums.FeatureDriftType
+
 
    .. py:attribute:: threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: minimum_violations
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: feature_names
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: TargetDriftConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Target Drift Condition Config for Monitor Alerts
 
@@ -7697,24 +7320,22 @@ Functions
    :param threshold: Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
-   .. py:attribute:: feature_drift_type
-      :type: abacusai.api_class.enums.FeatureDriftType
 
-      
+   .. py:attribute:: feature_drift_type
+      :type:  abacusai.api_class.enums.FeatureDriftType
+
 
    .. py:attribute:: threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: HistoryLengthDriftConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    History Length Drift Condition Config for Monitor Alerts
 
@@ -7723,24 +7344,22 @@ Functions
    :param threshold: Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
-   .. py:attribute:: feature_drift_type
-      :type: abacusai.api_class.enums.FeatureDriftType
 
-      
+   .. py:attribute:: feature_drift_type
+      :type:  abacusai.api_class.enums.FeatureDriftType
+
 
    .. py:attribute:: threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: DataIntegrityViolationConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Data Integrity Violation Condition Config for Monitor Alerts
 
@@ -7749,24 +7368,22 @@ Functions
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
    :type minimum_violations: int
 
-   .. py:attribute:: data_integrity_type
-      :type: abacusai.api_class.enums.DataIntegrityViolationType
 
-      
+   .. py:attribute:: data_integrity_type
+      :type:  abacusai.api_class.enums.DataIntegrityViolationType
+
 
    .. py:attribute:: minimum_violations
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: BiasViolationConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Bias Violation Condition Config for Monitor Alerts
 
@@ -7777,29 +7394,26 @@ Functions
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
    :type minimum_violations: int
 
-   .. py:attribute:: bias_type
-      :type: abacusai.api_class.enums.BiasType
 
-      
+   .. py:attribute:: bias_type
+      :type:  abacusai.api_class.enums.BiasType
+
 
    .. py:attribute:: threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: minimum_violations
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PredictionCountConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.
    :param threshold: Threshold for when to consider to be a violation. Negative means alert on reduction, positive means alert on increase.
@@ -7809,63 +7423,58 @@ Functions
    :param aggregation_type: Aggregation type to use for the aggregation window, e.g. sum, avg.
    :type aggregation_type: str
 
-   .. py:attribute:: threshold
-      :type: float
 
-      
+   .. py:attribute:: threshold
+      :type:  float
+
 
    .. py:attribute:: aggregation_window
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: aggregation_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _AlertConditionConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'alert_type'
 
-      
+
 
    .. py:attribute:: config_class_key_value_camel_case
       :value: True
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: AlertActionConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for alert action configs
 
-   .. py:attribute:: action_type
-      :type: abacusai.api_class.enums.AlertActionType
 
-      
+   .. py:attribute:: action_type
+      :type:  abacusai.api_class.enums.AlertActionType
+
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -7874,8 +7483,8 @@ Functions
 
 .. py:class:: EmailActionConfig
 
-
    Bases: :py:obj:`AlertActionConfig`
+
 
    Email Action Config for Monitor Alerts
 
@@ -7884,46 +7493,42 @@ Functions
    :param email_body: Body of the email to send.
    :type email_body: str
 
-   .. py:attribute:: email_recipients
-      :type: List[str]
 
-      
+   .. py:attribute:: email_recipients
+      :type:  List[str]
+
 
    .. py:attribute:: email_body
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _AlertActionConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'action_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: MonitorThresholdConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Monitor Threshold Config for Monitor Alerts
 
@@ -7932,20 +7537,18 @@ Functions
    :param threshold_config: Thresholds for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold_config: ThresholdConfigs
 
-   .. py:attribute:: drift_type
-      :type: abacusai.api_class.enums.FeatureDriftType
 
-      
+   .. py:attribute:: drift_type
+      :type:  abacusai.api_class.enums.FeatureDriftType
+
 
    .. py:attribute:: at_risk_threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: severely_drifting_threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: to_dict()
 
@@ -7957,21 +7560,20 @@ Functions
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -7980,9 +7582,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -8010,6 +7614,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -8017,23 +7622,25 @@ Functions
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:
@@ -8042,8 +7649,8 @@ Functions
 
 .. py:class:: FeatureMappingConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Feature mapping configuration for a feature group type.
 
@@ -8054,26 +7661,23 @@ Functions
    :param nested_feature_name: The name of the nested feature in the feature group.
    :type nested_feature_name: str
 
-   .. py:attribute:: feature_name
-      :type: str
 
-      
+   .. py:attribute:: feature_name
+      :type:  str
+
 
    .. py:attribute:: feature_mapping
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: nested_feature_name
-      :type: str
-
-      
+      :type:  str
 
 
 .. py:class:: ProjectFeatureGroupTypeMappingsConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Project feature group type mappings.
 
@@ -8084,20 +7688,18 @@ Functions
    :param feature_mappings: The feature mappings for the feature group.
    :type feature_mappings: List[FeatureMappingConfig]
 
-   .. py:attribute:: feature_group_id
-      :type: str
 
-      
+   .. py:attribute:: feature_group_id
+      :type:  str
+
 
    .. py:attribute:: feature_group_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: feature_mappings
-      :type: List[FeatureMappingConfig]
+      :type:  List[FeatureMappingConfig]
 
-      
 
    .. py:method:: from_dict(input_dict)
       :classmethod:
@@ -8106,8 +7708,8 @@ Functions
 
 .. py:class:: ConstraintConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Constraint configuration.
 
@@ -8122,43 +7724,38 @@ Functions
    :param penalty: The penalty for violating the constraint.
    :type penalty: float
 
-   .. py:attribute:: constant
-      :type: float
 
-      
+   .. py:attribute:: constant
+      :type:  float
+
 
    .. py:attribute:: operator
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: enforcement
-      :type: Optional[str]
+      :type:  Optional[str]
 
-      
 
    .. py:attribute:: code
-      :type: Optional[str]
+      :type:  Optional[str]
 
-      
 
    .. py:attribute:: penalty
-      :type: Optional[float]
-
-      
+      :type:  Optional[float]
 
 
 .. py:class:: ProjectFeatureGroupConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for project feature group configuration.
 
-   .. py:attribute:: type
-      :type: abacusai.api_class.enums.ProjectConfigType
 
-      
+   .. py:attribute:: type
+      :type:  abacusai.api_class.enums.ProjectConfigType
+
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -8167,81 +7764,76 @@ Functions
 
 .. py:class:: ConstraintProjectFeatureGroupConfig
 
-
    Bases: :py:obj:`ProjectFeatureGroupConfig`
+
 
    Constraint project feature group configuration.
 
    :param constraints: The constraint for the feature group. Should be a list of one ConstraintConfig.
    :type constraints: List[ConstraintConfig]
 
-   .. py:attribute:: constraints
-      :type: List[ConstraintConfig]
 
-      
+   .. py:attribute:: constraints
+      :type:  List[ConstraintConfig]
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ReviewModeProjectFeatureGroupConfig
 
-
    Bases: :py:obj:`ProjectFeatureGroupConfig`
+
 
    Review mode project feature group configuration.
 
    :param is_review_mode: The review mode for the feature group.
    :type is_review_mode: bool
 
-   .. py:attribute:: is_review_mode
-      :type: bool
 
-      
+   .. py:attribute:: is_review_mode
+      :type:  bool
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _ProjectFeatureGroupConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -8250,9 +7842,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -8280,6 +7874,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -8287,8 +7882,8 @@ Functions
 
 .. py:class:: PythonFunctionArgument
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A config class for python function arguments
 
@@ -8303,36 +7898,31 @@ Functions
    :param pipeline_variable: The name of the pipeline variable to use as the value
    :type pipeline_variable: str
 
-   .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.PythonFunctionArgumentType
 
-      
+   .. py:attribute:: variable_type
+      :type:  abacusai.api_class.enums.PythonFunctionArgumentType
+
 
    .. py:attribute:: name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: is_required
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: value
-      :type: Any
+      :type:  Any
 
-      
 
    .. py:attribute:: pipeline_variable
-      :type: str
-
-      
+      :type:  str
 
 
 .. py:class:: OutputVariableMapping
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    A config class for python function arguments
 
@@ -8341,34 +7931,31 @@ Functions
    :param name: The name of the python function variable
    :type name: str
 
-   .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.PythonFunctionOutputArgumentType
 
-      
+   .. py:attribute:: variable_type
+      :type:  abacusai.api_class.enums.PythonFunctionOutputArgumentType
+
 
    .. py:attribute:: name
-      :type: str
-
-      
+      :type:  str
 
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -8377,9 +7964,11 @@ Functions
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -8407,6 +7996,7 @@ Functions
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -8414,23 +8004,25 @@ Functions
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:
@@ -8439,15 +8031,15 @@ Functions
 
 .. py:class:: FeatureGroupExportConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for feature group exports.
 
-   .. py:attribute:: connector_type
-      :type: abacusai.api_class.enums.ConnectorType
 
-      
+   .. py:attribute:: connector_type
+      :type:  abacusai.api_class.enums.ConnectorType
+
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -8456,8 +8048,8 @@ Functions
 
 .. py:class:: FileConnectorExportConfig
 
-
    Bases: :py:obj:`FeatureGroupExportConfig`
+
 
    File connector export config for feature groups
 
@@ -8466,15 +8058,14 @@ Functions
    :param export_file_format: The file format to export the feature group to
    :type export_file_format: str
 
-   .. py:attribute:: location
-      :type: str
 
-      
+   .. py:attribute:: location
+      :type:  str
+
 
    .. py:attribute:: export_file_format
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
@@ -8489,8 +8080,8 @@ Functions
 
 .. py:class:: DatabaseConnectorExportConfig
 
-
    Bases: :py:obj:`FeatureGroupExportConfig`
+
 
    Database connector export config for feature groups
 
@@ -8507,35 +8098,30 @@ Functions
    :param data_columns: The data columns to export the feature group to
    :type data_columns: Dict[str, str]
 
-   .. py:attribute:: database_connector_id
-      :type: str
 
-      
+   .. py:attribute:: database_connector_id
+      :type:  str
+
 
    .. py:attribute:: mode
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: object_name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: id_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: additional_id_columns
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: data_columns
-      :type: Dict[str, str]
+      :type:  Dict[str, str]
 
-      
 
    .. py:method:: __post_init__()
 
@@ -8550,23 +8136,21 @@ Functions
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'connector_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
