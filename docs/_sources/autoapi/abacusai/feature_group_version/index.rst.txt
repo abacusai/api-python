@@ -1,261 +1,26 @@
-abacusai.feature_group_version
-==============================
+:py:mod:`abacusai.feature_group_version`
+========================================
 
 .. py:module:: abacusai.feature_group_version
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_group_version.AnnotationConfig
-   abacusai.feature_group_version.CodeSource
-   abacusai.feature_group_version.Feature
-   abacusai.feature_group_version.IndexingConfig
-   abacusai.feature_group_version.PointInTimeGroup
-   abacusai.feature_group_version.AbstractApiClass
-   abacusai.feature_group_version.FeatureGroupVersion
 
 
 Module Contents
 ---------------
 
-.. py:class:: AnnotationConfig(client, featureAnnotationConfigs=None, labels=None, statusFeature=None, commentsFeatures=None, metadataFeature=None)
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
+   abacusai.feature_group_version.FeatureGroupVersion
 
-   Annotation config for a feature group
 
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param featureAnnotationConfigs: List of feature annotation configs
-   :type featureAnnotationConfigs: list
-   :param labels: List of labels
-   :type labels: list
-   :param statusFeature: Name of the feature that contains the status of the annotation (Optional)
-   :type statusFeature: str
-   :param commentsFeatures: Features that contain comments for the annotation (Optional)
-   :type commentsFeatures: list
-   :param metadataFeature: Name of the feature that contains the metadata for the annotation (Optional)
-   :type metadataFeature: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Code source for python-based custom feature groups and models
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param sourceType: The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
-   :type sourceType: str
-   :param sourceCode: If the type of the source is TEXT, the raw text of the function
-   :type sourceCode: str
-   :param applicationConnectorId: The Application Connector to fetch the code from
-   :type applicationConnectorId: str
-   :param applicationConnectorInfo: Args passed to the application connector to fetch the code
-   :type applicationConnectorInfo: str
-   :param packageRequirements: The pip package dependencies required to run the code
-   :type packageRequirements: list
-   :param status: The status of the code and validations
-   :type status: str
-   :param error: If the status is failed, an error message describing what went wrong
-   :type error: str
-   :param publishingMsg: Warnings in the source code
-   :type publishingMsg: dict
-   :param moduleDependencies: The list of internal modules dependencies required to run the code
-   :type moduleDependencies: list
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: import_as_cell()
-
-      Adds the source code as an unexecuted cell in the notebook.
-
-
-
-.. py:class:: Feature(client, name=None, selectClause=None, featureMapping=None, sourceTable=None, originalName=None, usingClause=None, orderClause=None, whereClause=None, featureType=None, dataType=None, detectedFeatureType=None, detectedDataType=None, columns={}, pointInTimeInfo={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A feature in a feature group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: The unique name of the column
-   :type name: str
-   :param selectClause: The sql logic for creating this feature's data
-   :type selectClause: str
-   :param featureMapping: The Feature Mapping of the feature
-   :type featureMapping: str
-   :param sourceTable: The source table of the column
-   :type sourceTable: str
-   :param originalName: The original name of the column
-   :type originalName: str
-   :param usingClause: Nested Column Using Clause
-   :type usingClause: str
-   :param orderClause: Nested Column Ordering Clause
-   :type orderClause: str
-   :param whereClause: Nested Column Where Clause
-   :type whereClause: str
-   :param featureType: Feature Type of the Feature
-   :type featureType: str
-   :param dataType: Data Type of the Feature
-   :type dataType: str
-   :param detectedFeatureType: The detected feature type of the column
-   :type detectedFeatureType: str
-   :param detectedDataType: The detected data type of the column
-   :type detectedDataType: str
-   :param columns: Nested Features
-   :type columns: NestedFeature
-   :param pointInTimeInfo: Point in time column information
-   :type pointInTimeInfo: PointInTimeFeature
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: IndexingConfig(client, primaryKey=None, updateTimestampKey=None, lookupKeys=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   The indexing config for a Feature Group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param primaryKey: A single key index
-   :type primaryKey: str
-   :param updateTimestampKey: The primary timestamp feature
-   :type updateTimestampKey: str
-   :param lookupKeys: A multi-key index. Cannot be used in conjuction with primary key.
-   :type lookupKeys: list[str]
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: PointInTimeGroup(client, groupName=None, windowKey=None, aggregationKeys=None, lookbackWindow=None, lookbackWindowLag=None, lookbackCount=None, lookbackUntilPosition=None, historyTableName=None, historyWindowKey=None, historyAggregationKeys=None, features={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A point in time group containing point in time features
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param groupName: The name of the point in time group
-   :type groupName: str
-   :param windowKey: Name of feature which contains the timestamp value for the point in time feature
-   :type windowKey: str
-   :param aggregationKeys: List of keys to use for join the historical table and performing the window aggregation.
-   :type aggregationKeys: list
-   :param lookbackWindow: Number of seconds in the past from the current time for start of the window.
-   :type lookbackWindow: float
-   :param lookbackWindowLag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
-   :type lookbackWindowLag: float
-   :param lookbackCount: If window is specified in terms of count, the start position of the window (0 is the current row)
-   :type lookbackCount: int
-   :param lookbackUntilPosition: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
-   :type lookbackUntilPosition: int
-   :param historyTableName: The table to use for aggregating, if not provided, the source table will be used
-   :type historyTableName: str
-   :param historyWindowKey: Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
-   :type historyWindowKey: str
-   :param historyAggregationKeys: List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
-   :type historyAggregationKeys: list
-   :param features: List of features in the Point in Time group
-   :type features: PointInTimeGroupFeature
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, sourceDatasetVersions=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, indexingConfigWarningMsg=None, materializationStartedAt=None, materializationCompletedAt=None, columns=None, templateBindings=None, features={}, pointInTimeGroups={}, codeSource={}, annotationConfig={}, indexingConfig={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A materialized version of a feature group
 
@@ -308,11 +73,9 @@ Module Contents
    :param indexingConfig: The indexing config for the feature group.
    :type indexingConfig: IndexingConfig
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -321,7 +84,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: create_snapshot_feature_group(table_name)
@@ -333,7 +95,6 @@ Module Contents
 
       :returns: Feature Group corresponding to the newly created Snapshot.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: export_to_file_connector(location, export_file_format, overwrite = False)
@@ -349,7 +110,6 @@ Module Contents
 
       :returns: The FeatureGroupExport instance.
       :rtype: FeatureGroupExport
-
 
 
    .. py:method:: export_to_database_connector(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
@@ -373,7 +133,6 @@ Module Contents
       :rtype: FeatureGroupExport
 
 
-
    .. py:method:: export_to_console(export_file_format)
 
       Export Feature group to console.
@@ -383,7 +142,6 @@ Module Contents
 
       :returns: The FeatureGroupExport instance.
       :rtype: FeatureGroupExport
-
 
 
    .. py:method:: get_materialization_logs(stdout = False, stderr = False)
@@ -399,14 +157,12 @@ Module Contents
       :rtype: FunctionLogs
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: FeatureGroupVersion
-
 
 
    .. py:method:: describe()
@@ -418,7 +174,6 @@ Module Contents
 
       :returns: The feature group version.
       :rtype: FeatureGroupVersion
-
 
 
    .. py:method:: get_metrics(selected_columns = None, include_charts = False, include_statistics = True)
@@ -436,7 +191,6 @@ Module Contents
       :rtype: DataMetrics
 
 
-
    .. py:method:: get_logs()
 
       Retrieves the feature group materialization logs.
@@ -448,14 +202,12 @@ Module Contents
       :rtype: FeatureGroupVersionLogs
 
 
-
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until feature group version is materialized
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
-
 
 
    .. py:method:: wait_for_materialization(timeout=3600)
@@ -466,14 +218,12 @@ Module Contents
       :type timeout: int
 
 
-
    .. py:method:: get_status()
 
       Gets the status of the feature group version.
 
       :returns: A string describing the status of a feature group version (pending, complete, etc.).
       :rtype: str
-
 
 
    .. py:method:: _download_avro_file(file_part, tmp_dir, part_index)
@@ -488,7 +238,6 @@ Module Contents
 
       :returns: A pandas dataframe displaying the data in the feature group version.
       :rtype: DataFrame
-
 
 
    .. py:method:: load_as_pandas_documents(doc_id_column, document_column, max_workers=10)

@@ -1,795 +1,26 @@
-abacusai.feature_group
-======================
+:py:mod:`abacusai.feature_group`
+================================
 
 .. py:module:: abacusai.feature_group
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_group.AnnotationConfig
-   abacusai.feature_group.MergeConfig
-   abacusai.feature_group.ProjectFeatureGroupConfig
-   abacusai.feature_group.SamplingConfig
-   abacusai.feature_group.CodeSource
-   abacusai.feature_group.ConcatenationConfig
-   abacusai.feature_group.Feature
-   abacusai.feature_group.FeatureGroupTemplate
-   abacusai.feature_group.FeatureGroupVersion
-   abacusai.feature_group.IndexingConfig
-   abacusai.feature_group.NaturalLanguageExplanation
-   abacusai.feature_group.PointInTimeGroup
-   abacusai.feature_group.RefreshSchedule
-   abacusai.feature_group.AbstractApiClass
-   abacusai.feature_group.FeatureGroup
 
 
 Module Contents
 ---------------
 
-.. py:class:: AnnotationConfig(client, featureAnnotationConfigs=None, labels=None, statusFeature=None, commentsFeatures=None, metadataFeature=None)
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group.FeatureGroup
+
+
+
+
+.. py:class:: FeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={}, operatorConfig={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Annotation config for a feature group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param featureAnnotationConfigs: List of feature annotation configs
-   :type featureAnnotationConfigs: list
-   :param labels: List of labels
-   :type labels: list
-   :param statusFeature: Name of the feature that contains the status of the annotation (Optional)
-   :type statusFeature: str
-   :param commentsFeatures: Features that contain comments for the annotation (Optional)
-   :type commentsFeatures: list
-   :param metadataFeature: Name of the feature that contains the metadata for the annotation (Optional)
-   :type metadataFeature: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: MergeConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for the merge config of a feature group
-
-
-   .. py:attribute:: merge_mode
-      :type:  abacusai.api_class.enums.MergeMode
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-   .. py:method:: __post_init__()
-
-
-.. py:class:: ProjectFeatureGroupConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for project feature group configuration.
-
-
-   .. py:attribute:: type
-      :type:  abacusai.api_class.enums.ProjectConfigType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: SamplingConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for the sampling config of a feature group
-
-
-   .. py:attribute:: sampling_method
-      :type:  abacusai.api_class.enums.SamplingMethodType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-   .. py:method:: __post_init__()
-
-
-.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Code source for python-based custom feature groups and models
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param sourceType: The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
-   :type sourceType: str
-   :param sourceCode: If the type of the source is TEXT, the raw text of the function
-   :type sourceCode: str
-   :param applicationConnectorId: The Application Connector to fetch the code from
-   :type applicationConnectorId: str
-   :param applicationConnectorInfo: Args passed to the application connector to fetch the code
-   :type applicationConnectorInfo: str
-   :param packageRequirements: The pip package dependencies required to run the code
-   :type packageRequirements: list
-   :param status: The status of the code and validations
-   :type status: str
-   :param error: If the status is failed, an error message describing what went wrong
-   :type error: str
-   :param publishingMsg: Warnings in the source code
-   :type publishingMsg: dict
-   :param moduleDependencies: The list of internal modules dependencies required to run the code
-   :type moduleDependencies: list
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: import_as_cell()
-
-      Adds the source code as an unexecuted cell in the notebook.
-
-
-
-.. py:class:: ConcatenationConfig(client, concatenatedTable=None, mergeType=None, replaceUntilTimestamp=None, skipMaterialize=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Feature Group Concatenation Config
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param concatenatedTable: The feature group to concatenate with the destination feature group.
-   :type concatenatedTable: str
-   :param mergeType: The type of merge to perform, either `UNION` or `INTERSECTION`.
-   :type mergeType: str
-   :param replaceUntilTimestamp: The Unix timestamp to specify the point up to which data from the source feature group will be replaced.
-   :type replaceUntilTimestamp: int
-   :param skipMaterialize: If `True`, the concatenated feature group will not be materialized.
-   :type skipMaterialize: bool
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: Feature(client, name=None, selectClause=None, featureMapping=None, sourceTable=None, originalName=None, usingClause=None, orderClause=None, whereClause=None, featureType=None, dataType=None, detectedFeatureType=None, detectedDataType=None, columns={}, pointInTimeInfo={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A feature in a feature group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: The unique name of the column
-   :type name: str
-   :param selectClause: The sql logic for creating this feature's data
-   :type selectClause: str
-   :param featureMapping: The Feature Mapping of the feature
-   :type featureMapping: str
-   :param sourceTable: The source table of the column
-   :type sourceTable: str
-   :param originalName: The original name of the column
-   :type originalName: str
-   :param usingClause: Nested Column Using Clause
-   :type usingClause: str
-   :param orderClause: Nested Column Ordering Clause
-   :type orderClause: str
-   :param whereClause: Nested Column Where Clause
-   :type whereClause: str
-   :param featureType: Feature Type of the Feature
-   :type featureType: str
-   :param dataType: Data Type of the Feature
-   :type dataType: str
-   :param detectedFeatureType: The detected feature type of the column
-   :type detectedFeatureType: str
-   :param detectedDataType: The detected data type of the column
-   :type detectedDataType: str
-   :param columns: Nested Features
-   :type columns: NestedFeature
-   :param pointInTimeInfo: Point in time column information
-   :type pointInTimeInfo: PointInTimeFeature
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: FeatureGroupTemplate(client, featureGroupTemplateId=None, description=None, featureGroupId=None, isSystemTemplate=None, name=None, templateSql=None, templateVariables=None, createdAt=None, updatedAt=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A template for creating feature groups.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param featureGroupTemplateId: The unique identifier for this feature group template.
-   :type featureGroupTemplateId: str
-   :param description: A user-friendly text description of this feature group template.
-   :type description: str
-   :param featureGroupId: The unique identifier for the feature group used to create this template.
-   :type featureGroupId: str
-   :param isSystemTemplate: True if this is a system template returned from a user organization.
-   :type isSystemTemplate: bool
-   :param name: The user-friendly name of this feature group template.
-   :type name: str
-   :param templateSql: SQL that can include variables which will be replaced by values from the template config to resolve this template SQL into a valid SQL query for a feature group.
-   :type templateSql: str
-   :param templateVariables: A map, from template variable names to parameters for replacing those template variables with values (e.g. to values and metadata on how to resolve those values).
-   :type templateVariables: dict
-   :param createdAt: When the feature group template was created.
-   :type createdAt: str
-   :param updatedAt: When the feature group template was updated.
-   :type updatedAt: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: delete()
-
-      Delete an existing feature group template.
-
-      :param feature_group_template_id: Unique string identifier associated with the feature group template.
-      :type feature_group_template_id: str
-
-
-
-   .. py:method:: refresh()
-
-      Calls describe and refreshes the current object's fields
-
-      :returns: The current object
-      :rtype: FeatureGroupTemplate
-
-
-
-   .. py:method:: describe()
-
-      Describe a Feature Group Template.
-
-      :param feature_group_template_id: The unique identifier of a feature group template.
-      :type feature_group_template_id: str
-
-      :returns: The feature group template object.
-      :rtype: FeatureGroupTemplate
-
-
-
-   .. py:method:: update(template_sql = None, template_variables = None, description = None, name = None)
-
-      Update a feature group template.
-
-      :param template_sql: If provided, the new value to use for the template SQL.
-      :type template_sql: str
-      :param template_variables: If provided, the new value to use for the template variables.
-      :type template_variables: list
-      :param description: Description of this feature group template.
-      :type description: str
-      :param name: User-friendly name for this feature group template.
-      :type name: str
-
-      :returns: The updated feature group template.
-      :rtype: FeatureGroupTemplate
-
-
-
-   .. py:method:: preview_resolution(template_bindings = None, template_sql = None, template_variables = None, should_validate = True)
-
-      Resolve template sql using template variables and template bindings.
-
-      :param template_bindings: Values to override the template variable values specified by the template.
-      :type template_bindings: list
-      :param template_sql: If specified, use this as the template SQL instead of the feature group template's SQL.
-      :type template_sql: str
-      :param template_variables: Template variables to use. If a template is provided, this overrides the template's template variables.
-      :type template_variables: list
-      :param should_validate: If true, validates the resolved SQL.
-      :type should_validate: bool
-
-      :returns: The resolved template
-      :rtype: ResolvedFeatureGroupTemplate
-
-
-
-.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, sourceDatasetVersions=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, indexingConfigWarningMsg=None, materializationStartedAt=None, materializationCompletedAt=None, columns=None, templateBindings=None, features={}, pointInTimeGroups={}, codeSource={}, annotationConfig={}, indexingConfig={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A materialized version of a feature group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param featureGroupVersion: The unique identifier for this materialized version of feature group.
-   :type featureGroupVersion: str
-   :param featureGroupId: The unique identifier of the feature group this version belongs to.
-   :type featureGroupId: str
-   :param sql: The sql definition creating this feature group.
-   :type sql: str
-   :param sourceTables: The source tables for this feature group.
-   :type sourceTables: list[str]
-   :param sourceDatasetVersions: The dataset version ids for this feature group version.
-   :type sourceDatasetVersions: list[str]
-   :param createdAt: The timestamp at which the feature group version was created.
-   :type createdAt: str
-   :param status: The current status of the feature group version.
-   :type status: str
-   :param error: Relevant error if the status is FAILED.
-   :type error: str
-   :param deployable: whether feature group is deployable or not.
-   :type deployable: bool
-   :param cpuSize: Cpu size specified for the python feature group.
-   :type cpuSize: str
-   :param memory: Memory in GB specified for the python feature group.
-   :type memory: int
-   :param useOriginalCsvNames: If true, the feature group will use the original column names in the source dataset.
-   :type useOriginalCsvNames: bool
-   :param pythonFunctionBindings: Config specifying variable names, types, and values to use when resolving a Python feature group.
-   :type pythonFunctionBindings: list
-   :param indexingConfigWarningMsg: The warning message related to indexing keys.
-   :type indexingConfigWarningMsg: str
-   :param materializationStartedAt: The timestamp at which the feature group materialization started.
-   :type materializationStartedAt: str
-   :param materializationCompletedAt: The timestamp at which the feature group materialization completed.
-   :type materializationCompletedAt: str
-   :param columns: List of resolved columns.
-   :type columns: list[feature]
-   :param templateBindings: Template variable bindings used for resolving the template.
-   :type templateBindings: list
-   :param features: List of features.
-   :type features: Feature
-   :param pointInTimeGroups: List of Point In Time Groups
-   :type pointInTimeGroups: PointInTimeGroup
-   :param codeSource: If a python feature group, information on the source code
-   :type codeSource: CodeSource
-   :param annotationConfig: The annotations config for the feature group.
-   :type annotationConfig: AnnotationConfig
-   :param indexingConfig: The indexing config for the feature group.
-   :type indexingConfig: IndexingConfig
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: create_snapshot_feature_group(table_name)
-
-      Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
-
-      :param table_name: Name for the newly created Snapshot Feature Group table. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
-      :type table_name: str
-
-      :returns: Feature Group corresponding to the newly created Snapshot.
-      :rtype: FeatureGroup
-
-
-
-   .. py:method:: export_to_file_connector(location, export_file_format, overwrite = False)
-
-      Export Feature group to File Connector.
-
-      :param location: Cloud file location to export to.
-      :type location: str
-      :param export_file_format: Enum string specifying the file format to export to.
-      :type export_file_format: str
-      :param overwrite: If true and a file exists at this location, this process will overwrite the file.
-      :type overwrite: bool
-
-      :returns: The FeatureGroupExport instance.
-      :rtype: FeatureGroupExport
-
-
-
-   .. py:method:: export_to_database_connector(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
-
-      Export Feature group to Database Connector.
-
-      :param database_connector_id: Unique string identifier for the Database Connector to export to.
-      :type database_connector_id: str
-      :param object_name: Name of the database object to write to.
-      :type object_name: str
-      :param write_mode: Enum string indicating whether to use INSERT or UPSERT.
-      :type write_mode: str
-      :param database_feature_mapping: Key/value pair JSON object of "database connector column" -> "feature name" pairs.
-      :type database_feature_mapping: dict
-      :param id_column: Required if write_mode is UPSERT. Indicates which database column should be used as the lookup key.
-      :type id_column: str
-      :param additional_id_columns: For database connectors which support it, additional ID columns to use as a complex key for upserting.
-      :type additional_id_columns: list
-
-      :returns: The FeatureGroupExport instance.
-      :rtype: FeatureGroupExport
-
-
-
-   .. py:method:: export_to_console(export_file_format)
-
-      Export Feature group to console.
-
-      :param export_file_format: File format to export to.
-      :type export_file_format: str
-
-      :returns: The FeatureGroupExport instance.
-      :rtype: FeatureGroupExport
-
-
-
-   .. py:method:: get_materialization_logs(stdout = False, stderr = False)
-
-      Returns logs for a materialized feature group version.
-
-      :param stdout: Set to True to get info logs.
-      :type stdout: bool
-      :param stderr: Set to True to get error logs.
-      :type stderr: bool
-
-      :returns: A function logs object.
-      :rtype: FunctionLogs
-
-
-
-   .. py:method:: refresh()
-
-      Calls describe and refreshes the current object's fields
-
-      :returns: The current object
-      :rtype: FeatureGroupVersion
-
-
-
-   .. py:method:: describe()
-
-      Describe a feature group version.
-
-      :param feature_group_version: The unique identifier associated with the feature group version.
-      :type feature_group_version: str
-
-      :returns: The feature group version.
-      :rtype: FeatureGroupVersion
-
-
-
-   .. py:method:: get_metrics(selected_columns = None, include_charts = False, include_statistics = True)
-
-      Get metrics for a specific feature group version.
-
-      :param selected_columns: A list of columns to order first.
-      :type selected_columns: List
-      :param include_charts: A flag indicating whether charts should be included in the response. Default is false.
-      :type include_charts: bool
-      :param include_statistics: A flag indicating whether statistics should be included in the response. Default is true.
-      :type include_statistics: bool
-
-      :returns: The metrics for the specified feature group version.
-      :rtype: DataMetrics
-
-
-
-   .. py:method:: get_logs()
-
-      Retrieves the feature group materialization logs.
-
-      :param feature_group_version: The unique version ID of the feature group version.
-      :type feature_group_version: str
-
-      :returns: The logs for the specified feature group version.
-      :rtype: FeatureGroupVersionLogs
-
-
-
-   .. py:method:: wait_for_results(timeout=3600)
-
-      A waiting call until feature group version is materialized
-
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int
-
-
-
-   .. py:method:: wait_for_materialization(timeout=3600)
-
-      A waiting call until feature group version is materialized.
-
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int
-
-
-
-   .. py:method:: get_status()
-
-      Gets the status of the feature group version.
-
-      :returns: A string describing the status of a feature group version (pending, complete, etc.).
-      :rtype: str
-
-
-
-   .. py:method:: _download_avro_file(file_part, tmp_dir, part_index)
-
-
-   .. py:method:: load_as_pandas(max_workers=10)
-
-      Loads the feature group version into a pandas dataframe.
-
-      :param max_workers: The number of threads.
-      :type max_workers: int
-
-      :returns: A pandas dataframe displaying the data in the feature group version.
-      :rtype: DataFrame
-
-
-
-   .. py:method:: load_as_pandas_documents(doc_id_column, document_column, max_workers=10)
-
-      Loads a feature group with documents data into a pandas dataframe.
-
-      :param doc_id_feature: The name of the feature / column containing the document ID.
-      :type doc_id_feature: str
-      :param document_feature: The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
-      :type document_feature: str
-      :param max_workers: The number of threads.
-      :type max_workers: int
-
-      :returns: A pandas dataframe containing the extracted document data.
-      :rtype: DataFrame
-
-
-
-.. py:class:: IndexingConfig(client, primaryKey=None, updateTimestampKey=None, lookupKeys=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   The indexing config for a Feature Group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param primaryKey: A single key index
-   :type primaryKey: str
-   :param updateTimestampKey: The primary timestamp feature
-   :type updateTimestampKey: str
-   :param lookupKeys: A multi-key index. Cannot be used in conjuction with primary key.
-   :type lookupKeys: list[str]
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: NaturalLanguageExplanation(client, shortExplanation=None, longExplanation=None, isOutdated=None, htmlExplanation=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Natural language explanation of an artifact/object
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param shortExplanation: succinct explanation of the artifact
-   :type shortExplanation: str
-   :param longExplanation: Longer and verbose explanation of the artifact
-   :type longExplanation: str
-   :param isOutdated: Flag indicating whether the explanation is outdated due to a change in the underlying artifact
-   :type isOutdated: bool
-   :param htmlExplanation: HTML formatted explanation of the artifact
-   :type htmlExplanation: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: PointInTimeGroup(client, groupName=None, windowKey=None, aggregationKeys=None, lookbackWindow=None, lookbackWindowLag=None, lookbackCount=None, lookbackUntilPosition=None, historyTableName=None, historyWindowKey=None, historyAggregationKeys=None, features={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A point in time group containing point in time features
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param groupName: The name of the point in time group
-   :type groupName: str
-   :param windowKey: Name of feature which contains the timestamp value for the point in time feature
-   :type windowKey: str
-   :param aggregationKeys: List of keys to use for join the historical table and performing the window aggregation.
-   :type aggregationKeys: list
-   :param lookbackWindow: Number of seconds in the past from the current time for start of the window.
-   :type lookbackWindow: float
-   :param lookbackWindowLag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
-   :type lookbackWindowLag: float
-   :param lookbackCount: If window is specified in terms of count, the start position of the window (0 is the current row)
-   :type lookbackCount: int
-   :param lookbackUntilPosition: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
-   :type lookbackUntilPosition: int
-   :param historyTableName: The table to use for aggregating, if not provided, the source table will be used
-   :type historyTableName: str
-   :param historyWindowKey: Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
-   :type historyWindowKey: str
-   :param historyAggregationKeys: List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
-   :type historyAggregationKeys: list
-   :param features: List of features in the Point in Time group
-   :type features: PointInTimeGroupFeature
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, error=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A refresh schedule for an object. Defines when the next version of the object will be created
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param refreshPolicyId: The unique identifier of the refresh policy
-   :type refreshPolicyId: str
-   :param nextRunTime: The next run time of the refresh policy. If null, the policy is paused.
-   :type nextRunTime: str
-   :param cron: A cron-style string that describes the when this refresh policy is to be executed in UTC
-   :type cron: str
-   :param refreshType: The type of refresh that will be run
-   :type refreshType: str
-   :param error: An error message for the last pipeline run of a policy
-   :type error: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
-
-
-.. py:class:: FeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, operatorConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
 
    A feature group.
 
@@ -839,8 +70,6 @@ Module Contents
    :type incremental: bool
    :param mergeConfig: Merge configuration settings for the feature group.
    :type mergeConfig: dict
-   :param operatorConfig: Operator configuration settings for the feature group.
-   :type operatorConfig: dict
    :param samplingConfig: Sampling configuration for the feature group.
    :type samplingConfig: dict
    :param cpuSize: CPU size specified for the Python feature group.
@@ -887,12 +116,12 @@ Module Contents
    :type explanation: NaturalLanguageExplanation
    :param refreshSchedules: List of schedules that determines when the next version of the feature group will be created.
    :type refreshSchedules: RefreshSchedule
-
+   :param operatorConfig: Operator configuration settings for the feature group.
+   :type operatorConfig: OperatorConfig
 
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -901,7 +130,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: add_to_project(project_id, feature_group_type = 'CUSTOM_TABLE')
@@ -914,7 +142,6 @@ Module Contents
       :type feature_group_type: str
 
 
-
    .. py:method:: set_project_config(project_id, project_config = None)
 
       Sets a feature group's project config
@@ -923,7 +150,6 @@ Module Contents
       :type project_id: str
       :param project_config: Feature group's project configuration.
       :type project_config: ProjectFeatureGroupConfig
-
 
 
    .. py:method:: get_project_config(project_id)
@@ -937,14 +163,12 @@ Module Contents
       :rtype: ProjectConfig
 
 
-
    .. py:method:: remove_from_project(project_id)
 
       Removes a feature group from a project.
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
-
 
 
    .. py:method:: set_type(project_id, feature_group_type = 'CUSTOM_TABLE')
@@ -955,7 +179,6 @@ Module Contents
       :type project_id: str
       :param feature_group_type: The feature group type to set the feature group as.
       :type feature_group_type: str
-
 
 
    .. py:method:: describe_annotation(feature_name = None, doc_id = None, feature_group_row_identifier = None)
@@ -973,7 +196,6 @@ Module Contents
       :rtype: AnnotationEntry
 
 
-
    .. py:method:: verify_and_describe_annotation(feature_name = None, doc_id = None, feature_group_row_identifier = None)
 
       Get the latest annotation entry for a given feature group, feature, and document along with verification information.
@@ -987,7 +209,6 @@ Module Contents
 
       :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information.
       :rtype: AnnotationEntry
-
 
 
    .. py:method:: update_annotation_status(feature_name, status, doc_id = None, feature_group_row_identifier = None, save_metadata = False)
@@ -1009,7 +230,6 @@ Module Contents
       :rtype: AnnotationEntry
 
 
-
    .. py:method:: get_document_to_annotate(project_id, feature_name, feature_group_row_identifier = None, get_previous = False)
 
       Get an available document that needs to be annotated for a annotation feature group.
@@ -1027,7 +247,6 @@ Module Contents
       :rtype: AnnotationDocument
 
 
-
    .. py:method:: get_annotations_status(feature_name = None, check_for_materialization = False)
 
       Get the status of the annotations for a given feature group and feature.
@@ -1041,7 +260,6 @@ Module Contents
       :rtype: AnnotationsStatus
 
 
-
    .. py:method:: import_annotation_labels(file, annotation_type)
 
       Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).
@@ -1053,7 +271,6 @@ Module Contents
 
       :returns: The annotation config for the feature group.
       :rtype: AnnotationConfig
-
 
 
    .. py:method:: create_sampling(table_name, sampling_config, description = None)
@@ -1074,7 +291,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: set_sampling_config(sampling_config)
 
       Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
@@ -1084,7 +300,6 @@ Module Contents
 
       :returns: The updated FeatureGroup.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: set_merge_config(merge_config)
@@ -1098,14 +313,15 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: set_operator_config(operator_config)
 
       Set a OperatorFeatureGroup’s operator config to the values provided.
 
       :param operator_config: A dictionary object specifying the pre-defined operations.
-      :type operator_config: dict
+      :type operator_config: OperatorConfig
 
+      :returns: The updated FeatureGroup.
+      :rtype: FeatureGroup
 
 
    .. py:method:: set_schema(schema)
@@ -1114,7 +330,6 @@ Module Contents
 
       :param schema: JSON string containing an array of objects with 'name' and 'dataType' properties.
       :type schema: list
-
 
 
    .. py:method:: get_schema(project_id = None)
@@ -1126,7 +341,6 @@ Module Contents
 
       :returns: A list of objects for each column in the specified feature group.
       :rtype: list[Feature]
-
 
 
    .. py:method:: create_feature(name, select_expression)
@@ -1142,7 +356,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: add_tag(tag)
 
       Adds a tag to the feature group
@@ -1151,14 +364,12 @@ Module Contents
       :type tag: str
 
 
-
    .. py:method:: remove_tag(tag)
 
       Removes a tag from the specified feature group.
 
       :param tag: The tag to remove from the feature group.
       :type tag: str
-
 
 
    .. py:method:: add_annotatable_feature(name, annotation_type)
@@ -1172,7 +383,6 @@ Module Contents
 
       :returns: The feature group after the feature has been set
       :rtype: FeatureGroup
-
 
 
    .. py:method:: set_feature_as_annotatable_feature(feature_name, annotation_type, feature_group_row_identifier_feature = None, doc_id_feature = None)
@@ -1192,7 +402,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: set_annotation_status_feature(feature_name)
 
       Sets a feature as the annotation status feature for a feature group.
@@ -1204,7 +413,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: unset_feature_as_annotatable_feature(feature_name)
 
       Unsets a feature as annotatable
@@ -1214,7 +422,6 @@ Module Contents
 
       :returns: The feature group after unsetting the feature
       :rtype: FeatureGroup
-
 
 
    .. py:method:: add_annotation_label(label_name, annotation_type, label_definition = None)
@@ -1232,7 +439,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: remove_annotation_label(label_name)
 
       Removes an annotation label
@@ -1242,7 +448,6 @@ Module Contents
 
       :returns: The feature group after adding the annotation label
       :rtype: FeatureGroup
-
 
 
    .. py:method:: add_feature_tag(feature, tag)
@@ -1255,7 +460,6 @@ Module Contents
       :type tag: str
 
 
-
    .. py:method:: remove_feature_tag(feature, tag)
 
       Removes a tag from a feature
@@ -1264,7 +468,6 @@ Module Contents
       :type feature: str
       :param tag: The tag to remove.
       :type tag: str
-
 
 
    .. py:method:: create_nested_feature(nested_feature_name, table_name, using_clause, where_clause = None, order_clause = None)
@@ -1284,7 +487,6 @@ Module Contents
 
       :returns: A feature group object with the newly added nested feature.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: update_nested_feature(nested_feature_name, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
@@ -1308,7 +510,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: delete_nested_feature(nested_feature_name)
 
       Delete a nested feature.
@@ -1318,7 +519,6 @@ Module Contents
 
       :returns: A feature group object without the specified nested feature.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: create_point_in_time_feature(feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0)
@@ -1355,7 +555,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: update_point_in_time_feature(feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, new_feature_name = None)
 
       Updates an existing Point-in-Time (PiT) feature in a feature group. See `createPointInTimeFeature` for detailed semantics.
@@ -1387,7 +586,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: create_point_in_time_group(group_name, window_key, aggregation_keys, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
 
       Create a Point-in-Time Group
@@ -1417,7 +615,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: generate_point_in_time_features(group_name, columns, window_functions, prefix = None)
 
       Generates and adds PIT features given the selected columns to aggregate over, and the operations to include.
@@ -1433,7 +630,6 @@ Module Contents
 
       :returns: Feature group object with newly added point-in-time features.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: update_point_in_time_group(group_name, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
@@ -1465,7 +661,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: delete_point_in_time_group(group_name)
 
       Delete point in time group
@@ -1475,7 +670,6 @@ Module Contents
 
       :returns: The feature group after the point in time group has been deleted.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: create_point_in_time_group_feature(group_name, name, expression)
@@ -1493,7 +687,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: update_point_in_time_group_feature(group_name, name, expression)
 
       Update a feature's SQL expression in a point in time group
@@ -1507,7 +700,6 @@ Module Contents
 
       :returns: The feature group after the update has been applied.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: set_feature_type(feature, feature_type, project_id = None)
@@ -1525,14 +717,12 @@ Module Contents
       :rtype: Schema
 
 
-
    .. py:method:: invalidate_streaming_data(invalid_before_timestamp)
 
       Invalidates all streaming data with timestamp before invalidBeforeTimestamp
 
       :param invalid_before_timestamp: Unix timestamp; any data with a timestamp before this time will be invalidated
       :type invalid_before_timestamp: int
-
 
 
    .. py:method:: concatenate_data(source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
@@ -1549,7 +739,6 @@ Module Contents
       :type skip_materialize: bool
 
 
-
    .. py:method:: remove_concatenation_config()
 
       Removes the concatenation config on a destination feature group.
@@ -1558,14 +747,12 @@ Module Contents
       :type feature_group_id: str
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: FeatureGroup
-
 
 
    .. py:method:: describe()
@@ -1577,7 +764,6 @@ Module Contents
 
       :returns: The feature group object.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: set_indexing_config(primary_key = None, update_timestamp_key = None, lookup_keys = None)
@@ -1592,7 +778,6 @@ Module Contents
       :type lookup_keys: list
 
 
-
    .. py:method:: update(description = None)
 
       Modify an existing Feature Group.
@@ -1602,7 +787,6 @@ Module Contents
 
       :returns: Updated Feature Group object.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: detach_from_template()
@@ -1616,7 +800,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: update_template_bindings(template_bindings = None)
 
       Update the feature group template bindings for a template feature group.
@@ -1628,14 +811,12 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: update_python_function_bindings(python_function_bindings)
 
       Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
       :param python_function_bindings: List of python function arguments.
       :type python_function_bindings: List
-
 
 
    .. py:method:: update_python_function(python_function_name, python_function_bindings = None, cpu_size = None, memory = None, use_gpu = None, use_original_csv_names = None)
@@ -1651,14 +832,13 @@ Module Contents
       :param python_function_bindings: List of python function arguments.
       :type python_function_bindings: List
       :param cpu_size: Size of the CPU for the feature group python function.
-      :type cpu_size: str
+      :type cpu_size: CPUSize
       :param memory: Memory (in GB) for the feature group python function.
-      :type memory: int
+      :type memory: MemorySize
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
       :param use_original_csv_names: If enabled, it uses the original column names for input feature groups from CSV datasets.
       :type use_original_csv_names: bool
-
 
 
    .. py:method:: update_sql_definition(sql)
@@ -1672,7 +852,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: update_dataset_feature_expression(feature_expression)
 
       Updates the SQL feature expression for a Dataset FeatureGroup's custom features
@@ -1682,7 +861,6 @@ Module Contents
 
       :returns: The updated feature group.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: update_feature(name, select_expression = None, new_name = None)
@@ -1700,7 +878,6 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: list_exports()
 
       Lists all of the feature group exports for the feature group
@@ -1712,14 +889,12 @@ Module Contents
       :rtype: list[FeatureGroupExport]
 
 
-
    .. py:method:: set_modifier_lock(locked = True)
 
       Lock a feature group to prevent modification.
 
       :param locked: Whether to disable or enable feature group modification (True or False).
       :type locked: bool
-
 
 
    .. py:method:: list_modifiers()
@@ -1733,14 +908,12 @@ Module Contents
       :rtype: ModificationLockInfo
 
 
-
    .. py:method:: add_user_to_modifiers(email)
 
       Adds a user to a feature group.
 
       :param email: The email address of the user to be added.
       :type email: str
-
 
 
    .. py:method:: add_organization_group_to_modifiers(organization_group_id)
@@ -1751,7 +924,6 @@ Module Contents
       :type organization_group_id: str
 
 
-
    .. py:method:: remove_user_from_modifiers(email)
 
       Removes a user from a specified feature group.
@@ -1760,14 +932,12 @@ Module Contents
       :type email: str
 
 
-
    .. py:method:: remove_organization_group_from_modifiers(organization_group_id)
 
       Removes an OrganizationGroup from a feature group modifiers list
 
       :param organization_group_id: The unique ID associated with the organization group.
       :type organization_group_id: str
-
 
 
    .. py:method:: delete_feature(name)
@@ -1781,14 +951,12 @@ Module Contents
       :rtype: FeatureGroup
 
 
-
    .. py:method:: delete()
 
       Deletes a Feature Group.
 
       :param feature_group_id: Unique string identifier for the feature group to be removed.
       :type feature_group_id: str
-
 
 
    .. py:method:: create_version(variable_bindings = None)
@@ -1802,7 +970,6 @@ Module Contents
       :rtype: FeatureGroupVersion
 
 
-
    .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       Retrieves a list of all feature group versions for the specified feature group.
@@ -1814,7 +981,6 @@ Module Contents
 
       :returns: A list of feature group versions.
       :rtype: list[FeatureGroupVersion]
-
 
 
    .. py:method:: create_template(name, template_sql, template_variables, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
@@ -1838,7 +1004,6 @@ Module Contents
       :rtype: FeatureGroupTemplate
 
 
-
    .. py:method:: suggest_template_for()
 
       Suggest values for a feature gruop template, based on a feature group.
@@ -1850,14 +1015,12 @@ Module Contents
       :rtype: FeatureGroupTemplate
 
 
-
    .. py:method:: get_recent_streamed_data()
 
       Returns recently streamed data to a streaming feature group.
 
       :param feature_group_id: Unique string identifier associated with the feature group.
       :type feature_group_id: str
-
 
 
    .. py:method:: append_data(streaming_token, data)
@@ -1870,7 +1033,6 @@ Module Contents
       :type data: dict
 
 
-
    .. py:method:: append_multiple_data(streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
@@ -1879,7 +1041,6 @@ Module Contents
       :type streaming_token: str
       :param data: Data to record, as a list of JSON objects.
       :type data: list
-
 
 
    .. py:method:: upsert_data(data, streaming_token = None)
@@ -1895,14 +1056,12 @@ Module Contents
       :rtype: FeatureGroupRow
 
 
-
    .. py:method:: delete_data(primary_key)
 
       Deletes a row from the feature group given the primary key
 
       :param primary_key: The primary key value for which to delete the feature group row
       :type primary_key: str
-
 
 
    .. py:method:: get_data(primary_key = None, num_rows = None)
@@ -1922,7 +1081,6 @@ Module Contents
       :rtype: list[FeatureGroupRow]
 
 
-
    .. py:method:: get_natural_language_explanation(feature_group_version = None, model_id = None)
 
       Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
@@ -1934,7 +1092,6 @@ Module Contents
 
       :returns: The object containing natural language explanation(s) as field(s).
       :rtype: NaturalLanguageExplanation
-
 
 
    .. py:method:: generate_natural_language_explanation(feature_group_version = None, model_id = None)
@@ -1950,14 +1107,12 @@ Module Contents
       :rtype: NaturalLanguageExplanation
 
 
-
    .. py:method:: wait_for_dataset(timeout = 7200)
 
           A waiting call until the feature group's dataset, if any, is ready for use.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
       :type timeout: int
-
 
 
    .. py:method:: wait_for_upload(timeout = 7200)
@@ -1968,14 +1123,12 @@ Module Contents
       :type timeout: int
 
 
-
    .. py:method:: wait_for_materialization(timeout = 7200)
 
       A waiting call until feature group is materialized.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
       :type timeout: int
-
 
 
    .. py:method:: wait_for_streaming_ready(timeout = 600)
@@ -1986,7 +1139,6 @@ Module Contents
       :type timeout: int
 
 
-
    .. py:method:: get_status(streaming_status = False)
 
       Gets the status of the feature group.
@@ -1995,14 +1147,12 @@ Module Contents
       :rtype: str
 
 
-
    .. py:method:: load_as_pandas()
 
       Loads the feature groups into a python pandas dataframe.
 
       :returns: A pandas dataframe with annotations and text_snippet columns.
       :rtype: DataFrame
-
 
 
    .. py:method:: load_as_pandas_documents(doc_id_column, document_column)
@@ -2018,14 +1168,12 @@ Module Contents
       :rtype: DataFrame
 
 
-
    .. py:method:: describe_dataset()
 
       Displays the dataset attached to a feature group.
 
       :returns: A dataset object with all the relevant information about the dataset.
       :rtype: Dataset
-
 
 
    .. py:method:: materialize()

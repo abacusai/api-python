@@ -1,27 +1,29 @@
-abacusai.python_function_validator
-==================================
+:py:mod:`abacusai.python_function_validator`
+============================================
 
 .. py:module:: abacusai.python_function_validator
 
 
+Module Contents
+---------------
+
 Classes
--------
+~~~~~~~
 
 .. autoapisummary::
 
    abacusai.python_function_validator._MonkeyPatch
 
 
+
 Functions
----------
+~~~~~~~~~
 
 .. autoapisummary::
 
    abacusai.python_function_validator.validate_function_locally
 
 
-Module Contents
----------------
 
 .. py:function:: validate_function_locally(client, python_function_name, kwargs = None)
 
@@ -43,20 +45,18 @@ Module Contents
 
 .. py:class:: _MonkeyPatch
 
+
    Helper class to prepend to ``sys.path`` and undo monkeypatching of attributes
        :syspath_prepend: prepend to ``sys.path`` list of import locations
        :undo: undo all changes made
-
 
    .. py:method:: context()
       :classmethod:
 
 
-
    .. py:method:: syspath_prepend(path)
 
       Prepend ``path`` to ``sys.path`` list of import locations.
-
 
 
    .. py:method:: undo()

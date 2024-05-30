@@ -1,145 +1,26 @@
-abacusai.feature_drift_summary
-==============================
+:py:mod:`abacusai.feature_drift_summary`
+========================================
 
 .. py:module:: abacusai.feature_drift_summary
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_drift_summary.CategoricalRangeViolation
-   abacusai.feature_drift_summary.NullViolation
-   abacusai.feature_drift_summary.RangeViolation
-   abacusai.feature_drift_summary.AbstractApiClass
-   abacusai.feature_drift_summary.FeatureDriftSummary
 
 
 Module Contents
 ---------------
 
-.. py:class:: CategoricalRangeViolation(client, name=None, mostCommonValues=None, freqOutsideTrainingRange=None)
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
-
-   Summary of important range mismatches for a numerical feature discovered by a model monitoring instance
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: Name of feature.
-   :type name: str
-   :param mostCommonValues: List of most common feature names in the prediction distribution not present in the training distribution.
-   :type mostCommonValues: list[str]
-   :param freqOutsideTrainingRange: Frequency of prediction rows outside training distribution for the specified feature.
-   :type freqOutsideTrainingRange: float
+   abacusai.feature_drift_summary.FeatureDriftSummary
 
 
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: NullViolation(client, name=None, violation=None, trainingNullFreq=None, predictionNullFreq=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Summary of anomalous null frequencies for a feature discovered by a model monitoring instance
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: Name of feature.
-   :type name: str
-   :param violation: Description of null violation for a prediction feature.
-   :type violation: str
-   :param trainingNullFreq: Proportion of null entries in training feature.
-   :type trainingNullFreq: float
-   :param predictionNullFreq: Proportion of null entries in prediction feature.
-   :type predictionNullFreq: float
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: RangeViolation(client, name=None, trainingMin=None, trainingMax=None, predictionMin=None, predictionMax=None, freqAboveTrainingRange=None, freqBelowTrainingRange=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Summary of important range mismatches for a numerical feature discovered by a model monitoring instance
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: Name of feature.
-   :type name: str
-   :param trainingMin: Minimum value of training distribution for the specified feature.
-   :type trainingMin: float
-   :param trainingMax: Maximum value of training distribution for the specified feature.
-   :type trainingMax: float
-   :param predictionMin: Minimum value of prediction distribution for the specified feature.
-   :type predictionMin: float
-   :param predictionMax: Maximum value of prediction distribution for the specified feature.
-   :type predictionMax: float
-   :param freqAboveTrainingRange: Frequency of prediction rows below training minimum for the specified feature.
-   :type freqAboveTrainingRange: float
-   :param freqBelowTrainingRange: Frequency of prediction rows above training maximum for the specified feature.
-   :type freqBelowTrainingRange: float
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, predictionDrift=None, targetColumn=None, dataIntegrityTimeseries=None, nestedSummary=None, psi=None, csi=None, chiSquare=None, nullViolations={}, rangeViolations={}, catViolations={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Summary of important model monitoring statistics for features available in a model monitoring instance
 
@@ -178,11 +59,9 @@ Module Contents
    :param catViolations: A list of dicts of categorical feature names and corresponding prediction range discrepancies.
    :type catViolations: CategoricalRangeViolation
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

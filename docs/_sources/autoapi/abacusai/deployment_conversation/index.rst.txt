@@ -1,115 +1,26 @@
-abacusai.deployment_conversation
-================================
+:py:mod:`abacusai.deployment_conversation`
+==========================================
 
 .. py:module:: abacusai.deployment_conversation
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.deployment_conversation.DeploymentConversationEvent
-   abacusai.deployment_conversation.AbstractApiClass
-   abacusai.deployment_conversation.DeploymentConversation
 
 
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None)
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.deployment_conversation.DeploymentConversation
+
+
+
+
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, history={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A single deployment conversation message.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param role: The role of the message sender
-   :type role: str
-   :param text: The text of the message
-   :type text: str
-   :param timestamp: The timestamp at which the message was sent
-   :type timestamp: str
-   :param messageIndex: The index of the message in the conversation
-   :type messageIndex: int
-   :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
-   :type regenerateAttempt: int
-   :param modelVersion: The model instance id associated with the message.
-   :type modelVersion: str
-   :param searchResults: The search results for the message.
-   :type searchResults: dict
-   :param isUseful: Whether this message was marked as useful or not
-   :type isUseful: bool
-   :param feedback: The feedback provided for the message
-   :type feedback: str
-   :param feedbackType: The type of feedback provided for the message
-   :type feedbackType: str
-   :param docInfos: A list of information on the documents associated with the message
-   :type docInfos: list
-   :param keywordArguments: User message only. A dictionary of keyword arguments used to generate response.
-   :type keywordArguments: dict
-   :param inputParams: User message only. A dictionary of input parameters used to generate response.
-   :type inputParams: dict
-   :param attachments: A list of attachments associated with the message.
-   :type attachments: list
-   :param responseVersion: The version of the response, used to differentiate w/ legacy agent response.
-   :type responseVersion: str
-   :param agentWorkflowNodeId: The workflow node id associated with the agent response.
-   :type agentWorkflowNodeId: str
-   :param nextAgentWorkflowNodeId: The id of the workflow node to be executed next.
-   :type nextAgentWorkflowNodeId: str
-   :param chatType: The type of chat llm that was run for the message.
-   :type chatType: str
-   :param agentResponse: Response from the agent. Only for conversation with agents.
-   :type agentResponse: dict
-   :param error: The error message in case of an error.
-   :type error: str
-   :param segments: The segments of the message.
-   :type segments: list
-   :param streamedData: Aggregated streamed messages from the agent.
-   :type streamedData: str
-   :param streamedSectionData: Aggregated streamed section outputs from the agent in a list.
-   :type streamedSectionData: str
-   :param highlights: Chunks with bounding boxes for highlighting the result sources.
-   :type highlights: dict
-   :param llmDisplayName: The display name of the LLM model used to generate the response. Only used for system-created bots.
-   :type llmDisplayName: str
-   :param llmBotIcon: The icon location of the LLM model used to generate the response. Only used for system-created bots.
-   :type llmBotIcon: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
-
-
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, history={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
 
    A deployment conversation.
 
@@ -131,14 +42,14 @@ Module Contents
    :type regenerateAttempt: int
    :param externalApplicationId: The external application id associated with the deployment conversation.
    :type externalApplicationId: str
+   :param unusedDocumentUploadIds: The list of unused document upload ids associated with the deployment conversation.
+   :type unusedDocumentUploadIds: list[str]
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
-
 
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -149,8 +60,7 @@ Module Contents
       :rtype: dict
 
 
-
-   .. py:method:: get(external_session_id = None, deployment_id = None, deployment_token = None, filter_intermediate_conversation_events = True)
+   .. py:method:: get(external_session_id = None, deployment_id = None, deployment_token = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
 
       Gets a deployment conversation.
 
@@ -162,10 +72,11 @@ Module Contents
       :type deployment_token: str
       :param filter_intermediate_conversation_events: If true, intermediate conversation events will be filtered out. Default is true.
       :type filter_intermediate_conversation_events: bool
+      :param get_unused_document_uploads: If true, unused document uploads will be returned. Default is false.
+      :type get_unused_document_uploads: bool
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
-
 
 
    .. py:method:: delete(deployment_id = None, deployment_token = None)
@@ -176,7 +87,6 @@ Module Contents
       :type deployment_id: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
       :type deployment_token: str
-
 
 
    .. py:method:: clear(external_session_id = None, deployment_id = None, deployment_token = None, user_message_indices = None)
@@ -191,7 +101,6 @@ Module Contents
       :type deployment_token: str
       :param user_message_indices: Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.
       :type user_message_indices: list
-
 
 
    .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None, deployment_token = None)
@@ -214,7 +123,6 @@ Module Contents
       :type deployment_token: str
 
 
-
    .. py:method:: rename(name, deployment_id = None, deployment_token = None)
 
       Rename a Deployment Conversation.
@@ -225,7 +133,6 @@ Module Contents
       :type deployment_id: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
       :type deployment_token: str
-
 
 
    .. py:method:: export(external_session_id = None)

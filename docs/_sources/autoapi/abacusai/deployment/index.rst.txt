@@ -1,204 +1,26 @@
-abacusai.deployment
-===================
+:py:mod:`abacusai.deployment`
+=============================
 
 .. py:module:: abacusai.deployment
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.deployment.AlertActionConfig
-   abacusai.deployment.AlertConditionConfig
-   abacusai.deployment.BatchPredictionArgs
-   abacusai.deployment.PredictionArguments
-   abacusai.deployment.FeatureGroupExportConfig
-   abacusai.deployment.RefreshSchedule
-   abacusai.deployment.AbstractApiClass
-   abacusai.deployment.Deployment
 
 
 Module Contents
 ---------------
 
-.. py:class:: AlertActionConfig
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+.. autoapisummary::
 
+   abacusai.deployment.Deployment
 
-   An abstract class for alert action configs
 
-
-   .. py:attribute:: action_type
-      :type:  abacusai.api_class.enums.AlertActionType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: AlertConditionConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for alert condition configs
-
-
-   .. py:attribute:: alert_type
-      :type:  abacusai.api_class.enums.MonitorAlertType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: BatchPredictionArgs
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for Batch Prediction args specific to problem type.
-
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:attribute:: kwargs
-      :type:  dict
-
-
-   .. py:attribute:: problem_type
-      :type:  abacusai.api_class.enums.ProblemType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: PredictionArguments
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for prediction arguments specific to problem type.
-
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:attribute:: kwargs
-      :type:  dict
-
-
-   .. py:attribute:: problem_type
-      :type:  abacusai.api_class.enums.ProblemType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: FeatureGroupExportConfig(client, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, additionalIdColumns=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Export configuration (file connector or database connector information) for feature group exports.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param outputLocation: The File Connector location to which the feature group is being written.
-   :type outputLocation: str
-   :param fileFormat: The file format being written to output_location.
-   :type fileFormat: str
-   :param databaseConnectorId: The unique string identifier of the database connector used.
-   :type databaseConnectorId: str
-   :param objectName: The object in the database connector to which the feature group is being written.
-   :type objectName: str
-   :param writeMode: UPSERT or INSERT for writing to the database connector.
-   :type writeMode: str
-   :param databaseFeatureMapping: The column/feature pairs mapping the features to the database columns.
-   :type databaseFeatureMapping: dict
-   :param idColumn: The id column to use as the upsert key.
-   :type idColumn: str
-   :param additionalIdColumns: For database connectors which support it, additional ID columns to use as a complex key for upserting.
-   :type additionalIdColumns: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, error=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A refresh schedule for an object. Defines when the next version of the object will be created
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param refreshPolicyId: The unique identifier of the refresh policy
-   :type refreshPolicyId: str
-   :param nextRunTime: The next run time of the refresh policy. If null, the policy is paused.
-   :type nextRunTime: str
-   :param cron: A cron-style string that describes the when this refresh policy is to be executed in UTC
-   :type cron: str
-   :param refreshType: The type of refresh that will be run
-   :type refreshType: str
-   :param error: An error message for the last pipeline run of a policy
-   :type error: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A model deployment
 
@@ -265,11 +87,9 @@ Module Contents
    :param defaultPredictionArguments: The default prediction arguments for prediction APIs
    :type defaultPredictionArguments: PredictionArguments
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -278,7 +98,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: create_webhook(endpoint, webhook_event_type, payload_template = None)
@@ -296,7 +115,6 @@ Module Contents
       :rtype: Webhook
 
 
-
    .. py:method:: list_webhooks()
 
       List all the webhooks attached to a given deployment.
@@ -308,14 +126,12 @@ Module Contents
       :rtype: list[Webhook]
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Deployment
-
 
 
    .. py:method:: describe()
@@ -327,7 +143,6 @@ Module Contents
 
       :returns: Description of the deployment.
       :rtype: Deployment
-
 
 
    .. py:method:: update(description = None, auto_deploy = None, skip_metrics_check = None)
@@ -342,14 +157,12 @@ Module Contents
       :type skip_metrics_check: bool
 
 
-
    .. py:method:: rename(name)
 
       Updates a deployment's name
 
       :param name: The new deployment name.
       :type name: str
-
 
 
    .. py:method:: set_auto(enable = None)
@@ -361,7 +174,6 @@ Module Contents
 
       :param enable: Enable or disable the autoDeploy property of the deployment.
       :type enable: bool
-
 
 
    .. py:method:: set_model_version(model_version, algorithm = None, model_deployment_config = None)
@@ -376,14 +188,12 @@ Module Contents
       :type model_deployment_config: dict
 
 
-
    .. py:method:: set_feature_group_version(feature_group_version)
 
       Promotes a feature group version to be served in the deployment.
 
       :param feature_group_version: Unique string identifier for the feature group version.
       :type feature_group_version: str
-
 
 
    .. py:method:: set_prediction_operator_version(prediction_operator_version)
@@ -394,14 +204,12 @@ Module Contents
       :type prediction_operator_version: str
 
 
-
    .. py:method:: start()
 
       Restarts the specified deployment that was previously suspended.
 
       :param deployment_id: A unique string identifier associated with the deployment.
       :type deployment_id: str
-
 
 
    .. py:method:: stop()
@@ -412,14 +220,12 @@ Module Contents
       :type deployment_id: str
 
 
-
    .. py:method:: delete()
 
       Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
 
       :param deployment_id: Unique string identifier of the deployment to delete.
       :type deployment_id: str
-
 
 
    .. py:method:: set_feature_group_export_file_connector_output(file_format = None, output_location = None)
@@ -430,7 +236,6 @@ Module Contents
       :type file_format: str
       :param output_location: The file connector (cloud) location where the output should be exported.
       :type output_location: str
-
 
 
    .. py:method:: set_feature_group_export_database_connector_output(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
@@ -451,14 +256,12 @@ Module Contents
       :type additional_id_columns: list
 
 
-
    .. py:method:: remove_feature_group_export_output()
 
       Removes the export type that is set for the Feature Group Deployment
 
       :param deployment_id: The ID of the deployment for which the export type is set.
       :type deployment_id: str
-
 
 
    .. py:method:: set_default_prediction_arguments(prediction_arguments, set_as_override = False)
@@ -472,7 +275,6 @@ Module Contents
 
       :returns: description of the updated deployment.
       :rtype: Deployment
-
 
 
    .. py:method:: create_alert(alert_name, condition_config, action_config)
@@ -493,7 +295,6 @@ Module Contents
       :rtype: MonitorAlert
 
 
-
    .. py:method:: list_alerts()
 
       List the monitor alerts associated with the deployment id.
@@ -503,7 +304,6 @@ Module Contents
 
       :returns: An array of deployment alerts.
       :rtype: list[MonitorAlert]
-
 
 
    .. py:method:: create_realtime_monitor(realtime_monitor_schedule = None, lookback_time = None)
@@ -517,7 +317,6 @@ Module Contents
 
       :returns: Object describing the real-time monitor.
       :rtype: RealtimeMonitor
-
 
 
    .. py:method:: get_conversation_response(message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None, doc_infos = None)
@@ -552,7 +351,6 @@ Module Contents
       :type doc_infos: list
 
 
-
    .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
@@ -583,7 +381,6 @@ Module Contents
       :type ignore_documents: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
-
 
 
    .. py:method:: create_batch_prediction(table_name = None, name = None, global_prediction_args = None, batch_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
@@ -623,7 +420,6 @@ Module Contents
       :rtype: BatchPrediction
 
 
-
    .. py:method:: describe_feature_group_row_process_by_key(primary_key_value)
 
       Gets the feature group row process.
@@ -633,7 +429,6 @@ Module Contents
 
       :returns: An object representing the feature group row process
       :rtype: FeatureGroupRowProcess
-
 
 
    .. py:method:: list_feature_group_row_processes(limit = None, status = None)
@@ -649,7 +444,6 @@ Module Contents
       :rtype: list[FeatureGroupRowProcess]
 
 
-
    .. py:method:: get_feature_group_row_process_summary()
 
       Gets a summary of the statuses of the individual feature group processes.
@@ -659,7 +453,6 @@ Module Contents
 
       :returns: An object representing the summary of the statuses of the individual feature group processes
       :rtype: FeatureGroupRowProcessSummary
-
 
 
    .. py:method:: reset_feature_group_row_process_by_key(primary_key_value)
@@ -673,7 +466,6 @@ Module Contents
       :rtype: FeatureGroupRowProcess
 
 
-
    .. py:method:: get_feature_group_row_process_logs_by_key(primary_key_value)
 
       Gets the logs for a feature group row process
@@ -683,7 +475,6 @@ Module Contents
 
       :returns: An object representing the logs for the feature group row process
       :rtype: FeatureGroupRowProcessLogs
-
 
 
    .. py:method:: create_conversation(name, deployment_token = None, external_application_id = None)
@@ -701,7 +492,6 @@ Module Contents
       :rtype: DeploymentConversation
 
 
-
    .. py:method:: list_conversations(external_application_id = None)
 
       Lists all conversations for the given deployment and current user.
@@ -711,7 +501,6 @@ Module Contents
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
-
 
 
    .. py:method:: create_external_application(name = None, description = None, logo = None, theme = None)
@@ -731,7 +520,6 @@ Module Contents
       :rtype: ExternalApplication
 
 
-
    .. py:method:: download_agent_attachment(attachment_id)
 
       Return an agent attachment.
@@ -740,14 +528,12 @@ Module Contents
       :type attachment_id: str
 
 
-
    .. py:method:: wait_for_deployment(wait_states={'PENDING', 'DEPLOYING'}, timeout=900)
 
       A waiting call until deployment is completed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
-
 
 
    .. py:method:: wait_for_pending_deployment_update(timeout=900)
@@ -761,14 +547,12 @@ Module Contents
       :rtype: Deployment
 
 
-
    .. py:method:: get_status()
 
       Gets the status of the deployment.
 
       :returns: A string describing the status of a deploymet (pending, deploying, active, etc.).
       :rtype: str
-
 
 
    .. py:method:: create_refresh_policy(cron)
@@ -780,7 +564,6 @@ Module Contents
 
       :returns: The refresh policy object.
       :rtype: RefreshPolicy
-
 
 
    .. py:method:: list_refresh_policies()

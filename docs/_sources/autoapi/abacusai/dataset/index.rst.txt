@@ -1,440 +1,26 @@
-abacusai.dataset
-================
+:py:mod:`abacusai.dataset`
+==========================
 
 .. py:module:: abacusai.dataset
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.dataset.ApplicationConnectorDatasetConfig
-   abacusai.dataset.DatasetDocumentProcessingConfig
-   abacusai.dataset.DataType
-   abacusai.dataset.DocumentProcessingConfig
-   abacusai.dataset.ParsingConfig
-   abacusai.dataset.DatasetColumn
-   abacusai.dataset.DatasetVersion
-   abacusai.dataset.RefreshSchedule
-   abacusai.dataset.AbstractApiClass
-   abacusai.dataset.Dataset
 
 
 Module Contents
 ---------------
 
-.. py:class:: ApplicationConnectorDatasetConfig
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.api_class.dataset.DatasetConfig`
+.. autoapisummary::
 
+   abacusai.dataset.Dataset
 
-   An abstract class for dataset configs specific to application connectors.
 
-   :param application_connector_type: The type of application connector
-   :type application_connector_type: enums.ApplicationConnectorType
-
-
-   .. py:attribute:: application_connector_type
-      :type:  abacusai.api_class.enums.ApplicationConnectorType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: DatasetDocumentProcessingConfig
-
-   Bases: :py:obj:`DocumentProcessingConfig`
-
-
-   Document processing configuration for dataset imports.
-
-   :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
-   :type extract_bounding_boxes: bool
-   :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
-   :type ocr_mode: OcrMode
-   :param use_full_ocr: Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
-   :type use_full_ocr: bool
-   :param remove_header_footer: Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
-   :type remove_header_footer: bool
-   :param remove_watermarks: Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
-   :type remove_watermarks: bool
-   :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
-   :type convert_to_markdown: bool
-   :param page_text_column: Name of the output column which contains the extracted text for each page. If not provided, no column will be created.
-   :type page_text_column: str
-
-
-   .. py:attribute:: page_text_column
-      :type:  str
-      :value: None
-
-
-
-.. py:class:: DataType
-
-   Bases: :py:obj:`ApiEnum`
-
-
-   Generic enumeration.
-
-   Derive from this class to define new enumerations.
-
-
-   .. py:attribute:: INTEGER
-      :value: 'integer'
-
-
-
-   .. py:attribute:: FLOAT
-      :value: 'float'
-
-
-
-   .. py:attribute:: STRING
-      :value: 'string'
-
-
-
-   .. py:attribute:: DATE
-      :value: 'date'
-
-
-
-   .. py:attribute:: DATETIME
-      :value: 'datetime'
-
-
-
-   .. py:attribute:: BOOLEAN
-      :value: 'boolean'
-
-
-
-   .. py:attribute:: LIST
-      :value: 'list'
-
-
-
-   .. py:attribute:: STRUCT
-      :value: 'struct'
-
-
-
-   .. py:attribute:: NULL
-      :value: 'null'
-
-
-
-.. py:class:: DocumentProcessingConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   Document processing configuration.
-
-   :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
-   :type extract_bounding_boxes: bool
-   :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
-   :type ocr_mode: OcrMode
-   :param use_full_ocr: Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
-   :type use_full_ocr: bool
-   :param remove_header_footer: Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
-   :type remove_header_footer: bool
-   :param remove_watermarks: Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
-   :type remove_watermarks: bool
-   :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
-   :type convert_to_markdown: bool
-
-
-   .. py:attribute:: extract_bounding_boxes
-      :type:  bool
-      :value: False
-
-
-
-   .. py:attribute:: ocr_mode
-      :type:  abacusai.api_class.enums.OcrMode
-
-
-   .. py:attribute:: use_full_ocr
-      :type:  bool
-      :value: None
-
-
-
-   .. py:attribute:: remove_header_footer
-      :type:  bool
-      :value: False
-
-
-
-   .. py:attribute:: remove_watermarks
-      :type:  bool
-      :value: True
-
-
-
-   .. py:attribute:: convert_to_markdown
-      :type:  bool
-      :value: False
-
-
-
-.. py:class:: ParsingConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   Custom config for dataset parsing.
-
-   :param escape: Escape character for CSV files. Defaults to '"'.
-   :type escape: str
-   :param csv_delimiter: Delimiter for CSV files. Defaults to None.
-   :type csv_delimiter: str
-   :param file_path_with_schema: Path to the file with schema. Defaults to None.
-   :type file_path_with_schema: str
-
-
-   .. py:attribute:: escape
-      :type:  str
-
-
-   .. py:attribute:: csv_delimiter
-      :type:  str
-
-
-   .. py:attribute:: file_path_with_schema
-      :type:  str
-
-
-.. py:class:: DatasetColumn(client, name=None, dataType=None, detectedDataType=None, featureType=None, detectedFeatureType=None, originalName=None, validDataTypes=None, timeFormat=None, timestampFrequency=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A schema description for a column
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: The unique name of the column.
-   :type name: str
-   :param dataType: The underlying data type of each column.
-   :type dataType: str
-   :param detectedDataType: The detected data type of the column.
-   :type detectedDataType: str
-   :param featureType: Feature type of the column.
-   :type featureType: str
-   :param detectedFeatureType: The detected feature type of the column.
-   :type detectedFeatureType: str
-   :param originalName: The original name of the column.
-   :type originalName: str
-   :param validDataTypes: The valid data type options for this column.
-   :type validDataTypes: list[str]
-   :param timeFormat: The detected time format of the column.
-   :type timeFormat: str
-   :param timestampFrequency: The detected frequency of the timestamps in the dataset.
-   :type timestampFrequency: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, fileInspectMetadata=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, databaseConnectorConfig=None, applicationConnectorConfig=None, invalidRecords=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A specific version of a dataset
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param datasetVersion: The unique identifier of the dataset version.
-   :type datasetVersion: str
-   :param status: The current status of the dataset version
-   :type status: str
-   :param datasetId: A reference to the Dataset this dataset version belongs to.
-   :type datasetId: str
-   :param size: The size in bytes of the file.
-   :type size: int
-   :param rowCount: Number of rows in the dataset version.
-   :type rowCount: int
-   :param fileInspectMetadata: Metadata information about file's inspection. For example - the detected delimiter for CSV files.
-   :type fileInspectMetadata: dict
-   :param createdAt: The timestamp this dataset version was created.
-   :type createdAt: str
-   :param error: If status is FAILED, this field will be populated with an error.
-   :type error: str
-   :param incrementalQueriedAt: If the dataset version is from an incremental dataset, this is the last entry of timestamp column when the dataset version was created.
-   :type incrementalQueriedAt: str
-   :param uploadId: If the dataset version is being uploaded, this the reference to the Upload
-   :type uploadId: str
-   :param mergeFileSchemas: If the merge file schemas policy is enabled.
-   :type mergeFileSchemas: bool
-   :param databaseConnectorConfig: The database connector query used to retrieve data for this version.
-   :type databaseConnectorConfig: dict
-   :param applicationConnectorConfig: The application connector used to retrieve data for this version.
-   :type applicationConnectorConfig: dict
-   :param invalidRecords: Invalid records in the dataset version
-   :type invalidRecords: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: get_metrics(selected_columns = None, include_charts = False, include_statistics = True)
-
-      Get metrics for a specific dataset version.
-
-      :param selected_columns: A list of columns to order first.
-      :type selected_columns: List
-      :param include_charts: A flag indicating whether charts should be included in the response. Default is false.
-      :type include_charts: bool
-      :param include_statistics: A flag indicating whether statistics should be included in the response. Default is true.
-      :type include_statistics: bool
-
-      :returns: The metrics for the specified Dataset version.
-      :rtype: DataMetrics
-
-
-
-   .. py:method:: refresh()
-
-      Calls describe and refreshes the current object's fields
-
-      :returns: The current object
-      :rtype: DatasetVersion
-
-
-
-   .. py:method:: describe()
-
-      Retrieves a full description of the specified dataset version, including its ID, name, source type, and other attributes.
-
-      :param dataset_version: Unique string identifier associated with the dataset version.
-      :type dataset_version: str
-
-      :returns: The dataset version.
-      :rtype: DatasetVersion
-
-
-
-   .. py:method:: get_logs()
-
-      Retrieves the dataset import logs.
-
-      :param dataset_version: The unique version ID of the dataset version.
-      :type dataset_version: str
-
-      :returns: The logs for the specified dataset version.
-      :rtype: DatasetVersionLogs
-
-
-
-   .. py:method:: wait_for_import(timeout=900)
-
-      A waiting call until dataset version is imported.
-
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int
-
-
-
-   .. py:method:: wait_for_inspection(timeout=None)
-
-      A waiting call until dataset version is completely inspected.
-
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int
-
-
-
-   .. py:method:: get_status()
-
-      Gets the status of the dataset version.
-
-      :returns: A string describing the status of a dataset version (importing, inspecting, complete, etc.).
-      :rtype: str
-
-
-
-.. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, error=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A refresh schedule for an object. Defines when the next version of the object will be created
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param refreshPolicyId: The unique identifier of the refresh policy
-   :type refreshPolicyId: str
-   :param nextRunTime: The next run time of the refresh policy. If null, the policy is paused.
-   :type nextRunTime: str
-   :param cron: A cron-style string that describes the when this refresh policy is to be executed in UTC
-   :type cron: str
-   :param refreshType: The type of refresh that will be run
-   :type refreshType: str
-   :param error: An error message for the last pipeline run of a policy
-   :type error: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A dataset reference
 
@@ -487,11 +73,9 @@ Module Contents
    :param documentProcessingConfig: The document processing config used for dataset (when is_documentset is True).
    :type documentProcessingConfig: DocumentProcessingConfig
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -500,7 +84,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: create_version_from_file_connector(location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None, parsing_config = None)
@@ -522,7 +105,6 @@ Module Contents
       :rtype: DatasetVersion
 
 
-
    .. py:method:: create_version_from_database_connector(object_name = None, columns = None, query_arguments = None, sql_query = None)
 
       Creates a new version of the specified dataset.
@@ -540,7 +122,6 @@ Module Contents
       :rtype: DatasetVersion
 
 
-
    .. py:method:: create_version_from_application_connector(dataset_config = None)
 
       Creates a new version of the specified dataset.
@@ -550,7 +131,6 @@ Module Contents
 
       :returns: The new Dataset Version created.
       :rtype: DatasetVersion
-
 
 
    .. py:method:: create_version_from_upload(file_format = None)
@@ -564,7 +144,6 @@ Module Contents
       :rtype: Upload
 
 
-
    .. py:method:: create_version_from_document_reprocessing(document_processing_config = None)
 
       Creates a new dataset version for a source docstore dataset with the provided document processing configuration. This does not re-import the data but uses the same data which is imported in the latest dataset version and only performs document processing on it.
@@ -576,7 +155,6 @@ Module Contents
       :rtype: DatasetVersion
 
 
-
    .. py:method:: snapshot_streaming_data()
 
       Snapshots the current data in the streaming dataset.
@@ -586,7 +164,6 @@ Module Contents
 
       :returns: The new Dataset Version created by taking a snapshot of the current data in the streaming dataset.
       :rtype: DatasetVersion
-
 
 
    .. py:method:: set_column_data_type(column, data_type)
@@ -602,7 +179,6 @@ Module Contents
       :rtype: Dataset
 
 
-
    .. py:method:: set_streaming_retention_policy(retention_hours = None, retention_row_count = None, ignore_records_before_timestamp = None)
 
       Sets the streaming retention policy.
@@ -615,7 +191,6 @@ Module Contents
       :type ignore_records_before_timestamp: int
 
 
-
    .. py:method:: get_schema()
 
       Retrieves the column schema of a dataset.
@@ -625,7 +200,6 @@ Module Contents
 
       :returns: List of column schema definitions.
       :rtype: list[DatasetColumn]
-
 
 
    .. py:method:: set_database_connector_config(database_connector_id, object_name = None, columns = None, query_arguments = None, sql_query = None)
@@ -644,14 +218,12 @@ Module Contents
       :type sql_query: str
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Dataset
-
 
 
    .. py:method:: describe()
@@ -663,7 +235,6 @@ Module Contents
 
       :returns: The dataset.
       :rtype: Dataset
-
 
 
    .. py:method:: list_versions(limit = 100, start_after_version = None)
@@ -679,14 +250,12 @@ Module Contents
       :rtype: list[DatasetVersion]
 
 
-
    .. py:method:: delete()
 
       Deletes the specified dataset from the organization.
 
       :param dataset_id: Unique string identifier of the dataset to delete.
       :type dataset_id: str
-
 
 
    .. py:method:: wait_for_import(timeout=900)
@@ -697,14 +266,12 @@ Module Contents
       :type timeout: int
 
 
-
    .. py:method:: wait_for_inspection(timeout=None)
 
       A waiting call until dataset is completely inspected.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
-
 
 
    .. py:method:: get_status()
@@ -715,14 +282,12 @@ Module Contents
       :rtype: str
 
 
-
    .. py:method:: describe_feature_group()
 
       Gets the feature group attached to the dataset.
 
       :returns: A feature group object.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: create_refresh_policy(cron)
@@ -734,7 +299,6 @@ Module Contents
 
       :returns: The refresh policy object.
       :rtype: RefreshPolicy
-
 
 
    .. py:method:: list_refresh_policies()

@@ -1,36 +1,26 @@
-abacusai.abacus_api
-===================
+:py:mod:`abacusai.abacus_api`
+=============================
 
 .. py:module:: abacusai.abacus_api
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.abacus_api.AbstractApiClass
-   abacusai.abacus_api.AbacusApi
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.abacus_api.AbacusApi
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: AbacusApi(client, method=None, docstring=None, score=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    An Abacus API.
 
@@ -43,11 +33,9 @@ Module Contents
    :param score: The relevance score of the API method.
    :type score: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

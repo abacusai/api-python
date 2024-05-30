@@ -1,36 +1,26 @@
-abacusai.feature_group_lineage
-==============================
+:py:mod:`abacusai.feature_group_lineage`
+========================================
 
 .. py:module:: abacusai.feature_group_lineage
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_group_lineage.AbstractApiClass
-   abacusai.feature_group_lineage.FeatureGroupLineage
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.feature_group_lineage.FeatureGroupLineage
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureGroupLineage(client, nodes=None, connections=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Directed acyclic graph of feature group lineage for all feature groups in a project
 
@@ -41,11 +31,9 @@ Module Contents
    :param connections: A list of connections in the graph between nodes
    :type connections: list<dict>
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

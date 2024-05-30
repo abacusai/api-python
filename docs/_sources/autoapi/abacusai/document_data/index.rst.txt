@@ -1,36 +1,26 @@
-abacusai.document_data
-======================
+:py:mod:`abacusai.document_data`
+================================
 
 .. py:module:: abacusai.document_data
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.document_data.AbstractApiClass
-   abacusai.document_data.DocumentData
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
+   abacusai.document_data.DocumentData
 
 
-.. py:class:: DocumentData(client, docId=None, mimeType=None, pageCount=None, totalPageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None, metadata=None, pageMarkdown=None, extractedPageText=None)
+
+
+.. py:class:: DocumentData(client, docId=None, mimeType=None, pageCount=None, totalPageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None, metadata=None, pageMarkdown=None, extractedPageText=None, augmentedPageText=None)
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
 
    Data extracted from a docstore document.
 
@@ -58,12 +48,12 @@ Module Contents
    :type pageMarkdown: list
    :param extractedPageText: List of extracted text for each page in the document obtained from OCR.
    :type extractedPageText: list
-
+   :param augmentedPageText: List of extracted text for each page in the document obtained from OCR augmented with embedded links in the document.
+   :type augmentedPageText: list
 
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

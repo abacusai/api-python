@@ -128,6 +128,17 @@ class MergeMode(ApiEnum):
     TIME_WINDOW = 'TIME_WINDOW'
 
 
+class OperatorType(ApiEnum):
+    UNPIVOT = 'UNPIVOT'
+    MARKDOWN = 'MARKDOWN'
+    CRAWLER = 'CRAWLER'
+    EXTRACT_DOCUMENT_DATA = 'EXTRACT_DOCUMENT_DATA'
+
+
+class MarkdownOperatorInputType(ApiEnum):
+    HTML = 'HTML'
+
+
 class FillLogic(ApiEnum):
     # back / future
     AVERAGE = 'average'
@@ -406,6 +417,7 @@ class VectorStoreTextEncoder(ApiEnum):
     OPENAI = 'OPENAI'
     SENTENCE_BERT = 'SENTENCE_BERT'
     E5_SMALL = 'E5_SMALL'
+    CODE_BERT = 'CODE_BERT'
 
 
 class LLMName(ApiEnum):
@@ -517,6 +529,7 @@ class OcrMode(ApiEnum):
     COMPREHENSIVE = 'COMPREHENSIVE'
     COMPREHENSIVE_V2 = 'COMPREHENSIVE_V2'
     COMPREHENSIVE_TABLE_MD = 'COMPREHENSIVE_TABLE_MD'
+    TESSERACT_FAST = 'TESSERACT_FAST'
 
 
 class StdDevThresholdType(ApiEnum):
@@ -535,6 +548,7 @@ class DataType(ApiEnum):
     LIST = 'list'
     STRUCT = 'struct'
     NULL = 'null'
+    BINARY = 'binary'
 
 
 class AgentInterface(ApiEnum):
@@ -545,4 +559,26 @@ class AgentInterface(ApiEnum):
 
 class ProjectConfigType(ApiEnum):
     CONSTRAINTS = 'CONSTRAINTS'
+    CHAT_FEEDBACK = 'CHAT_FEEDBACK'
     REVIEW_MODE = 'REVIEW_MODE'
+
+
+class CPUSize(ApiEnum):
+    SMALL = 'small'
+    MEDIUM = 'medium'
+    LARGE = 'large'
+
+
+class MemorySize(ApiEnum):
+    SMALL = 16
+    MEDIUM = 32
+    LARGE = 64
+    XLARGE = 128
+
+    @classmethod
+    def from_value(cls, value):
+        sorted_members = sorted(cls, key=lambda mem: mem.value)
+        for member in sorted_members:
+            if member.value >= value:
+                return member
+        return None

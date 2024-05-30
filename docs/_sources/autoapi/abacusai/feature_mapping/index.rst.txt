@@ -1,36 +1,26 @@
-abacusai.feature_mapping
-========================
+:py:mod:`abacusai.feature_mapping`
+==================================
 
 .. py:module:: abacusai.feature_mapping
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_mapping.AbstractApiClass
-   abacusai.feature_mapping.FeatureMapping
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.feature_mapping.FeatureMapping
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureMapping(client, featureMapping=None, featureName=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A description of the data use for a feature
 
@@ -41,11 +31,9 @@ Module Contents
    :param featureName: The unique name of the feature.
    :type featureName: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

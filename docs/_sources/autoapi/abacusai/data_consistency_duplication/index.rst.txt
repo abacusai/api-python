@@ -1,36 +1,26 @@
-abacusai.data_consistency_duplication
-=====================================
+:py:mod:`abacusai.data_consistency_duplication`
+===============================================
 
 .. py:module:: abacusai.data_consistency_duplication
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.data_consistency_duplication.AbstractApiClass
-   abacusai.data_consistency_duplication.DataConsistencyDuplication
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.data_consistency_duplication.DataConsistencyDuplication
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DataConsistencyDuplication(client, totalCount=None, numDuplicates=None, sample={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Data Consistency for duplication within data
 
@@ -43,11 +33,9 @@ Module Contents
    :param sample: A list of dicts enumerating rows the rows that contained duplications in primary keys.
    :type sample: FeatureRecord
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

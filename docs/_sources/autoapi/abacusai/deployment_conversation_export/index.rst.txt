@@ -1,36 +1,26 @@
-abacusai.deployment_conversation_export
-=======================================
+:py:mod:`abacusai.deployment_conversation_export`
+=================================================
 
 .. py:module:: abacusai.deployment_conversation_export
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.deployment_conversation_export.AbstractApiClass
-   abacusai.deployment_conversation_export.DeploymentConversationExport
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.deployment_conversation_export.DeploymentConversationExport
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DeploymentConversationExport(client, deploymentConversationId=None, conversationExportHtml=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A deployment conversation html export, to be used for downloading the conversation.
 
@@ -41,11 +31,9 @@ Module Contents
    :param conversationExportHtml: The html string of the deployment conversation.
    :type conversationExportHtml: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

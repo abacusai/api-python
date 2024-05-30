@@ -33,16 +33,19 @@ from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
     AgentInterface, AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    ApplicationConnectorDatasetConfig, BatchPredictionArgs, BlobInput,
-    DatasetDocumentProcessingConfig, DataType, DocumentProcessingConfig,
-    EvalArtifactType, FeatureGroupExportConfig, ForecastingMonitorConfig,
-    IncrementalDatabaseConnectorConfig, LLMName, MergeConfig, ParsingConfig,
+    ApplicationConnectorDatasetConfig, BatchPredictionArgs, Blob, BlobInput,
+    CPUSize, DatasetDocumentProcessingConfig, DataType,
+    DocumentProcessingConfig, EvalArtifactType, FeatureGroupExportConfig,
+    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
+    MemorySize, MergeConfig, OperatorConfig, ParsingConfig,
     PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
-    PythonFunctionType, SamplingConfig, TrainingConfig, VectorStoreConfig,
-    WorkflowGraph, get_clean_function_source_code
+    PythonFunctionType, SamplingConfig, StreamingConnectorDatasetConfig,
+    TrainingConfig, VectorStoreConfig, WorkflowGraph,
+    get_clean_function_source_code
 )
 from .api_class.abstract import get_clean_function_source_code, snake_case
 from .api_class.ai_agents import WorkflowGraph
+from .api_class.blob_input import Blob, BlobInput
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, StreamType,
     clean_column_name, get_object_from_context
@@ -251,25 +254,6 @@ def _discover_service_url(service_discovery_url, client_version, deployment_id, 
 
 
 _cached_endpoints = {}
-
-
-class Blob:
-
-    def __init__(self, contents: bytes, mime_type: str = None, filename: str = None):
-        if contents is None or not isinstance(contents, bytes):
-            raise Exception(
-                'Contents are required and should be of bytes type')
-        self.filename = filename
-        self.contents = contents
-        if mime_type is None:
-            try:
-                import magic
-                mime_type = magic.Magic(mime=True).from_buffer(contents)
-            except Exception:
-                pass
-        if mime_type is not None and not isinstance(mime_type, str):
-            raise Exception('mime_type should be of string type')
-        self.mime_type = mime_type
 
 
 class AgentResponse:
@@ -608,7 +592,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.3.2'
+    client_version = '1.3.3'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -2527,7 +2511,7 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat sessions with Data Science Co-pilot"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
-    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, filter_intermediate_conversation_events: bool = True) -> DeploymentConversation:
+    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False) -> DeploymentConversation:
         """Gets a deployment conversation.
 
         Args:
@@ -2536,10 +2520,11 @@ class ReadOnlyClient(BaseApiClient):
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
             filter_intermediate_conversation_events (bool): If true, intermediate conversation events will be filtered out. Default is true.
+            get_unused_document_uploads (bool): If true, unused document uploads will be returned. Default is false.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads}, parse_type=DeploymentConversation, is_sync=True)
 
     def list_deployment_conversations(self, deployment_id: str, external_application_id: str = None) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
@@ -3549,7 +3534,7 @@ class ApiClient(ReadOnlyClient):
         execute function.
 
         Returns:
-            List[ChatMessage]:: The chat history for the current request being processed by the Agent.
+            List[ChatMessage]: The chat history for the current request being processed by the Agent.
         """
         from .chat_message import ChatMessage
         return get_object_from_context(self, _request_context, 'chat_history', List[ChatMessage]) or []
@@ -3673,7 +3658,7 @@ class ApiClient(ReadOnlyClient):
             section_key (str): Key to identify output schema section.
 
         Returns:
-            text: The response from the model.
+            text (str): The response from the model.
         """
         caller = self._get_agent_async_app_caller()
         request_id = self._get_agent_app_request_id()
@@ -4444,7 +4429,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group."""
         return self._call_api('createFeatureGroupFromTemplate', 'POST', query_params={}, body={'tableName': table_name, 'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'shouldAttachFeatureGroupToTemplate': should_attach_feature_group_to_template, 'description': description}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_function(self, table_name: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_name: str = None, python_function_bindings: List = None, use_gpu: bool = None) -> FeatureGroup:
+    def create_feature_group_from_function(self, table_name: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, description: str = None, cpu_size: Union[CPUSize, str] = None, memory: Union[MemorySize, str] = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_name: str = None, python_function_bindings: List = None, use_gpu: bool = None) -> FeatureGroup:
         """Creates a new feature in a Feature Group from user-provided code. Currently supported code languages are Python.
 
         If a list of input feature groups are supplied, we will provide DataFrames (pandas, in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
@@ -4458,8 +4443,8 @@ class ApiClient(ReadOnlyClient):
             function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
             input_feature_groups (list): List of feature group names that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             description (str): The description for this feature group.
-            cpu_size (str): Size of the CPU for the feature group function.
-            memory (int): Memory (in GB) for the feature group function.
+            cpu_size (CPUSize): Size of the CPU for the feature group function.
+            memory (MemorySize): Memory (in GB) for the feature group function.
             package_requirements (list): List of package requirements for the feature group function. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_original_csv_names (bool): Defaults to False, if set it uses the original column names for input feature groups from CSV datasets.
             python_function_name (str): Name of Python Function that contains the source code and function arguments.
@@ -4501,13 +4486,13 @@ Description:
 Creates a new feature group defined as the union of other feature group versions."""
         return self._call_api('createMergeFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'mergeConfig': merge_config, 'description': description}, parse_type=FeatureGroup)
 
-    def create_operator_feature_group(self, source_feature_group_id: str, table_name: str, operator_config: dict, description: str = None) -> FeatureGroup:
+    def create_operator_feature_group(self, source_feature_group_id: str, table_name: str, operator_config: Union[dict, OperatorConfig], description: str = None) -> FeatureGroup:
         """Creates a new Feature Group defined by a pre-defined operator applied to another Feature Group.
 
         Args:
             source_feature_group_id (str): Unique string identifier corresponding to the Feature Group to which the operator will be applied.
             table_name (str): Unique string identifier for the operator Feature Group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
-            operator_config (dict): JSON object (aka map) defining the operator and its parameters.
+            operator_config (OperatorConfig): The operator config is used to define the operator and its parameters.
             description (str): Human-readable description of the Feature Group.
 
         Returns:
@@ -4559,13 +4544,16 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: The updated FeatureGroup."""
         return self._call_api('setFeatureGroupMergeConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'mergeConfig': merge_config}, parse_type=FeatureGroup)
 
-    def set_feature_group_operator_config(self, feature_group_id: str, operator_config: dict):
+    def set_feature_group_operator_config(self, feature_group_id: str, operator_config: Union[dict, OperatorConfig]) -> FeatureGroup:
         """Set a OperatorFeatureGroup’s operator config to the values provided.
 
         Args:
             feature_group_id (str): A unique string identifier associated with the feature group.
-            operator_config (dict): A dictionary object specifying the pre-defined operations."""
-        return self._call_api('setFeatureGroupOperatorConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'operatorConfig': operator_config})
+            operator_config (OperatorConfig): A dictionary object specifying the pre-defined operations.
+
+        Returns:
+            FeatureGroup: The updated FeatureGroup."""
+        return self._call_api('setFeatureGroupOperatorConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'operatorConfig': operator_config}, parse_type=FeatureGroup)
 
     def set_feature_group_schema(self, feature_group_id: str, schema: list):
         """Creates a new schema and points the feature group to the new feature group schema ID.
@@ -4982,7 +4970,7 @@ Creates a new feature group defined as the union of other feature group versions
             python_function_bindings (List): List of python function arguments."""
         return self._call_api('updateFeatureGroupPythonFunctionBindings', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'pythonFunctionBindings': python_function_bindings})
 
-    def update_feature_group_python_function(self, feature_group_id: str, python_function_name: str, python_function_bindings: List = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None, use_original_csv_names: bool = None):
+    def update_feature_group_python_function(self, feature_group_id: str, python_function_name: str, python_function_bindings: List = None, cpu_size: Union[CPUSize, str] = None, memory: Union[MemorySize, str] = None, use_gpu: bool = None, use_original_csv_names: bool = None):
         """Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
         bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
@@ -4993,8 +4981,8 @@ Creates a new feature group defined as the union of other feature group versions
             feature_group_id (str): The unique ID associated with the feature group.
             python_function_name (str): The name of the python function to be associated with the feature group.
             python_function_bindings (List): List of python function arguments.
-            cpu_size (str): Size of the CPU for the feature group python function.
-            memory (int): Memory (in GB) for the feature group python function.
+            cpu_size (CPUSize): Size of the CPU for the feature group python function.
+            memory (MemorySize): Memory (in GB) for the feature group python function.
             use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
             use_original_csv_names (bool): If enabled, it uses the original column names for input feature groups from CSV datasets."""
         return self._call_api('updateFeatureGroupPythonFunction', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings, 'cpuSize': cpu_size, 'memory': memory, 'useGpu': use_gpu, 'useOriginalCsvNames': use_original_csv_names})
@@ -5394,18 +5382,18 @@ Creates a new feature group defined as the union of other feature group versions
             Dataset: The dataset and schema after the data type has been set."""
         return self._call_api('setDatasetColumnDataType', 'POST', query_params={'datasetId': dataset_id}, body={'column': column, 'dataType': data_type}, parse_type=Dataset)
 
-    def create_dataset_from_streaming_connector(self, table_name: str, streaming_connector_id: str, streaming_args: dict = None, refresh_schedule: str = None) -> Dataset:
+    def create_dataset_from_streaming_connector(self, table_name: str, streaming_connector_id: str, dataset_config: Union[dict, StreamingConnectorDatasetConfig] = None, refresh_schedule: str = None) -> Dataset:
         """Creates a dataset from a Streaming Connector
 
         Args:
             table_name (str): Organization-unique table name
             streaming_connector_id (str): Unique String Identifier for the Streaming Connector to import the dataset from
-            streaming_args (dict): Dictionary of arguments to read data from the streaming connector
+            dataset_config (StreamingConnectorDatasetConfig): Streaming dataset config
             refresh_schedule (str): Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. Time is specified in UTC.
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromStreamingConnector', 'POST', query_params={}, body={'tableName': table_name, 'streamingConnectorId': streaming_connector_id, 'streamingArgs': streaming_args, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+        return self._call_api('createDatasetFromStreamingConnector', 'POST', query_params={}, body={'tableName': table_name, 'streamingConnectorId': streaming_connector_id, 'datasetConfig': dataset_config, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
 
     def set_streaming_retention_policy(self, dataset_id: str, retention_hours: int = None, retention_row_count: int = None, ignore_records_before_timestamp: int = None):
         """Sets the streaming retention policy.
@@ -5841,7 +5829,7 @@ Creates a new feature group defined as the union of other feature group versions
             ModelArtifactsExport: Object describing the export and its status."""
         return self._call_api('exportCustomModelVersion', 'POST', query_params={}, body={'modelVersion': model_version, 'outputLocation': output_location, 'algorithm': algorithm}, parse_type=ModelArtifactsExport)
 
-    def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None, include_interactive_performance_analysis: bool = False) -> ModelMonitor:
+    def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None, exclude_interactive_performance_analysis: bool = True, exclude_bias_analysis: bool = None, exclude_performance_analysis: bool = None, exclude_feature_drift_analysis: bool = None, exclude_data_integrity_analysis: bool = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
         Args:
@@ -5858,11 +5846,15 @@ Creates a new feature group defined as the union of other feature group versions
             training_feature_mappings (dict): A JSON map to override features for training_fature_group, where keys are column names and the values are feature data use types.
             feature_group_base_monitor_config (dict): Selection strategy for the feature_group 1 with the feature group version if selected.
             feature_group_comparison_monitor_config (dict): Selection strategy for the feature_group 1 with the feature group version if selected.
-            include_interactive_performance_analysis (bool): Whether to include interactive performance analysis.
+            exclude_interactive_performance_analysis (bool): Whether to exclude interactive performance analysis. Defaults to True if not provided.
+            exclude_bias_analysis (bool): Whether to exclude bias analysis in the model monitor. For default value bias analysis is included.
+            exclude_performance_analysis (bool): Whether to exclude performance analysis in the model monitor. For default value performance analysis is included.
+            exclude_feature_drift_analysis (bool): Whether to exclude feature drift analysis in the model monitor. For default value feature drift analysis is included.
+            exclude_data_integrity_analysis (bool): Whether to exclude data integrity analysis in the model monitor. For default value data integrity analysis is included.
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'targetValueBias': target_value_bias, 'targetValuePerformance': target_value_performance, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings, 'featureGroupBaseMonitorConfig': feature_group_base_monitor_config, 'featureGroupComparisonMonitorConfig': feature_group_comparison_monitor_config, 'includeInteractivePerformanceAnalysis': include_interactive_performance_analysis}, parse_type=ModelMonitor)
+        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'targetValueBias': target_value_bias, 'targetValuePerformance': target_value_performance, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings, 'featureGroupBaseMonitorConfig': feature_group_base_monitor_config, 'featureGroupComparisonMonitorConfig': feature_group_comparison_monitor_config, 'excludeInteractivePerformanceAnalysis': exclude_interactive_performance_analysis, 'excludeBiasAnalysis': exclude_bias_analysis, 'excludePerformanceAnalysis': exclude_performance_analysis, 'excludeFeatureDriftAnalysis': exclude_feature_drift_analysis, 'excludeDataIntegrityAnalysis': exclude_data_integrity_analysis}, parse_type=ModelMonitor)
 
     def rerun_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
         """Re-runs the specified model monitor.
@@ -8155,7 +8147,7 @@ Creates a new feature group defined as the union of other feature group versions
             LlmResponse: The response from the model, raw text and parsed components."""
         return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'responseType': response_type, 'jsonResponseSchema': json_response_schema}, parse_type=LlmResponse)
 
-    def render_feature_groups_for_llm(self, feature_group_ids: List, token_budget: int = None, include_definition: bool = True) -> LlmInput:
+    def render_feature_groups_for_llm(self, feature_group_ids: List, token_budget: int = None, include_definition: bool = True) -> List[LlmInput]:
         """Encode feature groups as language model inputs.
 
         Args:
@@ -8164,7 +8156,7 @@ Creates a new feature group defined as the union of other feature group versions
             include_definition (bool): Include the definition of the feature group in the encoding.
 
         Returns:
-            LlmInput: LLM input object comprising of information about the feature groups with given IDs."""
+            list[LlmInput]: LLM input object comprising of information about the feature groups with given IDs."""
         return self._call_api('renderFeatureGroupsForLLM', 'POST', query_params={}, body={'featureGroupIds': feature_group_ids, 'tokenBudget': token_budget, 'includeDefinition': include_definition}, parse_type=LlmInput)
 
     def generate_code_for_data_query_using_llm(self, query: str, feature_group_ids: List = None, external_database_schemas: List = None, prompt_context: str = None, llm_name: Union[LLMName, str] = None, temperature: float = None, sql_dialect: str = 'Spark') -> LlmGeneratedCode:

@@ -1,36 +1,26 @@
-abacusai.feature_group_row
-==========================
+:py:mod:`abacusai.feature_group_row`
+====================================
 
 .. py:module:: abacusai.feature_group_row
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_group_row.AbstractApiClass
-   abacusai.feature_group_row.FeatureGroupRow
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.feature_group_row.FeatureGroupRow
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureGroupRow(client, featureGroupId=None, primaryKey=None, createdAt=None, updatedAt=None, contents=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A row of a feature group.
 
@@ -47,11 +37,9 @@ Module Contents
    :param contents: A dictionary of feature names and values for this row.
    :type contents: dict
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

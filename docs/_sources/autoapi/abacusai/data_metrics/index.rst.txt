@@ -1,36 +1,26 @@
-abacusai.data_metrics
-=====================
+:py:mod:`abacusai.data_metrics`
+===============================
 
 .. py:module:: abacusai.data_metrics
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.data_metrics.AbstractApiClass
-   abacusai.data_metrics.DataMetrics
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.data_metrics.DataMetrics
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DataMetrics(client, metrics=None, schema=None, numRows=None, numCols=None, numDuplicateRows=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Processed Metrics and Schema for a dataset version or feature group version
 
@@ -47,11 +37,9 @@ Module Contents
    :param numDuplicateRows: The number of duplicate rows
    :type numDuplicateRows: int
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

@@ -1,36 +1,26 @@
-abacusai.extracted_fields
-=========================
+:py:mod:`abacusai.extracted_fields`
+===================================
 
 .. py:module:: abacusai.extracted_fields
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.extracted_fields.AbstractApiClass
-   abacusai.extracted_fields.ExtractedFields
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.extracted_fields.ExtractedFields
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ExtractedFields(client, data=None, rawLlmResponse=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    The fields extracted from a document.
 
@@ -41,11 +31,9 @@ Module Contents
    :param rawLlmResponse: The raw llm response. Only returned if it could not be parsed to json.
    :type rawLlmResponse: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

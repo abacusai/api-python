@@ -1,124 +1,26 @@
-abacusai.feature
-================
+:py:mod:`abacusai.feature`
+==========================
 
 .. py:module:: abacusai.feature
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature.NestedFeature
-   abacusai.feature.PointInTimeFeature
-   abacusai.feature.AbstractApiClass
-   abacusai.feature.Feature
 
 
 Module Contents
 ---------------
 
-.. py:class:: NestedFeature(client, name=None, selectClause=None, featureType=None, featureMapping=None, dataType=None, sourceTable=None, originalName=None)
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
-
-   A nested feature in a feature group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: The unique name of the column
-   :type name: str
-   :param selectClause: The sql logic for creating this feature's data
-   :type selectClause: str
-   :param featureType: Feature Type of the Feature
-   :type featureType: str
-   :param featureMapping: The Feature Mapping of the feature
-   :type featureMapping: str
-   :param dataType: Data Type of the Feature
-   :type dataType: str
-   :param sourceTable: The source table of the column
-   :type sourceTable: str
-   :param originalName: The original name of the column
-   :type originalName: str
+   abacusai.feature.Feature
 
 
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: PointInTimeFeature(client, historyTableName=None, aggregationKeys=None, timestampKey=None, historicalTimestampKey=None, lookbackWindowSeconds=None, lookbackWindowLagSeconds=None, lookbackCount=None, lookbackUntilPosition=None, expression=None, groupName=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A point-in-time feature description
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param historyTableName: The name of the history table. If not specified, the current table is used for a self-join.
-   :type historyTableName: str
-   :param aggregationKeys: List of keys to use for joining the historical table and performing the window aggregation.
-   :type aggregationKeys: list[str]
-   :param timestampKey: Name of feature which contains the timestamp value for the point-in-time feature.
-   :type timestampKey: str
-   :param historicalTimestampKey: Name of feature which contains the historical timestamp.
-   :type historicalTimestampKey: str
-   :param lookbackWindowSeconds: If window is specified in terms of time, the number of seconds in the past from the current time for the start of the window.
-   :type lookbackWindowSeconds: float
-   :param lookbackWindowLagSeconds: Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed. If it is negative, we are looking at the "future" rows in the history table.
-   :type lookbackWindowLagSeconds: float
-   :param lookbackCount: If window is specified in terms of count, the start position of the window (0 is the current row).
-   :type lookbackCount: int
-   :param lookbackUntilPosition: Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
-   :type lookbackUntilPosition: int
-   :param expression: SQL aggregate expression which can convert a sequence of rows into a scalar value.
-   :type expression: str
-   :param groupName: The group name this point-in-time feature belongs to.
-   :type groupName: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: Feature(client, name=None, selectClause=None, featureMapping=None, sourceTable=None, originalName=None, usingClause=None, orderClause=None, whereClause=None, featureType=None, dataType=None, detectedFeatureType=None, detectedDataType=None, columns={}, pointInTimeInfo={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A feature in a feature group
 
@@ -153,11 +55,9 @@ Module Contents
    :param pointInTimeInfo: Point in time column information
    :type pointInTimeInfo: PointInTimeFeature
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

@@ -1,97 +1,31 @@
-abacusai.streaming_client
-=========================
+:py:mod:`abacusai.streaming_client`
+===================================
 
 .. py:module:: abacusai.streaming_client
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.streaming_client.BaseApiClient
-   abacusai.streaming_client.ClientOptions
-   abacusai.streaming_client.StreamingClient
 
 
 Module Contents
 ---------------
 
-.. py:class:: BaseApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+Classes
+~~~~~~~
 
-   Abstract Base API Client
+.. autoapisummary::
 
-   :param api_key: The api key to use as authentication to the server
-   :type api_key: str
-   :param server: The base server url to use to send API requets to
-   :type server: str
-   :param client_options: Optional API client configurations
-   :type client_options: ClientOptions
-   :param skip_version_check: If true, will skip checking the server's current API version on initializing the client
-   :type skip_version_check: bool
+   abacusai.streaming_client.StreamingClient
 
 
-   .. py:attribute:: client_version
-      :value: '1.3.2'
-
-
-
-   .. py:method:: _get_prediction_endpoint(deployment_id, deployment_token)
-
-
-   .. py:method:: _get_proxy_endpoint(deployment_id, deployment_token)
-
-
-   .. py:method:: _get_streaming_endpoint(streaming_token, model_id = None, feature_group_id = None)
-
-
-   .. py:method:: _clean_api_objects(obj)
-
-
-   .. py:method:: _call_api(action, method, query_params=None, body=None, files=None, parse_type=None, streamable_response=False, server_override=None, timeout=None, retry_500 = False, data=None)
-
-
-   .. py:method:: _proxy_request(name, method = 'POST', query_params = None, body = None, files=None, parse_type=None, is_sync = False, streamable_response = False)
-
-
-   .. py:method:: _build_class(return_class, values)
-
-
-   .. py:method:: _request(url, method, query_params=None, headers=None, body=None, files=None, stream=False, timeout=None, retry_500 = False, data=None)
-
-
-   .. py:method:: _poll(obj, wait_states, delay = 15, timeout = 300, poll_args = {}, status_field=None)
-
-
-   .. py:method:: _validate_pandas_df(df, clean_column_names)
-
-
-   .. py:method:: _upload_from_pandas(upload, df, clean_column_names=False)
-
-
-   .. py:method:: _upload_from_spark(upload, df)
-
-
-.. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
-
-   Options for configuring the ApiClient
-
-   :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
-   :type exception_on_404: bool
-   :param server: The default server endpoint to use for API requests
-   :type server: str
 
 
 .. py:class:: StreamingClient(client_options = None)
 
-   Bases: :py:obj:`abacusai.client.BaseApiClient`
 
+   Bases: :py:obj:`abacusai.client.BaseApiClient`
 
    Abacus.AI Streaming API Client. Does not utilize authentication and only contains public streaming methods
 
    :param client_options: Optional API client configurations
    :type client_options: ClientOptions
-
 
    .. py:method:: upsert_item_embeddings(streaming_token, model_id, item_id, vector, catalog_id = None)
 
@@ -109,7 +43,6 @@ Module Contents
       :type catalog_id: str
 
 
-
    .. py:method:: delete_item_embeddings(streaming_token, model_id, item_ids, catalog_id = None)
 
       Deletes KNN embeddings for a list of item IDs for a given model ID.
@@ -122,7 +55,6 @@ Module Contents
       :type item_ids: list
       :param catalog_id: An optional name to specify which catalog in a model to update.
       :type catalog_id: str
-
 
 
    .. py:method:: upsert_multiple_item_embeddings(streaming_token, model_id, upserts, catalog_id = None)
@@ -139,7 +71,6 @@ Module Contents
       :type catalog_id: str
 
 
-
    .. py:method:: append_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
@@ -150,7 +81,6 @@ Module Contents
       :type streaming_token: str
       :param data: The data to record as a JSON object.
       :type data: dict
-
 
 
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)

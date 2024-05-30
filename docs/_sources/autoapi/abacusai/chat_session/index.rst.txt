@@ -1,110 +1,26 @@
-abacusai.chat_session
-=====================
+:py:mod:`abacusai.chat_session`
+===============================
 
 .. py:module:: abacusai.chat_session
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.chat_session.AiBuildingTask
-   abacusai.chat_session.ChatMessage
-   abacusai.chat_session.AbstractApiClass
-   abacusai.chat_session.ChatSession
 
 
 Module Contents
 ---------------
 
-.. py:class:: AiBuildingTask(client, task=None, taskType=None)
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
-
-   A task for Data Science Co-pilot to help build AI.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param task: The task to be performed
-   :type task: str
-   :param taskType: The type of task
-   :type taskType: str
+   abacusai.chat_session.ChatSession
 
 
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A single chat message with Abacus Chat.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param role: The role of the message sender
-   :type role: str
-   :param text: A list of text segments for the message
-   :type text: list[dict]
-   :param timestamp: The timestamp at which the message was sent
-   :type timestamp: str
-   :param isUseful: Whether this message was marked as useful or not
-   :type isUseful: bool
-   :param feedback: The feedback provided for the message
-   :type feedback: str
-   :param docIds: A list of IDs of the uploaded document if the message has
-   :type docIds: list[str]
-   :param hotkeyTitle: The title of the hotkey prompt if the message has one
-   :type hotkeyTitle: str
-   :param tasks: The list of spawned tasks, if the message was broken down into smaller sub-tasks.
-   :type tasks: list[str]
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, name=None, createdAt=None, status=None, aiBuildingInProgress=None, notification=None, whiteboard=None, chatHistory={}, nextAiBuildingTask={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A chat session with Abacus Data Science Co-pilot.
 
@@ -133,11 +49,9 @@ Module Contents
    :param nextAiBuildingTask: The next AI building task for the chat session
    :type nextAiBuildingTask: AiBuildingTask
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -146,7 +60,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: get()
@@ -160,7 +73,6 @@ Module Contents
       :rtype: ChatSession
 
 
-
    .. py:method:: delete_chat_message(message_index)
 
       Deletes a message in a chat session and its associated response.
@@ -169,14 +81,12 @@ Module Contents
       :type message_index: int
 
 
-
    .. py:method:: export()
 
       Exports a chat session to an HTML file
 
       :param chat_session_id: Unique ID of the chat session.
       :type chat_session_id: str
-
 
 
    .. py:method:: rename(name)

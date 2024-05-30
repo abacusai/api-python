@@ -1,36 +1,26 @@
-abacusai.use_case_requirements
-==============================
+:py:mod:`abacusai.use_case_requirements`
+========================================
 
 .. py:module:: abacusai.use_case_requirements
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.use_case_requirements.AbstractApiClass
-   abacusai.use_case_requirements.UseCaseRequirements
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.use_case_requirements.UseCaseRequirements
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: UseCaseRequirements(client, datasetType=None, name=None, description=None, required=None, multi=None, allowedFeatureMappings=None, allowedNestedFeatureMappings=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Use Case Requirements
 
@@ -51,11 +41,9 @@ Module Contents
    :param allowedNestedFeatureMappings: A collection of key-value pairs, with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool }.
    :type allowedNestedFeatureMappings: dict
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

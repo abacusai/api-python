@@ -1,16 +1,17 @@
-abacusai.api_class.dataset
-==========================
+:py:mod:`abacusai.api_class.dataset`
+====================================
 
 .. py:module:: abacusai.api_class.dataset
 
 
+Module Contents
+---------------
+
 Classes
--------
+~~~~~~~
 
 .. autoapisummary::
 
-   abacusai.api_class.dataset.ApiClass
-   abacusai.api_class.dataset.OcrMode
    abacusai.api_class.dataset.DatasetConfig
    abacusai.api_class.dataset.ParsingConfig
    abacusai.api_class.dataset.DocumentProcessingConfig
@@ -18,130 +19,28 @@ Classes
    abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig
 
 
-Module Contents
----------------
-
-.. py:class:: ApiClass
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: _upper_snake_case_keys
-      :type:  bool
-
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-   .. py:method:: __str__()
-
-      Return str(self).
-
-
-
-   .. py:method:: _repr_html_()
-
-
-   .. py:method:: __getitem__(item)
-
-
-   .. py:method:: __setitem__(item, value)
-
-
-   .. py:method:: _unset_item(item)
-
-
-   .. py:method:: get(item, default = None)
-
-
-   .. py:method:: pop(item, default = NotImplemented)
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(input_dict)
-      :classmethod:
-
-
-
-.. py:class:: OcrMode
-
-   Bases: :py:obj:`ApiEnum`
-
-
-   Generic enumeration.
-
-   Derive from this class to define new enumerations.
-
-
-   .. py:attribute:: DEFAULT
-      :value: 'DEFAULT'
-
-
-
-   .. py:attribute:: LAYOUT
-      :value: 'LAYOUT'
-
-
-
-   .. py:attribute:: SCANNED
-      :value: 'SCANNED'
-
-
-
-   .. py:attribute:: COMPREHENSIVE
-      :value: 'COMPREHENSIVE'
-
-
-
-   .. py:attribute:: COMPREHENSIVE_V2
-      :value: 'COMPREHENSIVE_V2'
-
-
-
-   .. py:attribute:: COMPREHENSIVE_TABLE_MD
-      :value: 'COMPREHENSIVE_TABLE_MD'
-
 
 
 .. py:class:: DatasetConfig
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for dataset configs
 
    :param is_documentset: Whether the dataset is a document set
    :type is_documentset: bool
 
-
    .. py:attribute:: is_documentset
-      :type:  bool
+      :type: bool
+
+      
 
 
 .. py:class:: ParsingConfig
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Custom config for dataset parsing.
 
@@ -152,23 +51,26 @@ Module Contents
    :param file_path_with_schema: Path to the file with schema. Defaults to None.
    :type file_path_with_schema: str
 
-
    .. py:attribute:: escape
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: csv_delimiter
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: file_path_with_schema
-      :type:  str
+      :type: str
+
+      
 
 
 .. py:class:: DocumentProcessingConfig
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Document processing configuration.
 
@@ -184,46 +86,54 @@ Module Contents
    :type remove_watermarks: bool
    :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
    :type convert_to_markdown: bool
-
+   :param return_links: Whether to augment the extracted text with embedded URLs in the PDF. Defaults to False. This option only takes effect when the document is a PDF.
+   :type return_links: bool
 
    .. py:attribute:: extract_bounding_boxes
-      :type:  bool
+      :type: bool
       :value: False
 
-
+      
 
    .. py:attribute:: ocr_mode
-      :type:  abacusai.api_class.enums.OcrMode
+      :type: abacusai.api_class.enums.OcrMode
 
+      
 
    .. py:attribute:: use_full_ocr
-      :type:  bool
-      :value: None
+      :type: bool
 
-
+      
 
    .. py:attribute:: remove_header_footer
-      :type:  bool
+      :type: bool
       :value: False
 
-
+      
 
    .. py:attribute:: remove_watermarks
-      :type:  bool
+      :type: bool
       :value: True
 
-
+      
 
    .. py:attribute:: convert_to_markdown
-      :type:  bool
+      :type: bool
       :value: False
 
+      
+
+   .. py:attribute:: return_links
+      :type: bool
+      :value: False
+
+      
 
 
 .. py:class:: DatasetDocumentProcessingConfig
 
-   Bases: :py:obj:`DocumentProcessingConfig`
 
+   Bases: :py:obj:`DocumentProcessingConfig`
 
    Document processing configuration for dataset imports.
 
@@ -242,25 +152,25 @@ Module Contents
    :param page_text_column: Name of the output column which contains the extracted text for each page. If not provided, no column will be created.
    :type page_text_column: str
 
-
    .. py:attribute:: page_text_column
-      :type:  str
-      :value: None
+      :type: str
 
+      
 
 
 .. py:class:: IncrementalDatabaseConnectorConfig
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Config information for incremental datasets from database connectors
 
    :param timestamp_column: If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
    :type timestamp_column: str
 
-
    .. py:attribute:: timestamp_column
-      :type:  str
+      :type: str
+
+      
 
 

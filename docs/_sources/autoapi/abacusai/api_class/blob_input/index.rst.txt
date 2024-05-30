@@ -1,89 +1,29 @@
-abacusai.api_class.blob_input
-=============================
+:py:mod:`abacusai.api_class.blob_input`
+=======================================
 
 .. py:module:: abacusai.api_class.blob_input
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.api_class.blob_input.ApiClass
-   abacusai.api_class.blob_input.BlobInput
 
 
 Module Contents
 ---------------
 
-.. py:class:: ApiClass
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abc.ABC`
+.. autoapisummary::
 
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: _upper_snake_case_keys
-      :type:  bool
-
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
+   abacusai.api_class.blob_input.Blob
+   abacusai.api_class.blob_input.BlobInput
 
 
 
-   .. py:method:: __str__()
 
-      Return str(self).
+.. py:class:: Blob(contents, mime_type = None, filename = None, size = None)
 
-
-
-   .. py:method:: _repr_html_()
-
-
-   .. py:method:: __getitem__(item)
-
-
-   .. py:method:: __setitem__(item, value)
-
-
-   .. py:method:: _unset_item(item)
-
-
-   .. py:method:: get(item, default = None)
-
-
-   .. py:method:: pop(item, default = NotImplemented)
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(input_dict)
-      :classmethod:
-
-
-
-.. py:class:: BlobInput
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-
-   Binary large object input data.
+   Binary large object data.
 
    :param filename: The original filename of the blob.
    :type filename: str
@@ -94,30 +34,41 @@ Module Contents
    :param size: The size of the blob in bytes.
    :type size: int
 
-
    .. py:attribute:: filename
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: contents
-      :type:  bytes
+      :type: bytes
 
+      
 
    .. py:attribute:: mime_type
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: size
-      :type:  int
+      :type: int
 
+      
 
    .. py:method:: from_local_file(file_path)
       :classmethod:
 
 
-
    .. py:method:: from_contents(contents, filename = None, mime_type = None)
       :classmethod:
 
+
+
+.. py:class:: BlobInput(filename = None, contents = None, mime_type = None, size = None)
+
+
+   Bases: :py:obj:`Blob`
+
+   Binary large object data.
+   An alias for Blob, used to indicate that this is an input object.
 
 

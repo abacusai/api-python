@@ -1,36 +1,26 @@
-abacusai.chat_message
-=====================
+:py:mod:`abacusai.chat_message`
+===============================
 
 .. py:module:: abacusai.chat_message
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.chat_message.AbstractApiClass
-   abacusai.chat_message.ChatMessage
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
+   abacusai.chat_message.ChatMessage
 
 
-.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None)
+
+
+.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None, keywordArguments=None)
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
 
    A single chat message with Abacus Chat.
 
@@ -52,12 +42,12 @@ Module Contents
    :type hotkeyTitle: str
    :param tasks: The list of spawned tasks, if the message was broken down into smaller sub-tasks.
    :type tasks: list[str]
-
+   :param keywordArguments: A dict of kwargs used to generate the response.
+   :type keywordArguments: dict
 
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

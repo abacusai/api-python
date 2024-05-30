@@ -1,36 +1,26 @@
-abacusai.data_quality_results
-=============================
+:py:mod:`abacusai.data_quality_results`
+=======================================
 
 .. py:module:: abacusai.data_quality_results
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.data_quality_results.AbstractApiClass
-   abacusai.data_quality_results.DataQualityResults
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.data_quality_results.DataQualityResults
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DataQualityResults(client, results=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Data Quality results from normalization stage
 
@@ -39,11 +29,9 @@ Module Contents
    :param results: A list with different pairs of quality parameters and their values
    :type results: dict
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

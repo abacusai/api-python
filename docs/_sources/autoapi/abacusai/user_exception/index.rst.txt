@@ -1,36 +1,26 @@
-abacusai.user_exception
-=======================
+:py:mod:`abacusai.user_exception`
+=================================
 
 .. py:module:: abacusai.user_exception
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.user_exception.AbstractApiClass
-   abacusai.user_exception.UserException
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.user_exception.UserException
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: UserException(client, type=None, value=None, traceback=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Exception information for errors in usercode.
 
@@ -43,11 +33,9 @@ Module Contents
    :param traceback: The traceback of the exception
    :type traceback: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

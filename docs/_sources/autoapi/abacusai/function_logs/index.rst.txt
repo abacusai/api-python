@@ -1,69 +1,26 @@
-abacusai.function_logs
-======================
+:py:mod:`abacusai.function_logs`
+================================
 
 .. py:module:: abacusai.function_logs
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.function_logs.AbstractApiClass
-   abacusai.function_logs.UserException
-   abacusai.function_logs.FunctionLogs
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.function_logs.FunctionLogs
 
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
-
-
-.. py:class:: UserException(client, type=None, value=None, traceback=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Exception information for errors in usercode.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param type: The type of exception
-   :type type: str
-   :param value: The value of the exception
-   :type value: str
-   :param traceback: The traceback of the exception
-   :type traceback: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
 
 
 
 .. py:class:: FunctionLogs(client, function=None, stats=None, stdout=None, stderr=None, algorithm=None, exception={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Logs from an invocation of a function.
 
@@ -82,11 +39,9 @@ Module Contents
    :param exception: The exception stacktrace
    :type exception: UserException
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

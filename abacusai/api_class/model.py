@@ -170,6 +170,7 @@ class RegressionTrainingConfig(TrainingConfig):
         custom_loss_functions (List[str]): Registered custom losses available for selection.
         custom_metrics (List[str]): Registered custom metrics available for selection.
         partial_dependence_analysis (PartialDependenceAnalysis): Specify whether to run partial dependence plots for all features or only some features.
+        do_masked_language_model_pretraining (bool): Specify whether to run a masked language model unsupervised pretraining step before supervized training in certain supported algorithms which use BERT-like backbones.
     """
     objective: enums.RegressionObjective = dataclasses.field(default=None)
     sort_objective: enums.RegressionObjective = dataclasses.field(default=None)
@@ -213,6 +214,7 @@ class RegressionTrainingConfig(TrainingConfig):
     dropout_rate: int = dataclasses.field(default=None)
     pretrained_model_name: str = dataclasses.field(default=None)
     is_multilingual: bool = dataclasses.field(default=None)
+    do_masked_language_model_pretraining: bool = dataclasses.field(default=None)
 
     # loss function
     loss_function: enums.RegressionLossFunction = dataclasses.field(default=None)

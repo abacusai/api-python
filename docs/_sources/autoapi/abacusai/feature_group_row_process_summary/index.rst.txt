@@ -1,36 +1,26 @@
-abacusai.feature_group_row_process_summary
-==========================================
+:py:mod:`abacusai.feature_group_row_process_summary`
+====================================================
 
 .. py:module:: abacusai.feature_group_row_process_summary
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_group_row_process_summary.AbstractApiClass
-   abacusai.feature_group_row_process_summary.FeatureGroupRowProcessSummary
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.feature_group_row_process_summary.FeatureGroupRowProcessSummary
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureGroupRowProcessSummary(client, totalProcesses=None, pendingProcesses=None, processingProcesses=None, completeProcesses=None, failedProcesses=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A summary of the feature group processes for a deployment.
 
@@ -47,11 +37,9 @@ Module Contents
    :param failedProcesses: The number of failed processes
    :type failedProcesses: int
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

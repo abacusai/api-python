@@ -1,16 +1,17 @@
-abacusai.api_class.feature_group
-================================
+:py:mod:`abacusai.api_class.feature_group`
+==========================================
 
 .. py:module:: abacusai.api_class.feature_group
 
 
+Module Contents
+---------------
+
 Classes
--------
+~~~~~~~
 
 .. autoapisummary::
 
-   abacusai.api_class.feature_group.ApiClass
-   abacusai.api_class.feature_group._ApiClassFactory
    abacusai.api_class.feature_group.SamplingConfig
    abacusai.api_class.feature_group.NSamplingConfig
    abacusai.api_class.feature_group.PercentSamplingConfig
@@ -19,247 +20,163 @@ Classes
    abacusai.api_class.feature_group.LastNMergeConfig
    abacusai.api_class.feature_group.TimeWindowMergeConfig
    abacusai.api_class.feature_group._MergeConfigFactory
+   abacusai.api_class.feature_group.OperatorConfig
+   abacusai.api_class.feature_group.UnpivotConfig
+   abacusai.api_class.feature_group.MarkdownConfig
+   abacusai.api_class.feature_group.CrawlerTransformConfig
+   abacusai.api_class.feature_group.ExtractDocumentDataConfig
+   abacusai.api_class.feature_group._OperatorConfigFactory
 
-
-Module Contents
----------------
-
-.. py:class:: ApiClass
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: _upper_snake_case_keys
-      :type:  bool
-
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-   .. py:method:: __str__()
-
-      Return str(self).
-
-
-
-   .. py:method:: _repr_html_()
-
-
-   .. py:method:: __getitem__(item)
-
-
-   .. py:method:: __setitem__(item, value)
-
-
-   .. py:method:: _unset_item(item)
-
-
-   .. py:method:: get(item, default = None)
-
-
-   .. py:method:: pop(item, default = NotImplemented)
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(input_dict)
-      :classmethod:
-
-
-
-.. py:class:: _ApiClassFactory
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: config_abstract_class
-      :value: None
-
-
-
-   .. py:attribute:: config_class_key
-      :value: None
-
-
-
-   .. py:attribute:: config_class_map
-
-
-   .. py:method:: from_dict(config)
-      :classmethod:
 
 
 
 .. py:class:: SamplingConfig
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the sampling config of a feature group
 
-
    .. py:attribute:: sampling_method
-      :type:  abacusai.api_class.enums.SamplingMethodType
+      :type: abacusai.api_class.enums.SamplingMethodType
 
+      
 
    .. py:method:: _get_builder()
       :classmethod:
 
 
-
    .. py:method:: __post_init__()
+
 
 
 .. py:class:: NSamplingConfig
 
-   Bases: :py:obj:`SamplingConfig`
 
+   Bases: :py:obj:`SamplingConfig`
 
    The number of distinct values of the key columns to include in the sample, or number of rows if key columns not specified.
 
-   :param sampling_method: N_SAMPLING
-   :type sampling_method: SamplingMethodType
    :param sample_count: The number of rows to include in the sample
    :type sample_count: int
    :param key_columns: The feature(s) to use as the key(s) when sampling
    :type key_columns: List[str]
 
-
    .. py:attribute:: sample_count
-      :type:  int
+      :type: int
 
+      
 
    .. py:attribute:: key_columns
-      :type:  List[str]
+      :type: List[str]
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: PercentSamplingConfig
+
 
    Bases: :py:obj:`SamplingConfig`
 
-
    The fraction of distinct values of the feature group to include in the sample.
 
-   :param sampling_method: PERCENT_SAMPLING
-   :type sampling_method: SamplingMethodType
    :param sample_percent: The percentage of the rows to sample
    :type sample_percent: float
    :param key_columns: The feature(s) to use as the key(s) when sampling
    :type key_columns: List[str]
 
-
    .. py:attribute:: sample_percent
-      :type:  float
+      :type: float
 
+      
 
    .. py:attribute:: key_columns
-      :type:  List[str]
+      :type: List[str]
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: _SamplingConfigFactory
 
-   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
-
+      
 
    .. py:attribute:: config_abstract_class
 
+      
 
    .. py:attribute:: config_class_map
+
+      
 
 
 .. py:class:: MergeConfig
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the merge config of a feature group
 
-
    .. py:attribute:: merge_mode
-      :type:  abacusai.api_class.enums.MergeMode
+      :type: abacusai.api_class.enums.MergeMode
 
+      
 
    .. py:method:: _get_builder()
       :classmethod:
 
 
-
    .. py:method:: __post_init__()
+
 
 
 .. py:class:: LastNMergeConfig
 
-   Bases: :py:obj:`MergeConfig`
 
+   Bases: :py:obj:`MergeConfig`
 
    Merge LAST N chunks/versions of an incremental dataset.
 
-   :param merge_mode: LAST_N
-   :type merge_mode: MergeMode
    :param num_versions: The number of versions to merge. num_versions == 0 means merge all versions.
    :type num_versions: int
    :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
    :type include_version_timestamp_column: bool
 
-
    .. py:attribute:: num_versions
-      :type:  int
+      :type: int
 
+      
 
    .. py:attribute:: include_version_timestamp_column
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: TimeWindowMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
-
    Merge rows within a given timewindow of the most recent timestamp
 
-   :param merge_mode: TIME_WINDOW
-   :type merge_mode: MergeMode
    :param feature_name: Time based column to index on
    :type feature_name: str
    :param time_window_size_ms: Range of merged rows will be [MAX_TIME - time_window_size_ms, MAX_TIME]
@@ -267,39 +184,255 @@ Module Contents
    :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
    :type include_version_timestamp_column: bool
 
-
    .. py:attribute:: feature_name
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: time_window_size_ms
-      :type:  int
+      :type: int
 
+      
 
    .. py:attribute:: include_version_timestamp_column
-      :type:  bool
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _MergeConfigFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_class_key
+      :value: 'merge_mode'
+
+      
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+
+.. py:class:: OperatorConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Configuration for a template Feature Group Operation
+
+   .. py:attribute:: operator_type
+      :type: abacusai.api_class.enums.OperatorType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
 
 
    .. py:method:: __post_init__()
 
 
-.. py:class:: _MergeConfigFactory
+
+.. py:class:: UnpivotConfig
+
+
+   Bases: :py:obj:`OperatorConfig`
+
+   Unpivot Columns in a FeatureGroup.
+
+   :param columns: Which columns to unpivot.
+   :type columns: List[str]
+   :param index_column: Name of new column containing the unpivoted column names as its values
+   :type index_column: str
+   :param value_column: Name of new column containing the row values that were unpivoted.
+   :type value_column: str
+   :param exclude: If True, the unpivoted columns are all the columns EXCEPT the ones in the columns argument. Default is False.
+   :type exclude: bool
+
+   .. py:attribute:: columns
+      :type: List[str]
+
+      
+
+   .. py:attribute:: index_column
+      :type: str
+
+      
+
+   .. py:attribute:: value_column
+      :type: str
+
+      
+
+   .. py:attribute:: exclude
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: MarkdownConfig
+
+
+   Bases: :py:obj:`OperatorConfig`
+
+   Transform a input column to a markdown column.
+
+   :param input_column: Name of input column to transform.
+   :type input_column: str
+   :param output_column: Name of output column to store transformed data.
+   :type output_column: str
+   :param input_column_type: Type of input column to transform.
+   :type input_column_type: MarkdownOperatorInputType
+
+   .. py:attribute:: input_column
+      :type: str
+
+      
+
+   .. py:attribute:: output_column
+      :type: str
+
+      
+
+   .. py:attribute:: input_column_type
+      :type: abacusai.api_class.enums.MarkdownOperatorInputType
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: CrawlerTransformConfig
+
+
+   Bases: :py:obj:`OperatorConfig`
+
+   Transform a input column of urls to html text
+
+   :param input_column: Name of input column to transform.
+   :type input_column: str
+   :param output_column: Name of output column to store transformed data.
+   :type output_column: str
+   :param depth_column: Increasing depth explores more links, capturing more content
+   :type depth_column: str
+   :param disable_host_restriction: If True, will not restrict crawling to the same host.
+   :type disable_host_restriction: bool
+   :param honour_website_rules: If True, will respect robots.txt rules.
+   :type honour_website_rules: bool
+   :param user_agent: If provided, will use this user agent instead of randomly selecting one.
+   :type user_agent: str
+
+   .. py:attribute:: input_column
+      :type: str
+
+      
+
+   .. py:attribute:: output_column
+      :type: str
+
+      
+
+   .. py:attribute:: depth_column
+      :type: str
+
+      
+
+   .. py:attribute:: input_column_type
+      :type: str
+
+      
+
+   .. py:attribute:: crawl_depth
+      :type: int
+
+      
+
+   .. py:attribute:: disable_host_restriction
+      :type: bool
+
+      
+
+   .. py:attribute:: honour_website_rules
+      :type: bool
+
+      
+
+   .. py:attribute:: user_agent
+      :type: str
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ExtractDocumentDataConfig
+
+
+   Bases: :py:obj:`OperatorConfig`
+
+   Extracts data from documents.
+
+   :param doc_id_column: Name of input document ID column.
+   :type doc_id_column: str
+   :param document_column: Name of the input document column which contains the page infos. This column will be transformed to include the document processing config in the output feature group.
+   :type document_column: str
+   :param document_processing_config: Document processing configuration.
+   :type document_processing_config: DocumentProcessingConfig
+
+   .. py:attribute:: doc_id_column
+      :type: str
+
+      
+
+   .. py:attribute:: document_column
+      :type: str
+
+      
+
+   .. py:attribute:: document_processing_config
+      :type: abacusai.api_class.dataset.DocumentProcessingConfig
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _OperatorConfigFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: config_class_key
-      :value: 'merge_mode'
-
-
+   A class to select and return the the correct type of Operator Config based on a serialized OperatorConfig instance.
 
    .. py:attribute:: config_abstract_class
 
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'operator_type'
+
+      
 
    .. py:attribute:: config_class_map
+
+      
 
 

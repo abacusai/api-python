@@ -1,36 +1,26 @@
-abacusai.monitor_alert_version
-==============================
+:py:mod:`abacusai.monitor_alert_version`
+========================================
 
 .. py:module:: abacusai.monitor_alert_version
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.monitor_alert_version.AbstractApiClass
-   abacusai.monitor_alert_version.MonitorAlertVersion
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.monitor_alert_version.MonitorAlertVersion
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: MonitorAlertVersion(client, name=None, monitorAlertVersion=None, monitorAlertId=None, status=None, createdAt=None, alertingStartedAt=None, alertingCompletedAt=None, error=None, modelMonitorVersion=None, conditionConfig=None, actionConfig=None, alertResult=None, actionStatus=None, actionError=None, actionStartedAt=None, actionCompletedAt=None, conditionDescription=None, actionDescription=None, alertType=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A monitor alert version
 
@@ -75,11 +65,9 @@ Module Contents
    :param alertType: The type of the alert
    :type alertType: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -90,14 +78,12 @@ Module Contents
       :rtype: dict
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: MonitorAlertVersion
-
 
 
    .. py:method:: describe()
@@ -111,14 +97,12 @@ Module Contents
       :rtype: MonitorAlertVersion
 
 
-
    .. py:method:: wait_for_monitor_alert(timeout=1200)
 
       A waiting call until model monitor version is ready.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
-
 
 
    .. py:method:: get_status()

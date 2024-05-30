@@ -15,9 +15,10 @@ class ChatMessage(AbstractApiClass):
             docIds (list[str]): A list of IDs of the uploaded document if the message has
             hotkeyTitle (str): The title of the hotkey prompt if the message has one
             tasks (list[str]): The list of spawned tasks, if the message was broken down into smaller sub-tasks.
+            keywordArguments (dict): A dict of kwargs used to generate the response.
     """
 
-    def __init__(self, client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None):
+    def __init__(self, client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None, keywordArguments=None):
         super().__init__(client, None)
         self.role = role
         self.text = text
@@ -27,11 +28,12 @@ class ChatMessage(AbstractApiClass):
         self.doc_ids = docIds
         self.hotkey_title = hotkeyTitle
         self.tasks = tasks
+        self.keyword_arguments = keywordArguments
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'is_useful': repr(
-            self.is_useful), f'feedback': repr(self.feedback), f'doc_ids': repr(self.doc_ids), f'hotkey_title': repr(self.hotkey_title), f'tasks': repr(self.tasks)}
+        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'is_useful': repr(self.is_useful), f'feedback': repr(
+            self.feedback), f'doc_ids': repr(self.doc_ids), f'hotkey_title': repr(self.hotkey_title), f'tasks': repr(self.tasks), f'keyword_arguments': repr(self.keyword_arguments)}
         class_name = "ChatMessage"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -44,6 +46,6 @@ class ChatMessage(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'is_useful': self.is_useful,
-                'feedback': self.feedback, 'doc_ids': self.doc_ids, 'hotkey_title': self.hotkey_title, 'tasks': self.tasks}
+        resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'is_useful': self.is_useful, 'feedback': self.feedback,
+                'doc_ids': self.doc_ids, 'hotkey_title': self.hotkey_title, 'tasks': self.tasks, 'keyword_arguments': self.keyword_arguments}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

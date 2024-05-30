@@ -1,36 +1,26 @@
-abacusai.pipeline_step_version_reference
-========================================
+:py:mod:`abacusai.pipeline_step_version_reference`
+==================================================
 
 .. py:module:: abacusai.pipeline_step_version_reference
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.pipeline_step_version_reference.AbstractApiClass
-   abacusai.pipeline_step_version_reference.PipelineStepVersionReference
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.pipeline_step_version_reference.PipelineStepVersionReference
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PipelineStepVersionReference(client, pipelineStepVersionReferenceId=None, pipelineStepVersion=None, objectType=None, datasetVersion=None, modelVersion=None, deploymentVersion=None, batchPredictionId=None, modelMonitorVersion=None, notebookVersion=None, featureGroupVersion=None, status=None, error=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A reference from a pipeline step version to the versions that were output from the pipeline step.
 
@@ -61,11 +51,9 @@ Module Contents
    :param error: The error message if the reference is in an error state.
    :type error: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

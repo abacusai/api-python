@@ -1,36 +1,26 @@
-abacusai.feature_drift_record
-=============================
+:py:mod:`abacusai.feature_drift_record`
+=======================================
 
 .. py:module:: abacusai.feature_drift_record
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_drift_record.AbstractApiClass
-   abacusai.feature_drift_record.FeatureDriftRecord
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.feature_drift_record.FeatureDriftRecord
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureDriftRecord(client, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, psi=None, csi=None, chiSquare=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Value of each type of drift
 
@@ -53,11 +43,9 @@ Module Contents
    :param chiSquare: Chi-square statistic computed between the training distribution and the range of values in the specified window.
    :type chiSquare: float
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

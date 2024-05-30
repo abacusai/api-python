@@ -1,36 +1,26 @@
-abacusai.file_connector_instructions
-====================================
+:py:mod:`abacusai.file_connector_instructions`
+==============================================
 
 .. py:module:: abacusai.file_connector_instructions
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.file_connector_instructions.AbstractApiClass
-   abacusai.file_connector_instructions.FileConnectorInstructions
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.file_connector_instructions.FileConnectorInstructions
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FileConnectorInstructions(client, verified=None, writePermission=None, authOptions=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    An object with a full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid.
 
@@ -43,11 +33,9 @@ Module Contents
    :param authOptions: A list of options for giving Abacus.AI access to this bucket
    :type authOptions: list[dict]
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

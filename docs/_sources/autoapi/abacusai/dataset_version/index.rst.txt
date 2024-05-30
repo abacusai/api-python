@@ -1,36 +1,26 @@
-abacusai.dataset_version
-========================
+:py:mod:`abacusai.dataset_version`
+==================================
 
 .. py:module:: abacusai.dataset_version
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.dataset_version.AbstractApiClass
-   abacusai.dataset_version.DatasetVersion
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.dataset_version.DatasetVersion
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, fileInspectMetadata=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, databaseConnectorConfig=None, applicationConnectorConfig=None, invalidRecords=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A specific version of a dataset
 
@@ -65,11 +55,9 @@ Module Contents
    :param invalidRecords: Invalid records in the dataset version
    :type invalidRecords: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -78,7 +66,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: get_metrics(selected_columns = None, include_charts = False, include_statistics = True)
@@ -96,14 +83,12 @@ Module Contents
       :rtype: DataMetrics
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: DatasetVersion
-
 
 
    .. py:method:: describe()
@@ -117,7 +102,6 @@ Module Contents
       :rtype: DatasetVersion
 
 
-
    .. py:method:: get_logs()
 
       Retrieves the dataset import logs.
@@ -129,7 +113,6 @@ Module Contents
       :rtype: DatasetVersionLogs
 
 
-
    .. py:method:: wait_for_import(timeout=900)
 
       A waiting call until dataset version is imported.
@@ -138,14 +121,12 @@ Module Contents
       :type timeout: int
 
 
-
    .. py:method:: wait_for_inspection(timeout=None)
 
       A waiting call until dataset version is completely inspected.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
-
 
 
    .. py:method:: get_status()

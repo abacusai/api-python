@@ -1,36 +1,26 @@
-abacusai.finetuned_pretrained_model
-===================================
+:py:mod:`abacusai.finetuned_pretrained_model`
+=============================================
 
 .. py:module:: abacusai.finetuned_pretrained_model
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.finetuned_pretrained_model.AbstractApiClass
-   abacusai.finetuned_pretrained_model.FinetunedPretrainedModel
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.finetuned_pretrained_model.FinetunedPretrainedModel
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FinetunedPretrainedModel(client, name=None, finetunedPretrainedModelId=None, finetunedPretrainedModelVersion=None, createdAt=None, updatedAt=None, config=None, baseModel=None, finetuningDatasetVersion=None, status=None, error=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A finetuned pretrained model
 
@@ -57,11 +47,9 @@ Module Contents
    :param error: Relevant error if the status is FAILED.
    :type error: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

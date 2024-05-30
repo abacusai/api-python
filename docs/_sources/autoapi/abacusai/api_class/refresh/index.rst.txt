@@ -1,125 +1,36 @@
-abacusai.api_class.refresh
-==========================
+:py:mod:`abacusai.api_class.refresh`
+====================================
 
 .. py:module:: abacusai.api_class.refresh
 
 
+Module Contents
+---------------
+
 Classes
--------
+~~~~~~~
 
 .. autoapisummary::
 
-   abacusai.api_class.refresh.ApiClass
-   abacusai.api_class.refresh._ApiClassFactory
    abacusai.api_class.refresh.FeatureGroupExportConfig
    abacusai.api_class.refresh.FileConnectorExportConfig
    abacusai.api_class.refresh.DatabaseConnectorExportConfig
    abacusai.api_class.refresh._FeatureGroupExportConfigFactory
 
 
-Module Contents
----------------
-
-.. py:class:: ApiClass
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: _upper_snake_case_keys
-      :type:  bool
-
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-   .. py:method:: __str__()
-
-      Return str(self).
-
-
-
-   .. py:method:: _repr_html_()
-
-
-   .. py:method:: __getitem__(item)
-
-
-   .. py:method:: __setitem__(item, value)
-
-
-   .. py:method:: _unset_item(item)
-
-
-   .. py:method:: get(item, default = None)
-
-
-   .. py:method:: pop(item, default = NotImplemented)
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(input_dict)
-      :classmethod:
-
-
-
-.. py:class:: _ApiClassFactory
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: config_abstract_class
-      :value: None
-
-
-
-   .. py:attribute:: config_class_key
-      :value: None
-
-
-
-   .. py:attribute:: config_class_map
-
-
-   .. py:method:: from_dict(config)
-      :classmethod:
-
 
 
 .. py:class:: FeatureGroupExportConfig
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for feature group exports.
 
-
    .. py:attribute:: connector_type
-      :type:  abacusai.api_class.enums.ConnectorType
+      :type: abacusai.api_class.enums.ConnectorType
 
+      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -128,8 +39,8 @@ Module Contents
 
 .. py:class:: FileConnectorExportConfig
 
-   Bases: :py:obj:`FeatureGroupExportConfig`
 
+   Bases: :py:obj:`FeatureGroupExportConfig`
 
    File connector export config for feature groups
 
@@ -138,14 +49,15 @@ Module Contents
    :param export_file_format: The file format to export the feature group to
    :type export_file_format: str
 
-
    .. py:attribute:: location
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: export_file_format
-      :type:  str
+      :type: str
 
+      
 
    .. py:method:: __post_init__()
 
@@ -160,8 +72,8 @@ Module Contents
 
 .. py:class:: DatabaseConnectorExportConfig
 
-   Bases: :py:obj:`FeatureGroupExportConfig`
 
+   Bases: :py:obj:`FeatureGroupExportConfig`
 
    Database connector export config for feature groups
 
@@ -178,30 +90,35 @@ Module Contents
    :param data_columns: The data columns to export the feature group to
    :type data_columns: Dict[str, str]
 
-
    .. py:attribute:: database_connector_id
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: mode
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: object_name
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: id_column
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: additional_id_columns
-      :type:  List[str]
+      :type: List[str]
 
+      
 
    .. py:attribute:: data_columns
-      :type:  Dict[str, str]
+      :type: Dict[str, str]
 
+      
 
    .. py:method:: __post_init__()
 
@@ -216,21 +133,23 @@ Module Contents
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
-   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-
    .. py:attribute:: config_abstract_class
 
+      
 
    .. py:attribute:: config_class_key
       :value: 'connector_type'
 
-
+      
 
    .. py:attribute:: config_class_map
+
+      
 
 

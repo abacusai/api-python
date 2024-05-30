@@ -1,36 +1,26 @@
-abacusai.streaming_row_count
-============================
+:py:mod:`abacusai.streaming_row_count`
+======================================
 
 .. py:module:: abacusai.streaming_row_count
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.streaming_row_count.AbstractApiClass
-   abacusai.streaming_row_count.StreamingRowCount
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.streaming_row_count.StreamingRowCount
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: StreamingRowCount(client, count=None, startTsMs=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Returns the number of rows in a streaming feature group from the specified time
 
@@ -41,11 +31,9 @@ Module Contents
    :param startTsMs: The start time for the number of rows.
    :type startTsMs: int
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

@@ -1,36 +1,26 @@
-abacusai.holdout_analysis_version
-=================================
+:py:mod:`abacusai.holdout_analysis_version`
+===========================================
 
 .. py:module:: abacusai.holdout_analysis_version
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.holdout_analysis_version.AbstractApiClass
-   abacusai.holdout_analysis_version.HoldoutAnalysisVersion
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.holdout_analysis_version.HoldoutAnalysisVersion
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: HoldoutAnalysisVersion(client, holdoutAnalysisVersion=None, holdoutAnalysisId=None, createdAt=None, status=None, error=None, modelId=None, modelVersion=None, algorithm=None, algoName=None, metrics=None, metricInfos=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A holdout analysis version object.
 
@@ -59,11 +49,9 @@ Module Contents
    :param metricInfos: The metric infos of the holdout analysis version.
    :type metricInfos: dict
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -74,14 +62,12 @@ Module Contents
       :rtype: dict
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: HoldoutAnalysisVersion
-
 
 
    .. py:method:: describe(get_metrics = False)
@@ -95,14 +81,12 @@ Module Contents
       :rtype: HoldoutAnalysisVersion
 
 
-
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until holdout analysis for the version is complete
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
-
 
 
    .. py:method:: get_status()

@@ -1,36 +1,26 @@
-abacusai.prediction_feature_group
-=================================
+:py:mod:`abacusai.prediction_feature_group`
+===========================================
 
 .. py:module:: abacusai.prediction_feature_group
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.prediction_feature_group.AbstractApiClass
-   abacusai.prediction_feature_group.PredictionFeatureGroup
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.prediction_feature_group.PredictionFeatureGroup
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PredictionFeatureGroup(client, featureGroupId=None, featureGroupVersion=None, datasetType=None, default=None, required=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Batch Input Feature Group
 
@@ -47,11 +37,9 @@ Module Contents
    :param required: If true, this feature group is required for the batch prediction
    :type required: bool
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

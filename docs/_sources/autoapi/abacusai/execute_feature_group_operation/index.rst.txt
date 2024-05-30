@@ -1,36 +1,26 @@
-abacusai.execute_feature_group_operation
-========================================
+:py:mod:`abacusai.execute_feature_group_operation`
+==================================================
 
 .. py:module:: abacusai.execute_feature_group_operation
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.execute_feature_group_operation.AbstractApiClass
-   abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ExecuteFeatureGroupOperation(client, featureGroupOperationRunId=None, status=None, error=None, query=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    The result of executing a SQL query
 
@@ -45,11 +35,9 @@ Module Contents
    :param query: The SQL query of the operation
    :type query: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -58,7 +46,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: wait_for_results(timeout=3600, delay=2)
@@ -71,7 +58,6 @@ Module Contents
       :type delay: int
 
 
-
    .. py:method:: wait_for_execution(timeout=3600, delay=2)
 
       A waiting call until query is executed.
@@ -82,14 +68,12 @@ Module Contents
       :type delay: int
 
 
-
    .. py:method:: get_status()
 
       Gets the status of the query execution
 
       :returns: A string describing the status of a query execution (pending, complete, etc.).
       :rtype: str
-
 
 
    .. py:method:: refresh()
@@ -100,14 +84,12 @@ Module Contents
       :rtype: DatasetVersion
 
 
-
    .. py:method:: describe()
 
       Gets the description of the query execution
 
       :returns: A ExecuteFeatureGroupOperation object describing the query execution.
       :rtype: ExecuteFeatureGroupOperation
-
 
 
    .. py:method:: _download_avro_file(file_part, tmp_dir, part_index)

@@ -1,260 +1,26 @@
-abacusai.batch_prediction_version
-=================================
+:py:mod:`abacusai.batch_prediction_version`
+===========================================
 
 .. py:module:: abacusai.batch_prediction_version
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.batch_prediction_version.BatchPredictionArgs
-   abacusai.batch_prediction_version.FileFormat
-   abacusai.batch_prediction_version.PredictionFeatureGroup
-   abacusai.batch_prediction_version.PredictionInput
-   abacusai.batch_prediction_version.AbstractApiClass
-   abacusai.batch_prediction_version.BatchPredictionVersion
 
 
 Module Contents
 ---------------
 
-.. py:class:: BatchPredictionArgs
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+.. autoapisummary::
 
+   abacusai.batch_prediction_version.BatchPredictionVersion
 
-   An abstract class for Batch Prediction args specific to problem type.
 
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:attribute:: kwargs
-      :type:  dict
-
-
-   .. py:attribute:: problem_type
-      :type:  abacusai.api_class.enums.ProblemType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: FileFormat
-
-   Bases: :py:obj:`ApiEnum`
-
-
-   Generic enumeration.
-
-   Derive from this class to define new enumerations.
-
-
-   .. py:attribute:: AVRO
-      :value: 'AVRO'
-
-
-
-   .. py:attribute:: PARQUET
-      :value: 'PARQUET'
-
-
-
-   .. py:attribute:: TFRECORD
-      :value: 'TFRECORD'
-
-
-
-   .. py:attribute:: TSV
-      :value: 'TSV'
-
-
-
-   .. py:attribute:: CSV
-      :value: 'CSV'
-
-
-
-   .. py:attribute:: ORC
-      :value: 'ORC'
-
-
-
-   .. py:attribute:: JSON
-      :value: 'JSON'
-
-
-
-   .. py:attribute:: ODS
-      :value: 'ODS'
-
-
-
-   .. py:attribute:: XLS
-      :value: 'XLS'
-
-
-
-   .. py:attribute:: GZ
-      :value: 'GZ'
-
-
-
-   .. py:attribute:: ZIP
-      :value: 'ZIP'
-
-
-
-   .. py:attribute:: TAR
-      :value: 'TAR'
-
-
-
-   .. py:attribute:: DOCX
-      :value: 'DOCX'
-
-
-
-   .. py:attribute:: PDF
-      :value: 'PDF'
-
-
-
-   .. py:attribute:: RAR
-      :value: 'RAR'
-
-
-
-   .. py:attribute:: JPEG
-      :value: 'JPG'
-
-
-
-   .. py:attribute:: PNG
-      :value: 'PNG'
-
-
-
-   .. py:attribute:: TIF
-      :value: 'TIFF'
-
-
-
-   .. py:attribute:: NUMBERS
-      :value: 'NUMBERS'
-
-
-
-   .. py:attribute:: PPTX
-      :value: 'PPTX'
-
-
-
-   .. py:attribute:: PPT
-      :value: 'PPT'
-
-
-
-   .. py:attribute:: HTML
-      :value: 'HTML'
-
-
-
-   .. py:attribute:: TXT
-      :value: 'txt'
-
-
-
-.. py:class:: PredictionFeatureGroup(client, featureGroupId=None, featureGroupVersion=None, datasetType=None, default=None, required=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Batch Input Feature Group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param featureGroupId: The unique identifier of the feature group
-   :type featureGroupId: str
-   :param featureGroupVersion: The unique identifier of the feature group version used for predictions
-   :type featureGroupVersion: str
-   :param datasetType: dataset type
-   :type datasetType: str
-   :param default: If true, this feature group is the default feature group in the model
-   :type default: bool
-   :param required: If true, this feature group is required for the batch prediction
-   :type required: bool
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: PredictionInput(client, featureGroupDatasetIds=None, datasetIdRemap=None, featureGroups={}, datasets={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Batch inputs
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param featureGroupDatasetIds: The list of dataset IDs to use as input
-   :type featureGroupDatasetIds: list
-   :param datasetIdRemap: Replacement datasets to swap as prediction input
-   :type datasetIdRemap: dict
-   :param featureGroups: List of prediction feature groups
-   :type featureGroups: PredictionFeatureGroup
-   :param datasets: List of prediction datasets
-   :type datasets: PredictionDataset
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, bpAcrossVersionsMonitorVersion=None, batchPredictionArgsType=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Batch Prediction Version
 
@@ -343,11 +109,9 @@ Module Contents
    :param batchPredictionArgs: Argument(s) passed to every prediction call
    :type batchPredictionArgs: BatchPredictionArgs
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -356,7 +120,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: download_batch_prediction_result_chunk(offset = 0, chunk_size = 10485760)
@@ -369,7 +132,6 @@ Module Contents
       :type chunk_size: int
 
 
-
    .. py:method:: get_batch_prediction_connector_errors()
 
       Returns a stream containing the batch prediction database connection write errors, if any writes failed for the specified batch prediction job.
@@ -378,14 +140,12 @@ Module Contents
       :type batch_prediction_version: str
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: BatchPredictionVersion
-
 
 
    .. py:method:: describe()
@@ -399,7 +159,6 @@ Module Contents
       :rtype: BatchPredictionVersion
 
 
-
    .. py:method:: get_logs()
 
       Retrieves the batch prediction logs.
@@ -411,14 +170,12 @@ Module Contents
       :rtype: BatchPredictionVersionLogs
 
 
-
    .. py:method:: download_result_to_file(file)
 
       Downloads the batch prediction version in a local file.
 
       :param file: A file object opened in a binary mode e.g., file=open('/tmp/output', 'wb').
       :type file: file object
-
 
 
    .. py:method:: wait_for_predictions(timeout=86400)
@@ -429,7 +186,6 @@ Module Contents
       :type timeout: int
 
 
-
    .. py:method:: wait_for_drift_monitor(timeout=86400)
 
       A waiting call until batch prediction drift monitor calculations are ready.
@@ -438,14 +194,12 @@ Module Contents
       :type timeout: int
 
 
-
    .. py:method:: get_status(drift_monitor_status = False)
 
       Gets the status of the batch prediction version.
 
       :returns: A string describing the status of the batch prediction version, for e.g., pending, complete, etc.
       :rtype: str
-
 
 
    .. py:method:: load_results_as_pandas()

@@ -1,36 +1,26 @@
-abacusai.organization_group
-===========================
+:py:mod:`abacusai.organization_group`
+=====================================
 
 .. py:module:: abacusai.organization_group
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.organization_group.AbstractApiClass
-   abacusai.organization_group.OrganizationGroup
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.organization_group.OrganizationGroup
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: OrganizationGroup(client, organizationGroupId=None, permissions=None, groupName=None, defaultGroup=None, admin=None, createdAt=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    An Organization Group. Defines the permissions available to the users who are members of the group.
 
@@ -49,11 +39,9 @@ Module Contents
    :param createdAt: When the Organization Group was created.
    :type createdAt: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -64,14 +52,12 @@ Module Contents
       :rtype: dict
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: OrganizationGroup
-
 
 
    .. py:method:: describe()
@@ -85,14 +71,12 @@ Module Contents
       :rtype: OrganizationGroup
 
 
-
    .. py:method:: add_permission(permission)
 
       Adds a permission to the specified Organization Group.
 
       :param permission: Permission to add to the Organization Group.
       :type permission: str
-
 
 
    .. py:method:: remove_permission(permission)
@@ -103,14 +87,12 @@ Module Contents
       :type permission: str
 
 
-
    .. py:method:: delete()
 
       Deletes the specified Organization Group
 
       :param organization_group_id: Unique string identifier of the organization group.
       :type organization_group_id: str
-
 
 
    .. py:method:: add_user_to(email)
@@ -121,14 +103,12 @@ Module Contents
       :type email: str
 
 
-
    .. py:method:: remove_user_from(email)
 
       Removes a user from an Organization Group.
 
       :param email: Email of the user to remove.
       :type email: str
-
 
 
    .. py:method:: set_default()

@@ -1,36 +1,26 @@
-abacusai.modification_lock_info
-===============================
+:py:mod:`abacusai.modification_lock_info`
+=========================================
 
 .. py:module:: abacusai.modification_lock_info
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.modification_lock_info.AbstractApiClass
-   abacusai.modification_lock_info.ModificationLockInfo
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.modification_lock_info.ModificationLockInfo
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModificationLockInfo(client, modificationLock=None, userEmails=None, organizationGroups=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Information about a modification lock for a certain object
 
@@ -43,11 +33,9 @@ Module Contents
    :param organizationGroups: The list organization groups allowed to modify the object if the object's modification lock is activated.
    :type organizationGroups: list of unique string identifiers
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

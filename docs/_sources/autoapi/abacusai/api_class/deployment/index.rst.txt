@@ -1,16 +1,17 @@
-abacusai.api_class.deployment
-=============================
+:py:mod:`abacusai.api_class.deployment`
+=======================================
 
 .. py:module:: abacusai.api_class.deployment
 
 
+Module Contents
+---------------
+
 Classes
--------
+~~~~~~~
 
 .. autoapisummary::
 
-   abacusai.api_class.deployment.ApiClass
-   abacusai.api_class.deployment._ApiClassFactory
    abacusai.api_class.deployment.PredictionArguments
    abacusai.api_class.deployment.OptimizationPredictionArguments
    abacusai.api_class.deployment.TimeseriesAnomalyPredictionArguments
@@ -23,117 +24,29 @@ Classes
    abacusai.api_class.deployment._PredictionArgumentsFactory
 
 
-Module Contents
----------------
-
-.. py:class:: ApiClass
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: _upper_snake_case_keys
-      :type:  bool
-
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-   .. py:method:: __str__()
-
-      Return str(self).
-
-
-
-   .. py:method:: _repr_html_()
-
-
-   .. py:method:: __getitem__(item)
-
-
-   .. py:method:: __setitem__(item, value)
-
-
-   .. py:method:: _unset_item(item)
-
-
-   .. py:method:: get(item, default = None)
-
-
-   .. py:method:: pop(item, default = NotImplemented)
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(input_dict)
-      :classmethod:
-
-
-
-.. py:class:: _ApiClassFactory
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
-   .. py:attribute:: config_abstract_class
-      :value: None
-
-
-
-   .. py:attribute:: config_class_key
-      :value: None
-
-
-
-   .. py:attribute:: config_class_map
-
-
-   .. py:method:: from_dict(config)
-      :classmethod:
-
 
 
 .. py:class:: PredictionArguments
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for prediction arguments specific to problem type.
 
-
    .. py:attribute:: _support_kwargs
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:attribute:: kwargs
-      :type:  dict
+      :type: dict
 
+      
 
    .. py:attribute:: problem_type
-      :type:  abacusai.api_class.enums.ProblemType
+      :type: abacusai.api_class.enums.ProblemType
 
+      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -142,8 +55,8 @@ Module Contents
 
 .. py:class:: OptimizationPredictionArguments
 
-   Bases: :py:obj:`PredictionArguments`
 
+   Bases: :py:obj:`PredictionArguments`
 
    Prediction arguments for the OPTIMIZATION problem type
 
@@ -154,26 +67,29 @@ Module Contents
    :param include_all_assignments: If True, will return all assignments, including assignments with value 0. Default is False.
    :type include_all_assignments: bool
 
-
    .. py:attribute:: forced_assignments
-      :type:  dict
+      :type: dict
 
+      
 
    .. py:attribute:: solve_time_limit_seconds
-      :type:  float
+      :type: float
 
+      
 
    .. py:attribute:: include_all_assignments
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: TimeseriesAnomalyPredictionArguments
 
-   Bases: :py:obj:`PredictionArguments`
 
+   Bases: :py:obj:`PredictionArguments`
 
    Prediction arguments for the TS_ANOMALY problem type
 
@@ -184,26 +100,29 @@ Module Contents
    :param get_all_item_data: If True, anomaly detection has to be performed on all the data related to input ids
    :type get_all_item_data: bool
 
-
    .. py:attribute:: start_timestamp
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: end_timestamp
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: get_all_item_data
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: ChatLLMPredictionArguments
 
-   Bases: :py:obj:`PredictionArguments`
 
+   Bases: :py:obj:`PredictionArguments`
 
    Prediction arguments for the CHAT_LLM problem type
 
@@ -220,38 +139,44 @@ Module Contents
    :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
    :type ignore_documents: bool
 
-
    .. py:attribute:: llm_name
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: num_completion_tokens
-      :type:  int
+      :type: int
 
+      
 
    .. py:attribute:: system_message
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: temperature
-      :type:  float
+      :type: float
 
+      
 
    .. py:attribute:: search_score_cutoff
-      :type:  float
+      :type: float
 
+      
 
    .. py:attribute:: ignore_documents
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: RegressionPredictionArguments
 
-   Bases: :py:obj:`PredictionArguments`
 
+   Bases: :py:obj:`PredictionArguments`
 
    Prediction arguments for the PREDICTIVE_MODELING problem type
 
@@ -260,22 +185,24 @@ Module Contents
    :param explainer_type: Type of explainer to use for explanations.
    :type explainer_type: str
 
-
    .. py:attribute:: explain_predictions
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:attribute:: explainer_type
-      :type:  str
+      :type: str
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: ForecastingPredictionArguments
 
-   Bases: :py:obj:`PredictionArguments`
 
+   Bases: :py:obj:`PredictionArguments`
 
    Prediction arguments for the FORECASTING problem type
 
@@ -290,34 +217,39 @@ Module Contents
    :param get_item_data: If True, will return the data corresponding to items as well.
    :type get_item_data: bool
 
-
    .. py:attribute:: num_predictions
-      :type:  int
+      :type: int
 
+      
 
    .. py:attribute:: prediction_start
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: explain_predictions
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:attribute:: explainer_type
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: get_item_data
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: CumulativeForecastingPredictionArguments
 
-   Bases: :py:obj:`PredictionArguments`
 
+   Bases: :py:obj:`PredictionArguments`
 
    Prediction arguments for the CUMULATIVE_FORECASTING problem type
 
@@ -332,34 +264,39 @@ Module Contents
    :param get_item_data: If True, will return the data corresponding to items as well.
    :type get_item_data: bool
 
-
    .. py:attribute:: num_predictions
-      :type:  int
+      :type: int
 
+      
 
    .. py:attribute:: prediction_start
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: explain_predictions
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:attribute:: explainer_type
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: get_item_data
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: NaturalLanguageSearchPredictionArguments
 
-   Bases: :py:obj:`PredictionArguments`
 
+   Bases: :py:obj:`PredictionArguments`
 
    Prediction arguments for the NATURAL_LANGUAGE_SEARCH problem type
 
@@ -376,69 +313,78 @@ Module Contents
    :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
    :type ignore_documents: bool
 
-
    .. py:attribute:: llm_name
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: num_completion_tokens
-      :type:  int
+      :type: int
 
+      
 
    .. py:attribute:: system_message
-      :type:  str
+      :type: str
 
+      
 
    .. py:attribute:: temperature
-      :type:  float
+      :type: float
 
+      
 
    .. py:attribute:: search_score_cutoff
-      :type:  float
+      :type: float
 
+      
 
    .. py:attribute:: ignore_documents
-      :type:  bool
+      :type: bool
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: FeatureStorePredictionArguments
 
-   Bases: :py:obj:`PredictionArguments`
 
+   Bases: :py:obj:`PredictionArguments`
 
    Prediction arguments for the FEATURE_STORE problem type
 
    :param limit_results: If provided, will limit the number of results to the value specified.
    :type limit_results: int
 
-
    .. py:attribute:: limit_results
-      :type:  int
+      :type: int
 
+      
 
    .. py:method:: __post_init__()
 
 
+
 .. py:class:: _PredictionArgumentsFactory
 
-   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-
    .. py:attribute:: config_abstract_class
 
+      
 
    .. py:attribute:: config_class_key
       :value: 'problem_type'
 
-
+      
 
    .. py:attribute:: config_class_map
+
+      
 
 

@@ -1,36 +1,26 @@
-abacusai.external_invite
-========================
+:py:mod:`abacusai.external_invite`
+==================================
 
 .. py:module:: abacusai.external_invite
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.external_invite.AbstractApiClass
-   abacusai.external_invite.ExternalInvite
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.external_invite.ExternalInvite
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ExternalInvite(client, userAlreadyInOrg=None, userAlreadyInAppGroup=None, userExistsAsInternal=None, successfulInvites=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    The response of the invites for different emails
 
@@ -45,11 +35,9 @@ Module Contents
    :param successfulInvites: List of users successfully invited.
    :type successfulInvites: list
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

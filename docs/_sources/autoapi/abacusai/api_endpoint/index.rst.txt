@@ -1,36 +1,26 @@
-abacusai.api_endpoint
-=====================
+:py:mod:`abacusai.api_endpoint`
+===============================
 
 .. py:module:: abacusai.api_endpoint
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.api_endpoint.AbstractApiClass
-   abacusai.api_endpoint.ApiEndpoint
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.api_endpoint.ApiEndpoint
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    An collection of endpoints which can be used to make requests to, such as api calls or predict calls
 
@@ -49,11 +39,9 @@ Module Contents
    :param dashboardEndpoint: The URI that the external chat will use to go back to the dashboard
    :type dashboardEndpoint: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

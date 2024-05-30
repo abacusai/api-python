@@ -1,36 +1,26 @@
-abacusai.document_retriever_config
-==================================
+:py:mod:`abacusai.document_retriever_config`
+============================================
 
 .. py:module:: abacusai.document_retriever_config
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.document_retriever_config.AbstractApiClass
-   abacusai.document_retriever_config.DocumentRetrieverConfig
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.document_retriever_config.DocumentRetrieverConfig
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None, pruneVectors=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A config for document retriever creation.
 
@@ -47,11 +37,9 @@ Module Contents
    :param pruneVectors: Corpus specific transformation of vectors that applies dimensional reduction techniques to strip common components from the vectors.
    :type pruneVectors: bool
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

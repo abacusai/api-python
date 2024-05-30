@@ -1,36 +1,26 @@
-abacusai.hosted_model_token
-===========================
+:py:mod:`abacusai.hosted_model_token`
+=====================================
 
 .. py:module:: abacusai.hosted_model_token
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.hosted_model_token.AbstractApiClass
-   abacusai.hosted_model_token.HostedModelToken
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.hosted_model_token.HostedModelToken
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: HostedModelToken(client, createdAt=None, tag=None, trailingAuthToken=None, hostedModelTokenId=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A hosted model authentication token that is used to authenticate requests to an abacus hosted model
 
@@ -45,11 +35,9 @@ Module Contents
    :param hostedModelTokenId: The unique identifier attached to this authenticaion token
    :type hostedModelTokenId: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

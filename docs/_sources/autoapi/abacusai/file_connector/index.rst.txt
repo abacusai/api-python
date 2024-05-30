@@ -1,36 +1,26 @@
-abacusai.file_connector
-=======================
+:py:mod:`abacusai.file_connector`
+=================================
 
 .. py:module:: abacusai.file_connector
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.file_connector.AbstractApiClass
-   abacusai.file_connector.FileConnector
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.file_connector.FileConnector
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FileConnector(client, bucket=None, verified=None, writePermission=None, authExpiresAt=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Verification result for an external storage service
 
@@ -45,11 +35,9 @@ Module Contents
    :param authExpiresAt: The time when the file connector's auth expires, if applicable
    :type authExpiresAt: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

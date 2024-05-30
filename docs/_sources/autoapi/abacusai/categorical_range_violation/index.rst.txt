@@ -1,36 +1,26 @@
-abacusai.categorical_range_violation
-====================================
+:py:mod:`abacusai.categorical_range_violation`
+==============================================
 
 .. py:module:: abacusai.categorical_range_violation
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.categorical_range_violation.AbstractApiClass
-   abacusai.categorical_range_violation.CategoricalRangeViolation
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.categorical_range_violation.CategoricalRangeViolation
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: CategoricalRangeViolation(client, name=None, mostCommonValues=None, freqOutsideTrainingRange=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Summary of important range mismatches for a numerical feature discovered by a model monitoring instance
 
@@ -43,11 +33,9 @@ Module Contents
    :param freqOutsideTrainingRange: Frequency of prediction rows outside training distribution for the specified feature.
    :type freqOutsideTrainingRange: float
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

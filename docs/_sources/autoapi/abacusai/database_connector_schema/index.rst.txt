@@ -1,67 +1,26 @@
-abacusai.database_connector_schema
-==================================
+:py:mod:`abacusai.database_connector_schema`
+============================================
 
 .. py:module:: abacusai.database_connector_schema
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.database_connector_schema.DatabaseConnectorColumn
-   abacusai.database_connector_schema.AbstractApiClass
-   abacusai.database_connector_schema.DatabaseConnectorSchema
 
 
 Module Contents
 ---------------
 
-.. py:class:: DatabaseConnectorColumn(client, name=None, externalDataType=None)
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
-
-   A schema description for a column from a database connector
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: The unique name of the column.
-   :type name: str
-   :param externalDataType: The data type of column in the external database system.
-   :type externalDataType: str
+   abacusai.database_connector_schema.DatabaseConnectorSchema
 
 
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DatabaseConnectorSchema(client, tableName=None, columns={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A schema description for a table from a database connector
 
@@ -72,11 +31,9 @@ Module Contents
    :param columns: List of columns in the table.
    :type columns: DatabaseConnectorColumn
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

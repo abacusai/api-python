@@ -1,36 +1,26 @@
-abacusai.nested_feature
-=======================
+:py:mod:`abacusai.nested_feature`
+=================================
 
 .. py:module:: abacusai.nested_feature
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.nested_feature.AbstractApiClass
-   abacusai.nested_feature.NestedFeature
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.nested_feature.NestedFeature
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: NestedFeature(client, name=None, selectClause=None, featureType=None, featureMapping=None, dataType=None, sourceTable=None, originalName=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A nested feature in a feature group
 
@@ -51,11 +41,9 @@ Module Contents
    :param originalName: The original name of the column
    :type originalName: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

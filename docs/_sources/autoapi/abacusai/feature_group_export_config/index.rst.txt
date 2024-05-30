@@ -1,36 +1,26 @@
-abacusai.feature_group_export_config
-====================================
+:py:mod:`abacusai.feature_group_export_config`
+==============================================
 
 .. py:module:: abacusai.feature_group_export_config
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_group_export_config.AbstractApiClass
-   abacusai.feature_group_export_config.FeatureGroupExportConfig
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.feature_group_export_config.FeatureGroupExportConfig
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureGroupExportConfig(client, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, additionalIdColumns=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Export configuration (file connector or database connector information) for feature group exports.
 
@@ -53,11 +43,9 @@ Module Contents
    :param additionalIdColumns: For database connectors which support it, additional ID columns to use as a complex key for upserting.
    :type additionalIdColumns: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

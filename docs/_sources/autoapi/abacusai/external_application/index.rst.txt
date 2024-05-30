@@ -1,36 +1,26 @@
-abacusai.external_application
-=============================
+:py:mod:`abacusai.external_application`
+=======================================
 
 .. py:module:: abacusai.external_application
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.external_application.AbstractApiClass
-   abacusai.external_application.ExternalApplication
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.external_application.ExternalApplication
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    An external application.
 
@@ -61,11 +51,9 @@ Module Contents
    :param predictionOverrides: The prediction overrides for the external application.
    :type predictionOverrides: dict
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -74,7 +62,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
@@ -98,14 +85,12 @@ Module Contents
       :rtype: ExternalApplication
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: ExternalApplication
-
 
 
    .. py:method:: describe()
@@ -117,7 +102,6 @@ Module Contents
 
       :returns: The External Application.
       :rtype: ExternalApplication
-
 
 
    .. py:method:: delete()

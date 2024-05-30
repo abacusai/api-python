@@ -1,19 +1,14 @@
-abacusai.api_client_utils
-=========================
+:py:mod:`abacusai.api_client_utils`
+===================================
 
 .. py:module:: abacusai.api_client_utils
 
 
-Attributes
-----------
-
-.. autoapisummary::
-
-   abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS
-
+Module Contents
+---------------
 
 Classes
--------
+~~~~~~~
 
 .. autoapisummary::
 
@@ -22,8 +17,9 @@ Classes
    abacusai.api_client_utils.DocstoreUtils
 
 
+
 Functions
----------
+~~~~~~~~~
 
 .. autoapisummary::
 
@@ -36,23 +32,33 @@ Functions
    abacusai.api_client_utils.try_abacus_internal_copy
 
 
-Module Contents
----------------
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS
+
 
 .. py:data:: INVALID_PANDAS_COLUMN_NAME_CHARACTERS
    :value: '[^A-Za-z0-9_]'
 
+   
 
 .. py:function:: clean_column_name(column)
 
+
 .. py:function:: avro_to_pandas_dtype(avro_type)
+
 
 .. py:function:: get_non_nullable_type(types)
 
+
 .. py:class:: StreamingHandler
 
-   Bases: :py:obj:`str`
 
+   Bases: :py:obj:`str`
 
    str(object='') -> str
    str(bytes_or_buffer[, encoding[, errors]]) -> str
@@ -65,7 +71,6 @@ Module Contents
    encoding defaults to sys.getdefaultencoding().
    errors defaults to 'strict'.
 
-
    .. py:method:: process_streaming_data(value, context, section_key, data_type)
       :classmethod:
 
@@ -73,134 +78,133 @@ Module Contents
 
 .. py:function:: get_object_from_context(client, context, variable_name, return_type)
 
+
 .. py:function:: load_as_pandas_from_avro_fd(fd)
+
 
 .. py:function:: load_as_pandas_from_avro_files(files, download_method, max_workers = 10)
 
+
 .. py:class:: StreamType
 
-   Bases: :py:obj:`enum.Enum`
 
+   Bases: :py:obj:`enum.Enum`
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
-
    .. py:attribute:: MESSAGE
       :value: 'message'
 
-
+      
 
    .. py:attribute:: SECTION_OUTPUT
       :value: 'section_output'
 
+      
 
 
 .. py:class:: DocstoreUtils
 
+
    Utility class for loading docstore data.
    Needs to be updated if docstore formats change.
-
 
    .. py:attribute:: DOC_ID
       :value: 'doc_id'
 
-
+      
 
    .. py:attribute:: PREDICTION_PREFIX
       :value: 'prediction'
 
-
+      
 
    .. py:attribute:: FIRST_PAGE
       :value: 'first_page'
 
-
+      
 
    .. py:attribute:: LAST_PAGE
       :value: 'last_page'
 
-
+      
 
    .. py:attribute:: PAGE_TEXT
       :value: 'page_text'
 
-
+      
 
    .. py:attribute:: PAGES
       :value: 'pages'
 
-
+      
 
    .. py:attribute:: CONTENT
       :value: 'content'
 
-
+      
 
    .. py:attribute:: TOKENS
       :value: 'tokens'
 
-
+      
 
    .. py:attribute:: PAGES_ZIP_METADATA
       :value: 'pages_zip_metadata'
 
-
+      
 
    .. py:attribute:: PAGE_DATA
       :value: 'page_data'
 
-
+      
 
    .. py:attribute:: HEIGHT
       :value: 'height'
 
-
+      
 
    .. py:attribute:: WIDTH
       :value: 'width'
 
-
+      
 
    .. py:attribute:: METADATA
       :value: 'metadata'
 
-
+      
 
    .. py:attribute:: EXTRACTED_TEXT
       :value: 'extracted_text'
 
-
+      
 
    .. py:attribute:: DOCUMENT_PROCESSING_CONFIG
       :value: 'document_processing_config'
 
-
+      
 
    .. py:attribute:: DOCUMENT_PROCESSING_VERSION
       :value: 'document_processing_version'
 
-
+      
 
    .. py:method:: get_archive_id(doc_id)
       :staticmethod:
-
 
 
    .. py:method:: get_page_id(doc_id, page)
       :staticmethod:
 
 
-
    .. py:method:: get_content_hash(doc_id)
       :staticmethod:
 
 
-
    .. py:method:: get_pandas_pages_df(df, feature_group_version, doc_id_column, document_column, get_docstore_resource_bytes, get_document_processing_result_infos, max_workers = 10)
       :classmethod:
-
 
 
    .. py:method:: get_pandas_documents_df(df, feature_group_version, doc_id_column, document_column, get_docstore_resource_bytes, get_document_processing_result_infos, max_workers = 10)

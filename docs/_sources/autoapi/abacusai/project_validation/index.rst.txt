@@ -1,36 +1,26 @@
-abacusai.project_validation
-===========================
+:py:mod:`abacusai.project_validation`
+=====================================
 
 .. py:module:: abacusai.project_validation
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.project_validation.AbstractApiClass
-   abacusai.project_validation.ProjectValidation
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.project_validation.ProjectValidation
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ProjectValidation(client, valid=None, datasetErrors=None, columnHints=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A validation result for a project
 
@@ -43,11 +33,9 @@ Module Contents
    :param columnHints: Hints for what to set on the columns
    :type columnHints: dict
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

@@ -1,36 +1,26 @@
-abacusai.feature_record
-=======================
+:py:mod:`abacusai.feature_record`
+=================================
 
 .. py:module:: abacusai.feature_record
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.feature_record.AbstractApiClass
-   abacusai.feature_record.FeatureRecord
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.feature_record.FeatureRecord
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: FeatureRecord(client, data=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A feature record
 
@@ -39,11 +29,9 @@ Module Contents
    :param data: the record's current data
    :type data: dict
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

@@ -1,36 +1,26 @@
-abacusai.realtime_monitor
-=========================
+:py:mod:`abacusai.realtime_monitor`
+===================================
 
 .. py:module:: abacusai.realtime_monitor
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.realtime_monitor.AbstractApiClass
-   abacusai.realtime_monitor.RealtimeMonitor
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.realtime_monitor.RealtimeMonitor
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: RealtimeMonitor(client, realtimeMonitorId=None, name=None, createdAt=None, deploymentId=None, lookbackTime=None, realtimeMonitorSchedule=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A real-time monitor
 
@@ -49,11 +39,9 @@ Module Contents
    :param realtimeMonitorSchedule: The drift computation schedule for the real-time monitor.
    :type realtimeMonitorSchedule: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -62,7 +50,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: update(realtime_monitor_schedule = None, lookback_time = None)
@@ -78,14 +65,12 @@ Module Contents
       :rtype: RealtimeMonitor
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: RealtimeMonitor
-
 
 
    .. py:method:: describe()
@@ -97,7 +82,6 @@ Module Contents
 
       :returns: Object describing the real-time monitor.
       :rtype: RealtimeMonitor
-
 
 
    .. py:method:: delete()

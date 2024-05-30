@@ -1,36 +1,26 @@
-abacusai.code_source
-====================
+:py:mod:`abacusai.code_source`
+==============================
 
 .. py:module:: abacusai.code_source
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.code_source.AbstractApiClass
-   abacusai.code_source.CodeSource
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.code_source.CodeSource
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Code source for python-based custom feature groups and models
 
@@ -55,11 +45,9 @@ Module Contents
    :param moduleDependencies: The list of internal modules dependencies required to run the code
    :type moduleDependencies: list
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -68,7 +56,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: import_as_cell()

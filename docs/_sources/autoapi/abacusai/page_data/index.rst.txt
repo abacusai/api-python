@@ -1,36 +1,26 @@
-abacusai.page_data
-==================
+:py:mod:`abacusai.page_data`
+============================
 
 .. py:module:: abacusai.page_data
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.page_data.AbstractApiClass
-   abacusai.page_data.PageData
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
+   abacusai.page_data.PageData
 
 
-.. py:class:: PageData(client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None, extractedText=None, rotationAngle=None, pageMarkdown=None)
+
+
+.. py:class:: PageData(client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None, extractedText=None, rotationAngle=None, pageMarkdown=None, embeddedText=None)
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
 
    Data extracted from a docstore page.
 
@@ -59,13 +49,13 @@ Module Contents
    :param rotationAngle: The detected rotation angle of the page in degrees. Positive values indicate clockwise and negative values indicate anti-clockwise rotation from the original orientation.
    :type rotationAngle: float
    :param pageMarkdown: The markdown text for the page.
-   :type pageMarkdown: list
-
+   :type pageMarkdown: str
+   :param embeddedText: The embedded text in the page. Only available for digital documents.
+   :type embeddedText: str
 
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

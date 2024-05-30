@@ -1,36 +1,26 @@
-abacusai.eda_chart_description
-==============================
+:py:mod:`abacusai.eda_chart_description`
+========================================
 
 .. py:module:: abacusai.eda_chart_description
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.eda_chart_description.AbstractApiClass
-   abacusai.eda_chart_description.EdaChartDescription
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.eda_chart_description.EdaChartDescription
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: EdaChartDescription(client, chartType=None, description=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Eda Chart Description.
 
@@ -41,11 +31,9 @@ Module Contents
    :param description: Description of the eda chart.
    :type description: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

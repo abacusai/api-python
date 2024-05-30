@@ -1,255 +1,26 @@
-abacusai.model_monitor
-======================
+:py:mod:`abacusai.model_monitor`
+================================
 
 .. py:module:: abacusai.model_monitor
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.model_monitor.ModelMonitorVersion
-   abacusai.model_monitor.RefreshSchedule
-   abacusai.model_monitor.AbstractApiClass
-   abacusai.model_monitor.ModelMonitor
 
 
 Module Contents
 ---------------
 
-.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, monitorDriftConfig=None, predictionDataUseMappings=None, trainingDataUseMappings=None)
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
+   abacusai.model_monitor.ModelMonitor
 
-   A version of a model monitor
 
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param modelMonitorVersion: The unique identifier of a model monitor version.
-   :type modelMonitorVersion: str
-   :param status: The current status of the model.
-   :type status: str
-   :param modelMonitorId: A reference to the model monitor this version belongs to.
-   :type modelMonitorId: str
-   :param monitoringStartedAt: The start time and date of the monitoring process.
-   :type monitoringStartedAt: str
-   :param monitoringCompletedAt: The end time and date of the monitoring process.
-   :type monitoringCompletedAt: str
-   :param trainingFeatureGroupVersion: Feature group version IDs that this refresh pipeline run is monitoring.
-   :type trainingFeatureGroupVersion: list[str]
-   :param predictionFeatureGroupVersion: Feature group version IDs that this refresh pipeline run is monitoring.
-   :type predictionFeatureGroupVersion: list[str]
-   :param error: Relevant error if the status is FAILED.
-   :type error: str
-   :param pendingDeploymentIds: List of deployment IDs where deployment is pending.
-   :type pendingDeploymentIds: list
-   :param failedDeploymentIds: List of failed deployment IDs.
-   :type failedDeploymentIds: list
-   :param metricConfigs: List of metric configs for the model monitor instance.
-   :type metricConfigs: list[dict]
-   :param featureGroupMonitorConfigs: Configurations for feature group monitor
-   :type featureGroupMonitorConfigs: dict
-   :param metricTypes: List of metric types.
-   :type metricTypes: list
-   :param modelVersion: Model version IDs that this refresh pipeline run is monitoring.
-   :type modelVersion: list[str]
-   :param batchPredictionVersion: The batch prediction version this model monitor is monitoring
-   :type batchPredictionVersion: str
-   :param edaConfigs: The list of eda configs for the version
-   :type edaConfigs: list
-   :param trainingForecastConfig: The training forecast config for the monitor version
-   :type trainingForecastConfig: dict
-   :param predictionForecastConfig: The prediction forecast config for the monitor version
-   :type predictionForecastConfig: dict
-   :param forecastFrequency: The forecast frequency for the monitor version
-   :type forecastFrequency: str
-   :param monitorDriftConfig: The monitor drift config for the monitor version
-   :type monitorDriftConfig: dict
-   :param predictionDataUseMappings: The mapping of prediction data use to feature group version
-   :type predictionDataUseMappings: dict
-   :param trainingDataUseMappings: The mapping of training data use to feature group version
-   :type trainingDataUseMappings: dict
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: get_prediction_drift()
-
-      Gets the label and prediction drifts for a model monitor.
-
-      :param model_monitor_version: Unique string identifier for a model monitor version created under the project.
-      :type model_monitor_version: str
-
-      :returns: Object describing training and prediction output label and prediction distributions.
-      :rtype: DriftDistributions
-
-
-
-   .. py:method:: refresh()
-
-      Calls describe and refreshes the current object's fields
-
-      :returns: The current object
-      :rtype: ModelMonitorVersion
-
-
-
-   .. py:method:: describe()
-
-      Retrieves a full description of the specified model monitor version.
-
-      :param model_monitor_version: The unique version ID of the model monitor version.
-      :type model_monitor_version: str
-
-      :returns: A model monitor version.
-      :rtype: ModelMonitorVersion
-
-
-
-   .. py:method:: delete()
-
-      Deletes the specified model monitor version.
-
-      :param model_monitor_version: Unique identifier of the model monitor version to delete.
-      :type model_monitor_version: str
-
-
-
-   .. py:method:: metric_data(metric_type, actual_values_to_detail = None)
-
-      Provides the data needed for decile metrics associated with the model monitor.
-
-      :param metric_type: The type of metric to get data for.
-      :type metric_type: str
-      :param actual_values_to_detail: The actual values to detail.
-      :type actual_values_to_detail: list
-
-      :returns: Data associated with the metric.
-      :rtype: ModelMonitorVersionMetricData
-
-
-
-   .. py:method:: list_monitor_alert_versions_for_monitor_version()
-
-      Retrieves the list of monitor alert versions for a specified monitor instance.
-
-      :param model_monitor_version: The unique ID associated with the model monitor.
-      :type model_monitor_version: str
-
-      :returns: A list of monitor alert versions.
-      :rtype: list[MonitorAlertVersion]
-
-
-
-   .. py:method:: get_drift_for_feature(feature_name, nested_feature_name = None)
-
-      Gets the feature drift associated with a single feature in an output feature group from a prediction.
-
-      :param feature_name: Name of the feature to view the distribution of.
-      :type feature_name: str
-      :param nested_feature_name: Optionally, the name of the nested feature that the feature is in.
-      :type nested_feature_name: str
-
-      :returns: An object describing the training and prediction output feature distributions.
-      :rtype: FeatureDistribution
-
-
-
-   .. py:method:: get_outliers_for_feature(feature_name = None, nested_feature_name = None)
-
-      Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
-
-      :param feature_name: Name of the feature to view the distribution of.
-      :type feature_name: str
-      :param nested_feature_name: Optionally, the name of the nested feature that the feature is in.
-      :type nested_feature_name: str
-
-
-
-   .. py:method:: wait_for_monitor(timeout=1200)
-
-      A waiting call until model monitor version is ready.
-
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int
-
-
-
-   .. py:method:: get_status()
-
-      Gets the status of the model monitor version.
-
-      :returns: A string describing the status of the model monitor version, for e.g., pending, complete, etc.
-      :rtype: str
-
-
-
-.. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, error=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A refresh schedule for an object. Defines when the next version of the object will be created
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param refreshPolicyId: The unique identifier of the refresh policy
-   :type refreshPolicyId: str
-   :param nextRunTime: The next run time of the refresh policy. If null, the policy is paused.
-   :type nextRunTime: str
-   :param cron: A cron-style string that describes the when this refresh policy is to be executed in UTC
-   :type cron: str
-   :param refreshType: The type of refresh that will be run
-   :type refreshType: str
-   :param error: An error message for the last pipeline run of a policy
-   :type error: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, predictionFeatureGroupVersion=None, trainingFeatureGroupVersion=None, alertConfig=None, biasMetricId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, trainingFeatureGroupSampling=None, predictionFeatureGroupSampling=None, monitorDriftConfig=None, predictionDataUseMappings=None, trainingDataUseMappings=None, refreshSchedules={}, latestMonitorModelVersion={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A model monitor
 
@@ -312,11 +83,9 @@ Module Contents
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
    :type refreshSchedules: RefreshSchedule
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -325,7 +94,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: rerun()
@@ -339,14 +107,12 @@ Module Contents
       :rtype: ModelMonitor
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: ModelMonitor
-
 
 
    .. py:method:: describe()
@@ -360,7 +126,6 @@ Module Contents
       :rtype: ModelMonitor
 
 
-
    .. py:method:: get_summary()
 
       Gets the summary of a model monitor across versions.
@@ -370,7 +135,6 @@ Module Contents
 
       :returns: An object describing integrity, bias violations, model accuracy and drift for the model monitor.
       :rtype: ModelMonitorSummary
-
 
 
    .. py:method:: list_versions(limit = 100, start_after_version = None)
@@ -386,7 +150,6 @@ Module Contents
       :rtype: list[ModelMonitorVersion]
 
 
-
    .. py:method:: rename(name)
 
       Renames a model monitor
@@ -395,14 +158,12 @@ Module Contents
       :type name: str
 
 
-
    .. py:method:: delete()
 
       Deletes the specified Model Monitor and all its versions.
 
       :param model_monitor_id: Unique identifier of the Model Monitor to delete.
       :type model_monitor_id: str
-
 
 
    .. py:method:: list_monitor_alerts_for_monitor(realtime_monitor_id = None)

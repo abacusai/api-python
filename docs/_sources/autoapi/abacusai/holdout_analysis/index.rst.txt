@@ -1,36 +1,26 @@
-abacusai.holdout_analysis
-=========================
+:py:mod:`abacusai.holdout_analysis`
+===================================
 
 .. py:module:: abacusai.holdout_analysis
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.holdout_analysis.AbstractApiClass
-   abacusai.holdout_analysis.HoldoutAnalysis
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.holdout_analysis.HoldoutAnalysis
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: HoldoutAnalysis(client, holdoutAnalysisId=None, name=None, featureGroupIds=None, modelId=None, modelName=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A holdout analysis object.
 
@@ -47,11 +37,9 @@ Module Contents
    :param modelName: The model name associated with the holdout analysis.
    :type modelName: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -60,7 +48,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: rerun(model_version = None, algorithm = None)
@@ -76,14 +63,12 @@ Module Contents
       :rtype: HoldoutAnalysisVersion
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: HoldoutAnalysis
-
 
 
    .. py:method:: describe()
@@ -95,7 +80,6 @@ Module Contents
 
       :returns: The holdout analysis
       :rtype: HoldoutAnalysis
-
 
 
    .. py:method:: list_versions()

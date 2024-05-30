@@ -1,36 +1,26 @@
-abacusai.data_upload_result
-===========================
+:py:mod:`abacusai.data_upload_result`
+=====================================
 
 .. py:module:: abacusai.data_upload_result
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.data_upload_result.AbstractApiClass
-   abacusai.data_upload_result.DataUploadResult
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.data_upload_result.DataUploadResult
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DataUploadResult(client, docInfos=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Results of uploading data to agent.
 
@@ -39,11 +29,9 @@ Module Contents
    :param docInfos: A list of dict for information on the documents uploaded to agent.
    :type docInfos: list[agentdatadocumentinfo]
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

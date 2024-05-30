@@ -1,36 +1,26 @@
-abacusai.pipeline_step_version_logs
-===================================
+:py:mod:`abacusai.pipeline_step_version_logs`
+=============================================
 
 .. py:module:: abacusai.pipeline_step_version_logs
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.pipeline_step_version_logs.AbstractApiClass
-   abacusai.pipeline_step_version_logs.PipelineStepVersionLogs
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.pipeline_step_version_logs.PipelineStepVersionLogs
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PipelineStepVersionLogs(client, stepName=None, pipelineStepId=None, pipelineStepVersion=None, logs=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Logs for a given pipeline step version.
 
@@ -45,11 +35,9 @@ Module Contents
    :param logs: The logs for both stdout and stderr of the step
    :type logs: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

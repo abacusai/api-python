@@ -1,136 +1,26 @@
-abacusai.monitor_drift_and_distributions
-========================================
+:py:mod:`abacusai.monitor_drift_and_distributions`
+==================================================
 
 .. py:module:: abacusai.monitor_drift_and_distributions
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.monitor_drift_and_distributions.EmbeddingFeatureDriftDistribution
-   abacusai.monitor_drift_and_distributions.ForecastingMonitorSummary
-   abacusai.monitor_drift_and_distributions.AbstractApiClass
-   abacusai.monitor_drift_and_distributions.MonitorDriftAndDistributions
 
 
 Module Contents
 ---------------
 
-.. py:class:: EmbeddingFeatureDriftDistribution(client, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, psi=None, csi=None, chiSquare=None, averageDrift={})
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
-
-   Feature distribution for embeddings
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param distance: Histogram data of KL divergences between the training distribution and the range of values in the specified window.
-   :type distance: list
-   :param jsDistance: Histogram data of JS divergence between the training distribution and the range of values in the specified window.
-   :type jsDistance: list
-   :param wsDistance: Histogram data of Wasserstein distance between the training distribution and the range of values in the specified window.
-   :type wsDistance: list
-   :param ksStatistic: Histogram data of Kolmogorov-Smirnov statistic computed between the training distribution and the range of values in the specified window.
-   :type ksStatistic: list
-   :param psi: Histogram data of Population stability index computed between the training distribution and the range of values in the specified window.
-   :type psi: list
-   :param csi: Histogram data of Characteristic Stability Index computed between the training distribution and the range of values in the specified window.
-   :type csi: list
-   :param chiSquare: Histogram data of Chi-square statistic computed between the training distribution and the range of values in the specified window.
-   :type chiSquare: list
-   :param averageDrift: Average drift embedding for each type of drift
-   :type averageDrift: DriftTypesValue
+   abacusai.monitor_drift_and_distributions.MonitorDriftAndDistributions
 
 
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: ForecastingMonitorSummary(client, predictionTimestampCol=None, predictionTargetCol=None, trainingTimestampCol=None, trainingTargetCol=None, predictionItemId=None, trainingItemId=None, forecastFrequency=None, trainingTargetAcrossTime={}, predictionTargetAcrossTime={}, actualsHistogram={}, predictionsHistogram={}, trainHistoryData={}, predictHistoryData={}, targetDrift={}, historyDrift={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Forecasting Monitor Summary of the latest version of the data.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param predictionTimestampCol: Feature in the data that represents the timestamp column.
-   :type predictionTimestampCol: str
-   :param predictionTargetCol: Feature in the data that represents the target.
-   :type predictionTargetCol: str
-   :param trainingTimestampCol: Feature in the data that represents the timestamp column.
-   :type trainingTimestampCol: str
-   :param trainingTargetCol: Feature in the data that represents the target.
-   :type trainingTargetCol: str
-   :param predictionItemId: Feature in the data that represents the item id.
-   :type predictionItemId: str
-   :param trainingItemId: Feature in the data that represents the item id.
-   :type trainingItemId: str
-   :param forecastFrequency: Frequency of data, could be hourly, daily, weekly, monthly, quarterly or yearly.
-   :type forecastFrequency: str
-   :param trainingTargetAcrossTime: Data showing average, p10, p90, median sales across time
-   :type trainingTargetAcrossTime: ForecastingAnalysisGraphData
-   :param predictionTargetAcrossTime: Data showing average, p10, p90, median sales across time
-   :type predictionTargetAcrossTime: ForecastingAnalysisGraphData
-   :param actualsHistogram: Data showing actuals histogram
-   :type actualsHistogram: ForecastingAnalysisGraphData
-   :param predictionsHistogram: Data showing predictions histogram
-   :type predictionsHistogram: ForecastingAnalysisGraphData
-   :param trainHistoryData: Data showing length of history distribution
-   :type trainHistoryData: ForecastingAnalysisGraphData
-   :param predictHistoryData: Data showing length of history distribution
-   :type predictHistoryData: ForecastingAnalysisGraphData
-   :param targetDrift: Data showing drift of the target for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic, psi, csi, chi_square
-   :type targetDrift: FeatureDriftRecord
-   :param historyDrift: Data showing drift of the history for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic, psi, csi, chi_square
-   :type historyDrift: FeatureDriftRecord
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: MonitorDriftAndDistributions(client, featureDrifts=None, featureDistributions=None, nestedDrifts=None, forecastingMonitorSummary={}, embeddingsDistribution={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Summary of important model monitoring statistics for features available in a model monitoring instance
 
@@ -147,11 +37,9 @@ Module Contents
    :param embeddingsDistribution: Summary of important model monitoring statistics for features available in a model monitoring instance
    :type embeddingsDistribution: EmbeddingFeatureDriftDistribution
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

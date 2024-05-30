@@ -1,112 +1,26 @@
-abacusai.project_feature_group_schema
-=====================================
+:py:mod:`abacusai.project_feature_group_schema`
+===============================================
 
 .. py:module:: abacusai.project_feature_group_schema
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.project_feature_group_schema.ProjectConfig
-   abacusai.project_feature_group_schema.AbstractApiClass
-   abacusai.project_feature_group_schema.Schema
-   abacusai.project_feature_group_schema.ProjectFeatureGroupSchema
 
 
 Module Contents
 ---------------
 
-.. py:class:: ProjectConfig(client, type=None, config={})
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
+   abacusai.project_feature_group_schema.ProjectFeatureGroupSchema
 
-   Project-specific config for a feature group
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param type: Type of project config
-   :type type: str
-   :param config: Project-specific config for this feature group
-   :type config: ProjectFeatureGroupConfig
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
-
-
-.. py:class:: Schema(client, name=None, featureMapping=None, detectedFeatureMapping=None, featureType=None, detectedFeatureType=None, dataType=None, detectedDataType=None, nestedFeatures={}, pointInTimeInfo={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A schema description for a feature
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param name: The unique name of the feature.
-   :type name: str
-   :param featureMapping: The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
-   :type featureMapping: str
-   :param detectedFeatureMapping: Detected feature mapping for this feature
-   :type detectedFeatureMapping: str
-   :param featureType: The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  ENTITY_LABEL_LIST,  PAGE_LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL,  PAGE_INFOS,  PAGES_DOCUMENT,  TOKENS_DOCUMENT.
-   :type featureType: str
-   :param detectedFeatureType: The detected feature type for this feature
-   :type detectedFeatureType: str
-   :param dataType: The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL,  BINARY.
-   :type dataType: str
-   :param detectedDataType: The detected data type for this feature
-   :type detectedDataType: str
-   :param nestedFeatures: List of features of nested feature
-   :type nestedFeatures: NestedFeatureSchema
-   :param pointInTimeInfo: Point in time information for this feature
-   :type pointInTimeInfo: PointInTimeFeatureInfo
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
 
 
 
 .. py:class:: ProjectFeatureGroupSchema(client, nestedSchema=None, schema={}, duplicateFeatures={}, projectConfig={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A schema description for a project feature group
 
@@ -121,11 +35,9 @@ Module Contents
    :param projectConfig: Project-specific config for this feature group.
    :type projectConfig: ProjectConfig
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

@@ -1,226 +1,26 @@
-abacusai.eda
-============
+:py:mod:`abacusai.eda`
+======================
 
 .. py:module:: abacusai.eda
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.eda.EdaVersion
-   abacusai.eda.RefreshSchedule
-   abacusai.eda.AbstractApiClass
-   abacusai.eda.Eda
 
 
 Module Contents
 ---------------
 
-.. py:class:: EdaVersion(client, edaVersion=None, status=None, edaId=None, edaStartedAt=None, edaCompletedAt=None, referenceFeatureGroupVersion=None, testFeatureGroupVersion=None, error=None)
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
+   abacusai.eda.Eda
 
-   A version of an eda object
 
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param edaVersion: The unique identifier of a eda version.
-   :type edaVersion: str
-   :param status: The current status of the eda object.
-   :type status: str
-   :param edaId: A reference to the eda this version belongs to.
-   :type edaId: str
-   :param edaStartedAt: The start time and date of the eda process.
-   :type edaStartedAt: str
-   :param edaCompletedAt: The end time and date of the eda process.
-   :type edaCompletedAt: str
-   :param referenceFeatureGroupVersion: Feature group version IDs that this refresh pipeline run is analyzing.
-   :type referenceFeatureGroupVersion: list[str]
-   :param testFeatureGroupVersion: Feature group version IDs that this refresh pipeline run is analyzing.
-   :type testFeatureGroupVersion: list[str]
-   :param error: Relevant error if the status is FAILED.
-   :type error: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: refresh()
-
-      Calls describe and refreshes the current object's fields
-
-      :returns: The current object
-      :rtype: EdaVersion
-
-
-
-   .. py:method:: describe()
-
-      Retrieves a full description of the specified EDA version.
-
-      :param eda_version: Unique string identifier of the EDA version.
-      :type eda_version: str
-
-      :returns: An EDA version.
-      :rtype: EdaVersion
-
-
-
-   .. py:method:: delete()
-
-      Deletes the specified EDA version.
-
-      :param eda_version: Unique string identifier of the EDA version to delete.
-      :type eda_version: str
-
-
-
-   .. py:method:: get_eda_collinearity()
-
-      Gets the Collinearity between all features for the Exploratory Data Analysis.
-
-      :param eda_version: Unique string identifier associated with the EDA instance.
-      :type eda_version: str
-
-      :returns: An object with a record of correlations between each feature for the EDA.
-      :rtype: EdaCollinearity
-
-
-
-   .. py:method:: get_eda_data_consistency(transformation_feature = None)
-
-      Gets the data consistency for the Exploratory Data Analysis.
-
-      :param transformation_feature: The transformation feature to get consistency for.
-      :type transformation_feature: str
-
-      :returns: Object with duplication, deletion, and transformation data for data consistency analysis for an EDA.
-      :rtype: EdaDataConsistency
-
-
-
-   .. py:method:: get_collinearity_for_feature(feature_name = None)
-
-      Gets the Collinearity for the given feature from the Exploratory Data Analysis.
-
-      :param feature_name: Name of the feature for which correlation is shown.
-      :type feature_name: str
-
-      :returns: Object with a record of correlations for the provided feature for an EDA.
-      :rtype: EdaFeatureCollinearity
-
-
-
-   .. py:method:: get_feature_association(reference_feature_name, test_feature_name)
-
-      Gets the Feature Association for the given features from the feature group version within the eda_version.
-
-      :param reference_feature_name: Name of the feature for feature association (on x-axis for the plots generated for the Feature association in the product).
-      :type reference_feature_name: str
-      :param test_feature_name: Name of the feature for feature association (on y-axis for the plots generated for the Feature association in the product).
-      :type test_feature_name: str
-
-      :returns: An object with a record of data for the feature association between the two given features for an EDA version.
-      :rtype: EdaFeatureAssociation
-
-
-
-   .. py:method:: get_eda_forecasting_analysis()
-
-      Gets the Forecasting analysis for the Exploratory Data Analysis.
-
-      :param eda_version: Unique string identifier associated with the EDA version.
-      :type eda_version: str
-
-      :returns: Object with forecasting analysis that includes sales_across_time, cummulative_contribution, missing_value_distribution, history_length, num_rows_histogram, product_maturity data.
-      :rtype: EdaForecastingAnalysis
-
-
-
-   .. py:method:: wait_for_eda(timeout=1200)
-
-      A waiting call until eda version is ready.
-
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int
-
-
-
-   .. py:method:: get_status()
-
-      Gets the status of the eda version.
-
-      :returns: A string describing the status of the model monitor version, for e.g., pending, complete, etc.
-      :rtype: str
-
-
-
-.. py:class:: RefreshSchedule(client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None, error=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A refresh schedule for an object. Defines when the next version of the object will be created
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param refreshPolicyId: The unique identifier of the refresh policy
-   :type refreshPolicyId: str
-   :param nextRunTime: The next run time of the refresh policy. If null, the policy is paused.
-   :type nextRunTime: str
-   :param cron: A cron-style string that describes the when this refresh policy is to be executed in UTC
-   :type cron: str
-   :param refreshType: The type of refresh that will be run
-   :type refreshType: str
-   :param error: An error message for the last pipeline run of a policy
-   :type error: str
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: Eda(client, edaId=None, name=None, createdAt=None, projectId=None, featureGroupId=None, referenceFeatureGroupVersion=None, testFeatureGroupVersion=None, edaConfigs=None, latestEdaVersion={}, refreshSchedules={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A exploratory data analysis object
 
@@ -247,11 +47,9 @@ Module Contents
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
    :type refreshSchedules: RefreshSchedule
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -260,7 +58,6 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
-
 
 
    .. py:method:: rerun()
@@ -274,14 +71,12 @@ Module Contents
       :rtype: Eda
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Eda
-
 
 
    .. py:method:: describe()
@@ -293,7 +88,6 @@ Module Contents
 
       :returns: Description of the EDA object.
       :rtype: Eda
-
 
 
    .. py:method:: list_versions(limit = 100, start_after_version = None)
@@ -309,14 +103,12 @@ Module Contents
       :rtype: list[EdaVersion]
 
 
-
    .. py:method:: rename(name)
 
       Renames an EDA
 
       :param name: The new name to apply to the model monitor.
       :type name: str
-
 
 
    .. py:method:: delete()

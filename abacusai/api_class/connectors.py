@@ -28,7 +28,7 @@ class KafkaDatasetConfig(StreamingConnectorDatasetConfig):
     Args:
         topic (str): The kafka topic to consume
     """
-    topic: str
+    topic: str = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.streaming_connector_type = enums.StreamingConnectorType.KAFKA

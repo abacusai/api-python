@@ -1,36 +1,26 @@
-abacusai.document_retriever_lookup_result
-=========================================
+:py:mod:`abacusai.document_retriever_lookup_result`
+===================================================
 
 .. py:module:: abacusai.document_retriever_lookup_result
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.document_retriever_lookup_result.AbstractApiClass
-   abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Result of a document retriever lookup.
 
@@ -47,11 +37,9 @@ Module Contents
    :param boundingBoxes: Bounding boxes of the retrieved text from the original document.
    :type boundingBoxes: list
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

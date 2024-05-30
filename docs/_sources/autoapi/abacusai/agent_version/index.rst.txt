@@ -1,122 +1,26 @@
-abacusai.agent_version
-======================
+:py:mod:`abacusai.agent_version`
+================================
 
 .. py:module:: abacusai.agent_version
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.agent_version.WorkflowGraph
-   abacusai.agent_version.CodeSource
-   abacusai.agent_version.AbstractApiClass
-   abacusai.agent_version.AgentVersion
 
 
 Module Contents
 ---------------
 
-.. py:class:: WorkflowGraph
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+.. autoapisummary::
 
-
-   An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
-
-   :param nodes: A list of nodes in the workflow graph.
-   :type nodes: List[WorkflowGraphNode]
-   :param edges: A list of edges in the workflow graph, where each edge is a tuple of source, target and details.
-   :type edges: List[WorkflowGraphEdge]
+   abacusai.agent_version.AgentVersion
 
 
-   .. py:attribute:: nodes
-      :type:  List[WorkflowGraphNode]
-
-
-   .. py:attribute:: edges
-      :type:  List[WorkflowGraphEdge]
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(graph)
-      :classmethod:
-
-
-
-.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Code source for python-based custom feature groups and models
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param sourceType: The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
-   :type sourceType: str
-   :param sourceCode: If the type of the source is TEXT, the raw text of the function
-   :type sourceCode: str
-   :param applicationConnectorId: The Application Connector to fetch the code from
-   :type applicationConnectorId: str
-   :param applicationConnectorInfo: Args passed to the application connector to fetch the code
-   :type applicationConnectorInfo: str
-   :param packageRequirements: The pip package dependencies required to run the code
-   :type packageRequirements: list
-   :param status: The status of the code and validations
-   :type status: str
-   :param error: If the status is failed, an error message describing what went wrong
-   :type error: str
-   :param publishingMsg: Warnings in the source code
-   :type publishingMsg: dict
-   :param moduleDependencies: The list of internal modules dependencies required to run the code
-   :type moduleDependencies: list
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: import_as_cell()
-
-      Adds the source code as an unexecuted cell in the notebook.
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: AgentVersion(client, agentVersion=None, status=None, agentId=None, agentConfig=None, publishingStartedAt=None, publishingCompletedAt=None, pendingDeploymentIds=None, failedDeploymentIds=None, error=None, agentExecutionConfig=None, codeSource={}, workflowGraph={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A version of an AI agent.
 
@@ -147,11 +51,9 @@ Module Contents
    :param workflowGraph: The workflow graph for the agent.
    :type workflowGraph: WorkflowGraph
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -162,14 +64,12 @@ Module Contents
       :rtype: dict
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: AgentVersion
-
 
 
    .. py:method:: describe()
@@ -183,14 +83,12 @@ Module Contents
       :rtype: AgentVersion
 
 
-
    .. py:method:: wait_for_publish(timeout=None)
 
       A waiting call until agent gets published.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
-
 
 
    .. py:method:: get_status()

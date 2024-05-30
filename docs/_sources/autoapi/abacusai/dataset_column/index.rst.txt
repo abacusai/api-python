@@ -1,36 +1,26 @@
-abacusai.dataset_column
-=======================
+:py:mod:`abacusai.dataset_column`
+=================================
 
 .. py:module:: abacusai.dataset_column
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.dataset_column.AbstractApiClass
-   abacusai.dataset_column.DatasetColumn
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.dataset_column.DatasetColumn
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: DatasetColumn(client, name=None, dataType=None, detectedDataType=None, featureType=None, detectedFeatureType=None, originalName=None, validDataTypes=None, timeFormat=None, timestampFrequency=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A schema description for a column
 
@@ -55,11 +45,9 @@ Module Contents
    :param timestampFrequency: The detected frequency of the timestamps in the dataset.
    :type timestampFrequency: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

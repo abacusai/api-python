@@ -1,36 +1,26 @@
-abacusai.resolved_feature_group_template
-========================================
+:py:mod:`abacusai.resolved_feature_group_template`
+==================================================
 
 .. py:module:: abacusai.resolved_feature_group_template
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.resolved_feature_group_template.AbstractApiClass
-   abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ResolvedFeatureGroupTemplate(client, featureGroupTemplateId=None, resolvedVariables=None, resolvedSql=None, templateSql=None, sqlError=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Final SQL from resolving a feature group template.
 
@@ -47,11 +37,9 @@ Module Contents
    :param sqlError: if invalid, the sql error message
    :type sqlError: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

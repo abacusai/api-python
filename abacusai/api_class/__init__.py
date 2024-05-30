@@ -2,6 +2,7 @@ from .ai_agents import *
 from .ai_chat import *
 from .batch_prediction import *
 from .blob_input import *
+from .connectors import *
 from .dataset import *
 from .dataset_application_connector import *
 from .deployment import *

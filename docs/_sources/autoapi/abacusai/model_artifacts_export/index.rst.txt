@@ -1,36 +1,26 @@
-abacusai.model_artifacts_export
-===============================
+:py:mod:`abacusai.model_artifacts_export`
+=========================================
 
 .. py:module:: abacusai.model_artifacts_export
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.model_artifacts_export.AbstractApiClass
-   abacusai.model_artifacts_export.ModelArtifactsExport
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.model_artifacts_export.ModelArtifactsExport
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ModelArtifactsExport(client, modelArtifactsExportId=None, modelVersion=None, outputLocation=None, status=None, createdAt=None, exportCompletedAt=None, error=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A Model Artifacts Export Job
 
@@ -51,11 +41,9 @@ Module Contents
    :param error: If `status` is `FAILED`, this field will be populated with an error.
    :type error: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -66,14 +54,12 @@ Module Contents
       :rtype: dict
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: ModelArtifactsExport
-
 
 
    .. py:method:: describe()
@@ -87,14 +73,12 @@ Module Contents
       :rtype: ModelArtifactsExport
 
 
-
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until model artifacts export is created.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
-
 
 
    .. py:method:: get_status()

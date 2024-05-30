@@ -1,36 +1,26 @@
-abacusai.problem_type
-=====================
+:py:mod:`abacusai.problem_type`
+===============================
 
 .. py:module:: abacusai.problem_type
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.problem_type.AbstractApiClass
-   abacusai.problem_type.ProblemType
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.problem_type.ProblemType
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: ProblemType(client, problemType=None, requiredFeatureGroupType=None, optionalFeatureGroupTypes=None, useCasesSupportCustomAlgorithm=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Description of a problem type which is the common underlying problem for different use cases.
 
@@ -45,11 +35,9 @@ Module Contents
    :param useCasesSupportCustomAlgorithm: A list of use cases that support custom algorithms
    :type useCasesSupportCustomAlgorithm: list
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

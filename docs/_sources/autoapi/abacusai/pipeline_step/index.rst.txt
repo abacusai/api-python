@@ -1,165 +1,26 @@
-abacusai.pipeline_step
-======================
+:py:mod:`abacusai.pipeline_step`
+================================
 
 .. py:module:: abacusai.pipeline_step
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.pipeline_step.CodeSource
-   abacusai.pipeline_step.PythonFunction
-   abacusai.pipeline_step.AbstractApiClass
-   abacusai.pipeline_step.PipelineStep
 
 
 Module Contents
 ---------------
 
-.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+.. autoapisummary::
 
-
-   Code source for python-based custom feature groups and models
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param sourceType: The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
-   :type sourceType: str
-   :param sourceCode: If the type of the source is TEXT, the raw text of the function
-   :type sourceCode: str
-   :param applicationConnectorId: The Application Connector to fetch the code from
-   :type applicationConnectorId: str
-   :param applicationConnectorInfo: Args passed to the application connector to fetch the code
-   :type applicationConnectorInfo: str
-   :param packageRequirements: The pip package dependencies required to run the code
-   :type packageRequirements: list
-   :param status: The status of the code and validations
-   :type status: str
-   :param error: If the status is failed, an error message describing what went wrong
-   :type error: str
-   :param publishingMsg: Warnings in the source code
-   :type publishingMsg: dict
-   :param moduleDependencies: The list of internal modules dependencies required to run the code
-   :type moduleDependencies: list
+   abacusai.pipeline_step.PipelineStep
 
 
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: import_as_cell()
-
-      Adds the source code as an unexecuted cell in the notebook.
-
-
-
-.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, codeSource={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Customer created python function
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param notebookId: The unique identifier of the notebook used to spin up the notebook upon creation.
-   :type notebookId: str
-   :param name: The name to identify the algorithm, only uppercase letters, numbers, and underscores allowed (i.e. it must be a valid Python identifier)
-   :type name: str
-   :param createdAt: The ISO-8601 string representing when the Python function was created.
-   :type createdAt: str
-   :param functionVariableMappings: A description of the function variables.
-   :type functionVariableMappings: dict
-   :param outputVariableMappings: A description of the variables returned by the function
-   :type outputVariableMappings: dict
-   :param functionName: The name of the Python function to be used.
-   :type functionName: str
-   :param pythonFunctionId: The unique identifier of the Python function.
-   :type pythonFunctionId: str
-   :param functionType: The type of the Python function.
-   :type functionType: str
-   :param packageRequirements: The pip package dependencies required to run the code
-   :type packageRequirements: list
-   :param codeSource: Information about the source code of the Python function.
-   :type codeSource: CodeSource
-
-
-   .. py:method:: __repr__()
-
-      Return repr(self).
-
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: add_graph_to_dashboard(graph_dashboard_id, function_variable_mappings = None, name = None)
-
-      Add a python plot function to a dashboard
-
-      :param graph_dashboard_id: Unique string identifier for the graph dashboard to update.
-      :type graph_dashboard_id: str
-      :param function_variable_mappings: List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-      :type function_variable_mappings: List
-      :param name: Name of the added python plot
-      :type name: str
-
-      :returns: An object describing the graph dashboard.
-      :rtype: GraphDashboard
-
-
-
-   .. py:method:: validate_locally(kwargs = None)
-
-      Validates a Python function by running it with the given input values in an local environment. Taking Input Feature Group as either name(string) or Pandas DataFrame in kwargs.
-
-      :param kwargs: A dictionary mapping function arguments to values to pass to the function. Feature group names will automatically be converted into pandas dataframes.
-      :type kwargs: dict
-
-      :returns: The result of executing the python function
-      :rtype: any
-
-      :raises TypeError: If an Input Feature Group argument has an invalid type or argument is missing.
-      :raises Exception: If an error occurs while validating the Python function.
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PipelineStep(client, pipelineStepId=None, pipelineId=None, stepName=None, pipelineName=None, createdAt=None, updatedAt=None, pythonFunctionId=None, stepDependencies=None, cpuSize=None, memory=None, timeout=None, pythonFunction={}, codeSource={})
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A step in a pipeline.
 
@@ -192,11 +53,9 @@ Module Contents
    :param codeSource: Information about the source code of the step function.
    :type codeSource: CodeSource
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -207,14 +66,12 @@ Module Contents
       :rtype: dict
 
 
-
    .. py:method:: delete()
 
       Deletes a step from a pipeline.
 
       :param pipeline_step_id: The ID of the pipeline step.
       :type pipeline_step_id: str
-
 
 
    .. py:method:: update(function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, timeout = None)
@@ -244,7 +101,6 @@ Module Contents
       :rtype: PipelineStep
 
 
-
    .. py:method:: rename(step_name)
 
       Renames a step in a given pipeline.
@@ -256,14 +112,12 @@ Module Contents
       :rtype: PipelineStep
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: PipelineStep
-
 
 
    .. py:method:: describe()

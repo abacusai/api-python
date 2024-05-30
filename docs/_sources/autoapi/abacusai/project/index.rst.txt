@@ -1,262 +1,26 @@
-abacusai.project
-================
+:py:mod:`abacusai.project`
+==========================
 
 .. py:module:: abacusai.project
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.project.AgentInterface
-   abacusai.project.AlertActionConfig
-   abacusai.project.AlertConditionConfig
-   abacusai.project.ForecastingMonitorConfig
-   abacusai.project.TrainingConfig
-   abacusai.project.VectorStoreConfig
-   abacusai.project.WorkflowGraph
-   abacusai.project.AbstractApiClass
-   abacusai.project.Project
 
 
 Module Contents
 ---------------
 
-.. py:class:: AgentInterface
+Classes
+~~~~~~~
 
-   Bases: :py:obj:`ApiEnum`
+.. autoapisummary::
 
+   abacusai.project.Project
 
-   Generic enumeration.
 
-   Derive from this class to define new enumerations.
-
-
-   .. py:attribute:: DEFAULT
-      :value: 'DEFAULT'
-
-
-
-   .. py:attribute:: CHAT
-      :value: 'CHAT'
-
-
-
-.. py:class:: AlertActionConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for alert action configs
-
-
-   .. py:attribute:: action_type
-      :type:  abacusai.api_class.enums.AlertActionType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: AlertConditionConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for alert condition configs
-
-
-   .. py:attribute:: alert_type
-      :type:  abacusai.api_class.enums.MonitorAlertType
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: ForecastingMonitorConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   Forecasting Monitor Configuration
-
-   :param id_column: The name of the column that contains the unique identifier for the time series.
-   :type id_column: str
-   :param timestamp_column: The name of the column that contains the timestamp for the time series.
-   :type timestamp_column: str
-   :param target_column: The name of the column that contains the target value for the time series.
-   :type target_column: str
-   :param start_time: The start time of the time series data.
-   :type start_time: str
-   :param end_time: The end time of the time series data.
-   :type end_time: str
-   :param window_config: The windowing configuration for the time series data.
-   :type window_config: TimeWindowConfig
-
-
-   .. py:attribute:: id_column
-      :type:  str
-
-
-   .. py:attribute:: timestamp_column
-      :type:  str
-
-
-   .. py:attribute:: target_column
-      :type:  str
-
-
-   .. py:attribute:: start_time
-      :type:  str
-
-
-   .. py:attribute:: end_time
-      :type:  str
-
-
-   .. py:attribute:: window_config
-      :type:  TimeWindowConfig
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-.. py:class:: TrainingConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An abstract class for the training config options used to train the model.
-
-
-   .. py:attribute:: _upper_snake_case_keys
-      :type:  bool
-
-
-   .. py:attribute:: _support_kwargs
-      :type:  bool
-
-
-   .. py:attribute:: kwargs
-      :type:  dict
-
-
-   .. py:attribute:: problem_type
-      :type:  abacusai.api_class.enums.ProblemType
-
-
-   .. py:attribute:: algorithm
-      :type:  str
-
-
-   .. py:method:: _get_builder()
-      :classmethod:
-
-
-
-.. py:class:: VectorStoreConfig
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   Config for indexing options of a document retriever. Default values of optional arguments are heuristically selected by the Abacus.AI platform based on the underlying data.
-
-   :param chunk_size: The size of text chunks in the vector store.
-   :type chunk_size: int
-   :param chunk_overlap_fraction: The fraction of overlap between chunks.
-   :type chunk_overlap_fraction: float
-   :param text_encoder: Encoder used to index texts from the documents.
-   :type text_encoder: VectorStoreTextEncoder
-   :param chunk_size_factors: Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to `chunk_size`.
-   :type chunk_size_factors: list
-   :param score_multiplier_column: If provided, will use the values in this metadata column to modify the relevance score of returned chunks for all queries.
-   :type score_multiplier_column: str
-   :param prune_vectors: Transform vectors using SVD so that the average component of vectors in the corpus are removed.
-   :type prune_vectors: bool
-
-
-   .. py:attribute:: chunk_size
-      :type:  int
-
-
-   .. py:attribute:: chunk_overlap_fraction
-      :type:  float
-
-
-   .. py:attribute:: text_encoder
-      :type:  abacusai.api_class.enums.VectorStoreTextEncoder
-
-
-   .. py:attribute:: chunk_size_factors
-      :type:  list
-
-
-   .. py:attribute:: score_multiplier_column
-      :type:  str
-
-
-   .. py:attribute:: prune_vectors
-      :type:  bool
-
-
-.. py:class:: WorkflowGraph
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
-
-   :param nodes: A list of nodes in the workflow graph.
-   :type nodes: List[WorkflowGraphNode]
-   :param edges: A list of edges in the workflow graph, where each edge is a tuple of source, target and details.
-   :type edges: List[WorkflowGraphEdge]
-
-
-   .. py:attribute:: nodes
-      :type:  List[WorkflowGraphNode]
-
-
-   .. py:attribute:: edges
-      :type:  List[WorkflowGraphEdge]
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(graph)
-      :classmethod:
-
-
-
-.. py:class:: AbstractApiClass(client, id)
-
-   .. py:method:: __eq__(other)
-
-      Return self==value.
-
-
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, tags=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A project is a container which holds datasets, models and deployments
 
@@ -275,11 +39,9 @@ Module Contents
    :param tags: List of tags associated with the project.
    :type tags: list[str]
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -290,14 +52,12 @@ Module Contents
       :rtype: dict
 
 
-
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Project
-
 
 
    .. py:method:: describe()
@@ -311,14 +71,12 @@ Module Contents
       :rtype: Project
 
 
-
    .. py:method:: rename(name)
 
       This method renames a project after it is created.
 
       :param name: The new name for the project.
       :type name: str
-
 
 
    .. py:method:: delete()
@@ -336,7 +94,6 @@ Module Contents
       :type project_id: str
 
 
-
    .. py:method:: add_tags(tags)
 
       This method adds a tag to a project.
@@ -345,14 +102,12 @@ Module Contents
       :type tags: list
 
 
-
    .. py:method:: remove_tags(tags)
 
       This method removes a tag from a project.
 
       :param tags: The tags to remove from the project.
       :type tags: list
-
 
 
    .. py:method:: set_feature_mapping(feature_group_id, feature_name, feature_mapping = None, nested_column_name = None)
@@ -372,7 +127,6 @@ Module Contents
       :rtype: list[Feature]
 
 
-
    .. py:method:: validate(feature_group_ids = None)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
@@ -382,7 +136,6 @@ Module Contents
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
       :rtype: ProjectValidation
-
 
 
    .. py:method:: infer_feature_mappings(feature_group_id)
@@ -396,7 +149,6 @@ Module Contents
       :rtype: InferredFeatureMappings
 
 
-
    .. py:method:: describe_feature_group(feature_group_id)
 
       Describe a feature group associated with a project
@@ -406,7 +158,6 @@ Module Contents
 
       :returns: The project feature group object.
       :rtype: ProjectFeatureGroup
-
 
 
    .. py:method:: list_feature_groups(filter_feature_group_use = None, limit = 100, start_after_id = None)
@@ -424,7 +175,6 @@ Module Contents
       :rtype: list[ProjectFeatureGroup]
 
 
-
    .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None, should_include_all_system_templates = False)
 
       List feature group templates for feature groups associated with the project.
@@ -438,7 +188,6 @@ Module Contents
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
       :rtype: list[FeatureGroupTemplate]
-
 
 
    .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None)
@@ -456,7 +205,6 @@ Module Contents
       :rtype: list[TrainingConfigOptions]
 
 
-
    .. py:method:: create_train_test_data_split_feature_group(training_config, feature_group_ids)
 
       Get the train and test data split without training the model. Only supported for models with custom algorithms.
@@ -468,7 +216,6 @@ Module Contents
 
       :returns: The feature group containing the training data and folds information.
       :rtype: FeatureGroup
-
 
 
    .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None, algorithm_training_configs = None)
@@ -500,7 +247,6 @@ Module Contents
 
       :returns: The new model which is being trained.
       :rtype: Model
-
 
 
    .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False, is_thread_safe = None)
@@ -543,7 +289,6 @@ Module Contents
       :rtype: Model
 
 
-
    .. py:method:: list_models()
 
       Retrieves the list of models in the specified project.
@@ -553,7 +298,6 @@ Module Contents
 
       :returns: A list of models.
       :rtype: list[Model]
-
 
 
    .. py:method:: get_custom_train_function_info(feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
@@ -573,8 +317,7 @@ Module Contents
       :rtype: CustomTrainFunctionInfo
 
 
-
-   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None, include_interactive_performance_analysis = False)
+   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None, exclude_interactive_performance_analysis = True, exclude_bias_analysis = None, exclude_performance_analysis = None, exclude_feature_drift_analysis = None, exclude_data_integrity_analysis = None)
 
       Runs a model monitor for the specified project.
 
@@ -602,12 +345,19 @@ Module Contents
       :type feature_group_base_monitor_config: dict
       :param feature_group_comparison_monitor_config: Selection strategy for the feature_group 1 with the feature group version if selected.
       :type feature_group_comparison_monitor_config: dict
-      :param include_interactive_performance_analysis: Whether to include interactive performance analysis.
-      :type include_interactive_performance_analysis: bool
+      :param exclude_interactive_performance_analysis: Whether to exclude interactive performance analysis. Defaults to True if not provided.
+      :type exclude_interactive_performance_analysis: bool
+      :param exclude_bias_analysis: Whether to exclude bias analysis in the model monitor. For default value bias analysis is included.
+      :type exclude_bias_analysis: bool
+      :param exclude_performance_analysis: Whether to exclude performance analysis in the model monitor. For default value performance analysis is included.
+      :type exclude_performance_analysis: bool
+      :param exclude_feature_drift_analysis: Whether to exclude feature drift analysis in the model monitor. For default value feature drift analysis is included.
+      :type exclude_feature_drift_analysis: bool
+      :param exclude_data_integrity_analysis: Whether to exclude data integrity analysis in the model monitor. For default value data integrity analysis is included.
+      :type exclude_data_integrity_analysis: bool
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
-
 
 
    .. py:method:: list_model_monitors()
@@ -619,7 +369,6 @@ Module Contents
 
       :returns: A list of model monitors.
       :rtype: list[ModelMonitor]
-
 
 
    .. py:method:: create_vision_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
@@ -645,7 +394,6 @@ Module Contents
       :rtype: ModelMonitor
 
 
-
    .. py:method:: create_nlp_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
 
       Runs an NLP drift monitor for the specified project.
@@ -669,7 +417,6 @@ Module Contents
       :rtype: ModelMonitor
 
 
-
    .. py:method:: create_forecasting_monitor(name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency, refresh_schedule = None)
 
       Runs a forecasting monitor for the specified project.
@@ -691,7 +438,6 @@ Module Contents
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
-
 
 
    .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
@@ -725,7 +471,6 @@ Module Contents
       :rtype: Eda
 
 
-
    .. py:method:: list_eda()
 
       Retrieves the list of Exploratory Data Analysis (EDA) in the specified project.
@@ -737,7 +482,6 @@ Module Contents
       :rtype: list[Eda]
 
 
-
    .. py:method:: list_holdout_analysis(model_id = None)
 
       List holdout analyses for a project. Optionally, filter by model.
@@ -747,7 +491,6 @@ Module Contents
 
       :returns: The holdout analyses
       :rtype: list[HoldoutAnalysis]
-
 
 
    .. py:method:: create_monitor_alert(alert_name, condition_config, action_config, model_monitor_id = None, realtime_monitor_id = None)
@@ -769,7 +512,6 @@ Module Contents
       :rtype: MonitorAlert
 
 
-
    .. py:method:: list_prediction_operators()
 
       List all the prediction operators inside a project.
@@ -779,7 +521,6 @@ Module Contents
 
       :returns: A list of prediction operator objects.
       :rtype: list[PredictionOperator]
-
 
 
    .. py:method:: create_deployment_token(name = None)
@@ -796,7 +537,6 @@ Module Contents
       :rtype: DeploymentAuthToken
 
 
-
    .. py:method:: list_deployments()
 
       Retrieves a list of all deployments in the specified project.
@@ -806,7 +546,6 @@ Module Contents
 
       :returns: An array of deployments.
       :rtype: list[Deployment]
-
 
 
    .. py:method:: list_deployment_tokens()
@@ -820,7 +559,6 @@ Module Contents
       :rtype: list[DeploymentAuthToken]
 
 
-
    .. py:method:: list_realtime_monitors()
 
       List the real-time monitors associated with the deployment id.
@@ -830,7 +568,6 @@ Module Contents
 
       :returns: An array of real-time monitors.
       :rtype: list[RealtimeMonitor]
-
 
 
    .. py:method:: list_refresh_policies(dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], notebook_ids = [])
@@ -856,7 +593,6 @@ Module Contents
       :rtype: list[RefreshPolicy]
 
 
-
    .. py:method:: list_batch_predictions()
 
       Retrieves a list of batch predictions in the project.
@@ -868,7 +604,6 @@ Module Contents
       :rtype: list[BatchPrediction]
 
 
-
    .. py:method:: list_pipelines()
 
       Lists the pipelines for an organization or a project
@@ -878,7 +613,6 @@ Module Contents
 
       :returns: A list of pipelines.
       :rtype: list[Pipeline]
-
 
 
    .. py:method:: create_graph_dashboard(name, python_function_ids = None)
@@ -894,7 +628,6 @@ Module Contents
       :rtype: GraphDashboard
 
 
-
    .. py:method:: list_graph_dashboards()
 
       Lists the graph dashboards for a project
@@ -904,7 +637,6 @@ Module Contents
 
       :returns: A list of graph dashboards.
       :rtype: list[GraphDashboard]
-
 
 
    .. py:method:: list_builtin_algorithms(feature_group_ids, training_config = None)
@@ -920,7 +652,6 @@ Module Contents
       :rtype: list[Algorithm]
 
 
-
    .. py:method:: create_chat_session(name = None)
 
       Creates a chat session with Data Science Co-pilot.
@@ -930,7 +661,6 @@ Module Contents
 
       :returns: The chat session with Data Science Co-pilot
       :rtype: ChatSession
-
 
 
    .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT)
@@ -954,7 +684,6 @@ Module Contents
       :rtype: Agent
 
 
-
    .. py:method:: list_agents()
 
       Retrieves the list of agents in the specified project.
@@ -964,7 +693,6 @@ Module Contents
 
       :returns: A list of agents in the project.
       :rtype: list[Agent]
-
 
 
    .. py:method:: create_document_retriever(name, feature_group_id, document_retriever_config = None)
@@ -985,7 +713,6 @@ Module Contents
       :rtype: DocumentRetriever
 
 
-
    .. py:method:: list_document_retrievers(limit = 100, start_after_id = None)
 
       List all the document retrievers.
@@ -997,7 +724,6 @@ Module Contents
 
       :returns: All the document retrievers in the organization associated with the specified project.
       :rtype: list[DocumentRetriever]
-
 
 
    .. py:method:: create_model_from_functions(train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False)

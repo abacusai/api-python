@@ -1,36 +1,26 @@
-abacusai.annotation_document
-============================
+:py:mod:`abacusai.annotation_document`
+======================================
 
 .. py:module:: abacusai.annotation_document
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.annotation_document.AbstractApiClass
-   abacusai.annotation_document.AnnotationDocument
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.annotation_document.AnnotationDocument
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: AnnotationDocument(client, docId=None, featureGroupRowIdentifier=None, featureGroupRowIndex=None, totalRows=None, isAnnotationPresent=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Document to be annotated.
 
@@ -47,11 +37,9 @@ Module Contents
    :param isAnnotationPresent: Whether the document already has an annotation. Returns None if feature group is not under annotations review mode.
    :type isAnnotationPresent: bool
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()

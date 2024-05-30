@@ -2,7 +2,7 @@ import io
 from typing import List, Union
 
 from .annotation_config import AnnotationConfig
-from .api_class import MergeConfig, ProjectFeatureGroupConfig, SamplingConfig
+from .api_class import CPUSize, MemorySize, MergeConfig, OperatorConfig, ProjectFeatureGroupConfig, SamplingConfig
 from .code_source import CodeSource
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature
@@ -43,7 +43,6 @@ class FeatureGroup(AbstractApiClass):
             streamingEnabled (bool): If true, the feature group can have data streamed to it.
             incremental (bool): If feature group corresponds to an incremental dataset.
             mergeConfig (dict): Merge configuration settings for the feature group.
-            operatorConfig (dict): Operator configuration settings for the feature group.
             samplingConfig (dict): Sampling configuration for the feature group.
             cpuSize (str): CPU size specified for the Python feature group.
             memory (int): Memory in GB specified for the Python feature group.
@@ -67,9 +66,10 @@ class FeatureGroup(AbstractApiClass):
             featureGroupTemplate (FeatureGroupTemplate): FeatureGroupTemplate to use when this feature group is attached to a template.
             explanation (NaturalLanguageExplanation): Natural language explanation of the feature group
             refreshSchedules (RefreshSchedule): List of schedules that determines when the next version of the feature group will be created.
+            operatorConfig (OperatorConfig): Operator configuration settings for the feature group.
     """
 
-    def __init__(self, client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, operatorConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={}):
+    def __init__(self, client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={}, operatorConfig={}):
         super().__init__(client, featureGroupId)
         self.feature_group_id = featureGroupId
         self.modification_lock = modificationLock
@@ -93,7 +93,6 @@ class FeatureGroup(AbstractApiClass):
         self.streaming_enabled = streamingEnabled
         self.incremental = incremental
         self.merge_config = mergeConfig
-        self.operator_config = operatorConfig
         self.sampling_config = samplingConfig
         self.cpu_size = cpuSize
         self.memory = memory
@@ -126,11 +125,13 @@ class FeatureGroup(AbstractApiClass):
             RefreshSchedule, refreshSchedules)
         self.latest_feature_group_version = client._build_class(
             FeatureGroupVersion, latestFeatureGroupVersion)
+        self.operator_config = client._build_class(
+            OperatorConfig, operatorConfig)
         self.deprecated_keys = {'name'}
 
     def __repr__(self):
-        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'modification_lock': repr(self.modification_lock), f'name': repr(self.name), f'feature_group_source_type': repr(self.feature_group_source_type), f'table_name': repr(self.table_name), f'sql': repr(self.sql), f'dataset_id': repr(self.dataset_id), f'function_source_code': repr(self.function_source_code), f'function_name': repr(self.function_name), f'source_tables': repr(self.source_tables), f'created_at': repr(self.created_at), f'description': repr(self.description), f'sql_error': repr(self.sql_error), f'latest_version_outdated': repr(self.latest_version_outdated), f'referenced_feature_groups': repr(self.referenced_feature_groups), f'tags': repr(self.tags), f'primary_key': repr(self.primary_key), f'update_timestamp_key': repr(self.update_timestamp_key), f'lookup_keys': repr(self.lookup_keys), f'streaming_enabled': repr(self.streaming_enabled), f'incremental': repr(self.incremental), f'merge_config': repr(self.merge_config), f'operator_config': repr(self.operator_config), f'sampling_config': repr(self.sampling_config), f'cpu_size': repr(
-            self.cpu_size), f'memory': repr(self.memory), f'streaming_ready': repr(self.streaming_ready), f'feature_tags': repr(self.feature_tags), f'module_name': repr(self.module_name), f'template_bindings': repr(self.template_bindings), f'feature_expression': repr(self.feature_expression), f'use_original_csv_names': repr(self.use_original_csv_names), f'python_function_bindings': repr(self.python_function_bindings), f'python_function_name': repr(self.python_function_name), f'use_gpu': repr(self.use_gpu), f'features': repr(self.features), f'duplicate_features': repr(self.duplicate_features), f'point_in_time_groups': repr(self.point_in_time_groups), f'annotation_config': repr(self.annotation_config), f'concatenation_config': repr(self.concatenation_config), f'indexing_config': repr(self.indexing_config), f'code_source': repr(self.code_source), f'feature_group_template': repr(self.feature_group_template), f'explanation': repr(self.explanation), f'refresh_schedules': repr(self.refresh_schedules), f'latest_feature_group_version': repr(self.latest_feature_group_version)}
+        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'modification_lock': repr(self.modification_lock), f'name': repr(self.name), f'feature_group_source_type': repr(self.feature_group_source_type), f'table_name': repr(self.table_name), f'sql': repr(self.sql), f'dataset_id': repr(self.dataset_id), f'function_source_code': repr(self.function_source_code), f'function_name': repr(self.function_name), f'source_tables': repr(self.source_tables), f'created_at': repr(self.created_at), f'description': repr(self.description), f'sql_error': repr(self.sql_error), f'latest_version_outdated': repr(self.latest_version_outdated), f'referenced_feature_groups': repr(self.referenced_feature_groups), f'tags': repr(self.tags), f'primary_key': repr(self.primary_key), f'update_timestamp_key': repr(self.update_timestamp_key), f'lookup_keys': repr(self.lookup_keys), f'streaming_enabled': repr(self.streaming_enabled), f'incremental': repr(self.incremental), f'merge_config': repr(self.merge_config), f'sampling_config': repr(self.sampling_config), f'cpu_size': repr(self.cpu_size), f'memory': repr(
+            self.memory), f'streaming_ready': repr(self.streaming_ready), f'feature_tags': repr(self.feature_tags), f'module_name': repr(self.module_name), f'template_bindings': repr(self.template_bindings), f'feature_expression': repr(self.feature_expression), f'use_original_csv_names': repr(self.use_original_csv_names), f'python_function_bindings': repr(self.python_function_bindings), f'python_function_name': repr(self.python_function_name), f'use_gpu': repr(self.use_gpu), f'features': repr(self.features), f'duplicate_features': repr(self.duplicate_features), f'point_in_time_groups': repr(self.point_in_time_groups), f'annotation_config': repr(self.annotation_config), f'concatenation_config': repr(self.concatenation_config), f'indexing_config': repr(self.indexing_config), f'code_source': repr(self.code_source), f'feature_group_template': repr(self.feature_group_template), f'explanation': repr(self.explanation), f'refresh_schedules': repr(self.refresh_schedules), f'latest_feature_group_version': repr(self.latest_feature_group_version), f'operator_config': repr(self.operator_config)}
         class_name = "FeatureGroup"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -143,8 +144,8 @@ class FeatureGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'feature_group_id': self.feature_group_id, 'modification_lock': self.modification_lock, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'referenced_feature_groups': self.referenced_feature_groups, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'incremental': self.incremental, 'merge_config': self.merge_config, 'operator_config': self.operator_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name,
-                'template_bindings': self.template_bindings, 'feature_expression': self.feature_expression, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'python_function_name': self.python_function_name, 'use_gpu': self.use_gpu, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'feature_group_template': self._get_attribute_as_dict(self.feature_group_template), 'explanation': self._get_attribute_as_dict(self.explanation), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
+        resp = {'feature_group_id': self.feature_group_id, 'modification_lock': self.modification_lock, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'referenced_feature_groups': self.referenced_feature_groups, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'incremental': self.incremental, 'merge_config': self.merge_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'template_bindings': self.template_bindings,
+                'feature_expression': self.feature_expression, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'python_function_name': self.python_function_name, 'use_gpu': self.use_gpu, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'feature_group_template': self._get_attribute_as_dict(self.feature_group_template), 'explanation': self._get_attribute_as_dict(self.explanation), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version), 'operator_config': self._get_attribute_as_dict(self.operator_config)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
@@ -324,12 +325,15 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_group_merge_config(self.feature_group_id, merge_config)
 
-    def set_operator_config(self, operator_config: dict):
+    def set_operator_config(self, operator_config: Union[dict, OperatorConfig]):
         """
         Set a OperatorFeatureGroup’s operator config to the values provided.
 
         Args:
-            operator_config (dict): A dictionary object specifying the pre-defined operations.
+            operator_config (OperatorConfig): A dictionary object specifying the pre-defined operations.
+
+        Returns:
+            FeatureGroup: The updated FeatureGroup.
         """
         return self.client.set_feature_group_operator_config(self.feature_group_id, operator_config)
 
@@ -795,7 +799,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_python_function_bindings(self.feature_group_id, python_function_bindings)
 
-    def update_python_function(self, python_function_name: str, python_function_bindings: List = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None, use_original_csv_names: bool = None):
+    def update_python_function(self, python_function_name: str, python_function_bindings: List = None, cpu_size: Union[dict, CPUSize] = None, memory: Union[dict, MemorySize] = None, use_gpu: bool = None, use_original_csv_names: bool = None):
         """
         Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -806,8 +810,8 @@ class FeatureGroup(AbstractApiClass):
         Args:
             python_function_name (str): The name of the python function to be associated with the feature group.
             python_function_bindings (List): List of python function arguments.
-            cpu_size (str): Size of the CPU for the feature group python function.
-            memory (int): Memory (in GB) for the feature group python function.
+            cpu_size (CPUSize): Size of the CPU for the feature group python function.
+            memory (MemorySize): Memory (in GB) for the feature group python function.
             use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
             use_original_csv_names (bool): If enabled, it uses the original column names for input feature groups from CSV datasets.
         """

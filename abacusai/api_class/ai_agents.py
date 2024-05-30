@@ -28,7 +28,7 @@ class WorkflowNodeInputSchema(ApiClass):
     A react-jsonschema-form conformant schema for workflow node input.
 
     Args:
-        json_schema (dict): The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties". Supported elements - Checkbox, Radio Button, Dropdown, Textarea, Number, Date, File Upload. Not supported - Nested elements, arrays and other complex types.
+        json_schema (dict): The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties". Supported elements - Checkbox, Radio Button, Dropdown, Textarea, Number, Date, file upload. Not supported - Nested elements, arrays and other complex types.
         ui_schema (dict): The ui schema for the input conformant to react-jsonschema-form specification.
     """
     json_schema: dict
@@ -99,6 +99,8 @@ class WorkflowNodeInputMapping(ApiClass):
 
     @classmethod
     def from_dict(cls, mapping: dict):
+        if any(field not in mapping for field in ['name', 'variable_type']):
+            raise ValueError('Invalid workflow node input mapping. Must contain keys - name, variable_type')
         return cls(
             name=mapping['name'],
             variable_type=mapping['variable_type'],
@@ -179,6 +181,8 @@ class WorkflowGraphNode(ApiClass):
 
     @classmethod
     def from_dict(cls, node: dict):
+        if any(field not in node for field in ['name', 'function_name', 'source_code', 'input_mappings', 'output_mappings']):
+            raise ValueError('Invalid workflow graph node. Must contain keys - name, function_name, source_code, input_mappings, output_mappings.')
         return cls(
             name=node['name'],
             function_name=node['function_name'],

@@ -1,36 +1,26 @@
-abacusai.pipeline_reference
-===========================
+:py:mod:`abacusai.pipeline_reference`
+=====================================
 
 .. py:module:: abacusai.pipeline_reference
-
-
-Classes
--------
-
-.. autoapisummary::
-
-   abacusai.pipeline_reference.AbstractApiClass
-   abacusai.pipeline_reference.PipelineReference
 
 
 Module Contents
 ---------------
 
-.. py:class:: AbstractApiClass(client, id)
+Classes
+~~~~~~~
 
-   .. py:method:: __eq__(other)
+.. autoapisummary::
 
-      Return self==value.
+   abacusai.pipeline_reference.PipelineReference
 
 
-
-   .. py:method:: _get_attribute_as_dict(attribute)
 
 
 .. py:class:: PipelineReference(client, pipelineReferenceId=None, pipelineId=None, objectType=None, datasetId=None, modelId=None, deploymentId=None, batchPredictionDescriptionId=None, modelMonitorId=None, notebookId=None, featureGroupId=None)
 
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A reference to a pipeline to the objects it is run on.
 
@@ -57,11 +47,9 @@ Module Contents
    :param featureGroupId: The feature group id of the reference.
    :type featureGroupId: str
 
-
    .. py:method:: __repr__()
 
       Return repr(self).
-
 
 
    .. py:method:: to_dict()
