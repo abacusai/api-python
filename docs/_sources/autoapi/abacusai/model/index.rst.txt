@@ -1,26 +1,24 @@
-:py:mod:`abacusai.model`
-========================
+abacusai.model
+==============
 
 .. py:module:: abacusai.model
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.model.Model
 
 
+Module Contents
+---------------
 
-
-.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, dataLlmFeatureGroups=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, latestModelVersion={}, modelConfig={})
-
+.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A model
 
@@ -82,8 +80,6 @@ Classes
    :type notebookId: str
    :param trainingRequired: If training is required to keep the model up-to-date.
    :type trainingRequired: bool
-   :param dataLlmFeatureGroups: List of feature groups used by the model for queries
-   :type dataLlmFeatureGroups: list[featuregroup]
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
    :param location: Location information for models that are imported.
@@ -94,12 +90,16 @@ Classes
    :type codeSource: CodeSource
    :param databaseConnector: Database connector used by the model.
    :type databaseConnector: DatabaseConnector
+   :param dataLlmFeatureGroups: List of feature groups used by the model for queries
+   :type dataLlmFeatureGroups: FeatureGroup
    :param modelConfig: The training config options used to train this model.
    :type modelConfig: TrainingConfig
+
 
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -108,6 +108,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: describe_train_test_data_split_feature_group()
@@ -121,12 +122,14 @@ Classes
       :rtype: FeatureGroup
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Model
+
 
 
    .. py:method:: describe()
@@ -140,12 +143,14 @@ Classes
       :rtype: Model
 
 
+
    .. py:method:: rename(name)
 
       Renames a model
 
       :param name: The new name to assign to the model.
       :type name: str
+
 
 
    .. py:method:: update_python(function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None, is_thread_safe = None, training_config = None)
@@ -184,6 +189,7 @@ Classes
       :rtype: Model
 
 
+
    .. py:method:: update_python_zip(train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
 
       Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
@@ -214,6 +220,7 @@ Classes
 
       :returns: The updated model.
       :rtype: Upload
+
 
 
    .. py:method:: update_python_git(application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, use_gpu = None)
@@ -252,6 +259,7 @@ Classes
       :rtype: Model
 
 
+
    .. py:method:: set_training_config(training_config, feature_group_ids = None)
 
       Edits the default model training config
@@ -265,6 +273,7 @@ Classes
       :rtype: Model
 
 
+
    .. py:method:: set_prediction_params(prediction_config)
 
       Sets the model prediction config for the model
@@ -274,6 +283,7 @@ Classes
 
       :returns: Model object after the prediction configuration is applied.
       :rtype: Model
+
 
 
    .. py:method:: get_metrics(model_version = None, return_graphs = False, validation = False)
@@ -294,6 +304,7 @@ Classes
       :rtype: ModelMetrics
 
 
+
    .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       Retrieves a list of versions for a given model.
@@ -305,6 +316,7 @@ Classes
 
       :returns: An array of model versions.
       :rtype: list[ModelVersion]
+
 
 
    .. py:method:: retrain(deployment_ids = None, feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None, algorithm_training_configs = None)
@@ -334,12 +346,14 @@ Classes
       :rtype: Model
 
 
+
    .. py:method:: delete()
 
       Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
 
       :param model_id: Unique string identifier of the model to delete.
       :type model_id: str
+
 
 
    .. py:method:: set_default_algorithm(algorithm = None, data_cluster_type = None)
@@ -350,6 +364,7 @@ Classes
       :type algorithm: str
       :param data_cluster_type: Data cluster type to set the lead model for.
       :type data_cluster_type: str
+
 
 
    .. py:method:: list_artifacts_exports(limit = 25)
@@ -363,6 +378,7 @@ Classes
       :rtype: list[ModelArtifactsExport]
 
 
+
    .. py:method:: get_training_types_for_deployment(model_version = None, algorithm = None)
 
       Returns types of models that can be deployed for a given model instance ID.
@@ -374,6 +390,7 @@ Classes
 
       :returns: Model training types for deployment.
       :rtype: ModelTrainingTypeForDeployment
+
 
 
    .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None)
@@ -393,12 +410,14 @@ Classes
       :rtype: Agent
 
 
+
    .. py:method:: wait_for_training(timeout=None)
 
       A waiting call until model is trained.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: wait_for_evaluation(timeout=None)
@@ -409,12 +428,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: wait_for_publish(timeout=None)
 
       A waiting call until agent is published.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: wait_for_full_automl(timeout=None)
@@ -425,12 +446,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status(get_automl_status = False)
 
       Gets the status of the model training.
 
       :returns: A string describing the status of a model training (pending, complete, etc.).
       :rtype: str
+
 
 
    .. py:method:: create_refresh_policy(cron)
@@ -444,12 +467,14 @@ Classes
       :rtype: RefreshPolicy
 
 
+
    .. py:method:: list_refresh_policies()
 
       Gets the refresh policies in a list.
 
       :returns: A list of refresh policy objects.
       :rtype: List[RefreshPolicy]
+
 
 
    .. py:method:: get_train_test_feature_group_as_pandas()

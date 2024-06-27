@@ -1,26 +1,24 @@
-:py:mod:`abacusai.forecasting_monitor_summary`
-==============================================
+abacusai.forecasting_monitor_summary
+====================================
 
 .. py:module:: abacusai.forecasting_monitor_summary
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.forecasting_monitor_summary.ForecastingMonitorSummary
 
 
-
+Module Contents
+---------------
 
 .. py:class:: ForecastingMonitorSummary(client, predictionTimestampCol=None, predictionTargetCol=None, trainingTimestampCol=None, trainingTargetCol=None, predictionItemId=None, trainingItemId=None, forecastFrequency=None, trainingTargetAcrossTime={}, predictionTargetAcrossTime={}, actualsHistogram={}, predictionsHistogram={}, trainHistoryData={}, predictHistoryData={}, targetDrift={}, historyDrift={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Forecasting Monitor Summary of the latest version of the data.
 
@@ -57,9 +55,11 @@ Classes
    :param historyDrift: Data showing drift of the history for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic, psi, csi, chi_square
    :type historyDrift: FeatureDriftRecord
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

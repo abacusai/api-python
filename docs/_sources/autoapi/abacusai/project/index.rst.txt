@@ -1,26 +1,24 @@
-:py:mod:`abacusai.project`
-==========================
+abacusai.project
+================
 
 .. py:module:: abacusai.project
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.project.Project
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, tags=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A project is a container which holds datasets, models and deployments
 
@@ -39,9 +37,11 @@ Classes
    :param tags: List of tags associated with the project.
    :type tags: list[str]
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -52,12 +52,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Project
+
 
 
    .. py:method:: describe()
@@ -71,12 +73,14 @@ Classes
       :rtype: Project
 
 
+
    .. py:method:: rename(name)
 
       This method renames a project after it is created.
 
       :param name: The new name for the project.
       :type name: str
+
 
 
    .. py:method:: delete()
@@ -94,6 +98,7 @@ Classes
       :type project_id: str
 
 
+
    .. py:method:: add_tags(tags)
 
       This method adds a tag to a project.
@@ -102,12 +107,14 @@ Classes
       :type tags: list
 
 
+
    .. py:method:: remove_tags(tags)
 
       This method removes a tag from a project.
 
       :param tags: The tags to remove from the project.
       :type tags: list
+
 
 
    .. py:method:: set_feature_mapping(feature_group_id, feature_name, feature_mapping = None, nested_column_name = None)
@@ -127,6 +134,7 @@ Classes
       :rtype: list[Feature]
 
 
+
    .. py:method:: validate(feature_group_ids = None)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
@@ -136,6 +144,7 @@ Classes
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
       :rtype: ProjectValidation
+
 
 
    .. py:method:: infer_feature_mappings(feature_group_id)
@@ -149,6 +158,7 @@ Classes
       :rtype: InferredFeatureMappings
 
 
+
    .. py:method:: describe_feature_group(feature_group_id)
 
       Describe a feature group associated with a project
@@ -158,6 +168,7 @@ Classes
 
       :returns: The project feature group object.
       :rtype: ProjectFeatureGroup
+
 
 
    .. py:method:: list_feature_groups(filter_feature_group_use = None, limit = 100, start_after_id = None)
@@ -175,6 +186,7 @@ Classes
       :rtype: list[ProjectFeatureGroup]
 
 
+
    .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None, should_include_all_system_templates = False)
 
       List feature group templates for feature groups associated with the project.
@@ -188,6 +200,7 @@ Classes
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
       :rtype: list[FeatureGroupTemplate]
+
 
 
    .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None)
@@ -205,6 +218,7 @@ Classes
       :rtype: list[TrainingConfigOptions]
 
 
+
    .. py:method:: create_train_test_data_split_feature_group(training_config, feature_group_ids)
 
       Get the train and test data split without training the model. Only supported for models with custom algorithms.
@@ -216,6 +230,7 @@ Classes
 
       :returns: The feature group containing the training data and folds information.
       :rtype: FeatureGroup
+
 
 
    .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None, algorithm_training_configs = None)
@@ -247,6 +262,7 @@ Classes
 
       :returns: The new model which is being trained.
       :rtype: Model
+
 
 
    .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False, is_thread_safe = None)
@@ -289,6 +305,7 @@ Classes
       :rtype: Model
 
 
+
    .. py:method:: list_models()
 
       Retrieves the list of models in the specified project.
@@ -298,6 +315,7 @@ Classes
 
       :returns: A list of models.
       :rtype: list[Model]
+
 
 
    .. py:method:: get_custom_train_function_info(feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
@@ -315,6 +333,7 @@ Classes
 
       :returns: Information about how to call the customer-provided train function.
       :rtype: CustomTrainFunctionInfo
+
 
 
    .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None, exclude_interactive_performance_analysis = True, exclude_bias_analysis = None, exclude_performance_analysis = None, exclude_feature_drift_analysis = None, exclude_data_integrity_analysis = None)
@@ -360,6 +379,7 @@ Classes
       :rtype: ModelMonitor
 
 
+
    .. py:method:: list_model_monitors()
 
       Retrieves the list of model monitors in the specified project.
@@ -369,6 +389,7 @@ Classes
 
       :returns: A list of model monitors.
       :rtype: list[ModelMonitor]
+
 
 
    .. py:method:: create_vision_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
@@ -394,6 +415,7 @@ Classes
       :rtype: ModelMonitor
 
 
+
    .. py:method:: create_nlp_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
 
       Runs an NLP drift monitor for the specified project.
@@ -417,6 +439,7 @@ Classes
       :rtype: ModelMonitor
 
 
+
    .. py:method:: create_forecasting_monitor(name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency, refresh_schedule = None)
 
       Runs a forecasting monitor for the specified project.
@@ -438,6 +461,7 @@ Classes
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
+
 
 
    .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
@@ -471,6 +495,7 @@ Classes
       :rtype: Eda
 
 
+
    .. py:method:: list_eda()
 
       Retrieves the list of Exploratory Data Analysis (EDA) in the specified project.
@@ -482,6 +507,7 @@ Classes
       :rtype: list[Eda]
 
 
+
    .. py:method:: list_holdout_analysis(model_id = None)
 
       List holdout analyses for a project. Optionally, filter by model.
@@ -491,6 +517,7 @@ Classes
 
       :returns: The holdout analyses
       :rtype: list[HoldoutAnalysis]
+
 
 
    .. py:method:: create_monitor_alert(alert_name, condition_config, action_config, model_monitor_id = None, realtime_monitor_id = None)
@@ -512,6 +539,7 @@ Classes
       :rtype: MonitorAlert
 
 
+
    .. py:method:: list_prediction_operators()
 
       List all the prediction operators inside a project.
@@ -521,6 +549,7 @@ Classes
 
       :returns: A list of prediction operator objects.
       :rtype: list[PredictionOperator]
+
 
 
    .. py:method:: create_deployment_token(name = None)
@@ -537,6 +566,7 @@ Classes
       :rtype: DeploymentAuthToken
 
 
+
    .. py:method:: list_deployments()
 
       Retrieves a list of all deployments in the specified project.
@@ -546,6 +576,7 @@ Classes
 
       :returns: An array of deployments.
       :rtype: list[Deployment]
+
 
 
    .. py:method:: list_deployment_tokens()
@@ -559,6 +590,7 @@ Classes
       :rtype: list[DeploymentAuthToken]
 
 
+
    .. py:method:: list_realtime_monitors()
 
       List the real-time monitors associated with the deployment id.
@@ -568,6 +600,7 @@ Classes
 
       :returns: An array of real-time monitors.
       :rtype: list[RealtimeMonitor]
+
 
 
    .. py:method:: list_refresh_policies(dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], notebook_ids = [])
@@ -593,6 +626,7 @@ Classes
       :rtype: list[RefreshPolicy]
 
 
+
    .. py:method:: list_batch_predictions()
 
       Retrieves a list of batch predictions in the project.
@@ -604,6 +638,7 @@ Classes
       :rtype: list[BatchPrediction]
 
 
+
    .. py:method:: list_pipelines()
 
       Lists the pipelines for an organization or a project
@@ -613,6 +648,7 @@ Classes
 
       :returns: A list of pipelines.
       :rtype: list[Pipeline]
+
 
 
    .. py:method:: create_graph_dashboard(name, python_function_ids = None)
@@ -628,6 +664,7 @@ Classes
       :rtype: GraphDashboard
 
 
+
    .. py:method:: list_graph_dashboards()
 
       Lists the graph dashboards for a project
@@ -637,6 +674,7 @@ Classes
 
       :returns: A list of graph dashboards.
       :rtype: list[GraphDashboard]
+
 
 
    .. py:method:: list_builtin_algorithms(feature_group_ids, training_config = None)
@@ -652,6 +690,7 @@ Classes
       :rtype: list[Algorithm]
 
 
+
    .. py:method:: create_chat_session(name = None)
 
       Creates a chat session with Data Science Co-pilot.
@@ -661,6 +700,7 @@ Classes
 
       :returns: The chat session with Data Science Co-pilot
       :rtype: ChatSession
+
 
 
    .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT)
@@ -684,6 +724,7 @@ Classes
       :rtype: Agent
 
 
+
    .. py:method:: list_agents()
 
       Retrieves the list of agents in the specified project.
@@ -693,6 +734,7 @@ Classes
 
       :returns: A list of agents in the project.
       :rtype: list[Agent]
+
 
 
    .. py:method:: create_document_retriever(name, feature_group_id, document_retriever_config = None)
@@ -713,6 +755,7 @@ Classes
       :rtype: DocumentRetriever
 
 
+
    .. py:method:: list_document_retrievers(limit = 100, start_after_id = None)
 
       List all the document retrievers.
@@ -724,6 +767,7 @@ Classes
 
       :returns: All the document retrievers in the organization associated with the specified project.
       :rtype: list[DocumentRetriever]
+
 
 
    .. py:method:: create_model_from_functions(train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False)

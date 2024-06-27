@@ -1,26 +1,24 @@
-:py:mod:`abacusai.deployment`
-=============================
+abacusai.deployment
+===================
 
 .. py:module:: abacusai.deployment
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.deployment.Deployment
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A model deployment
 
@@ -87,9 +85,11 @@ Classes
    :param defaultPredictionArguments: The default prediction arguments for prediction APIs
    :type defaultPredictionArguments: PredictionArguments
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -98,6 +98,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: create_webhook(endpoint, webhook_event_type, payload_template = None)
@@ -115,6 +116,7 @@ Classes
       :rtype: Webhook
 
 
+
    .. py:method:: list_webhooks()
 
       List all the webhooks attached to a given deployment.
@@ -126,12 +128,14 @@ Classes
       :rtype: list[Webhook]
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Deployment
+
 
 
    .. py:method:: describe()
@@ -143,6 +147,7 @@ Classes
 
       :returns: Description of the deployment.
       :rtype: Deployment
+
 
 
    .. py:method:: update(description = None, auto_deploy = None, skip_metrics_check = None)
@@ -157,12 +162,14 @@ Classes
       :type skip_metrics_check: bool
 
 
+
    .. py:method:: rename(name)
 
       Updates a deployment's name
 
       :param name: The new deployment name.
       :type name: str
+
 
 
    .. py:method:: set_auto(enable = None)
@@ -174,6 +181,7 @@ Classes
 
       :param enable: Enable or disable the autoDeploy property of the deployment.
       :type enable: bool
+
 
 
    .. py:method:: set_model_version(model_version, algorithm = None, model_deployment_config = None)
@@ -188,12 +196,14 @@ Classes
       :type model_deployment_config: dict
 
 
+
    .. py:method:: set_feature_group_version(feature_group_version)
 
       Promotes a feature group version to be served in the deployment.
 
       :param feature_group_version: Unique string identifier for the feature group version.
       :type feature_group_version: str
+
 
 
    .. py:method:: set_prediction_operator_version(prediction_operator_version)
@@ -204,12 +214,14 @@ Classes
       :type prediction_operator_version: str
 
 
+
    .. py:method:: start()
 
       Restarts the specified deployment that was previously suspended.
 
       :param deployment_id: A unique string identifier associated with the deployment.
       :type deployment_id: str
+
 
 
    .. py:method:: stop()
@@ -220,12 +232,14 @@ Classes
       :type deployment_id: str
 
 
+
    .. py:method:: delete()
 
       Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
 
       :param deployment_id: Unique string identifier of the deployment to delete.
       :type deployment_id: str
+
 
 
    .. py:method:: set_feature_group_export_file_connector_output(file_format = None, output_location = None)
@@ -236,6 +250,7 @@ Classes
       :type file_format: str
       :param output_location: The file connector (cloud) location where the output should be exported.
       :type output_location: str
+
 
 
    .. py:method:: set_feature_group_export_database_connector_output(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
@@ -256,12 +271,14 @@ Classes
       :type additional_id_columns: list
 
 
+
    .. py:method:: remove_feature_group_export_output()
 
       Removes the export type that is set for the Feature Group Deployment
 
       :param deployment_id: The ID of the deployment for which the export type is set.
       :type deployment_id: str
+
 
 
    .. py:method:: set_default_prediction_arguments(prediction_arguments, set_as_override = False)
@@ -275,6 +292,7 @@ Classes
 
       :returns: description of the updated deployment.
       :rtype: Deployment
+
 
 
    .. py:method:: create_alert(alert_name, condition_config, action_config)
@@ -295,6 +313,7 @@ Classes
       :rtype: MonitorAlert
 
 
+
    .. py:method:: list_alerts()
 
       List the monitor alerts associated with the deployment id.
@@ -304,6 +323,7 @@ Classes
 
       :returns: An array of deployment alerts.
       :rtype: list[MonitorAlert]
+
 
 
    .. py:method:: create_realtime_monitor(realtime_monitor_schedule = None, lookback_time = None)
@@ -319,7 +339,8 @@ Classes
       :rtype: RealtimeMonitor
 
 
-   .. py:method:: get_conversation_response(message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None, doc_infos = None)
+
+   .. py:method:: get_conversation_response(message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, deployment_token = None, doc_infos = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -343,15 +364,14 @@ Classes
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
-      :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
-      :type ignore_documents: bool
       :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
       :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
       :type doc_infos: list
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
+
+   .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -377,10 +397,9 @@ Classes
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
-      :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
-      :type ignore_documents: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
+
 
 
    .. py:method:: create_batch_prediction(table_name = None, name = None, global_prediction_args = None, batch_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
@@ -420,6 +439,21 @@ Classes
       :rtype: BatchPrediction
 
 
+
+   .. py:method:: get_statistics_over_time(start_date, end_date)
+
+      Return basic access statistics for the given window
+
+      :param start_date: Timeline start date in ISO format.
+      :type start_date: str
+      :param end_date: Timeline end date in ISO format. The date range must be 7 days or less.
+      :type end_date: str
+
+      :returns: Object describing Time series data of the number of requests and latency over the specified time period.
+      :rtype: DeploymentStatistics
+
+
+
    .. py:method:: describe_feature_group_row_process_by_key(primary_key_value)
 
       Gets the feature group row process.
@@ -429,6 +463,7 @@ Classes
 
       :returns: An object representing the feature group row process
       :rtype: FeatureGroupRowProcess
+
 
 
    .. py:method:: list_feature_group_row_processes(limit = None, status = None)
@@ -444,6 +479,7 @@ Classes
       :rtype: list[FeatureGroupRowProcess]
 
 
+
    .. py:method:: get_feature_group_row_process_summary()
 
       Gets a summary of the statuses of the individual feature group processes.
@@ -453,6 +489,7 @@ Classes
 
       :returns: An object representing the summary of the statuses of the individual feature group processes
       :rtype: FeatureGroupRowProcessSummary
+
 
 
    .. py:method:: reset_feature_group_row_process_by_key(primary_key_value)
@@ -466,6 +503,7 @@ Classes
       :rtype: FeatureGroupRowProcess
 
 
+
    .. py:method:: get_feature_group_row_process_logs_by_key(primary_key_value)
 
       Gets the logs for a feature group row process
@@ -475,6 +513,7 @@ Classes
 
       :returns: An object representing the logs for the feature group row process
       :rtype: FeatureGroupRowProcessLogs
+
 
 
    .. py:method:: create_conversation(name, deployment_token = None, external_application_id = None)
@@ -492,6 +531,7 @@ Classes
       :rtype: DeploymentConversation
 
 
+
    .. py:method:: list_conversations(external_application_id = None)
 
       Lists all conversations for the given deployment and current user.
@@ -501,6 +541,7 @@ Classes
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
+
 
 
    .. py:method:: create_external_application(name = None, description = None, logo = None, theme = None)
@@ -520,6 +561,7 @@ Classes
       :rtype: ExternalApplication
 
 
+
    .. py:method:: download_agent_attachment(attachment_id)
 
       Return an agent attachment.
@@ -528,12 +570,14 @@ Classes
       :type attachment_id: str
 
 
+
    .. py:method:: wait_for_deployment(wait_states={'PENDING', 'DEPLOYING'}, timeout=900)
 
       A waiting call until deployment is completed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: wait_for_pending_deployment_update(timeout=900)
@@ -547,12 +591,14 @@ Classes
       :rtype: Deployment
 
 
+
    .. py:method:: get_status()
 
       Gets the status of the deployment.
 
       :returns: A string describing the status of a deploymet (pending, deploying, active, etc.).
       :rtype: str
+
 
 
    .. py:method:: create_refresh_policy(cron)
@@ -564,6 +610,7 @@ Classes
 
       :returns: The refresh policy object.
       :rtype: RefreshPolicy
+
 
 
    .. py:method:: list_refresh_policies()

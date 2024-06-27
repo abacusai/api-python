@@ -1,26 +1,24 @@
-:py:mod:`abacusai.batch_prediction_version`
-===========================================
+abacusai.batch_prediction_version
+=================================
 
 .. py:module:: abacusai.batch_prediction_version
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.batch_prediction_version.BatchPredictionVersion
 
 
-
+Module Contents
+---------------
 
 .. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, bpAcrossVersionsMonitorVersion=None, batchPredictionArgsType=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Batch Prediction Version
 
@@ -109,9 +107,11 @@ Classes
    :param batchPredictionArgs: Argument(s) passed to every prediction call
    :type batchPredictionArgs: BatchPredictionArgs
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -120,6 +120,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: download_batch_prediction_result_chunk(offset = 0, chunk_size = 10485760)
@@ -132,6 +133,7 @@ Classes
       :type chunk_size: int
 
 
+
    .. py:method:: get_batch_prediction_connector_errors()
 
       Returns a stream containing the batch prediction database connection write errors, if any writes failed for the specified batch prediction job.
@@ -140,12 +142,14 @@ Classes
       :type batch_prediction_version: str
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: BatchPredictionVersion
+
 
 
    .. py:method:: describe()
@@ -159,6 +163,7 @@ Classes
       :rtype: BatchPredictionVersion
 
 
+
    .. py:method:: get_logs()
 
       Retrieves the batch prediction logs.
@@ -170,12 +175,14 @@ Classes
       :rtype: BatchPredictionVersionLogs
 
 
+
    .. py:method:: download_result_to_file(file)
 
       Downloads the batch prediction version in a local file.
 
       :param file: A file object opened in a binary mode e.g., file=open('/tmp/output', 'wb').
       :type file: file object
+
 
 
    .. py:method:: wait_for_predictions(timeout=86400)
@@ -186,6 +193,7 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: wait_for_drift_monitor(timeout=86400)
 
       A waiting call until batch prediction drift monitor calculations are ready.
@@ -194,12 +202,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status(drift_monitor_status = False)
 
       Gets the status of the batch prediction version.
 
       :returns: A string describing the status of the batch prediction version, for e.g., pending, complete, etc.
       :rtype: str
+
 
 
    .. py:method:: load_results_as_pandas()

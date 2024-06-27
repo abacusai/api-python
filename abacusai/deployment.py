@@ -327,7 +327,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_realtime_monitor(self.deployment_id, realtime_monitor_schedule, lookback_time)
 
-    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, deployment_token: str = None, doc_infos: list = None):
+    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, deployment_token: str = None, doc_infos: list = None):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -342,13 +342,12 @@ class Deployment(AbstractApiClass):
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
-            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
             deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
         """
-        return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents, deployment_token, doc_infos)
+        return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, deployment_token, doc_infos)
 
-    def get_conversation_response_with_binary_data(self, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None):
+    def get_conversation_response_with_binary_data(self, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, attachments: None = None):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -364,10 +363,9 @@ class Deployment(AbstractApiClass):
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
-            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
             attachments (None): A dictionary of binary data to use to answer the queries.
         """
-        return self.client.get_conversation_response_with_binary_data(self.deployment_id, deployment_token, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents, attachments)
+        return self.client.get_conversation_response_with_binary_data(self.deployment_id, deployment_token, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, attachments)
 
     def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, batch_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
         """
@@ -393,6 +391,19 @@ class Deployment(AbstractApiClass):
             BatchPrediction: The batch prediction description.
         """
         return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, batch_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns, input_feature_groups)
+
+    def get_statistics_over_time(self, start_date: str, end_date: str):
+        """
+        Return basic access statistics for the given window
+
+        Args:
+            start_date (str): Timeline start date in ISO format.
+            end_date (str): Timeline end date in ISO format. The date range must be 7 days or less.
+
+        Returns:
+            DeploymentStatistics: Object describing Time series data of the number of requests and latency over the specified time period.
+        """
+        return self.client.get_deployment_statistics_over_time(self.deployment_id, start_date, end_date)
 
     def describe_feature_group_row_process_by_key(self, primary_key_value: str):
         """

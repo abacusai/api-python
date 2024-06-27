@@ -1,26 +1,24 @@
-:py:mod:`abacusai.feature_group_export`
-=======================================
+abacusai.feature_group_export
+=============================
 
 .. py:module:: abacusai.feature_group_export
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.feature_group_export.FeatureGroupExport
 
 
-
+Module Contents
+---------------
 
 .. py:class:: FeatureGroupExport(client, featureGroupExportId=None, failedWrites=None, totalWrites=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None, databaseOutputError=None, projectConfig={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A feature Group Export Job
 
@@ -65,9 +63,11 @@ Classes
    :param projectConfig: Project config for this feature group.
    :type projectConfig: ProjectConfig
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -76,6 +76,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: get_feature_group_version_export_download_url()
@@ -89,12 +90,14 @@ Classes
       :rtype: FeatureGroupExportDownloadUrl
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: FeatureGroupExport
+
 
 
    .. py:method:: describe()
@@ -108,12 +111,14 @@ Classes
       :rtype: FeatureGroupExport
 
 
+
    .. py:method:: get_connector_errors()
 
       Returns a stream containing the write errors of the feature group export database connection, if any writes failed to the database connector.
 
       :param feature_group_export_id: Unique identifier of the feature group export to get the errors for.
       :type feature_group_export_id: str
+
 
 
    .. py:method:: wait_for_results(timeout=3600)
@@ -124,12 +129,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: wait_for_export(timeout=3600)
 
       A waiting call until feature group export is created.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

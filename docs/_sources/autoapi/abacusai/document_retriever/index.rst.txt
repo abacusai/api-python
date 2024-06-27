@@ -1,26 +1,24 @@
-:py:mod:`abacusai.document_retriever`
-=====================================
+abacusai.document_retriever
+===========================
 
 .. py:module:: abacusai.document_retriever
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.document_retriever.DocumentRetriever
 
 
-
+Module Contents
+---------------
 
 .. py:class:: DocumentRetriever(client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, featureGroupName=None, indexingRequired=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A vector store that stores embeddings for a list of document trunks.
 
@@ -43,9 +41,11 @@ Classes
    :param documentRetrieverConfig: The config for vector store creation.
    :type documentRetrieverConfig: DocumentRetrieverConfig
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -54,6 +54,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: rename(name)
@@ -65,6 +66,7 @@ Classes
 
       :returns: The updated document retriever.
       :rtype: DocumentRetriever
+
 
 
    .. py:method:: create_version(feature_group_id = None, document_retriever_config = None)
@@ -80,12 +82,14 @@ Classes
       :rtype: DocumentRetrieverVersion
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: DocumentRetriever
+
 
 
    .. py:method:: describe()
@@ -99,6 +103,7 @@ Classes
       :rtype: DocumentRetriever
 
 
+
    .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       List all the document retriever versions with a given ID.
@@ -110,6 +115,7 @@ Classes
 
       :returns: All the document retriever versions associated with the document retriever.
       :rtype: list[DocumentRetrieverVersion]
+
 
 
    .. py:method:: get_document_snippet(document_id, start_word_index = None, end_word_index = None)
@@ -127,15 +133,17 @@ Classes
       :rtype: DocumentRetrieverLookupResult
 
 
+
    .. py:method:: restart()
 
-      Restart the document retriever if it is stopped. This will start the deployment of the document retriever,
+      Restart the document retriever if it is stopped or has failed. This will start the deployment of the document retriever,
 
       but will not wait for it to be ready. You need to call wait_until_ready to wait until the deployment is ready.
 
 
       :param document_retriever_id: A unique string identifier associated with the document retriever.
       :type document_retriever_id: str
+
 
 
    .. py:method:: wait_until_ready(timeout = 3600)
@@ -146,6 +154,7 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: wait_until_deployment_ready(timeout = 3600)
 
       A waiting call until the document retriever deployment is ready to serve.
@@ -154,12 +163,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status()
 
-      Gets the indexing status of the document retriever.
+      Gets the status of the document retriever. It represents indexing status until indexing isn't complete, and deployment status after indexing is complete.
 
-      :returns: A string describing the status of a document retriever (pending, complete, etc.).
+      :returns: A string describing the status of a document retriever (pending, indexing, complete, active, etc.).
       :rtype: str
+
 
 
    .. py:method:: get_deployment_status()
@@ -168,6 +179,7 @@ Classes
 
       :returns: A string describing the deployment status of document retriever (pending, deploying, active, etc.).
       :rtype: str
+
 
 
    .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None)

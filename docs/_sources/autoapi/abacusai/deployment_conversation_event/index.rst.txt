@@ -1,26 +1,24 @@
-:py:mod:`abacusai.deployment_conversation_event`
-================================================
+abacusai.deployment_conversation_event
+======================================
 
 .. py:module:: abacusai.deployment_conversation_event
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.deployment_conversation_event.DeploymentConversationEvent
 
 
-
+Module Contents
+---------------
 
 .. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A single deployment conversation message.
 
@@ -79,9 +77,11 @@ Classes
    :param llmBotIcon: The icon location of the LLM model used to generate the response. Only used for system-created bots.
    :type llmBotIcon: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

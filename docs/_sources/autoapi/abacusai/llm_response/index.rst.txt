@@ -1,26 +1,24 @@
-:py:mod:`abacusai.llm_response`
-===============================
+abacusai.llm_response
+=====================
 
 .. py:module:: abacusai.llm_response
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.llm_response.LlmResponse
 
 
-
+Module Contents
+---------------
 
 .. py:class:: LlmResponse(client, content=None, tokens=None, stopReason=None, llmName=None, codeBlocks={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    The response returned by LLM
 
@@ -37,9 +35,11 @@ Classes
    :param codeBlocks: A list of parsed code blocks from raw LLM Response
    :type codeBlocks: LlmCodeBlock
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

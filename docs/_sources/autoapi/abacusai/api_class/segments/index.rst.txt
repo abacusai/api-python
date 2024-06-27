@@ -1,0 +1,170 @@
+abacusai.api_class.segments
+===========================
+
+.. py:module:: abacusai.api_class.segments
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.api_class.segments.Attachment
+   abacusai.api_class.segments.Segment
+   abacusai.api_class.segments.AttachmentsSegment
+   abacusai.api_class.segments.AgentFlowButtonSegment
+   abacusai.api_class.segments.ImageUrlSegment
+   abacusai.api_class.segments.TextSegment
+
+
+Module Contents
+---------------
+
+.. py:class:: Attachment
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   An attachment that an agent can return to render attachments.
+
+   :param filename: The name of the file.
+   :type filename: str
+   :param mime_type: The MIME type of the file.
+   :type mime_type: str
+   :param attachment_id: The ID of the attachment.
+   :type attachment_id: str
+
+
+   .. py:attribute:: filename
+      :type:  str
+
+
+   .. py:attribute:: mime_type
+      :type:  str
+
+
+   .. py:attribute:: attachment_id
+      :type:  str
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(data)
+      :classmethod:
+
+
+
+.. py:class:: Segment
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   A segment that an agent can return to render specific UI elements.
+
+   :param type: The type of the segment.
+   :type type: SegmentType
+   :param id: The section key of the segment.
+   :type id: str
+
+
+   .. py:attribute:: type
+      :type:  abacusai.api_class.enums.SegmentType
+
+
+   .. py:attribute:: id
+      :type:  str
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: AttachmentsSegment(attachments, section_key = None)
+
+   Bases: :py:obj:`Segment`
+
+
+   A segment that an agent can return to render attachments.
+
+   :param attachments: The list of attachments to be displayed.
+   :type attachments: List[Attachment]
+
+
+   .. py:attribute:: attachments
+      :type:  List[Attachment]
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(data)
+      :classmethod:
+
+
+
+.. py:class:: AgentFlowButtonSegment(label, agent_workflow_node_name, section_key = None)
+
+   Bases: :py:obj:`Segment`
+
+
+   A segment that an AI Agent can return to render a button.
+
+   :param label: The label of the button.
+   :type label: str
+   :param agent_workflow_node_name: The workflow start node to be executed when the button is clicked.
+   :type agent_workflow_node_name: str
+
+
+   .. py:attribute:: label
+      :type:  str
+
+
+   .. py:attribute:: agent_workflow_node_name
+      :type:  str
+
+
+.. py:class:: ImageUrlSegment(url, section_key = None)
+
+   Bases: :py:obj:`Segment`
+
+
+   A segment that an agent can return to render an image.
+
+   :param segment: The url of the image to be displayed.
+   :type segment: str
+
+
+   .. py:attribute:: segment
+      :type:  str
+
+
+.. py:class:: TextSegment(text, section_key = None)
+
+   Bases: :py:obj:`Segment`
+
+
+   A segment that an agent can return to render text.
+
+   :param segment: The text to be displayed.
+   :type segment: str
+
+
+   .. py:attribute:: segment
+      :type:  str
+
+

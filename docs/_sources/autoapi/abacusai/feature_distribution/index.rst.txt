@@ -1,26 +1,24 @@
-:py:mod:`abacusai.feature_distribution`
-=======================================
+abacusai.feature_distribution
+=============================
 
 .. py:module:: abacusai.feature_distribution
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.feature_distribution.FeatureDistribution
 
 
-
+Module Contents
+---------------
 
 .. py:class:: FeatureDistribution(client, type=None, trainingDistribution=None, predictionDistribution=None, numericalTrainingDistribution=None, numericalPredictionDistribution=None, trainingStatistics=None, predictionStatistics=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    For a single feature, how it has changed in the training data versus some specified window
 
@@ -41,9 +39,11 @@ Classes
    :param predictionStatistics: A dict describing summary statistics of values in the specified window.
    :type predictionStatistics: dict
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

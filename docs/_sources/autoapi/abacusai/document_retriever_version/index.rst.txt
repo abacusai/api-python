@@ -1,26 +1,24 @@
-:py:mod:`abacusai.document_retriever_version`
-=============================================
+abacusai.document_retriever_version
+===================================
 
 .. py:module:: abacusai.document_retriever_version
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.document_retriever_version.DocumentRetrieverVersion
 
 
-
+Module Contents
+---------------
 
 .. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, deploymentStatus=None, featureGroupId=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of document retriever.
 
@@ -32,7 +30,7 @@ Classes
    :type documentRetrieverVersion: str
    :param createdAt: When the Document Retriever was created.
    :type createdAt: str
-   :param status: The status of creating Document Retriever version.
+   :param status: The status of Document Retriever version. It represents indexing status until indexing isn't complete, and deployment status after indexing is complete.
    :type status: str
    :param deploymentStatus: The status of deploying the Document Retriever version.
    :type deploymentStatus: str
@@ -51,9 +49,11 @@ Classes
    :param resolvedConfig: The resolved configurations, such as default settings, for indexing documents.
    :type resolvedConfig: DocumentRetrieverConfig
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -64,12 +64,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: DocumentRetrieverVersion
+
 
 
    .. py:method:: describe()
@@ -83,12 +85,14 @@ Classes
       :rtype: DocumentRetrieverVersion
 
 
+
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until document retriever version is complete.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: wait_until_ready(timeout=3600)
@@ -99,6 +103,7 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: wait_until_deployment_ready(timeout = 3600)
 
       A waiting call until the document retriever deployment is ready to serve.
@@ -107,12 +112,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status()
 
       Gets the status of the document retriever version.
 
       :returns: A string describing the status of a document retriever version (pending, complete, etc.).
       :rtype: str
+
 
 
    .. py:method:: get_deployment_status()

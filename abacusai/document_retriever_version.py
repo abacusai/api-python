@@ -12,7 +12,7 @@ class DocumentRetrieverVersion(AbstractApiClass):
             documentRetrieverId (str): The unique identifier of the Document Retriever.
             documentRetrieverVersion (str): The unique identifier of the Document Retriever version.
             createdAt (str): When the Document Retriever was created.
-            status (str): The status of creating Document Retriever version.
+            status (str): The status of Document Retriever version. It represents indexing status until indexing isn't complete, and deployment status after indexing is complete.
             deploymentStatus (str): The status of deploying the Document Retriever version.
             featureGroupId (str): The feature group id associated with the document retriever.
             featureGroupVersion (str): The unique identifier of the feature group version at which the Document Retriever version is created.

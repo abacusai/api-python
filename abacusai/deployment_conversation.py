@@ -17,10 +17,11 @@ class DeploymentConversation(AbstractApiClass):
             regenerateAttempt (int): The sequence number of regeneration. Not regenerated if 0.
             externalApplicationId (str): The external application id associated with the deployment conversation.
             unusedDocumentUploadIds (list[str]): The list of unused document upload ids associated with the deployment conversation.
+            humanizeInstructions (dict): Instructions for humanizing the conversation.
             history (DeploymentConversationEvent): The history of the deployment conversation.
     """
 
-    def __init__(self, client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, history={}):
+    def __init__(self, client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, history={}):
         super().__init__(client, deploymentConversationId)
         self.deployment_conversation_id = deploymentConversationId
         self.name = name
@@ -31,13 +32,14 @@ class DeploymentConversation(AbstractApiClass):
         self.regenerate_attempt = regenerateAttempt
         self.external_application_id = externalApplicationId
         self.unused_document_upload_ids = unusedDocumentUploadIds
+        self.humanize_instructions = humanizeInstructions
         self.history = client._build_class(
             DeploymentConversationEvent, history)
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'created_at': repr(self.created_at), f'last_event_created_at': repr(self.last_event_created_at), f'external_session_id': repr(
-            self.external_session_id), f'regenerate_attempt': repr(self.regenerate_attempt), f'external_application_id': repr(self.external_application_id), f'unused_document_upload_ids': repr(self.unused_document_upload_ids), f'history': repr(self.history)}
+            self.external_session_id), f'regenerate_attempt': repr(self.regenerate_attempt), f'external_application_id': repr(self.external_application_id), f'unused_document_upload_ids': repr(self.unused_document_upload_ids), f'humanize_instructions': repr(self.humanize_instructions), f'history': repr(self.history)}
         class_name = "DeploymentConversation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -51,7 +53,7 @@ class DeploymentConversation(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'created_at': self.created_at, 'last_event_created_at': self.last_event_created_at, 'external_session_id': self.external_session_id,
-                'regenerate_attempt': self.regenerate_attempt, 'external_application_id': self.external_application_id, 'unused_document_upload_ids': self.unused_document_upload_ids, 'history': self._get_attribute_as_dict(self.history)}
+                'regenerate_attempt': self.regenerate_attempt, 'external_application_id': self.external_application_id, 'unused_document_upload_ids': self.unused_document_upload_ids, 'humanize_instructions': self.humanize_instructions, 'history': self._get_attribute_as_dict(self.history)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def get(self, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False):

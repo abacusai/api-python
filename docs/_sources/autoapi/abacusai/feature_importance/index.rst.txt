@@ -1,26 +1,24 @@
-:py:mod:`abacusai.feature_importance`
-=====================================
+abacusai.feature_importance
+===========================
 
 .. py:module:: abacusai.feature_importance
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.feature_importance.FeatureImportance
 
 
-
+Module Contents
+---------------
 
 .. py:class:: FeatureImportance(client, shapFeatureImportance=None, limeFeatureImportance=None, permutationFeatureImportance=None, nullFeatureImportance=None, lofoFeatureImportance=None, ebmFeatureImportance=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Feature importance for a specified model monitor
 
@@ -39,9 +37,11 @@ Classes
    :param ebmFeatureImportance: A map of feature name to feature importance, determined by an Explainable Boosting Machine.
    :type ebmFeatureImportance: dict
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

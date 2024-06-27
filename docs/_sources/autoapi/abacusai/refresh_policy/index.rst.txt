@@ -1,26 +1,24 @@
-:py:mod:`abacusai.refresh_policy`
-=================================
+abacusai.refresh_policy
+=======================
 
 .. py:module:: abacusai.refresh_policy
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.refresh_policy.RefreshPolicy
 
 
-
+Module Contents
+---------------
 
 .. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, featureGroupId=None, modelIds=None, deploymentIds=None, batchPredictionIds=None, modelMonitorIds=None, notebookId=None, paused=None, predictionOperatorId=None, pipelineId=None, featureGroupExportConfig={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A Refresh Policy describes the frequency at which one or more datasets/models/deployments/batch_predictions can be updated.
 
@@ -63,9 +61,11 @@ Classes
    :param featureGroupExportConfig: The export configuration for the feature group. Only applicable if refresh_type is FEATUREGROUP.
    :type featureGroupExportConfig: FeatureGroupRefreshExportConfig
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -76,6 +76,7 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: delete()
 
       Delete a refresh policy.
@@ -84,12 +85,14 @@ Classes
       :type refresh_policy_id: str
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: RefreshPolicy
+
 
 
    .. py:method:: describe()
@@ -103,6 +106,7 @@ Classes
       :rtype: RefreshPolicy
 
 
+
    .. py:method:: list_refresh_pipeline_runs()
 
       List the the times that the refresh policy has been run
@@ -114,12 +118,14 @@ Classes
       :rtype: list[RefreshPipelineRun]
 
 
+
    .. py:method:: pause()
 
       Pauses a refresh policy
 
       :param refresh_policy_id: Unique identifier associated with the refresh policy to be paused.
       :type refresh_policy_id: str
+
 
 
    .. py:method:: resume()
@@ -130,12 +136,14 @@ Classes
       :type refresh_policy_id: str
 
 
+
    .. py:method:: run()
 
       Force a run of the refresh policy.
 
       :param refresh_policy_id: Unique string identifier associated with the refresh policy to be run.
       :type refresh_policy_id: str
+
 
 
    .. py:method:: update(name = None, cron = None, feature_group_export_config = None)

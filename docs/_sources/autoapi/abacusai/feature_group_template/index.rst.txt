@@ -1,26 +1,24 @@
-:py:mod:`abacusai.feature_group_template`
-=========================================
+abacusai.feature_group_template
+===============================
 
 .. py:module:: abacusai.feature_group_template
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.feature_group_template.FeatureGroupTemplate
 
 
-
+Module Contents
+---------------
 
 .. py:class:: FeatureGroupTemplate(client, featureGroupTemplateId=None, description=None, featureGroupId=None, isSystemTemplate=None, name=None, templateSql=None, templateVariables=None, createdAt=None, updatedAt=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A template for creating feature groups.
 
@@ -45,9 +43,11 @@ Classes
    :param updatedAt: When the feature group template was updated.
    :type updatedAt: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -58,6 +58,7 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: delete()
 
       Delete an existing feature group template.
@@ -66,12 +67,14 @@ Classes
       :type feature_group_template_id: str
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: FeatureGroupTemplate
+
 
 
    .. py:method:: describe()
@@ -83,6 +86,7 @@ Classes
 
       :returns: The feature group template object.
       :rtype: FeatureGroupTemplate
+
 
 
    .. py:method:: update(template_sql = None, template_variables = None, description = None, name = None)
@@ -100,6 +104,7 @@ Classes
 
       :returns: The updated feature group template.
       :rtype: FeatureGroupTemplate
+
 
 
    .. py:method:: preview_resolution(template_bindings = None, template_sql = None, template_variables = None, should_validate = True)

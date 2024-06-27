@@ -1,26 +1,24 @@
-:py:mod:`abacusai.graph_dashboard`
-==================================
+abacusai.graph_dashboard
+========================
 
 .. py:module:: abacusai.graph_dashboard
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.graph_dashboard.GraphDashboard
 
 
-
+Module Contents
+---------------
 
 .. py:class:: GraphDashboard(client, name=None, graphDashboardId=None, createdAt=None, projectId=None, pythonFunctionIds=None, plotReferenceIds=None, pythonFunctionNames=None, projectName=None, description=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A Graph Dashboard
 
@@ -45,9 +43,11 @@ Classes
    :param description: The description of the graph dashboard.
    :type description: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -58,12 +58,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: GraphDashboard
+
 
 
    .. py:method:: describe()
@@ -77,12 +79,14 @@ Classes
       :rtype: GraphDashboard
 
 
+
    .. py:method:: delete()
 
       Deletes a graph dashboard
 
       :param graph_dashboard_id: Unique string identifier for the graph dashboard to be deleted.
       :type graph_dashboard_id: str
+
 
 
    .. py:method:: update(name = None, python_function_ids = None)

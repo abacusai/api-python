@@ -1,26 +1,24 @@
-:py:mod:`abacusai.feature_group_version`
-========================================
+abacusai.feature_group_version
+==============================
 
 .. py:module:: abacusai.feature_group_version
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.feature_group_version.FeatureGroupVersion
 
 
-
+Module Contents
+---------------
 
 .. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, sourceDatasetVersions=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, indexingConfigWarningMsg=None, materializationStartedAt=None, materializationCompletedAt=None, columns=None, templateBindings=None, features={}, pointInTimeGroups={}, codeSource={}, annotationConfig={}, indexingConfig={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A materialized version of a feature group
 
@@ -73,9 +71,11 @@ Classes
    :param indexingConfig: The indexing config for the feature group.
    :type indexingConfig: IndexingConfig
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -84,6 +84,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: create_snapshot_feature_group(table_name)
@@ -95,6 +96,7 @@ Classes
 
       :returns: Feature Group corresponding to the newly created Snapshot.
       :rtype: FeatureGroup
+
 
 
    .. py:method:: export_to_file_connector(location, export_file_format, overwrite = False)
@@ -110,6 +112,7 @@ Classes
 
       :returns: The FeatureGroupExport instance.
       :rtype: FeatureGroupExport
+
 
 
    .. py:method:: export_to_database_connector(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
@@ -133,6 +136,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
+
    .. py:method:: export_to_console(export_file_format)
 
       Export Feature group to console.
@@ -142,6 +146,16 @@ Classes
 
       :returns: The FeatureGroupExport instance.
       :rtype: FeatureGroupExport
+
+
+
+   .. py:method:: delete()
+
+      Deletes a Feature Group Version.
+
+      :param feature_group_version: String identifier for the feature group version to be removed.
+      :type feature_group_version: str
+
 
 
    .. py:method:: get_materialization_logs(stdout = False, stderr = False)
@@ -157,12 +171,14 @@ Classes
       :rtype: FunctionLogs
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: FeatureGroupVersion
+
 
 
    .. py:method:: describe()
@@ -174,6 +190,7 @@ Classes
 
       :returns: The feature group version.
       :rtype: FeatureGroupVersion
+
 
 
    .. py:method:: get_metrics(selected_columns = None, include_charts = False, include_statistics = True)
@@ -191,6 +208,7 @@ Classes
       :rtype: DataMetrics
 
 
+
    .. py:method:: get_logs()
 
       Retrieves the feature group materialization logs.
@@ -202,12 +220,14 @@ Classes
       :rtype: FeatureGroupVersionLogs
 
 
+
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until feature group version is materialized
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: wait_for_materialization(timeout=3600)
@@ -218,12 +238,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status()
 
       Gets the status of the feature group version.
 
       :returns: A string describing the status of a feature group version (pending, complete, etc.).
       :rtype: str
+
 
 
    .. py:method:: _download_avro_file(file_part, tmp_dir, part_index)
@@ -238,6 +260,7 @@ Classes
 
       :returns: A pandas dataframe displaying the data in the feature group version.
       :rtype: DataFrame
+
 
 
    .. py:method:: load_as_pandas_documents(doc_id_column, document_column, max_workers=10)

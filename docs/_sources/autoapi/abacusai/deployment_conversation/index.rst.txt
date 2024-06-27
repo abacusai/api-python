@@ -1,26 +1,24 @@
-:py:mod:`abacusai.deployment_conversation`
-==========================================
+abacusai.deployment_conversation
+================================
 
 .. py:module:: abacusai.deployment_conversation
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.deployment_conversation.DeploymentConversation
 
 
+Module Contents
+---------------
 
-
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, history={})
-
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, history={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A deployment conversation.
 
@@ -44,12 +42,16 @@ Classes
    :type externalApplicationId: str
    :param unusedDocumentUploadIds: The list of unused document upload ids associated with the deployment conversation.
    :type unusedDocumentUploadIds: list[str]
+   :param humanizeInstructions: Instructions for humanizing the conversation.
+   :type humanizeInstructions: dict
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
+
 
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -58,6 +60,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: get(external_session_id = None, deployment_id = None, deployment_token = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
@@ -79,6 +82,7 @@ Classes
       :rtype: DeploymentConversation
 
 
+
    .. py:method:: delete(deployment_id = None, deployment_token = None)
 
       Delete a Deployment Conversation.
@@ -87,6 +91,7 @@ Classes
       :type deployment_id: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
       :type deployment_token: str
+
 
 
    .. py:method:: clear(external_session_id = None, deployment_id = None, deployment_token = None, user_message_indices = None)
@@ -101,6 +106,7 @@ Classes
       :type deployment_token: str
       :param user_message_indices: Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.
       :type user_message_indices: list
+
 
 
    .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None, deployment_token = None)
@@ -123,6 +129,7 @@ Classes
       :type deployment_token: str
 
 
+
    .. py:method:: rename(name, deployment_id = None, deployment_token = None)
 
       Rename a Deployment Conversation.
@@ -133,6 +140,7 @@ Classes
       :type deployment_id: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
       :type deployment_token: str
+
 
 
    .. py:method:: export(external_session_id = None)

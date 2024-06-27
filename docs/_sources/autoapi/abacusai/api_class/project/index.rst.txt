@@ -1,14 +1,11 @@
-:py:mod:`abacusai.api_class.project`
-====================================
+abacusai.api_class.project
+==========================
 
 .. py:module:: abacusai.api_class.project
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -21,12 +18,13 @@ Classes
    abacusai.api_class.project._ProjectFeatureGroupConfigFactory
 
 
-
+Module Contents
+---------------
 
 .. py:class:: FeatureMappingConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Feature mapping configuration for a feature group type.
 
@@ -37,26 +35,23 @@ Classes
    :param nested_feature_name: The name of the nested feature in the feature group.
    :type nested_feature_name: str
 
-   .. py:attribute:: feature_name
-      :type: str
 
-      
+   .. py:attribute:: feature_name
+      :type:  str
+
 
    .. py:attribute:: feature_mapping
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: nested_feature_name
-      :type: str
-
-      
+      :type:  str
 
 
 .. py:class:: ProjectFeatureGroupTypeMappingsConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Project feature group type mappings.
 
@@ -67,20 +62,18 @@ Classes
    :param feature_mappings: The feature mappings for the feature group.
    :type feature_mappings: List[FeatureMappingConfig]
 
-   .. py:attribute:: feature_group_id
-      :type: str
 
-      
+   .. py:attribute:: feature_group_id
+      :type:  str
+
 
    .. py:attribute:: feature_group_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: feature_mappings
-      :type: List[FeatureMappingConfig]
+      :type:  List[FeatureMappingConfig]
 
-      
 
    .. py:method:: from_dict(input_dict)
       :classmethod:
@@ -89,8 +82,8 @@ Classes
 
 .. py:class:: ConstraintConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Constraint configuration.
 
@@ -105,43 +98,38 @@ Classes
    :param penalty: The penalty for violating the constraint.
    :type penalty: float
 
-   .. py:attribute:: constant
-      :type: float
 
-      
+   .. py:attribute:: constant
+      :type:  float
+
 
    .. py:attribute:: operator
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: enforcement
-      :type: Optional[str]
+      :type:  Optional[str]
 
-      
 
    .. py:attribute:: code
-      :type: Optional[str]
+      :type:  Optional[str]
 
-      
 
    .. py:attribute:: penalty
-      :type: Optional[float]
-
-      
+      :type:  Optional[float]
 
 
 .. py:class:: ProjectFeatureGroupConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for project feature group configuration.
 
-   .. py:attribute:: type
-      :type: abacusai.api_class.enums.ProjectConfigType
 
-      
+   .. py:attribute:: type
+      :type:  abacusai.api_class.enums.ProjectConfigType
+
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -150,61 +138,57 @@ Classes
 
 .. py:class:: ConstraintProjectFeatureGroupConfig
 
-
    Bases: :py:obj:`ProjectFeatureGroupConfig`
+
 
    Constraint project feature group configuration.
 
    :param constraints: The constraint for the feature group. Should be a list of one ConstraintConfig.
    :type constraints: List[ConstraintConfig]
 
-   .. py:attribute:: constraints
-      :type: List[ConstraintConfig]
 
-      
+   .. py:attribute:: constraints
+      :type:  List[ConstraintConfig]
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ReviewModeProjectFeatureGroupConfig
 
-
    Bases: :py:obj:`ProjectFeatureGroupConfig`
+
 
    Review mode project feature group configuration.
 
    :param is_review_mode: The review mode for the feature group.
    :type is_review_mode: bool
 
-   .. py:attribute:: is_review_mode
-      :type: bool
 
-      
+   .. py:attribute:: is_review_mode
+      :type:  bool
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _ProjectFeatureGroupConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 

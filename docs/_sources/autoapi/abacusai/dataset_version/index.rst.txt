@@ -1,26 +1,24 @@
-:py:mod:`abacusai.dataset_version`
-==================================
+abacusai.dataset_version
+========================
 
 .. py:module:: abacusai.dataset_version
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.dataset_version.DatasetVersion
 
 
-
+Module Contents
+---------------
 
 .. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, fileInspectMetadata=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, databaseConnectorConfig=None, applicationConnectorConfig=None, invalidRecords=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A specific version of a dataset
 
@@ -55,9 +53,11 @@ Classes
    :param invalidRecords: Invalid records in the dataset version
    :type invalidRecords: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -66,6 +66,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: get_metrics(selected_columns = None, include_charts = False, include_statistics = True)
@@ -83,12 +84,14 @@ Classes
       :rtype: DataMetrics
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: DatasetVersion
+
 
 
    .. py:method:: describe()
@@ -102,6 +105,16 @@ Classes
       :rtype: DatasetVersion
 
 
+
+   .. py:method:: delete()
+
+      Deletes the specified dataset version from the organization.
+
+      :param dataset_version: String identifier of the dataset version to delete.
+      :type dataset_version: str
+
+
+
    .. py:method:: get_logs()
 
       Retrieves the dataset import logs.
@@ -113,6 +126,7 @@ Classes
       :rtype: DatasetVersionLogs
 
 
+
    .. py:method:: wait_for_import(timeout=900)
 
       A waiting call until dataset version is imported.
@@ -121,12 +135,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: wait_for_inspection(timeout=None)
 
       A waiting call until dataset version is completely inspected.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

@@ -1,26 +1,24 @@
-:py:mod:`abacusai.agent_version`
-================================
+abacusai.agent_version
+======================
 
 .. py:module:: abacusai.agent_version
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.agent_version.AgentVersion
 
 
-
+Module Contents
+---------------
 
 .. py:class:: AgentVersion(client, agentVersion=None, status=None, agentId=None, agentConfig=None, publishingStartedAt=None, publishingCompletedAt=None, pendingDeploymentIds=None, failedDeploymentIds=None, error=None, agentExecutionConfig=None, codeSource={}, workflowGraph={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of an AI agent.
 
@@ -51,9 +49,11 @@ Classes
    :param workflowGraph: The workflow graph for the agent.
    :type workflowGraph: WorkflowGraph
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -64,12 +64,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: AgentVersion
+
 
 
    .. py:method:: describe()
@@ -83,12 +85,14 @@ Classes
       :rtype: AgentVersion
 
 
+
    .. py:method:: wait_for_publish(timeout=None)
 
       A waiting call until agent gets published.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

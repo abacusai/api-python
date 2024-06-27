@@ -144,6 +144,15 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.export_feature_group_version_to_console(self.feature_group_version, export_file_format)
 
+    def delete(self):
+        """
+        Deletes a Feature Group Version.
+
+        Args:
+            feature_group_version (str): String identifier for the feature group version to be removed.
+        """
+        return self.client.delete_feature_group_version(self.feature_group_version)
+
     def get_materialization_logs(self, stdout: bool = False, stderr: bool = False):
         """
         Returns logs for a materialized feature group version.

@@ -1,26 +1,24 @@
-:py:mod:`abacusai.refresh_pipeline_run`
-=======================================
+abacusai.refresh_pipeline_run
+=============================
 
 .. py:module:: abacusai.refresh_pipeline_run
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.refresh_pipeline_run.RefreshPipelineRun
 
 
-
+Module Contents
+---------------
 
 .. py:class:: RefreshPipelineRun(client, refreshPipelineRunId=None, refreshPolicyId=None, createdAt=None, startedAt=None, completedAt=None, status=None, refreshType=None, datasetVersions=None, featureGroupVersion=None, modelVersions=None, deploymentVersions=None, batchPredictions=None, refreshPolicy={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    This keeps track of the overall status of a refresh. A refresh can span multiple resources such as the creation of new dataset versions and the training of a new model version based on them.
 
@@ -53,9 +51,11 @@ Classes
    :param refreshPolicy: The refresh policy for this refresh policy run.
    :type refreshPolicy: RefreshPolicy
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -66,12 +66,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: RefreshPipelineRun
+
 
 
    .. py:method:: describe()
@@ -85,12 +87,14 @@ Classes
       :rtype: RefreshPipelineRun
 
 
+
    .. py:method:: wait_for_complete(timeout=None)
 
       A waiting call until refresh pipeline run has completed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

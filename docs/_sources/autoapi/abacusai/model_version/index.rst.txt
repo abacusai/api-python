@@ -1,26 +1,24 @@
-:py:mod:`abacusai.model_version`
-================================
+abacusai.model_version
+======================
 
 .. py:module:: abacusai.model_version
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.model_version.ModelVersion
 
 
-
+Module Contents
+---------------
 
 .. py:class:: ModelVersion(client, modelVersion=None, modelConfigType=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingDocumentRetrieverVersions=None, documentRetrieverMappings=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, trainingConfigUpdated=None, codeSource={}, modelConfig={}, deployableAlgorithms={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of a model
 
@@ -87,9 +85,11 @@ Classes
    :param deployableAlgorithms: List of deployable algorithms.
    :type deployableAlgorithms: DeployableAlgorithm
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -98,6 +98,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: describe_train_test_data_split_feature_group_version()
@@ -111,6 +112,7 @@ Classes
       :rtype: FeatureGroupVersion
 
 
+
    .. py:method:: set_model_objective(metric = None)
 
       Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
@@ -120,6 +122,7 @@ Classes
 
       :param metric: The metric to use to determine the best model.
       :type metric: str
+
 
 
    .. py:method:: get_feature_group_schemas_for()
@@ -133,12 +136,14 @@ Classes
       :rtype: list[ModelVersionFeatureGroupSchema]
 
 
+
    .. py:method:: delete()
 
       Deletes the specified model version. Model versions which are currently used in deployments cannot be deleted.
 
       :param model_version: The unique identifier of the model version to delete.
       :type model_version: str
+
 
 
    .. py:method:: export_model_artifact_as_feature_group(table_name, artifact_type = None)
@@ -154,12 +159,14 @@ Classes
       :rtype: FeatureGroup
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: ModelVersion
+
 
 
    .. py:method:: describe()
@@ -173,6 +180,7 @@ Classes
       :rtype: ModelVersion
 
 
+
    .. py:method:: get_feature_importance_by()
 
       Gets the feature importance calculated by various methods for the model.
@@ -184,6 +192,7 @@ Classes
       :rtype: FeatureImportance
 
 
+
    .. py:method:: get_training_data_logs()
 
       Retrieves the data preparation logs during model training.
@@ -193,6 +202,7 @@ Classes
 
       :returns: A list of logs.
       :rtype: list[DataPrepLogs]
+
 
 
    .. py:method:: get_training_logs(stdout = False, stderr = False)
@@ -208,6 +218,7 @@ Classes
       :rtype: FunctionLogs
 
 
+
    .. py:method:: export_custom(output_location, algorithm = None)
 
       Bundle custom model artifacts to a zip file, and export to the specified location.
@@ -221,12 +232,14 @@ Classes
       :rtype: ModelArtifactsExport
 
 
+
    .. py:method:: wait_for_training(timeout=None)
 
       A waiting call until model gets trained.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: wait_for_full_automl(timeout=None)
@@ -237,12 +250,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status()
 
       Gets the status of the model version under training.
 
       :returns: A string describing the status of a model training (pending, complete, etc.).
       :rtype: str
+
 
 
    .. py:method:: get_train_test_feature_group_as_pandas()

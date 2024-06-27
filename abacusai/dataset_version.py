@@ -98,6 +98,15 @@ class DatasetVersion(AbstractApiClass):
         """
         return self.client.describe_dataset_version(self.dataset_version)
 
+    def delete(self):
+        """
+        Deletes the specified dataset version from the organization.
+
+        Args:
+            dataset_version (str): String identifier of the dataset version to delete.
+        """
+        return self.client.delete_dataset_version(self.dataset_version)
+
     def get_logs(self):
         """
         Retrieves the dataset import logs.

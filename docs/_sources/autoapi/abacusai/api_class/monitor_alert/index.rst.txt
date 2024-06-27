@@ -1,14 +1,11 @@
-:py:mod:`abacusai.api_class.monitor_alert`
-==========================================
+abacusai.api_class.monitor_alert
+================================
 
 .. py:module:: abacusai.api_class.monitor_alert
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -27,19 +24,20 @@ Classes
    abacusai.api_class.monitor_alert.MonitorThresholdConfig
 
 
-
+Module Contents
+---------------
 
 .. py:class:: AlertConditionConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for alert condition configs
 
-   .. py:attribute:: alert_type
-      :type: abacusai.api_class.enums.MonitorAlertType
 
-      
+   .. py:attribute:: alert_type
+      :type:  abacusai.api_class.enums.MonitorAlertType
+
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -48,27 +46,26 @@ Classes
 
 .. py:class:: AccuracyBelowThresholdConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Accuracy Below Threshold Condition Config for Monitor Alerts
 
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
-   .. py:attribute:: threshold
-      :type: float
 
-      
+   .. py:attribute:: threshold
+      :type:  float
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: FeatureDriftConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Feature Drift Condition Config for Monitor Alerts
 
@@ -81,34 +78,30 @@ Classes
    :param feature_names: List of feature names to monitor for this alert.
    :type feature_names: List[str]
 
-   .. py:attribute:: feature_drift_type
-      :type: abacusai.api_class.enums.FeatureDriftType
 
-      
+   .. py:attribute:: feature_drift_type
+      :type:  abacusai.api_class.enums.FeatureDriftType
+
 
    .. py:attribute:: threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: minimum_violations
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: feature_names
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: TargetDriftConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Target Drift Condition Config for Monitor Alerts
 
@@ -117,24 +110,22 @@ Classes
    :param threshold: Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
-   .. py:attribute:: feature_drift_type
-      :type: abacusai.api_class.enums.FeatureDriftType
 
-      
+   .. py:attribute:: feature_drift_type
+      :type:  abacusai.api_class.enums.FeatureDriftType
+
 
    .. py:attribute:: threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: HistoryLengthDriftConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    History Length Drift Condition Config for Monitor Alerts
 
@@ -143,24 +134,22 @@ Classes
    :param threshold: Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
-   .. py:attribute:: feature_drift_type
-      :type: abacusai.api_class.enums.FeatureDriftType
 
-      
+   .. py:attribute:: feature_drift_type
+      :type:  abacusai.api_class.enums.FeatureDriftType
+
 
    .. py:attribute:: threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: DataIntegrityViolationConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Data Integrity Violation Condition Config for Monitor Alerts
 
@@ -169,24 +158,22 @@ Classes
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
    :type minimum_violations: int
 
-   .. py:attribute:: data_integrity_type
-      :type: abacusai.api_class.enums.DataIntegrityViolationType
 
-      
+   .. py:attribute:: data_integrity_type
+      :type:  abacusai.api_class.enums.DataIntegrityViolationType
+
 
    .. py:attribute:: minimum_violations
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: BiasViolationConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Bias Violation Condition Config for Monitor Alerts
 
@@ -197,29 +184,26 @@ Classes
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
    :type minimum_violations: int
 
-   .. py:attribute:: bias_type
-      :type: abacusai.api_class.enums.BiasType
 
-      
+   .. py:attribute:: bias_type
+      :type:  abacusai.api_class.enums.BiasType
+
 
    .. py:attribute:: threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: minimum_violations
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: PredictionCountConditionConfig
 
-
    Bases: :py:obj:`AlertConditionConfig`
+
 
    Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.
    :param threshold: Threshold for when to consider to be a violation. Negative means alert on reduction, positive means alert on increase.
@@ -229,63 +213,58 @@ Classes
    :param aggregation_type: Aggregation type to use for the aggregation window, e.g. sum, avg.
    :type aggregation_type: str
 
-   .. py:attribute:: threshold
-      :type: float
 
-      
+   .. py:attribute:: threshold
+      :type:  float
+
 
    .. py:attribute:: aggregation_window
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: aggregation_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _AlertConditionConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'alert_type'
 
-      
+
 
    .. py:attribute:: config_class_key_value_camel_case
       :value: True
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: AlertActionConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for alert action configs
 
-   .. py:attribute:: action_type
-      :type: abacusai.api_class.enums.AlertActionType
 
-      
+   .. py:attribute:: action_type
+      :type:  abacusai.api_class.enums.AlertActionType
+
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -294,8 +273,8 @@ Classes
 
 .. py:class:: EmailActionConfig
 
-
    Bases: :py:obj:`AlertActionConfig`
+
 
    Email Action Config for Monitor Alerts
 
@@ -304,46 +283,42 @@ Classes
    :param email_body: Body of the email to send.
    :type email_body: str
 
-   .. py:attribute:: email_recipients
-      :type: List[str]
 
-      
+   .. py:attribute:: email_recipients
+      :type:  List[str]
+
 
    .. py:attribute:: email_body
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _AlertActionConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'action_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: MonitorThresholdConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Monitor Threshold Config for Monitor Alerts
 
@@ -352,20 +327,18 @@ Classes
    :param threshold_config: Thresholds for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold_config: ThresholdConfigs
 
-   .. py:attribute:: drift_type
-      :type: abacusai.api_class.enums.FeatureDriftType
 
-      
+   .. py:attribute:: drift_type
+      :type:  abacusai.api_class.enums.FeatureDriftType
+
 
    .. py:attribute:: at_risk_threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: severely_drifting_threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: to_dict()
 

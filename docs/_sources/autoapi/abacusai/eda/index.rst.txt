@@ -1,26 +1,24 @@
-:py:mod:`abacusai.eda`
-======================
+abacusai.eda
+============
 
 .. py:module:: abacusai.eda
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.eda.Eda
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Eda(client, edaId=None, name=None, createdAt=None, projectId=None, featureGroupId=None, referenceFeatureGroupVersion=None, testFeatureGroupVersion=None, edaConfigs=None, latestEdaVersion={}, refreshSchedules={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A exploratory data analysis object
 
@@ -47,9 +45,11 @@ Classes
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
    :type refreshSchedules: RefreshSchedule
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -58,6 +58,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: rerun()
@@ -71,12 +72,14 @@ Classes
       :rtype: Eda
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Eda
+
 
 
    .. py:method:: describe()
@@ -88,6 +91,7 @@ Classes
 
       :returns: Description of the EDA object.
       :rtype: Eda
+
 
 
    .. py:method:: list_versions(limit = 100, start_after_version = None)
@@ -103,12 +107,14 @@ Classes
       :rtype: list[EdaVersion]
 
 
+
    .. py:method:: rename(name)
 
       Renames an EDA
 
       :param name: The new name to apply to the model monitor.
       :type name: str
+
 
 
    .. py:method:: delete()

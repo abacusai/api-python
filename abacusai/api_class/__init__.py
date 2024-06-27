@@ -15,3 +15,4 @@ from .monitor_alert import *
 from .project import *
 from .python_functions import *
 from .refresh import *
+from .segments import *

@@ -202,6 +202,16 @@ class TrainablePlugAndPlayBatchPredictionArgs(BatchPredictionArgs):
 
 
 @dataclasses.dataclass
+class AIAgentBatchPredictionArgs(BatchPredictionArgs):
+    """
+    Batch Prediction Config for the AIAgents problem type
+    """
+
+    def __post_init__(self):
+        self.problem_type = enums.ProblemType.AI_AGENT
+
+
+@dataclasses.dataclass
 class _BatchPredictionArgsFactory(_ApiClassFactory):
     config_abstract_class = BatchPredictionArgs
     config_class_key = 'problem_type'
@@ -215,4 +225,5 @@ class _BatchPredictionArgsFactory(_ApiClassFactory):
         enums.ProblemType.THEME_ANALYSIS: ThemeAnalysisBatchPredictionArgs,
         enums.ProblemType.CHAT_LLM: ChatLLMBatchPredictionArgs,
         enums.ProblemType.CUSTOM_ALGORITHM: TrainablePlugAndPlayBatchPredictionArgs,
+        enums.ProblemType.AI_AGENT: AIAgentBatchPredictionArgs,
     }

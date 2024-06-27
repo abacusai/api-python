@@ -1,26 +1,24 @@
-:py:mod:`abacusai.monitor_alert`
-================================
+abacusai.monitor_alert
+======================
 
 .. py:module:: abacusai.monitor_alert
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.monitor_alert.MonitorAlert
 
 
-
+Module Contents
+---------------
 
 .. py:class:: MonitorAlert(client, name=None, monitorAlertId=None, createdAt=None, projectId=None, modelMonitorId=None, realtimeMonitorId=None, conditionConfig=None, actionConfig=None, conditionDescription=None, actionDescription=None, alertType=None, deploymentId=None, latestMonitorAlertVersion={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A Monitor Alert
 
@@ -53,9 +51,11 @@ Classes
    :param latestMonitorAlertVersion: The latest monitor alert version.
    :type latestMonitorAlertVersion: MonitorAlertVersion
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -64,6 +64,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: update(alert_name = None, condition_config = None, action_config = None)
@@ -81,12 +82,14 @@ Classes
       :rtype: MonitorAlert
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: MonitorAlert
+
 
 
    .. py:method:: describe()
@@ -100,6 +103,7 @@ Classes
       :rtype: MonitorAlert
 
 
+
    .. py:method:: run()
 
       Reruns a given monitor alert from latest monitor instance
@@ -109,6 +113,7 @@ Classes
 
       :returns: Object describing the monitor alert.
       :rtype: MonitorAlert
+
 
 
    .. py:method:: delete()

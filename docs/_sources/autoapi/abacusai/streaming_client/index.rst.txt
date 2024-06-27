@@ -1,31 +1,30 @@
-:py:mod:`abacusai.streaming_client`
-===================================
+abacusai.streaming_client
+=========================
 
 .. py:module:: abacusai.streaming_client
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.streaming_client.StreamingClient
 
 
-
+Module Contents
+---------------
 
 .. py:class:: StreamingClient(client_options = None)
 
-
    Bases: :py:obj:`abacusai.client.BaseApiClient`
+
 
    Abacus.AI Streaming API Client. Does not utilize authentication and only contains public streaming methods
 
    :param client_options: Optional API client configurations
    :type client_options: ClientOptions
+
 
    .. py:method:: upsert_item_embeddings(streaming_token, model_id, item_id, vector, catalog_id = None)
 
@@ -43,6 +42,7 @@ Classes
       :type catalog_id: str
 
 
+
    .. py:method:: delete_item_embeddings(streaming_token, model_id, item_ids, catalog_id = None)
 
       Deletes KNN embeddings for a list of item IDs for a given model ID.
@@ -55,6 +55,7 @@ Classes
       :type item_ids: list
       :param catalog_id: An optional name to specify which catalog in a model to update.
       :type catalog_id: str
+
 
 
    .. py:method:: upsert_multiple_item_embeddings(streaming_token, model_id, upserts, catalog_id = None)
@@ -71,6 +72,7 @@ Classes
       :type catalog_id: str
 
 
+
    .. py:method:: append_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
@@ -81,6 +83,7 @@ Classes
       :type streaming_token: str
       :param data: The data to record as a JSON object.
       :type data: dict
+
 
 
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)

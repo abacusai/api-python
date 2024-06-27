@@ -196,6 +196,9 @@ class FileFormat(ApiEnum):
     PPT = 'PPT'
     HTML = 'HTML'
     TXT = 'txt'
+    EML = 'eml'
+    MP3 = 'MP3'
+    MP4 = 'MP4'
 
 
 class ExperimentationMode(ApiEnum):
@@ -374,6 +377,7 @@ class ApplicationConnectorType(ApiEnum):
     MICROSOFTAUTH = 'MICROSOFTAUTH'
     FRESHSERVICE = 'FRESHSERVICE'
     ZENDESKSUNSHINEMESSAGING = 'ZENDESKSUNSHINEMESSAGING'
+    GOOGLEDRIVEUSER = 'GOOGLEDRIVEUSER'
 
 
 class StreamingConnectorType(ApiEnum):
@@ -435,6 +439,7 @@ class LLMName(ApiEnum):
     CLAUDE_V3_OPUS = 'CLAUDE_V3_OPUS'
     CLAUDE_V3_SONNET = 'CLAUDE_V3_SONNET'
     CLAUDE_V3_HAIKU = 'CLAUDE_V3_HAIKU'
+    CLAUDE_V3_5_SONNET = 'CLAUDE_V3_5_SONNET'
     ABACUS_GIRAFFE = 'ABACUS_GIRAFFE'
     ABACUS_GIRAFFE_LARGE = 'ABACUS_GIRAFFE_LARGE'
     LLAMA2_CHAT = 'LLAMA2_CHAT'
@@ -445,6 +450,7 @@ class LLMName(ApiEnum):
     MIXTRAL_CHAT = 'MIXTRAL_CHAT'
     MISTRAL_MEDIUM = 'MISTRAL_MEDIUM'
     ABACUS_SMAUG3 = 'ABACUS_SMAUG3'
+    GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
 
 
 class MonitorAlertType(ApiEnum):
@@ -530,6 +536,7 @@ class OcrMode(ApiEnum):
     COMPREHENSIVE_V2 = 'COMPREHENSIVE_V2'
     COMPREHENSIVE_TABLE_MD = 'COMPREHENSIVE_TABLE_MD'
     TESSERACT_FAST = 'TESSERACT_FAST'
+    LLM = 'LLM'
 
 
 class StdDevThresholdType(ApiEnum):
@@ -582,3 +589,15 @@ class MemorySize(ApiEnum):
             if member.value >= value:
                 return member
         return None
+
+
+class SegmentType(ApiEnum):
+    ATTACHMENTS = 'attachments'
+    AGENT_FLOW_BUTTON = 'agent_flow_button'
+    IMAGE_URL = 'image_url'
+    TEXT = 'text'
+
+
+class CodeSegmentLanguage(ApiEnum):
+    PYTHON = 'python'
+    SQL = 'sql'

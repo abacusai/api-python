@@ -1,26 +1,24 @@
-:py:mod:`abacusai.chat_session`
-===============================
+abacusai.chat_session
+=====================
 
 .. py:module:: abacusai.chat_session
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.chat_session.ChatSession
 
 
-
+Module Contents
+---------------
 
 .. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, name=None, createdAt=None, status=None, aiBuildingInProgress=None, notification=None, whiteboard=None, chatHistory={}, nextAiBuildingTask={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A chat session with Abacus Data Science Co-pilot.
 
@@ -49,9 +47,11 @@ Classes
    :param nextAiBuildingTask: The next AI building task for the chat session
    :type nextAiBuildingTask: AiBuildingTask
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -60,6 +60,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: get()
@@ -73,6 +74,7 @@ Classes
       :rtype: ChatSession
 
 
+
    .. py:method:: delete_chat_message(message_index)
 
       Deletes a message in a chat session and its associated response.
@@ -81,12 +83,14 @@ Classes
       :type message_index: int
 
 
+
    .. py:method:: export()
 
       Exports a chat session to an HTML file
 
       :param chat_session_id: Unique ID of the chat session.
       :type chat_session_id: str
+
 
 
    .. py:method:: rename(name)

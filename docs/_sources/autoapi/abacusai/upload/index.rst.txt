@@ -1,26 +1,24 @@
-:py:mod:`abacusai.upload`
-=========================
+abacusai.upload
+===============
 
 .. py:module:: abacusai.upload
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.upload.Upload
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Upload(client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelId=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A Upload Reference for uploading file parts
 
@@ -47,9 +45,11 @@ Classes
    :param createdAt: The timestamp at which the upload was created.
    :type createdAt: str
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -60,12 +60,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: cancel()
 
       Cancels an upload.
 
       :param upload_id: A unique string identifier for the upload.
       :type upload_id: str
+
 
 
    .. py:method:: part(part_number, part_data)
@@ -81,6 +83,7 @@ Classes
       :rtype: UploadPart
 
 
+
    .. py:method:: mark_complete()
 
       Marks an upload process as complete.
@@ -92,12 +95,14 @@ Classes
       :rtype: Upload
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Upload
+
 
 
    .. py:method:: describe()
@@ -111,12 +116,14 @@ Classes
       :rtype: Upload
 
 
+
    .. py:method:: upload_part(upload_args)
 
       Uploads a file part.
 
       :returns: The object 'UploadPart' that encapsulates the hash and the etag for the part that got uploaded.
       :rtype: UploadPart
+
 
 
    .. py:method:: upload_file(file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600)
@@ -136,6 +143,7 @@ Classes
       :rtype: Upload
 
 
+
    .. py:method:: _yield_upload_part(file, chunksize)
 
 
@@ -145,6 +153,7 @@ Classes
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to have timed out. Defaults to 600.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

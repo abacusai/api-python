@@ -1,26 +1,24 @@
-:py:mod:`abacusai.batch_prediction`
-===================================
+abacusai.batch_prediction
+=========================
 
 .. py:module:: abacusai.batch_prediction
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.batch_prediction.BatchPrediction
 
 
-
+Module Contents
+---------------
 
 .. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Make batch predictions.
 
@@ -87,9 +85,11 @@ Classes
    :param batchPredictionArgs: Argument(s) passed to every prediction call.
    :type batchPredictionArgs: BatchPredictionArgs
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -98,6 +98,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: start()
@@ -111,12 +112,14 @@ Classes
       :rtype: BatchPredictionVersion
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: BatchPrediction
+
 
 
    .. py:method:: describe()
@@ -130,6 +133,7 @@ Classes
       :rtype: BatchPrediction
 
 
+
    .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       Retrieves a list of versions of a given batch prediction
@@ -141,6 +145,7 @@ Classes
 
       :returns: List of batch prediction versions.
       :rtype: list[BatchPredictionVersion]
+
 
 
    .. py:method:: update(deployment_id = None, global_prediction_args = None, batch_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
@@ -170,6 +175,7 @@ Classes
       :rtype: BatchPrediction
 
 
+
    .. py:method:: set_file_connector_output(output_format = None, output_location = None)
 
       Updates the file connector output configuration of the batch prediction
@@ -181,6 +187,7 @@ Classes
 
       :returns: The batch prediction description.
       :rtype: BatchPrediction
+
 
 
    .. py:method:: set_database_connector_output(database_connector_id = None, database_output_config = None)
@@ -196,6 +203,7 @@ Classes
       :rtype: BatchPrediction
 
 
+
    .. py:method:: set_feature_group_output(table_name)
 
       Creates a feature group and sets it as the batch prediction output.
@@ -207,6 +215,7 @@ Classes
       :rtype: BatchPrediction
 
 
+
    .. py:method:: set_output_to_console()
 
       Sets the batch prediction output to the console, clearing both the file connector and database connector configurations.
@@ -216,6 +225,7 @@ Classes
 
       :returns: The batch prediction description.
       :rtype: BatchPrediction
+
 
 
    .. py:method:: set_feature_group(feature_group_type, feature_group_id = None)
@@ -231,6 +241,7 @@ Classes
       :rtype: BatchPrediction
 
 
+
    .. py:method:: set_dataset_remap(dataset_id_remap)
 
       For the purpose of this batch prediction, will swap out datasets in the training feature groups
@@ -242,12 +253,14 @@ Classes
       :rtype: BatchPrediction
 
 
+
    .. py:method:: delete()
 
       Deletes a batch prediction and associated data, such as associated monitors.
 
       :param batch_prediction_id: Unique string identifier of the batch prediction.
       :type batch_prediction_id: str
+
 
 
    .. py:method:: wait_for_predictions(timeout=86400)
@@ -258,6 +271,7 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: wait_for_drift_monitor(timeout=86400)
 
       A waiting call until batch prediction drift monitor calculations are ready.
@@ -266,12 +280,14 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status()
 
       Gets the status of the latest batch prediction version.
 
       :returns: A string describing the status of the latest batch prediction version e.g., pending, complete, etc.
       :rtype: str
+
 
 
    .. py:method:: create_refresh_policy(cron)
@@ -285,6 +301,7 @@ Classes
       :rtype: RefreshPolicy
 
 
+
    .. py:method:: list_refresh_policies()
 
       Gets the refresh policies in a list.
@@ -293,12 +310,14 @@ Classes
       :rtype: List[RefreshPolicy]
 
 
+
    .. py:method:: describe_output_feature_group()
 
       Gets the results feature group for this batch prediction
 
       :returns: A feature group object.
       :rtype: FeatureGroup
+
 
 
    .. py:method:: load_results_as_pandas()

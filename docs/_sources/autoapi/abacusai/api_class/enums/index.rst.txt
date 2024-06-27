@@ -1,14 +1,11 @@
-:py:mod:`abacusai.api_class.enums`
-==================================
+abacusai.api_class.enums
+========================
 
 .. py:module:: abacusai.api_class.enums
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -73,22 +70,27 @@ Classes
    abacusai.api_class.enums.ProjectConfigType
    abacusai.api_class.enums.CPUSize
    abacusai.api_class.enums.MemorySize
+   abacusai.api_class.enums.SegmentType
+   abacusai.api_class.enums.CodeSegmentLanguage
 
 
-
+Module Contents
+---------------
 
 .. py:class:: ApiEnum
 
-
    Bases: :py:obj:`enum.Enum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:method:: __eq__(other)
 
       Return self==value.
+
 
 
    .. py:method:: __hash__()
@@ -99,2435 +101,2521 @@ Classes
 
 .. py:class:: ProblemType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AI_AGENT
       :value: 'ai_agent'
 
-      
+
 
    .. py:attribute:: EVENT_ANOMALY
       :value: 'event_anomaly'
 
-      
+
 
    .. py:attribute:: CLUSTERING
       :value: 'clustering'
 
-      
+
 
    .. py:attribute:: CLUSTERING_TIMESERIES
       :value: 'clustering_timeseries'
 
-      
+
 
    .. py:attribute:: CUMULATIVE_FORECASTING
       :value: 'cumulative_forecasting'
 
-      
+
 
    .. py:attribute:: NAMED_ENTITY_EXTRACTION
       :value: 'nlp_ner'
 
-      
+
 
    .. py:attribute:: NATURAL_LANGUAGE_SEARCH
       :value: 'nlp_search'
 
-      
+
 
    .. py:attribute:: CHAT_LLM
       :value: 'chat_llm'
 
-      
+
 
    .. py:attribute:: SENTENCE_BOUNDARY_DETECTION
       :value: 'nlp_sentence_boundary_detection'
 
-      
+
 
    .. py:attribute:: SENTIMENT_DETECTION
       :value: 'nlp_sentiment'
 
-      
+
 
    .. py:attribute:: DOCUMENT_CLASSIFICATION
       :value: 'nlp_classification'
 
-      
+
 
    .. py:attribute:: DOCUMENT_SUMMARIZATION
       :value: 'nlp_summarization'
 
-      
+
 
    .. py:attribute:: DOCUMENT_VISUALIZATION
       :value: 'nlp_document_visualization'
 
-      
+
 
    .. py:attribute:: PERSONALIZATION
       :value: 'personalization'
 
-      
+
 
    .. py:attribute:: PREDICTIVE_MODELING
       :value: 'regression'
 
-      
+
 
    .. py:attribute:: FINETUNED_LLM
       :value: 'finetuned_llm'
 
-      
+
 
    .. py:attribute:: FORECASTING
       :value: 'forecasting'
 
-      
+
 
    .. py:attribute:: CUSTOM_TRAINED_MODEL
       :value: 'plug_and_play'
 
-      
+
 
    .. py:attribute:: CUSTOM_ALGORITHM
       :value: 'trainable_plug_and_play'
 
-      
+
 
    .. py:attribute:: FEATURE_STORE
       :value: 'feature_store'
 
-      
+
 
    .. py:attribute:: IMAGE_CLASSIFICATION
       :value: 'vision_classification'
 
-      
+
 
    .. py:attribute:: OBJECT_DETECTION
       :value: 'vision_object_detection'
 
-      
+
 
    .. py:attribute:: IMAGE_VALUE_PREDICTION
       :value: 'vision_regression'
 
-      
+
 
    .. py:attribute:: MODEL_MONITORING
       :value: 'model_monitoring'
 
-      
+
 
    .. py:attribute:: LANGUAGE_DETECTION
       :value: 'language_detection'
 
-      
+
 
    .. py:attribute:: OPTIMIZATION
       :value: 'optimization'
 
-      
+
 
    .. py:attribute:: PRETRAINED_MODELS
       :value: 'pretrained'
 
-      
+
 
    .. py:attribute:: THEME_ANALYSIS
       :value: 'theme_analysis'
 
-      
+
 
    .. py:attribute:: TS_ANOMALY
       :value: 'ts_anomaly'
 
-      
 
 
 .. py:class:: RegressionObjective
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: AUC
       :value: 'auc'
 
-      
+
 
    .. py:attribute:: ACCURACY
       :value: 'acc'
 
-      
+
 
    .. py:attribute:: LOG_LOSS
       :value: 'log_loss'
 
-      
+
 
    .. py:attribute:: PRECISION
       :value: 'precision'
 
-      
+
 
    .. py:attribute:: RECALL
       :value: 'recall'
 
-      
+
 
    .. py:attribute:: F1_SCORE
       :value: 'fscore'
 
-      
+
 
    .. py:attribute:: MAE
       :value: 'mae'
 
-      
+
 
    .. py:attribute:: MAPE
       :value: 'mape'
 
-      
+
 
    .. py:attribute:: WAPE
       :value: 'wape'
 
-      
+
 
    .. py:attribute:: RMSE
       :value: 'rmse'
 
-      
+
 
    .. py:attribute:: R_SQUARED_COEFFICIENT_OF_DETERMINATION
       :value: 'r^2'
 
-      
 
 
 .. py:class:: RegressionTreeHPOMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: RAPID
       :value: 'rapid'
 
-      
+
 
    .. py:attribute:: THOROUGH
       :value: 'thorough'
 
-      
 
 
 .. py:class:: PartialDependenceAnalysis
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: RAPID
       :value: 'rapid'
 
-      
+
 
    .. py:attribute:: THOROUGH
       :value: 'thorough'
 
-      
 
 
 .. py:class:: RegressionAugmentationStrategy
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: SMOTE
       :value: 'smote'
 
-      
+
 
    .. py:attribute:: RESAMPLE
       :value: 'resample'
 
-      
 
 
 .. py:class:: RegressionTargetTransform
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: LOG
       :value: 'log'
 
-      
+
 
    .. py:attribute:: QUANTILE
       :value: 'quantile'
 
-      
+
 
    .. py:attribute:: YEO_JOHNSON
       :value: 'yeo-johnson'
 
-      
+
 
    .. py:attribute:: BOX_COX
       :value: 'box-cox'
 
-      
 
 
 .. py:class:: RegressionTypeOfSplit
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: RANDOM
       :value: 'Random Sampling'
 
-      
+
 
    .. py:attribute:: TIMESTAMP_BASED
       :value: 'Timestamp Based'
 
-      
+
 
    .. py:attribute:: ROW_INDICATOR_BASED
       :value: 'Row Indicator Based'
 
-      
+
 
    .. py:attribute:: STRATIFIED_RANDOM_SAMPLING
       :value: 'Stratified Random Sampling'
 
-      
 
 
 .. py:class:: RegressionTimeSplitMethod
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: TEST_SPLIT_PERCENTAGE_BASED
       :value: 'Test Split Percentage Based'
 
-      
+
 
    .. py:attribute:: TEST_START_TIMESTAMP_BASED
       :value: 'Test Start Timestamp Based'
 
-      
 
 
 .. py:class:: RegressionLossFunction
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: HUBER
       :value: 'Huber'
 
-      
+
 
    .. py:attribute:: MSE
       :value: 'Mean Squared Error'
 
-      
+
 
    .. py:attribute:: MAE
       :value: 'Mean Absolute Error'
 
-      
+
 
    .. py:attribute:: MAPE
       :value: 'Mean Absolute Percentage Error'
 
-      
+
 
    .. py:attribute:: MSLE
       :value: 'Mean Squared Logarithmic Error'
 
-      
+
 
    .. py:attribute:: TWEEDIE
       :value: 'Tweedie'
 
-      
+
 
    .. py:attribute:: CROSS_ENTROPY
       :value: 'Cross Entropy'
 
-      
+
 
    .. py:attribute:: FOCAL_CROSS_ENTROPY
       :value: 'Focal Cross Entropy'
 
-      
+
 
    .. py:attribute:: AUTOMATIC
       :value: 'Automatic'
 
-      
+
 
    .. py:attribute:: CUSTOM
       :value: 'Custom'
 
-      
 
 
 .. py:class:: ExplainerType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: KERNEL_EXPLAINER
       :value: 'KERNEL_EXPLAINER'
 
-      
+
 
    .. py:attribute:: LIME_EXPLAINER
       :value: 'LIME_EXPLAINER'
 
-      
+
 
    .. py:attribute:: TREE_EXPLAINER
       :value: 'TREE_EXPLAINER'
 
-      
+
 
    .. py:attribute:: EBM_EXPLAINER
       :value: 'EBM_EXPLAINER'
 
-      
 
 
 .. py:class:: SamplingMethodType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: N_SAMPLING
       :value: 'N_SAMPLING'
 
-      
+
 
    .. py:attribute:: PERCENT_SAMPLING
       :value: 'PERCENT_SAMPLING'
 
-      
 
 
 .. py:class:: MergeMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: LAST_N
       :value: 'LAST_N'
 
-      
+
 
    .. py:attribute:: TIME_WINDOW
       :value: 'TIME_WINDOW'
 
-      
 
 
 .. py:class:: OperatorType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: UNPIVOT
       :value: 'UNPIVOT'
 
-      
+
 
    .. py:attribute:: MARKDOWN
       :value: 'MARKDOWN'
 
-      
+
 
    .. py:attribute:: CRAWLER
       :value: 'CRAWLER'
 
-      
+
 
    .. py:attribute:: EXTRACT_DOCUMENT_DATA
       :value: 'EXTRACT_DOCUMENT_DATA'
 
-      
 
 
 .. py:class:: MarkdownOperatorInputType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: HTML
       :value: 'HTML'
 
-      
 
 
 .. py:class:: FillLogic
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AVERAGE
       :value: 'average'
 
-      
+
 
    .. py:attribute:: MAX
       :value: 'max'
 
-      
+
 
    .. py:attribute:: MEDIAN
       :value: 'median'
 
-      
+
 
    .. py:attribute:: MIN
       :value: 'min'
 
-      
+
 
    .. py:attribute:: CUSTOM
       :value: 'custom'
 
-      
+
 
    .. py:attribute:: BACKFILL
       :value: 'bfill'
 
-      
+
 
    .. py:attribute:: FORWARDFILL
       :value: 'ffill'
 
-      
+
 
    .. py:attribute:: LINEAR
       :value: 'linear'
 
-      
+
 
    .. py:attribute:: NEAREST
       :value: 'nearest'
 
-      
 
 
 .. py:class:: BatchSize
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: BATCH_8
       :value: 8
 
-      
+
 
    .. py:attribute:: BATCH_16
       :value: 16
 
-      
+
 
    .. py:attribute:: BATCH_32
       :value: 32
 
-      
+
 
    .. py:attribute:: BATCH_64
       :value: 64
 
-      
+
 
    .. py:attribute:: BATCH_128
       :value: 128
 
-      
+
 
    .. py:attribute:: BATCH_256
       :value: 256
 
-      
+
 
    .. py:attribute:: BATCH_384
       :value: 384
 
-      
+
 
    .. py:attribute:: BATCH_512
       :value: 512
 
-      
+
 
    .. py:attribute:: BATCH_740
       :value: 740
 
-      
+
 
    .. py:attribute:: BATCH_1024
       :value: 1024
 
-      
 
 
 .. py:class:: HolidayCalendars
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AU
       :value: 'AU'
 
-      
+
 
    .. py:attribute:: UK
       :value: 'UK'
 
-      
+
 
    .. py:attribute:: US
       :value: 'US'
 
-      
 
 
 .. py:class:: FileFormat
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AVRO
       :value: 'AVRO'
 
-      
+
 
    .. py:attribute:: PARQUET
       :value: 'PARQUET'
 
-      
+
 
    .. py:attribute:: TFRECORD
       :value: 'TFRECORD'
 
-      
+
 
    .. py:attribute:: TSV
       :value: 'TSV'
 
-      
+
 
    .. py:attribute:: CSV
       :value: 'CSV'
 
-      
+
 
    .. py:attribute:: ORC
       :value: 'ORC'
 
-      
+
 
    .. py:attribute:: JSON
       :value: 'JSON'
 
-      
+
 
    .. py:attribute:: ODS
       :value: 'ODS'
 
-      
+
 
    .. py:attribute:: XLS
       :value: 'XLS'
 
-      
+
 
    .. py:attribute:: GZ
       :value: 'GZ'
 
-      
+
 
    .. py:attribute:: ZIP
       :value: 'ZIP'
 
-      
+
 
    .. py:attribute:: TAR
       :value: 'TAR'
 
-      
+
 
    .. py:attribute:: DOCX
       :value: 'DOCX'
 
-      
+
 
    .. py:attribute:: PDF
       :value: 'PDF'
 
-      
+
 
    .. py:attribute:: RAR
       :value: 'RAR'
 
-      
+
 
    .. py:attribute:: JPEG
       :value: 'JPG'
 
-      
+
 
    .. py:attribute:: PNG
       :value: 'PNG'
 
-      
+
 
    .. py:attribute:: TIF
       :value: 'TIFF'
 
-      
+
 
    .. py:attribute:: NUMBERS
       :value: 'NUMBERS'
 
-      
+
 
    .. py:attribute:: PPTX
       :value: 'PPTX'
 
-      
+
 
    .. py:attribute:: PPT
       :value: 'PPT'
 
-      
+
 
    .. py:attribute:: HTML
       :value: 'HTML'
 
-      
+
 
    .. py:attribute:: TXT
       :value: 'txt'
 
-      
+
+
+   .. py:attribute:: EML
+      :value: 'eml'
+
+
+
+   .. py:attribute:: MP3
+      :value: 'MP3'
+
+
+
+   .. py:attribute:: MP4
+      :value: 'MP4'
+
 
 
 .. py:class:: ExperimentationMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: RAPID
       :value: 'rapid'
 
-      
+
 
    .. py:attribute:: THOROUGH
       :value: 'thorough'
 
-      
 
 
 .. py:class:: PersonalizationTrainingMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: EXPERIMENTAL
       :value: 'EXP'
 
-      
+
 
    .. py:attribute:: PRODUCTION
       :value: 'PROD'
 
-      
 
 
 .. py:class:: PersonalizationObjective
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: NDCG
       :value: 'ndcg'
 
-      
+
 
    .. py:attribute:: NDCG_5
       :value: 'ndcg@5'
 
-      
+
 
    .. py:attribute:: NDCG_10
       :value: 'ndcg@10'
 
-      
+
 
    .. py:attribute:: MAP
       :value: 'map'
 
-      
+
 
    .. py:attribute:: MAP_5
       :value: 'map@5'
 
-      
+
 
    .. py:attribute:: MAP_10
       :value: 'map@10'
 
-      
+
 
    .. py:attribute:: MRR
       :value: 'mrr'
 
-      
+
 
    .. py:attribute:: PERSONALIZATION
       :value: 'personalization@10'
 
-      
+
 
    .. py:attribute:: COVERAGE
       :value: 'coverage'
 
-      
 
 
 .. py:class:: ForecastingObjective
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ACCURACY
       :value: 'w_c_accuracy'
 
-      
+
 
    .. py:attribute:: WAPE
       :value: 'wape'
 
-      
+
 
    .. py:attribute:: MAPE
       :value: 'mape'
 
-      
+
 
    .. py:attribute:: CMAPE
       :value: 'cmape'
 
-      
+
 
    .. py:attribute:: RMSE
       :value: 'rmse'
 
-      
+
 
    .. py:attribute:: CV
       :value: 'coefficient_of_variation'
 
-      
+
 
    .. py:attribute:: BIAS
       :value: 'bias'
 
-      
+
 
    .. py:attribute:: SRMSE
       :value: 'srmse'
 
-      
 
 
 .. py:class:: ForecastingFrequency
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: HOURLY
       :value: '1H'
 
-      
+
 
    .. py:attribute:: DAILY
       :value: '1D'
 
-      
+
 
    .. py:attribute:: WEEKLY_SUNDAY_START
       :value: '1W'
 
-      
+
 
    .. py:attribute:: WEEKLY_MONDAY_START
       :value: 'W-MON'
 
-      
+
 
    .. py:attribute:: WEEKLY_SATURDAY_START
       :value: 'W-SAT'
 
-      
+
 
    .. py:attribute:: MONTH_START
       :value: 'MS'
 
-      
+
 
    .. py:attribute:: MONTH_END
       :value: '1M'
 
-      
+
 
    .. py:attribute:: QUARTER_START
       :value: 'QS'
 
-      
+
 
    .. py:attribute:: QUARTER_END
       :value: '1Q'
 
-      
+
 
    .. py:attribute:: YEARLY
       :value: '1Y'
 
-      
 
 
 .. py:class:: ForecastingDataSplitType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: AUTO
       :value: 'Automatic Time Based'
 
-      
+
 
    .. py:attribute:: TIMESTAMP
       :value: 'Timestamp Based'
 
-      
+
 
    .. py:attribute:: ITEM
       :value: 'Item Based'
 
-      
+
 
    .. py:attribute:: PREDICTION_LENGTH
       :value: 'Force Prediction Length'
 
-      
 
 
 .. py:class:: ForecastingLossFunction
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: CUSTOM
       :value: 'Custom'
 
-      
+
 
    .. py:attribute:: MEAN_ABSOLUTE_ERROR
       :value: 'mae'
 
-      
+
 
    .. py:attribute:: NORMALIZED_MEAN_ABSOLUTE_ERROR
       :value: 'nmae'
 
-      
+
 
    .. py:attribute:: PEAKS_MEAN_ABSOLUTE_ERROR
       :value: 'peaks_mae'
 
-      
+
 
    .. py:attribute:: MEAN_ABSOLUTE_PERCENTAGE_ERROR
       :value: 'stable_mape'
 
-      
+
 
    .. py:attribute:: POINTWISE_ACCURACY
       :value: 'accuracy'
 
-      
+
 
    .. py:attribute:: ROOT_MEAN_SQUARE_ERROR
       :value: 'rmse'
 
-      
+
 
    .. py:attribute:: NORMALIZED_ROOT_MEAN_SQUARE_ERROR
       :value: 'nrmse'
 
-      
+
 
    .. py:attribute:: ASYMMETRIC_MEAN_ABSOLUTE_PERCENTAGE_ERROR
       :value: 'asymmetric_mape'
 
-      
+
 
    .. py:attribute:: STABLE_STANDARDIZED_MEAN_ABSOLUTE_PERCENTAGE_ERROR
       :value: 'stable_standardized_mape_with_cmape'
 
-      
+
 
    .. py:attribute:: GAUSSIAN
       :value: 'mle_gaussian_local'
 
-      
+
 
    .. py:attribute:: GAUSSIAN_FULL_COVARIANCE
       :value: 'mle_gaussfullcov'
 
-      
+
 
    .. py:attribute:: GUASSIAN_EXPONENTIAL
       :value: 'mle_gaussexp'
 
-      
+
 
    .. py:attribute:: MIX_GAUSSIANS
       :value: 'mle_gaussmix'
 
-      
+
 
    .. py:attribute:: WEIBULL
       :value: 'mle_weibull'
 
-      
+
 
    .. py:attribute:: NEGATIVE_BINOMIAL
       :value: 'mle_negbinom'
 
-      
+
 
    .. py:attribute:: LOG_ROOT_MEAN_SQUARE_ERROR
       :value: 'log_rmse'
 
-      
 
 
 .. py:class:: ForecastingLocalScaling
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ZSCORE
       :value: 'zscore'
 
-      
+
 
    .. py:attribute:: SLIDING_ZSCORE
       :value: 'sliding_zscore'
 
-      
+
 
    .. py:attribute:: LAST_POINT
       :value: 'lastpoint'
 
-      
+
 
    .. py:attribute:: MIN_MAX
       :value: 'minmax'
 
-      
+
 
    .. py:attribute:: MIN_STD
       :value: 'minstd'
 
-      
+
 
    .. py:attribute:: ROBUST
       :value: 'robust'
 
-      
+
 
    .. py:attribute:: ITEM
       :value: 'item'
 
-      
 
 
 .. py:class:: ForecastingFillMethod
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: BACK
       :value: 'BACK'
 
-      
+
 
    .. py:attribute:: MIDDLE
       :value: 'MIDDLE'
 
-      
+
 
    .. py:attribute:: FUTURE
       :value: 'FUTURE'
 
-      
 
 
 .. py:class:: ForecastingQuanitlesExtensionMethod
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: DIRECT
       :value: 'direct'
 
-      
+
 
    .. py:attribute:: QUADRATIC
       :value: 'quadratic'
 
-      
+
 
    .. py:attribute:: ANCESTRAL_SIMULATION
       :value: 'simulation'
 
-      
 
 
 .. py:class:: TimeseriesAnomalyDataSplitType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AUTO
       :value: 'Automatic Time Based'
 
-      
+
 
    .. py:attribute:: TIMESTAMP
       :value: 'Fixed Timestamp Based'
 
-      
 
 
 .. py:class:: TimeseriesAnomalyTypeOfAnomaly
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: HIGH_PEAK
       :value: 'high_peak'
 
-      
+
 
    .. py:attribute:: LOW_PEAK
       :value: 'low_peak'
 
-      
 
 
 .. py:class:: TimeseriesAnomalyUseHeuristic
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ENABLE
       :value: 'enable'
 
-      
+
 
    .. py:attribute:: DISABLE
       :value: 'disable'
 
-      
+
 
    .. py:attribute:: AUTOMATIC
       :value: 'automatic'
 
-      
 
 
 .. py:class:: NERObjective
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: LOG_LOSS
       :value: 'log_loss'
 
-      
+
 
    .. py:attribute:: AUC
       :value: 'auc'
 
-      
+
 
    .. py:attribute:: PRECISION
       :value: 'precision'
 
-      
+
 
    .. py:attribute:: RECALL
       :value: 'recall'
 
-      
+
 
    .. py:attribute:: ANNOTATIONS_PRECISION
       :value: 'annotations_precision'
 
-      
+
 
    .. py:attribute:: ANNOTATIONS_RECALL
       :value: 'annotations_recall'
 
-      
 
 
 .. py:class:: NERModelType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: PRETRAINED_BERT
       :value: 'pretrained_bert'
 
-      
+
 
    .. py:attribute:: PRETRAINED_ROBERTA_27
       :value: 'pretrained_roberta_27'
 
-      
+
 
    .. py:attribute:: PRETRAINED_ROBERTA_43
       :value: 'pretrained_roberta_43'
 
-      
+
 
    .. py:attribute:: PRETRAINED_MULTILINGUAL
       :value: 'pretrained_multilingual'
 
-      
+
 
    .. py:attribute:: LEARNED
       :value: 'learned'
 
-      
 
 
 .. py:class:: NLPDocumentFormat
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AUTO
       :value: 'auto'
 
-      
+
 
    .. py:attribute:: TEXT
       :value: 'text'
 
-      
+
 
    .. py:attribute:: DOC
       :value: 'doc'
 
-      
+
 
    .. py:attribute:: TOKENS
       :value: 'tokens'
 
-      
 
 
 .. py:class:: SentimentType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: VALENCE
       :value: 'valence'
 
-      
+
 
    .. py:attribute:: EMOTION
       :value: 'emotion'
 
-      
 
 
 .. py:class:: ClusteringImputationMethod
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: AUTOMATIC
       :value: 'Automatic'
 
-      
+
 
    .. py:attribute:: ZEROS
       :value: 'Zeros'
 
-      
+
 
    .. py:attribute:: INTERPOLATE
       :value: 'Interpolate'
 
-      
 
 
 .. py:class:: ConnectorType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: FILE
       :value: 'FILE'
 
-      
+
 
    .. py:attribute:: DATABASE
       :value: 'DATABASE'
 
-      
+
 
    .. py:attribute:: STREAMING
       :value: 'STREAMING'
 
-      
+
 
    .. py:attribute:: APPLICATION
       :value: 'APPLICATION'
 
-      
 
 
 .. py:class:: ApplicationConnectorType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: GOOGLEANALYTICS
       :value: 'GOOGLEANALYTICS'
 
-      
+
 
    .. py:attribute:: GOOGLEDRIVE
       :value: 'GOOGLEDRIVE'
 
-      
+
 
    .. py:attribute:: GIT
       :value: 'GIT'
 
-      
+
 
    .. py:attribute:: CONFLUENCE
       :value: 'CONFLUENCE'
 
-      
+
 
    .. py:attribute:: JIRA
       :value: 'JIRA'
 
-      
+
 
    .. py:attribute:: ONEDRIVE
       :value: 'ONEDRIVE'
 
-      
+
 
    .. py:attribute:: ZENDESK
       :value: 'ZENDESK'
 
-      
+
 
    .. py:attribute:: SLACK
       :value: 'SLACK'
 
-      
+
 
    .. py:attribute:: SHAREPOINT
       :value: 'SHAREPOINT'
 
-      
+
 
    .. py:attribute:: TEAMS
       :value: 'TEAMS'
 
-      
+
 
    .. py:attribute:: ABACUSUSAGEMETRICS
       :value: 'ABACUSUSAGEMETRICS'
 
-      
+
 
    .. py:attribute:: MICROSOFTAUTH
       :value: 'MICROSOFTAUTH'
 
-      
+
 
    .. py:attribute:: FRESHSERVICE
       :value: 'FRESHSERVICE'
 
-      
+
 
    .. py:attribute:: ZENDESKSUNSHINEMESSAGING
       :value: 'ZENDESKSUNSHINEMESSAGING'
 
-      
+
+
+   .. py:attribute:: GOOGLEDRIVEUSER
+      :value: 'GOOGLEDRIVEUSER'
+
 
 
 .. py:class:: StreamingConnectorType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: KAFKA
       :value: 'KAFKA'
 
-      
 
 
 .. py:class:: PythonFunctionArgumentType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: FEATURE_GROUP
       :value: 'FEATURE_GROUP'
 
-      
+
 
    .. py:attribute:: INTEGER
       :value: 'INTEGER'
 
-      
+
 
    .. py:attribute:: STRING
       :value: 'STRING'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'BOOLEAN'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'FLOAT'
 
-      
+
 
    .. py:attribute:: JSON
       :value: 'JSON'
 
-      
+
 
    .. py:attribute:: LIST
       :value: 'LIST'
 
-      
+
 
    .. py:attribute:: DATASET_ID
       :value: 'DATASET_ID'
 
-      
+
 
    .. py:attribute:: MODEL_ID
       :value: 'MODEL_ID'
 
-      
+
 
    .. py:attribute:: FEATURE_GROUP_ID
       :value: 'FEATURE_GROUP_ID'
 
-      
+
 
    .. py:attribute:: MONITOR_ID
       :value: 'MONITOR_ID'
 
-      
+
 
    .. py:attribute:: BATCH_PREDICTION_ID
       :value: 'BATCH_PREDICTION_ID'
 
-      
+
 
    .. py:attribute:: DEPLOYMENT_ID
       :value: 'DEPLOYMENT_ID'
 
-      
 
 
 .. py:class:: PythonFunctionOutputArgumentType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: NTEGER
       :value: 'INTEGER'
 
-      
+
 
    .. py:attribute:: STRING
       :value: 'STRING'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'BOOLEAN'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'FLOAT'
 
-      
+
 
    .. py:attribute:: JSON
       :value: 'JSON'
 
-      
+
 
    .. py:attribute:: LIST
       :value: 'LIST'
 
-      
+
 
    .. py:attribute:: DATASET_ID
       :value: 'DATASET_ID'
 
-      
+
 
    .. py:attribute:: MODEL_ID
       :value: 'MODEL_ID'
 
-      
+
 
    .. py:attribute:: FEATURE_GROUP_ID
       :value: 'FEATURE_GROUP_ID'
 
-      
+
 
    .. py:attribute:: MONITOR_ID
       :value: 'MONITOR_ID'
 
-      
+
 
    .. py:attribute:: BATCH_PREDICTION_ID
       :value: 'BATCH_PREDICTION_ID'
 
-      
+
 
    .. py:attribute:: DEPLOYMENT_ID
       :value: 'DEPLOYMENT_ID'
 
-      
+
 
    .. py:attribute:: ANY
       :value: 'ANY'
 
-      
 
 
 .. py:class:: VectorStoreTextEncoder
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: E5
       :value: 'E5'
 
-      
+
 
    .. py:attribute:: OPENAI
       :value: 'OPENAI'
 
-      
+
 
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
 
-      
+
 
    .. py:attribute:: E5_SMALL
       :value: 'E5_SMALL'
 
-      
+
 
    .. py:attribute:: CODE_BERT
       :value: 'CODE_BERT'
 
-      
 
 
 .. py:class:: LLMName
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: OPENAI_GPT4
       :value: 'OPENAI_GPT4'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4_32K
       :value: 'OPENAI_GPT4_32K'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4_128K
       :value: 'OPENAI_GPT4_128K'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4_128K_LATEST
       :value: 'OPENAI_GPT4_128K_LATEST'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4_VISION
       :value: 'OPENAI_GPT4_VISION'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT4O
       :value: 'OPENAI_GPT4O'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
-      
+
 
    .. py:attribute:: OPENAI_GPT3_5_TEXT
       :value: 'OPENAI_GPT3_5_TEXT'
 
-      
+
 
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
 
-      
+
 
    .. py:attribute:: GROQ_LLAMA3_LARGE_CHAT
       :value: 'GROQ_LLAMA3_LARGE_CHAT'
 
-      
+
 
    .. py:attribute:: CLAUDE_V2_1
       :value: 'CLAUDE_V2_1'
 
-      
+
 
    .. py:attribute:: CLAUDE_V3_OPUS
       :value: 'CLAUDE_V3_OPUS'
 
-      
+
 
    .. py:attribute:: CLAUDE_V3_SONNET
       :value: 'CLAUDE_V3_SONNET'
 
-      
+
 
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
-      
+
+
+   .. py:attribute:: CLAUDE_V3_5_SONNET
+      :value: 'CLAUDE_V3_5_SONNET'
+
+
 
    .. py:attribute:: ABACUS_GIRAFFE
       :value: 'ABACUS_GIRAFFE'
 
-      
+
 
    .. py:attribute:: ABACUS_GIRAFFE_LARGE
       :value: 'ABACUS_GIRAFFE_LARGE'
 
-      
+
 
    .. py:attribute:: LLAMA2_CHAT
       :value: 'LLAMA2_CHAT'
 
-      
+
 
    .. py:attribute:: PALM
       :value: 'PALM'
 
-      
+
 
    .. py:attribute:: PALM_TEXT
       :value: 'PALM_TEXT'
 
-      
+
 
    .. py:attribute:: GEMINI_PRO
       :value: 'GEMINI_PRO'
 
-      
+
 
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
 
-      
+
 
    .. py:attribute:: MIXTRAL_CHAT
       :value: 'MIXTRAL_CHAT'
 
-      
+
 
    .. py:attribute:: MISTRAL_MEDIUM
       :value: 'MISTRAL_MEDIUM'
 
-      
+
 
    .. py:attribute:: ABACUS_SMAUG3
       :value: 'ABACUS_SMAUG3'
 
-      
+
+
+   .. py:attribute:: GEMINI_1_5_FLASH
+      :value: 'GEMINI_1_5_FLASH'
+
 
 
 .. py:class:: MonitorAlertType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ACCURACY_BELOW_THRESHOLD
       :value: 'AccuracyBelowThreshold'
 
-      
+
 
    .. py:attribute:: FEATURE_DRIFT
       :value: 'FeatureDrift'
 
-      
+
 
    .. py:attribute:: DATA_INTEGRITY_VIOLATIONS
       :value: 'DataIntegrityViolations'
 
-      
+
 
    .. py:attribute:: BIAS_VIOLATIONS
       :value: 'BiasViolations'
 
-      
+
 
    .. py:attribute:: HISTORY_LENGTH_DRIFT
       :value: 'HistoryLengthDrift'
 
-      
+
 
    .. py:attribute:: TARGET_DRIFT
       :value: 'TargetDrift'
 
-      
+
 
    .. py:attribute:: PREDICTION_COUNT
       :value: 'PredictionCount'
 
-      
 
 
 .. py:class:: FeatureDriftType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: KL
       :value: 'kl'
 
-      
+
 
    .. py:attribute:: KS
       :value: 'ks'
 
-      
+
 
    .. py:attribute:: WS
       :value: 'ws'
 
-      
+
 
    .. py:attribute:: JS
       :value: 'js'
 
-      
+
 
    .. py:attribute:: PSI
       :value: 'psi'
 
-      
+
 
    .. py:attribute:: CHI_SQUARE
       :value: 'chi_square'
 
-      
+
 
    .. py:attribute:: CSI
       :value: 'csi'
 
-      
 
 
 .. py:class:: DataIntegrityViolationType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: NULL_VIOLATIONS
       :value: 'null_violations'
 
-      
+
 
    .. py:attribute:: RANGE_VIOLATIONS
       :value: 'range_violations'
 
-      
+
 
    .. py:attribute:: CATEGORICAL_RANGE_VIOLATION
       :value: 'categorical_range_violations'
 
-      
+
 
    .. py:attribute:: TOTAL_VIOLATIONS
       :value: 'total_violations'
 
-      
 
 
 .. py:class:: BiasType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: DEMOGRAPHIC_PARITY
       :value: 'demographic_parity'
 
-      
+
 
    .. py:attribute:: EQUAL_OPPORTUNITY
       :value: 'equal_opportunity'
 
-      
+
 
    .. py:attribute:: GROUP_BENEFIT_EQUALITY
       :value: 'group_benefit'
 
-      
+
 
    .. py:attribute:: TOTAL
       :value: 'total'
 
-      
 
 
 .. py:class:: AlertActionType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: EMAIL
       :value: 'Email'
 
-      
 
 
 .. py:class:: PythonFunctionType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: FEATURE_GROUP
       :value: 'FEATURE_GROUP'
 
-      
+
 
    .. py:attribute:: PLOTLY_FIG
       :value: 'PLOTLY_FIG'
 
-      
+
 
    .. py:attribute:: STEP_FUNCTION
       :value: 'STEP_FUNCTION'
 
-      
 
 
 .. py:class:: EvalArtifactType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: FORECASTING_ACCURACY
       :value: 'bar_chart'
 
-      
+
 
    .. py:attribute:: FORECASTING_VOLUME
       :value: 'bar_chart_volume'
 
-      
+
 
    .. py:attribute:: FORECASTING_HISTORY_LENGTH_ACCURACY
       :value: 'bar_chart_accuracy_by_history'
 
-      
 
 
 .. py:class:: FieldDescriptorType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: STRING
       :value: 'STRING'
 
-      
+
 
    .. py:attribute:: INTEGER
       :value: 'INTEGER'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'FLOAT'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'BOOLEAN'
 
-      
+
 
    .. py:attribute:: DATETIME
       :value: 'DATETIME'
 
-      
+
 
    .. py:attribute:: DATE
       :value: 'DATE'
 
-      
 
 
 .. py:class:: WorkflowNodeInputType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: USER_INPUT
       :value: 'USER_INPUT'
 
-      
+
 
    .. py:attribute:: WORKFLOW_VARIABLE
       :value: 'WORKFLOW_VARIABLE'
 
-      
 
 
 .. py:class:: WorkflowNodeOutputType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ATTACHMENT
       :value: 'ATTACHMENT'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'BOOLEAN'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'FLOAT'
 
-      
+
 
    .. py:attribute:: INTEGER
       :value: 'INTEGER'
 
-      
+
 
    .. py:attribute:: DICT
       :value: 'DICT'
 
-      
+
 
    .. py:attribute:: LIST
       :value: 'LIST'
 
-      
+
 
    .. py:attribute:: STRING
       :value: 'STRING'
 
-      
 
 
 .. py:class:: OcrMode
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: DEFAULT
       :value: 'DEFAULT'
 
-      
+
 
    .. py:attribute:: LAYOUT
       :value: 'LAYOUT'
 
-      
+
 
    .. py:attribute:: SCANNED
       :value: 'SCANNED'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE
       :value: 'COMPREHENSIVE'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE_V2
       :value: 'COMPREHENSIVE_V2'
 
-      
+
 
    .. py:attribute:: COMPREHENSIVE_TABLE_MD
       :value: 'COMPREHENSIVE_TABLE_MD'
 
-      
+
 
    .. py:attribute:: TESSERACT_FAST
       :value: 'TESSERACT_FAST'
 
-      
+
+
+   .. py:attribute:: LLM
+      :value: 'LLM'
+
 
 
 .. py:class:: StdDevThresholdType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: ABSOLUTE
       :value: 'ABSOLUTE'
 
-      
+
 
    .. py:attribute:: PERCENTILE
       :value: 'PERCENTILE'
 
-      
+
 
    .. py:attribute:: STDDEV
       :value: 'STDDEV'
 
-      
 
 
 .. py:class:: DataType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: INTEGER
       :value: 'integer'
 
-      
+
 
    .. py:attribute:: FLOAT
       :value: 'float'
 
-      
+
 
    .. py:attribute:: STRING
       :value: 'string'
 
-      
+
 
    .. py:attribute:: DATE
       :value: 'date'
 
-      
+
 
    .. py:attribute:: DATETIME
       :value: 'datetime'
 
-      
+
 
    .. py:attribute:: BOOLEAN
       :value: 'boolean'
 
-      
+
 
    .. py:attribute:: LIST
       :value: 'list'
 
-      
+
 
    .. py:attribute:: STRUCT
       :value: 'struct'
 
-      
+
 
    .. py:attribute:: NULL
       :value: 'null'
 
-      
+
 
    .. py:attribute:: BINARY
       :value: 'binary'
 
-      
 
 
 .. py:class:: AgentInterface
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: DEFAULT
       :value: 'DEFAULT'
 
-      
+
 
    .. py:attribute:: CHAT
       :value: 'CHAT'
 
-      
 
 
 .. py:class:: ProjectConfigType
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: CONSTRAINTS
       :value: 'CONSTRAINTS'
 
-      
+
 
    .. py:attribute:: CHAT_FEEDBACK
       :value: 'CHAT_FEEDBACK'
 
-      
+
 
    .. py:attribute:: REVIEW_MODE
       :value: 'REVIEW_MODE'
 
-      
 
 
 .. py:class:: CPUSize
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
 
    .. py:attribute:: SMALL
       :value: 'small'
 
-      
+
 
    .. py:attribute:: MEDIUM
       :value: 'medium'
 
-      
+
 
    .. py:attribute:: LARGE
       :value: 'large'
 
-      
 
 
 .. py:class:: MemorySize
 
-
    Bases: :py:obj:`ApiEnum`
+
 
    Generic enumeration.
 
    Derive from this class to define new enumerations.
 
+
    .. py:attribute:: SMALL
       :value: 16
 
-      
+
 
    .. py:attribute:: MEDIUM
       :value: 32
 
-      
+
 
    .. py:attribute:: LARGE
       :value: 64
 
-      
+
 
    .. py:attribute:: XLARGE
       :value: 128
 
-      
+
 
    .. py:method:: from_value(value)
       :classmethod:
+
+
+
+.. py:class:: SegmentType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: ATTACHMENTS
+      :value: 'attachments'
+
+
+
+   .. py:attribute:: AGENT_FLOW_BUTTON
+      :value: 'agent_flow_button'
+
+
+
+   .. py:attribute:: IMAGE_URL
+      :value: 'image_url'
+
+
+
+   .. py:attribute:: TEXT
+      :value: 'text'
+
+
+
+.. py:class:: CodeSegmentLanguage
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: PYTHON
+      :value: 'python'
+
+
+
+   .. py:attribute:: SQL
+      :value: 'sql'
 
 
 

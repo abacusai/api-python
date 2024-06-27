@@ -1,26 +1,24 @@
-:py:mod:`abacusai.pipeline_version`
-===================================
+abacusai.pipeline_version
+=========================
 
 .. py:module:: abacusai.pipeline_version
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.pipeline_version.PipelineVersion
 
 
-
+Module Contents
+---------------
 
 .. py:class:: PipelineVersion(client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, stepVersions={}, codeSource={}, pipelineVariableMappings={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of a pipeline.
 
@@ -49,9 +47,11 @@ Classes
    :param pipelineVariableMappings: A description of the function variables into the pipeline.
    :type pipelineVariableMappings: PythonFunctionArgument
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -62,12 +62,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: PipelineVersion
+
 
 
    .. py:method:: describe()
@@ -79,6 +81,7 @@ Classes
 
       :returns: Object describing the pipeline version
       :rtype: PipelineVersion
+
 
 
    .. py:method:: reset(steps = None, include_downstream_steps = True)
@@ -94,6 +97,7 @@ Classes
       :rtype: PipelineVersion
 
 
+
    .. py:method:: list_logs()
 
       Gets the logs for the steps in a given pipeline version.
@@ -103,6 +107,7 @@ Classes
 
       :returns: Object describing the logs for the steps in the pipeline.
       :rtype: PipelineVersionLogs
+
 
 
    .. py:method:: skip_pending_steps()
@@ -116,12 +121,14 @@ Classes
       :rtype: PipelineVersion
 
 
+
    .. py:method:: wait_for_pipeline(timeout=1200)
 
       A waiting call until all the stages in a pipeline version have completed.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int
+
 
 
    .. py:method:: get_status()

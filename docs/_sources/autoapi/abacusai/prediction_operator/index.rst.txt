@@ -1,26 +1,24 @@
-:py:mod:`abacusai.prediction_operator`
-======================================
+abacusai.prediction_operator
+============================
 
 .. py:module:: abacusai.prediction_operator
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.prediction_operator.PredictionOperator
 
 
-
+Module Contents
+---------------
 
 .. py:class:: PredictionOperator(client, name=None, predictionOperatorId=None, createdAt=None, updatedAt=None, projectId=None, predictFunctionName=None, sourceCode=None, initializeFunctionName=None, notebookId=None, memory=None, useGpu=None, featureGroupIds=None, featureGroupTableNames=None, codeSource={}, refreshSchedules={}, latestPredictionOperatorVersion={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A prediction operator.
 
@@ -59,9 +57,11 @@ Classes
    :param refreshSchedules: List of refresh schedules that indicate when the next prediction operator version will be processed
    :type refreshSchedules: RefreshSchedule
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -72,12 +72,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: PredictionOperator
+
 
 
    .. py:method:: describe()
@@ -89,6 +91,7 @@ Classes
 
       :returns: The requested prediction operator object.
       :rtype: PredictionOperator
+
 
 
    .. py:method:: update(name = None, feature_group_ids = None, source_code = None, initialize_function_name = None, predict_function_name = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
@@ -118,12 +121,14 @@ Classes
       :rtype: PredictionOperator
 
 
+
    .. py:method:: delete()
 
       Delete an existing prediction operator.
 
       :param prediction_operator_id: The unique ID of the prediction operator.
       :type prediction_operator_id: str
+
 
 
    .. py:method:: deploy(auto_deploy = True)
@@ -137,6 +142,7 @@ Classes
       :rtype: Deployment
 
 
+
    .. py:method:: create_version()
 
       Create a new version of the prediction operator.
@@ -146,6 +152,7 @@ Classes
 
       :returns: The created prediction operator version object.
       :rtype: PredictionOperatorVersion
+
 
 
    .. py:method:: list_versions()

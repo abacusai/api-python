@@ -1,14 +1,11 @@
-:py:mod:`abacusai.api_class.blob_input`
-=======================================
+abacusai.api_class.blob_input
+=============================
 
 .. py:module:: abacusai.api_class.blob_input
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -16,12 +13,13 @@ Classes
    abacusai.api_class.blob_input.BlobInput
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Blob(contents, mime_type = None, filename = None, size = None)
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Binary large object data.
 
@@ -34,28 +32,26 @@ Classes
    :param size: The size of the blob in bytes.
    :type size: int
 
-   .. py:attribute:: filename
-      :type: str
 
-      
+   .. py:attribute:: filename
+      :type:  str
+
 
    .. py:attribute:: contents
-      :type: bytes
+      :type:  bytes
 
-      
 
    .. py:attribute:: mime_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: size
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: from_local_file(file_path)
       :classmethod:
+
 
 
    .. py:method:: from_contents(contents, filename = None, mime_type = None)
@@ -65,8 +61,8 @@ Classes
 
 .. py:class:: BlobInput(filename = None, contents = None, mime_type = None, size = None)
 
-
    Bases: :py:obj:`Blob`
+
 
    Binary large object data.
    An alias for Blob, used to indicate that this is an input object.

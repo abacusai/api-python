@@ -1,26 +1,24 @@
-:py:mod:`abacusai.web_search_result`
-====================================
+abacusai.web_search_result
+==========================
 
 .. py:module:: abacusai.web_search_result
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.web_search_result.WebSearchResult
 
 
+Module Contents
+---------------
 
-
-.. py:class:: WebSearchResult(client, title=None, url=None, snippet=None, content=None)
-
+.. py:class:: WebSearchResult(client, title=None, url=None, snippet=None, news=None, place=None, entity=None, content=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A single search result.
 
@@ -32,12 +30,20 @@ Classes
    :type url: str
    :param snippet: The snippet of the search result.
    :type snippet: str
+   :param news: The news search result (if any)
+   :type news: str
+   :param place: The place search result (if any)
+   :type place: str
+   :param entity: The entity search result (if any)
+   :type entity: str
    :param content: The page of content fetched from the url.
    :type content: str
+
 
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

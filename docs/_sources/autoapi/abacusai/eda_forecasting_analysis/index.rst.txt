@@ -1,26 +1,24 @@
-:py:mod:`abacusai.eda_forecasting_analysis`
-===========================================
+abacusai.eda_forecasting_analysis
+=================================
 
 .. py:module:: abacusai.eda_forecasting_analysis
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.eda_forecasting_analysis.EdaForecastingAnalysis
 
 
-
+Module Contents
+---------------
 
 .. py:class:: EdaForecastingAnalysis(client, primaryKeys=None, forecastingTargetFeature=None, timestampFeature=None, forecastFrequency=None, salesAcrossTime={}, cummulativeContribution={}, missingValueDistribution={}, historyLength={}, numRowsHistogram={}, productMaturity={}, seasonalityYear={}, seasonalityMonth={}, seasonalityWeekOfYear={}, seasonalityDayOfYear={}, seasonalityDayOfMonth={}, seasonalityDayOfWeek={}, seasonalityQuarter={}, seasonalityHour={}, seasonalityMinute={}, seasonalitySecond={}, autocorrelation={}, partialAutocorrelation={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Eda Forecasting Analysis of the latest version of the data.
 
@@ -71,9 +69,11 @@ Classes
    :param partialAutocorrelation: Data showing the correlation of the forecasting target and its lagged values, controlling for the effects of intervening lags.
    :type partialAutocorrelation: ForecastingAnalysisGraphData
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

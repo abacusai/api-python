@@ -1,26 +1,24 @@
-:py:mod:`abacusai.python_function`
-==================================
+abacusai.python_function
+========================
 
 .. py:module:: abacusai.python_function
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.python_function.PythonFunction
 
 
-
+Module Contents
+---------------
 
 .. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, codeSource={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Customer created python function
 
@@ -47,9 +45,11 @@ Classes
    :param codeSource: Information about the source code of the Python function.
    :type codeSource: CodeSource
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -58,6 +58,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: add_graph_to_dashboard(graph_dashboard_id, function_variable_mappings = None, name = None)
@@ -73,6 +74,7 @@ Classes
 
       :returns: An object describing the graph dashboard.
       :rtype: GraphDashboard
+
 
 
    .. py:method:: validate_locally(kwargs = None)

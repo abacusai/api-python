@@ -1,26 +1,24 @@
-:py:mod:`abacusai.document_data`
-================================
+abacusai.document_data
+======================
 
 .. py:module:: abacusai.document_data
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.document_data.DocumentData
 
 
-
+Module Contents
+---------------
 
 .. py:class:: DocumentData(client, docId=None, mimeType=None, pageCount=None, totalPageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None, metadata=None, pageMarkdown=None, extractedPageText=None, augmentedPageText=None)
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Data extracted from a docstore document.
 
@@ -51,9 +49,11 @@ Classes
    :param augmentedPageText: List of extracted text for each page in the document obtained from OCR augmented with embedded links in the document.
    :type augmentedPageText: list
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

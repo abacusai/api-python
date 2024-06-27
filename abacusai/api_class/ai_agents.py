@@ -100,7 +100,7 @@ class WorkflowNodeInputMapping(ApiClass):
     @classmethod
     def from_dict(cls, mapping: dict):
         if any(field not in mapping for field in ['name', 'variable_type']):
-            raise ValueError('Invalid workflow node input mapping. Must contain keys - name, variable_type')
+            raise ValueError('input_mapping', f'Invalid workflow node input mapping "{mapping}". Must contain keys - name, variable_type')
         return cls(
             name=mapping['name'],
             variable_type=mapping['variable_type'],
@@ -158,7 +158,7 @@ class WorkflowGraphNode(ApiClass):
             self.function_name = function_name
             self.source_code = source_code
         else:
-            raise ValueError('Either function or function_name and source_code must be provided.')
+            raise ValueError('workflow_graph_node', 'Either function or function_name and source_code must be provided.')
 
         self.name = name
         self.input_mappings = input_mappings
@@ -182,7 +182,7 @@ class WorkflowGraphNode(ApiClass):
     @classmethod
     def from_dict(cls, node: dict):
         if any(field not in node for field in ['name', 'function_name', 'source_code', 'input_mappings', 'output_mappings']):
-            raise ValueError('Invalid workflow graph node. Must contain keys - name, function_name, source_code, input_mappings, output_mappings.')
+            raise ValueError('workflow_graph_node', 'Invalid workflow graph node. Must contain keys - name, function_name, source_code, input_mappings, output_mappings.')
         return cls(
             name=node['name'],
             function_name=node['function_name'],
@@ -199,6 +199,8 @@ class WorkflowGraphNode(ApiClass):
 class WorkflowGraphEdge(ApiClass):
     """
     An edge in an Agent workflow graph.
+    To make an edge conditional, provide 'EXECUTION_CONDITION': <condition> key-value in details.
+    The condition should be a pythonic expression that evaluates to a boolean value and only depends on outputs of the source node.
 
     Args:
         source (str): The name of the source node of the edge.
@@ -221,19 +223,30 @@ class WorkflowGraph(ApiClass):
     Args:
         nodes (List[WorkflowGraphNode]): A list of nodes in the workflow graph.
         edges (List[WorkflowGraphEdge]): A list of edges in the workflow graph, where each edge is a tuple of source, target and details.
+        primary_start_node (str): The primary node to start the workflow from.
     """
     nodes: List[WorkflowGraphNode] = dataclasses.field(default_factory=list)
     edges: List[WorkflowGraphEdge] = dataclasses.field(default_factory=list)
+    primary_start_node: str = dataclasses.field(default=None)
 
     def to_dict(self):
         return {
             'nodes': [node.to_dict() for node in self.nodes],
-            'edges': [edge.to_dict() for edge in self.edges]
+            'edges': [edge.to_dict() for edge in self.edges],
+            'primary_start_node': self.primary_start_node
         }
 
     @classmethod
     def from_dict(cls, graph: dict):
+        if graph.get('primary_start_node') is None:
+            non_primary_nodes = set()
+            for edges in graph.get('edges', []):
+                non_primary_nodes.add(edges['target'])
+            primary_nodes = set([node['name'] for node in graph.get('nodes', [])]) - non_primary_nodes
+            graph['primary_start_node'] = primary_nodes.pop() if primary_nodes else None
+
         return cls(
             nodes=[WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])],
-            edges=[WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]
+            edges=[WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])],
+            primary_start_node=graph.get('primary_start_node', None)
         )

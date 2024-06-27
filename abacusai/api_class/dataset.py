@@ -42,7 +42,6 @@ class DocumentProcessingConfig(ApiClass):
         remove_header_footer (bool): Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
         remove_watermarks (bool): Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
         convert_to_markdown (bool): Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
-        return_links (bool): Whether to augment the extracted text with embedded URLs in the PDF. Defaults to False. This option only takes effect when the document is a PDF.
     """
     # NOTE: The defaults should match with clouddb.document_processing_results table defaults
     extract_bounding_boxes: bool = False
@@ -51,7 +50,6 @@ class DocumentProcessingConfig(ApiClass):
     remove_header_footer: bool = False
     remove_watermarks: bool = True
     convert_to_markdown: bool = False
-    return_links: bool = False
 
 
 @dataclasses.dataclass

@@ -1,14 +1,11 @@
-:py:mod:`abacusai.api_class.monitor`
-====================================
+abacusai.api_class.monitor
+==========================
 
 .. py:module:: abacusai.api_class.monitor
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -20,12 +17,13 @@ Classes
    abacusai.api_class.monitor.MonitorFilteringConfig
 
 
-
+Module Contents
+---------------
 
 .. py:class:: TimeWindowConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Time Window Configuration
 
@@ -34,15 +32,14 @@ Classes
    :param window_from_start: Whether the window should be from the start of the time series.
    :type window_from_start: bool
 
-   .. py:attribute:: window_duration
-      :type: int
 
-      
+   .. py:attribute:: window_duration
+      :type:  int
+
 
    .. py:attribute:: window_from_start
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: to_dict()
 
@@ -54,8 +51,8 @@ Classes
 
 .. py:class:: ForecastingMonitorConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Forecasting Monitor Configuration
 
@@ -72,35 +69,30 @@ Classes
    :param window_config: The windowing configuration for the time series data.
    :type window_config: TimeWindowConfig
 
-   .. py:attribute:: id_column
-      :type: str
 
-      
+   .. py:attribute:: id_column
+      :type:  str
+
 
    .. py:attribute:: timestamp_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: target_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: start_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: end_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: window_config
-      :type: TimeWindowConfig
+      :type:  TimeWindowConfig
 
-      
 
    .. py:method:: to_dict()
 
@@ -112,8 +104,8 @@ Classes
 
 .. py:class:: StdDevThreshold
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Std Dev Threshold types
 
@@ -122,15 +114,14 @@ Classes
    :param value: Value to use for the threshold.
    :type value: float
 
-   .. py:attribute:: threshold_type
-      :type: abacusai.api_class.enums.StdDevThresholdType
 
-      
+   .. py:attribute:: threshold_type
+      :type:  abacusai.api_class.enums.StdDevThresholdType
+
 
    .. py:attribute:: value
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: to_dict()
 
@@ -142,8 +133,8 @@ Classes
 
 .. py:class:: ItemAttributesStdDevThreshold
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Item Attributes Std Dev Threshold for Monitor Alerts
 
@@ -152,15 +143,14 @@ Classes
    :param upper_bound: Upper bound for the item attributes.
    :type upper_bound: StdDevThreshold
 
-   .. py:attribute:: lower_bound
-      :type: StdDevThreshold
 
-      
+   .. py:attribute:: lower_bound
+      :type:  StdDevThreshold
+
 
    .. py:attribute:: upper_bound
-      :type: StdDevThreshold
+      :type:  StdDevThreshold
 
-      
 
    .. py:method:: to_dict()
 
@@ -172,8 +162,8 @@ Classes
 
 .. py:class:: RestrictFeatureMappings
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Restrict Feature Mappings for Monitor Filtering
 
@@ -190,35 +180,30 @@ Classes
    :param max_value: Filtering the numerical feature to below this value
    :type max_value: float
 
-   .. py:attribute:: feature_name
-      :type: str
 
-      
+   .. py:attribute:: feature_name
+      :type:  str
+
 
    .. py:attribute:: restricted_feature_values
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: start_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: end_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: min_value
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: max_value
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: to_dict()
 
@@ -230,8 +215,8 @@ Classes
 
 .. py:class:: MonitorFilteringConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Monitor Filtering Configuration
 
@@ -248,35 +233,30 @@ Classes
    :param prediction_target_feature: Set the target feature for the prediction data.
    :type prediction_target_feature: str
 
-   .. py:attribute:: start_time
-      :type: str
 
-      
+   .. py:attribute:: start_time
+      :type:  str
+
 
    .. py:attribute:: end_time
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: restrict_feature_mappings
-      :type: List[RestrictFeatureMappings]
+      :type:  List[RestrictFeatureMappings]
 
-      
 
    .. py:attribute:: target_class
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: train_target_feature
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: prediction_target_feature
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: to_dict()
 

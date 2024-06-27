@@ -131,7 +131,7 @@ class DocumentRetriever(AbstractApiClass):
 
     def restart(self):
         """
-        Restart the document retriever if it is stopped. This will start the deployment of the document retriever,
+        Restart the document retriever if it is stopped or has failed. This will start the deployment of the document retriever,
 
         but will not wait for it to be ready. You need to call wait_until_ready to wait until the deployment is ready.
 
@@ -193,10 +193,10 @@ class DocumentRetriever(AbstractApiClass):
 
     def get_status(self):
         """
-        Gets the indexing status of the document retriever.
+        Gets the status of the document retriever. It represents indexing status until indexing isn't complete, and deployment status after indexing is complete.
 
         Returns:
-            str: A string describing the status of a document retriever (pending, complete, etc.).
+            str: A string describing the status of a document retriever (pending, indexing, complete, active, etc.).
         """
         return self.describe().latest_document_retriever_version.status
 
@@ -209,7 +209,7 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.describe().latest_document_retriever_version.deployment_status
 
-    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: Dict[str, int] = None):
+    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: Dict[str, Union[int, Dict[str, int]]] = None):
         """
         Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 

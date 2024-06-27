@@ -65,6 +65,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
         min_item_history (int): Minimum number of interactions an item must have to be included in training.
         query_column (str): Name of column in the interactions table that represents a natural language query, e.g. 'blue t-shirt'.
         item_query_column (str): Name of column in the item catalog that will be matched to the query column in the interactions table.
+        include_item_id_feature (bool): Add Item-Id to the input features of the model. Applicable for Embedding distance and CTR models.
     """
     # top-level params
     objective: enums.PersonalizationObjective = dataclasses.field(default=None)
@@ -112,6 +113,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
     item_query_column: str = dataclasses.field(default=None)
     use_user_id_feature: bool = dataclasses.field(default=None)
     session_dedupe_mins: float = dataclasses.field(default=None)
+    include_item_id_feature: bool = dataclasses.field(default=None)
 
     # outliers
     max_user_history_len_percentile: int = dataclasses.field(default=None)
@@ -159,6 +161,7 @@ class RegressionTrainingConfig(TrainingConfig):
         batch_size (BatchSize): Batch size.
         dropout_rate (int): Dropout percentage rate.
         pretrained_model_name (str): Enable algorithms which process text using pretrained multilingual NLP models.
+        pretrained_llm_name (str): Enable algorithms which process text using pretrained large language models.
         is_multilingual (bool): Enable algorithms which process text using pretrained multilingual NLP models.
         loss_function (RegressionLossFunction): Loss function to be used as objective for model training.
         loss_parameters (str): Loss function params in format <key>=<value>;<key>=<value>;.....
@@ -171,7 +174,10 @@ class RegressionTrainingConfig(TrainingConfig):
         custom_metrics (List[str]): Registered custom metrics available for selection.
         partial_dependence_analysis (PartialDependenceAnalysis): Specify whether to run partial dependence plots for all features or only some features.
         do_masked_language_model_pretraining (bool): Specify whether to run a masked language model unsupervised pretraining step before supervized training in certain supported algorithms which use BERT-like backbones.
-    """
+        max_tokens_in_sentence (int): Specify the max tokens to be kept in a sentence based on the truncation strategy.
+        truncation_strategy (str): What strategy to use to deal with text rows with more than a given number of tokens (if num of tokens is more than "max_tokens_in_sentence").
+     """
+
     objective: enums.RegressionObjective = dataclasses.field(default=None)
     sort_objective: enums.RegressionObjective = dataclasses.field(default=None)
     tree_hpo_mode: enums.RegressionTreeHPOMode = dataclasses.field(default=None)
@@ -213,8 +219,11 @@ class RegressionTrainingConfig(TrainingConfig):
     batch_size: enums.BatchSize = dataclasses.field(default=None)
     dropout_rate: int = dataclasses.field(default=None)
     pretrained_model_name: str = dataclasses.field(default=None)
+    pretrained_llm_name: str = dataclasses.field(default=None)
     is_multilingual: bool = dataclasses.field(default=None)
     do_masked_language_model_pretraining: bool = dataclasses.field(default=None)
+    max_tokens_in_sentence: int = dataclasses.field(default=None)
+    truncation_strategy: str = dataclasses.field(default=None)
 
     # loss function
     loss_function: enums.RegressionLossFunction = dataclasses.field(default=None)
@@ -299,12 +308,13 @@ class ForecastingTrainingConfig(TrainingConfig):
         use_all_item_totals (bool): Include as input total target across items.
         handle_zeros_as_missing_values (bool): If True, handle zero values in demand as missing data.
         datetime_holiday_calendars (List[HolidayCalendars]): Holiday calendars to augment training with.
-        fill_missing_values (List[dict]): Strategy for filling in missing values.
+        fill_missing_values (List[List[dict]]): Strategy for filling in missing values.
         enable_clustering (bool): Enable clustering in forecasting.
         data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
         custom_loss_functions (List[str]): Registered custom losses available for selection.
         custom_metrics (List[str]): Registered custom metrics available for selection.
         return_fractional_forecasts: Use this to return fractional forecast values while prediction
+        allow_training_with_small_history: Allows training with fewer than 100 rows in the dataset
     """
     prediction_length: int = dataclasses.field(default=None)
     objective: enums.ForecastingObjective = dataclasses.field(default=None)
@@ -367,13 +377,14 @@ class ForecastingTrainingConfig(TrainingConfig):
     use_all_item_totals: bool = dataclasses.field(default=None)
     handle_zeros_as_missing_values: bool = dataclasses.field(default=None)
     datetime_holiday_calendars: List[enums.HolidayCalendars] = dataclasses.field(default=None)
-    fill_missing_values: List[dict] = dataclasses.field(default=None)
+    fill_missing_values: List[List[dict]] = dataclasses.field(default=None)
     enable_clustering: bool = dataclasses.field(default=None)
     # Others
     data_split_feature_group_table_name: str = dataclasses.field(default=None)
     custom_loss_functions: List[str] = dataclasses.field(default=None)
     custom_metrics: List[str] = dataclasses.field(default=None)
     return_fractional_forecasts: bool = dataclasses.field(default=None)
+    allow_training_with_small_history: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.FORECASTING
@@ -393,6 +404,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
         minimum_bounding_box_overlap_ratio (float): Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.
         save_predicted_pdf (bool): Whether to save predicted PDF documents
         enhanced_ocr (bool): Enhanced text extraction from predicted digital documents
+        additional_extraction_instructions (str): Additional instructions to guide the LLM in extracting the entities. Only used with LLM algorithms.
     """
     llm_for_ner: enums.LLMName = None
     # Data Split Params
@@ -405,6 +417,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     # OCR
     save_predicted_pdf: bool = True
     enhanced_ocr: bool = False
+    additional_extraction_instructions: str = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.NAMED_ENTITY_EXTRACTION
@@ -440,7 +453,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     Training config for the CHAT_LLM problem type
 
     Args:
-        document_retrievers (List[str]): List of names of document retrievers to use as vector stores of information for RAG responses.
+        document_retrievers (List[str]): List of names or IDs of document retrievers to use as vector stores of information for RAG responses.
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
         temperature (float): The generative LLM temperature.
         retrieval_columns (list): Include the metadata column values in the retrieved search results.
@@ -459,6 +472,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         hide_generated_sql (bool): When running data queries, hides the generated SQL in the response and will just return the table.
         disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
         search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
+        include_bm25_retrieval (bool): Combine BM25 search score with vector search using reciprocal rank fusion.
         database_connector_id (str): Database connector ID to use for the ChatLLM.
         database_connector_tables (List[str]): List of tables to use from the database connector for the ChatLLM.
         enable_code_execution (bool): Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
@@ -482,6 +496,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     hide_generated_sql: bool = dataclasses.field(default=None)
     disable_data_summarization: bool = dataclasses.field(default=None)
     search_score_cutoff: float = dataclasses.field(default=None)
+    include_bm25_retrieval: bool = dataclasses.field(default=None)
     database_connector_id: str = dataclasses.field(default=None)
     database_connector_tables: List[str] = dataclasses.field(default=None)
     enable_code_execution: bool = dataclasses.field(default=None)
@@ -652,7 +667,7 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
         type_of_split (TimeseriesAnomalyDataSplitType): Type of data splitting into train/test.
         test_start (str): Limit training data to dates before the given test start.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-        fill_missing_values (List[dict]): strategies to fill missing values and missing timestamps
+        fill_missing_values (List[List[dict]]): strategies to fill missing values and missing timestamps
         handle_zeros_as_missing_values (bool): If True, handle zero values in numeric columns as missing data
         timeseries_frequency (str): set this to control frequency of filling missing values
         min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
@@ -663,7 +678,7 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
     type_of_split: enums.TimeseriesAnomalyDataSplitType = dataclasses.field(default=None)
     test_start: str = dataclasses.field(default=None)
     test_split: int = dataclasses.field(default=None)
-    fill_missing_values: List[dict] = dataclasses.field(default=None)
+    fill_missing_values: List[List[dict]] = dataclasses.field(default=None)
     handle_zeros_as_missing_values: bool = dataclasses.field(default=None)
     timeseries_frequency: str = dataclasses.field(default=None)
     min_samples_in_normal_region: int = dataclasses.field(default=None)

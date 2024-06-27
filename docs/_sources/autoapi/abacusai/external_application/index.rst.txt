@@ -1,26 +1,24 @@
-:py:mod:`abacusai.external_application`
-=======================================
+abacusai.external_application
+=============================
 
 .. py:module:: abacusai.external_application
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.external_application.ExternalApplication
 
 
+Module Contents
+---------------
 
-
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None)
-
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    An external application.
 
@@ -42,6 +40,8 @@ Classes
    :type userGroupIds: list
    :param useCase: Use Case of the project of this deployment
    :type useCase: str
+   :param isAgent: Whether the external application is an agent.
+   :type isAgent: bool
    :param status: The status of the deployment.
    :type status: str
    :param deploymentConversationRetentionHours: The retention policy for the external application.
@@ -50,10 +50,14 @@ Classes
    :type managedUserService: str
    :param predictionOverrides: The prediction overrides for the external application.
    :type predictionOverrides: dict
+   :param isSystemCreated: Whether the external application is system created.
+   :type isSystemCreated: bool
+
 
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -62,6 +66,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
@@ -85,12 +90,14 @@ Classes
       :rtype: ExternalApplication
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: ExternalApplication
+
 
 
    .. py:method:: describe()
@@ -102,6 +109,7 @@ Classes
 
       :returns: The External Application.
       :rtype: ExternalApplication
+
 
 
    .. py:method:: delete()

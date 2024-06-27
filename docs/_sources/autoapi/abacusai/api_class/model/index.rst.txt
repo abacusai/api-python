@@ -1,14 +1,11 @@
-:py:mod:`abacusai.api_class.model`
-==================================
+abacusai.api_class.model
+========================
 
 .. py:module:: abacusai.api_class.model
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -38,39 +35,36 @@ Classes
    abacusai.api_class.model.DeployableAlgorithm
 
 
-
+Module Contents
+---------------
 
 .. py:class:: TrainingConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    An abstract class for the training config options used to train the model.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: kwargs
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+      :type:  abacusai.api_class.enums.ProblemType
 
-      
 
    .. py:attribute:: algorithm
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -79,8 +73,8 @@ Classes
 
 .. py:class:: PersonalizationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the PERSONALIZATION problem type
 
@@ -158,200 +152,169 @@ Classes
    :type query_column: str
    :param item_query_column: Name of column in the item catalog that will be matched to the query column in the interactions table.
    :type item_query_column: str
+   :param include_item_id_feature: Add Item-Id to the input features of the model. Applicable for Embedding distance and CTR models.
+   :type include_item_id_feature: bool
+
 
    .. py:attribute:: objective
-      :type: abacusai.api_class.enums.PersonalizationObjective
+      :type:  abacusai.api_class.enums.PersonalizationObjective
 
-      
 
    .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.PersonalizationObjective
+      :type:  abacusai.api_class.enums.PersonalizationObjective
 
-      
 
    .. py:attribute:: training_mode
-      :type: abacusai.api_class.enums.PersonalizationTrainingMode
+      :type:  abacusai.api_class.enums.PersonalizationTrainingMode
 
-      
 
    .. py:attribute:: target_action_types
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: target_action_weights
-      :type: Dict[str, float]
+      :type:  Dict[str, float]
 
-      
 
    .. py:attribute:: session_event_types
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: recent_days_for_training
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: training_start_date
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: test_on_user_split
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: test_split_on_last_k_items
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: test_last_items_length
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: test_window_length_hours
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: explicit_time_split
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: test_row_indicator
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: full_data_retraining
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: sequential_training
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: data_split_feature_group_table_name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: optimized_event_type
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:attribute:: disable_transformer
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: disable_gpu
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: filter_history
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: action_types_exclusion_days
-      :type: Dict[str, float]
+      :type:  Dict[str, float]
 
-      
 
    .. py:attribute:: max_history_length
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: compute_rerank_metrics
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: add_time_features
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: disable_timestamp_scalar_features
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: compute_session_metrics
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: query_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: item_query_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: use_user_id_feature
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: session_dedupe_mins
-      :type: float
+      :type:  float
 
-      
+
+   .. py:attribute:: include_item_id_feature
+      :type:  bool
+
 
    .. py:attribute:: max_user_history_len_percentile
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: downsample_item_popularity_percentile
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: min_item_history
-      :type: int
+      :type:  int
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: RegressionTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the PREDICTIVE_MODELING problem type
 
@@ -415,6 +378,8 @@ Classes
    :type dropout_rate: int
    :param pretrained_model_name: Enable algorithms which process text using pretrained multilingual NLP models.
    :type pretrained_model_name: str
+   :param pretrained_llm_name: Enable algorithms which process text using pretrained large language models.
+   :type pretrained_llm_name: str
    :param is_multilingual: Enable algorithms which process text using pretrained multilingual NLP models.
    :type is_multilingual: bool
    :param loss_function: Loss function to be used as objective for model training.
@@ -439,225 +404,199 @@ Classes
    :type partial_dependence_analysis: PartialDependenceAnalysis
    :param do_masked_language_model_pretraining: Specify whether to run a masked language model unsupervised pretraining step before supervized training in certain supported algorithms which use BERT-like backbones.
    :type do_masked_language_model_pretraining: bool
+   :param max_tokens_in_sentence: Specify the max tokens to be kept in a sentence based on the truncation strategy.
+   :type max_tokens_in_sentence: int
+   :param truncation_strategy: What strategy to use to deal with text rows with more than a given number of tokens (if num of tokens is more than "max_tokens_in_sentence").
+   :type truncation_strategy: str
+
 
    .. py:attribute:: objective
-      :type: abacusai.api_class.enums.RegressionObjective
+      :type:  abacusai.api_class.enums.RegressionObjective
 
-      
 
    .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.RegressionObjective
+      :type:  abacusai.api_class.enums.RegressionObjective
 
-      
 
    .. py:attribute:: tree_hpo_mode
-      :type: abacusai.api_class.enums.RegressionTreeHPOMode
+      :type:  abacusai.api_class.enums.RegressionTreeHPOMode
 
-      
 
    .. py:attribute:: partial_dependence_analysis
-      :type: abacusai.api_class.enums.PartialDependenceAnalysis
+      :type:  abacusai.api_class.enums.PartialDependenceAnalysis
 
-      
 
    .. py:attribute:: type_of_split
-      :type: abacusai.api_class.enums.RegressionTypeOfSplit
+      :type:  abacusai.api_class.enums.RegressionTypeOfSplit
 
-      
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: disable_test_val_fold
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: k_fold_cross_validation
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: num_cv_folds
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: timestamp_based_splitting_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: timestamp_based_splitting_method
-      :type: abacusai.api_class.enums.RegressionTimeSplitMethod
+      :type:  abacusai.api_class.enums.RegressionTimeSplitMethod
 
-      
 
    .. py:attribute:: test_splitting_timestamp
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: sampling_unit_keys
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: test_row_indicator
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: full_data_retraining
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: rebalance_classes
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: rare_class_augmentation_threshold
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: augmentation_strategy
-      :type: abacusai.api_class.enums.RegressionAugmentationStrategy
+      :type:  abacusai.api_class.enums.RegressionAugmentationStrategy
 
-      
 
    .. py:attribute:: training_rows_downsample_ratio
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: active_labels_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: min_categorical_count
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: sample_weight
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: numeric_clipping_percentile
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: target_transform
-      :type: abacusai.api_class.enums.RegressionTargetTransform
+      :type:  abacusai.api_class.enums.RegressionTargetTransform
 
-      
 
    .. py:attribute:: ignore_datetime_features
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: max_text_words
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: perform_feature_selection
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: feature_selection_intensity
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: pretrained_model_name
-      :type: str
+      :type:  str
 
-      
+
+   .. py:attribute:: pretrained_llm_name
+      :type:  str
+
 
    .. py:attribute:: is_multilingual
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: do_masked_language_model_pretraining
-      :type: bool
+      :type:  bool
 
-      
+
+   .. py:attribute:: max_tokens_in_sentence
+      :type:  int
+
+
+   .. py:attribute:: truncation_strategy
+      :type:  str
+
 
    .. py:attribute:: loss_function
-      :type: abacusai.api_class.enums.RegressionLossFunction
+      :type:  abacusai.api_class.enums.RegressionLossFunction
 
-      
 
    .. py:attribute:: loss_parameters
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: target_encode_categoricals
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: drop_original_categoricals
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: monotonically_increasing_features
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: monotonically_decreasing_features
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: data_split_feature_group_table_name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: custom_loss_functions
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: custom_metrics
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ForecastingTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the FORECASTING problem type
 
@@ -773,7 +712,7 @@ Classes
    :param datetime_holiday_calendars: Holiday calendars to augment training with.
    :type datetime_holiday_calendars: List[HolidayCalendars]
    :param fill_missing_values: Strategy for filling in missing values.
-   :type fill_missing_values: List[dict]
+   :type fill_missing_values: List[List[dict]]
    :param enable_clustering: Enable clustering in forecasting.
    :type enable_clustering: bool
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
@@ -783,325 +722,268 @@ Classes
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: List[str]
    :param return_fractional_forecasts: Use this to return fractional forecast values while prediction
+   :param allow_training_with_small_history: Allows training with fewer than 100 rows in the dataset
+
 
    .. py:attribute:: prediction_length
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: objective
-      :type: abacusai.api_class.enums.ForecastingObjective
+      :type:  abacusai.api_class.enums.ForecastingObjective
 
-      
 
    .. py:attribute:: sort_objective
-      :type: abacusai.api_class.enums.ForecastingObjective
+      :type:  abacusai.api_class.enums.ForecastingObjective
 
-      
 
    .. py:attribute:: forecast_frequency
-      :type: abacusai.api_class.enums.ForecastingFrequency
+      :type:  abacusai.api_class.enums.ForecastingFrequency
 
-      
 
    .. py:attribute:: probability_quantiles
-      :type: List[float]
+      :type:  List[float]
 
-      
 
    .. py:attribute:: force_prediction_length
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: filter_items
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_feature_selection
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_padding
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_cold_start
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_multiple_backtests
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: num_backtesting_windows
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: backtesting_window_step_size
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: full_data_retraining
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: additional_forecast_keys
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: experimentation_mode
-      :type: abacusai.api_class.enums.ExperimentationMode
+      :type:  abacusai.api_class.enums.ExperimentationMode
 
-      
 
    .. py:attribute:: type_of_split
-      :type: abacusai.api_class.enums.ForecastingDataSplitType
+      :type:  abacusai.api_class.enums.ForecastingDataSplitType
 
-      
 
    .. py:attribute:: test_by_item
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: test_start
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: loss_function
-      :type: abacusai.api_class.enums.ForecastingLossFunction
+      :type:  abacusai.api_class.enums.ForecastingLossFunction
 
-      
 
    .. py:attribute:: underprediction_weight
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: disable_networks_without_analytic_quantiles
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: initial_learning_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: l2_regularization_factor
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: recurrent_layers
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: recurrent_units
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: convolutional_layers
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: convolution_filters
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: local_scaling_mode
-      :type: abacusai.api_class.enums.ForecastingLocalScaling
+      :type:  abacusai.api_class.enums.ForecastingLocalScaling
 
-      
 
    .. py:attribute:: zero_predictor
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: skip_missing
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:attribute:: batch_renormalization
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: history_length
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: prediction_step_size
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: training_point_overlap
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: max_scale_context
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: quantiles_extension_method
-      :type: abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
+      :type:  abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
 
-      
 
    .. py:attribute:: number_of_samples
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: symmetrize_quantiles
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: use_log_transforms
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: smooth_history
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: local_scale_target
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: use_clipping
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: timeseries_weight_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: item_attributes_weight_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: use_timeseries_weights_in_objective
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: use_item_weights_in_objective
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: skip_timeseries_weight_scaling
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: timeseries_loss_weight_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: use_item_id
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: use_all_item_totals
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: handle_zeros_as_missing_values
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: datetime_holiday_calendars
-      :type: List[abacusai.api_class.enums.HolidayCalendars]
+      :type:  List[abacusai.api_class.enums.HolidayCalendars]
 
-      
 
    .. py:attribute:: fill_missing_values
-      :type: List[dict]
+      :type:  List[List[dict]]
 
-      
 
    .. py:attribute:: enable_clustering
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: data_split_feature_group_table_name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: custom_loss_functions
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: custom_metrics
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: return_fractional_forecasts
-      :type: bool
+      :type:  bool
 
-      
+
+   .. py:attribute:: allow_training_with_small_history
+      :type:  bool
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: NamedEntityExtractionTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
 
@@ -1121,58 +1003,71 @@ Classes
    :type save_predicted_pdf: bool
    :param enhanced_ocr: Enhanced text extraction from predicted digital documents
    :type enhanced_ocr: bool
+   :param additional_extraction_instructions: Additional instructions to guide the LLM in extracting the entities. Only used with LLM algorithms.
+   :type additional_extraction_instructions: str
+
 
    .. py:attribute:: llm_for_ner
-      :type: abacusai.api_class.enums.LLMName
+      :type:  abacusai.api_class.enums.LLMName
+      :value: None
 
-      
+
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
+      :value: None
 
-      
+
 
    .. py:attribute:: test_row_indicator
-      :type: str
+      :type:  str
+      :value: None
 
-      
+
 
    .. py:attribute:: active_labels_column
-      :type: str
+      :type:  str
+      :value: None
 
-      
+
 
    .. py:attribute:: document_format
-      :type: abacusai.api_class.enums.NLPDocumentFormat
+      :type:  abacusai.api_class.enums.NLPDocumentFormat
+      :value: None
 
-      
+
 
    .. py:attribute:: minimum_bounding_box_overlap_ratio
-      :type: float
+      :type:  float
       :value: 0.0
 
-      
+
 
    .. py:attribute:: save_predicted_pdf
-      :type: bool
+      :type:  bool
       :value: True
 
-      
+
 
    .. py:attribute:: enhanced_ocr
-      :type: bool
+      :type:  bool
       :value: False
 
-      
+
+
+   .. py:attribute:: additional_extraction_instructions
+      :type:  str
+      :value: None
+
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: NaturalLanguageSearchTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
 
@@ -1189,48 +1084,42 @@ Classes
    :param index_fraction: Fraction of the chunk to use for indexing.
    :type index_fraction: float
 
-   .. py:attribute:: abacus_internal_model
-      :type: bool
 
-      
+   .. py:attribute:: abacus_internal_model
+      :type:  bool
+
 
    .. py:attribute:: num_completion_tokens
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: larger_embeddings
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: search_chunk_size
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: index_fraction
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: chunk_overlap_fraction
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ChatLLMTrainingConfig
-
 
    Bases: :py:obj:`TrainingConfig`
 
+
    Training config for the CHAT_LLM problem type
 
-   :param document_retrievers: List of names of document retrievers to use as vector stores of information for RAG responses.
+   :param document_retrievers: List of names or IDs of document retrievers to use as vector stores of information for RAG responses.
    :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
    :type num_completion_tokens: int
@@ -1267,6 +1156,8 @@ Classes
    :type disable_data_summarization: bool
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
    :type search_score_cutoff: float
+   :param include_bm25_retrieval: Combine BM25 search score with vector search using reciprocal rank fusion.
+   :type include_bm25_retrieval: bool
    :param database_connector_id: Database connector ID to use for the ChatLLM.
    :type database_connector_id: str
    :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
@@ -1274,134 +1165,114 @@ Classes
    :param enable_code_execution: Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
    :type enable_code_execution: bool
 
-   .. py:attribute:: document_retrievers
-      :type: List[str]
 
-      
+   .. py:attribute:: document_retrievers
+      :type:  List[str]
+
 
    .. py:attribute:: num_completion_tokens
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: temperature
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: retrieval_columns
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: filter_columns
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: include_general_knowledge
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: enable_web_search
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: behavior_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: response_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: enable_llm_rewrite
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: column_filtering_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: keyword_requirement_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: query_rewrite_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: max_search_results
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: data_feature_group_ids
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: data_prompt_context
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: hide_generated_sql
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: disable_data_summarization
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: search_score_cutoff
-      :type: float
+      :type:  float
 
-      
+
+   .. py:attribute:: include_bm25_retrieval
+      :type:  bool
+
 
    .. py:attribute:: database_connector_id
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: database_connector_tables
-      :type: List[str]
+      :type:  List[str]
 
-      
 
    .. py:attribute:: enable_code_execution
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: metadata_columns
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: lookup_rewrite_instructions
-      :type: str
+      :type:  str
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
 
@@ -1412,29 +1283,26 @@ Classes
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
 
-   .. py:attribute:: test_split
-      :type: int
 
-      
+   .. py:attribute:: test_split
+      :type:  int
+
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: SentimentDetectionTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the SENTIMENT_DETECTION problem type
 
@@ -1449,39 +1317,34 @@ Classes
    :param compute_metrics: Whether to compute metrics.
    :type compute_metrics: bool
 
-   .. py:attribute:: sentiment_type
-      :type: abacusai.api_class.enums.SentimentType
 
-      
+   .. py:attribute:: sentiment_type
+      :type:  abacusai.api_class.enums.SentimentType
+
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:attribute:: compute_metrics
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: DocumentClassificationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
 
@@ -1494,34 +1357,30 @@ Classes
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
 
-   .. py:attribute:: zero_shot_hypotheses
-      :type: List[str]
 
-      
+   .. py:attribute:: zero_shot_hypotheses
+      :type:  List[str]
+
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: DocumentSummarizationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
 
@@ -1532,29 +1391,26 @@ Classes
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
 
-   .. py:attribute:: test_split
-      :type: int
 
-      
+   .. py:attribute:: test_split
+      :type:  int
+
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: DocumentVisualizationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the DOCUMENT_VISUALIZATION problem type
 
@@ -1565,48 +1421,44 @@ Classes
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
 
-   .. py:attribute:: test_split
-      :type: int
 
-      
+   .. py:attribute:: test_split
+      :type:  int
+
 
    .. py:attribute:: dropout_rate
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
+      :type:  abacusai.api_class.enums.BatchSize
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ClusteringTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CLUSTERING problem type
 
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
 
-   .. py:attribute:: num_clusters_selection
-      :type: int
 
-      
+   .. py:attribute:: num_clusters_selection
+      :type:  int
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: ClusteringTimeseriesTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CLUSTERING_TIMESERIES problem type
 
@@ -1615,43 +1467,40 @@ Classes
    :param imputation: Imputation method for missing values.
    :type imputation: ClusteringImputationMethod
 
-   .. py:attribute:: num_clusters_selection
-      :type: int
 
-      
+   .. py:attribute:: num_clusters_selection
+      :type:  int
+
 
    .. py:attribute:: imputation
-      :type: abacusai.api_class.enums.ClusteringImputationMethod
+      :type:  abacusai.api_class.enums.ClusteringImputationMethod
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: EventAnomalyTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the EVENT_ANOMALY problem type
 
    :param anomaly_fraction: The fraction of the dataset to classify as anomalous, between 0 and 0.5
    :type anomaly_fraction: float
 
-   .. py:attribute:: anomaly_fraction
-      :type: float
 
-      
+   .. py:attribute:: anomaly_fraction
+      :type:  float
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: TimeseriesAnomalyTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the TS_ANOMALY problem type
 
@@ -1662,7 +1511,7 @@ Classes
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param fill_missing_values: strategies to fill missing values and missing timestamps
-   :type fill_missing_values: List[dict]
+   :type fill_missing_values: List[List[dict]]
    :param handle_zeros_as_missing_values: If True, handle zero values in numeric columns as missing data
    :type handle_zeros_as_missing_values: bool
    :param timeseries_frequency: set this to control frequency of filling missing values
@@ -1676,64 +1525,54 @@ Classes
    :param threshold_score: Threshold score for anomaly detection
    :type threshold_score: float
 
-   .. py:attribute:: type_of_split
-      :type: abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
 
-      
+   .. py:attribute:: type_of_split
+      :type:  abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
+
 
    .. py:attribute:: test_start
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: test_split
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: fill_missing_values
-      :type: List[dict]
+      :type:  List[List[dict]]
 
-      
 
    .. py:attribute:: handle_zeros_as_missing_values
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: timeseries_frequency
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: min_samples_in_normal_region
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: anomaly_type
-      :type: abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
+      :type:  abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
 
-      
 
    .. py:attribute:: hyperparameter_calculation_with_heuristics
-      :type: abacusai.api_class.enums.TimeseriesAnomalyUseHeuristic
+      :type:  abacusai.api_class.enums.TimeseriesAnomalyUseHeuristic
 
-      
 
    .. py:attribute:: threshold_score
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: CumulativeForecastingTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CUMULATIVE_FORECASTING problem type
 
@@ -1750,55 +1589,49 @@ Classes
    :param predict_residuals: Predict residuals instead of totals at each prediction step.
    :type predict_residuals: bool
 
-   .. py:attribute:: test_split
-      :type: int
 
-      
+   .. py:attribute:: test_split
+      :type:  int
+
 
    .. py:attribute:: historical_frequency
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: cumulative_prediction_lengths
-      :type: List[int]
+      :type:  List[int]
 
-      
 
    .. py:attribute:: skip_input_transform
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: skip_target_transform
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: predict_residuals
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
-
 
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
 
+
    Training config for the THEME ANALYSIS problem type
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: AIAgentTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the AI_AGENT problem type
 
@@ -1807,39 +1640,34 @@ Classes
    :param agent_interface: The interface that the agent will be deployed with.
    :type agent_interface: AgentInterface
 
-   .. py:attribute:: description
-      :type: str
 
-      
+   .. py:attribute:: description
+      :type:  str
+
 
    .. py:attribute:: agent_interface
-      :type: abacusai.api_class.enums.AgentInterface
+      :type:  abacusai.api_class.enums.AgentInterface
 
-      
 
    .. py:attribute:: enable_binary_input
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: agent_input_schema
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:attribute:: agent_output_schema
-      :type: dict
+      :type:  dict
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: CustomTrainedModelTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CUSTOM_TRAINED_MODEL problem type
 
@@ -1856,63 +1684,56 @@ Classes
    :param streaming_embeddings: Flag to enable streaming embeddings.
    :type streaming_embeddings: bool
 
-   .. py:attribute:: max_catalog_size
-      :type: int
 
-      
+   .. py:attribute:: max_catalog_size
+      :type:  int
+
 
    .. py:attribute:: max_dimension
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: index_output_path
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: docker_image_uri
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: service_port
-      :type: int
+      :type:  int
 
-      
 
    .. py:attribute:: streaming_embeddings
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: CustomAlgorithmTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the CUSTOM_ALGORITHM problem type
 
    :param timeout_minutes: Timeout for the model training in minutes.
    :type timeout_minutes: int
 
-   .. py:attribute:: timeout_minutes
-      :type: int
 
-      
+   .. py:attribute:: timeout_minutes
+      :type:  int
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: OptimizationTrainingConfig
 
-
    Bases: :py:obj:`TrainingConfig`
+
 
    Training config for the OPTIMIZATION problem type
 
@@ -1921,46 +1742,42 @@ Classes
    :param optimality_gap_limit: The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
    :type optimality_gap_limit: float
 
-   .. py:attribute:: solve_time_limit
-      :type: float
 
-      
+   .. py:attribute:: solve_time_limit
+      :type:  float
+
 
    .. py:attribute:: optimality_gap_limit
-      :type: float
+      :type:  float
 
-      
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _TrainingConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'problem_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 
 .. py:class:: DeployableAlgorithm
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Algorithm that can be deployed to a model.
 
@@ -1973,24 +1790,20 @@ Classes
    :param trained_model_types: List of trained model types.
    :type trained_model_types: List[dict]
 
-   .. py:attribute:: algorithm
-      :type: str
 
-      
+   .. py:attribute:: algorithm
+      :type:  str
+
 
    .. py:attribute:: name
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: only_offline_deployable
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:attribute:: trained_model_types
-      :type: List[dict]
-
-      
+      :type:  List[dict]
 
 

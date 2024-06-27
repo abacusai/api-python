@@ -1,0 +1,51 @@
+abacusai.deployment_statistics
+==============================
+
+.. py:module:: abacusai.deployment_statistics
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.deployment_statistics.DeploymentStatistics
+
+
+Module Contents
+---------------
+
+.. py:class:: DeploymentStatistics(client, requestSeries=None, latencySeries=None, dateLabels=None, httpStatusSeries=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A set of statistics for a realtime deployment.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param requestSeries: A list of the number of requests per second.
+   :type requestSeries: list
+   :param latencySeries: A list of the latency in milliseconds for each request.
+   :type latencySeries: list
+   :param dateLabels: A list of date labels for each point in the series.
+   :type dateLabels: list
+   :param httpStatusSeries: A list of the HTTP status codes for each request.
+   :type httpStatusSeries: list
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

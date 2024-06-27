@@ -39,13 +39,14 @@ from .api_class import (
     ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
     MemorySize, MergeConfig, OperatorConfig, ParsingConfig,
     PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
-    PythonFunctionType, SamplingConfig, StreamingConnectorDatasetConfig,
-    TrainingConfig, VectorStoreConfig, WorkflowGraph,
-    get_clean_function_source_code
+    PythonFunctionType, SamplingConfig, Segment,
+    StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
+    WorkflowGraph, get_clean_function_source_code
 )
 from .api_class.abstract import get_clean_function_source_code, snake_case
 from .api_class.ai_agents import WorkflowGraph
 from .api_class.blob_input import Blob, BlobInput
+from .api_class.segments import Segment
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, StreamType,
     clean_column_name, get_object_from_context
@@ -75,6 +76,7 @@ from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .deployment_conversation import DeploymentConversation
 from .deployment_conversation_export import DeploymentConversationExport
+from .deployment_statistics import DeploymentStatistics
 from .document_data import DocumentData
 from .document_retriever import DocumentRetriever
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
@@ -265,18 +267,18 @@ class AgentResponse:
         self.data_list = []
         self.section_data_list = []
         for arg in args:
-            if isinstance(arg, Blob) or _is_json_serializable(arg):
+            if isinstance(arg, Blob) or _is_json_serializable(arg) or isinstance(arg, Segment):
                 self.data_list.append(arg)
             else:
                 raise Exception(
-                    'AgentResponse can only contain Blob or json serializable objects')
+                    'AgentResponse can only contain Blob, Segment or json serializable objects')
 
         for key, value in kwargs.items():
-            if isinstance(value, Blob) or _is_json_serializable(value):
+            if isinstance(value, Blob) or _is_json_serializable(value) or isinstance(value, Segment):
                 self.section_data_list.append({key: value})
             else:
                 raise Exception(
-                    'AgentResponse can only contain Blob or json serializable objects')
+                    'AgentResponse can only contain Blob, Segment or json serializable objects')
 
 
 class ClientOptions:
@@ -592,9 +594,9 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.3.3'
+    client_version = '1.3.7'
 
-    def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
+    def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
         if self.api_key is None:
             self.api_key = os.getenv('ABACUS_API_KEY')
@@ -636,6 +638,19 @@ class BaseApiClient:
             except Exception:
                 logging.error(
                     f'Failed get the current API version from Abacus.AI ({self.server or DEFAULT_SERVER}/api/v0/version)')
+        # Modify traceback
+        if not include_tb:
+            excepthook = sys.excepthook
+
+            def modify_tb_excepthook(type, value, tb):
+                import abacusai
+                pylibdir = os.path.dirname(abacusai.__file__)
+                tb_itr = tb
+                while not (tb_itr.tb_next is None or tb_itr.tb_next.tb_frame.f_code.co_filename.startswith(pylibdir)):
+                    tb_itr = tb_itr.tb_next
+                tb_itr.tb_next = None
+                excepthook(type, value, tb)
+            sys.excepthook = modify_tb_excepthook
 
     def _get_prediction_endpoint(self, deployment_id: str, deployment_token: str):
         if self.prediction_endpoint:
@@ -762,7 +777,7 @@ class BaseApiClient:
                 error_message, response.status_code, error_type, request_id)
         return result
 
-    def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
+    def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, data: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
         headers = {'APIKEY': self.api_key}
         deployment_id = os.getenv('ABACUS_DEPLOYMENT_ID')
         if deployment_id:
@@ -782,12 +797,15 @@ class BaseApiClient:
         body = deepcopy(body)
         self._clean_api_objects(query_params)
         self._clean_api_objects(body)
+        if data:
+            data = deepcopy(data)
+            self._clean_api_objects(data)
 
         try:
             if is_sync:
                 sync_api_endpoint = f'{endpoint}/api/{name}'
                 response = self._request(url=sync_api_endpoint, method=method, query_params=query_params,
-                                         headers=headers, body=body, files=files, stream=streamable_response)
+                                         headers=headers, body=body, data=data, files=files, stream=streamable_response)
                 status_code = response.status_code
                 if streamable_response and status_code == 200:
                     return response.raw
@@ -800,7 +818,7 @@ class BaseApiClient:
                 create_request_endpoint = f'{endpoint}/api/create{name}Request'
                 status_request_endpoint = f'{endpoint}/api/get{name}Status'
                 create_request = self._request(url=create_request_endpoint, method='PUT' if files else 'POST',
-                                               query_params=query_params, headers=headers, body=body, files=files)
+                                               query_params=query_params, headers=headers, body=body or data, files=files)
                 status_code = create_request.status_code
                 if status_code == 200:
                     request_id = create_request.json()['request_id']
@@ -2210,6 +2228,18 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             BatchPredictionVersionLogs: The logs for the specified batch prediction version."""
         return self._call_api('getBatchPredictionVersionLogs', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersionLogs)
+
+    def get_deployment_statistics_over_time(self, deployment_id: str, start_date: str, end_date: str) -> DeploymentStatistics:
+        """Return basic access statistics for the given window
+
+        Args:
+            deployment_id (str): Unique string identifier of the deployment created under the project.
+            start_date (str): Timeline start date in ISO format.
+            end_date (str): Timeline end date in ISO format. The date range must be 7 days or less.
+
+        Returns:
+            DeploymentStatistics: Object describing Time series data of the number of requests and latency over the specified time period."""
+        return self._call_api('getDeploymentStatisticsOverTime', 'GET', query_params={'deploymentId': deployment_id, 'startDate': start_date, 'endDate': end_date}, parse_type=DeploymentStatistics)
 
     def get_data(self, feature_group_id: str, primary_key: str = None, num_rows: int = None) -> List[FeatureGroupRow]:
         """Gets the feature group rows for online updatable feature groups.
@@ -3718,7 +3748,7 @@ class ApiClient(ReadOnlyClient):
                 request_id, caller, message=message, extra_args=extra_args, proxy_caller=proxy_caller)
         return StreamingHandler(message, _request_context)
 
-    def stream_section_output(self, section_key: str, value: Any, value_type: str = 'text') -> None:
+    def stream_section_output(self, section_key: str, value: str) -> None:
         """
         Streams value corresponding to a particular section to the current request context. Applicable within a AIAgent execute function.
         If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
@@ -3726,14 +3756,13 @@ class ApiClient(ReadOnlyClient):
         Args:
             section_key (str): The section key to which the output corresponds.
             value (Any): The output contents.
-            value_type (str): The mime type of the output contents.
         """
         request_id = self._get_agent_app_request_id()
         caller = self._get_agent_async_app_caller()
         proxy_caller = self._is_proxy_app_caller()
         if _is_json_serializable(value):
             message_args = {'id': section_key,
-                            'type': value_type, 'mime_type': 'text/plain'}
+                            'type': 'text', 'mime_type': 'text/plain'}
         else:
             raise ValueError('The value is not json serializable')
         if request_id and caller:
@@ -3744,7 +3773,28 @@ class ApiClient(ReadOnlyClient):
                     {'agent_workflow_node_id': _request_context.agent_workflow_node_id})
             self._call_aiagent_app_send_message(
                 request_id, caller, message=value, message_args=message_args, extra_args=extra_args, proxy_caller=proxy_caller)
-        return StreamingHandler(value, _request_context, section_key=section_key, data_type=value_type)
+        return StreamingHandler(value, _request_context, section_key=section_key)
+
+    def stream_segment(self, segment: Segment):
+        """
+        Streams a segment to the current request context. Applicable within a AIAgent execute function.
+        If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
+
+        Args:
+            segment (Segment): The segment to be streamed.
+        """
+        request_id = self._get_agent_app_request_id()
+        caller = self._get_agent_async_app_caller()
+        proxy_caller = self._is_proxy_app_caller()
+        if request_id and caller:
+            segment = segment.to_dict()
+            extra_args = {'stream_type': StreamType.SEGMENT.value}
+            if hasattr(_request_context, 'agent_workflow_node_id'):
+                extra_args.update(
+                    {'agent_workflow_node_id': _request_context.agent_workflow_node_id})
+            self._call_aiagent_app_send_message(
+                request_id, caller, segment=segment, extra_args=extra_args, proxy_caller=proxy_caller)
+        return StreamingHandler(segment, _request_context, data_type='segment')
 
     def _stream_llm_call(self, section_key=None, **kwargs):
         request_id = self._get_agent_app_request_id()
@@ -3766,7 +3816,7 @@ class ApiClient(ReadOnlyClient):
                 {'agent_workflow_node_id': _request_context.agent_workflow_node_id})
         return self._call_aiagent_app_send_message(request_id, caller, llm_args=kwargs, message_args=message_args, extra_args=extra_args, proxy_caller=proxy_caller)
 
-    def _call_aiagent_app_send_message(self, request_id, caller, message=None, llm_args=None, message_args=None, extra_args=None, proxy_caller=False):
+    def _call_aiagent_app_send_message(self, request_id, caller, message=None, segment=None, llm_args=None, message_args=None, extra_args=None, proxy_caller=False):
         """
         Calls the AI Agent app send message endpoint.
 
@@ -3788,6 +3838,8 @@ class ApiClient(ReadOnlyClient):
         body = {'requestId': request_id}
         if message:
             body['message'] = message
+        elif segment:
+            body['segment'] = segment
         elif llm_args:
             body['llmArgs'] = llm_args
         else:
@@ -4347,7 +4399,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             AnnotationEntry: The annotation entry that was added."""
-        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'status': status, 'comments': comments, 'projectId': project_id, 'saveMetadata': save_metadata, 'pages': pages}, parse_type=AnnotationEntry)
+        return self._proxy_request('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'status': status, 'comments': comments, 'projectId': project_id, 'saveMetadata': save_metadata, 'pages': pages}, parse_type=AnnotationEntry, is_sync=True)
 
     def describe_annotation(self, feature_group_id: str, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
         """Get the latest annotation entry for a given feature group, feature, and document.
@@ -5120,6 +5172,13 @@ Creates a new feature group defined as the union of other feature group versions
             feature_group_id (str): Unique string identifier for the feature group to be removed."""
         return self._call_api('deleteFeatureGroup', 'DELETE', query_params={'featureGroupId': feature_group_id})
 
+    def delete_feature_group_version(self, feature_group_version: str):
+        """Deletes a Feature Group Version.
+
+        Args:
+            feature_group_version (str): String identifier for the feature group version to be removed."""
+        return self._call_api('deleteFeatureGroupVersion', 'DELETE', query_params={'featureGroupVersion': feature_group_version})
+
     def create_feature_group_version(self, feature_group_id: str, variable_bindings: dict = None) -> FeatureGroupVersion:
         """Creates a snapshot for a specified feature group. Triggers materialization of the feature group. The new version of the feature group is created after it has materialized.
 
@@ -5520,6 +5579,13 @@ Creates a new feature group defined as the union of other feature group versions
             dataset_id (str): Unique string identifier of the dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
+    def delete_dataset_version(self, dataset_version: str):
+        """Deletes the specified dataset version from the organization.
+
+        Args:
+            dataset_version (str): String identifier of the dataset version to delete."""
+        return self._call_api('deleteDatasetVersion', 'DELETE', query_params={'datasetVersion': dataset_version})
+
     def get_docstore_page_data(self, doc_id: str, page: int, document_processing_config: Union[dict, DocumentProcessingConfig] = None, document_processing_version: str = None) -> PageData:
         """Returns the extracted page data for a document page.
 
@@ -5544,7 +5610,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             DocumentData: The extracted document data."""
-        return self._call_api('getDocstoreDocumentData', 'POST', query_params={}, body={'docId': doc_id, 'documentProcessingConfig': document_processing_config, 'documentProcessingVersion': document_processing_version, 'returnExtractedPageText': return_extracted_page_text}, parse_type=DocumentData)
+        return self._proxy_request('getDocstoreDocumentData', 'POST', query_params={}, body={'docId': doc_id, 'documentProcessingConfig': document_processing_config, 'documentProcessingVersion': document_processing_version, 'returnExtractedPageText': return_extracted_page_text}, parse_type=DocumentData, is_sync=True)
 
     def extract_document_data(self, document: io.TextIOBase = None, doc_id: str = None, document_processing_config: Union[dict, DocumentProcessingConfig] = None, start_page: int = None, end_page: int = None, return_extracted_page_text: bool = False) -> DocumentData:
         """Extracts data from a document.
@@ -5559,7 +5625,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             DocumentData: The extracted document data."""
-        return self._proxy_request('ExtractDocumentData', 'POST', query_params={}, body={'docId': doc_id, 'documentProcessingConfig': json.dumps(document_processing_config), 'startPage': start_page, 'endPage': end_page, 'returnExtractedPageText': return_extracted_page_text}, files={'document': document}, parse_type=DocumentData)
+        return self._proxy_request('ExtractDocumentData', 'POST', query_params={}, data={'docId': doc_id, 'documentProcessingConfig': json.dumps(document_processing_config), 'startPage': start_page, 'endPage': end_page, 'returnExtractedPageText': return_extracted_page_text}, files={'document': document}, parse_type=DocumentData)
 
     def get_training_config_options(self, project_id: str, feature_group_ids: List = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None) -> List[TrainingConfigOptions]:
         """Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
@@ -6725,7 +6791,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -6738,13 +6804,12 @@ Creates a new feature group defined as the union of other feature group versions
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
-            chat_config (dict): A dictionary specifying the query chat config override.
-            ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response."""
+            chat_config (dict): A dictionary specifying the query chat config override."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config}, server_override=prediction_url)
 
-    def get_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None) -> Dict:
+    def get_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, attachments: None = None) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -6758,13 +6823,12 @@ Creates a new feature group defined as the union of other feature group versions
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifying the query chat config override.
-            ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
             attachments (None): A dictionary of binary data to use to answer the queries."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'ignoreDocuments': json.dumps(ignore_documents) if (ignore_documents is not None and not isinstance(ignore_documents, str)) else ignore_documents}, files=attachments, server_override=prediction_url)
+        return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config}, files=attachments, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, deployment_token: str = None, doc_infos: list = None) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, deployment_token: str = None, doc_infos: list = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -6779,14 +6843,13 @@ Creates a new feature group defined as the union of other feature group versions
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
-            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
             deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents, 'docInfos': doc_infos}, server_override=prediction_url)
+        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'docInfos': doc_infos}, server_override=prediction_url)
 
-    def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None) -> Dict:
+    def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, attachments: None = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -6802,11 +6865,10 @@ Creates a new feature group defined as the union of other feature group versions
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
-            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
             attachments (None): A dictionary of binary data to use to answer the queries."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'ignoreDocuments': json.dumps(ignore_documents) if (ignore_documents is not None and not isinstance(ignore_documents, str)) else ignore_documents}, files=attachments, server_override=prediction_url)
+        return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config}, files=attachments, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
@@ -7054,7 +7116,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
 
-    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None) -> Dict:
+    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None, agent_workflow_node_id: str = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
         Args:
@@ -7065,12 +7127,13 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
             external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
             regenerate (bool): If True, will regenerate the response from the last query.
-            doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore."""
+            doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
+            agent_workflow_node_id (str): An optional agent workflow node id to trigger agent execution from an intermediate node."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos}, server_override=prediction_url)
+        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos, 'agentWorkflowNodeId': agent_workflow_node_id}, server_override=prediction_url)
 
-    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: Dict = None) -> List[DocumentRetrieverLookupResult]:
+    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: dict = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -7092,7 +7155,7 @@ Creates a new feature group defined as the union of other feature group versions
             min_score (float): If provided, will filter out the results with score less than the value specified.
             required_phrases (list): If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
             filter_clause (str): If provided, filter the results of the query using this sql where clause.
-            crowding_limits (Dict): A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
+            crowding_limits (dict): A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set. An entry in the map can also be a map specifying the limit per attribute value rather than a single limit for all values. This allows a per value limit for attributes. If an attribute value is not present in the map its limit defaults to zero.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
@@ -8297,7 +8360,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('getDocumentSnippet', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'documentId': document_id, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index}, parse_type=DocumentRetrieverLookupResult)
 
     def restart_document_retriever(self, document_retriever_id: str):
-        """Restart the document retriever if it is stopped. This will start the deployment of the document retriever,
+        """Restart the document retriever if it is stopped or has failed. This will start the deployment of the document retriever,
 
         but will not wait for it to be ready. You need to call wait_until_ready to wait until the deployment is ready.
 
@@ -8328,4 +8391,4 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
-        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, body={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text}, files=blobs, parse_type=DocumentRetrieverLookupResult)
+        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, data={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text}, files=blobs, parse_type=DocumentRetrieverLookupResult)

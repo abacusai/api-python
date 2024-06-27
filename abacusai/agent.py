@@ -122,3 +122,13 @@ class Agent(AbstractApiClass):
             str: A string describing the status of a agent publishing (pending, complete, etc.).
         """
         return self.describe().latest_agent_version.status
+
+    def republish(self):
+        """
+        Re-publishes the Agent and creates a new Agent Version.
+
+        Returns:
+            AgentVersion: The new Agent Version.
+        """
+        self.client.retrain_model(self.agent_id)
+        return self.describe().latest_agent_version

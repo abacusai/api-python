@@ -1,26 +1,24 @@
-:py:mod:`abacusai.eda_data_consistency`
-=======================================
+abacusai.eda_data_consistency
+=============================
 
 .. py:module:: abacusai.eda_data_consistency
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.eda_data_consistency.EdaDataConsistency
 
 
-
+Module Contents
+---------------
 
 .. py:class:: EdaDataConsistency(client, columnNames=None, primaryKeys=None, transformationColumnNames=None, baseDuplicates={}, compareDuplicates={}, deletions={}, transformations={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    Eda Data Consistency, contained the duplicates in the base version, Comparison version, Deletions between the base and comparison and feature transformations between the base and comparison data.
 
@@ -41,9 +39,11 @@ Classes
    :param transformations: A DataConsistencyTransformation the number of changes that occured per feature in the data
    :type transformations: DataConsistencyTransformation
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()

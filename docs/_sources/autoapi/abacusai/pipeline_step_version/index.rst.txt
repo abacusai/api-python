@@ -1,26 +1,24 @@
-:py:mod:`abacusai.pipeline_step_version`
-========================================
+abacusai.pipeline_step_version
+==============================
 
 .. py:module:: abacusai.pipeline_step_version
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.pipeline_step_version.PipelineStepVersion
 
 
-
+Module Contents
+---------------
 
 .. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, cpuSize=None, memory=None, timeout=None, pipelineStepVersionReferences={}, codeSource={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A version of a pipeline step.
 
@@ -65,9 +63,11 @@ Classes
    :param codeSource: Information about the source code of the pipeline step version.
    :type codeSource: CodeSource
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -78,12 +78,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: PipelineStepVersion
+
 
 
    .. py:method:: describe()
@@ -95,6 +97,7 @@ Classes
 
       :returns: An object describing the pipeline step version.
       :rtype: PipelineStepVersion
+
 
 
    .. py:method:: get_step_version_logs()

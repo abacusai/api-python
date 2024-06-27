@@ -1,14 +1,11 @@
-:py:mod:`abacusai.api_class.connectors`
-=======================================
+abacusai.api_class.connectors
+=============================
 
 .. py:module:: abacusai.api_class.connectors
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -17,22 +14,23 @@ Classes
    abacusai.api_class.connectors._StreamingConnectorDatasetConfigFactory
 
 
-
+Module Contents
+---------------
 
 .. py:class:: StreamingConnectorDatasetConfig
 
-
    Bases: :py:obj:`abacusai.api_class.dataset.DatasetConfig`
+
 
    An abstract class for dataset configs specific to streaming connectors.
 
    :param streaming_connector_type: The type of streaming connector
    :type streaming_connector_type: StreamingConnectorType
 
-   .. py:attribute:: streaming_connector_type
-      :type: abacusai.api_class.enums.StreamingConnectorType
 
-      
+   .. py:attribute:: streaming_connector_type
+      :type:  abacusai.api_class.enums.StreamingConnectorType
+
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -41,42 +39,39 @@ Classes
 
 .. py:class:: KafkaDatasetConfig
 
-
    Bases: :py:obj:`StreamingConnectorDatasetConfig`
+
 
    Dataset config for Kafka Streaming Connector
 
    :param topic: The kafka topic to consume
    :type topic: str
 
-   .. py:attribute:: topic
-      :type: str
 
-      
+   .. py:attribute:: topic
+      :type:  str
+
 
    .. py:method:: __post_init__()
 
 
-
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
-
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
+
    .. py:attribute:: config_abstract_class
 
-      
 
    .. py:attribute:: config_class_key
       :value: 'streaming_connector_type'
 
-      
+
 
    .. py:attribute:: config_class_map
-
-      
 
 

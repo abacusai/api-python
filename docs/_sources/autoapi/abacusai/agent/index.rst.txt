@@ -1,26 +1,24 @@
-:py:mod:`abacusai.agent`
-========================
+abacusai.agent
+==============
 
 .. py:module:: abacusai.agent
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.agent.Agent
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, workflowGraph={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    An AI agent.
 
@@ -55,9 +53,11 @@ Classes
    :param workflowGraph: The workflow graph for the agent.
    :type workflowGraph: WorkflowGraph
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -68,12 +68,14 @@ Classes
       :rtype: dict
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: Agent
+
 
 
    .. py:method:: describe()
@@ -85,6 +87,7 @@ Classes
 
       :returns: Description of the agent.
       :rtype: Agent
+
 
 
    .. py:method:: list_versions(limit = 100, start_after_version = None)
@@ -100,6 +103,7 @@ Classes
       :rtype: list[AgentVersion]
 
 
+
    .. py:method:: wait_for_publish(timeout=None)
 
       A waiting call until agent is published.
@@ -108,12 +112,22 @@ Classes
       :type timeout: int
 
 
+
    .. py:method:: get_status()
 
       Gets the status of the agent publishing.
 
       :returns: A string describing the status of a agent publishing (pending, complete, etc.).
       :rtype: str
+
+
+
+   .. py:method:: republish()
+
+      Re-publishes the Agent and creates a new Agent Version.
+
+      :returns: The new Agent Version.
+      :rtype: AgentVersion
 
 
 

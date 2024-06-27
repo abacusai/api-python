@@ -1,14 +1,20 @@
-:py:mod:`abacusai.api_class.abstract`
-=====================================
+abacusai.api_class.abstract
+===========================
 
 .. py:module:: abacusai.api_class.abstract
 
 
-Module Contents
----------------
+Attributes
+----------
+
+.. autoapisummary::
+
+   abacusai.api_class.abstract.FIRST_CAP_RE
+   abacusai.api_class.abstract.ALL_CAP_RE
+
 
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -16,9 +22,8 @@ Classes
    abacusai.api_class.abstract._ApiClassFactory
 
 
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
@@ -28,53 +33,37 @@ Functions
    abacusai.api_class.abstract.get_clean_function_source_code
 
 
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   abacusai.api_class.abstract.FIRST_CAP_RE
-   abacusai.api_class.abstract.ALL_CAP_RE
-
+Module Contents
+---------------
 
 .. py:data:: FIRST_CAP_RE
 
-   
-
 .. py:data:: ALL_CAP_RE
-
-   
 
 .. py:function:: camel_case(value)
 
-
 .. py:function:: upper_snake_case(value)
-
 
 .. py:function:: snake_case(value)
 
-
 .. py:function:: get_clean_function_source_code(func)
-
 
 .. py:class:: ApiClass
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
 
-      
+   .. py:attribute:: _upper_snake_case_keys
+      :type:  bool
+
 
    .. py:attribute:: _support_kwargs
-      :type: bool
+      :type:  bool
 
-      
 
    .. py:method:: __post_init__()
 
@@ -83,9 +72,11 @@ Attributes
       :classmethod:
 
 
+
    .. py:method:: __str__()
 
       Return str(self).
+
 
 
    .. py:method:: _repr_html_()
@@ -113,6 +104,7 @@ Attributes
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
    .. py:method:: from_dict(input_dict)
       :classmethod:
 
@@ -120,23 +112,25 @@ Attributes
 
 .. py:class:: _ApiClassFactory
 
-
    Bases: :py:obj:`abc.ABC`
+
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: config_abstract_class
 
-      
+   .. py:attribute:: config_abstract_class
+      :value: None
+
+
 
    .. py:attribute:: config_class_key
+      :value: None
 
-      
+
 
    .. py:attribute:: config_class_map
 
-      
 
    .. py:method:: from_dict(config)
       :classmethod:

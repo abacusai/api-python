@@ -1,26 +1,24 @@
-:py:mod:`abacusai.model_monitor`
-================================
+abacusai.model_monitor
+======================
 
 .. py:module:: abacusai.model_monitor
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    abacusai.model_monitor.ModelMonitor
 
 
-
+Module Contents
+---------------
 
 .. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, predictionFeatureGroupVersion=None, trainingFeatureGroupVersion=None, alertConfig=None, biasMetricId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, trainingFeatureGroupSampling=None, predictionFeatureGroupSampling=None, monitorDriftConfig=None, predictionDataUseMappings=None, trainingDataUseMappings=None, refreshSchedules={}, latestMonitorModelVersion={})
 
-
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
 
    A model monitor
 
@@ -83,9 +81,11 @@ Classes
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
    :type refreshSchedules: RefreshSchedule
 
+
    .. py:method:: __repr__()
 
       Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -94,6 +94,7 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
 
 
    .. py:method:: rerun()
@@ -107,12 +108,14 @@ Classes
       :rtype: ModelMonitor
 
 
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
       :returns: The current object
       :rtype: ModelMonitor
+
 
 
    .. py:method:: describe()
@@ -126,6 +129,7 @@ Classes
       :rtype: ModelMonitor
 
 
+
    .. py:method:: get_summary()
 
       Gets the summary of a model monitor across versions.
@@ -135,6 +139,7 @@ Classes
 
       :returns: An object describing integrity, bias violations, model accuracy and drift for the model monitor.
       :rtype: ModelMonitorSummary
+
 
 
    .. py:method:: list_versions(limit = 100, start_after_version = None)
@@ -150,6 +155,7 @@ Classes
       :rtype: list[ModelMonitorVersion]
 
 
+
    .. py:method:: rename(name)
 
       Renames a model monitor
@@ -158,12 +164,14 @@ Classes
       :type name: str
 
 
+
    .. py:method:: delete()
 
       Deletes the specified Model Monitor and all its versions.
 
       :param model_monitor_id: Unique identifier of the Model Monitor to delete.
       :type model_monitor_id: str
+
 
 
    .. py:method:: list_monitor_alerts_for_monitor(realtime_monitor_id = None)

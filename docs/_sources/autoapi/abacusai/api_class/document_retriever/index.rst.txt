@@ -1,34 +1,32 @@
-:py:mod:`abacusai.api_class.document_retriever`
-===============================================
+abacusai.api_class.document_retriever
+=====================================
 
 .. py:module:: abacusai.api_class.document_retriever
 
 
-Module Contents
----------------
-
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   abacusai.api_class.document_retriever.VectorStoreConfig
-
-
-
-
 Attributes
-~~~~~~~~~~
+----------
 
 .. autoapisummary::
 
    abacusai.api_class.document_retriever.DocumentRetrieverConfig
 
 
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.api_class.document_retriever.VectorStoreConfig
+
+
+Module Contents
+---------------
+
 .. py:class:: VectorStoreConfig
 
-
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
 
    Config for indexing options of a document retriever. Default values of optional arguments are heuristically selected by the Abacus.AI platform based on the underlying data.
 
@@ -45,38 +43,30 @@ Attributes
    :param prune_vectors: Transform vectors using SVD so that the average component of vectors in the corpus are removed.
    :type prune_vectors: bool
 
-   .. py:attribute:: chunk_size
-      :type: int
 
-      
+   .. py:attribute:: chunk_size
+      :type:  int
+
 
    .. py:attribute:: chunk_overlap_fraction
-      :type: float
+      :type:  float
 
-      
 
    .. py:attribute:: text_encoder
-      :type: abacusai.api_class.enums.VectorStoreTextEncoder
+      :type:  abacusai.api_class.enums.VectorStoreTextEncoder
 
-      
 
    .. py:attribute:: chunk_size_factors
-      :type: list
+      :type:  list
 
-      
 
    .. py:attribute:: score_multiplier_column
-      :type: str
+      :type:  str
 
-      
 
    .. py:attribute:: prune_vectors
-      :type: bool
-
-      
+      :type:  bool
 
 
 .. py:data:: DocumentRetrieverConfig
-
-   
 
