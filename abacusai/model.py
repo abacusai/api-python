@@ -355,20 +355,22 @@ class Model(AbstractApiClass):
         """
         return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
 
-    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = None):
+    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = None, included_modules: List = None):
         """
         Updates an existing AI Agent. A new version of the agent will be created and published.
 
         Args:
             memory (int): Memory (in GB) for the agent.
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             description (str): A description of the agent, including its purpose and instructions.
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
+            included_modules (List): A list of user created custom modules to include in the agent's environment.
 
         Returns:
             Agent: The updated agent.
         """
-        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input, agent_input_schema, agent_output_schema, workflow_graph, agent_interface)
+        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input, agent_input_schema, agent_output_schema, workflow_graph, agent_interface, included_modules)
 
     def wait_for_training(self, timeout=None):
         """

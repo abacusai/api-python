@@ -1150,8 +1150,8 @@ Module Contents
    :param data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
    :param data_prompt_context: Prompt context for the data feature group IDs.
    :type data_prompt_context: str
-   :param hide_generated_sql: When running data queries, hides the generated SQL in the response and will just return the table.
-   :type hide_generated_sql: bool
+   :param hide_sql_and_code: When running data queries, this will hide the generated SQL and Code in the response.
+   :type hide_sql_and_code: bool
    :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
    :type disable_data_summarization: bool
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
@@ -1164,6 +1164,8 @@ Module Contents
    :type database_connector_tables: List[str]
    :param enable_code_execution: Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
    :type enable_code_execution: bool
+   :param enable_response_caching: Enable caching of LLM responses to speed up response times and improve reproducibility.
+   :type enable_response_caching: bool
 
 
    .. py:attribute:: document_retrievers
@@ -1230,7 +1232,7 @@ Module Contents
       :type:  str
 
 
-   .. py:attribute:: hide_generated_sql
+   .. py:attribute:: hide_sql_and_code
       :type:  bool
 
 
@@ -1264,6 +1266,10 @@ Module Contents
 
    .. py:attribute:: lookup_rewrite_instructions
       :type:  str
+
+
+   .. py:attribute:: enable_response_caching
+      :type:  bool
 
 
    .. py:method:: __post_init__()

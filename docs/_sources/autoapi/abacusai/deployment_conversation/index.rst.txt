@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, history={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44,6 +44,8 @@ Module Contents
    :type unusedDocumentUploadIds: list[str]
    :param humanizeInstructions: Instructions for humanizing the conversation.
    :type humanizeInstructions: dict
+   :param conversationWarning: Extra text associated with the deployment conversation (to show it at the bottom of chatbot)
+   :type conversationWarning: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
 

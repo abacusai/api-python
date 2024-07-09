@@ -253,6 +253,8 @@ class ForecastingDataSplitType(ApiEnum):
     TIMESTAMP = 'Timestamp Based'
     ITEM = 'Item Based'
     PREDICTION_LENGTH = 'Force Prediction Length'
+    L_SHAPED_AUTO = 'L-shaped Split - Automatic Time Based'
+    L_SHAPED_TIMESTAMP = 'L-shaped Split - Timestamp Based'
 
 
 class ForecastingLossFunction(ApiEnum):
@@ -526,6 +528,7 @@ class WorkflowNodeOutputType(ApiEnum):
     DICT = 'DICT'
     LIST = 'LIST'
     STRING = 'STRING'
+    RUNTIME_SCHEMA = 'RUNTIME_SCHEMA'
 
 
 class OcrMode(ApiEnum):
@@ -591,13 +594,20 @@ class MemorySize(ApiEnum):
         return None
 
 
-class SegmentType(ApiEnum):
-    ATTACHMENTS = 'attachments'
+class ResponseSectionType(ApiEnum):
     AGENT_FLOW_BUTTON = 'agent_flow_button'
+    ATTACHMENTS = 'attachments'
+    BASE64_IMAGE = 'base64_image'
+    CHART = 'chart'
+    CODE = 'code'
+    COLLAPSIBLE_COMPONENT = 'collapsible_component'
     IMAGE_URL = 'image_url'
+    RUNTIME_SCHEMA = 'runtime_schema'
+    LIST = 'list'
+    TABLE = 'table'
     TEXT = 'text'
 
 
-class CodeSegmentLanguage(ApiEnum):
+class CodeLanguage(ApiEnum):
     PYTHON = 'python'
     SQL = 'sql'

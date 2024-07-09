@@ -283,10 +283,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.MemorySize" title="abacusai.api_class.enums.MemorySize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemorySize</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.SegmentType" title="abacusai.api_class.enums.SegmentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SegmentType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.ResponseSectionType" title="abacusai.api_class.enums.ResponseSectionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSectionType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.CodeSegmentLanguage" title="abacusai.api_class.enums.CodeSegmentLanguage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeSegmentLanguage</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.CodeLanguage" title="abacusai.api_class.enums.CodeLanguage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeLanguage</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
 </tbody>
@@ -1312,6 +1312,16 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.ForecastingDataSplitType.PREDICTION_LENGTH">
 <span class="sig-name descname"><span class="pre">PREDICTION_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Force</span> <span class="pre">Prediction</span> <span class="pre">Length'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ForecastingDataSplitType.PREDICTION_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ForecastingDataSplitType.L_SHAPED_AUTO">
+<span class="sig-name descname"><span class="pre">L_SHAPED_AUTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'L-shaped</span> <span class="pre">Split</span> <span class="pre">-</span> <span class="pre">Automatic</span> <span class="pre">Time</span> <span class="pre">Based'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ForecastingDataSplitType.L_SHAPED_AUTO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ForecastingDataSplitType.L_SHAPED_TIMESTAMP">
+<span class="sig-name descname"><span class="pre">L_SHAPED_TIMESTAMP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'L-shaped</span> <span class="pre">Split</span> <span class="pre">-</span> <span class="pre">Timestamp</span> <span class="pre">Based'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ForecastingDataSplitType.L_SHAPED_TIMESTAMP" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2436,6 +2446,11 @@
 <span class="sig-name descname"><span class="pre">STRING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STRING'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType.STRING" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.WorkflowNodeOutputType.RUNTIME_SCHEMA">
+<span class="sig-name descname"><span class="pre">RUNTIME_SCHEMA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RUNTIME_SCHEMA'</span></em><a class="headerlink" href="#abacusai.api_class.enums.WorkflowNodeOutputType.RUNTIME_SCHEMA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -2665,47 +2680,82 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.api_class.enums.SegmentType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">SegmentType</span></span><a class="headerlink" href="#abacusai.api_class.enums.SegmentType" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">ResponseSectionType</span></span><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.enums.ApiEnum" title="abacusai.api_class.enums.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
 <p>Generic enumeration.</p>
 <p>Derive from this class to define new enumerations.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.enums.SegmentType.ATTACHMENTS">
-<span class="sig-name descname"><span class="pre">ATTACHMENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'attachments'</span></em><a class="headerlink" href="#abacusai.api_class.enums.SegmentType.ATTACHMENTS" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.AGENT_FLOW_BUTTON">
+<span class="sig-name descname"><span class="pre">AGENT_FLOW_BUTTON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'agent_flow_button'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.AGENT_FLOW_BUTTON" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.enums.SegmentType.AGENT_FLOW_BUTTON">
-<span class="sig-name descname"><span class="pre">AGENT_FLOW_BUTTON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'agent_flow_button'</span></em><a class="headerlink" href="#abacusai.api_class.enums.SegmentType.AGENT_FLOW_BUTTON" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.ATTACHMENTS">
+<span class="sig-name descname"><span class="pre">ATTACHMENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'attachments'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.ATTACHMENTS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.enums.SegmentType.IMAGE_URL">
-<span class="sig-name descname"><span class="pre">IMAGE_URL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'image_url'</span></em><a class="headerlink" href="#abacusai.api_class.enums.SegmentType.IMAGE_URL" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.BASE64_IMAGE">
+<span class="sig-name descname"><span class="pre">BASE64_IMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'base64_image'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.BASE64_IMAGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.enums.SegmentType.TEXT">
-<span class="sig-name descname"><span class="pre">TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'text'</span></em><a class="headerlink" href="#abacusai.api_class.enums.SegmentType.TEXT" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.CHART">
+<span class="sig-name descname"><span class="pre">CHART</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'chart'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.CHART" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.CODE">
+<span class="sig-name descname"><span class="pre">CODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'code'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.CODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.COLLAPSIBLE_COMPONENT">
+<span class="sig-name descname"><span class="pre">COLLAPSIBLE_COMPONENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'collapsible_component'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.COLLAPSIBLE_COMPONENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.IMAGE_URL">
+<span class="sig-name descname"><span class="pre">IMAGE_URL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'image_url'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.IMAGE_URL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.RUNTIME_SCHEMA">
+<span class="sig-name descname"><span class="pre">RUNTIME_SCHEMA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'runtime_schema'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.RUNTIME_SCHEMA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.LIST">
+<span class="sig-name descname"><span class="pre">LIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'list'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.LIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.TABLE">
+<span class="sig-name descname"><span class="pre">TABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'table'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.TABLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ResponseSectionType.TEXT">
+<span class="sig-name descname"><span class="pre">TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'text'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ResponseSectionType.TEXT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.api_class.enums.CodeSegmentLanguage">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">CodeSegmentLanguage</span></span><a class="headerlink" href="#abacusai.api_class.enums.CodeSegmentLanguage" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.enums.CodeLanguage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">CodeLanguage</span></span><a class="headerlink" href="#abacusai.api_class.enums.CodeLanguage" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.enums.ApiEnum" title="abacusai.api_class.enums.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
 <p>Generic enumeration.</p>
 <p>Derive from this class to define new enumerations.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.enums.CodeSegmentLanguage.PYTHON">
-<span class="sig-name descname"><span class="pre">PYTHON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'python'</span></em><a class="headerlink" href="#abacusai.api_class.enums.CodeSegmentLanguage.PYTHON" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.enums.CodeLanguage.PYTHON">
+<span class="sig-name descname"><span class="pre">PYTHON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'python'</span></em><a class="headerlink" href="#abacusai.api_class.enums.CodeLanguage.PYTHON" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.enums.CodeSegmentLanguage.SQL">
-<span class="sig-name descname"><span class="pre">SQL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sql'</span></em><a class="headerlink" href="#abacusai.api_class.enums.CodeSegmentLanguage.SQL" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.enums.CodeLanguage.SQL">
+<span class="sig-name descname"><span class="pre">SQL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sql'</span></em><a class="headerlink" href="#abacusai.api_class.enums.CodeLanguage.SQL" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

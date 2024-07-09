@@ -4,6 +4,7 @@ import os
 import re
 import string
 from enum import Enum
+from itertools import groupby
 from typing import IO, Callable, List
 
 
@@ -202,7 +203,15 @@ class DocstoreUtils:
     HEIGHT = 'height'
     WIDTH = 'width'
     METADATA = 'metadata'
+    PAGE = 'page'
+    BLOCK = 'block'
+    LINE = 'line'
     EXTRACTED_TEXT = 'extracted_text'
+    EMBEDDED_TEXT = 'embedded_text'
+    PAGE_MARKDOWN = 'page_markdown'
+    PAGE_LLM_OCR = 'page_llm_ocr'
+    PAGE_TABLE_TEXT = 'page_table_text'
+    MARKDOWN_FEATURES = 'markdown_features'
     DOCUMENT_PROCESSING_CONFIG = 'document_processing_config'
     DOCUMENT_PROCESSING_VERSION = 'document_processing_version'
 
@@ -354,31 +363,62 @@ class DocstoreUtils:
         # pages_df will have "doc_id" as column name which can be different from doc_id_column
         pages_df = pages_df.rename(columns={cls.DOC_ID: doc_id_column})
 
+        def tokens_to_pages(tokens: List[dict]) -> List[str]:
+            result = []
+            if not tokens:
+                return result
+            for _, page_tokens in groupby(sorted(tokens, key=lambda t: (t[cls.PAGE], t[cls.BLOCK], t[cls.LINE])), key=lambda t: t[cls.PAGE]):
+                blocks = []
+                for _, block_tokens in groupby(page_tokens, key=lambda t: t[cls.BLOCK]):
+                    lines = []
+                    for _, line_tokens in groupby(block_tokens, key=lambda t: t[cls.LINE]):
+                        lines += [' '.join(t[cls.CONTENT]
+                                           for t in line_tokens), '\n']
+                    if lines:
+                        lines.pop()
+                        blocks += [''.join(lines)]
+                if blocks:
+                    result.append('\n'.join(blocks))
+            return result
+
+        def combine_page_texts(pages_text: List[str]) -> str:
+            return '\n'.join(pages_text)
+
+        def tokens_to_text(tokens: List[dict]) -> str:
+            return combine_page_texts(tokens_to_pages(tokens))
+
         # Convert column with tokens per page (list of list) to column with Document format:
         # {TOKENS: [list of tokens in document], PAGES: [list of pages in document]}.
         # No need to sort as page_df is already sorted.
         def combine_doc_info(group):
-            pages = list(group[cls.PAGE_TEXT])
-            result = {cls.PAGES: pages}
-            if cls.TOKENS in group:
-                tokens = [tok for page_tokens in group[cls.TOKENS]
-                          if page_tokens for tok in page_tokens]
-                height_list = list(group[cls.HEIGHT])
-                width_list = list(group[cls.WIDTH])
-                metadata_list = [{'height': h, 'width': w, 'page': page_no}
-                                 for page_no, (h, w) in enumerate(zip(height_list, width_list))]
-                result.update(
-                    {cls.TOKENS: tokens, cls.METADATA: metadata_list})
-
-            if cls.EXTRACTED_TEXT in group:
-                pagewise_extracted_text = list(group[cls.EXTRACTED_TEXT])
-                result.update({cls.EXTRACTED_TEXT: pagewise_extracted_text})
-            elif cls.TOKENS in group:
-                pagewise_extracted_text = [' '.join([(token or {}).get(
-                    cls.CONTENT) or '' for token in page_tokens or []]) for page_tokens in group[cls.TOKENS]]
-                result.update({cls.EXTRACTED_TEXT: pagewise_extracted_text})
-
-            return result
+            page_infos = group.to_dict(orient='records')
+            document_data = {
+                cls.METADATA: [{cls.HEIGHT: page.get(cls.HEIGHT, None), cls.WIDTH: page.get(cls.WIDTH, None), cls.PAGE: page_no + 1, cls.MARKDOWN_FEATURES: page.get(cls.MARKDOWN_FEATURES)}
+                               for page_no, page in enumerate(page_infos)],
+                cls.TOKENS: [token for page in page_infos for token in page.get(cls.TOKENS) or []],
+                # default to embedded text
+                cls.PAGES: [page.get(cls.PAGE_TEXT) or '' for page in page_infos],
+                **({cls.DOC_ID: page_infos[0]} if cls.DOC_ID in page_infos[0] else {}),
+            }
+            document_data[cls.EMBEDDED_TEXT] = combine_page_texts(info.get(
+                cls.EMBEDDED_TEXT) or info.get(cls.PAGE_TEXT) or '' for info in page_infos)
+            page_texts = None
+            for k in [cls.PAGE_MARKDOWN, cls.PAGE_LLM_OCR, cls.PAGE_TABLE_TEXT]:
+                if k in page_infos[0] and not document_data.get(cls.PAGE_MARKDOWN):
+                    document_data[cls.PAGE_MARKDOWN] = page_texts = [
+                        page.get(k, '') for page in page_infos]
+                    break
+            if not page_texts and cls.EXTRACTED_TEXT in page_infos[0]:
+                page_texts = [page.get(cls.EXTRACTED_TEXT, '')
+                              for page in page_infos]
+            elif not page_texts and cls.TOKENS in page_infos[0]:
+                page_texts = [tokens_to_text(pg[cls.TOKENS])
+                              for pg in page_infos]
+            if page_texts:
+                document_data[cls.PAGES] = page_texts
+            page_texts = page_texts or ['' for _ in page_infos]
+            document_data[cls.EXTRACTED_TEXT] = combine_page_texts(page_texts)
+            return document_data
 
         doc_infos = pages_df.groupby(doc_id_column).apply(
             combine_doc_info).reset_index(name=document_column)

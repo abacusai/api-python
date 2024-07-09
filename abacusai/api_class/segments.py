@@ -34,16 +34,16 @@ class Attachment(ApiClass):
 
 
 @dataclasses.dataclass
-class Segment(ApiClass):
+class ResponseSection(ApiClass):
     """
-    A segment that an agent can return to render specific UI elements.
+    A response section that an agent can return to render specific UI elements.
 
     Args:
-        type (SegmentType): The type of the segment.
+        type (ResponseSectionType): The type of the response.
         id (str): The section key of the segment.
     """
 
-    type: enums.SegmentType
+    type: enums.ResponseSectionType
     id: str
 
     def to_dict(self):
@@ -51,9 +51,9 @@ class Segment(ApiClass):
 
 
 @dataclasses.dataclass
-class AttachmentsSegment(Segment):
+class AttachmentsResponseSection(ResponseSection):
     """
-    A segment that an agent can return to render attachments.
+    A response section that an agent can return to render attachments.
 
     Args:
         attachments (List[Attachment]): The list of attachments to be displayed.
@@ -62,7 +62,7 @@ class AttachmentsSegment(Segment):
     attachments: List[Attachment]
 
     def __init__(self, attachments: List[Attachment], section_key: str = None):
-        super().__init__(type=enums.SegmentType.ATTACHMENTS, id=section_key)
+        super().__init__(type=enums.ResponseSectionType.ATTACHMENTS, id=section_key)
         self.attachments = attachments
 
     def to_dict(self):
@@ -78,9 +78,9 @@ class AttachmentsSegment(Segment):
 
 
 @dataclasses.dataclass
-class AgentFlowButtonSegment(Segment):
+class AgentFlowButtonResponseSection(ResponseSection):
     """
-    A segment that an AI Agent can return to render a button.
+    A response section that an AI Agent can return to render a button.
 
     Args:
         label (str): The label of the button.
@@ -91,31 +91,37 @@ class AgentFlowButtonSegment(Segment):
     agent_workflow_node_name: str
 
     def __init__(self, label: str, agent_workflow_node_name: str, section_key: str = None):
-        super().__init__(type=enums.SegmentType.AGENT_FLOW_BUTTON, id=section_key)
+        super().__init__(type=enums.ResponseSectionType.AGENT_FLOW_BUTTON, id=section_key)
         self.label = label
         self.agent_workflow_node_name = agent_workflow_node_name
 
 
 @dataclasses.dataclass
-class ImageUrlSegment(Segment):
+class ImageUrlResponseSection(ResponseSection):
     """
-    A segment that an agent can return to render an image.
+    A response section that an agent can return to render an image.
 
     Args:
-        segment (str): The url of the image to be displayed.
+        url (str): The url of the image to be displayed.
+        height (int): The height of the image.
+        width (int): The width of the image.
     """
 
-    segment: str
+    url: str
+    height: int
+    width: int
 
-    def __init__(self, url: str, section_key: str = None):
-        super().__init__(type=enums.SegmentType.IMAGE_URL, id=section_key)
-        self.segment = url
+    def __init__(self, url: str, height: int, width: int, section_key: str = None):
+        super().__init__(type=enums.ResponseSectionType.IMAGE_URL, id=section_key)
+        self.url = url
+        self.height = height
+        self.width = width
 
 
 @dataclasses.dataclass
-class TextSegment(Segment):
+class TextResponseSection(ResponseSection):
     """
-    A segment that an agent can return to render text.
+    A response section that an agent can return to render text.
 
     Args:
         segment (str): The text to be displayed.
@@ -124,5 +130,119 @@ class TextSegment(Segment):
     segment: str
 
     def __init__(self, text: str, section_key: str = None):
-        super().__init__(type=enums.SegmentType.TEXT, id=section_key)
+        super().__init__(type=enums.ResponseSectionType.TEXT, id=section_key)
         self.segment = text
+
+
+@dataclasses.dataclass
+class RuntimeSchemaResponseSection(ResponseSection):
+    """
+    A segment that an agent can return to render json and ui schema for workflow nodes.
+    This is primarily to generate dynamic schema for subsequent workflow nodes.
+
+    Args:
+        json_schema (dict): json schema in RJSF format.
+        ui_schema (dict): ui schema in RJSF format.
+    """
+
+    json_schema: dict
+    ui_schema: dict
+
+    def __init__(self, json_schema: dict, ui_schema: dict = None, schema_prop: str = None):
+        super().__init__(type=enums.ResponseSectionType.RUNTIME_SCHEMA, id=schema_prop)
+        self.json_schema = json_schema
+        self.ui_schema = ui_schema or {}
+
+
+@dataclasses.dataclass
+class CodeResponseSection(ResponseSection):
+    """
+    A response section that an agent can return to render code.
+
+    Args:
+        code (str): The code to be displayed.
+        language (CodeLanguage): The language of the code.
+    """
+
+    code: str
+    language: enums.CodeLanguage
+
+    def __init__(self, code: str, language: enums.CodeLanguage, section_key: str = None):
+        super().__init__(enums.ResponseSectionType.CODE, id=section_key)
+        self.code = code
+        self.language = language
+
+
+@dataclasses.dataclass
+class Base64ImageResponseSection(ResponseSection):
+    """
+    A response section that an agent can return to render a base64 image.
+
+    Args:
+        b64_image (str): The base64 image to be displayed.
+    """
+
+    b64_image: str
+
+    def __init__(self, b64_image: str, section_key: str = None):
+        super().__init__(enums.ResponseSectionType.BASE64_IMAGE, id=section_key)
+        self.b64_image = b64_image
+
+
+@dataclasses.dataclass
+class CollapseResponseSection(ResponseSection):
+    """
+    A response section that an agent can return to render a collapsible component.
+
+    Args:
+        title (str): The title of the collapsible component.
+        content (ResponseSection): The response section constituting the content of collapsible component
+    """
+
+    title: str
+    content: ResponseSection
+
+    def __init__(self, title: str, content: ResponseSection, section_key: str = None):
+        super().__init__(enums.ResponseSectionType.COLLAPSIBLE_COMPONENT, id=section_key)  # Enum typos are hard to fix.
+        self.title = title
+        self.content = content
+
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'content': self.content.to_dict(),
+            'type': self.type.value,
+            'id': self.id
+        }
+
+
+@dataclasses.dataclass
+class ListResponseSection(ResponseSection):
+    """
+    A response section that an agent can return to render a list.
+
+    Args:
+        items (List[str]): The list items to be displayed.
+    """
+
+    items: List[str]
+
+    def __init__(self, items: List[str], section_key: str = None):
+        super().__init__(enums.ResponseSectionType.LIST, id=section_key)
+        self.items = items
+
+
+@dataclasses.dataclass
+class ChartResponseSection(ResponseSection):
+    """
+    A response section that an agent can return to render a chart.
+
+    Args:
+        chart (dict): The chart to be displayed.
+    """
+
+    chart: dict
+
+    def __init__(self, chart: dict, section_key: str = None):
+        super().__init__(enums.ResponseSectionType.CHART, id=section_key)
+        self.chart = chart

@@ -505,7 +505,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.3.7'
+      :value: '1.3.9'
 
 
 
@@ -3595,6 +3595,16 @@ Module Contents
 
 
 
+   .. py:method:: get_agent_context_user_info()
+
+      Gets information about the user interacting with the agent.
+      Applicable within a AIAgent execute function.
+
+      :returns: Containing email and name of the end user.
+      :rtype: dict
+
+
+
    .. py:method:: clear_agent_context()
 
       Clears the current request context.
@@ -3679,13 +3689,13 @@ Module Contents
 
 
 
-   .. py:method:: stream_segment(segment)
+   .. py:method:: stream_response_section(response_section)
 
-      Streams a segment to the current request context. Applicable within a AIAgent execute function.
-      If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
+      Streams a response section to the current request context. Applicable within a AIAgent execute function.
+      If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise returned as part of response if used from notebook or python script.
 
-      :param segment: The segment to be streamed.
-      :type segment: Segment
+      :param response_section: The response section to be streamed.
+      :type response_section: ResponseSection
 
 
 
@@ -9492,7 +9502,7 @@ Module Contents
 
 
 
-   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -9502,6 +9512,8 @@ Module Contents
       :type name: str
       :param memory: Overrides the default memory allocation (in GB) for the agent.
       :type memory: int
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
       :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
@@ -9510,13 +9522,15 @@ Module Contents
       :type workflow_graph: WorkflowGraph
       :param agent_interface: The interface that the agent will be deployed with.
       :type agent_interface: AgentInterface
+      :param included_modules: A list of user created custom modules to include in the agent's environment.
+      :type included_modules: List
 
       :returns: The new agent.
       :rtype: Agent
 
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -9524,12 +9538,16 @@ Module Contents
       :type model_id: str
       :param memory: Memory (in GB) for the agent.
       :type memory: int
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
       :param workflow_graph: The workflow graph for the agent.
       :type workflow_graph: WorkflowGraph
       :param agent_interface: The interface that the agent will be deployed with.
       :type agent_interface: AgentInterface
+      :param included_modules: A list of user created custom modules to include in the agent's environment.
+      :type included_modules: List
 
       :returns: The updated agent.
       :rtype: Agent

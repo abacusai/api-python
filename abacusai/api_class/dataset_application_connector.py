@@ -2,7 +2,7 @@ import dataclasses
 
 from . import enums
 from .abstract import _ApiClassFactory
-from .dataset import DatasetConfig
+from .dataset import DatasetConfig, DatasetDocumentProcessingConfig
 
 
 @dataclasses.dataclass
@@ -11,9 +11,11 @@ class ApplicationConnectorDatasetConfig(DatasetConfig):
     An abstract class for dataset configs specific to application connectors.
 
     Args:
-        application_connector_type(enums.ApplicationConnectorType): The type of application connector
+        application_connector_type (enums.ApplicationConnectorType): The type of application connector
+        document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True for the dataset.
     """
     application_connector_type: enums.ApplicationConnectorType = dataclasses.field(default=None, repr=False, init=False)
+    document_processing_config: DatasetDocumentProcessingConfig = dataclasses.field(default=None)
 
     @classmethod
     def _get_builder(cls):
@@ -34,7 +36,7 @@ class ConfluenceDatasetConfig(ApplicationConnectorDatasetConfig):
     location: str = dataclasses.field(default=None)
     pull_attachments: bool = dataclasses.field(default=False)
     space_key: str = dataclasses.field(default=None)
-    extract_bounding_boxes: bool = dataclasses.field(default=False)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.CONFLUENCE
@@ -71,7 +73,7 @@ class GoogleDriveDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
-    extract_bounding_boxes: bool = dataclasses.field(default=False)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
     merge_file_schemas: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
@@ -111,7 +113,7 @@ class OneDriveDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
-    extract_bounding_boxes: bool = dataclasses.field(default=False)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
     merge_file_schemas: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
@@ -131,7 +133,7 @@ class SharepointDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
-    extract_bounding_boxes: bool = dataclasses.field(default=False)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
     merge_file_schemas: bool = dataclasses.field(default=False)
 
     def __post_init__(self):

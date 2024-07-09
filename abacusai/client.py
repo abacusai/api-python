@@ -39,14 +39,14 @@ from .api_class import (
     ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
     MemorySize, MergeConfig, OperatorConfig, ParsingConfig,
     PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
-    PythonFunctionType, SamplingConfig, Segment,
+    PythonFunctionType, ResponseSection, SamplingConfig,
     StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
     WorkflowGraph, get_clean_function_source_code
 )
 from .api_class.abstract import get_clean_function_source_code, snake_case
 from .api_class.ai_agents import WorkflowGraph
 from .api_class.blob_input import Blob, BlobInput
-from .api_class.segments import Segment
+from .api_class.segments import ResponseSection
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, StreamType,
     clean_column_name, get_object_from_context
@@ -267,18 +267,18 @@ class AgentResponse:
         self.data_list = []
         self.section_data_list = []
         for arg in args:
-            if isinstance(arg, Blob) or _is_json_serializable(arg) or isinstance(arg, Segment):
+            if isinstance(arg, Blob) or _is_json_serializable(arg) or isinstance(arg, ResponseSection):
                 self.data_list.append(arg)
             else:
                 raise Exception(
-                    'AgentResponse can only contain Blob, Segment or json serializable objects')
+                    'AgentResponse can only contain Blob, ResponseSection or json serializable objects')
 
         for key, value in kwargs.items():
-            if isinstance(value, Blob) or _is_json_serializable(value) or isinstance(value, Segment):
+            if isinstance(value, Blob) or _is_json_serializable(value) or isinstance(value, ResponseSection):
                 self.section_data_list.append({key: value})
             else:
                 raise Exception(
-                    'AgentResponse can only contain Blob, Segment or json serializable objects')
+                    'AgentResponse can only contain Blob, ResponseSection or json serializable objects')
 
 
 class ClientOptions:
@@ -594,7 +594,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.3.7'
+    client_version = '1.3.9'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3664,6 +3664,16 @@ class ApiClient(ReadOnlyClient):
         """
         return get_object_from_context(self, _request_context, 'blob_inputs', List[BlobInput])
 
+    def get_agent_context_user_info(self):
+        """
+        Gets information about the user interacting with the agent.
+        Applicable within a AIAgent execute function.
+
+        Returns:
+            dict: Containing email and name of the end user.
+        """
+        return get_object_from_context(self, _request_context, 'user_info', dict)
+
     def clear_agent_context(self):
         """
         Clears the current request context.
@@ -3775,19 +3785,19 @@ class ApiClient(ReadOnlyClient):
                 request_id, caller, message=value, message_args=message_args, extra_args=extra_args, proxy_caller=proxy_caller)
         return StreamingHandler(value, _request_context, section_key=section_key)
 
-    def stream_segment(self, segment: Segment):
+    def stream_response_section(self, response_section: ResponseSection):
         """
-        Streams a segment to the current request context. Applicable within a AIAgent execute function.
-        If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
+        Streams a response section to the current request context. Applicable within a AIAgent execute function.
+        If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise returned as part of response if used from notebook or python script.
 
         Args:
-            segment (Segment): The segment to be streamed.
+            response_section (ResponseSection): The response section to be streamed.
         """
         request_id = self._get_agent_app_request_id()
         caller = self._get_agent_async_app_caller()
         proxy_caller = self._is_proxy_app_caller()
         if request_id and caller:
-            segment = segment.to_dict()
+            segment = response_section.to_dict()
             extra_args = {'stream_type': StreamType.SEGMENT.value}
             if hasattr(_request_context, 'agent_workflow_node_id'):
                 extra_args.update(
@@ -8163,35 +8173,39 @@ Creates a new feature group defined as the union of other feature group versions
             external_application_id (str): The ID of the External Application."""
         return self._call_api('deleteExternalApplication', 'DELETE', query_params={'externalApplicationId': external_application_id})
 
-    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT) -> Agent:
+    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None) -> Agent:
         """Creates a new AI agent using the given agent workflow graph definition.
 
         Args:
             project_id (str): The unique ID associated with the project.
             name (str): The name you want your agent to have, defaults to "<Project Name> Agent".
             memory (int): Overrides the default memory allocation (in GB) for the agent.
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             description (str): A description of the agent, including its purpose and instructions.
             evaluation_feature_group_id (str): The ID of the feature group to use for evaluation.
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
+            included_modules (List): A list of user created custom modules to include in the agent's environment.
 
         Returns:
             Agent: The new agent."""
-        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface}, parse_type=Agent)
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules}, parse_type=Agent)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None) -> Agent:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None) -> Agent:
         """Updates an existing AI Agent. A new version of the agent will be created and published.
 
         Args:
             model_id (str): The unique ID associated with the AI Agent to be changed.
             memory (int): Memory (in GB) for the agent.
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             description (str): A description of the agent, including its purpose and instructions.
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
+            included_modules (List): A list of user created custom modules to include in the agent's environment.
 
         Returns:
             Agent: The updated agent."""
-        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface}, parse_type=Agent)
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules}, parse_type=Agent)
 
     def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.

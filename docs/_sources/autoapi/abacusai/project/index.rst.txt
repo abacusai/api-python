@@ -703,7 +703,7 @@ Module Contents
 
 
 
-   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT)
+   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -711,6 +711,8 @@ Module Contents
       :type name: str
       :param memory: Overrides the default memory allocation (in GB) for the agent.
       :type memory: int
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
       :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
@@ -719,6 +721,8 @@ Module Contents
       :type workflow_graph: WorkflowGraph
       :param agent_interface: The interface that the agent will be deployed with.
       :type agent_interface: AgentInterface
+      :param included_modules: A list of user created custom modules to include in the agent's environment.
+      :type included_modules: List
 
       :returns: The new agent.
       :rtype: Agent

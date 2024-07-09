@@ -291,8 +291,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema.json_schema"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema.json_schema</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema.ui_schema"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema.ui_schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema.schema_source"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema.schema_source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema.schema_prop"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema.schema_prop</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema.runtime_schema"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema.runtime_schema</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema.to_dict"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema.to_dict()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema.from_dict"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema.from_workflow_node"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema.from_workflow_node()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.WorkflowNodeOutputSchema"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeOutputSchema</span></code></a><ul>
@@ -507,6 +511,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.ApplicationConnectorDatasetConfig"><code class="docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApplicationConnectorDatasetConfig.application_connector_type"><code class="docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig.application_connector_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApplicationConnectorDatasetConfig.document_processing_config"><code class="docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig.document_processing_config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApplicationConnectorDatasetConfig._get_builder"><code class="docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig._get_builder()</span></code></a></li>
 </ul>
 </li>
@@ -909,6 +914,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ForecastingDataSplitType.TIMESTAMP"><code class="docutils literal notranslate"><span class="pre">ForecastingDataSplitType.TIMESTAMP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ForecastingDataSplitType.ITEM"><code class="docutils literal notranslate"><span class="pre">ForecastingDataSplitType.ITEM</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ForecastingDataSplitType.PREDICTION_LENGTH"><code class="docutils literal notranslate"><span class="pre">ForecastingDataSplitType.PREDICTION_LENGTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ForecastingDataSplitType.L_SHAPED_AUTO"><code class="docutils literal notranslate"><span class="pre">ForecastingDataSplitType.L_SHAPED_AUTO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ForecastingDataSplitType.L_SHAPED_TIMESTAMP"><code class="docutils literal notranslate"><span class="pre">ForecastingDataSplitType.L_SHAPED_TIMESTAMP</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.ForecastingLossFunction"><code class="docutils literal notranslate"><span class="pre">ForecastingLossFunction</span></code></a><ul>
@@ -1166,6 +1173,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeOutputType.DICT"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeOutputType.DICT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeOutputType.LIST"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeOutputType.LIST</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeOutputType.STRING"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeOutputType.STRING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.WorkflowNodeOutputType.RUNTIME_SCHEMA"><code class="docutils literal notranslate"><span class="pre">WorkflowNodeOutputType.RUNTIME_SCHEMA</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.StdDevThresholdType"><code class="docutils literal notranslate"><span class="pre">StdDevThresholdType</span></code></a><ul>
@@ -1212,16 +1220,23 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.MemorySize.from_value"><code class="docutils literal notranslate"><span class="pre">MemorySize.from_value()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abacusai.SegmentType"><code class="docutils literal notranslate"><span class="pre">SegmentType</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.SegmentType.ATTACHMENTS"><code class="docutils literal notranslate"><span class="pre">SegmentType.ATTACHMENTS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.SegmentType.AGENT_FLOW_BUTTON"><code class="docutils literal notranslate"><span class="pre">SegmentType.AGENT_FLOW_BUTTON</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.SegmentType.IMAGE_URL"><code class="docutils literal notranslate"><span class="pre">SegmentType.IMAGE_URL</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.SegmentType.TEXT"><code class="docutils literal notranslate"><span class="pre">SegmentType.TEXT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.ResponseSectionType"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.AGENT_FLOW_BUTTON"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.AGENT_FLOW_BUTTON</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.ATTACHMENTS"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.ATTACHMENTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.BASE64_IMAGE"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.BASE64_IMAGE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.CHART"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.CHART</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.CODE"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.CODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.COLLAPSIBLE_COMPONENT"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.COLLAPSIBLE_COMPONENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.IMAGE_URL"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.IMAGE_URL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.RUNTIME_SCHEMA"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.RUNTIME_SCHEMA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.LIST"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.LIST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.TABLE"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.TABLE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSectionType.TEXT"><code class="docutils literal notranslate"><span class="pre">ResponseSectionType.TEXT</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abacusai.CodeSegmentLanguage"><code class="docutils literal notranslate"><span class="pre">CodeSegmentLanguage</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.CodeSegmentLanguage.PYTHON"><code class="docutils literal notranslate"><span class="pre">CodeSegmentLanguage.PYTHON</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.CodeSegmentLanguage.SQL"><code class="docutils literal notranslate"><span class="pre">CodeSegmentLanguage.SQL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.CodeLanguage"><code class="docutils literal notranslate"><span class="pre">CodeLanguage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.CodeLanguage.PYTHON"><code class="docutils literal notranslate"><span class="pre">CodeLanguage.PYTHON</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.CodeLanguage.SQL"><code class="docutils literal notranslate"><span class="pre">CodeLanguage.SQL</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.SamplingConfig"><code class="docutils literal notranslate"><span class="pre">SamplingConfig</span></code></a><ul>
@@ -1526,7 +1541,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.max_search_results"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.max_search_results</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.data_feature_group_ids"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.data_feature_group_ids</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.data_prompt_context"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.data_prompt_context</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.hide_generated_sql"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.hide_generated_sql</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.hide_sql_and_code"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.hide_sql_and_code</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.disable_data_summarization"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.disable_data_summarization</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.search_score_cutoff"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.search_score_cutoff</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.include_bm25_retrieval"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.include_bm25_retrieval</span></code></a></li>
@@ -1535,6 +1550,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.enable_code_execution"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.enable_code_execution</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.metadata_columns"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.metadata_columns</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.lookup_rewrite_instructions"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.lookup_rewrite_instructions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.enable_response_caching"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.enable_response_caching</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.__post_init__()</span></code></a></li>
 </ul>
 </li>
@@ -1884,29 +1900,59 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.Attachment.from_dict"><code class="docutils literal notranslate"><span class="pre">Attachment.from_dict()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abacusai.Segment"><code class="docutils literal notranslate"><span class="pre">Segment</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.Segment.type"><code class="docutils literal notranslate"><span class="pre">Segment.type</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.Segment.id"><code class="docutils literal notranslate"><span class="pre">Segment.id</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.Segment.to_dict"><code class="docutils literal notranslate"><span class="pre">Segment.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.ResponseSection"><code class="docutils literal notranslate"><span class="pre">ResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSection.type"><code class="docutils literal notranslate"><span class="pre">ResponseSection.type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSection.id"><code class="docutils literal notranslate"><span class="pre">ResponseSection.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ResponseSection.to_dict"><code class="docutils literal notranslate"><span class="pre">ResponseSection.to_dict()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abacusai.AttachmentsSegment"><code class="docutils literal notranslate"><span class="pre">AttachmentsSegment</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.AttachmentsSegment.attachments"><code class="docutils literal notranslate"><span class="pre">AttachmentsSegment.attachments</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.AttachmentsSegment.to_dict"><code class="docutils literal notranslate"><span class="pre">AttachmentsSegment.to_dict()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.AttachmentsSegment.from_dict"><code class="docutils literal notranslate"><span class="pre">AttachmentsSegment.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.AttachmentsResponseSection"><code class="docutils literal notranslate"><span class="pre">AttachmentsResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.AttachmentsResponseSection.attachments"><code class="docutils literal notranslate"><span class="pre">AttachmentsResponseSection.attachments</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.AttachmentsResponseSection.to_dict"><code class="docutils literal notranslate"><span class="pre">AttachmentsResponseSection.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.AttachmentsResponseSection.from_dict"><code class="docutils literal notranslate"><span class="pre">AttachmentsResponseSection.from_dict()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abacusai.AgentFlowButtonSegment"><code class="docutils literal notranslate"><span class="pre">AgentFlowButtonSegment</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.AgentFlowButtonSegment.label"><code class="docutils literal notranslate"><span class="pre">AgentFlowButtonSegment.label</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.AgentFlowButtonSegment.agent_workflow_node_name"><code class="docutils literal notranslate"><span class="pre">AgentFlowButtonSegment.agent_workflow_node_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.AgentFlowButtonResponseSection"><code class="docutils literal notranslate"><span class="pre">AgentFlowButtonResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.AgentFlowButtonResponseSection.label"><code class="docutils literal notranslate"><span class="pre">AgentFlowButtonResponseSection.label</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.AgentFlowButtonResponseSection.agent_workflow_node_name"><code class="docutils literal notranslate"><span class="pre">AgentFlowButtonResponseSection.agent_workflow_node_name</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abacusai.ImageUrlSegment"><code class="docutils literal notranslate"><span class="pre">ImageUrlSegment</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.ImageUrlSegment.segment"><code class="docutils literal notranslate"><span class="pre">ImageUrlSegment.segment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.ImageUrlResponseSection"><code class="docutils literal notranslate"><span class="pre">ImageUrlResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ImageUrlResponseSection.url"><code class="docutils literal notranslate"><span class="pre">ImageUrlResponseSection.url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ImageUrlResponseSection.height"><code class="docutils literal notranslate"><span class="pre">ImageUrlResponseSection.height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ImageUrlResponseSection.width"><code class="docutils literal notranslate"><span class="pre">ImageUrlResponseSection.width</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abacusai.TextSegment"><code class="docutils literal notranslate"><span class="pre">TextSegment</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.TextSegment.segment"><code class="docutils literal notranslate"><span class="pre">TextSegment.segment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.TextResponseSection"><code class="docutils literal notranslate"><span class="pre">TextResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.TextResponseSection.segment"><code class="docutils literal notranslate"><span class="pre">TextResponseSection.segment</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.RuntimeSchemaResponseSection"><code class="docutils literal notranslate"><span class="pre">RuntimeSchemaResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.RuntimeSchemaResponseSection.json_schema"><code class="docutils literal notranslate"><span class="pre">RuntimeSchemaResponseSection.json_schema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.RuntimeSchemaResponseSection.ui_schema"><code class="docutils literal notranslate"><span class="pre">RuntimeSchemaResponseSection.ui_schema</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.CodeResponseSection"><code class="docutils literal notranslate"><span class="pre">CodeResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.CodeResponseSection.code"><code class="docutils literal notranslate"><span class="pre">CodeResponseSection.code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.CodeResponseSection.language"><code class="docutils literal notranslate"><span class="pre">CodeResponseSection.language</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.Base64ImageResponseSection"><code class="docutils literal notranslate"><span class="pre">Base64ImageResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.Base64ImageResponseSection.b64_image"><code class="docutils literal notranslate"><span class="pre">Base64ImageResponseSection.b64_image</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.CollapseResponseSection"><code class="docutils literal notranslate"><span class="pre">CollapseResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.CollapseResponseSection.title"><code class="docutils literal notranslate"><span class="pre">CollapseResponseSection.title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.CollapseResponseSection.content"><code class="docutils literal notranslate"><span class="pre">CollapseResponseSection.content</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.CollapseResponseSection.to_dict"><code class="docutils literal notranslate"><span class="pre">CollapseResponseSection.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.ListResponseSection"><code class="docutils literal notranslate"><span class="pre">ListResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ListResponseSection.items"><code class="docutils literal notranslate"><span class="pre">ListResponseSection.items</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.ChartResponseSection"><code class="docutils literal notranslate"><span class="pre">ChartResponseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ChartResponseSection.chart"><code class="docutils literal notranslate"><span class="pre">ChartResponseSection.chart</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.AgentResponse"><code class="docutils literal notranslate"><span class="pre">AgentResponse</span></code></a></li>
@@ -1952,6 +1998,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.get_agent_context_doc_infos"><code class="docutils literal notranslate"><span class="pre">ApiClient.get_agent_context_doc_infos()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.set_agent_context_doc_infos"><code class="docutils literal notranslate"><span class="pre">ApiClient.set_agent_context_doc_infos()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.get_agent_context_blob_inputs"><code class="docutils literal notranslate"><span class="pre">ApiClient.get_agent_context_blob_inputs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.get_agent_context_user_info"><code class="docutils literal notranslate"><span class="pre">ApiClient.get_agent_context_user_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.clear_agent_context"><code class="docutils literal notranslate"><span class="pre">ApiClient.clear_agent_context()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.streaming_evaluate_prompt"><code class="docutils literal notranslate"><span class="pre">ApiClient.streaming_evaluate_prompt()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient._get_agent_app_request_id"><code class="docutils literal notranslate"><span class="pre">ApiClient._get_agent_app_request_id()</span></code></a></li>
@@ -1959,7 +2006,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient._is_proxy_app_caller"><code class="docutils literal notranslate"><span class="pre">ApiClient._is_proxy_app_caller()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.stream_message"><code class="docutils literal notranslate"><span class="pre">ApiClient.stream_message()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.stream_section_output"><code class="docutils literal notranslate"><span class="pre">ApiClient.stream_section_output()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.stream_segment"><code class="docutils literal notranslate"><span class="pre">ApiClient.stream_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.stream_response_section"><code class="docutils literal notranslate"><span class="pre">ApiClient.stream_response_section()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient._stream_llm_call"><code class="docutils literal notranslate"><span class="pre">ApiClient._stream_llm_call()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient._call_aiagent_app_send_message"><code class="docutils literal notranslate"><span class="pre">ApiClient._call_aiagent_app_send_message()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient._status_poll"><code class="docutils literal notranslate"><span class="pre">ApiClient._status_poll()</span></code></a></li>
@@ -2872,7 +2919,7 @@
 <td><p>Configs for vector store indexing.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.WorkflowNodeInputSchema" title="abacusai.WorkflowNodeInputSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema</span></code></a></p></td>
-<td><p>A react-jsonschema-form conformant schema for workflow node input.</p></td>
+<td><p>A react-jsonschema-form conformant schema for workflow node input. To initialize a WorkflowNodeInputSchema dependent on another node's output, use from_workflow_node method.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.WorkflowNodeOutputSchema" title="abacusai.WorkflowNodeOutputSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeOutputSchema</span></code></a></p></td>
 <td><p>A react-jsonschema-form schema for a workflow node output.</p></td>
@@ -3213,10 +3260,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.MemorySize" title="abacusai.MemorySize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemorySize</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.SegmentType" title="abacusai.SegmentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SegmentType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ResponseSectionType" title="abacusai.ResponseSectionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSectionType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.CodeSegmentLanguage" title="abacusai.CodeSegmentLanguage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeSegmentLanguage</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.CodeLanguage" title="abacusai.CodeLanguage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeLanguage</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.SamplingConfig" title="abacusai.SamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfig</span></code></a></p></td>
@@ -3432,20 +3479,38 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.Attachment" title="abacusai.Attachment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Attachment</span></code></a></p></td>
 <td><p>An attachment that an agent can return to render attachments.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.Segment" title="abacusai.Segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segment</span></code></a></p></td>
-<td><p>A segment that an agent can return to render specific UI elements.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render specific UI elements.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.AttachmentsSegment" title="abacusai.AttachmentsSegment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AttachmentsSegment</span></code></a></p></td>
-<td><p>A segment that an agent can return to render attachments.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.AttachmentsResponseSection" title="abacusai.AttachmentsResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AttachmentsResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render attachments.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AgentFlowButtonSegment" title="abacusai.AgentFlowButtonSegment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentFlowButtonSegment</span></code></a></p></td>
-<td><p>A segment that an AI Agent can return to render a button.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AgentFlowButtonResponseSection" title="abacusai.AgentFlowButtonResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentFlowButtonResponseSection</span></code></a></p></td>
+<td><p>A response section that an AI Agent can return to render a button.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ImageUrlSegment" title="abacusai.ImageUrlSegment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageUrlSegment</span></code></a></p></td>
-<td><p>A segment that an agent can return to render an image.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ImageUrlResponseSection" title="abacusai.ImageUrlResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageUrlResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render an image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.TextSegment" title="abacusai.TextSegment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextSegment</span></code></a></p></td>
-<td><p>A segment that an agent can return to render text.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.TextResponseSection" title="abacusai.TextResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render text.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.RuntimeSchemaResponseSection" title="abacusai.RuntimeSchemaResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeSchemaResponseSection</span></code></a></p></td>
+<td><p>A segment that an agent can return to render json and ui schema for workflow nodes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.CodeResponseSection" title="abacusai.CodeResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render code.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.Base64ImageResponseSection" title="abacusai.Base64ImageResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Base64ImageResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render a base64 image.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.CollapseResponseSection" title="abacusai.CollapseResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CollapseResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render a collapsible component.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ListResponseSection" title="abacusai.ListResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ListResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render a list.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ChartResponseSection" title="abacusai.ChartResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChartResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render a chart.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.AgentResponse" title="abacusai.AgentResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentResponse</span></code></a></p></td>
 <td><p>Response object for agent to support attachments, section data and normal data</p></td>
@@ -3647,7 +3712,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dt class="sig sig-object py" id="abacusai.WorkflowNodeInputSchema">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">WorkflowNodeInputSchema</span></span><a class="headerlink" href="#abacusai.WorkflowNodeInputSchema" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="api_class/abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>A react-jsonschema-form conformant schema for workflow node input.</p>
+<p>A react-jsonschema-form conformant schema for workflow node input. To initialize a WorkflowNodeInputSchema dependent on another node’s output, use from_workflow_node method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -3666,6 +3731,21 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <span class="sig-name descname"><span class="pre">ui_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.WorkflowNodeInputSchema.ui_schema" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.WorkflowNodeInputSchema.schema_source">
+<span class="sig-name descname"><span class="pre">schema_source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.WorkflowNodeInputSchema.schema_source" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.WorkflowNodeInputSchema.schema_prop">
+<span class="sig-name descname"><span class="pre">schema_prop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.WorkflowNodeInputSchema.schema_prop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.WorkflowNodeInputSchema.runtime_schema">
+<span class="sig-name descname"><span class="pre">runtime_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.WorkflowNodeInputSchema.runtime_schema" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.WorkflowNodeInputSchema.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.WorkflowNodeInputSchema.to_dict" title="Link to this definition"></a></dt>
@@ -3680,6 +3760,20 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.WorkflowNodeInputSchema.from_workflow_node">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_workflow_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_prop</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.WorkflowNodeInputSchema.from_workflow_node" title="Link to this definition"></a></dt>
+<dd><p>Creates a WorkflowNodeInputSchema instance which references the schema generated by a WorkflowGraphNode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>schema_source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the source WorkflowGraphNode.</p></li>
+<li><p><strong>schema_prop</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the input schema parameter which source node outputs.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -3824,7 +3918,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.WorkflowGraphNode">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraphNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.WorkflowGraphNode" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraphNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.WorkflowGraphNode" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="api_class/abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
 <p>A node in an Agent workflow graph.</p>
 <dl class="field-list simple">
@@ -3836,7 +3930,6 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <li><p><strong>function</strong> (<em>callable</em>) – The callable node function reference.</p></li>
 <li><p><strong>input_schema</strong> (<a class="reference internal" href="#abacusai.WorkflowNodeInputSchema" title="abacusai.WorkflowNodeInputSchema"><em>WorkflowNodeInputSchema</em></a>) – The react json schema for the user input variables.</p></li>
 <li><p><strong>output_schema</strong> (<a class="reference internal" href="#abacusai.WorkflowNodeOutputSchema" title="abacusai.WorkflowNodeOutputSchema"><em>WorkflowNodeOutputSchema</em></a>) – The react json schema for the output to be shown on UI.</p></li>
-<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of package requirements for the node.</p></li>
 <li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
 <li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
 </ul>
@@ -4808,12 +4901,20 @@ inheritance.</p>
 <p>An abstract class for dataset configs specific to application connectors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>application_connector_type</strong> (<a class="reference internal" href="api_class/enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><em>enums.ApplicationConnectorType</em></a>) – The type of application connector</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>application_connector_type</strong> (<a class="reference internal" href="api_class/enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><em>enums.ApplicationConnectorType</em></a>) – The type of application connector</p></li>
+<li><p><strong>document_processing_config</strong> (<a class="reference internal" href="#abacusai.DatasetDocumentProcessingConfig" title="abacusai.DatasetDocumentProcessingConfig"><em>DatasetDocumentProcessingConfig</em></a>) – The document processing configuration. Only valid if is_documentset is True for the dataset.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.ApplicationConnectorDatasetConfig.application_connector_type">
 <span class="sig-name descname"><span class="pre">application_connector_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="api_class/enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><span class="pre">abacusai.api_class.enums.ApplicationConnectorType</span></a></em><a class="headerlink" href="#abacusai.ApplicationConnectorDatasetConfig.application_connector_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ApplicationConnectorDatasetConfig.document_processing_config">
+<span class="sig-name descname"><span class="pre">document_processing_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="api_class/dataset/index.html#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><span class="pre">abacusai.api_class.dataset.DatasetDocumentProcessingConfig</span></a></em><a class="headerlink" href="#abacusai.ApplicationConnectorDatasetConfig.document_processing_config" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -6639,6 +6740,16 @@ inheritance.</p>
 <span class="sig-name descname"><span class="pre">PREDICTION_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Force</span> <span class="pre">Prediction</span> <span class="pre">Length'</span></em><a class="headerlink" href="#abacusai.ForecastingDataSplitType.PREDICTION_LENGTH" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ForecastingDataSplitType.L_SHAPED_AUTO">
+<span class="sig-name descname"><span class="pre">L_SHAPED_AUTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'L-shaped</span> <span class="pre">Split</span> <span class="pre">-</span> <span class="pre">Automatic</span> <span class="pre">Time</span> <span class="pre">Based'</span></em><a class="headerlink" href="#abacusai.ForecastingDataSplitType.L_SHAPED_AUTO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ForecastingDataSplitType.L_SHAPED_TIMESTAMP">
+<span class="sig-name descname"><span class="pre">L_SHAPED_TIMESTAMP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'L-shaped</span> <span class="pre">Split</span> <span class="pre">-</span> <span class="pre">Timestamp</span> <span class="pre">Based'</span></em><a class="headerlink" href="#abacusai.ForecastingDataSplitType.L_SHAPED_TIMESTAMP" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -7728,6 +7839,11 @@ inheritance.</p>
 <span class="sig-name descname"><span class="pre">STRING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STRING'</span></em><a class="headerlink" href="#abacusai.WorkflowNodeOutputType.STRING" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.WorkflowNodeOutputType.RUNTIME_SCHEMA">
+<span class="sig-name descname"><span class="pre">RUNTIME_SCHEMA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RUNTIME_SCHEMA'</span></em><a class="headerlink" href="#abacusai.WorkflowNodeOutputType.RUNTIME_SCHEMA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -7909,47 +8025,82 @@ inheritance.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.SegmentType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">SegmentType</span></span><a class="headerlink" href="#abacusai.SegmentType" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ResponseSectionType</span></span><a class="headerlink" href="#abacusai.ResponseSectionType" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.ApiEnum" title="abacusai.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
 <p>Generic enumeration.</p>
 <p>Derive from this class to define new enumerations.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.SegmentType.ATTACHMENTS">
-<span class="sig-name descname"><span class="pre">ATTACHMENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'attachments'</span></em><a class="headerlink" href="#abacusai.SegmentType.ATTACHMENTS" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.AGENT_FLOW_BUTTON">
+<span class="sig-name descname"><span class="pre">AGENT_FLOW_BUTTON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'agent_flow_button'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.AGENT_FLOW_BUTTON" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.SegmentType.AGENT_FLOW_BUTTON">
-<span class="sig-name descname"><span class="pre">AGENT_FLOW_BUTTON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'agent_flow_button'</span></em><a class="headerlink" href="#abacusai.SegmentType.AGENT_FLOW_BUTTON" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.ATTACHMENTS">
+<span class="sig-name descname"><span class="pre">ATTACHMENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'attachments'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.ATTACHMENTS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.SegmentType.IMAGE_URL">
-<span class="sig-name descname"><span class="pre">IMAGE_URL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'image_url'</span></em><a class="headerlink" href="#abacusai.SegmentType.IMAGE_URL" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.BASE64_IMAGE">
+<span class="sig-name descname"><span class="pre">BASE64_IMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'base64_image'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.BASE64_IMAGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.SegmentType.TEXT">
-<span class="sig-name descname"><span class="pre">TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'text'</span></em><a class="headerlink" href="#abacusai.SegmentType.TEXT" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.CHART">
+<span class="sig-name descname"><span class="pre">CHART</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'chart'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.CHART" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.CODE">
+<span class="sig-name descname"><span class="pre">CODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'code'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.CODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.COLLAPSIBLE_COMPONENT">
+<span class="sig-name descname"><span class="pre">COLLAPSIBLE_COMPONENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'collapsible_component'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.COLLAPSIBLE_COMPONENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.IMAGE_URL">
+<span class="sig-name descname"><span class="pre">IMAGE_URL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'image_url'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.IMAGE_URL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.RUNTIME_SCHEMA">
+<span class="sig-name descname"><span class="pre">RUNTIME_SCHEMA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'runtime_schema'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.RUNTIME_SCHEMA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.LIST">
+<span class="sig-name descname"><span class="pre">LIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'list'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.LIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.TABLE">
+<span class="sig-name descname"><span class="pre">TABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'table'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.TABLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ResponseSectionType.TEXT">
+<span class="sig-name descname"><span class="pre">TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'text'</span></em><a class="headerlink" href="#abacusai.ResponseSectionType.TEXT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.CodeSegmentLanguage">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">CodeSegmentLanguage</span></span><a class="headerlink" href="#abacusai.CodeSegmentLanguage" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.CodeLanguage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">CodeLanguage</span></span><a class="headerlink" href="#abacusai.CodeLanguage" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.ApiEnum" title="abacusai.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
 <p>Generic enumeration.</p>
 <p>Derive from this class to define new enumerations.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.CodeSegmentLanguage.PYTHON">
-<span class="sig-name descname"><span class="pre">PYTHON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'python'</span></em><a class="headerlink" href="#abacusai.CodeSegmentLanguage.PYTHON" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.CodeLanguage.PYTHON">
+<span class="sig-name descname"><span class="pre">PYTHON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'python'</span></em><a class="headerlink" href="#abacusai.CodeLanguage.PYTHON" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.CodeSegmentLanguage.SQL">
-<span class="sig-name descname"><span class="pre">SQL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sql'</span></em><a class="headerlink" href="#abacusai.CodeSegmentLanguage.SQL" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.CodeLanguage.SQL">
+<span class="sig-name descname"><span class="pre">SQL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sql'</span></em><a class="headerlink" href="#abacusai.CodeLanguage.SQL" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -9510,13 +9661,14 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>max_search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.</p></li>
 <li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.</p></li>
 <li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group IDs.</p></li>
-<li><p><strong>hide_generated_sql</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, hides the generated SQL in the response and will just return the table.</p></li>
+<li><p><strong>hide_sql_and_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, this will hide the generated SQL and Code in the response.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
 <li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Minimum search score to consider a document as a valid search result.</p></li>
 <li><p><strong>include_bm25_retrieval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Combine BM25 search score with vector search using reciprocal rank fusion.</p></li>
 <li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Database connector ID to use for the ChatLLM.</p></li>
 <li><p><strong>database_connector_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use from the database connector for the ChatLLM.</p></li>
 <li><p><strong>enable_code_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.</p></li>
+<li><p><strong>enable_response_caching</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable caching of LLM responses to speed up response times and improve reproducibility.</p></li>
 </ul>
 </dd>
 </dl>
@@ -9601,8 +9753,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.hide_generated_sql">
-<span class="sig-name descname"><span class="pre">hide_generated_sql</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.hide_generated_sql" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.hide_sql_and_code">
+<span class="sig-name descname"><span class="pre">hide_sql_and_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.hide_sql_and_code" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -9643,6 +9795,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.lookup_rewrite_instructions">
 <span class="sig-name descname"><span class="pre">lookup_rewrite_instructions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.lookup_rewrite_instructions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.enable_response_caching">
+<span class="sig-name descname"><span class="pre">enable_response_caching</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.enable_response_caching" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -11382,31 +11539,31 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.Segment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">Segment</span></span><a class="headerlink" href="#abacusai.Segment" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ResponseSection</span></span><a class="headerlink" href="#abacusai.ResponseSection" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="api_class/abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>A segment that an agent can return to render specific UI elements.</p>
+<p>A response section that an agent can return to render specific UI elements.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type</strong> (<a class="reference internal" href="#abacusai.SegmentType" title="abacusai.SegmentType"><em>SegmentType</em></a>) – The type of the segment.</p></li>
+<li><p><strong>type</strong> (<a class="reference internal" href="#abacusai.ResponseSectionType" title="abacusai.ResponseSectionType"><em>ResponseSectionType</em></a>) – The type of the response.</p></li>
 <li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The section key of the segment.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.Segment.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="api_class/enums/index.html#abacusai.api_class.enums.SegmentType" title="abacusai.api_class.enums.SegmentType"><span class="pre">abacusai.api_class.enums.SegmentType</span></a></em><a class="headerlink" href="#abacusai.Segment.type" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSection.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="api_class/enums/index.html#abacusai.api_class.enums.ResponseSectionType" title="abacusai.api_class.enums.ResponseSectionType"><span class="pre">abacusai.api_class.enums.ResponseSectionType</span></a></em><a class="headerlink" href="#abacusai.ResponseSection.type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.Segment.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.Segment.id" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSection.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.ResponseSection.id" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.Segment.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.Segment.to_dict" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ResponseSection.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ResponseSection.to_dict" title="Link to this definition"></a></dt>
 <dd><p>Standardizes converting an ApiClass to dictionary.
 Keys of response dictionary are converted to camel case.
 This also validates the fields ( type, value, etc ) received in the dictionary.</p>
@@ -11415,10 +11572,10 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.AttachmentsSegment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">AttachmentsSegment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attachments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AttachmentsSegment" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#abacusai.Segment" title="abacusai.Segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segment</span></code></a></p>
-<p>A segment that an agent can return to render attachments.</p>
+<dt class="sig sig-object py" id="abacusai.AttachmentsResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">AttachmentsResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attachments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AttachmentsResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render attachments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -11428,21 +11585,21 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.AttachmentsSegment.attachments">
-<span class="sig-name descname"><span class="pre">attachments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#abacusai.Attachment" title="abacusai.Attachment"><span class="pre">Attachment</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.AttachmentsSegment.attachments" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.AttachmentsResponseSection.attachments">
+<span class="sig-name descname"><span class="pre">attachments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#abacusai.Attachment" title="abacusai.Attachment"><span class="pre">Attachment</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.AttachmentsResponseSection.attachments" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.AttachmentsSegment.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AttachmentsSegment.to_dict" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.AttachmentsResponseSection.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AttachmentsResponseSection.to_dict" title="Link to this definition"></a></dt>
 <dd><p>Standardizes converting an ApiClass to dictionary.
 Keys of response dictionary are converted to camel case.
 This also validates the fields ( type, value, etc ) received in the dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.AttachmentsSegment.from_dict">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AttachmentsSegment.from_dict" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.AttachmentsResponseSection.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AttachmentsResponseSection.from_dict" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p>
@@ -11453,10 +11610,10 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.AgentFlowButtonSegment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">AgentFlowButtonSegment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_workflow_node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AgentFlowButtonSegment" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#abacusai.Segment" title="abacusai.Segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segment</span></code></a></p>
-<p>A segment that an AI Agent can return to render a button.</p>
+<dt class="sig sig-object py" id="abacusai.AgentFlowButtonResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">AgentFlowButtonResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_workflow_node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AgentFlowButtonResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an AI Agent can return to render a button.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -11467,43 +11624,54 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.AgentFlowButtonSegment.label">
-<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.AgentFlowButtonSegment.label" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.AgentFlowButtonResponseSection.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.AgentFlowButtonResponseSection.label" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.AgentFlowButtonSegment.agent_workflow_node_name">
-<span class="sig-name descname"><span class="pre">agent_workflow_node_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.AgentFlowButtonSegment.agent_workflow_node_name" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.AgentFlowButtonResponseSection.agent_workflow_node_name">
+<span class="sig-name descname"><span class="pre">agent_workflow_node_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.AgentFlowButtonResponseSection.agent_workflow_node_name" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.ImageUrlSegment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ImageUrlSegment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ImageUrlSegment" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#abacusai.Segment" title="abacusai.Segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segment</span></code></a></p>
-<p>A segment that an agent can return to render an image.</p>
+<dt class="sig sig-object py" id="abacusai.ImageUrlResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ImageUrlResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ImageUrlResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render an image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>segment</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The url of the image to be displayed.</p></li>
-<li><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The url of the image to be displayed.</p></li>
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The height of the image.</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The width of the image.</p></li>
 <li><p><strong>section_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.ImageUrlSegment.segment">
-<span class="sig-name descname"><span class="pre">segment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.ImageUrlSegment.segment" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ImageUrlResponseSection.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.ImageUrlResponseSection.url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ImageUrlResponseSection.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.ImageUrlResponseSection.height" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ImageUrlResponseSection.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.ImageUrlResponseSection.width" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.TextSegment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">TextSegment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.TextSegment" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#abacusai.Segment" title="abacusai.Segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segment</span></code></a></p>
-<p>A segment that an agent can return to render text.</p>
+<dt class="sig sig-object py" id="abacusai.TextResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">TextResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.TextResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -11514,8 +11682,155 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.TextSegment.segment">
-<span class="sig-name descname"><span class="pre">segment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.TextSegment.segment" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.TextResponseSection.segment">
+<span class="sig-name descname"><span class="pre">segment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.TextResponseSection.segment" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.RuntimeSchemaResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">RuntimeSchemaResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_schema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ui_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_prop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.RuntimeSchemaResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A segment that an agent can return to render json and ui schema for workflow nodes.
+This is primarily to generate dynamic schema for subsequent workflow nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – json schema in RJSF format.</p></li>
+<li><p><strong>ui_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – ui schema in RJSF format.</p></li>
+<li><p><strong>schema_prop</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.RuntimeSchemaResponseSection.json_schema">
+<span class="sig-name descname"><span class="pre">json_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.RuntimeSchemaResponseSection.json_schema" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.RuntimeSchemaResponseSection.ui_schema">
+<span class="sig-name descname"><span class="pre">ui_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.RuntimeSchemaResponseSection.ui_schema" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.CodeResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">CodeResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.CodeResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The code to be displayed.</p></li>
+<li><p><strong>language</strong> (<a class="reference internal" href="#abacusai.CodeLanguage" title="abacusai.CodeLanguage"><em>CodeLanguage</em></a>) – The language of the code.</p></li>
+<li><p><strong>section_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.CodeResponseSection.code">
+<span class="sig-name descname"><span class="pre">code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.CodeResponseSection.code" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.CodeResponseSection.language">
+<span class="sig-name descname"><span class="pre">language</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="api_class/enums/index.html#abacusai.api_class.enums.CodeLanguage" title="abacusai.api_class.enums.CodeLanguage"><span class="pre">abacusai.api_class.enums.CodeLanguage</span></a></em><a class="headerlink" href="#abacusai.CodeResponseSection.language" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.Base64ImageResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">Base64ImageResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b64_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.Base64ImageResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render a base64 image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>b64_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The base64 image to be displayed.</p></li>
+<li><p><strong>section_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.Base64ImageResponseSection.b64_image">
+<span class="sig-name descname"><span class="pre">b64_image</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.Base64ImageResponseSection.b64_image" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.CollapseResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">CollapseResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.CollapseResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render a collapsible component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The title of the collapsible component.</p></li>
+<li><p><strong>content</strong> (<a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><em>ResponseSection</em></a>) – The response section constituting the content of collapsible component</p></li>
+<li><p><strong>section_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.CollapseResponseSection.title">
+<span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.CollapseResponseSection.title" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.CollapseResponseSection.content">
+<span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><span class="pre">ResponseSection</span></a></em><a class="headerlink" href="#abacusai.CollapseResponseSection.content" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.CollapseResponseSection.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.CollapseResponseSection.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.ListResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ListResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ListResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>items</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – The list items to be displayed.</p></li>
+<li><p><strong>section_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ListResponseSection.items">
+<span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.ListResponseSection.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.ChartResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ChartResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ChartResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render a chart.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chart</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The chart to be displayed.</p></li>
+<li><p><strong>section_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ChartResponseSection.chart">
+<span class="sig-name descname"><span class="pre">chart</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.ChartResponseSection.chart" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -12345,6 +12660,21 @@ Applicable within a AIAgent execute function.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.get_agent_context_user_info">
+<span class="sig-name descname"><span class="pre">get_agent_context_user_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_agent_context_user_info" title="Link to this definition"></a></dt>
+<dd><p>Gets information about the user interacting with the agent.
+Applicable within a AIAgent execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Containing email and name of the end user.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.clear_agent_context">
 <span class="sig-name descname"><span class="pre">clear_agent_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.clear_agent_context" title="Link to this definition"></a></dt>
 <dd><p>Clears the current request context.</p>
@@ -12454,13 +12784,13 @@ If the request is from the abacus.ai app, the response will be streamed to the U
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.ApiClient.stream_segment">
-<span class="sig-name descname"><span class="pre">stream_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.stream_segment" title="Link to this definition"></a></dt>
-<dd><p>Streams a segment to the current request context. Applicable within a AIAgent execute function.
-If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.</p>
+<dt class="sig sig-object py" id="abacusai.ApiClient.stream_response_section">
+<span class="sig-name descname"><span class="pre">stream_response_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response_section</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.stream_response_section" title="Link to this definition"></a></dt>
+<dd><p>Streams a response section to the current request context. Applicable within a AIAgent execute function.
+If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise returned as part of response if used from notebook or python script.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>segment</strong> (<a class="reference internal" href="#abacusai.Segment" title="abacusai.Segment"><em>Segment</em></a>) – The segment to be streamed.</p>
+<dd class="field-odd"><p><strong>response_section</strong> (<a class="reference internal" href="#abacusai.ResponseSection" title="abacusai.ResponseSection"><em>ResponseSection</em></a>) – The response section to be streamed.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -19183,7 +19513,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.create_agent">
-<span class="sig-name descname"><span class="pre">create_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_binary_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation_feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_agent" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_binary_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation_feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">included_modules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_agent" title="Link to this definition"></a></dt>
 <dd><p>Creates a new AI agent using the given agent workflow graph definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -19191,13 +19521,14 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique ID associated with the project.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name you want your agent to have, defaults to “&lt;Project Name&gt; Agent”.</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Overrides the default memory allocation (in GB) for the agent.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A description of the agent, including its purpose and instructions.</p></li>
 <li><p><strong>evaluation_feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the feature group to use for evaluation.</p></li>
 <li><p><strong>workflow_graph</strong> (<a class="reference internal" href="#abacusai.WorkflowGraph" title="abacusai.WorkflowGraph"><em>WorkflowGraph</em></a>) – The workflow graph for the agent.</p></li>
 <li><p><strong>agent_interface</strong> (<a class="reference internal" href="#abacusai.AgentInterface" title="abacusai.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>included_modules</strong> (<em>List</em>) – A list of user created custom modules to include in the agent’s environment.</p></li>
 <li><p><strong>function_source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
 <li><p><strong>agent_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
-<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>)</p></li>
 <li><p><strong>enable_binary_input</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>)</p></li>
 <li><p><strong>agent_input_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
 <li><p><strong>agent_output_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
@@ -19214,19 +19545,20 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.update_agent">
-<span class="sig-name descname"><span class="pre">update_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_binary_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_agent" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_binary_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">included_modules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_agent" title="Link to this definition"></a></dt>
 <dd><p>Updates an existing AI Agent. A new version of the agent will be created and published.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique ID associated with the AI Agent to be changed.</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the agent.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A description of the agent, including its purpose and instructions.</p></li>
 <li><p><strong>workflow_graph</strong> (<a class="reference internal" href="#abacusai.WorkflowGraph" title="abacusai.WorkflowGraph"><em>WorkflowGraph</em></a>) – The workflow graph for the agent.</p></li>
 <li><p><strong>agent_interface</strong> (<a class="reference internal" href="#abacusai.AgentInterface" title="abacusai.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>included_modules</strong> (<em>List</em>) – A list of user created custom modules to include in the agent’s environment.</p></li>
 <li><p><strong>function_source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
 <li><p><strong>agent_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
-<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>)</p></li>
 <li><p><strong>enable_binary_input</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>)</p></li>
 <li><p><strong>agent_input_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
 <li><p><strong>agent_output_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
@@ -23957,7 +24289,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.3.7'</span></em><a class="headerlink" href="#abacusai.__version__" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.3.9'</span></em><a class="headerlink" href="#abacusai.__version__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

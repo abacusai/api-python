@@ -393,18 +393,22 @@ Module Contents
 
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
       :param memory: Memory (in GB) for the agent.
       :type memory: int
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
       :param workflow_graph: The workflow graph for the agent.
       :type workflow_graph: WorkflowGraph
       :param agent_interface: The interface that the agent will be deployed with.
       :type agent_interface: AgentInterface
+      :param included_modules: A list of user created custom modules to include in the agent's environment.
+      :type included_modules: List
 
       :returns: The updated agent.
       :rtype: Agent

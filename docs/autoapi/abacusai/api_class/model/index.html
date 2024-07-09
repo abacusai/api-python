@@ -1295,13 +1295,14 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>max_search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.</p></li>
 <li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.</p></li>
 <li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group IDs.</p></li>
-<li><p><strong>hide_generated_sql</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, hides the generated SQL in the response and will just return the table.</p></li>
+<li><p><strong>hide_sql_and_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, this will hide the generated SQL and Code in the response.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
 <li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Minimum search score to consider a document as a valid search result.</p></li>
 <li><p><strong>include_bm25_retrieval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Combine BM25 search score with vector search using reciprocal rank fusion.</p></li>
 <li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Database connector ID to use for the ChatLLM.</p></li>
 <li><p><strong>database_connector_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use from the database connector for the ChatLLM.</p></li>
 <li><p><strong>enable_code_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.</p></li>
+<li><p><strong>enable_response_caching</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable caching of LLM responses to speed up response times and improve reproducibility.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1386,8 +1387,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.hide_generated_sql">
-<span class="sig-name descname"><span class="pre">hide_generated_sql</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.hide_generated_sql" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.hide_sql_and_code">
+<span class="sig-name descname"><span class="pre">hide_sql_and_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.hide_sql_and_code" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1428,6 +1429,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.lookup_rewrite_instructions">
 <span class="sig-name descname"><span class="pre">lookup_rewrite_instructions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.lookup_rewrite_instructions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.enable_response_caching">
+<span class="sig-name descname"><span class="pre">enable_response_caching</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.enable_response_caching" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

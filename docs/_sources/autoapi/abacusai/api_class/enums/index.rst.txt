@@ -70,8 +70,8 @@ Classes
    abacusai.api_class.enums.ProjectConfigType
    abacusai.api_class.enums.CPUSize
    abacusai.api_class.enums.MemorySize
-   abacusai.api_class.enums.SegmentType
-   abacusai.api_class.enums.CodeSegmentLanguage
+   abacusai.api_class.enums.ResponseSectionType
+   abacusai.api_class.enums.CodeLanguage
 
 
 Module Contents
@@ -1146,6 +1146,16 @@ Module Contents
 
    .. py:attribute:: PREDICTION_LENGTH
       :value: 'Force Prediction Length'
+
+
+
+   .. py:attribute:: L_SHAPED_AUTO
+      :value: 'L-shaped Split - Automatic Time Based'
+
+
+
+   .. py:attribute:: L_SHAPED_TIMESTAMP
+      :value: 'L-shaped Split - Timestamp Based'
 
 
 
@@ -2329,6 +2339,11 @@ Module Contents
 
 
 
+   .. py:attribute:: RUNTIME_SCHEMA
+      :value: 'RUNTIME_SCHEMA'
+
+
+
 .. py:class:: OcrMode
 
    Bases: :py:obj:`ApiEnum`
@@ -2569,7 +2584,7 @@ Module Contents
 
 
 
-.. py:class:: SegmentType
+.. py:class:: ResponseSectionType
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2579,13 +2594,33 @@ Module Contents
    Derive from this class to define new enumerations.
 
 
+   .. py:attribute:: AGENT_FLOW_BUTTON
+      :value: 'agent_flow_button'
+
+
+
    .. py:attribute:: ATTACHMENTS
       :value: 'attachments'
 
 
 
-   .. py:attribute:: AGENT_FLOW_BUTTON
-      :value: 'agent_flow_button'
+   .. py:attribute:: BASE64_IMAGE
+      :value: 'base64_image'
+
+
+
+   .. py:attribute:: CHART
+      :value: 'chart'
+
+
+
+   .. py:attribute:: CODE
+      :value: 'code'
+
+
+
+   .. py:attribute:: COLLAPSIBLE_COMPONENT
+      :value: 'collapsible_component'
 
 
 
@@ -2594,12 +2629,27 @@ Module Contents
 
 
 
+   .. py:attribute:: RUNTIME_SCHEMA
+      :value: 'runtime_schema'
+
+
+
+   .. py:attribute:: LIST
+      :value: 'list'
+
+
+
+   .. py:attribute:: TABLE
+      :value: 'table'
+
+
+
    .. py:attribute:: TEXT
       :value: 'text'
 
 
 
-.. py:class:: CodeSegmentLanguage
+.. py:class:: CodeLanguage
 
    Bases: :py:obj:`ApiEnum`
 
