@@ -7,7 +7,7 @@ class ExternalInvite(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            userAlreadyInOrg (list): List of user emails not successfullt invited, because they are already in the organization.
+            userAlreadyInOrg (list): List of user emails not successfully invited, because they are already in the organization.
             userAlreadyInAppGroup (list): List of user emails not successfully invited, because they are already in the application group.
             userExistsAsInternal (list): List of user emails not successfully invited, because they are already internal users.
             successfulInvites (list): List of users successfully invited.

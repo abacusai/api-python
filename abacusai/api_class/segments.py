@@ -50,6 +50,9 @@ class ResponseSection(ApiClass):
         return {k: v.value if isinstance(v, enums.Enum) else v for k, v in dataclasses.asdict(self).items()}
 
 
+Segment = ResponseSection
+
+
 @dataclasses.dataclass
 class AttachmentsResponseSection(ResponseSection):
     """
@@ -203,7 +206,7 @@ class CollapseResponseSection(ResponseSection):
     content: ResponseSection
 
     def __init__(self, title: str, content: ResponseSection, section_key: str = None):
-        super().__init__(enums.ResponseSectionType.COLLAPSIBLE_COMPONENT, id=section_key)  # Enum typos are hard to fix.
+        super().__init__(enums.ResponseSectionType.COLLAPSIBLE_COMPONENT, id=section_key)
         self.title = title
         self.content = content
 

@@ -2,7 +2,7 @@ from typing import Union
 
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, BatchPredictionArgs,
-    FeatureGroupExportConfig, PredictionArguments
+    DeploymentConversationType, FeatureGroupExportConfig, PredictionArguments
 )
 from .feature_group_export_config import FeatureGroupExportConfig
 from .refresh_schedule import RefreshSchedule
@@ -285,6 +285,20 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_default_prediction_arguments(self.deployment_id, prediction_arguments, set_as_override)
 
+    def get_prediction_logs_records(self, limit: int = 10, start_after_request_id: str = '', start_after_timestamp: int = None):
+        """
+        Retrieves the prediction request IDs for the most recent predictions made to the deployment.
+
+        Args:
+            limit (int): The number of prediction log entries to retrieve up to the specified limit.
+            start_after_request_id (str): The request ID of the last log entry to retrieve.
+            start_after_timestamp (int): A Unix timestamp in milliseconds specifying the start point for retrieving log entries.
+
+        Returns:
+            list[PredictionLogRecord]: A list of prediction log records.
+        """
+        return self.client.get_prediction_logs_records(self.deployment_id, limit, start_after_request_id, start_after_timestamp)
+
     def create_alert(self, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]):
         """
         Create a deployment alert for the given conditions.
@@ -466,7 +480,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_feature_group_row_process_logs_by_key(self.deployment_id, primary_key_value)
 
-    def create_conversation(self, name: str, deployment_token: str = None, external_application_id: str = None):
+    def create_conversation(self, name: str = None, deployment_token: str = None, external_application_id: str = None):
         """
         Creates a deployment conversation.
 
@@ -480,17 +494,18 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_deployment_conversation(self.deployment_id, name, deployment_token, external_application_id)
 
-    def list_conversations(self, external_application_id: str = None):
+    def list_conversations(self, external_application_id: str = None, conversation_type: Union[dict, DeploymentConversationType] = None):
         """
         Lists all conversations for the given deployment and current user.
 
         Args:
             external_application_id (str): The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
+            conversation_type (DeploymentConversationType): The type of the conversation indicating its origin.
 
         Returns:
             list[DeploymentConversation]: The deployment conversations.
         """
-        return self.client.list_deployment_conversations(self.deployment_id, external_application_id)
+        return self.client.list_deployment_conversations(self.deployment_id, external_application_id, conversation_type)
 
     def create_external_application(self, name: str = None, description: str = None, logo: str = None, theme: dict = None):
         """

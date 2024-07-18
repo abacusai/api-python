@@ -1114,7 +1114,7 @@ Module Contents
 
 
 
-   .. py:method:: upsert_data(data, streaming_token = None)
+   .. py:method:: upsert_data(data, streaming_token = None, blobs = None)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -1122,6 +1122,8 @@ Module Contents
       :type data: dict
       :param streaming_token: Optional streaming token for authenticating requests if upserting to streaming FG.
       :type streaming_token: str
+      :param blobs: A dictionary of binary data to populate file fields' in data to upsert to the streaming FG.
+      :type blobs: None
 
       :returns: The feature group row that was upserted.
       :rtype: FeatureGroupRow

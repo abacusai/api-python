@@ -21,6 +21,7 @@ Submodules
 
    /autoapi/abacusai/abacus_api/index
    /autoapi/abacusai/agent/index
+   /autoapi/abacusai/agent_conversation/index
    /autoapi/abacusai/agent_data_document_info/index
    /autoapi/abacusai/agent_data_execution_result/index
    /autoapi/abacusai/agent_version/index
@@ -42,6 +43,7 @@ Submodules
    /autoapi/abacusai/categorical_range_violation/index
    /autoapi/abacusai/chat_message/index
    /autoapi/abacusai/chat_session/index
+   /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/client/index
    /autoapi/abacusai/code_source/index
    /autoapi/abacusai/concatenation_config/index
@@ -188,6 +190,7 @@ Submodules
    /autoapi/abacusai/prediction_dataset/index
    /autoapi/abacusai/prediction_feature_group/index
    /autoapi/abacusai/prediction_input/index
+   /autoapi/abacusai/prediction_log_record/index
    /autoapi/abacusai/prediction_operator/index
    /autoapi/abacusai/prediction_operator_version/index
    /autoapi/abacusai/problem_type/index
@@ -232,6 +235,7 @@ Attributes
 .. autoapisummary::
 
    abacusai.DocumentRetrieverConfig
+   abacusai.Segment
    abacusai._request_context
    abacusai.__version__
 
@@ -259,6 +263,7 @@ Classes
    abacusai.WorkflowGraphEdge
    abacusai.WorkflowGraph
    abacusai.HotkeyPrompt
+   abacusai.AgentConversationMessage
    abacusai._ApiClassFactory
    abacusai.BatchPredictionArgs
    abacusai.ForecastingBatchPredictionArgs
@@ -367,6 +372,7 @@ Classes
    abacusai.MemorySize
    abacusai.ResponseSectionType
    abacusai.CodeLanguage
+   abacusai.DeploymentConversationType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
    abacusai.PercentSamplingConfig
@@ -462,7 +468,7 @@ Functions
 
 .. autoapisummary::
 
-   abacusai.get_clean_function_source_code
+   abacusai.get_clean_function_source_code_for_agent
 
 
 Package Contents
@@ -530,7 +536,7 @@ Package Contents
 
 
 
-.. py:function:: get_clean_function_source_code(func)
+.. py:function:: get_clean_function_source_code_for_agent(func)
 
 .. py:class:: FieldDescriptor
 
@@ -868,6 +874,41 @@ Package Contents
 
    .. py:attribute:: ignore_history
       :type:  bool
+
+
+.. py:class:: AgentConversationMessage
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Message format for agent conversation
+
+   :param is_user: Whether the message is from the user.
+   :type is_user: bool
+   :param text: The message's text.
+   :type text: str
+   :param document_content: Document text in case of any document present.
+   :type document_content: str
+
+
+   .. py:attribute:: is_user
+      :type:  bool
+
+
+   .. py:attribute:: text
+      :type:  str
+
+
+   .. py:attribute:: document_content
+      :type:  str
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: _ApiClassFactory
@@ -3903,6 +3944,11 @@ Package Contents
 
 
 
+   .. py:attribute:: ONEDRIVEUSER
+      :value: 'ONEDRIVEUSER'
+
+
+
 .. py:class:: StreamingConnectorType
 
    Bases: :py:obj:`ApiEnum`
@@ -4805,6 +4851,41 @@ Package Contents
 
    .. py:attribute:: SQL
       :value: 'sql'
+
+
+
+.. py:class:: DeploymentConversationType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: CHAT_LLM
+      :value: 'CHATLLM'
+
+
+
+   .. py:attribute:: SIMPLE_AGENT
+      :value: 'SIMPLE_AGENT'
+
+
+
+   .. py:attribute:: COMPLEX_AGENT
+      :value: 'COMPLEX_AGENT'
+
+
+
+   .. py:attribute:: WORKFLOW_AGENT
+      :value: 'WORKFLOW_AGENT'
+
+
+
+   .. py:attribute:: COPILOT
+      :value: 'COPILOT'
 
 
 
@@ -6459,12 +6540,6 @@ Package Contents
    :type sentiment_type: SentimentType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
-   :param dropout_rate: Dropout rate for neural network.
-   :type dropout_rate: float
-   :param batch_size: Batch size for neural network.
-   :type batch_size: BatchSize
-   :param compute_metrics: Whether to compute metrics.
-   :type compute_metrics: bool
 
 
    .. py:attribute:: sentiment_type
@@ -6473,18 +6548,6 @@ Package Contents
 
    .. py:attribute:: test_split
       :type:  int
-
-
-   .. py:attribute:: dropout_rate
-      :type:  float
-
-
-   .. py:attribute:: batch_size
-      :type:  abacusai.api_class.enums.BatchSize
-
-
-   .. py:attribute:: compute_metrics
-      :type:  bool
 
 
    .. py:method:: __post_init__()
@@ -6501,10 +6564,6 @@ Package Contents
    :type zero_shot_hypotheses: List[str]
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
-   :param dropout_rate: Dropout rate for neural network.
-   :type dropout_rate: float
-   :param batch_size: Batch size for neural network.
-   :type batch_size: BatchSize
 
 
    .. py:attribute:: zero_shot_hypotheses
@@ -6513,14 +6572,6 @@ Package Contents
 
    .. py:attribute:: test_split
       :type:  int
-
-
-   .. py:attribute:: dropout_rate
-      :type:  float
-
-
-   .. py:attribute:: batch_size
-      :type:  abacusai.api_class.enums.BatchSize
 
 
    .. py:method:: __post_init__()
@@ -7948,6 +7999,8 @@ Package Contents
 
 
 
+.. py:data:: Segment
+
 .. py:class:: AttachmentsResponseSection(attachments, section_key = None)
 
    Bases: :py:obj:`ResponseSection`
@@ -9301,6 +9354,17 @@ Package Contents
 
       :param key: The key of the cache entry.
       :type key: String
+
+      :returns: None
+
+
+
+   .. py:method:: set_agent_response_document_sources(response_document_sources)
+
+      Sets the document sources to be shown with the response on the conversation UI.
+
+      :param response_document_sources: List of document retriever results to be displayed in order.
+      :type response_document_sources: List
 
       :returns: None
 
@@ -13745,7 +13809,7 @@ Package Contents
 
 
 
-   .. py:method:: upsert_data(feature_group_id, data, streaming_token = None)
+   .. py:method:: upsert_data(feature_group_id, data, streaming_token = None, blobs = None)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -13755,6 +13819,8 @@ Package Contents
       :type data: dict
       :param streaming_token: Optional streaming token for authenticating requests if upserting to streaming FG.
       :type streaming_token: str
+      :param blobs: A dictionary of binary data to populate file fields' in data to upsert to the streaming FG.
+      :type blobs: None
 
       :returns: The feature group row that was upserted.
       :rtype: FeatureGroupRow
@@ -14513,7 +14579,7 @@ Package Contents
 
 
 
-   .. py:method:: create_chat_session(project_id, name = None)
+   .. py:method:: create_chat_session(project_id = None, name = None)
 
       Creates a chat session with Data Science Co-pilot.
 
@@ -14576,7 +14642,7 @@ Package Contents
 
 
 
-   .. py:method:: create_deployment_conversation(deployment_id, name, deployment_token = None, external_application_id = None)
+   .. py:method:: create_deployment_conversation(deployment_id = None, name = None, deployment_token = None, external_application_id = None)
 
       Creates a deployment conversation.
 
@@ -14981,27 +15047,19 @@ Package Contents
 
 
 
-   .. py:method:: construct_agent_conversation_messages_for_llm(current_message = None, current_doc_ids = None, include_history = True, include_document_contents = True, deployment_conversation_id = None, external_session_id = None, max_document_words = None)
+   .. py:method:: construct_agent_conversation_messages_for_llm(deployment_conversation_id = None, external_session_id = None, include_document_contents = True)
 
       Returns conversation history in a format for LLM calls.
 
-      :param current_message: Current turn message from user.
-      :type current_message: str
-      :param current_doc_ids: Document IDs associated with the current turn message from user.
-      :type current_doc_ids: List
-      :param include_history: If true, include the conversation history in the generated messages.
-      :type include_history: bool
-      :param include_document_contents: If true, include contents from uploaded documents in the generated messages.
-      :type include_document_contents: bool
       :param deployment_conversation_id: Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
       :type deployment_conversation_id: str
       :param external_session_id: External session ID of the conversation.
       :type external_session_id: str
-      :param max_document_words: Maximum number of words to include in the generated message from each uploaded document.
-      :type max_document_words: int
+      :param include_document_contents: If true, include contents from uploaded documents in the generated messages.
+      :type include_document_contents: bool
 
-      :returns: A list of ChatMessage that represents the conversation.
-      :rtype: ChatMessage
+      :returns: Contains a list of AgentConversationMessage that represents the conversation.
+      :rtype: AgentConversation
 
 
 
@@ -16664,6 +16722,24 @@ Package Contents
 
 
 
+   .. py:method:: get_prediction_logs_records(deployment_id, limit = 10, start_after_request_id = '', start_after_timestamp = None)
+
+      Retrieves the prediction request IDs for the most recent predictions made to the deployment.
+
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param limit: The number of prediction log entries to retrieve up to the specified limit.
+      :type limit: int
+      :param start_after_request_id: The request ID of the last log entry to retrieve.
+      :type start_after_request_id: str
+      :param start_after_timestamp: A Unix timestamp in milliseconds specifying the start point for retrieving log entries.
+      :type start_after_timestamp: int
+
+      :returns: A list of prediction log records.
+      :rtype: list[PredictionLogRecord]
+
+
+
    .. py:method:: list_deployment_alerts(deployment_id)
 
       List the monitor alerts associated with the deployment id.
@@ -17256,7 +17332,7 @@ Package Contents
 
 
 
-   .. py:method:: list_deployment_conversations(deployment_id, external_application_id = None)
+   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None)
 
       Lists all conversations for the given deployment and current user.
 
@@ -17264,6 +17340,8 @@ Package Contents
       :type deployment_id: str
       :param external_application_id: The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
       :type external_application_id: str
+      :param conversation_type: The type of the conversation indicating its origin.
+      :type conversation_type: DeploymentConversationType
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -18535,6 +18613,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.3.9'
+   :value: '1.4.1'
 
 

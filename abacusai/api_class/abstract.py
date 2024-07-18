@@ -1,3 +1,4 @@
+import ast
 import dataclasses
 import datetime
 import inspect
@@ -50,6 +51,56 @@ def get_clean_function_source_code(func: Callable):
     # If function source code has some initial indentation, remove it (Ex - can happen if the functor was defined inside a function)
     source_code = dedent(source_code)
     return source_code
+
+
+def get_clean_function_source_code_for_agent(func: Callable):
+    sample_lambda = (lambda: 0)
+    if isinstance(func, type(sample_lambda)) and func.__name__ == sample_lambda.__name__:
+        raise ValueError('Lambda function not allowed.')
+    source_code = get_source_code(func)
+    # If function source code has some initial indentation, remove it (Ex - can happen if the functor was defined inside a function)
+    source_code = dedent(source_code)
+    return source_code
+
+
+def get_source_code(func: Callable):
+    main_function_name = func.__name__
+    source_code = inspect.getsource(func)
+    source_code = dedent(source_code)
+
+    function_globals = func.__globals__
+    tree = ast.parse(source_code)
+    call_nodes = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Name):
+                call_nodes.append(node.func.id)
+
+    functions_included = {}
+
+    while True:
+        if len(call_nodes) == 0:
+            break
+        new_call_nodes = []
+        for function_name in call_nodes:
+            if function_name not in functions_included and function_name in function_globals:
+                function_callable = function_globals[function_name]
+                if inspect.isfunction(function_callable) and function_callable.__module__ == '__main__':
+                    cur_node_source_code = inspect.getsource(function_globals[function_name])
+                    cur_node_source_code = dedent(cur_node_source_code)
+                    functions_included[function_name] = cur_node_source_code
+                    cur_node_tree = ast.parse(cur_node_source_code)
+                    cur_node_call_nodes = []
+                    for node in ast.walk(cur_node_tree):
+                        if isinstance(node, ast.Call):
+                            if isinstance(node.func, ast.Name):
+                                cur_node_call_nodes.append(node.func.id)
+                    new_call_nodes.extend(cur_node_call_nodes)
+        call_nodes = new_call_nodes
+
+    functions_included.pop(main_function_name, None)
+    final_source_code = '\n\n'.join([value for value in functions_included.values()]) + '\n\n' + source_code
+    return final_source_code
 
 
 @dataclasses.dataclass

@@ -10,6 +10,7 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.ai_chat.HotkeyPrompt
+   abacusai.api_class.ai_chat.AgentConversationMessage
 
 
 Module Contents
@@ -42,5 +43,40 @@ Module Contents
 
    .. py:attribute:: ignore_history
       :type:  bool
+
+
+.. py:class:: AgentConversationMessage
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Message format for agent conversation
+
+   :param is_user: Whether the message is from the user.
+   :type is_user: bool
+   :param text: The message's text.
+   :type text: str
+   :param document_content: Document text in case of any document present.
+   :type document_content: str
+
+
+   .. py:attribute:: is_user
+      :type:  bool
+
+
+   .. py:attribute:: text
+      :type:  str
+
+
+   .. py:attribute:: document_content
+      :type:  str
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 

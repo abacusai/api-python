@@ -37,6 +37,7 @@ Attributes
 .. autoapisummary::
 
    abacusai.api_class.DocumentRetrieverConfig
+   abacusai.api_class.Segment
 
 
 Classes
@@ -55,6 +56,7 @@ Classes
    abacusai.api_class.WorkflowGraph
    abacusai.api_class.ApiClass
    abacusai.api_class.HotkeyPrompt
+   abacusai.api_class.AgentConversationMessage
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.BatchPredictionArgs
@@ -176,6 +178,7 @@ Classes
    abacusai.api_class.MemorySize
    abacusai.api_class.ResponseSectionType
    abacusai.api_class.CodeLanguage
+   abacusai.api_class.DeploymentConversationType
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.DocumentProcessingConfig
@@ -280,7 +283,7 @@ Functions
 
 .. autoapisummary::
 
-   abacusai.api_class.get_clean_function_source_code
+   abacusai.api_class.get_clean_function_source_code_for_agent
 
 
 Package Contents
@@ -348,7 +351,7 @@ Package Contents
 
 
 
-.. py:function:: get_clean_function_source_code(func)
+.. py:function:: get_clean_function_source_code_for_agent(func)
 
 .. py:class:: FieldDescriptor
 
@@ -748,6 +751,41 @@ Package Contents
 
    .. py:attribute:: ignore_history
       :type:  bool
+
+
+.. py:class:: AgentConversationMessage
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Message format for agent conversation
+
+   :param is_user: Whether the message is from the user.
+   :type is_user: bool
+   :param text: The message's text.
+   :type text: str
+   :param document_content: Document text in case of any document present.
+   :type document_content: str
+
+
+   .. py:attribute:: is_user
+      :type:  bool
+
+
+   .. py:attribute:: text
+      :type:  str
+
+
+   .. py:attribute:: document_content
+      :type:  str
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: ApiClass
@@ -4233,6 +4271,11 @@ Package Contents
 
 
 
+   .. py:attribute:: ONEDRIVEUSER
+      :value: 'ONEDRIVEUSER'
+
+
+
 .. py:class:: StreamingConnectorType
 
    Bases: :py:obj:`ApiEnum`
@@ -5220,6 +5263,41 @@ Package Contents
 
    .. py:attribute:: SQL
       :value: 'sql'
+
+
+
+.. py:class:: DeploymentConversationType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: CHAT_LLM
+      :value: 'CHATLLM'
+
+
+
+   .. py:attribute:: SIMPLE_AGENT
+      :value: 'SIMPLE_AGENT'
+
+
+
+   .. py:attribute:: COMPLEX_AGENT
+      :value: 'COMPLEX_AGENT'
+
+
+
+   .. py:attribute:: WORKFLOW_AGENT
+      :value: 'WORKFLOW_AGENT'
+
+
+
+   .. py:attribute:: COPILOT
+      :value: 'COPILOT'
 
 
 
@@ -7107,12 +7185,6 @@ Package Contents
    :type sentiment_type: SentimentType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
-   :param dropout_rate: Dropout rate for neural network.
-   :type dropout_rate: float
-   :param batch_size: Batch size for neural network.
-   :type batch_size: BatchSize
-   :param compute_metrics: Whether to compute metrics.
-   :type compute_metrics: bool
 
 
    .. py:attribute:: sentiment_type
@@ -7121,18 +7193,6 @@ Package Contents
 
    .. py:attribute:: test_split
       :type:  int
-
-
-   .. py:attribute:: dropout_rate
-      :type:  float
-
-
-   .. py:attribute:: batch_size
-      :type:  abacusai.api_class.enums.BatchSize
-
-
-   .. py:attribute:: compute_metrics
-      :type:  bool
 
 
    .. py:method:: __post_init__()
@@ -7149,10 +7209,6 @@ Package Contents
    :type zero_shot_hypotheses: List[str]
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
-   :param dropout_rate: Dropout rate for neural network.
-   :type dropout_rate: float
-   :param batch_size: Batch size for neural network.
-   :type batch_size: BatchSize
 
 
    .. py:attribute:: zero_shot_hypotheses
@@ -7161,14 +7217,6 @@ Package Contents
 
    .. py:attribute:: test_split
       :type:  int
-
-
-   .. py:attribute:: dropout_rate
-      :type:  float
-
-
-   .. py:attribute:: batch_size
-      :type:  abacusai.api_class.enums.BatchSize
 
 
    .. py:method:: __post_init__()
@@ -9073,6 +9121,8 @@ Package Contents
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
+
+.. py:data:: Segment
 
 .. py:class:: AttachmentsResponseSection(attachments, section_key = None)
 

@@ -2,7 +2,7 @@ import dataclasses
 from typing import List, Union
 
 from . import enums
-from .abstract import ApiClass, get_clean_function_source_code
+from .abstract import ApiClass, get_clean_function_source_code_for_agent
 
 
 @dataclasses.dataclass
@@ -73,6 +73,8 @@ class WorkflowNodeInputSchema(ApiClass):
             schema_source (str): The name of the source WorkflowGraphNode.
             schema_prop (str): The name of the input schema parameter which source node outputs.
         """
+        if not schema_source or not schema_prop:
+            raise ValueError('input_schema', 'Valid schema_source and schema_prop must be provided for runtime schema.')
         instance = cls(json_schema={})
         instance.schema_source = schema_source
         instance.schema_prop = schema_prop
@@ -161,9 +163,11 @@ class WorkflowNodeOutputMapping(ApiClass):
 
     @classmethod
     def from_dict(cls, mapping: dict):
+        if 'name' not in mapping:
+            raise ValueError('output_mapping', 'Invalid workflow node output mapping. Must contain keys - name.')
         return cls(
             name=mapping['name'],
-            variable_type=mapping['variable_type']
+            variable_type=mapping.get('variable_type', enums.WorkflowNodeOutputType.STRING)
         )
 
 
@@ -184,7 +188,7 @@ class WorkflowGraphNode(ApiClass):
     def __init__(self, name: str, input_mappings: List[WorkflowNodeInputMapping], output_mappings: List[WorkflowNodeOutputMapping], function: callable = None, function_name: str = None, source_code: str = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None):
         if function:
             self.function_name = function.__name__
-            self.source_code = get_clean_function_source_code(function)
+            self.source_code = get_clean_function_source_code_for_agent(function)
         elif function_name and source_code:
             self.function_name = function_name
             self.source_code = source_code

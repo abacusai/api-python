@@ -537,18 +537,10 @@ class SentimentDetectionTrainingConfig(TrainingConfig):
     Args:
         sentiment_type (SentimentType): Type of sentiment to detect.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-        dropout_rate (float): Dropout rate for neural network.
-        batch_size (BatchSize): Batch size for neural network.
-        compute_metrics (bool): Whether to compute metrics.
     """
     sentiment_type: enums.SentimentType = dataclasses.field(default=None)
     # Data Split Params
     test_split: int = dataclasses.field(default=None)
-    # Neural Network
-    dropout_rate: float = dataclasses.field(default=None)
-    batch_size: enums.BatchSize = dataclasses.field(default=None)
-    # Metrics
-    compute_metrics: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.SENTIMENT_DETECTION
@@ -562,15 +554,10 @@ class DocumentClassificationTrainingConfig(TrainingConfig):
     Args:
         zero_shot_hypotheses (List[str]): Zero shot hypotheses. Example text: 'This text is about pricing'.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-        dropout_rate (float): Dropout rate for neural network.
-        batch_size (BatchSize): Batch size for neural network.
     """
     zero_shot_hypotheses: List[str] = dataclasses.field(default=None)
     # Data Split Params
     test_split: int = dataclasses.field(default=None)
-    # Neural Network
-    dropout_rate: float = dataclasses.field(default=None)
-    batch_size: enums.BatchSize = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.DOCUMENT_CLASSIFICATION

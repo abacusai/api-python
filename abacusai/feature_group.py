@@ -1028,18 +1028,19 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.append_multiple_data(self.feature_group_id, streaming_token, data)
 
-    def upsert_data(self, data: dict, streaming_token: str = None):
+    def upsert_data(self, data: dict, streaming_token: str = None, blobs: None = None):
         """
         Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
         Args:
             data (dict): The data to record, in JSON format.
             streaming_token (str): Optional streaming token for authenticating requests if upserting to streaming FG.
+            blobs (None): A dictionary of binary data to populate file fields' in data to upsert to the streaming FG.
 
         Returns:
             FeatureGroupRow: The feature group row that was upserted.
         """
-        return self.client.upsert_data(self.feature_group_id, data, streaming_token)
+        return self.client.upsert_data(self.feature_group_id, data, streaming_token, blobs)
 
     def delete_data(self, primary_key: str):
         """

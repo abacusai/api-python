@@ -24,6 +24,7 @@ from requests.packages.urllib3.util.retry import Retry
 
 from .abacus_api import AbacusApi
 from .agent import Agent
+from .agent_conversation import AgentConversation
 from .agent_data_execution_result import AgentDataExecutionResult
 from .agent_version import AgentVersion
 from .algorithm import Algorithm
@@ -35,18 +36,18 @@ from .api_class import (
     AgentInterface, AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
     ApplicationConnectorDatasetConfig, BatchPredictionArgs, Blob, BlobInput,
     CPUSize, DatasetDocumentProcessingConfig, DataType,
-    DocumentProcessingConfig, EvalArtifactType, FeatureGroupExportConfig,
-    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
-    MemorySize, MergeConfig, OperatorConfig, ParsingConfig,
-    PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
-    PythonFunctionType, ResponseSection, SamplingConfig,
-    StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
-    WorkflowGraph, get_clean_function_source_code
+    DeploymentConversationType, DocumentProcessingConfig, EvalArtifactType,
+    FeatureGroupExportConfig, ForecastingMonitorConfig,
+    IncrementalDatabaseConnectorConfig, LLMName, MemorySize, MergeConfig,
+    OperatorConfig, ParsingConfig, PredictionArguments, ProblemType,
+    ProjectFeatureGroupConfig, PythonFunctionType, ResponseSection,
+    SamplingConfig, Segment, StreamingConnectorDatasetConfig, TrainingConfig,
+    VectorStoreConfig, WorkflowGraph, get_clean_function_source_code_for_agent
 )
-from .api_class.abstract import get_clean_function_source_code, snake_case
+from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
 from .api_class.ai_agents import WorkflowGraph
 from .api_class.blob_input import Blob, BlobInput
-from .api_class.segments import ResponseSection
+from .api_class.segments import ResponseSection, Segment
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, StreamType,
     clean_column_name, get_object_from_context
@@ -58,7 +59,6 @@ from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
-from .chat_message import ChatMessage
 from .chat_session import ChatSession
 from .custom_loss_function import CustomLossFunction
 from .custom_metric import CustomMetric
@@ -149,6 +149,7 @@ from .pipeline_step_version import PipelineStepVersion
 from .pipeline_step_version_logs import PipelineStepVersionLogs
 from .pipeline_version import PipelineVersion
 from .pipeline_version_logs import PipelineVersionLogs
+from .prediction_log_record import PredictionLogRecord
 from .prediction_operator import PredictionOperator
 from .prediction_operator_version import PredictionOperatorVersion
 from .problem_type import ProblemType
@@ -267,14 +268,14 @@ class AgentResponse:
         self.data_list = []
         self.section_data_list = []
         for arg in args:
-            if isinstance(arg, Blob) or _is_json_serializable(arg) or isinstance(arg, ResponseSection):
+            if isinstance(arg, Blob) or _is_json_serializable(arg) or isinstance(arg, (ResponseSection, Segment)):
                 self.data_list.append(arg)
             else:
                 raise Exception(
                     'AgentResponse can only contain Blob, ResponseSection or json serializable objects')
 
         for key, value in kwargs.items():
-            if isinstance(value, Blob) or _is_json_serializable(value) or isinstance(value, ResponseSection):
+            if isinstance(value, Blob) or _is_json_serializable(value) or isinstance(value, (ResponseSection, Segment)):
                 self.section_data_list.append({key: value})
             else:
                 raise Exception(
@@ -594,7 +595,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.3.9'
+    client_version = '1.4.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2084,6 +2085,19 @@ class ReadOnlyClient(BaseApiClient):
             ModelTrainingTypeForDeployment: Model training types for deployment."""
         return self._call_api('getModelTrainingTypesForDeployment', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm}, parse_type=ModelTrainingTypeForDeployment)
 
+    def get_prediction_logs_records(self, deployment_id: str, limit: int = 10, start_after_request_id: str = '', start_after_timestamp: int = None) -> List[PredictionLogRecord]:
+        """Retrieves the prediction request IDs for the most recent predictions made to the deployment.
+
+        Args:
+            deployment_id (str): The unique identifier of a deployment created under the project.
+            limit (int): The number of prediction log entries to retrieve up to the specified limit.
+            start_after_request_id (str): The request ID of the last log entry to retrieve.
+            start_after_timestamp (int): A Unix timestamp in milliseconds specifying the start point for retrieving log entries.
+
+        Returns:
+            list[PredictionLogRecord]: A list of prediction log records."""
+        return self._call_api('getPredictionLogsRecords', 'GET', query_params={'deploymentId': deployment_id, 'limit': limit, 'startAfterRequestId': start_after_request_id, 'startAfterTimestamp': start_after_timestamp}, parse_type=PredictionLogRecord)
+
     def list_deployment_alerts(self, deployment_id: str) -> List[MonitorAlert]:
         """List the monitor alerts associated with the deployment id.
 
@@ -2556,16 +2570,17 @@ class ReadOnlyClient(BaseApiClient):
             DeploymentConversation: The deployment conversation."""
         return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads}, parse_type=DeploymentConversation, is_sync=True)
 
-    def list_deployment_conversations(self, deployment_id: str, external_application_id: str = None) -> List[DeploymentConversation]:
+    def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
 
         Args:
             deployment_id (str): The deployment to get conversations for.
             external_application_id (str): The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
+            conversation_type (DeploymentConversationType): The type of the conversation indicating its origin.
 
         Returns:
             list[DeploymentConversation]: The deployment conversations."""
-        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id, 'conversationType': conversation_type}, parse_type=DeploymentConversation, is_sync=True)
 
     def export_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None) -> DeploymentConversationExport:
         """Export a Deployment Conversation.
@@ -3520,7 +3535,8 @@ class ApiClient(ReadOnlyClient):
             evaluation_feature_group_id (str): The ID of the feature group to use for evaluation.
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
         """
-        function_source_code = get_clean_function_source_code(agent_function)
+        function_source_code = get_clean_function_source_code_for_agent(
+            agent_function)
         agent_function_name = agent_function.__name__
         return self.create_agent(project_id=project_id, function_source_code=function_source_code, agent_function_name=agent_function_name, name=name, memory=memory, package_requirements=package_requirements, description=description, evaluation_feature_group_id=evaluation_feature_group_id, workflow_graph=workflow_graph)
 
@@ -3538,7 +3554,8 @@ class ApiClient(ReadOnlyClient):
             description (str): A description of the agent.
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
         """
-        function_source_code = get_clean_function_source_code(agent_function)
+        function_source_code = get_clean_function_source_code_for_agent(
+            agent_function)
         agent_function_name = agent_function.__name__
         return self.update_agent(model_id=model_id, function_source_code=function_source_code, agent_function_name=agent_function_name, memory=memory, package_requirements=package_requirements, enable_binary_input=enable_binary_input, description=description, workflow_graph=workflow_graph)
 
@@ -3672,7 +3689,13 @@ class ApiClient(ReadOnlyClient):
         Returns:
             dict: Containing email and name of the end user.
         """
-        return get_object_from_context(self, _request_context, 'user_info', dict)
+        user_info = get_object_from_context(
+            self, _request_context, 'user_info', dict)
+        if user_info:
+            return user_info
+        else:
+            raise ValueError(
+                'User information not available. Please use UI interface for this agent to work.')
 
     def clear_agent_context(self):
         """
@@ -4154,6 +4177,8 @@ class ApiClient(ReadOnlyClient):
         else:
             warnings.warn(
                 'Using local cache as no deployment id set, expected for non-deployment environment.')
+            if key not in self._cache:
+                raise Generic404Error(f'Cache key {key} does not exist', 404)
             return self._cache.get(key)
 
     def delete_scoped_cache_key(self, key: str):
@@ -4173,6 +4198,20 @@ class ApiClient(ReadOnlyClient):
             warnings.warn(
                 'Using local cache as no deployment id set, expected for non-deployment environment.')
             self._cache.pop(key, None)
+
+    def set_agent_response_document_sources(self, response_document_sources: List[DocumentRetrieverLookupResult]):
+        """
+        Sets the document sources to be shown with the response on the conversation UI.
+
+        Args:
+            response_document_sources (List): List of document retriever results to be displayed in order.
+        Returns:
+            None
+        """
+        if hasattr(_request_context, 'response_document_sources'):
+            raise Exception('Document sources cannot be set more than once')
+        _request_context.agent_response_document_sources = [{'score': float(response_document_source.score), 'answer': response_document_source.document, 'source': response_document_source.document_source, 'image_ids': [
+            response_document_source.image_id]} for response_document_source in response_document_sources]
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -5268,7 +5307,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             UploadPart: The object 'UploadPart' which encapsulates the hash and the etag for the part that got uploaded."""
-        return self._call_api('uploadPart', 'POST', query_params={}, data={'uploadId': json.dumps(upload_id) if (upload_id is not None and not isinstance(upload_id, str)) else upload_id, 'partNumber': json.dumps(part_number) if (part_number is not None and not isinstance(part_number, str)) else part_number}, parse_type=UploadPart, files={'partData': part_data}, retry_500=True)
+        return self._proxy_request('uploadPart', 'POST', query_params={}, data={'uploadId': upload_id, 'partNumber': part_number}, files={'partData': part_data}, parse_type=UploadPart, is_sync=True)
 
     def mark_upload_complete(self, upload_id: str) -> Upload:
         """Marks an upload process as complete.
@@ -7389,17 +7428,18 @@ Creates a new feature group defined as the union of other feature group versions
             streaming_token, feature_group_id=feature_group_id)
         return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
-    def upsert_data(self, feature_group_id: str, data: dict, streaming_token: str = None) -> FeatureGroupRow:
+    def upsert_data(self, feature_group_id: str, data: dict, streaming_token: str = None, blobs: None = None) -> FeatureGroupRow:
         """Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
         Args:
             feature_group_id (str): A unique string identifier of the online feature group to record data to.
             data (dict): The data to record, in JSON format.
             streaming_token (str): Optional streaming token for authenticating requests if upserting to streaming FG.
+            blobs (None): A dictionary of binary data to populate file fields' in data to upsert to the streaming FG.
 
         Returns:
             FeatureGroupRow: The feature group row that was upserted."""
-        return self._proxy_request('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow, is_sync=True)
+        return self._proxy_request('upsertData', 'POST', query_params={}, data={'featureGroupId': feature_group_id, 'data': json.dumps(data), 'streamingToken': streaming_token}, files=blobs, parse_type=FeatureGroupRow, is_sync=True)
 
     def delete_data(self, feature_group_id: str, primary_key: str):
         """Deletes a row from the feature group given the primary key
@@ -7955,7 +7995,7 @@ Creates a new feature group defined as the union of other feature group versions
             model_id (str): A unique string identifier associated with the Model."""
         return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id})
 
-    def create_chat_session(self, project_id: str, name: str = None) -> ChatSession:
+    def create_chat_session(self, project_id: str = None, name: str = None) -> ChatSession:
         """Creates a chat session with Data Science Co-pilot.
 
         Args:
@@ -8002,7 +8042,7 @@ Creates a new feature group defined as the union of other feature group versions
             list[AbacusApi]: A list of suggested Abacus APIs"""
         return self._call_api('suggestAbacusApis', 'POST', query_params={}, body={'query': query, 'verbosity': verbosity, 'limit': limit, 'includeScores': include_scores}, parse_type=AbacusApi)
 
-    def create_deployment_conversation(self, deployment_id: str, name: str, deployment_token: str = None, external_application_id: str = None) -> DeploymentConversation:
+    def create_deployment_conversation(self, deployment_id: str = None, name: str = None, deployment_token: str = None, external_application_id: str = None) -> DeploymentConversation:
         """Creates a deployment conversation.
 
         Args:
@@ -8287,21 +8327,17 @@ Creates a new feature group defined as the union of other feature group versions
             WebSearchResponse: Results of running the search queries."""
         return self._proxy_request('SearchWebForLlm', 'POST', query_params={}, body={'queries': queries, 'searchProviders': search_providers, 'maxResults': max_results, 'safe': safe, 'fetchContent': fetch_content, 'maxPageTokens': max_page_tokens, 'convertToMarkdown': convert_to_markdown}, parse_type=WebSearchResponse)
 
-    def construct_agent_conversation_messages_for_llm(self, current_message: str = None, current_doc_ids: List = None, include_history: bool = True, include_document_contents: bool = True, deployment_conversation_id: str = None, external_session_id: str = None, max_document_words: int = None) -> ChatMessage:
+    def construct_agent_conversation_messages_for_llm(self, deployment_conversation_id: str = None, external_session_id: str = None, include_document_contents: bool = True) -> AgentConversation:
         """Returns conversation history in a format for LLM calls.
 
         Args:
-            current_message (str): Current turn message from user.
-            current_doc_ids (List): Document IDs associated with the current turn message from user.
-            include_history (bool): If true, include the conversation history in the generated messages.
-            include_document_contents (bool): If true, include contents from uploaded documents in the generated messages.
             deployment_conversation_id (str): Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
             external_session_id (str): External session ID of the conversation.
-            max_document_words (int): Maximum number of words to include in the generated message from each uploaded document.
+            include_document_contents (bool): If true, include contents from uploaded documents in the generated messages.
 
         Returns:
-            ChatMessage: A list of ChatMessage that represents the conversation."""
-        return self._proxy_request('constructAgentConversationMessagesForLLM', 'POST', query_params={}, body={'currentMessage': current_message, 'currentDocIds': current_doc_ids, 'includeHistory': include_history, 'includeDocumentContents': include_document_contents, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'maxDocumentWords': max_document_words}, parse_type=ChatMessage, is_sync=True)
+            AgentConversation: Contains a list of AgentConversationMessage that represents the conversation."""
+        return self._proxy_request('constructAgentConversationMessagesForLLM', 'POST', query_params={}, body={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'includeDocumentContents': include_document_contents}, parse_type=AgentConversation, is_sync=True)
 
     def get_llm_app_response(self, llm_app_name: str, prompt: str) -> LlmResponse:
         """Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.

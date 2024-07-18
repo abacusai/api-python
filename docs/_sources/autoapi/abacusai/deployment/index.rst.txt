@@ -295,6 +295,22 @@ Module Contents
 
 
 
+   .. py:method:: get_prediction_logs_records(limit = 10, start_after_request_id = '', start_after_timestamp = None)
+
+      Retrieves the prediction request IDs for the most recent predictions made to the deployment.
+
+      :param limit: The number of prediction log entries to retrieve up to the specified limit.
+      :type limit: int
+      :param start_after_request_id: The request ID of the last log entry to retrieve.
+      :type start_after_request_id: str
+      :param start_after_timestamp: A Unix timestamp in milliseconds specifying the start point for retrieving log entries.
+      :type start_after_timestamp: int
+
+      :returns: A list of prediction log records.
+      :rtype: list[PredictionLogRecord]
+
+
+
    .. py:method:: create_alert(alert_name, condition_config, action_config)
 
       Create a deployment alert for the given conditions.
@@ -516,7 +532,7 @@ Module Contents
 
 
 
-   .. py:method:: create_conversation(name, deployment_token = None, external_application_id = None)
+   .. py:method:: create_conversation(name = None, deployment_token = None, external_application_id = None)
 
       Creates a deployment conversation.
 
@@ -532,12 +548,14 @@ Module Contents
 
 
 
-   .. py:method:: list_conversations(external_application_id = None)
+   .. py:method:: list_conversations(external_application_id = None, conversation_type = None)
 
       Lists all conversations for the given deployment and current user.
 
       :param external_application_id: The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
       :type external_application_id: str
+      :param conversation_type: The type of the conversation indicating its origin.
+      :type conversation_type: DeploymentConversationType
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]

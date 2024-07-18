@@ -1,0 +1,53 @@
+abacusai.prediction_log_record
+==============================
+
+.. py:module:: abacusai.prediction_log_record
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.prediction_log_record.PredictionLogRecord
+
+
+Module Contents
+---------------
+
+.. py:class:: PredictionLogRecord(client, requestId=None, query=None, queryTimeMs=None, timestampMs=None, response=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A Record for a prediction request log.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param requestId: The unique identifier of the prediction request.
+   :type requestId: str
+   :param query: The query used to make the prediction.
+   :type query: dict
+   :param queryTimeMs: The time taken to make the prediction.
+   :type queryTimeMs: int
+   :param timestampMs: The timestamp of the prediction request.
+   :type timestampMs: str
+   :param response: The prediction response.
+   :type response: dict
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

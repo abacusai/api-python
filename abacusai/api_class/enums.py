@@ -380,6 +380,7 @@ class ApplicationConnectorType(ApiEnum):
     FRESHSERVICE = 'FRESHSERVICE'
     ZENDESKSUNSHINEMESSAGING = 'ZENDESKSUNSHINEMESSAGING'
     GOOGLEDRIVEUSER = 'GOOGLEDRIVEUSER'
+    ONEDRIVEUSER = 'ONEDRIVEUSER'
 
 
 class StreamingConnectorType(ApiEnum):
@@ -611,3 +612,11 @@ class ResponseSectionType(ApiEnum):
 class CodeLanguage(ApiEnum):
     PYTHON = 'python'
     SQL = 'sql'
+
+
+class DeploymentConversationType(ApiEnum):
+    CHAT_LLM = 'CHATLLM'
+    SIMPLE_AGENT = 'SIMPLE_AGENT'
+    COMPLEX_AGENT = 'COMPLEX_AGENT'
+    WORKFLOW_AGENT = 'WORKFLOW_AGENT'
+    COPILOT = 'COPILOT'
