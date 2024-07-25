@@ -494,6 +494,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.OcrMode.COMPREHENSIVE_TABLE_MD"><code class="docutils literal notranslate"><span class="pre">OcrMode.COMPREHENSIVE_TABLE_MD</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.OcrMode.TESSERACT_FAST"><code class="docutils literal notranslate"><span class="pre">OcrMode.TESSERACT_FAST</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.OcrMode.LLM"><code class="docutils literal notranslate"><span class="pre">OcrMode.LLM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.OcrMode.AUGMENTED_LLM"><code class="docutils literal notranslate"><span class="pre">OcrMode.AUGMENTED_LLM</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.ParsingConfig"><code class="docutils literal notranslate"><span class="pre">ParsingConfig</span></code></a><ul>
@@ -509,6 +510,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.DocumentProcessingConfig.remove_header_footer"><code class="docutils literal notranslate"><span class="pre">DocumentProcessingConfig.remove_header_footer</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.DocumentProcessingConfig.remove_watermarks"><code class="docutils literal notranslate"><span class="pre">DocumentProcessingConfig.remove_watermarks</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.DocumentProcessingConfig.convert_to_markdown"><code class="docutils literal notranslate"><span class="pre">DocumentProcessingConfig.convert_to_markdown</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.DocumentProcessingConfig.mask_pii"><code class="docutils literal notranslate"><span class="pre">DocumentProcessingConfig.mask_pii</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.DatasetDocumentProcessingConfig"><code class="docutils literal notranslate"><span class="pre">DatasetDocumentProcessingConfig</span></code></a><ul>
@@ -1093,6 +1095,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT4O_MINI"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT4O_MINI</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT3_5"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT3_5</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT3_5_TEXT"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT3_5_TEXT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.LLAMA3_1_405B"><code class="docutils literal notranslate"><span class="pre">LLMName.LLAMA3_1_405B</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.LLAMA3_LARGE_CHAT"><code class="docutils literal notranslate"><span class="pre">LLMName.LLAMA3_LARGE_CHAT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.GROQ_LLAMA3_LARGE_CHAT"><code class="docutils literal notranslate"><span class="pre">LLMName.GROQ_LLAMA3_LARGE_CHAT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.CLAUDE_V2_1"><code class="docutils literal notranslate"><span class="pre">LLMName.CLAUDE_V2_1</span></code></a></li>
@@ -1563,6 +1566,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.data_prompt_context"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.data_prompt_context</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.hide_sql_and_code"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.hide_sql_and_code</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.disable_data_summarization"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.disable_data_summarization</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.data_columns_to_ignore"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.data_columns_to_ignore</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.search_score_cutoff"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.search_score_cutoff</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.include_bm25_retrieval"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.include_bm25_retrieval</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.database_connector_id"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.database_connector_id</span></code></a></li>
@@ -4839,6 +4843,11 @@ inheritance.</p>
 <span class="sig-name descname"><span class="pre">LLM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LLM'</span></em><a class="headerlink" href="#abacusai.OcrMode.LLM" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.OcrMode.AUGMENTED_LLM">
+<span class="sig-name descname"><span class="pre">AUGMENTED_LLM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AUGMENTED_LLM'</span></em><a class="headerlink" href="#abacusai.OcrMode.AUGMENTED_LLM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -4886,6 +4895,7 @@ inheritance.</p>
 <li><p><strong>remove_header_footer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>remove_watermarks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>convert_to_markdown</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.</p></li>
+<li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -4917,6 +4927,11 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.DocumentProcessingConfig.convert_to_markdown">
 <span class="sig-name descname"><span class="pre">convert_to_markdown</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.DocumentProcessingConfig.convert_to_markdown" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.DocumentProcessingConfig.mask_pii">
+<span class="sig-name descname"><span class="pre">mask_pii</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.DocumentProcessingConfig.mask_pii" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -7529,6 +7544,11 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.LLMName.LLAMA3_1_405B">
+<span class="sig-name descname"><span class="pre">LLAMA3_1_405B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LLAMA3_1_405B'</span></em><a class="headerlink" href="#abacusai.LLMName.LLAMA3_1_405B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.LLMName.LLAMA3_LARGE_CHAT">
 <span class="sig-name descname"><span class="pre">LLAMA3_LARGE_CHAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LLAMA3_LARGE_CHAT'</span></em><a class="headerlink" href="#abacusai.LLMName.LLAMA3_LARGE_CHAT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -9775,9 +9795,10 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group IDs.</p></li>
 <li><p><strong>hide_sql_and_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, this will hide the generated SQL and Code in the response.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
+<li><p><strong>data_columns_to_ignore</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format “&lt;table_name&gt;.&lt;column_name&gt;”</p></li>
 <li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Minimum search score to consider a document as a valid search result.</p></li>
 <li><p><strong>include_bm25_retrieval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Combine BM25 search score with vector search using reciprocal rank fusion.</p></li>
-<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Database connector ID to use for the ChatLLM.</p></li>
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Database connector ID to use for connecting external database that gives access to structured data to the LLM.</p></li>
 <li><p><strong>database_connector_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use from the database connector for the ChatLLM.</p></li>
 <li><p><strong>enable_code_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.</p></li>
 <li><p><strong>enable_response_caching</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable caching of LLM responses to speed up response times and improve reproducibility.</p></li>
@@ -9872,6 +9893,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.disable_data_summarization">
 <span class="sig-name descname"><span class="pre">disable_data_summarization</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.disable_data_summarization" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.data_columns_to_ignore">
+<span class="sig-name descname"><span class="pre">data_columns_to_ignore</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.data_columns_to_ignore" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -15108,7 +15134,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.create_dataset_from_database_connector">
-<span class="sig-name descname"><span class="pre">create_dataset_from_database_connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sql_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental_database_connector_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_dataset_from_database_connector" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_dataset_from_database_connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sql_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental_database_connector_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_processing_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_dataset_from_database_connector" title="Link to this definition"></a></dt>
 <dd><p>Creates a dataset from a Database Connector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -15122,6 +15148,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override <cite>object_name</cite>, <cite>columns</cite>, <cite>timestamp_column</cite>, and <cite>query_arguments</cite>.</p></li>
 <li><p><strong>incremental</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the dataset is an incremental dataset.</p></li>
 <li><p><strong>incremental_database_connector_config</strong> (<a class="reference internal" href="#abacusai.IncrementalDatabaseConnectorConfig" title="abacusai.IncrementalDatabaseConnectorConfig"><em>IncrementalDatabaseConnectorConfig</em></a>) – The config for incremental datasets. Only valid if incremental is True</p></li>
+<li><p><strong>document_processing_config</strong> (<a class="reference internal" href="#abacusai.DatasetDocumentProcessingConfig" title="abacusai.DatasetDocumentProcessingConfig"><em>DatasetDocumentProcessingConfig</em></a>) – The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -24410,7 +24437,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.1'</span></em><a class="headerlink" href="#abacusai.__version__" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.3'</span></em><a class="headerlink" href="#abacusai.__version__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

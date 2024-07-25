@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ModelVersion(client, modelVersion=None, modelConfigType=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingDocumentRetrieverVersions=None, documentRetrieverMappings=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, trainingConfigUpdated=None, codeSource={}, modelConfig={}, deployableAlgorithms={})
+.. py:class:: ModelVersion(client, modelVersion=None, modelConfigType=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, customAlgorithms=None, builtinAlgorithms=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingDocumentRetrieverVersions=None, documentRetrieverMappings=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, trainingConfigUpdated=None, codeSource={}, modelConfig={}, deployableAlgorithms={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,10 @@ Module Contents
    :type trainingCompletedAt: str
    :param featureGroupVersions: A list of Feature Group version IDs used for model training.
    :type featureGroupVersions: list
+   :param customAlgorithms: List of user-defined algorithms used for model training.
+   :type customAlgorithms: list
+   :param builtinAlgorithms: List of algorithm names builtin algorithms provided by Abacus.AI used for model training.
+   :type builtinAlgorithms: list
    :param error: Relevant error if the status is FAILED.
    :type error: str
    :param pendingDeploymentIds: List of deployment IDs where deployment is pending.

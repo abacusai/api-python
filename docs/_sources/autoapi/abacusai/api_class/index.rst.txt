@@ -1589,6 +1589,11 @@ Package Contents
 
 
 
+   .. py:attribute:: AUGMENTED_LLM
+      :value: 'AUGMENTED_LLM'
+
+
+
 .. py:class:: DatasetConfig
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -1650,6 +1655,8 @@ Package Contents
    :type remove_watermarks: bool
    :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
    :type convert_to_markdown: bool
+   :param mask_pii: Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.
+   :type mask_pii: bool
 
 
    .. py:attribute:: extract_bounding_boxes
@@ -1681,6 +1688,12 @@ Package Contents
 
 
    .. py:attribute:: convert_to_markdown
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: mask_pii
       :type:  bool
       :value: False
 
@@ -4531,6 +4544,11 @@ Package Contents
 
 
 
+   .. py:attribute:: LLAMA3_1_405B
+      :value: 'LLAMA3_1_405B'
+
+
+
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
 
@@ -4996,6 +5014,11 @@ Package Contents
 
 
 
+   .. py:attribute:: AUGMENTED_LLM
+      :value: 'AUGMENTED_LLM'
+
+
+
 .. py:class:: StdDevThresholdType
 
    Bases: :py:obj:`ApiEnum`
@@ -5414,6 +5437,8 @@ Package Contents
    :type remove_watermarks: bool
    :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
    :type convert_to_markdown: bool
+   :param mask_pii: Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.
+   :type mask_pii: bool
 
 
    .. py:attribute:: extract_bounding_boxes
@@ -5445,6 +5470,12 @@ Package Contents
 
 
    .. py:attribute:: convert_to_markdown
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: mask_pii
       :type:  bool
       :value: False
 
@@ -7028,11 +7059,13 @@ Package Contents
    :type hide_sql_and_code: bool
    :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
    :type disable_data_summarization: bool
+   :param data_columns_to_ignore: Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format "<table_name>.<column_name>"
+   :type data_columns_to_ignore: List[str]
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
    :type search_score_cutoff: float
    :param include_bm25_retrieval: Combine BM25 search score with vector search using reciprocal rank fusion.
    :type include_bm25_retrieval: bool
-   :param database_connector_id: Database connector ID to use for the ChatLLM.
+   :param database_connector_id: Database connector ID to use for connecting external database that gives access to structured data to the LLM.
    :type database_connector_id: str
    :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
    :type database_connector_tables: List[str]
@@ -7112,6 +7145,10 @@ Package Contents
 
    .. py:attribute:: disable_data_summarization
       :type:  bool
+
+
+   .. py:attribute:: data_columns_to_ignore
+      :type:  List[str]
 
 
    .. py:attribute:: search_score_cutoff

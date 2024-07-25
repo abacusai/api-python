@@ -133,6 +133,8 @@ class WorkflowNodeInputMapping(ApiClass):
 
     @classmethod
     def from_dict(cls, mapping: dict):
+        if not isinstance(mapping, dict):
+            raise ValueError('input_mapping', 'Invalid workflow node input mapping. Provided mapping should be a dictionary.')
         if any(field not in mapping for field in ['name', 'variable_type']):
             raise ValueError('input_mapping', f'Invalid workflow node input mapping "{mapping}". Must contain keys - name, variable_type')
         return cls(
@@ -163,6 +165,8 @@ class WorkflowNodeOutputMapping(ApiClass):
 
     @classmethod
     def from_dict(cls, mapping: dict):
+        if not isinstance(mapping, dict):
+            raise ValueError('output_mapping', 'Invalid workflow node output mapping. Provided mapping should be a dictionary.')
         if 'name' not in mapping:
             raise ValueError('output_mapping', 'Invalid workflow node output mapping. Must contain keys - name.')
         return cls(

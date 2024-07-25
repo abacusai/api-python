@@ -471,9 +471,10 @@ class ChatLLMTrainingConfig(TrainingConfig):
         data_prompt_context (str): Prompt context for the data feature group IDs.
         hide_sql_and_code (bool): When running data queries, this will hide the generated SQL and Code in the response.
         disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
+        data_columns_to_ignore (List[str]): Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format "<table_name>.<column_name>"
         search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
         include_bm25_retrieval (bool): Combine BM25 search score with vector search using reciprocal rank fusion.
-        database_connector_id (str): Database connector ID to use for the ChatLLM.
+        database_connector_id (str): Database connector ID to use for connecting external database that gives access to structured data to the LLM.
         database_connector_tables (List[str]): List of tables to use from the database connector for the ChatLLM.
         enable_code_execution (bool): Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
         enable_response_caching (bool): Enable caching of LLM responses to speed up response times and improve reproducibility.
@@ -496,6 +497,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     data_prompt_context: str = dataclasses.field(default=None)
     hide_sql_and_code: bool = dataclasses.field(default=None)
     disable_data_summarization: bool = dataclasses.field(default=None)
+    data_columns_to_ignore: List[str] = dataclasses.field(default=None)
     search_score_cutoff: float = dataclasses.field(default=None)
     include_bm25_retrieval: bool = dataclasses.field(default=None)
     database_connector_id: str = dataclasses.field(default=None)

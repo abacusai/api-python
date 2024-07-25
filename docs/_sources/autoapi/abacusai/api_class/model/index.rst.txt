@@ -1154,11 +1154,13 @@ Module Contents
    :type hide_sql_and_code: bool
    :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
    :type disable_data_summarization: bool
+   :param data_columns_to_ignore: Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format "<table_name>.<column_name>"
+   :type data_columns_to_ignore: List[str]
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
    :type search_score_cutoff: float
    :param include_bm25_retrieval: Combine BM25 search score with vector search using reciprocal rank fusion.
    :type include_bm25_retrieval: bool
-   :param database_connector_id: Database connector ID to use for the ChatLLM.
+   :param database_connector_id: Database connector ID to use for connecting external database that gives access to structured data to the LLM.
    :type database_connector_id: str
    :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
    :type database_connector_tables: List[str]
@@ -1238,6 +1240,10 @@ Module Contents
 
    .. py:attribute:: disable_data_summarization
       :type:  bool
+
+
+   .. py:attribute:: data_columns_to_ignore
+      :type:  List[str]
 
 
    .. py:attribute:: search_score_cutoff

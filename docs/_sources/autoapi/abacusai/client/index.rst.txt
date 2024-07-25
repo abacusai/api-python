@@ -505,7 +505,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.1'
+      :value: '1.4.3'
 
 
 
@@ -5617,7 +5617,7 @@ Module Contents
 
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None, document_processing_config = None)
 
       Creates a dataset from a Database Connector.
 
@@ -5639,6 +5639,8 @@ Module Contents
       :type incremental: bool
       :param incremental_database_connector_config: The config for incremental datasets. Only valid if incremental is True
       :type incremental_database_connector_config: IncrementalDatabaseConnectorConfig
+      :param document_processing_config: The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).
+      :type document_processing_config: DatasetDocumentProcessingConfig
 
       :returns: The created dataset.
       :rtype: Dataset

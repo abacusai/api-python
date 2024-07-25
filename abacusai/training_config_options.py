@@ -11,9 +11,9 @@ class TrainingConfigOptions(AbstractApiClass):
             dataType (str): The type of input required for this option
             valueType (str): If the data_type is of type DICT_VALUES, this field specifies the expected value type of the values
             valueOptions (list[str]): The list of valid values for DICT_VALUES
-            value (optional[str, int, float, bool]): The value of this option
-            default (optional[str, int, float, bool]): The default value for this option
-            options (list[dict]): A list of options for this parameter
+            value (optional[any]): The value of this option
+            default (optional[any]): The default value for this option
+            options (dict): A dict of options for this parameter
             description (str): A description of the parameter
             required (bool): True if the parameter is required for training
             lastModelValue (optional[str, int, float, bool]): The last value used to train a model in this project
