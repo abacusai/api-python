@@ -1286,8 +1286,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>filter_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Allow users to filter the document retrievers on these metadata columns.</p></li>
 <li><p><strong>include_general_knowledge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to rely not just on RAG search results, but to fall back on general knowledge. Disabled by default.</p></li>
 <li><p><strong>enable_web_search</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to use Web Search Engines to retrieve information for better results.</p></li>
-<li><p><strong>behavior_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize the overall role instructions for the LLM.</p></li>
-<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customized instructions for how the LLM should respond.</p></li>
+<li><p><strong>behavior_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize the overall behaviour of the model. This controls things like - when to execute code (if enabled), write sql query, search web (if enabled), etc.</p></li>
+<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customized instructions for how the model should respond.</p></li>
 <li><p><strong>enable_llm_rewrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.</p></li>
 <li><p><strong>column_filtering_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.</p></li>
 <li><p><strong>keyword_requirement_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.</p></li>
@@ -1295,6 +1295,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>max_search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.</p></li>
 <li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.</p></li>
 <li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group IDs.</p></li>
+<li><p><strong>data_prompt_table_context</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Dict of table name and table context pairs to provide table wise context for each structured data table.</p></li>
 <li><p><strong>hide_sql_and_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, this will hide the generated SQL and Code in the response.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
 <li><p><strong>data_columns_to_ignore</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format “&lt;table_name&gt;.&lt;column_name&gt;”</p></li>
@@ -1304,6 +1305,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>database_connector_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use from the database connector for the ChatLLM.</p></li>
 <li><p><strong>enable_code_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.</p></li>
 <li><p><strong>enable_response_caching</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable caching of LLM responses to speed up response times and improve reproducibility.</p></li>
+<li><p><strong>unknown_answer_phrase</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Fallback response when the LLM can’t find an answer.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1388,6 +1390,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.data_prompt_table_context">
+<span class="sig-name descname"><span class="pre">data_prompt_table_context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.data_prompt_table_context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.hide_sql_and_code">
 <span class="sig-name descname"><span class="pre">hide_sql_and_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.hide_sql_and_code" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -1440,6 +1447,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.enable_response_caching">
 <span class="sig-name descname"><span class="pre">enable_response_caching</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.enable_response_caching" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.unknown_answer_phrase">
+<span class="sig-name descname"><span class="pre">unknown_answer_phrase</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.unknown_answer_phrase" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

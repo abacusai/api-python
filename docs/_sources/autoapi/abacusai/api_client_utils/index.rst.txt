@@ -33,6 +33,11 @@ Functions
    abacusai.api_client_utils.get_object_from_context
    abacusai.api_client_utils.load_as_pandas_from_avro_fd
    abacusai.api_client_utils.load_as_pandas_from_avro_files
+   abacusai.api_client_utils.validate_workflow_node_inputs
+   abacusai.api_client_utils.run
+   abacusai.api_client_utils.evaluate_edge_condition
+   abacusai.api_client_utils.execute_python_source
+   abacusai.api_client_utils.process_node_response
    abacusai.api_client_utils.try_abacus_internal_copy
 
 
@@ -76,6 +81,16 @@ Module Contents
 .. py:function:: load_as_pandas_from_avro_fd(fd)
 
 .. py:function:: load_as_pandas_from_avro_files(files, download_method, max_workers = 10)
+
+.. py:function:: validate_workflow_node_inputs(nodes_info, agent_workflow_node_id, keyword_arguments, sample_user_inputs, filtered_workflow_vars)
+
+.. py:function:: run(nodes, primary_start_node, graph_info, sample_user_inputs = None, agent_workflow_node_id = None, workflow_vars = {}, topological_dfs_stack = [])
+
+.. py:function:: evaluate_edge_condition(source, target, details, workflow_vars)
+
+.. py:function:: execute_python_source(python_expression, variables)
+
+.. py:function:: process_node_response(node_response)
 
 .. py:class:: StreamType
 

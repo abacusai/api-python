@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DataUploadResult(client, docInfos=None)
+.. py:class:: DataUploadResult(client, docInfos=None, maxCount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,6 +26,8 @@ Module Contents
    :type client: ApiClient
    :param docInfos: A list of dict for information on the documents uploaded to agent.
    :type docInfos: list[agentdatadocumentinfo]
+   :param maxCount: The maximum number of documents
+   :type maxCount: int
 
 
    .. py:method:: __repr__()

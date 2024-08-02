@@ -126,7 +126,7 @@ class WorkflowNodeInputMapping(ApiClass):
     def to_dict(self):
         return {
             'name': self.name,
-            'variable_type': self.variable_type,
+            'variable_type': self.variable_type.value,
             'variable_source': self.variable_source,
             'is_required': self.is_required
         }
@@ -139,7 +139,7 @@ class WorkflowNodeInputMapping(ApiClass):
             raise ValueError('input_mapping', f'Invalid workflow node input mapping "{mapping}". Must contain keys - name, variable_type')
         return cls(
             name=mapping['name'],
-            variable_type=mapping['variable_type'],
+            variable_type=enums.WorkflowNodeInputType(mapping['variable_type']),
             variable_source=mapping.get('variable_source'),
             is_required=mapping.get('is_required', True)
         )
@@ -160,7 +160,7 @@ class WorkflowNodeOutputMapping(ApiClass):
     def to_dict(self):
         return {
             'name': self.name,
-            'variable_type': self.variable_type
+            'variable_type': self.variable_type.value
         }
 
     @classmethod
@@ -171,7 +171,7 @@ class WorkflowNodeOutputMapping(ApiClass):
             raise ValueError('output_mapping', 'Invalid workflow node output mapping. Must contain keys - name.')
         return cls(
             name=mapping['name'],
-            variable_type=mapping.get('variable_type', enums.WorkflowNodeOutputType.STRING)
+            variable_type=enums.WorkflowNodeOutputType(mapping.get('variable_type', 'STRING'))
         )
 
 

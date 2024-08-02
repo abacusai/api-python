@@ -95,7 +95,7 @@ class PredictionOperator(AbstractApiClass):
 
     def update(self, name: str = None, feature_group_ids: List = None, source_code: str = None, initialize_function_name: str = None, predict_function_name: str = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None):
         """
-        Update an existing prediction operator.
+        Update an existing prediction operator. This does not create a new version.
 
         Args:
             name (str): Name of the prediction operator.

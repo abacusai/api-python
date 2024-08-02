@@ -254,6 +254,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../streaming_row_count/index.html">abacusai.streaming_row_count</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_sample_code/index.html">abacusai.streaming_sample_code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tone_details/index.html">abacusai.tone_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html">abacusai.training_config_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload/index.html">abacusai.upload</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload_part/index.html">abacusai.upload_part</a></li>
@@ -507,6 +508,11 @@
 <dt class="sig sig-object py" id="abacusai.client.AgentResponse">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.client.</span></span><span class="sig-name descname"><span class="pre">AgentResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.AgentResponse" title="Link to this definition"></a></dt>
 <dd><p>Response object for agent to support attachments, section data and normal data</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.AgentResponse.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.AgentResponse.to_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -926,7 +932,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.3'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.4'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -4895,6 +4901,29 @@ This will be equivalent to including from that module file.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.run_workflow_graph">
+<span class="sig-name descname"><span class="pre">run_workflow_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_user_inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_workflow_node_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.run_workflow_graph" title="Link to this definition"></a></dt>
+<dd><p>Validates the workflow graph for an AI Agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow_graph</strong> (<a class="reference internal" href="../api_class/ai_agents/index.html#abacusai.api_class.ai_agents.WorkflowGraph" title="abacusai.api_class.ai_agents.WorkflowGraph"><em>WorkflowGraph</em></a>) – The workflow graph to validate.</p></li>
+<li><p><strong>sample_user_inputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Contains sample values for variables of type user_input for starting node</p></li>
+<li><p><strong>agent_workflow_node_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Node id from which we want to run workflow</p></li>
+<li><p><strong>agent_interface</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.AgentInterface" title="abacusai.api_class.enums.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The output variables for every node in workflow which has executed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_agent_from_function">
 <span class="sig-name descname"><span class="pre">create_agent_from_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation_feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_agent_from_function" title="Link to this definition"></a></dt>
 <dd><p>[Deprecated]
@@ -8788,7 +8817,7 @@ feature groups for those input feature groups.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.update_prediction_operator">
 <span class="sig-name descname"><span class="pre">update_prediction_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction_operator_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initialize_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_prediction_operator" title="Link to this definition"></a></dt>
-<dd><p>Update an existing prediction operator.</p>
+<dd><p>Update an existing prediction operator. This does not create a new version.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -12031,6 +12060,23 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.generate_agent_code">
+<span class="sig-name descname"><span class="pre">generate_agent_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.generate_agent_code" title="Link to this definition"></a></dt>
+<dd><p>Generates the code for defining an AI Agent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique ID associated with the project.</p></li>
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.evaluate_prompt">
 <span class="sig-name descname"><span class="pre">evaluate_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_response_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.evaluate_prompt" title="Link to this definition"></a></dt>
 <dd><p>Generate response to the prompt using the specified model.</p>
@@ -12190,6 +12236,42 @@ content returned in the response.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../llm_response/index.html#abacusai.llm_response.LlmResponse" title="abacusai.llm_response.LlmResponse">LlmResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.validate_workflow_graph">
+<span class="sig-name descname"><span class="pre">validate_workflow_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.validate_workflow_graph" title="Link to this definition"></a></dt>
+<dd><p>Validates the workflow graph for an AI Agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow_graph</strong> (<a class="reference internal" href="../api_class/ai_agents/index.html#abacusai.api_class.ai_agents.WorkflowGraph" title="abacusai.api_class.ai_agents.WorkflowGraph"><em>WorkflowGraph</em></a>) – The workflow graph to validate.</p></li>
+<li><p><strong>agent_interface</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.AgentInterface" title="abacusai.api_class.enums.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.extract_graph_information">
+<span class="sig-name descname"><span class="pre">extract_graph_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.extract_graph_information" title="Link to this definition"></a></dt>
+<dd><p>Extracts information from the workflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow_graph</strong> (<a class="reference internal" href="../api_class/ai_agents/index.html#abacusai.api_class.ai_agents.WorkflowGraph" title="abacusai.api_class.ai_agents.WorkflowGraph"><em>WorkflowGraph</em></a>) – The workflow graph to validate.</p></li>
+<li><p><strong>agent_interface</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.AgentInterface" title="abacusai.api_class.enums.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>

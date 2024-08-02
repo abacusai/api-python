@@ -104,6 +104,9 @@ Module Contents
    Response object for agent to support attachments, section data and normal data
 
 
+   .. py:method:: to_dict()
+
+
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
    Options for configuring the ApiClient
@@ -505,7 +508,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.3'
+      :value: '1.4.4'
 
 
 
@@ -3447,6 +3450,26 @@ Module Contents
 
       :returns: the imported python module
       :rtype: module
+
+
+
+   .. py:method:: run_workflow_graph(workflow_graph, sample_user_inputs = {}, agent_workflow_node_id = None, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
+
+      Validates the workflow graph for an AI Agent.
+
+      :param workflow_graph: The workflow graph to validate.
+      :type workflow_graph: WorkflowGraph
+      :param sample_user_inputs: Contains sample values for variables of type user_input for starting node
+      :type sample_user_inputs: dict
+      :param agent_workflow_node_id: Node id from which we want to run workflow
+      :type agent_workflow_node_id: str
+      :param agent_interface: The interface that the agent will be deployed with.
+      :type agent_interface: AgentInterface
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
+
+      :returns: The output variables for every node in workflow which has executed.
+      :rtype: dict
 
 
 
@@ -6809,7 +6832,7 @@ Module Contents
 
    .. py:method:: update_prediction_operator(prediction_operator_id, name = None, feature_group_ids = None, source_code = None, initialize_function_name = None, predict_function_name = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
 
-      Update an existing prediction operator.
+      Update an existing prediction operator. This does not create a new version.
 
       :param prediction_operator_id: The unique ID of the prediction operator.
       :type prediction_operator_id: str
@@ -9589,6 +9612,17 @@ Module Contents
 
 
 
+   .. py:method:: generate_agent_code(project_id, prompt)
+
+      Generates the code for defining an AI Agent
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param prompt: A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out
+      :type prompt: str
+
+
+
    .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
 
       Generate response to the prompt using the specified model.
@@ -9730,6 +9764,32 @@ Module Contents
 
       :returns: The response from the LLM App.
       :rtype: LlmResponse
+
+
+
+   .. py:method:: validate_workflow_graph(workflow_graph, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
+
+      Validates the workflow graph for an AI Agent.
+
+      :param workflow_graph: The workflow graph to validate.
+      :type workflow_graph: WorkflowGraph
+      :param agent_interface: The interface that the agent will be deployed with.
+      :type agent_interface: AgentInterface
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
+
+
+
+   .. py:method:: extract_graph_information(workflow_graph, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
+
+      Extracts information from the workflow.
+
+      :param workflow_graph: The workflow graph to validate.
+      :type workflow_graph: WorkflowGraph
+      :param agent_interface: The interface that the agent will be deployed with.
+      :type agent_interface: AgentInterface
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
 
 
 

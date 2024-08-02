@@ -47,10 +47,11 @@ from .api_class import (
 from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
 from .api_class.ai_agents import WorkflowGraph
 from .api_class.blob_input import Blob, BlobInput
+from .api_class.enums import AgentInterface
 from .api_class.segments import ResponseSection, Segment
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, StreamType,
-    clean_column_name, get_object_from_context
+    clean_column_name, get_object_from_context, run
 )
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
@@ -272,14 +273,22 @@ class AgentResponse:
                 self.data_list.append(arg)
             else:
                 raise Exception(
-                    'AgentResponse can only contain Blob, ResponseSection or json serializable objects')
+                    'AgentResponse can only contain Blob, ResponseSection or json serializable objects if key is not provided')
 
         for key, value in kwargs.items():
-            if isinstance(value, Blob) or _is_json_serializable(value) or isinstance(value, (ResponseSection, Segment)):
-                self.section_data_list.append({key: value})
-            else:
-                raise Exception(
-                    'AgentResponse can only contain Blob, ResponseSection or json serializable objects')
+            self.section_data_list.append({key: value})
+
+    def to_dict(self):
+        result = {}
+        if self.data_list:
+            result['data_list'] = self.data_list
+        for section_data in self.section_data_list:
+            for k, v in section_data.items():
+                if isinstance(v, ResponseSection):
+                    result[k] = v.to_dict()
+                else:
+                    result[k] = v
+        return result
 
 
 class ClientOptions:
@@ -595,7 +604,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.3'
+    client_version = '1.4.4'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3520,6 +3529,32 @@ class ApiClient(ReadOnlyClient):
             setattr(the_main, name, getattr(module, name))
         return module
 
+    def run_workflow_graph(self, workflow_graph: WorkflowGraph, sample_user_inputs: dict = {}, agent_workflow_node_id: str = None, agent_interface: AgentInterface = AgentInterface.DEFAULT, package_requirements: list = []):
+        """
+        Validates the workflow graph for an AI Agent.
+
+        Args:
+            workflow_graph (WorkflowGraph): The workflow graph to validate.
+            sample_user_inputs (dict): Contains sample values for variables of type user_input for starting node
+            agent_workflow_node_id (str): Node id from which we want to run workflow
+            agent_interface (AgentInterface): The interface that the agent will be deployed with.
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+
+        Returns:
+            dict: The output variables for every node in workflow which has executed.
+        """
+        graph_info = self.extract_graph_information(
+            workflow_graph=workflow_graph, agent_interface=agent_interface, package_requirements=package_requirements)
+        workflow_vars = get_object_from_context(
+            self, _request_context, 'workflow_vars', dict) or {}
+        topological_dfs_stack = get_object_from_context(
+            self, _request_context, 'topological_dfs_stack', list) or []
+        workflow_info = run(nodes=workflow_graph['nodes'], primary_start_node=workflow_graph['primary_start_node'], graph_info=graph_info,
+                            sample_user_inputs=sample_user_inputs, agent_workflow_node_id=agent_workflow_node_id, workflow_vars=workflow_vars, topological_dfs_stack=topological_dfs_stack)
+        _request_context.workflow_vars = workflow_info['workflow_vars']
+        _request_context.topological_dfs_stack = workflow_info['topological_dfs_stack']
+        return workflow_info['run_info']
+
     def create_agent_from_function(self, project_id: str, agent_function: callable, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, evaluation_feature_group_id: str = None, workflow_graph: WorkflowGraph = None):
         """
         [Deprecated]
@@ -3883,6 +3918,7 @@ class ApiClient(ReadOnlyClient):
             body['extraArgs'] = extra_args
         headers = {'APIKEY': self.api_key}
         body['connectionId'] = uuid4().hex
+        self._clean_api_objects(body)
         for _ in range(3):
             response = self._request(
                 api_endpont, method='POST', body=body, headers=headers)
@@ -6199,7 +6235,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('createPredictionOperator', 'POST', query_params={}, body={'name': name, 'projectId': project_id, 'sourceCode': source_code, 'predictFunctionName': predict_function_name, 'initializeFunctionName': initialize_function_name, 'featureGroupIds': feature_group_ids, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=PredictionOperator)
 
     def update_prediction_operator(self, prediction_operator_id: str, name: str = None, feature_group_ids: List = None, source_code: str = None, initialize_function_name: str = None, predict_function_name: str = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None) -> PredictionOperator:
-        """Update an existing prediction operator.
+        """Update an existing prediction operator. This does not create a new version.
 
         Args:
             prediction_operator_id (str): The unique ID of the prediction operator.
@@ -8248,6 +8284,14 @@ Creates a new feature group defined as the union of other feature group versions
             Agent: The updated agent."""
         return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules}, parse_type=Agent)
 
+    def generate_agent_code(self, project_id: str, prompt: str) -> list:
+        """Generates the code for defining an AI Agent
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            prompt (str): A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out"""
+        return self._call_api('generateAgentCode', 'POST', query_params={}, body={'projectId': project_id, 'prompt': prompt})
+
     def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
 
@@ -8304,7 +8348,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             ExtractedFields: The response from the document query."""
-        return self._call_api('extractDataUsingLLM', 'POST', query_params={}, body={'fieldDescriptors': field_descriptors, 'documentId': document_id, 'documentText': document_text, 'llmName': llm_name}, parse_type=ExtractedFields)
+        return self._proxy_request('ExtractDataUsingLlm', 'POST', query_params={}, body={'fieldDescriptors': field_descriptors, 'documentId': document_id, 'documentText': document_text, 'llmName': llm_name}, parse_type=ExtractedFields)
 
     def search_web_for_llm(self, queries: List, search_providers: List = None, max_results: int = 1, safe: bool = True, fetch_content: bool = False, max_page_tokens: int = 8192, convert_to_markdown: bool = True) -> WebSearchResponse:
         """Access web search providers to fetch content related to the queries for use in large language model inputs.
@@ -8350,6 +8394,24 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             LlmResponse: The response from the LLM App."""
         return self._call_api('getLLMAppResponse', 'POST', query_params={}, body={'llmAppName': llm_app_name, 'prompt': prompt}, parse_type=LlmResponse)
+
+    def validate_workflow_graph(self, workflow_graph: Union[dict, WorkflowGraph], agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, package_requirements: list = []) -> dict:
+        """Validates the workflow graph for an AI Agent.
+
+        Args:
+            workflow_graph (WorkflowGraph): The workflow graph to validate.
+            agent_interface (AgentInterface): The interface that the agent will be deployed with.
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']."""
+        return self._call_api('validateWorkflowGraph', 'POST', query_params={}, body={'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'packageRequirements': package_requirements})
+
+    def extract_graph_information(self, workflow_graph: Union[dict, WorkflowGraph], agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, package_requirements: list = []) -> dict:
+        """Extracts information from the workflow.
+
+        Args:
+            workflow_graph (WorkflowGraph): The workflow graph to validate.
+            agent_interface (AgentInterface): The interface that the agent will be deployed with.
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']."""
+        return self._call_api('extractGraphInformation', 'POST', query_params={}, body={'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'packageRequirements': package_requirements})
 
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, VectorStoreConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.

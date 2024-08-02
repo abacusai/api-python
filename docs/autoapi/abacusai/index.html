@@ -250,6 +250,7 @@
 <li class="toctree-l3"><a class="reference internal" href="streaming_row_count/index.html">abacusai.streaming_row_count</a></li>
 <li class="toctree-l3"><a class="reference internal" href="streaming_sample_code/index.html">abacusai.streaming_sample_code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tone_details/index.html">abacusai.tone_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="training_config_options/index.html">abacusai.training_config_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="upload/index.html">abacusai.upload</a></li>
 <li class="toctree-l3"><a class="reference internal" href="upload_part/index.html">abacusai.upload_part</a></li>
@@ -674,6 +675,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.VectorStoreTextEncoder"><code class="docutils literal notranslate"><span class="pre">VectorStoreTextEncoder</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.VectorStoreTextEncoder.E5"><code class="docutils literal notranslate"><span class="pre">VectorStoreTextEncoder.E5</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.VectorStoreTextEncoder.OPENAI"><code class="docutils literal notranslate"><span class="pre">VectorStoreTextEncoder.OPENAI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.VectorStoreTextEncoder.OPENAI_LARGE"><code class="docutils literal notranslate"><span class="pre">VectorStoreTextEncoder.OPENAI_LARGE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.VectorStoreTextEncoder.SENTENCE_BERT"><code class="docutils literal notranslate"><span class="pre">VectorStoreTextEncoder.SENTENCE_BERT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.VectorStoreTextEncoder.E5_SMALL"><code class="docutils literal notranslate"><span class="pre">VectorStoreTextEncoder.E5_SMALL</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.VectorStoreTextEncoder.CODE_BERT"><code class="docutils literal notranslate"><span class="pre">VectorStoreTextEncoder.CODE_BERT</span></code></a></li>
@@ -1090,28 +1092,19 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT4_32K"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT4_32K</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT4_128K"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT4_128K</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT4_128K_LATEST"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT4_128K_LATEST</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT4_VISION"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT4_VISION</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT4O"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT4O</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT4O_MINI"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT4O_MINI</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT3_5"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT3_5</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.OPENAI_GPT3_5_TEXT"><code class="docutils literal notranslate"><span class="pre">LLMName.OPENAI_GPT3_5_TEXT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.LLAMA3_1_405B"><code class="docutils literal notranslate"><span class="pre">LLMName.LLAMA3_1_405B</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.LLAMA3_1_70B"><code class="docutils literal notranslate"><span class="pre">LLMName.LLAMA3_1_70B</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.LLAMA3_1_8B"><code class="docutils literal notranslate"><span class="pre">LLMName.LLAMA3_1_8B</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.LLAMA3_LARGE_CHAT"><code class="docutils literal notranslate"><span class="pre">LLMName.LLAMA3_LARGE_CHAT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.GROQ_LLAMA3_LARGE_CHAT"><code class="docutils literal notranslate"><span class="pre">LLMName.GROQ_LLAMA3_LARGE_CHAT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.CLAUDE_V2_1"><code class="docutils literal notranslate"><span class="pre">LLMName.CLAUDE_V2_1</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.CLAUDE_V3_OPUS"><code class="docutils literal notranslate"><span class="pre">LLMName.CLAUDE_V3_OPUS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.CLAUDE_V3_SONNET"><code class="docutils literal notranslate"><span class="pre">LLMName.CLAUDE_V3_SONNET</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.CLAUDE_V3_HAIKU"><code class="docutils literal notranslate"><span class="pre">LLMName.CLAUDE_V3_HAIKU</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.CLAUDE_V3_5_SONNET"><code class="docutils literal notranslate"><span class="pre">LLMName.CLAUDE_V3_5_SONNET</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.ABACUS_GIRAFFE"><code class="docutils literal notranslate"><span class="pre">LLMName.ABACUS_GIRAFFE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.ABACUS_GIRAFFE_LARGE"><code class="docutils literal notranslate"><span class="pre">LLMName.ABACUS_GIRAFFE_LARGE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.LLAMA2_CHAT"><code class="docutils literal notranslate"><span class="pre">LLMName.LLAMA2_CHAT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.PALM"><code class="docutils literal notranslate"><span class="pre">LLMName.PALM</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.PALM_TEXT"><code class="docutils literal notranslate"><span class="pre">LLMName.PALM_TEXT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.GEMINI_PRO"><code class="docutils literal notranslate"><span class="pre">LLMName.GEMINI_PRO</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.GEMINI_1_5_PRO"><code class="docutils literal notranslate"><span class="pre">LLMName.GEMINI_1_5_PRO</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.MIXTRAL_CHAT"><code class="docutils literal notranslate"><span class="pre">LLMName.MIXTRAL_CHAT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.MISTRAL_MEDIUM"><code class="docutils literal notranslate"><span class="pre">LLMName.MISTRAL_MEDIUM</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.ABACUS_SMAUG3"><code class="docutils literal notranslate"><span class="pre">LLMName.ABACUS_SMAUG3</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.LLMName.GEMINI_1_5_FLASH"><code class="docutils literal notranslate"><span class="pre">LLMName.GEMINI_1_5_FLASH</span></code></a></li>
 </ul>
@@ -1564,6 +1557,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.max_search_results"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.max_search_results</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.data_feature_group_ids"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.data_feature_group_ids</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.data_prompt_context"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.data_prompt_context</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.data_prompt_table_context"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.data_prompt_table_context</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.hide_sql_and_code"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.hide_sql_and_code</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.disable_data_summarization"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.disable_data_summarization</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.data_columns_to_ignore"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.data_columns_to_ignore</span></code></a></li>
@@ -1575,6 +1569,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.metadata_columns"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.metadata_columns</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.lookup_rewrite_instructions"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.lookup_rewrite_instructions</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.enable_response_caching"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.enable_response_caching</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.unknown_answer_phrase"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.unknown_answer_phrase</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMTrainingConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig.__post_init__()</span></code></a></li>
 </ul>
 </li>
@@ -1975,7 +1970,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChartResponseSection.chart"><code class="docutils literal notranslate"><span class="pre">ChartResponseSection.chart</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abacusai.AgentResponse"><code class="docutils literal notranslate"><span class="pre">AgentResponse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abacusai.AgentResponse"><code class="docutils literal notranslate"><span class="pre">AgentResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.AgentResponse.to_dict"><code class="docutils literal notranslate"><span class="pre">AgentResponse.to_dict()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#abacusai.ApiClient"><code class="docutils literal notranslate"><span class="pre">ApiClient</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.create_dataset_from_pandas"><code class="docutils literal notranslate"><span class="pre">ApiClient.create_dataset_from_pandas()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.create_dataset_version_from_pandas"><code class="docutils literal notranslate"><span class="pre">ApiClient.create_dataset_version_from_pandas()</span></code></a></li>
@@ -2004,6 +2002,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.create_module_from_notebook"><code class="docutils literal notranslate"><span class="pre">ApiClient.create_module_from_notebook()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.update_module_from_notebook"><code class="docutils literal notranslate"><span class="pre">ApiClient.update_module_from_notebook()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.import_module"><code class="docutils literal notranslate"><span class="pre">ApiClient.import_module()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.run_workflow_graph"><code class="docutils literal notranslate"><span class="pre">ApiClient.run_workflow_graph()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.create_agent_from_function"><code class="docutils literal notranslate"><span class="pre">ApiClient.create_agent_from_function()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.update_agent_with_function"><code class="docutils literal notranslate"><span class="pre">ApiClient.update_agent_with_function()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.execute_feature_group_sql"><code class="docutils literal notranslate"><span class="pre">ApiClient.execute_feature_group_sql()</span></code></a></li>
@@ -2385,6 +2384,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.delete_external_application"><code class="docutils literal notranslate"><span class="pre">ApiClient.delete_external_application()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.create_agent"><code class="docutils literal notranslate"><span class="pre">ApiClient.create_agent()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.update_agent"><code class="docutils literal notranslate"><span class="pre">ApiClient.update_agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.generate_agent_code"><code class="docutils literal notranslate"><span class="pre">ApiClient.generate_agent_code()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.evaluate_prompt"><code class="docutils literal notranslate"><span class="pre">ApiClient.evaluate_prompt()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.render_feature_groups_for_llm"><code class="docutils literal notranslate"><span class="pre">ApiClient.render_feature_groups_for_llm()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.generate_code_for_data_query_using_llm"><code class="docutils literal notranslate"><span class="pre">ApiClient.generate_code_for_data_query_using_llm()</span></code></a></li>
@@ -2392,6 +2392,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.search_web_for_llm"><code class="docutils literal notranslate"><span class="pre">ApiClient.search_web_for_llm()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.construct_agent_conversation_messages_for_llm"><code class="docutils literal notranslate"><span class="pre">ApiClient.construct_agent_conversation_messages_for_llm()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.get_llm_app_response"><code class="docutils literal notranslate"><span class="pre">ApiClient.get_llm_app_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.validate_workflow_graph"><code class="docutils literal notranslate"><span class="pre">ApiClient.validate_workflow_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.extract_graph_information"><code class="docutils literal notranslate"><span class="pre">ApiClient.extract_graph_information()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.create_document_retriever"><code class="docutils literal notranslate"><span class="pre">ApiClient.create_document_retriever()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.rename_document_retriever"><code class="docutils literal notranslate"><span class="pre">ApiClient.rename_document_retriever()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient.create_document_retriever_version"><code class="docutils literal notranslate"><span class="pre">ApiClient.create_document_retriever_version()</span></code></a></li>
@@ -2894,6 +2896,7 @@
 <li class="toctree-l1"><a class="reference internal" href="streaming_row_count/index.html">abacusai.streaming_row_count</a></li>
 <li class="toctree-l1"><a class="reference internal" href="streaming_sample_code/index.html">abacusai.streaming_sample_code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tone_details/index.html">abacusai.tone_details</a></li>
 <li class="toctree-l1"><a class="reference internal" href="training_config_options/index.html">abacusai.training_config_options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upload/index.html">abacusai.upload</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upload_part/index.html">abacusai.upload_part</a></li>
@@ -5734,6 +5737,11 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.VectorStoreTextEncoder.OPENAI_LARGE">
+<span class="sig-name descname"><span class="pre">OPENAI_LARGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI_LARGE'</span></em><a class="headerlink" href="#abacusai.VectorStoreTextEncoder.OPENAI_LARGE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.VectorStoreTextEncoder.SENTENCE_BERT">
 <span class="sig-name descname"><span class="pre">SENTENCE_BERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SENTENCE_BERT'</span></em><a class="headerlink" href="#abacusai.VectorStoreTextEncoder.SENTENCE_BERT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -7519,11 +7527,6 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.OPENAI_GPT4_VISION">
-<span class="sig-name descname"><span class="pre">OPENAI_GPT4_VISION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI_GPT4_VISION'</span></em><a class="headerlink" href="#abacusai.LLMName.OPENAI_GPT4_VISION" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.LLMName.OPENAI_GPT4O">
 <span class="sig-name descname"><span class="pre">OPENAI_GPT4O</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI_GPT4O'</span></em><a class="headerlink" href="#abacusai.LLMName.OPENAI_GPT4O" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -7549,18 +7552,18 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.LLMName.LLAMA3_1_70B">
+<span class="sig-name descname"><span class="pre">LLAMA3_1_70B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LLAMA3_1_70B'</span></em><a class="headerlink" href="#abacusai.LLMName.LLAMA3_1_70B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.LLMName.LLAMA3_1_8B">
+<span class="sig-name descname"><span class="pre">LLAMA3_1_8B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LLAMA3_1_8B'</span></em><a class="headerlink" href="#abacusai.LLMName.LLAMA3_1_8B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.LLMName.LLAMA3_LARGE_CHAT">
 <span class="sig-name descname"><span class="pre">LLAMA3_LARGE_CHAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LLAMA3_LARGE_CHAT'</span></em><a class="headerlink" href="#abacusai.LLMName.LLAMA3_LARGE_CHAT" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.GROQ_LLAMA3_LARGE_CHAT">
-<span class="sig-name descname"><span class="pre">GROQ_LLAMA3_LARGE_CHAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GROQ_LLAMA3_LARGE_CHAT'</span></em><a class="headerlink" href="#abacusai.LLMName.GROQ_LLAMA3_LARGE_CHAT" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.CLAUDE_V2_1">
-<span class="sig-name descname"><span class="pre">CLAUDE_V2_1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAUDE_V2_1'</span></em><a class="headerlink" href="#abacusai.LLMName.CLAUDE_V2_1" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -7584,48 +7587,8 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.ABACUS_GIRAFFE">
-<span class="sig-name descname"><span class="pre">ABACUS_GIRAFFE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ABACUS_GIRAFFE'</span></em><a class="headerlink" href="#abacusai.LLMName.ABACUS_GIRAFFE" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.ABACUS_GIRAFFE_LARGE">
-<span class="sig-name descname"><span class="pre">ABACUS_GIRAFFE_LARGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ABACUS_GIRAFFE_LARGE'</span></em><a class="headerlink" href="#abacusai.LLMName.ABACUS_GIRAFFE_LARGE" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.LLAMA2_CHAT">
-<span class="sig-name descname"><span class="pre">LLAMA2_CHAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LLAMA2_CHAT'</span></em><a class="headerlink" href="#abacusai.LLMName.LLAMA2_CHAT" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.PALM">
-<span class="sig-name descname"><span class="pre">PALM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PALM'</span></em><a class="headerlink" href="#abacusai.LLMName.PALM" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.PALM_TEXT">
-<span class="sig-name descname"><span class="pre">PALM_TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PALM_TEXT'</span></em><a class="headerlink" href="#abacusai.LLMName.PALM_TEXT" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.GEMINI_PRO">
-<span class="sig-name descname"><span class="pre">GEMINI_PRO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI_PRO'</span></em><a class="headerlink" href="#abacusai.LLMName.GEMINI_PRO" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.LLMName.GEMINI_1_5_PRO">
 <span class="sig-name descname"><span class="pre">GEMINI_1_5_PRO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI_1_5_PRO'</span></em><a class="headerlink" href="#abacusai.LLMName.GEMINI_1_5_PRO" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.MIXTRAL_CHAT">
-<span class="sig-name descname"><span class="pre">MIXTRAL_CHAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MIXTRAL_CHAT'</span></em><a class="headerlink" href="#abacusai.LLMName.MIXTRAL_CHAT" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.MISTRAL_MEDIUM">
-<span class="sig-name descname"><span class="pre">MISTRAL_MEDIUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MISTRAL_MEDIUM'</span></em><a class="headerlink" href="#abacusai.LLMName.MISTRAL_MEDIUM" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -9784,8 +9747,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>filter_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Allow users to filter the document retrievers on these metadata columns.</p></li>
 <li><p><strong>include_general_knowledge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to rely not just on RAG search results, but to fall back on general knowledge. Disabled by default.</p></li>
 <li><p><strong>enable_web_search</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to use Web Search Engines to retrieve information for better results.</p></li>
-<li><p><strong>behavior_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize the overall role instructions for the LLM.</p></li>
-<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customized instructions for how the LLM should respond.</p></li>
+<li><p><strong>behavior_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize the overall behaviour of the model. This controls things like - when to execute code (if enabled), write sql query, search web (if enabled), etc.</p></li>
+<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customized instructions for how the model should respond.</p></li>
 <li><p><strong>enable_llm_rewrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.</p></li>
 <li><p><strong>column_filtering_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.</p></li>
 <li><p><strong>keyword_requirement_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.</p></li>
@@ -9793,6 +9756,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>max_search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.</p></li>
 <li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.</p></li>
 <li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group IDs.</p></li>
+<li><p><strong>data_prompt_table_context</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Dict of table name and table context pairs to provide table wise context for each structured data table.</p></li>
 <li><p><strong>hide_sql_and_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, this will hide the generated SQL and Code in the response.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
 <li><p><strong>data_columns_to_ignore</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format “&lt;table_name&gt;.&lt;column_name&gt;”</p></li>
@@ -9802,6 +9766,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>database_connector_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use from the database connector for the ChatLLM.</p></li>
 <li><p><strong>enable_code_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.</p></li>
 <li><p><strong>enable_response_caching</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable caching of LLM responses to speed up response times and improve reproducibility.</p></li>
+<li><p><strong>unknown_answer_phrase</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Fallback response when the LLM can’t find an answer.</p></li>
 </ul>
 </dd>
 </dl>
@@ -9886,6 +9851,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.data_prompt_table_context">
+<span class="sig-name descname"><span class="pre">data_prompt_table_context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.data_prompt_table_context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.hide_sql_and_code">
 <span class="sig-name descname"><span class="pre">hide_sql_and_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.hide_sql_and_code" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -9938,6 +9908,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.enable_response_caching">
 <span class="sig-name descname"><span class="pre">enable_response_caching</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.enable_response_caching" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.unknown_answer_phrase">
+<span class="sig-name descname"><span class="pre">unknown_answer_phrase</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.unknown_answer_phrase" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -11952,6 +11927,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dt class="sig sig-object py" id="abacusai.AgentResponse">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">AgentResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AgentResponse" title="Link to this definition"></a></dt>
 <dd><p>Response object for agent to support attachments, section data and normal data</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.AgentResponse.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AgentResponse.to_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -12562,6 +12542,29 @@ This will be equivalent to including from that module file.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.run_workflow_graph">
+<span class="sig-name descname"><span class="pre">run_workflow_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_user_inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_workflow_node_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.run_workflow_graph" title="Link to this definition"></a></dt>
+<dd><p>Validates the workflow graph for an AI Agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow_graph</strong> (<a class="reference internal" href="#abacusai.WorkflowGraph" title="abacusai.WorkflowGraph"><em>WorkflowGraph</em></a>) – The workflow graph to validate.</p></li>
+<li><p><strong>sample_user_inputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Contains sample values for variables of type user_input for starting node</p></li>
+<li><p><strong>agent_workflow_node_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Node id from which we want to run workflow</p></li>
+<li><p><strong>agent_interface</strong> (<a class="reference internal" href="#abacusai.AgentInterface" title="abacusai.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The output variables for every node in workflow which has executed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -16460,7 +16463,7 @@ feature groups for those input feature groups.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.update_prediction_operator">
 <span class="sig-name descname"><span class="pre">update_prediction_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction_operator_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initialize_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_prediction_operator" title="Link to this definition"></a></dt>
-<dd><p>Update an existing prediction operator.</p>
+<dd><p>Update an existing prediction operator. This does not create a new version.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -19703,6 +19706,23 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.generate_agent_code">
+<span class="sig-name descname"><span class="pre">generate_agent_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.generate_agent_code" title="Link to this definition"></a></dt>
+<dd><p>Generates the code for defining an AI Agent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique ID associated with the project.</p></li>
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.evaluate_prompt">
 <span class="sig-name descname"><span class="pre">evaluate_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_response_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.evaluate_prompt" title="Link to this definition"></a></dt>
 <dd><p>Generate response to the prompt using the specified model.</p>
@@ -19862,6 +19882,42 @@ content returned in the response.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="llm_response/index.html#abacusai.llm_response.LlmResponse" title="abacusai.llm_response.LlmResponse">LlmResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.validate_workflow_graph">
+<span class="sig-name descname"><span class="pre">validate_workflow_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.validate_workflow_graph" title="Link to this definition"></a></dt>
+<dd><p>Validates the workflow graph for an AI Agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow_graph</strong> (<a class="reference internal" href="#abacusai.WorkflowGraph" title="abacusai.WorkflowGraph"><em>WorkflowGraph</em></a>) – The workflow graph to validate.</p></li>
+<li><p><strong>agent_interface</strong> (<a class="reference internal" href="#abacusai.AgentInterface" title="abacusai.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.extract_graph_information">
+<span class="sig-name descname"><span class="pre">extract_graph_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.extract_graph_information" title="Link to this definition"></a></dt>
+<dd><p>Extracts information from the workflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow_graph</strong> (<a class="reference internal" href="#abacusai.WorkflowGraph" title="abacusai.WorkflowGraph"><em>WorkflowGraph</em></a>) – The workflow graph to validate.</p></li>
+<li><p><strong>agent_interface</strong> (<a class="reference internal" href="#abacusai.AgentInterface" title="abacusai.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -24437,7 +24493,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.3'</span></em><a class="headerlink" href="#abacusai.__version__" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.4'</span></em><a class="headerlink" href="#abacusai.__version__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

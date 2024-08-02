@@ -180,6 +180,194 @@ def load_as_pandas_from_avro_files(files: List[str], download_method: Callable, 
     return data_df
 
 
+def validate_workflow_node_inputs(nodes_info, agent_workflow_node_id, keyword_arguments: dict, sample_user_inputs: dict, filtered_workflow_vars: dict):
+    from .api_class import WorkflowNodeInputType
+    input_mappings = nodes_info[agent_workflow_node_id].get(
+        'input_mappings', {})
+    input_schema = nodes_info[agent_workflow_node_id].get('input_schema', {})
+    if input_schema.get('runtime_schema', False):
+        keyword_arguments = {input_schema.get(
+            'schema_prop'): keyword_arguments}
+    for input_mapping in input_mappings:
+        input_name = input_mapping['name']
+        variable_type = input_mapping['variable_type']
+        is_required = input_mapping.get('is_required', True)
+        variable_source = input_mapping['variable_source']
+        if variable_type == 'WORKFLOW_VARIABLE':
+            if variable_source not in filtered_workflow_vars:
+                raise ValueError(
+                    f'The stage corresponding to "{agent_workflow_node_id}" requires variables from {variable_source} stage which are not there.')
+            if input_name not in filtered_workflow_vars[variable_source] and is_required:
+                raise ValueError(
+                    f'Missing required input "{input_name}" in workflow vars for workflow node "{agent_workflow_node_id}".')
+            else:
+                keyword_arguments[input_name] = filtered_workflow_vars[variable_source][input_name]
+        elif variable_type == WorkflowNodeInputType.USER_INPUT:
+            if sample_user_inputs and input_name in sample_user_inputs:
+                keyword_arguments[input_name] = sample_user_inputs[input_name]
+            elif variable_source in filtered_workflow_vars and input_name in filtered_workflow_vars[variable_source]:
+                keyword_arguments[input_name] = filtered_workflow_vars[variable_source][input_name]
+            else:
+                if is_required:
+                    raise ValueError(
+                        f'User input for "{input_name}" is required for the "{agent_workflow_node_id}" node.')
+                else:
+                    keyword_arguments[input_name] = None
+
+
+def run(nodes: List[dict], primary_start_node: str, graph_info: dict, sample_user_inputs: dict = None, agent_workflow_node_id: str = None, workflow_vars: dict = {}, topological_dfs_stack: List = []):
+    from .api_class import WorkflowNodeInputType
+    source_code = graph_info['source_code']
+    exec(source_code, globals())
+
+    nodes_info: dict = {node['name']: node for node in nodes}
+    traversal_orders = graph_info['traversal_orders']
+    nodes_ancestors = graph_info['nodes_ancestors']
+    nodes_inedges = graph_info['nodes_inedges']
+    primary_start_node = primary_start_node or graph_info['default_root_node']
+
+    primary_traversal_order = traversal_orders[primary_start_node]
+    run_info = {}
+    workflow_vars = workflow_vars.copy()
+    next_agent_workflow_node_id = None
+
+    if agent_workflow_node_id:
+        next_agent_workflow_node_id = agent_workflow_node_id
+        if next_agent_workflow_node_id not in traversal_orders.keys():
+            if next_agent_workflow_node_id not in nodes_info:
+                raise ValueError(
+                    f'The provided workflow node id "{next_agent_workflow_node_id}" is not part of the workflow. Please provide a valid node id.')
+            else:
+                topological_dfs_stack.append(next_agent_workflow_node_id)
+        else:
+            topological_dfs_stack = [next_agent_workflow_node_id]
+    else:
+        next_agent_workflow_node_id = primary_start_node
+        topological_dfs_stack = [primary_start_node]
+
+    flow_traversal_order = primary_traversal_order
+    for root, traversal_order in traversal_orders.items():
+        if next_agent_workflow_node_id in traversal_order:
+            flow_traversal_order = traversal_order
+            break
+
+    run_history = []
+    workflow_node_outputs = {}
+    while (True):
+        agent_workflow_node_id = next_agent_workflow_node_id
+        node_ancestors = nodes_ancestors[agent_workflow_node_id]
+
+        # To ensure the node takes inputs only from it's ancestors.
+        # workflow_vars must always contain an entry for ancestor, the error is somewhere else if this ever errors out.
+        filtered_workflow_vars = {}
+        for ancestor in node_ancestors:
+            if ancestor not in workflow_vars:
+                raise ValueError(
+                    f'Ancestor "{ancestor}" of node "{agent_workflow_node_id}" is not executed yet. Please make sure the ancestor nodes are executed before the current node.')
+            else:
+                filtered_workflow_vars[ancestor] = workflow_vars[ancestor]
+
+        arguments = []
+        keyword_arguments = {}
+        validate_workflow_node_inputs(nodes_info, agent_workflow_node_id,
+                                      keyword_arguments, sample_user_inputs, filtered_workflow_vars)
+
+        try:
+            func = eval(nodes_info[agent_workflow_node_id]['function_name'])
+            node_response = func(*arguments, **keyword_arguments)
+            workflow_node_outputs[agent_workflow_node_id] = node_response.to_dict(
+            )
+            node_workflow_vars = process_node_response(node_response)
+        except Exception as error:
+            raise ValueError(
+                f'Error in running workflow node {agent_workflow_node_id}: {error}')
+
+        workflow_vars[agent_workflow_node_id] = node_workflow_vars
+        next_agent_workflow_node_id = None
+        needs_user_input = False
+
+        potential_next_index = flow_traversal_order.index(
+            topological_dfs_stack[-1]) + 1
+        potential_next_agent_workflow_node_id = None
+        while (potential_next_index < len(flow_traversal_order)):
+            potential_next_agent_workflow_node_id = flow_traversal_order[potential_next_index]
+            incoming_edges = nodes_inedges[potential_next_agent_workflow_node_id]
+            valid_next_node = True
+            for source, _, details in incoming_edges:
+                if source not in topological_dfs_stack:
+                    valid_next_node = False
+                    potential_next_index += 1
+                    break
+                else:
+                    edge_evaluate_result = evaluate_edge_condition(
+                        source, potential_next_agent_workflow_node_id, details, workflow_vars)
+                    if not edge_evaluate_result:
+                        valid_next_node = False
+                        potential_next_index += 1
+                        break
+            if valid_next_node:
+                next_agent_workflow_node_id = potential_next_agent_workflow_node_id
+                break
+
+        if next_agent_workflow_node_id:
+            next_node_input_mappings = nodes_info[next_agent_workflow_node_id].get(
+                'input_mappings', [])
+            needs_user_input = any([input_mapping['variable_type'] ==
+                                   WorkflowNodeInputType.USER_INPUT for input_mapping in next_node_input_mappings])
+
+        if needs_user_input:
+            run_history.append(
+                f'Workflow node {agent_workflow_node_id} completed with next node {next_agent_workflow_node_id} and needs user_inputs')
+        else:
+            run_history.append(
+                f'Workflow node {agent_workflow_node_id} completed with next node {next_agent_workflow_node_id}')
+            topological_dfs_stack.append(next_agent_workflow_node_id)
+
+        if next_agent_workflow_node_id is None or needs_user_input:
+            break
+
+    run_info['workflow_node_outputs'] = workflow_node_outputs
+    run_info['run_history'] = run_history
+
+    workflow_info = {}
+    workflow_info['workflow_vars'] = workflow_vars
+    workflow_info['topological_dfs_stack'] = topological_dfs_stack
+    workflow_info['run_info'] = run_info
+
+    return workflow_info
+
+
+def evaluate_edge_condition(source, target, details, workflow_vars):
+    try:
+        condition = details.get('EXECUTION_CONDITION')
+        if condition:
+            result = execute_python_source(
+                condition, workflow_vars.get(source, {}))
+            return result
+        return True
+    except Exception as e:
+        raise ValueError(
+            f"Error evaluating edge '{source}'-->'{target}': {str(e)}")
+
+
+def execute_python_source(python_expression, variables):
+    try:
+        # Evaluate the expression using the variables dictionary
+        result = eval(python_expression, {}, variables)
+        return result
+    except Exception as e:
+        # Handle any exceptions that may occur during evaluation
+        raise ValueError(f'Error evaluating expression: {e}')
+
+
+def process_node_response(node_response):
+    output_vars = {}
+    for variable in node_response.section_data_list:
+        for key, value in variable.items():
+            output_vars[key] = value
+    return output_vars
+
+
 class StreamType(Enum):
     MESSAGE = 'message'
     SECTION_OUTPUT = 'section_output'

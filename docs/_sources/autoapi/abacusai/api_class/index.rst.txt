@@ -2620,6 +2620,11 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_LARGE
+      :value: 'OPENAI_LARGE'
+
+
+
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
 
@@ -4474,6 +4479,11 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_LARGE
+      :value: 'OPENAI_LARGE'
+
+
+
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
 
@@ -4519,11 +4529,6 @@ Package Contents
 
 
 
-   .. py:attribute:: OPENAI_GPT4_VISION
-      :value: 'OPENAI_GPT4_VISION'
-
-
-
    .. py:attribute:: OPENAI_GPT4O
       :value: 'OPENAI_GPT4O'
 
@@ -4549,18 +4554,18 @@ Package Contents
 
 
 
+   .. py:attribute:: LLAMA3_1_70B
+      :value: 'LLAMA3_1_70B'
+
+
+
+   .. py:attribute:: LLAMA3_1_8B
+      :value: 'LLAMA3_1_8B'
+
+
+
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
-
-
-
-   .. py:attribute:: GROQ_LLAMA3_LARGE_CHAT
-      :value: 'GROQ_LLAMA3_LARGE_CHAT'
-
-
-
-   .. py:attribute:: CLAUDE_V2_1
-      :value: 'CLAUDE_V2_1'
 
 
 
@@ -4584,48 +4589,8 @@ Package Contents
 
 
 
-   .. py:attribute:: ABACUS_GIRAFFE
-      :value: 'ABACUS_GIRAFFE'
-
-
-
-   .. py:attribute:: ABACUS_GIRAFFE_LARGE
-      :value: 'ABACUS_GIRAFFE_LARGE'
-
-
-
-   .. py:attribute:: LLAMA2_CHAT
-      :value: 'LLAMA2_CHAT'
-
-
-
-   .. py:attribute:: PALM
-      :value: 'PALM'
-
-
-
-   .. py:attribute:: PALM_TEXT
-      :value: 'PALM_TEXT'
-
-
-
-   .. py:attribute:: GEMINI_PRO
-      :value: 'GEMINI_PRO'
-
-
-
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
-
-
-
-   .. py:attribute:: MIXTRAL_CHAT
-      :value: 'MIXTRAL_CHAT'
-
-
-
-   .. py:attribute:: MISTRAL_MEDIUM
-      :value: 'MISTRAL_MEDIUM'
 
 
 
@@ -7038,9 +7003,9 @@ Package Contents
    :type include_general_knowledge: bool
    :param enable_web_search: Allow the LLM to use Web Search Engines to retrieve information for better results.
    :type enable_web_search: bool
-   :param behavior_instructions: Customize the overall role instructions for the LLM.
+   :param behavior_instructions: Customize the overall behaviour of the model. This controls things like - when to execute code (if enabled), write sql query, search web (if enabled), etc.
    :type behavior_instructions: str
-   :param response_instructions: Customized instructions for how the LLM should respond.
+   :param response_instructions: Customized instructions for how the model should respond.
    :type response_instructions: str
    :param enable_llm_rewrite: If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.
    :type enable_llm_rewrite: bool
@@ -7055,6 +7020,8 @@ Package Contents
    :param data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
    :param data_prompt_context: Prompt context for the data feature group IDs.
    :type data_prompt_context: str
+   :param data_prompt_table_context: Dict of table name and table context pairs to provide table wise context for each structured data table.
+   :type data_prompt_table_context: Dict[str, str]
    :param hide_sql_and_code: When running data queries, this will hide the generated SQL and Code in the response.
    :type hide_sql_and_code: bool
    :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
@@ -7073,6 +7040,8 @@ Package Contents
    :type enable_code_execution: bool
    :param enable_response_caching: Enable caching of LLM responses to speed up response times and improve reproducibility.
    :type enable_response_caching: bool
+   :param unknown_answer_phrase: Fallback response when the LLM can't find an answer.
+   :type unknown_answer_phrase: str
 
 
    .. py:attribute:: document_retrievers
@@ -7139,6 +7108,10 @@ Package Contents
       :type:  str
 
 
+   .. py:attribute:: data_prompt_table_context
+      :type:  Dict[str, str]
+
+
    .. py:attribute:: hide_sql_and_code
       :type:  bool
 
@@ -7181,6 +7154,10 @@ Package Contents
 
    .. py:attribute:: enable_response_caching
       :type:  bool
+
+
+   .. py:attribute:: unknown_answer_phrase
+      :type:  str
 
 
    .. py:method:: __post_init__()

@@ -253,6 +253,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../streaming_row_count/index.html">abacusai.streaming_row_count</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_sample_code/index.html">abacusai.streaming_sample_code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tone_details/index.html">abacusai.tone_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html">abacusai.training_config_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload/index.html">abacusai.upload</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload_part/index.html">abacusai.upload_part</a></li>
@@ -349,7 +350,22 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.load_as_pandas_from_avro_files" title="abacusai.api_client_utils.load_as_pandas_from_avro_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_as_pandas_from_avro_files</span></code></a>(files, download_method)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.try_abacus_internal_copy" title="abacusai.api_client_utils.try_abacus_internal_copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">try_abacus_internal_copy</span></code></a>(src_suffix, dst_local[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.validate_workflow_node_inputs" title="abacusai.api_client_utils.validate_workflow_node_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_workflow_node_inputs</span></code></a>(nodes_info, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.run" title="abacusai.api_client_utils.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(nodes, primary_start_node, graph_info[, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.evaluate_edge_condition" title="abacusai.api_client_utils.evaluate_edge_condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate_edge_condition</span></code></a>(source, target, details, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.execute_python_source" title="abacusai.api_client_utils.execute_python_source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">execute_python_source</span></code></a>(python_expression, variables)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.process_node_response" title="abacusai.api_client_utils.process_node_response"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_node_response</span></code></a>(node_response)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.try_abacus_internal_copy" title="abacusai.api_client_utils.try_abacus_internal_copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">try_abacus_internal_copy</span></code></a>(src_suffix, dst_local[, ...])</p></td>
 <td><p>Retuns true if the file was copied, false otherwise</p></td>
 </tr>
 </tbody>
@@ -425,6 +441,53 @@ errors defaults to ‘strict’.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.validate_workflow_node_inputs">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">validate_workflow_node_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_workflow_node_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_arguments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_user_inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filtered_workflow_vars</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.validate_workflow_node_inputs" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
+<li><p><strong>sample_user_inputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
+<li><p><strong>filtered_workflow_vars</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.run">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_start_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_user_inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_workflow_node_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_vars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topological_dfs_stack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.run" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em>]</em>)</p></li>
+<li><p><strong>primary_start_node</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>graph_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
+<li><p><strong>sample_user_inputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
+<li><p><strong>agent_workflow_node_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>workflow_vars</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
+<li><p><strong>topological_dfs_stack</strong> (<em>List</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.evaluate_edge_condition">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">evaluate_edge_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_vars</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.evaluate_edge_condition" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.execute_python_source">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">execute_python_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">python_expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.execute_python_source" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.process_node_response">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">process_node_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.process_node_response" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.StreamType">

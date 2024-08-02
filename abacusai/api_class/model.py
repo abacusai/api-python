@@ -460,8 +460,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
         filter_columns (list): Allow users to filter the document retrievers on these metadata columns.
         include_general_knowledge (bool): Allow the LLM to rely not just on RAG search results, but to fall back on general knowledge. Disabled by default.
         enable_web_search (bool) : Allow the LLM to use Web Search Engines to retrieve information for better results.
-        behavior_instructions (str): Customize the overall role instructions for the LLM.
-        response_instructions (str): Customized instructions for how the LLM should respond.
+        behavior_instructions (str): Customize the overall behaviour of the model. This controls things like - when to execute code (if enabled), write sql query, search web (if enabled), etc.
+        response_instructions (str): Customized instructions for how the model should respond.
         enable_llm_rewrite (bool): If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.
         column_filtering_instructions (str): Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
         keyword_requirement_instructions (str): Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.
@@ -469,6 +469,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         max_search_results (int): Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
         data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
         data_prompt_context (str): Prompt context for the data feature group IDs.
+        data_prompt_table_context (Dict[str, str]): Dict of table name and table context pairs to provide table wise context for each structured data table.
         hide_sql_and_code (bool): When running data queries, this will hide the generated SQL and Code in the response.
         disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
         data_columns_to_ignore (List[str]): Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format "<table_name>.<column_name>"
@@ -478,6 +479,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         database_connector_tables (List[str]): List of tables to use from the database connector for the ChatLLM.
         enable_code_execution (bool): Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
         enable_response_caching (bool): Enable caching of LLM responses to speed up response times and improve reproducibility.
+        unknown_answer_phrase (str): Fallback response when the LLM can't find an answer.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -495,6 +497,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     max_search_results: int = dataclasses.field(default=None)
     data_feature_group_ids: List[str] = dataclasses.field(default=None)
     data_prompt_context: str = dataclasses.field(default=None)
+    data_prompt_table_context: Dict[str, str] = dataclasses.field(default=None)
     hide_sql_and_code: bool = dataclasses.field(default=None)
     disable_data_summarization: bool = dataclasses.field(default=None)
     data_columns_to_ignore: List[str] = dataclasses.field(default=None)
@@ -506,6 +509,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     metadata_columns: list = dataclasses.field(default=None, metadata={'deprecated': True})
     lookup_rewrite_instructions: str = dataclasses.field(default=None, metadata={'deprecated': True})
     enable_response_caching: bool = dataclasses.field(default=None)
+    unknown_answer_phrase: str = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM
