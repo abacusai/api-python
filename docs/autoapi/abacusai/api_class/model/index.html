@@ -1296,6 +1296,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.</p></li>
 <li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group IDs.</p></li>
 <li><p><strong>data_prompt_table_context</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Dict of table name and table context pairs to provide table wise context for each structured data table.</p></li>
+<li><p><strong>data_prompt_column_context</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Dict of ‘table_name.column_name’ and ‘column_context’ pairs to provide column context for some selected columns in the selected structured data table. This replaces the default auto-generated information about the column data.</p></li>
 <li><p><strong>hide_sql_and_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, this will hide the generated SQL and Code in the response.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
 <li><p><strong>data_columns_to_ignore</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format “&lt;table_name&gt;.&lt;column_name&gt;”</p></li>
@@ -1392,6 +1393,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.data_prompt_table_context">
 <span class="sig-name descname"><span class="pre">data_prompt_table_context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.data_prompt_table_context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.data_prompt_column_context">
+<span class="sig-name descname"><span class="pre">data_prompt_column_context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.data_prompt_column_context" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1857,6 +1863,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Description of the agent function.</p></li>
 <li><p><strong>agent_interface</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.AgentInterface" title="abacusai.api_class.enums.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
+<li><p><strong>agent_connectors</strong> – (List[enums.ApplicationConnectorType]): The connectors needed for the agent to function.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1868,6 +1875,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.agent_interface">
 <span class="sig-name descname"><span class="pre">agent_interface</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.AgentInterface" title="abacusai.api_class.enums.AgentInterface"><span class="pre">abacusai.api_class.enums.AgentInterface</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.agent_interface" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.agent_connectors">
+<span class="sig-name descname"><span class="pre">agent_connectors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><span class="pre">abacusai.api_class.enums.ApplicationConnectorType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.agent_connectors" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

@@ -470,6 +470,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
         data_prompt_context (str): Prompt context for the data feature group IDs.
         data_prompt_table_context (Dict[str, str]): Dict of table name and table context pairs to provide table wise context for each structured data table.
+        data_prompt_column_context (Dict[str, str]): Dict of 'table_name.column_name' and 'column_context' pairs to provide column context for some selected columns in the selected structured data table. This replaces the default auto-generated information about the column data.
         hide_sql_and_code (bool): When running data queries, this will hide the generated SQL and Code in the response.
         disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
         data_columns_to_ignore (List[str]): Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format "<table_name>.<column_name>"
@@ -498,6 +499,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     data_feature_group_ids: List[str] = dataclasses.field(default=None)
     data_prompt_context: str = dataclasses.field(default=None)
     data_prompt_table_context: Dict[str, str] = dataclasses.field(default=None)
+    data_prompt_column_context: Dict[str, str] = dataclasses.field(default=None)
     hide_sql_and_code: bool = dataclasses.field(default=None)
     disable_data_summarization: bool = dataclasses.field(default=None)
     data_columns_to_ignore: List[str] = dataclasses.field(default=None)
@@ -727,9 +729,11 @@ class AIAgentTrainingConfig(TrainingConfig):
     Args:
         description (str): Description of the agent function.
         agent_interface (AgentInterface): The interface that the agent will be deployed with.
+        agent_connectors: (List[enums.ApplicationConnectorType]): The connectors needed for the agent to function.
     """
     description: str = dataclasses.field(default=None)
     agent_interface: enums.AgentInterface = dataclasses.field(default=None)
+    agent_connectors: List[enums.ApplicationConnectorType] = dataclasses.field(default=None)
     enable_binary_input: bool = dataclasses.field(default=None, metadata={'deprecated': True})
     agent_input_schema: dict = dataclasses.field(default=None, metadata={'deprecated': True})
     agent_output_schema: dict = dataclasses.field(default=None, metadata={'deprecated': True})

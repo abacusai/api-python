@@ -274,15 +274,17 @@ class WorkflowGraph(ApiClass):
 
     @classmethod
     def from_dict(cls, graph: dict):
+        nodes = [WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])]
+        edges = [WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]
         if graph.get('primary_start_node') is None:
             non_primary_nodes = set()
-            for edges in graph.get('edges', []):
-                non_primary_nodes.add(edges['target'])
-            primary_nodes = set([node['name'] for node in graph.get('nodes', [])]) - non_primary_nodes
+            for edge in edges:
+                non_primary_nodes.add(edge.target)
+            primary_nodes = set([node.name for node in nodes]) - non_primary_nodes
             graph['primary_start_node'] = primary_nodes.pop() if primary_nodes else None
 
         return cls(
-            nodes=[WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])],
-            edges=[WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])],
+            nodes=nodes,
+            edges=edges,
             primary_start_node=graph.get('primary_start_node', None)
         )

@@ -548,7 +548,7 @@ Module Contents
 
 
 
-   .. py:method:: list_conversations(external_application_id = None, conversation_type = None)
+   .. py:method:: list_conversations(external_application_id = None, conversation_type = None, fetch_last_llm_info = False)
 
       Lists all conversations for the given deployment and current user.
 
@@ -556,6 +556,8 @@ Module Contents
       :type external_application_id: str
       :param conversation_type: The type of the conversation indicating its origin.
       :type conversation_type: DeploymentConversationType
+      :param fetch_last_llm_info: If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
+      :type fetch_last_llm_info: bool
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]

@@ -195,6 +195,7 @@ Classes
    abacusai.api_class.MarkdownConfig
    abacusai.api_class.CrawlerTransformConfig
    abacusai.api_class.ExtractDocumentDataConfig
+   abacusai.api_class.DataGenerationConfig
    abacusai.api_class._OperatorConfigFactory
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
@@ -3229,6 +3230,11 @@ Package Contents
 
 
 
+   .. py:attribute:: DATA_GENERATION
+      :value: 'DATA_GENERATION'
+
+
+
 .. py:class:: MarkdownOperatorInputType
 
    Bases: :py:obj:`ApiEnum`
@@ -4289,8 +4295,38 @@ Package Contents
 
 
 
+   .. py:attribute:: GOOGLEWORKSPACEUSER
+      :value: 'GOOGLEWORKSPACEUSER'
+
+
+
+   .. py:attribute:: GMAILUSER
+      :value: 'GMAILUSER'
+
+
+
+   .. py:attribute:: GOOGLECALENDARUSER
+      :value: 'GOOGLECALENDARUSER'
+
+
+
+   .. py:attribute:: GOOGLESHEETSUSER
+      :value: 'GOOGLESHEETSUSER'
+
+
+
+   .. py:attribute:: GOOGLEDOCSUSER
+      :value: 'GOOGLEDOCSUSER'
+
+
+
    .. py:attribute:: ONEDRIVEUSER
       :value: 'ONEDRIVEUSER'
+
+
+
+   .. py:attribute:: JIRAAUTH
+      :value: 'JIRAAUTH'
 
 
 
@@ -4926,6 +4962,11 @@ Package Contents
 
    .. py:attribute:: RUNTIME_SCHEMA
       :value: 'RUNTIME_SCHEMA'
+
+
+
+   .. py:attribute:: NONE
+      :value: 'NONE'
 
 
 
@@ -5795,6 +5836,60 @@ Package Contents
 
    .. py:attribute:: document_processing_config
       :type:  abacusai.api_class.dataset.DocumentProcessingConfig
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: DataGenerationConfig
+
+   Bases: :py:obj:`OperatorConfig`
+
+
+   Generate synthetic data using a model for finetuning an LLM.
+
+   :param prompt_col: Name of the input prompt column.
+   :type prompt_col: str
+   :param completion_col: Name of the output completion column.
+   :type completion_col: str
+   :param description_col: Name of the description column.
+   :type description_col: str
+   :param id_col: Name of the identifier column.
+   :type id_col: str
+   :param generation_instructions: Instructions for the data generation model.
+   :type generation_instructions: str
+   :param temperature: Sampling temperature for the model.
+   :type temperature: float
+   :param fewshot_examples: Number of fewshot examples used to prompt the model.
+   :type fewshot_examples: int
+
+
+   .. py:attribute:: prompt_col
+      :type:  str
+
+
+   .. py:attribute:: completion_col
+      :type:  str
+
+
+   .. py:attribute:: description_col
+      :type:  str
+
+
+   .. py:attribute:: id_col
+      :type:  str
+
+
+   .. py:attribute:: generation_instructions
+      :type:  str
+
+
+   .. py:attribute:: temperature
+      :type:  float
+
+
+   .. py:attribute:: fewshot_examples
+      :type:  int
 
 
    .. py:method:: __post_init__()
@@ -7022,6 +7117,8 @@ Package Contents
    :type data_prompt_context: str
    :param data_prompt_table_context: Dict of table name and table context pairs to provide table wise context for each structured data table.
    :type data_prompt_table_context: Dict[str, str]
+   :param data_prompt_column_context: Dict of 'table_name.column_name' and 'column_context' pairs to provide column context for some selected columns in the selected structured data table. This replaces the default auto-generated information about the column data.
+   :type data_prompt_column_context: Dict[str, str]
    :param hide_sql_and_code: When running data queries, this will hide the generated SQL and Code in the response.
    :type hide_sql_and_code: bool
    :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
@@ -7109,6 +7206,10 @@ Package Contents
 
 
    .. py:attribute:: data_prompt_table_context
+      :type:  Dict[str, str]
+
+
+   .. py:attribute:: data_prompt_column_context
       :type:  Dict[str, str]
 
 
@@ -7503,6 +7604,7 @@ Package Contents
    :type description: str
    :param agent_interface: The interface that the agent will be deployed with.
    :type agent_interface: AgentInterface
+   :param agent_connectors: (List[enums.ApplicationConnectorType]): The connectors needed for the agent to function.
 
 
    .. py:attribute:: description
@@ -7511,6 +7613,10 @@ Package Contents
 
    .. py:attribute:: agent_interface
       :type:  abacusai.api_class.enums.AgentInterface
+
+
+   .. py:attribute:: agent_connectors
+      :type:  List[abacusai.api_class.enums.ApplicationConnectorType]
 
 
    .. py:attribute:: enable_binary_input

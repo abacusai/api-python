@@ -604,12 +604,13 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.4'
+    client_version = '1.4.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
         if self.api_key is None:
-            self.api_key = os.getenv('ABACUS_API_KEY')
+            self.api_key = get_object_from_context(
+                self, _request_context, 'ABACUS_API_KEY', str) or os.getenv('ABACUS_API_KEY')
         self.notebook_id = os.getenv('ABACUS_NOTEBOOK_ID')
         self.pipeline_id = os.getenv('ABACUS_PIPELINE_ID')
         self.web_version = None
@@ -740,8 +741,14 @@ class BaseApiClient:
     def _call_api(
             self, action, method, query_params=None,
             body=None, files=None, parse_type=None, streamable_response=False, server_override=None, timeout=None, retry_500: bool = False, data=None):
+        user_agent = f'python-abacusai-{self.client_version}'
+        if self.notebook_id:
+            user_agent = user_agent + f' | notebookId: {self.notebook_id}'
+        if os.getenv('ABACUS_ARTIFACT_ID'):
+            user_agent = user_agent + \
+                f' | artifactId: {os.getenv("ABACUS_ARTIFACT_ID")}'
         headers = {'apiKey': self.api_key, 'clientVersion': self.client_version,
-                   'User-Agent': f'python-abacusai-{self.client_version}', 'notebookId': self.notebook_id, 'pipelineId': self.pipeline_id}
+                   'User-Agent': user_agent, 'notebookId': self.notebook_id, 'pipelineId': self.pipeline_id}
         url = (server_override or self.server) + '/api/v0/' + action
         copied_query_params = deepcopy(query_params)
         copied_body = deepcopy(body)
@@ -946,7 +953,7 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('listApiKeys', 'GET', query_params={}, parse_type=ApiKey)
 
     def list_organization_users(self) -> List[User]:
-        """Retrieves a list of all users in the organization, including pending users who have been invited.
+        """Retrieves a list of all platform users in the organization, including pending users who have been invited.
 
         Returns:
             list[User]: An array of all the users in the organization."""
@@ -1456,6 +1463,16 @@ class ReadOnlyClient(BaseApiClient):
         Args:
             application_connector_id (str): Unique string identifier for the application connector."""
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
+
+    def get_connector_auth(self, service: str = None) -> ApplicationConnector:
+        """Get the authentication details for a given connector.
+
+        Args:
+            service (str): The service name.
+
+        Returns:
+            ApplicationConnector: The application connector with the authentication details."""
+        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service}, parse_type=ApplicationConnector)
 
     def list_streaming_connectors(self) -> List[StreamingConnector]:
         """Retrieves a list of all streaming connectors along with their corresponding attributes.
@@ -2579,17 +2596,18 @@ class ReadOnlyClient(BaseApiClient):
             DeploymentConversation: The deployment conversation."""
         return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads}, parse_type=DeploymentConversation, is_sync=True)
 
-    def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None) -> List[DeploymentConversation]:
+    def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
 
         Args:
             deployment_id (str): The deployment to get conversations for.
             external_application_id (str): The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
             conversation_type (DeploymentConversationType): The type of the conversation indicating its origin.
+            fetch_last_llm_info (bool): If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
 
         Returns:
             list[DeploymentConversation]: The deployment conversations."""
-        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id, 'conversationType': conversation_type}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id, 'conversationType': conversation_type, 'fetchLastLlmInfo': fetch_last_llm_info}, parse_type=DeploymentConversation, is_sync=True)
 
     def export_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None) -> DeploymentConversationExport:
         """Export a Deployment Conversation.
@@ -3531,7 +3549,7 @@ class ApiClient(ReadOnlyClient):
 
     def run_workflow_graph(self, workflow_graph: WorkflowGraph, sample_user_inputs: dict = {}, agent_workflow_node_id: str = None, agent_interface: AgentInterface = AgentInterface.DEFAULT, package_requirements: list = []):
         """
-        Validates the workflow graph for an AI Agent.
+        Validates the workflow graph by running the flow using sample user inputs for an AI Agent.
 
         Args:
             workflow_graph (WorkflowGraph): The workflow graph to validate.
@@ -3543,7 +3561,7 @@ class ApiClient(ReadOnlyClient):
         Returns:
             dict: The output variables for every node in workflow which has executed.
         """
-        graph_info = self.extract_graph_information(
+        graph_info = self.extract_agent_workflow_information(
             workflow_graph=workflow_graph, agent_interface=agent_interface, package_requirements=package_requirements)
         workflow_vars = get_object_from_context(
             self, _request_context, 'workflow_vars', dict) or {}
@@ -3594,19 +3612,48 @@ class ApiClient(ReadOnlyClient):
         agent_function_name = agent_function.__name__
         return self.update_agent(model_id=model_id, function_source_code=function_source_code, agent_function_name=agent_function_name, memory=memory, package_requirements=package_requirements, enable_binary_input=enable_binary_input, description=description, workflow_graph=workflow_graph)
 
-    def execute_feature_group_sql(self, sql, fix_query_on_error: bool = False, timeout=3600, delay=2):
+    def _attempt_deployment_sql_execution(self, sql):
+        deployment_id = os.environ.get('ABACUS_DEPLOYMENT_ID')
+        ttl_seconds = 120  # 2 minutes
+
+        @lru_cache()
+        def _endpoint(deployment_id: str, ttl_hash: int):
+            return self._call_api('_executeFeatureGroupSqlInDeploymentParams', 'GET', query_params={'deploymentId': deployment_id}, retry_500=True)
+
+        if deployment_id:
+            endpoint = _endpoint(deployment_id, time.time() // ttl_seconds)
+            if endpoint:
+                import pandas as pd
+
+                with self._request(endpoint, 'GET', query_params={'sql': sql}, stream=True, retry_500=True) as response:
+                    if response.status_code == 200:
+                        return pd.read_csv(response.raw, sep=',')
+                    else:
+                        error_json = response.json()
+                        error_message = error_json.get('error')
+                        error_type = error_json.get('errorType')
+                        request_id = error_json.get('requestId')
+                        raise _ApiExceptionFactory.from_response(
+                            error_message, response.status_code, error_type, request_id)
+
+    def execute_feature_group_sql(self, sql, fix_query_on_error: bool = False, timeout=3600, delay=2, use_latest_version=True):
         """
         Execute a SQL query on the feature groups
 
         Args:
             sql (str): The SQL query to execute.
             fix_query_on_error (bool): If enabled, SQL query is auto fixed if parsing fails.
+            use_latest_version (bool): If enabled, executes the query on the latest version of the feature group, and if version doesn't exist, FailedDependencyError is sent. If disabled, query is executed considering the latest feature group state irrespective of the latest version of the feature group. Defaults to True
 
         Returns:
             pandas.DataFrame: The result of the query.
         """
+        if use_latest_version:
+            deployment_sql_result = self._attempt_deployment_sql_execution(sql)
+            if deployment_sql_result is not None:
+                return deployment_sql_result
         execute_query = self.execute_async_feature_group_operation(
-            sql, fix_query_on_error=fix_query_on_error)
+            sql, fix_query_on_error=fix_query_on_error, use_latest_version=use_latest_version)
         execute_query.wait_for_execution(timeout=timeout, delay=delay)
         return execute_query.load_as_pandas()
 
@@ -3929,7 +3976,7 @@ class ApiClient(ReadOnlyClient):
         raise Exception(
             f'Error calling AI Agent app message endpoint. Status code: {response.status_code}. Response: {response.text}')
 
-    def _status_poll(self, url: str, wait_states: set, method: str, body: dict = {}, headers: dict = None, delay: int = 2, timeout: int = 1200):
+    def _status_poll(self, url: str, wait_states: set, method: str, body: dict = {}, headers: dict = None, delay: int = 1, timeout: int = 1200):
         start_time = time.time()
         while time.time() - start_time <= timeout:
             for _ in range(3):
@@ -3946,7 +3993,7 @@ class ApiClient(ReadOnlyClient):
 
     def execute_data_query_using_llm(self, query: str, feature_group_ids: List[str], prompt_context: str = None, llm_name: str = None,
                                      temperature: float = None, preview: bool = False, schema_document_retriever_ids: List[str] = None,
-                                     timeout=3600, delay=2):
+                                     timeout=3600, delay=2, use_latest_version=True):
         """
         Execute a data query using a large language model.
 
@@ -3960,6 +4007,7 @@ class ApiClient(ReadOnlyClient):
             schema_document_retriever_ids (List[str]): A list of document retrievers to retrieve schema information for the data query. Otherwise, they are retrieved from the feature group metadata.
             timeout (int): Time limit for the call.
             delay (int): Polling interval for checking timeout.
+            use_latest_version (bool): If enabled, executes the query on the latest version of the feature group, and if version doesn't exist, FailedDependencyError is sent. If disabled, query is executed considering the latest feature group state irrespective of the latest version of the feature group. Defaults to True.
 
         Returns:
             LlmExecutionResult: The result of the query execution. Execution results could be loaded as pandas using 'load_as_pandas', i.e., result.execution.load_as_pandas().
@@ -3973,7 +4021,7 @@ class ApiClient(ReadOnlyClient):
         result_dict = {'preview': {'sql': code.sql}}
         if not preview:
             execute_query = self.execute_async_feature_group_operation(
-                code.sql)
+                code.sql, use_latest_version=use_latest_version)
             execute_query.wait_for_execution(timeout=timeout, delay=delay)
             execute_query_dict = {'error': execute_query.error} if execute_query.error else {
                 'featureGroupOperationRunId': execute_query.feature_group_operation_run_id,
@@ -5046,16 +5094,17 @@ Creates a new feature group defined as the union of other feature group versions
             lookup_keys (list): List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns."""
         return self._call_api('setFeatureGroupIndexingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys})
 
-    def execute_async_feature_group_operation(self, query: str = None, fix_query_on_error: bool = False) -> ExecuteFeatureGroupOperation:
+    def execute_async_feature_group_operation(self, query: str = None, fix_query_on_error: bool = False, use_latest_version: bool = True) -> ExecuteFeatureGroupOperation:
         """Starts the execution of fg operation
 
         Args:
             query (str): The SQL to be executed.
             fix_query_on_error (bool): If enabled, SQL query is auto fixed if parsing fails.
+            use_latest_version (bool): If enabled, executes the query on the latest version of the feature group, and if version doesn't exist, FailedDependencyError is sent. If disabled, query is executed considering the latest feature group state irrespective of the latest version of the feature group.
 
         Returns:
             ExecuteFeatureGroupOperation: A dict that contains the execution status"""
-        return self._call_api('executeAsyncFeatureGroupOperation', 'POST', query_params={}, body={'query': query, 'fixQueryOnError': fix_query_on_error}, parse_type=ExecuteFeatureGroupOperation)
+        return self._call_api('executeAsyncFeatureGroupOperation', 'POST', query_params={}, body={'query': query, 'fixQueryOnError': fix_query_on_error, 'useLatestVersion': use_latest_version}, parse_type=ExecuteFeatureGroupOperation)
 
     def describe_async_feature_group_operation(self, feature_group_operation_run_id: str) -> ExecuteFeatureGroupOperation:
         """Gets the status of the execution of fg operation
@@ -8250,7 +8299,7 @@ Creates a new feature group defined as the union of other feature group versions
             external_application_id (str): The ID of the External Application."""
         return self._call_api('deleteExternalApplication', 'DELETE', query_params={'externalApplicationId': external_application_id})
 
-    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None) -> Agent:
+    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, agent_connectors: dict = None) -> Agent:
         """Creates a new AI agent using the given agent workflow graph definition.
 
         Args:
@@ -8263,12 +8312,13 @@ Creates a new feature group defined as the union of other feature group versions
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             included_modules (List): A list of user created custom modules to include in the agent's environment.
+            agent_connectors (dict): A dictionary of application connectors that are required for the agent mapped with oauth list for them.
 
         Returns:
             Agent: The new agent."""
-        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules}, parse_type=Agent)
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'agentConnectors': agent_connectors}, parse_type=Agent)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None) -> Agent:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, agent_connectors: dict = None) -> Agent:
         """Updates an existing AI Agent. A new version of the agent will be created and published.
 
         Args:
@@ -8279,10 +8329,11 @@ Creates a new feature group defined as the union of other feature group versions
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             included_modules (List): A list of user created custom modules to include in the agent's environment.
+            agent_connectors (dict): A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
 
         Returns:
             Agent: The updated agent."""
-        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules}, parse_type=Agent)
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'agentConnectors': agent_connectors}, parse_type=Agent)
 
     def generate_agent_code(self, project_id: str, prompt: str) -> list:
         """Generates the code for defining an AI Agent
@@ -8404,14 +8455,14 @@ Creates a new feature group defined as the union of other feature group versions
             package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']."""
         return self._call_api('validateWorkflowGraph', 'POST', query_params={}, body={'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'packageRequirements': package_requirements})
 
-    def extract_graph_information(self, workflow_graph: Union[dict, WorkflowGraph], agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, package_requirements: list = []) -> dict:
-        """Extracts information from the workflow.
+    def extract_agent_workflow_information(self, workflow_graph: Union[dict, WorkflowGraph], agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, package_requirements: list = []) -> dict:
+        """Extracts source code of workflow graph, ancestors, in_edges and traversal orders from the agent workflow.
 
         Args:
             workflow_graph (WorkflowGraph): The workflow graph to validate.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']."""
-        return self._call_api('extractGraphInformation', 'POST', query_params={}, body={'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'packageRequirements': package_requirements})
+        return self._call_api('extractAgentWorkflowInformation', 'POST', query_params={}, body={'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'packageRequirements': package_requirements})
 
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, VectorStoreConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.

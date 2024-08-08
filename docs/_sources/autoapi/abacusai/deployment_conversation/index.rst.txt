@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, history={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,6 +50,10 @@ Module Contents
    :type conversationType: str
    :param metadata: Additional backend information about the conversation.
    :type metadata: dict
+   :param llmDisplayName: The display name of the LLM model used to generate the most recent response. Only used for system-created bots.
+   :type llmDisplayName: str
+   :param llmBotIcon: The icon location of the LLM model used to generate the most recent response. Only used for system-created bots.
+   :type llmBotIcon: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
 

@@ -295,4 +295,10 @@ class _ApiClassFactory(ABC):
         if not config_class._upper_snake_case_keys:
             config = {snake_case(k): v for k, v in config.items()}
         config.pop(snake_case(config_class_key), None)
+
+        supported_fields = set([field.name for field in dataclasses.fields(config_class)])
+        actual_fields = set(snake_case(key) for key in config.keys())
+        if not actual_fields.issubset(supported_fields):
+            raise ValueError(f'Unknown fields for {config_class_type}: {actual_fields - supported_fields}')
+
         return config_class(**config)

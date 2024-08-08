@@ -609,7 +609,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_chat_session(self.project_id, name)
 
-    def create_agent(self, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = AgentInterface.DEFAULT, included_modules: List = None):
+    def create_agent(self, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = AgentInterface.DEFAULT, included_modules: List = None, agent_connectors: dict = None):
         """
         Creates a new AI agent using the given agent workflow graph definition.
 
@@ -622,11 +622,12 @@ class Project(AbstractApiClass):
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             included_modules (List): A list of user created custom modules to include in the agent's environment.
+            agent_connectors (dict): A dictionary of application connectors that are required for the agent mapped with oauth list for them.
 
         Returns:
             Agent: The new agent.
         """
-        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id, agent_input_schema, agent_output_schema, workflow_graph, agent_interface, included_modules)
+        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id, agent_input_schema, agent_output_schema, workflow_graph, agent_interface, included_modules, agent_connectors)
 
     def generate_agent_code(self, prompt: str):
         """

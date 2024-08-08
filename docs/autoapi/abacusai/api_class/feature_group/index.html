@@ -139,7 +139,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.ExtractDocumentDataConfig" title="abacusai.api_class.feature_group.ExtractDocumentDataConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtractDocumentDataConfig</span></code></a></p></td>
 <td><p>Extracts data from documents.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group._OperatorConfigFactory" title="abacusai.api_class.feature_group._OperatorConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_OperatorConfigFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.DataGenerationConfig" title="abacusai.api_class.feature_group.DataGenerationConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataGenerationConfig</span></code></a></p></td>
+<td><p>Generate synthetic data using a model for finetuning an LLM.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group._OperatorConfigFactory" title="abacusai.api_class.feature_group._OperatorConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_OperatorConfigFactory</span></code></a></p></td>
 <td><p>A class to select and return the the correct type of Operator Config based on a serialized OperatorConfig instance.</p></td>
 </tr>
 </tbody>
@@ -559,6 +562,66 @@ inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.feature_group.ExtractDocumentDataConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.feature_group.ExtractDocumentDataConfig.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.feature_group.</span></span><span class="sig-name descname"><span class="pre">DataGenerationConfig</span></span><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.feature_group.OperatorConfig" title="abacusai.api_class.feature_group.OperatorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OperatorConfig</span></code></a></p>
+<p>Generate synthetic data using a model for finetuning an LLM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt_col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the input prompt column.</p></li>
+<li><p><strong>completion_col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the output completion column.</p></li>
+<li><p><strong>description_col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the description column.</p></li>
+<li><p><strong>id_col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the identifier column.</p></li>
+<li><p><strong>generation_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for the data generation model.</p></li>
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Sampling temperature for the model.</p></li>
+<li><p><strong>fewshot_examples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of fewshot examples used to prompt the model.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.prompt_col">
+<span class="sig-name descname"><span class="pre">prompt_col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.prompt_col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.completion_col">
+<span class="sig-name descname"><span class="pre">completion_col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.completion_col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.description_col">
+<span class="sig-name descname"><span class="pre">description_col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.description_col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.id_col">
+<span class="sig-name descname"><span class="pre">id_col</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.id_col" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.generation_instructions">
+<span class="sig-name descname"><span class="pre">generation_instructions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.generation_instructions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.temperature" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.fewshot_examples">
+<span class="sig-name descname"><span class="pre">fewshot_examples</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.fewshot_examples" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.__post_init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

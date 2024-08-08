@@ -1152,6 +1152,8 @@ Module Contents
    :type data_prompt_context: str
    :param data_prompt_table_context: Dict of table name and table context pairs to provide table wise context for each structured data table.
    :type data_prompt_table_context: Dict[str, str]
+   :param data_prompt_column_context: Dict of 'table_name.column_name' and 'column_context' pairs to provide column context for some selected columns in the selected structured data table. This replaces the default auto-generated information about the column data.
+   :type data_prompt_column_context: Dict[str, str]
    :param hide_sql_and_code: When running data queries, this will hide the generated SQL and Code in the response.
    :type hide_sql_and_code: bool
    :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
@@ -1239,6 +1241,10 @@ Module Contents
 
 
    .. py:attribute:: data_prompt_table_context
+      :type:  Dict[str, str]
+
+
+   .. py:attribute:: data_prompt_column_context
       :type:  Dict[str, str]
 
 
@@ -1633,6 +1639,7 @@ Module Contents
    :type description: str
    :param agent_interface: The interface that the agent will be deployed with.
    :type agent_interface: AgentInterface
+   :param agent_connectors: (List[enums.ApplicationConnectorType]): The connectors needed for the agent to function.
 
 
    .. py:attribute:: description
@@ -1641,6 +1648,10 @@ Module Contents
 
    .. py:attribute:: agent_interface
       :type:  abacusai.api_class.enums.AgentInterface
+
+
+   .. py:attribute:: agent_connectors
+      :type:  List[abacusai.api_class.enums.ApplicationConnectorType]
 
 
    .. py:attribute:: enable_binary_input

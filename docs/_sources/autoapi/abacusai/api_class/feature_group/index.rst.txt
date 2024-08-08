@@ -22,6 +22,7 @@ Classes
    abacusai.api_class.feature_group.MarkdownConfig
    abacusai.api_class.feature_group.CrawlerTransformConfig
    abacusai.api_class.feature_group.ExtractDocumentDataConfig
+   abacusai.api_class.feature_group.DataGenerationConfig
    abacusai.api_class.feature_group._OperatorConfigFactory
 
 
@@ -377,6 +378,60 @@ Module Contents
 
    .. py:attribute:: document_processing_config
       :type:  abacusai.api_class.dataset.DocumentProcessingConfig
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: DataGenerationConfig
+
+   Bases: :py:obj:`OperatorConfig`
+
+
+   Generate synthetic data using a model for finetuning an LLM.
+
+   :param prompt_col: Name of the input prompt column.
+   :type prompt_col: str
+   :param completion_col: Name of the output completion column.
+   :type completion_col: str
+   :param description_col: Name of the description column.
+   :type description_col: str
+   :param id_col: Name of the identifier column.
+   :type id_col: str
+   :param generation_instructions: Instructions for the data generation model.
+   :type generation_instructions: str
+   :param temperature: Sampling temperature for the model.
+   :type temperature: float
+   :param fewshot_examples: Number of fewshot examples used to prompt the model.
+   :type fewshot_examples: int
+
+
+   .. py:attribute:: prompt_col
+      :type:  str
+
+
+   .. py:attribute:: completion_col
+      :type:  str
+
+
+   .. py:attribute:: description_col
+      :type:  str
+
+
+   .. py:attribute:: id_col
+      :type:  str
+
+
+   .. py:attribute:: generation_instructions
+      :type:  str
+
+
+   .. py:attribute:: temperature
+      :type:  float
+
+
+   .. py:attribute:: fewshot_examples
+      :type:  int
 
 
    .. py:method:: __post_init__()

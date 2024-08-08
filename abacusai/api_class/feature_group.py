@@ -217,6 +217,35 @@ class ExtractDocumentDataConfig(OperatorConfig):
         self.operator_type = enums.OperatorType.EXTRACT_DOCUMENT_DATA
 
 
+# TODO: create nested dict object so this does not need to be in sync with UI.
+@dataclasses.dataclass
+class DataGenerationConfig(OperatorConfig):
+    """ Generate synthetic data using a model for finetuning an LLM.
+
+    Args:
+        prompt_col (str): Name of the input prompt column.
+        completion_col (str): Name of the output completion column.
+        description_col (str): Name of the description column.
+        id_col (str): Name of the identifier column.
+        generation_instructions (str): Instructions for the data generation model.
+        temperature (float): Sampling temperature for the model.
+        fewshot_examples (int): Number of fewshot examples used to prompt the model.
+    """
+    # required
+    prompt_col: str = dataclasses.field(default=None)
+    completion_col: str = dataclasses.field(default=None)
+    description_col: str = dataclasses.field(default=None)
+    id_col: str = dataclasses.field(default=None)
+    generation_instructions: str = dataclasses.field(default=None)
+
+    # optional
+    temperature: float = dataclasses.field(default=None)
+    fewshot_examples: int = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.operator_type = enums.OperatorType.DATA_GENERATION
+
+
 @dataclasses.dataclass
 class _OperatorConfigFactory(_ApiClassFactory):
     """A class to select and return the the correct type of Operator Config based on a serialized OperatorConfig instance. """
@@ -227,4 +256,5 @@ class _OperatorConfigFactory(_ApiClassFactory):
         enums.OperatorType.MARKDOWN: MarkdownConfig,
         enums.OperatorType.CRAWLER: CrawlerTransformConfig,
         enums.OperatorType.EXTRACT_DOCUMENT_DATA: ExtractDocumentDataConfig,
+        enums.OperatorType.DATA_GENERATION: DataGenerationConfig,
     }

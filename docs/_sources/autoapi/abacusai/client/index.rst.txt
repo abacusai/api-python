@@ -508,7 +508,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.4'
+      :value: '1.4.5'
 
 
 
@@ -576,7 +576,7 @@ Module Contents
 
    .. py:method:: list_organization_users()
 
-      Retrieves a list of all users in the organization, including pending users who have been invited.
+      Retrieves a list of all platform users in the organization, including pending users who have been invited.
 
       :returns: An array of all the users in the organization.
       :rtype: list[User]
@@ -1232,6 +1232,18 @@ Module Contents
 
       :param application_connector_id: Unique string identifier for the application connector.
       :type application_connector_id: str
+
+
+
+   .. py:method:: get_connector_auth(service = None)
+
+      Get the authentication details for a given connector.
+
+      :param service: The service name.
+      :type service: str
+
+      :returns: The application connector with the authentication details.
+      :rtype: ApplicationConnector
 
 
 
@@ -2644,7 +2656,7 @@ Module Contents
 
 
 
-   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None)
+   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False)
 
       Lists all conversations for the given deployment and current user.
 
@@ -2654,6 +2666,8 @@ Module Contents
       :type external_application_id: str
       :param conversation_type: The type of the conversation indicating its origin.
       :type conversation_type: DeploymentConversationType
+      :param fetch_last_llm_info: If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
+      :type fetch_last_llm_info: bool
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -3455,7 +3469,7 @@ Module Contents
 
    .. py:method:: run_workflow_graph(workflow_graph, sample_user_inputs = {}, agent_workflow_node_id = None, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
 
-      Validates the workflow graph for an AI Agent.
+      Validates the workflow graph by running the flow using sample user inputs for an AI Agent.
 
       :param workflow_graph: The workflow graph to validate.
       :type workflow_graph: WorkflowGraph
@@ -3519,7 +3533,10 @@ Module Contents
 
 
 
-   .. py:method:: execute_feature_group_sql(sql, fix_query_on_error = False, timeout=3600, delay=2)
+   .. py:method:: _attempt_deployment_sql_execution(sql)
+
+
+   .. py:method:: execute_feature_group_sql(sql, fix_query_on_error = False, timeout=3600, delay=2, use_latest_version=True)
 
       Execute a SQL query on the feature groups
 
@@ -3527,6 +3544,8 @@ Module Contents
       :type sql: str
       :param fix_query_on_error: If enabled, SQL query is auto fixed if parsing fails.
       :type fix_query_on_error: bool
+      :param use_latest_version: If enabled, executes the query on the latest version of the feature group, and if version doesn't exist, FailedDependencyError is sent. If disabled, query is executed considering the latest feature group state irrespective of the latest version of the feature group. Defaults to True
+      :type use_latest_version: bool
 
       :returns: The result of the query.
       :rtype: pandas.DataFrame
@@ -3763,10 +3782,10 @@ Module Contents
 
 
 
-   .. py:method:: _status_poll(url, wait_states, method, body = {}, headers = None, delay = 2, timeout = 1200)
+   .. py:method:: _status_poll(url, wait_states, method, body = {}, headers = None, delay = 1, timeout = 1200)
 
 
-   .. py:method:: execute_data_query_using_llm(query, feature_group_ids, prompt_context = None, llm_name = None, temperature = None, preview = False, schema_document_retriever_ids = None, timeout=3600, delay=2)
+   .. py:method:: execute_data_query_using_llm(query, feature_group_ids, prompt_context = None, llm_name = None, temperature = None, preview = False, schema_document_retriever_ids = None, timeout=3600, delay=2, use_latest_version=True)
 
       Execute a data query using a large language model.
 
@@ -3788,6 +3807,8 @@ Module Contents
       :type timeout: int
       :param delay: Polling interval for checking timeout.
       :type delay: int
+      :param use_latest_version: If enabled, executes the query on the latest version of the feature group, and if version doesn't exist, FailedDependencyError is sent. If disabled, query is executed considering the latest feature group state irrespective of the latest version of the feature group. Defaults to True.
+      :type use_latest_version: bool
 
       :returns: The result of the query execution. Execution results could be loaded as pandas using 'load_as_pandas', i.e., result.execution.load_as_pandas().
       :rtype: LlmExecutionResult
@@ -5159,7 +5180,7 @@ Module Contents
 
 
 
-   .. py:method:: execute_async_feature_group_operation(query = None, fix_query_on_error = False)
+   .. py:method:: execute_async_feature_group_operation(query = None, fix_query_on_error = False, use_latest_version = True)
 
       Starts the execution of fg operation
 
@@ -5167,6 +5188,8 @@ Module Contents
       :type query: str
       :param fix_query_on_error: If enabled, SQL query is auto fixed if parsing fails.
       :type fix_query_on_error: bool
+      :param use_latest_version: If enabled, executes the query on the latest version of the feature group, and if version doesn't exist, FailedDependencyError is sent. If disabled, query is executed considering the latest feature group state irrespective of the latest version of the feature group.
+      :type use_latest_version: bool
 
       :returns: A dict that contains the execution status
       :rtype: ExecuteFeatureGroupOperation
@@ -9560,7 +9583,7 @@ Module Contents
 
 
 
-   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, agent_connectors = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -9582,13 +9605,15 @@ Module Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
+      :param agent_connectors: A dictionary of application connectors that are required for the agent mapped with oauth list for them.
+      :type agent_connectors: dict
 
       :returns: The new agent.
       :rtype: Agent
 
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -9606,6 +9631,8 @@ Module Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
+      :param agent_connectors: A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
+      :type agent_connectors: dict
 
       :returns: The updated agent.
       :rtype: Agent
@@ -9780,9 +9807,9 @@ Module Contents
 
 
 
-   .. py:method:: extract_graph_information(workflow_graph, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
+   .. py:method:: extract_agent_workflow_information(workflow_graph, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
 
-      Extracts information from the workflow.
+      Extracts source code of workflow graph, ancestors, in_edges and traversal orders from the agent workflow.
 
       :param workflow_graph: The workflow graph to validate.
       :type workflow_graph: WorkflowGraph

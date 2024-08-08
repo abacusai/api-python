@@ -703,7 +703,7 @@ Module Contents
 
 
 
-   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None)
+   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, agent_connectors = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -723,6 +723,8 @@ Module Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
+      :param agent_connectors: A dictionary of application connectors that are required for the agent mapped with oauth list for them.
+      :type agent_connectors: dict
 
       :returns: The new agent.
       :rtype: Agent

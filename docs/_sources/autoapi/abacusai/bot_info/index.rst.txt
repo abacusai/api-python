@@ -1,0 +1,51 @@
+abacusai.bot_info
+=================
+
+.. py:module:: abacusai.bot_info
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.bot_info.BotInfo
+
+
+Module Contents
+---------------
+
+.. py:class:: BotInfo(client, externalApplicationId=None, llmName=None, llmDisplayName=None, llmBotIcon=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Information about an external application and LLM.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param externalApplicationId: The external application ID.
+   :type externalApplicationId: str
+   :param llmName: The name of the LLM model. Only used for system-created bots.
+   :type llmName: str
+   :param llmDisplayName: The display name of the LLM model. Only used for system-created bots.
+   :type llmDisplayName: str
+   :param llmBotIcon: The icon location of the LLM model. Only used for system-created bots.
+   :type llmBotIcon: str
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
