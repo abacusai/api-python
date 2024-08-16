@@ -201,12 +201,13 @@ def _is_json_serializable(object: Any):
         return False
 
 
-async def sse_asynchronous_generator(endpoint: str, body: dict):
+async def sse_asynchronous_generator(endpoint: str, headers: dict, body: dict):
     try:
         import aiohttp
     except Exception:
         raise Exception('Please install aiohttp to use this functionality')
-    async with aiohttp.request('POST', endpoint, json=body) as response:
+
+    async with aiohttp.request('POST', endpoint, json=body, headers=headers) as response:
         async for line in response.content:
             if line:
                 streamed_responses = line.decode('utf-8').split('\n\n')
@@ -604,7 +605,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.5'
+    client_version = '1.4.6'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2428,11 +2429,11 @@ class ReadOnlyClient(BaseApiClient):
             Algorithm: The description of the algorithm."""
         return self._call_api('describeAlgorithm', 'GET', query_params={'algorithm': algorithm}, parse_type=Algorithm)
 
-    def list_algorithms(self, problem_type: str = None, project_id: str = None) -> List[Algorithm]:
+    def list_algorithms(self, problem_type: Union[ProblemType, str] = None, project_id: str = None) -> List[Algorithm]:
         """List all custom algorithms, with optional filtering on Problem Type and Project ID
 
         Args:
-            problem_type (str): The problem type to query. If `None`, return all algorithms in the organization.
+            problem_type (ProblemType): The problem type to query. If `None`, return all algorithms in the organization.
             project_id (str): The ID of the project.
 
         Returns:
@@ -3547,7 +3548,7 @@ class ApiClient(ReadOnlyClient):
             setattr(the_main, name, getattr(module, name))
         return module
 
-    def run_workflow_graph(self, workflow_graph: WorkflowGraph, sample_user_inputs: dict = {}, agent_workflow_node_id: str = None, agent_interface: AgentInterface = AgentInterface.DEFAULT, package_requirements: list = []):
+    def run_workflow_graph(self, workflow_graph: WorkflowGraph, sample_user_inputs: dict = {}, agent_workflow_node_id: str = None, agent_interface: AgentInterface = None, package_requirements: list = None):
         """
         Validates the workflow graph by running the flow using sample user inputs for an AI Agent.
 
@@ -4144,6 +4145,7 @@ class ApiClient(ReadOnlyClient):
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
             include_search_results (bool): If True, will also return search results, if relevant. """
+        headers = {'APIKEY': self.api_key}
         body = {
             'deploymentToken': deployment_token,
             'deploymentId': deployment_id,
@@ -4162,7 +4164,7 @@ class ApiClient(ReadOnlyClient):
         if endpoint is None:
             raise Exception(
                 'API not supported, Please contact Abacus.ai support')
-        return sse_asynchronous_generator(f'{endpoint}/api/getStreamingChatResponse', body)
+        return sse_asynchronous_generator(f'{endpoint}/api/getStreamingChatResponse', headers, body)
 
     def get_streaming_conversation_response(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False):
         """Return an asynchronous generator which continues the conversation based on the input messages and search results.
@@ -4182,6 +4184,7 @@ class ApiClient(ReadOnlyClient):
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
             include_search_results (bool): If True, will also return search results, if relevant. """
+        headers = {'APIKEY': self.api_key}
         body = {
             'deploymentToken': deployment_token,
             'deploymentId': deployment_id,
@@ -4202,7 +4205,40 @@ class ApiClient(ReadOnlyClient):
         if endpoint is None:
             raise Exception(
                 'API not supported, Please contact Abacus.ai support')
-        return sse_asynchronous_generator(f'{endpoint}/api/getStreamingConversationResponse', body)
+        return sse_asynchronous_generator(f'{endpoint}/api/getStreamingConversationResponse', headers, body)
+
+    def execute_conversation_agent_streaming(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None,
+                                             regenerate: bool = False, doc_infos: list = None, agent_workflow_node_id: str = None):
+        """Return an asynchronous generator which gives out the agent response stream.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            arguments (list): A list of arguments to pass to the agent.
+            keyword_arguments (dict): A dictionary of keyword arguments to pass to the agent.
+            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+            external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+            regenerate (bool): If True, will regenerate the conversation from the start.
+            doc_infos (list): A list of dictionaries containing information about the documents uploaded with the request.
+            agent_workflow_node_id (str): The unique identifier of the agent workflow node to trigger. If not specified, the primary node will be used.
+        """
+        headers = {'APIKEY': self.api_key}
+        body = {
+            'deploymentToken': deployment_token,
+            'deploymentId': deployment_id,
+            'arguments': arguments,
+            'keywordArguments': keyword_arguments,
+            'deploymentConversationId': deployment_conversation_id,
+            'externalSessionId': external_session_id,
+            'regenerate': regenerate,
+            'docInfos': doc_infos,
+            'agentWorkflowNodeId': agent_workflow_node_id
+        }
+        endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
+        if endpoint is None:
+            raise Exception(
+                'API not supported, Please contact Abacus.ai support')
+        return sse_asynchronous_generator(f'{endpoint}/api/executeConversationAgentStreaming', headers, body)
 
     def set_cache_scope(self, scope: str):
         """
@@ -4294,8 +4330,25 @@ class ApiClient(ReadOnlyClient):
         """
         if hasattr(_request_context, 'response_document_sources'):
             raise Exception('Document sources cannot be set more than once')
-        _request_context.agent_response_document_sources = [{'score': float(response_document_source.score), 'answer': response_document_source.document, 'source': response_document_source.document_source, 'image_ids': [
-            response_document_source.image_id]} for response_document_source in response_document_sources]
+        _request_context.agent_response_document_sources = [{
+            'score': float(response_document_source.score),
+            'answer': response_document_source.document,
+            'source': response_document_source.document_source,
+            'image_ids': response_document_source.image_ids,
+            'pages': response_document_source.pages,
+            'bounding_boxes': response_document_source.bounding_boxes
+        } for response_document_source in response_document_sources]
+
+    def get_initialized_data(self):
+        """
+            Returns the object returned by the initialize_function during agent creation.
+            Returns:
+                Object returned in the initialize_function.
+        """
+        initialized_object = None
+        if hasattr(_request_context, 'model_object'):
+            initialized_object = _request_context.model_object
+        return initialized_object
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -7251,6 +7304,19 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
 
+    def get_matrix_agent_schema(self, deployment_token: str, deployment_id: str, query: str, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
+        """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            query (str): User input query to initialize the matrix computation.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
+            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('getMatrixAgentSchema', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'query': query, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url, timeout=1500)
+
     def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None, agent_workflow_node_id: str = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -8299,7 +8365,7 @@ Creates a new feature group defined as the union of other feature group versions
             external_application_id (str): The ID of the External Application."""
         return self._call_api('deleteExternalApplication', 'DELETE', query_params={'externalApplicationId': external_application_id})
 
-    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, agent_connectors: dict = None) -> Agent:
+    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, agent_connectors: dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
         """Creates a new AI agent using the given agent workflow graph definition.
 
         Args:
@@ -8313,12 +8379,14 @@ Creates a new feature group defined as the union of other feature group versions
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             included_modules (List): A list of user created custom modules to include in the agent's environment.
             agent_connectors (dict): A dictionary of application connectors that are required for the agent mapped with oauth list for them.
+            initialize_function_name (str): The name of the function to be used for initialization.
+            initialize_function_code (str): The function code to be used for initialization.
 
         Returns:
             Agent: The new agent."""
-        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'agentConnectors': agent_connectors}, parse_type=Agent)
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'agentConnectors': agent_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code}, parse_type=Agent)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, agent_connectors: dict = None) -> Agent:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, agent_connectors: dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
         """Updates an existing AI Agent. A new version of the agent will be created and published.
 
         Args:
@@ -8330,10 +8398,12 @@ Creates a new feature group defined as the union of other feature group versions
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             included_modules (List): A list of user created custom modules to include in the agent's environment.
             agent_connectors (dict): A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
+            initialize_function_name (str): The name of the function to be used for initialization.
+            initialize_function_code (str): The function code to be used for initialization.
 
         Returns:
             Agent: The updated agent."""
-        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'agentConnectors': agent_connectors}, parse_type=Agent)
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'agentConnectors': agent_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code}, parse_type=Agent)
 
     def generate_agent_code(self, project_id: str, prompt: str) -> list:
         """Generates the code for defining an AI Agent
@@ -8343,7 +8413,7 @@ Creates a new feature group defined as the union of other feature group versions
             prompt (str): A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out"""
         return self._call_api('generateAgentCode', 'POST', query_params={}, body={'projectId': project_id, 'prompt': prompt})
 
-    def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None) -> LlmResponse:
+    def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, stop_sequences: list = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
 
         Args:
@@ -8355,10 +8425,11 @@ Creates a new feature group defined as the union of other feature group versions
             messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
             response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
             json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
+            stop_sequences (list): Specifies the strings on which the LLM will stop generation.
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
-        return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'responseType': response_type, 'jsonResponseSchema': json_response_schema}, parse_type=LlmResponse)
+        return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'responseType': response_type, 'jsonResponseSchema': json_response_schema, 'stopSequences': stop_sequences}, parse_type=LlmResponse)
 
     def render_feature_groups_for_llm(self, feature_group_ids: List, token_budget: int = None, include_definition: bool = True) -> List[LlmInput]:
         """Encode feature groups as language model inputs.

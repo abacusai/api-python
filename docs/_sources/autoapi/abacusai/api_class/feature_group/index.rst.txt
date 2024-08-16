@@ -404,6 +404,26 @@ Module Contents
    :type temperature: float
    :param fewshot_examples: Number of fewshot examples used to prompt the model.
    :type fewshot_examples: int
+   :param concurrency: Number of concurrent processes.
+   :type concurrency: int
+   :param examples_per_target: Number of examples per target.
+   :type examples_per_target: int
+   :param subset_size: Size of the subset to use for generation.
+   :type subset_size: Optional[int]
+   :param verify_response: Whether to verify the response.
+   :type verify_response: bool
+   :param token_budget: Token budget for generation.
+   :type token_budget: int
+   :param oversample: Whether to oversample the data.
+   :type oversample: bool
+   :param documentation_char_limit: Character limit for documentation.
+   :type documentation_char_limit: int
+   :param frequency_penalty: Penalty for frequency of token appearance.
+   :type frequency_penalty: float
+   :param model: Model to use for data generation.
+   :type model: str
+   :param seed: Seed for random number generation.
+   :type seed: Optional[int]
 
 
    .. py:attribute:: prompt_col
@@ -431,6 +451,46 @@ Module Contents
 
 
    .. py:attribute:: fewshot_examples
+      :type:  int
+
+
+   .. py:attribute:: concurrency
+      :type:  int
+
+
+   .. py:attribute:: examples_per_target
+      :type:  int
+
+
+   .. py:attribute:: subset_size
+      :type:  int
+
+
+   .. py:attribute:: verify_response
+      :type:  bool
+
+
+   .. py:attribute:: token_budget
+      :type:  int
+
+
+   .. py:attribute:: oversample
+      :type:  bool
+
+
+   .. py:attribute:: documentation_char_limit
+      :type:  int
+
+
+   .. py:attribute:: frequency_penalty
+      :type:  float
+
+
+   .. py:attribute:: model
+      :type:  str
+
+
+   .. py:attribute:: seed
       :type:  int
 
 

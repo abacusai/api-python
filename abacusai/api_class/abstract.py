@@ -7,7 +7,7 @@ import sys
 from abc import ABC
 from copy import deepcopy
 from textwrap import dedent
-from typing import Any, Callable, get_type_hints
+from typing import Any, Callable, Union, _GenericAlias, get_type_hints
 
 
 if sys.version_info >= (3, 8):
@@ -20,6 +20,83 @@ from .enums import ApiEnum
 
 FIRST_CAP_RE = re.compile('(.)([A-Z][a-z]+)')
 ALL_CAP_RE = re.compile('([a-z0-9])([A-Z])')
+
+
+def _validate_instance(value, expected_type):
+    if expected_type == callable:
+        return callable(value)
+    elif isinstance(expected_type, _GenericAlias):
+        if expected_type.__origin__ == list:
+            if not isinstance(value, list):
+                return False
+            else:
+                for item in value:
+                    if not _validate_instance(item, expected_type.__args__[0]):
+                        return False
+        elif expected_type.__origin__ == Union:
+            type_match_found = False
+            for possible_type in expected_type.__args__:
+                if _validate_instance(value, possible_type):
+                    type_match_found = True
+                    break
+            return type_match_found
+        elif expected_type.__origin__ == dict:
+            if not isinstance(value, dict):
+                return False
+            else:
+                key_type = expected_type.__args__[0]
+                val_type = expected_type.__args__[1]
+                for key, val in value.items():
+                    if not _validate_instance(key, key_type) or not _validate_instance(val, val_type):
+                        return False
+    else:
+        return isinstance(value, expected_type)
+    return True
+
+
+def _get_user_friendly_type_name(typename):
+    type_value = ''
+    if isinstance(typename, _GenericAlias):
+        if typename.__origin__ == list:
+            type_value = f'a list of {_get_user_friendly_type_name(typename.__args__[0])}'
+        elif typename.__origin__ == dict:
+            type_value += f'a dictionary of key type: {{{_get_user_friendly_type_name(typename.__args__[0])}, {_get_user_friendly_type_name(typename.__args__[1])}}}'
+        elif typename.__origin__ == Union:
+            type_value += f'one of the following types - ( {", ".join([_get_user_friendly_type_name(possible_type) for possible_type in typename.__args__])} )'
+    else:
+        type_value = typename.__name__
+    return type_value
+
+
+def validate_class_method_annotations(classname=None, friendly_class_name=None):
+    if friendly_class_name is None:
+        friendly_class_name = classname
+
+    def validate_types(func):
+        nonlocal classname
+        if classname is None:
+            classname = func.__qualname__.split('.')[0]
+
+        def new_func(*args, **kwargs):
+            sig = inspect.signature(func)
+            bound_args = sig.bind(*args, **kwargs).arguments
+            for keyword, value in list(bound_args.items())[1:]:  # To skip self or cls argument.
+                default_value = sig.parameters[keyword].default
+                if default_value != sig.parameters[keyword].empty and value == default_value:
+                    continue
+                expected_type = func.__annotations__.get(keyword)
+                if not _validate_instance(value, expected_type):
+                    raise ValueError(friendly_class_name, f'Invalid {classname} instance. Argument "{keyword}" must be {_get_user_friendly_type_name(expected_type)}.')
+            func(*args, **kwargs)
+        return new_func
+    return validate_types
+
+
+def validate_constructor_arg_types(friendly_class_name=None):
+    def validate_types(cls):
+        cls.__init__ = validate_class_method_annotations(cls.__name__, friendly_class_name)(cls.__init__)
+        return cls
+    return validate_types
 
 
 def camel_case(value):

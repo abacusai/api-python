@@ -883,6 +883,23 @@ Module Contents
 
 
 
+   .. py:method:: get_matrix_agent_schema(deployment_token, deployment_id, query, deployment_conversation_id = None, external_session_id = None)
+
+      Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param query: User input query to initialize the matrix computation.
+      :type query: str
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+
+
+
    .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None, agent_workflow_node_id = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.

@@ -670,6 +670,19 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
 
+    def get_matrix_agent_schema(self, deployment_token: str, deployment_id: str, query: str, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
+        """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            query (str): User input query to initialize the matrix computation.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
+            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('getMatrixAgentSchema', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'query': query, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url, timeout=1500)
+
     def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None, agent_workflow_node_id: str = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 

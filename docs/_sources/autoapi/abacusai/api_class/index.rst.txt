@@ -47,6 +47,7 @@ Classes
 
    abacusai.api_class.ApiClass
    abacusai.api_class.FieldDescriptor
+   abacusai.api_class.JSONSchema
    abacusai.api_class.WorkflowNodeInputSchema
    abacusai.api_class.WorkflowNodeOutputSchema
    abacusai.api_class.WorkflowNodeInputMapping
@@ -277,6 +278,7 @@ Classes
    abacusai.api_class.CollapseResponseSection
    abacusai.api_class.ListResponseSection
    abacusai.api_class.ChartResponseSection
+   abacusai.api_class.DataframeResponseSection
 
 
 Functions
@@ -285,6 +287,8 @@ Functions
 .. autoapisummary::
 
    abacusai.api_class.get_clean_function_source_code_for_agent
+   abacusai.api_class.validate_constructor_arg_types
+   abacusai.api_class.validate_input_dict_param
 
 
 Package Contents
@@ -354,6 +358,10 @@ Package Contents
 
 .. py:function:: get_clean_function_source_code_for_agent(func)
 
+.. py:function:: validate_constructor_arg_types(friendly_class_name=None)
+
+.. py:function:: validate_input_dict_param(dict_object, friendly_class_name, must_contain=[])
+
 .. py:class:: FieldDescriptor
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -387,16 +395,30 @@ Package Contents
       :type:  abacusai.api_class.enums.FieldDescriptorType
 
 
+.. py:class:: JSONSchema
+
+   .. py:method:: from_fields_list(fields_list)
+      :classmethod:
+
+
+
+   .. py:method:: to_fields_list(json_schema)
+      :classmethod:
+
+
+
 .. py:class:: WorkflowNodeInputSchema
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`, :py:obj:`JSONSchema`
 
 
-   A react-jsonschema-form conformant schema for workflow node input. To initialize a WorkflowNodeInputSchema dependent on another node's output, use from_workflow_node method.
+   A schema conformant to react-jsonschema-form for workflow node input.
 
-   :param json_schema: The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties". Supported elements - Checkbox, Radio Button, Dropdown, Textarea, Number, Date, file upload. Not supported - Nested elements, arrays and other complex types.
+   To initialize a WorkflowNodeInputSchema dependent on another node's output, use the from_workflow_node method.
+
+   :param json_schema: The JSON schema for the input, conformant to react-jsonschema-form specification. Must define keys like "title", "type", and "properties". Supported elements include Checkbox, Radio Button, Dropdown, Textarea, Number, Date, and file upload. Nested elements, arrays, and other complex types are not supported.
    :type json_schema: dict
-   :param ui_schema: The ui schema for the input conformant to react-jsonschema-form specification.
+   :param ui_schema: The UI schema for the input, conformant to react-jsonschema-form specification.
    :type ui_schema: dict
 
 
@@ -448,12 +470,12 @@ Package Contents
 
 .. py:class:: WorkflowNodeOutputSchema
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`, :py:obj:`JSONSchema`
 
 
-   A react-jsonschema-form schema for a workflow node output.
+   A schema conformant to react-jsonschema-form for a workflow node output.
 
-   :param json_schema: The json schema for the output conformant to react-jsonschema-form specification.
+   :param json_schema: The JSON schema for the output, conformant to react-jsonschema-form specification.
    :type json_schema: dict
 
 
@@ -479,7 +501,7 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   A mapping of input to a workflow node.
+   Represents a mapping of inputs to a workflow node.
 
    :param name: The name of the input variable of the node function.
    :type name: str
@@ -487,10 +509,10 @@ Package Contents
    :type variable_type: WorkflowNodeInputType
    :param variable_source: The name of the node this variable is sourced from.
                            If the type is `WORKFLOW_VARIABLE`, the value given by the source node will be directly used.
-                           If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before user edits it.
+                           If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before the user edits it.
                            Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
    :type variable_source: str
-   :param is_required: Whether the input is required. Defaults to True
+   :param is_required: Indicates whether the input is required. Defaults to True.
    :type is_required: bool
 
 
@@ -503,6 +525,10 @@ Package Contents
 
 
    .. py:attribute:: variable_source
+      :type:  str
+
+
+   .. py:attribute:: source_prop
       :type:  str
 
 
@@ -528,7 +554,7 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   A mapping of output to a workflow node.
+   Represents a mapping of output from a workflow node.
 
    :param name: The name of the output.
    :type name: str
@@ -557,12 +583,12 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNode(name, input_mappings, output_mappings, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None)
+.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   A node in an Agent workflow graph.
+   Represents a node in an Agent workflow graph.
 
    :param name: A unique name for the workflow node.
    :type name: str
@@ -576,6 +602,22 @@ Package Contents
    :type input_schema: WorkflowNodeInputSchema
    :param output_schema: The react json schema for the output to be shown on UI.
    :type output_schema: WorkflowNodeOutputSchema
+
+   :raises ValueError: If neither `function` nor `function_name` and `source_code` are provided or the inputs are invalid.
+
+
+   .. py:attribute:: _user_args
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: arg_defaults
+
+
+   .. py:attribute:: is_shortform_input_mappings
+      :value: False
+
 
 
    .. py:method:: to_dict()
@@ -591,14 +633,27 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphEdge
+   .. py:class:: Outputs(node)
+
+      .. py:attribute:: node
+
+
+      .. py:method:: __getattr__(name)
+
+
+
+   .. py:property:: outputs
+
+
+.. py:class:: WorkflowGraphEdge(source, target, details = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   An edge in an Agent workflow graph.
-   To make an edge conditional, provide 'EXECUTION_CONDITION': <condition> key-value in details.
-   The condition should be a pythonic expression that evaluates to a boolean value and only depends on outputs of the source node.
+   Represents an edge in an Agent workflow graph.
+
+   To make an edge conditional, provide 'EXECUTION_CONDITION': <condition> key-value in the details dictionary.
+   The condition should be a Python expression that evaluates to a boolean value and only depends on the outputs of the source node.
 
    :param source: The name of the source node of the edge.
    :type source: str
@@ -609,11 +664,11 @@ Package Contents
 
 
    .. py:attribute:: source
-      :type:  str
+      :type:  Union[str, WorkflowGraphNode]
 
 
    .. py:attribute:: target
-      :type:  str
+      :type:  Union[str, WorkflowGraphNode]
 
 
    .. py:attribute:: details
@@ -628,14 +683,16 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
+   Represents an Agent workflow graph.
+
+   The edges define the node invocation order.
 
    :param nodes: A list of nodes in the workflow graph.
    :type nodes: List[WorkflowGraphNode]
-   :param edges: A list of edges in the workflow graph, where each edge is a tuple of source, target and details.
+   :param edges: A list of edges in the workflow graph, where each edge is a tuple of source, target, and details.
    :type edges: List[WorkflowGraphEdge]
    :param primary_start_node: The primary node to start the workflow from.
-   :type primary_start_node: str
+   :type primary_start_node: Union[str, WorkflowGraphNode]
 
 
    .. py:attribute:: nodes
@@ -647,7 +704,7 @@ Package Contents
 
 
    .. py:attribute:: primary_start_node
-      :type:  str
+      :type:  Union[str, WorkflowGraphNode]
 
 
    .. py:method:: to_dict()
@@ -4965,8 +5022,13 @@ Package Contents
 
 
 
-   .. py:attribute:: NONE
-      :value: 'NONE'
+   .. py:attribute:: ANY
+      :value: 'ANY'
+
+
+
+   .. py:method:: normalize_type(python_type)
+      :classmethod:
 
 
 
@@ -5127,6 +5189,11 @@ Package Contents
 
    .. py:attribute:: CHAT
       :value: 'CHAT'
+
+
+
+   .. py:attribute:: MATRIX
+      :value: 'MATRIX'
 
 
 
@@ -5862,6 +5929,26 @@ Package Contents
    :type temperature: float
    :param fewshot_examples: Number of fewshot examples used to prompt the model.
    :type fewshot_examples: int
+   :param concurrency: Number of concurrent processes.
+   :type concurrency: int
+   :param examples_per_target: Number of examples per target.
+   :type examples_per_target: int
+   :param subset_size: Size of the subset to use for generation.
+   :type subset_size: Optional[int]
+   :param verify_response: Whether to verify the response.
+   :type verify_response: bool
+   :param token_budget: Token budget for generation.
+   :type token_budget: int
+   :param oversample: Whether to oversample the data.
+   :type oversample: bool
+   :param documentation_char_limit: Character limit for documentation.
+   :type documentation_char_limit: int
+   :param frequency_penalty: Penalty for frequency of token appearance.
+   :type frequency_penalty: float
+   :param model: Model to use for data generation.
+   :type model: str
+   :param seed: Seed for random number generation.
+   :type seed: Optional[int]
 
 
    .. py:attribute:: prompt_col
@@ -5889,6 +5976,46 @@ Package Contents
 
 
    .. py:attribute:: fewshot_examples
+      :type:  int
+
+
+   .. py:attribute:: concurrency
+      :type:  int
+
+
+   .. py:attribute:: examples_per_target
+      :type:  int
+
+
+   .. py:attribute:: subset_size
+      :type:  int
+
+
+   .. py:attribute:: verify_response
+      :type:  bool
+
+
+   .. py:attribute:: token_budget
+      :type:  int
+
+
+   .. py:attribute:: oversample
+      :type:  bool
+
+
+   .. py:attribute:: documentation_char_limit
+      :type:  int
+
+
+   .. py:attribute:: frequency_penalty
+      :type:  float
+
+
+   .. py:attribute:: model
+      :type:  str
+
+
+   .. py:attribute:: seed
       :type:  int
 
 
@@ -9455,5 +9582,25 @@ Package Contents
 
    .. py:attribute:: chart
       :type:  dict
+
+
+.. py:class:: DataframeResponseSection(df, header = None, section_key = None)
+
+   Bases: :py:obj:`ResponseSection`
+
+
+   A response section that an agent can return to render a pandas dataframe.
+   :param df: The dataframe to be displayed.
+   :type df: pandas.DataFrame
+   :param header: Heading of the table to be displayed.
+   :type header: str
+
+
+   .. py:attribute:: df
+      :type:  Any
+
+
+   .. py:attribute:: header
+      :type:  str
 
 

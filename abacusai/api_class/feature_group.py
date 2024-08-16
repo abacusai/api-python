@@ -230,6 +230,16 @@ class DataGenerationConfig(OperatorConfig):
         generation_instructions (str): Instructions for the data generation model.
         temperature (float): Sampling temperature for the model.
         fewshot_examples (int): Number of fewshot examples used to prompt the model.
+        concurrency (int): Number of concurrent processes.
+        examples_per_target (int): Number of examples per target.
+        subset_size (Optional[int]): Size of the subset to use for generation.
+        verify_response (bool): Whether to verify the response.
+        token_budget (int): Token budget for generation.
+        oversample (bool): Whether to oversample the data.
+        documentation_char_limit (int): Character limit for documentation.
+        frequency_penalty (float): Penalty for frequency of token appearance.
+        model (str): Model to use for data generation.
+        seed (Optional[int]): Seed for random number generation.
     """
     # required
     prompt_col: str = dataclasses.field(default=None)
@@ -241,6 +251,16 @@ class DataGenerationConfig(OperatorConfig):
     # optional
     temperature: float = dataclasses.field(default=None)
     fewshot_examples: int = dataclasses.field(default=None)
+    concurrency: int = dataclasses.field(default=None)
+    examples_per_target: int = dataclasses.field(default=None)
+    subset_size: int = dataclasses.field(default=None)
+    verify_response: bool = dataclasses.field(default=None)
+    token_budget: int = dataclasses.field(default=None)
+    oversample: bool = dataclasses.field(default=None)
+    documentation_char_limit: int = dataclasses.field(default=None)
+    frequency_penalty: float = dataclasses.field(default=None)
+    model: str = dataclasses.field(default=None)
+    seed: int = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.operator_type = enums.OperatorType.DATA_GENERATION

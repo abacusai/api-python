@@ -1,8 +1,16 @@
+import ast
 import dataclasses
-from typing import List, Union
+from typing import Dict, List, Union
 
 from . import enums
-from .abstract import ApiClass, get_clean_function_source_code_for_agent
+from .abstract import ApiClass, get_clean_function_source_code_for_agent, validate_constructor_arg_types
+
+
+def validate_input_dict_param(dict_object, friendly_class_name, must_contain=[]):
+    if not isinstance(dict_object, dict):
+        raise ValueError(friendly_class_name, 'Invalid argument. Provided argument should be a dictionary.')
+    if any(field not in dict_object for field in must_contain):
+        raise ValueError(friendly_class_name, f'One or more keys are missing in the argument provided. Must contain keys - {must_contain}.')
 
 
 @dataclasses.dataclass
@@ -23,13 +31,33 @@ class FieldDescriptor(ApiClass):
 
 
 @dataclasses.dataclass
-class WorkflowNodeInputSchema(ApiClass):
+class JSONSchema:
+    @classmethod
+    def from_fields_list(cls, fields_list: List[str]):
+        json_schema = {
+            'type': 'object',
+            'properties': {field: {'title': field, 'type': 'string'} for field in fields_list}
+        }
+        return cls(json_schema=json_schema)
+
+    @classmethod
+    def to_fields_list(cls, json_schema) -> List[str]:
+        if 'properties' in json_schema:
+            return list(json_schema['properties'].keys())
+        return []
+
+
+@validate_constructor_arg_types('input_schema')
+@dataclasses.dataclass
+class WorkflowNodeInputSchema(ApiClass, JSONSchema):
     """
-    A react-jsonschema-form conformant schema for workflow node input. To initialize a WorkflowNodeInputSchema dependent on another node's output, use from_workflow_node method.
+    A schema conformant to react-jsonschema-form for workflow node input.
+
+    To initialize a WorkflowNodeInputSchema dependent on another node's output, use the from_workflow_node method.
 
     Args:
-        json_schema (dict): The json schema for the input conformant to react-jsonschema-form specification. Must define keys like "title", "type" and "properties". Supported elements - Checkbox, Radio Button, Dropdown, Textarea, Number, Date, file upload. Not supported - Nested elements, arrays and other complex types.
-        ui_schema (dict): The ui schema for the input conformant to react-jsonschema-form specification.
+        json_schema (dict): The JSON schema for the input, conformant to react-jsonschema-form specification. Must define keys like "title", "type", and "properties". Supported elements include Checkbox, Radio Button, Dropdown, Textarea, Number, Date, and file upload. Nested elements, arrays, and other complex types are not supported.
+        ui_schema (dict): The UI schema for the input, conformant to react-jsonschema-form specification.
     """
     json_schema: dict
     ui_schema: dict = dataclasses.field(default_factory=dict)
@@ -53,6 +81,7 @@ class WorkflowNodeInputSchema(ApiClass):
 
     @classmethod
     def from_dict(cls, schema: dict):
+        validate_input_dict_param(schema, friendly_class_name='input_schema')
         if schema.get('runtime_schema', False):
             return cls.from_workflow_node(
                 schema_source=schema.get('schema_source'),
@@ -75,6 +104,8 @@ class WorkflowNodeInputSchema(ApiClass):
         """
         if not schema_source or not schema_prop:
             raise ValueError('input_schema', 'Valid schema_source and schema_prop must be provided for runtime schema.')
+        if not isinstance(schema_source, str) or not isinstance(schema_prop, str):
+            raise ValueError('input_schema', 'schema_source and schema_prop must be strings.')
         instance = cls(json_schema={})
         instance.schema_source = schema_source
         instance.schema_prop = schema_prop
@@ -82,13 +113,14 @@ class WorkflowNodeInputSchema(ApiClass):
         return instance
 
 
+@validate_constructor_arg_types('output_schema')
 @dataclasses.dataclass
-class WorkflowNodeOutputSchema(ApiClass):
+class WorkflowNodeOutputSchema(ApiClass, JSONSchema):
     """
-    A react-jsonschema-form schema for a workflow node output.
+    A schema conformant to react-jsonschema-form for a workflow node output.
 
     Args:
-        json_schema (dict): The json schema for the output conformant to react-jsonschema-form specification.
+        json_schema (dict): The JSON schema for the output, conformant to react-jsonschema-form specification.
     """
     json_schema: dict
 
@@ -99,28 +131,31 @@ class WorkflowNodeOutputSchema(ApiClass):
 
     @classmethod
     def from_dict(cls, schema: dict):
+        validate_input_dict_param(schema, friendly_class_name='output_schema')
         return cls(
             json_schema=schema.get('json_schema', schema)
         )
 
 
+@validate_constructor_arg_types('input_mapping')
 @dataclasses.dataclass
 class WorkflowNodeInputMapping(ApiClass):
     """
-    A mapping of input to a workflow node.
+    Represents a mapping of inputs to a workflow node.
 
     Args:
         name (str): The name of the input variable of the node function.
         variable_type (WorkflowNodeInputType): The type of the input.
         variable_source (str): The name of the node this variable is sourced from.
                                If the type is `WORKFLOW_VARIABLE`, the value given by the source node will be directly used.
-                               If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before user edits it.
+                               If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before the user edits it.
                                Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
-        is_required (bool): Whether the input is required. Defaults to True
+        is_required (bool): Indicates whether the input is required. Defaults to True.
     """
     name: str
     variable_type: enums.WorkflowNodeInputType
     variable_source: str = dataclasses.field(default=None)
+    source_prop: str = dataclasses.field(default=None)
     is_required: bool = dataclasses.field(default=True)
 
     def to_dict(self):
@@ -128,34 +163,34 @@ class WorkflowNodeInputMapping(ApiClass):
             'name': self.name,
             'variable_type': self.variable_type.value,
             'variable_source': self.variable_source,
+            'source_prop': self.source_prop or self.name,
             'is_required': self.is_required
         }
 
     @classmethod
     def from_dict(cls, mapping: dict):
-        if not isinstance(mapping, dict):
-            raise ValueError('input_mapping', 'Invalid workflow node input mapping. Provided mapping should be a dictionary.')
-        if any(field not in mapping for field in ['name', 'variable_type']):
-            raise ValueError('input_mapping', f'Invalid workflow node input mapping "{mapping}". Must contain keys - name, variable_type')
+        validate_input_dict_param(mapping, friendly_class_name='input_mapping', must_contain=['name', 'variable_type'])
         return cls(
             name=mapping['name'],
             variable_type=enums.WorkflowNodeInputType(mapping['variable_type']),
             variable_source=mapping.get('variable_source'),
+            source_prop=mapping.get('source_prop') or mapping['name'],
             is_required=mapping.get('is_required', True)
         )
 
 
+@validate_constructor_arg_types('output_schema')
 @dataclasses.dataclass
 class WorkflowNodeOutputMapping(ApiClass):
     """
-    A mapping of output to a workflow node.
+    Represents a mapping of output from a workflow node.
 
     Args:
         name (str): The name of the output.
         variable_type (WorkflowNodeOutputType): The type of the output.
     """
     name: str
-    variable_type: enums.WorkflowNodeOutputType = dataclasses.field(default=enums.WorkflowNodeOutputType.STRING)
+    variable_type: enums.WorkflowNodeOutputType = dataclasses.field(default=enums.WorkflowNodeOutputType.ANY)
 
     def to_dict(self):
         return {
@@ -165,20 +200,18 @@ class WorkflowNodeOutputMapping(ApiClass):
 
     @classmethod
     def from_dict(cls, mapping: dict):
-        if not isinstance(mapping, dict):
-            raise ValueError('output_mapping', 'Invalid workflow node output mapping. Provided mapping should be a dictionary.')
-        if 'name' not in mapping:
-            raise ValueError('output_mapping', 'Invalid workflow node output mapping. Must contain keys - name.')
+        validate_input_dict_param(mapping, friendly_class_name='output_mapping', must_contain=['name'])
         return cls(
             name=mapping['name'],
-            variable_type=enums.WorkflowNodeOutputType(mapping.get('variable_type', 'STRING'))
+            variable_type=enums.WorkflowNodeOutputType(mapping.get('variable_type', 'ANY'))
         )
 
 
+@validate_constructor_arg_types('workflow_graph_node')
 @dataclasses.dataclass
 class WorkflowGraphNode(ApiClass):
     """
-    A node in an Agent workflow graph.
+    Represents a node in an Agent workflow graph.
 
     Args:
         name (str): A unique name for the workflow node.
@@ -187,9 +220,13 @@ class WorkflowGraphNode(ApiClass):
         function (callable): The callable node function reference.
         input_schema (WorkflowNodeInputSchema): The react json schema for the user input variables.
         output_schema (WorkflowNodeOutputSchema): The react json schema for the output to be shown on UI.
+
+    Raises:
+        ValueError: If neither `function` nor `function_name` and `source_code` are provided or the inputs are invalid.
     """
 
-    def __init__(self, name: str, input_mappings: List[WorkflowNodeInputMapping], output_mappings: List[WorkflowNodeOutputMapping], function: callable = None, function_name: str = None, source_code: str = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None):
+    def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None):
+        self._user_args = locals()
         if function:
             self.function_name = function.__name__
             self.source_code = get_clean_function_source_code_for_agent(function)
@@ -200,10 +237,69 @@ class WorkflowGraphNode(ApiClass):
             raise ValueError('workflow_graph_node', 'Either function or function_name and source_code must be provided.')
 
         self.name = name
-        self.input_mappings = input_mappings
-        self.output_mappings = output_mappings
-        self.input_schema = input_schema if input_schema else WorkflowNodeInputSchema({})
-        self.output_schema = output_schema if output_schema else WorkflowNodeOutputSchema({})
+        try:
+            tree = ast.parse(self.source_code)
+        except SyntaxError as e:
+            raise ValueError('workflow_graph_node', f'SyntaxError: "{e}"')
+        arg_defaults = {}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef) and node.name == self.function_name:
+                input_arguments = [arg.arg for arg in node.args.args]
+                defaults = [None] * (len(input_arguments) - len(node.args.defaults)) + node.args.defaults
+                arg_defaults = dict(zip(input_arguments, defaults))
+
+        is_shortform_input_mappings = False
+        if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
+            self.input_mappings = input_mappings
+            input_mapping_args = [input.name for input in input_mappings]
+            for arg, default in arg_defaults.items():
+                if arg not in input_mapping_args:
+                    self.input_mappings.append(WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None))
+        elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, WorkflowNodeInputMapping) for key, value in input_mappings.items()):
+            is_shortform_input_mappings = True
+            self.input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None) for arg, default in arg_defaults.items() if arg not in input_mappings]
+            for key, value in input_mappings.items():
+                if key not in arg_defaults:
+                    raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{key}" not found in function "{self.function_name}".')
+                self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=value.variable_type, variable_source=value.variable_source, source_prop=value.source_prop, is_required=arg_defaults.get(key) is None))
+        else:
+            raise ValueError('workflow_graph_node', 'Invalid input mappings. Must be a list of WorkflowNodeInputMapping or a dictionary of input mappings in the form {arg_name: node_name.outputs.prop_name}.')
+
+        if isinstance(output_mappings, List):
+            if all(isinstance(output, WorkflowNodeOutputMapping) for output in output_mappings):
+                self.output_mappings = output_mappings
+            elif all(isinstance(output, str) for output in output_mappings):
+                self.output_mappings = [WorkflowNodeOutputMapping(name=output, variable_type=enums.WorkflowNodeOutputType.STRING) for output in output_mappings]
+            else:
+                raise ValueError('workflow_graph_node', 'Invalid output mappings. Must be a list of WorkflowNodeOutputMapping or a list of output names or a dictionary of output mappings in the form {output_name: output_type}.')
+        elif isinstance(output_mappings, Dict):
+            self.output_mappings = [WorkflowNodeOutputMapping(name=output, variable_type=enums.WorkflowNodeOutputType.normalize_type(type)) for output, type in output_mappings.items()]
+        else:
+            raise ValueError('workflow_graph_node', 'Invalid output mappings. Must be a list of WorkflowNodeOutputMapping or a list of output names or a dictionary of output mappings in the form {output_name: output_type}.')
+
+        if not input_schema:
+            self.input_schema = WorkflowNodeInputSchema({})
+        elif isinstance(input_schema, WorkflowNodeInputSchema):
+            self.input_schema = input_schema
+        elif isinstance(input_schema, list) and all(isinstance(field, str) for field in input_schema):
+            self.input_schema = WorkflowNodeInputSchema.from_fields_list(input_schema)
+        else:
+            raise ValueError('workflow_graph_node', 'Invalid input schema. Must be a WorkflowNodeInputSchema or a list of field names.')
+
+        if is_shortform_input_mappings:
+            user_input_fields = JSONSchema.to_fields_list(self.input_schema)
+            for mapping in self.input_mappings:
+                if mapping.name in user_input_fields:
+                    mapping.variable_type = enums.WorkflowNodeInputType.USER_INPUT
+
+        if not output_schema:
+            self.output_schema = WorkflowNodeOutputSchema({})
+        elif isinstance(output_schema, WorkflowNodeOutputSchema):
+            self.output_schema = output_schema
+        elif isinstance(output_schema, list) and all(isinstance(field, str) for field in output_schema):
+            self.output_schema = WorkflowNodeOutputSchema.from_fields_list(output_schema)
+        else:
+            raise ValueError('workflow_graph_node', 'Invalid output schema. Must be a WorkflowNodeOutputSchema or a list of output section names.')
 
     def to_dict(self):
         return {
@@ -218,8 +314,7 @@ class WorkflowGraphNode(ApiClass):
 
     @classmethod
     def from_dict(cls, node: dict):
-        if any(field not in node for field in ['name', 'function_name', 'source_code', 'input_mappings', 'output_mappings']):
-            raise ValueError('workflow_graph_node', 'Invalid workflow graph node. Must contain keys - name, function_name, source_code, input_mappings, output_mappings.')
+        validate_input_dict_param(node, friendly_class_name='workflow_graph_node', must_contain=['name', 'function_name', 'source_code', 'input_mappings', 'output_mappings'])
         return cls(
             name=node['name'],
             function_name=node['function_name'],
@@ -230,50 +325,75 @@ class WorkflowGraphNode(ApiClass):
             output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {}))
         )
 
+    class Outputs:
+        def __init__(self, node: 'WorkflowGraphNode'):
+            self.node = node
 
+        def __getattr__(self, name):
+            for mapping in self.node.output_mappings:
+                if mapping.name == name:
+                    return WorkflowNodeInputMapping(None, enums.WorkflowNodeInputType.WORKFLOW_VARIABLE, variable_source=self.node.name, source_prop=name)
+            raise AttributeError(f'Output mapping "{name}" not found in node "{self.name}".')
+
+    @property
+    def outputs(self):
+        return self.Outputs(self)
+
+
+@validate_constructor_arg_types('workflow_graph_edge')
 @dataclasses.dataclass
 class WorkflowGraphEdge(ApiClass):
     """
-    An edge in an Agent workflow graph.
-    To make an edge conditional, provide 'EXECUTION_CONDITION': <condition> key-value in details.
-    The condition should be a pythonic expression that evaluates to a boolean value and only depends on outputs of the source node.
+    Represents an edge in an Agent workflow graph.
+
+    To make an edge conditional, provide 'EXECUTION_CONDITION': <condition> key-value in the details dictionary.
+    The condition should be a Python expression that evaluates to a boolean value and only depends on the outputs of the source node.
 
     Args:
         source (str): The name of the source node of the edge.
         target (str): The name of the target node of the edge.
         details (dict): Additional details about the edge.
     """
-    source: str
-    target: str
+    source: Union[str, WorkflowGraphNode]
+    target: Union[str, WorkflowGraphNode]
     details: dict = dataclasses.field(default_factory=dict)
+
+    def __init__(self, source: Union[str, WorkflowGraphNode], target: Union[str, WorkflowGraphNode], details: dict = None):
+        self.source = source.name if isinstance(source, WorkflowGraphNode) else source
+        self.target = target.name if isinstance(target, WorkflowGraphNode) else target
+        self.details = details or {}
 
     def to_nx_edge(self):
         return [self.source, self.target, self.details]
 
 
+@validate_constructor_arg_types('workflow_graph')
 @dataclasses.dataclass
 class WorkflowGraph(ApiClass):
     """
-    An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.
+    Represents an Agent workflow graph.
+
+    The edges define the node invocation order.
 
     Args:
         nodes (List[WorkflowGraphNode]): A list of nodes in the workflow graph.
-        edges (List[WorkflowGraphEdge]): A list of edges in the workflow graph, where each edge is a tuple of source, target and details.
-        primary_start_node (str): The primary node to start the workflow from.
+        edges (List[WorkflowGraphEdge]): A list of edges in the workflow graph, where each edge is a tuple of source, target, and details.
+        primary_start_node (Union[str, WorkflowGraphNode]): The primary node to start the workflow from.
     """
     nodes: List[WorkflowGraphNode] = dataclasses.field(default_factory=list)
     edges: List[WorkflowGraphEdge] = dataclasses.field(default_factory=list)
-    primary_start_node: str = dataclasses.field(default=None)
+    primary_start_node: Union[str, WorkflowGraphNode] = dataclasses.field(default=None)
 
     def to_dict(self):
         return {
             'nodes': [node.to_dict() for node in self.nodes],
             'edges': [edge.to_dict() for edge in self.edges],
-            'primary_start_node': self.primary_start_node
+            'primary_start_node': self.primary_start_node.name if isinstance(self.primary_start_node, WorkflowGraphNode) else self.primary_start_node
         }
 
     @classmethod
     def from_dict(cls, graph: dict):
+        validate_input_dict_param(graph, friendly_class_name='workflow_graph')
         nodes = [WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])]
         edges = [WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]
         if graph.get('primary_start_node') is None:

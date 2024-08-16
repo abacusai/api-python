@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Union
 
 
 class ApiEnum(Enum):
@@ -531,7 +532,33 @@ class WorkflowNodeOutputType(ApiEnum):
     LIST = 'LIST'
     STRING = 'STRING'
     RUNTIME_SCHEMA = 'RUNTIME_SCHEMA'
-    NONE = 'NONE'
+    ANY = 'ANY'
+
+    @classmethod
+    def normalize_type(cls, python_type: Union[str, type, None, 'WorkflowNodeOutputType']) -> 'WorkflowNodeOutputType':
+        if isinstance(python_type, WorkflowNodeOutputType):
+            return python_type
+
+        if isinstance(python_type, type) or isinstance(python_type, str):
+            python_type = python_type.__name__ if isinstance(python_type, type) else python_type
+        else:
+            python_type = type(python_type).__name__
+
+        if python_type == 'int':
+            return cls.INTEGER
+        elif python_type == 'float':
+            return cls.FLOAT
+        elif python_type == 'str':
+            return cls.STRING
+        elif python_type == 'bool':
+            return cls.BOOLEAN
+        elif python_type == 'dict':
+            return cls.DICT
+        elif python_type == 'list':
+            return cls.LIST
+        elif python_type in ('NoneType', '_SpecialForm'):
+            return cls.ANY
+        raise ValueError(f'Unsupported output type: {python_type}')
 
 
 class OcrMode(ApiEnum):
@@ -569,6 +596,7 @@ class AgentInterface(ApiEnum):
     # Duplicated in reainternal.enums, both should be kept in sync
     DEFAULT = 'DEFAULT'
     CHAT = 'CHAT'
+    MATRIX = 'MATRIX'
 
 
 class ProjectConfigType(ApiEnum):

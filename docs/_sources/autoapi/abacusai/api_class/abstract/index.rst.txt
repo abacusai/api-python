@@ -27,6 +27,10 @@ Functions
 
 .. autoapisummary::
 
+   abacusai.api_class.abstract._validate_instance
+   abacusai.api_class.abstract._get_user_friendly_type_name
+   abacusai.api_class.abstract.validate_class_method_annotations
+   abacusai.api_class.abstract.validate_constructor_arg_types
    abacusai.api_class.abstract.camel_case
    abacusai.api_class.abstract.upper_snake_case
    abacusai.api_class.abstract.snake_case
@@ -41,6 +45,14 @@ Module Contents
 .. py:data:: FIRST_CAP_RE
 
 .. py:data:: ALL_CAP_RE
+
+.. py:function:: _validate_instance(value, expected_type)
+
+.. py:function:: _get_user_friendly_type_name(typename)
+
+.. py:function:: validate_class_method_annotations(classname=None, friendly_class_name=None)
+
+.. py:function:: validate_constructor_arg_types(friendly_class_name=None)
 
 .. py:function:: camel_case(value)
 

@@ -103,32 +103,50 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.FieldDescriptor" title="abacusai.api_class.ai_agents.FieldDescriptor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FieldDescriptor</span></code></a></p></td>
 <td><p>Configs for vector store indexing.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeInputSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema</span></code></a></p></td>
-<td><p>A react-jsonschema-form conformant schema for workflow node input. To initialize a WorkflowNodeInputSchema dependent on another node's output, use from_workflow_node method.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.JSONSchema" title="abacusai.api_class.ai_agents.JSONSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JSONSchema</span></code></a></p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeOutputSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeOutputSchema</span></code></a></p></td>
-<td><p>A react-jsonschema-form schema for a workflow node output.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeInputSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeInputSchema</span></code></a></p></td>
+<td><p>A schema conformant to react-jsonschema-form for workflow node input.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeInputMapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeInputMapping</span></code></a></p></td>
-<td><p>A mapping of input to a workflow node.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeOutputSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeOutputSchema</span></code></a></p></td>
+<td><p>A schema conformant to react-jsonschema-form for a workflow node output.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeOutputMapping</span></code></a></p></td>
-<td><p>A mapping of output to a workflow node.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeInputMapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeInputMapping</span></code></a></p></td>
+<td><p>Represents a mapping of inputs to a workflow node.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphNode</span></code></a></p></td>
-<td><p>A node in an Agent workflow graph.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeOutputMapping</span></code></a></p></td>
+<td><p>Represents a mapping of output from a workflow node.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="abacusai.api_class.ai_agents.WorkflowGraphEdge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphEdge</span></code></a></p></td>
-<td><p>An edge in an Agent workflow graph.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphNode</span></code></a></p></td>
+<td><p>Represents a node in an Agent workflow graph.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraph" title="abacusai.api_class.ai_agents.WorkflowGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraph</span></code></a></p></td>
-<td><p>An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="abacusai.api_class.ai_agents.WorkflowGraphEdge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphEdge</span></code></a></p></td>
+<td><p>Represents an edge in an Agent workflow graph.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraph" title="abacusai.api_class.ai_agents.WorkflowGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraph</span></code></a></p></td>
+<td><p>Represents an Agent workflow graph.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.validate_input_dict_param" title="abacusai.api_class.ai_agents.validate_input_dict_param"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_input_dict_param</span></code></a>(dict_object, friendly_class_name)</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.validate_input_dict_param">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">validate_input_dict_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friendly_class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">must_contain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.validate_input_dict_param" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.FieldDescriptor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">FieldDescriptor</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.FieldDescriptor" title="Link to this definition"></a></dt>
@@ -167,15 +185,41 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.JSONSchema">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">JSONSchema</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.JSONSchema" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.JSONSchema.from_fields_list">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_fields_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.JSONSchema.from_fields_list" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fields_list</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.JSONSchema.to_fields_list">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">to_fields_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_schema</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.JSONSchema.to_fields_list" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputSchema">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowNodeInputSchema</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputSchema" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>A react-jsonschema-form conformant schema for workflow node input. To initialize a WorkflowNodeInputSchema dependent on another node’s output, use from_workflow_node method.</p>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a>, <a class="reference internal" href="#abacusai.api_class.ai_agents.JSONSchema" title="abacusai.api_class.ai_agents.JSONSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JSONSchema</span></code></a></p>
+<p>A schema conformant to react-jsonschema-form for workflow node input.</p>
+<p>To initialize a WorkflowNodeInputSchema dependent on another node’s output, use the from_workflow_node method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>json_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The json schema for the input conformant to react-jsonschema-form specification. Must define keys like “title”, “type” and “properties”. Supported elements - Checkbox, Radio Button, Dropdown, Textarea, Number, Date, file upload. Not supported - Nested elements, arrays and other complex types.</p></li>
-<li><p><strong>ui_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The ui schema for the input conformant to react-jsonschema-form specification.</p></li>
+<li><p><strong>json_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The JSON schema for the input, conformant to react-jsonschema-form specification. Must define keys like “title”, “type”, and “properties”. Supported elements include Checkbox, Radio Button, Dropdown, Textarea, Number, Date, and file upload. Nested elements, arrays, and other complex types are not supported.</p></li>
+<li><p><strong>ui_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The UI schema for the input, conformant to react-jsonschema-form specification.</p></li>
 </ul>
 </dd>
 </dl>
@@ -241,11 +285,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeOutputSchema">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowNodeOutputSchema</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputSchema" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>A react-jsonschema-form schema for a workflow node output.</p>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a>, <a class="reference internal" href="#abacusai.api_class.ai_agents.JSONSchema" title="abacusai.api_class.ai_agents.JSONSchema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JSONSchema</span></code></a></p>
+<p>A schema conformant to react-jsonschema-form for a workflow node output.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>json_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The json schema for the output conformant to react-jsonschema-form specification.</p>
+<dd class="field-odd"><p><strong>json_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The JSON schema for the output, conformant to react-jsonschema-form specification.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -277,7 +321,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowNodeInputMapping</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>A mapping of input to a workflow node.</p>
+<p>Represents a mapping of inputs to a workflow node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -285,9 +329,9 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <li><p><strong>variable_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.WorkflowNodeInputType" title="abacusai.api_class.enums.WorkflowNodeInputType"><em>WorkflowNodeInputType</em></a>) – The type of the input.</p></li>
 <li><p><strong>variable_source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the node this variable is sourced from.
 If the type is <cite>WORKFLOW_VARIABLE</cite>, the value given by the source node will be directly used.
-If the type is <cite>USER_INPUT</cite>, the value given by the source node will be used as the default initial value before user edits it.
+If the type is <cite>USER_INPUT</cite>, the value given by the source node will be used as the default initial value before the user edits it.
 Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable doesn’t need a pre-filled initial value.</p></li>
-<li><p><strong>is_required</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the input is required. Defaults to True</p></li>
+<li><p><strong>is_required</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Indicates whether the input is required. Defaults to True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -304,6 +348,11 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping.variable_source">
 <span class="sig-name descname"><span class="pre">variable_source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping.variable_source" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping.source_prop">
+<span class="sig-name descname"><span class="pre">source_prop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping.source_prop" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -335,7 +384,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowNodeOutputMapping</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>A mapping of output to a workflow node.</p>
+<p>Represents a mapping of output from a workflow node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -376,9 +425,9 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraphNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraphNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>A node in an Agent workflow graph.</p>
+<p>Represents a node in an Agent workflow graph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -392,7 +441,30 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
 </ul>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If neither <cite>function</cite> nor <cite>function_name</cite> and <cite>source_code</cite> are provided or the inputs are invalid.</p>
+</dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode._user_args">
+<span class="sig-name descname"><span class="pre">_user_args</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode._user_args" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.arg_defaults">
+<span class="sig-name descname"><span class="pre">arg_defaults</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.arg_defaults" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.is_shortform_input_mappings">
+<span class="sig-name descname"><span class="pre">is_shortform_input_mappings</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.is_shortform_input_mappings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.to_dict" title="Link to this definition"></a></dt>
@@ -411,15 +483,40 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dl>
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.Outputs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.Outputs" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><em>WorkflowGraphNode</em></a>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.Outputs.node">
+<span class="sig-name descname"><span class="pre">node</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.Outputs.node" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.Outputs.__getattr__">
+<span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.Outputs.__getattr__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.outputs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">outputs</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.outputs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphEdge">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraphEdge</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraphEdge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>An edge in an Agent workflow graph.
-To make an edge conditional, provide ‘EXECUTION_CONDITION’: &lt;condition&gt; key-value in details.
-The condition should be a pythonic expression that evaluates to a boolean value and only depends on outputs of the source node.</p>
+<p>Represents an edge in an Agent workflow graph.</p>
+<p>To make an edge conditional, provide ‘EXECUTION_CONDITION’: &lt;condition&gt; key-value in the details dictionary.
+The condition should be a Python expression that evaluates to a boolean value and only depends on the outputs of the source node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -431,12 +528,12 @@ The condition should be a pythonic expression that evaluates to a boolean value 
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphEdge.source">
-<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge.source" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><span class="pre">WorkflowGraphNode</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge.source" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphEdge.target">
-<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge.target" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><span class="pre">WorkflowGraphNode</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge.target" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -455,13 +552,14 @@ The condition should be a pythonic expression that evaluates to a boolean value 
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraph">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraph</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraph" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>An Agent workflow graph. The edges define the node invokation order. The workflow must follow linear invokation order.</p>
+<p>Represents an Agent workflow graph.</p>
+<p>The edges define the node invocation order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>nodes</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><em>WorkflowGraphNode</em></a><em>]</em>) – A list of nodes in the workflow graph.</p></li>
-<li><p><strong>edges</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="abacusai.api_class.ai_agents.WorkflowGraphEdge"><em>WorkflowGraphEdge</em></a><em>]</em>) – A list of edges in the workflow graph, where each edge is a tuple of source, target and details.</p></li>
-<li><p><strong>primary_start_node</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The primary node to start the workflow from.</p></li>
+<li><p><strong>edges</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="abacusai.api_class.ai_agents.WorkflowGraphEdge"><em>WorkflowGraphEdge</em></a><em>]</em>) – A list of edges in the workflow graph, where each edge is a tuple of source, target, and details.</p></li>
+<li><p><strong>primary_start_node</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><em>WorkflowGraphNode</em></a><em>]</em>) – The primary node to start the workflow from.</p></li>
 </ul>
 </dd>
 </dl>
@@ -477,7 +575,7 @@ The condition should be a pythonic expression that evaluates to a boolean value 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraph.primary_start_node">
-<span class="sig-name descname"><span class="pre">primary_start_node</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraph.primary_start_node" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">primary_start_node</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><span class="pre">WorkflowGraphNode</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraph.primary_start_node" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

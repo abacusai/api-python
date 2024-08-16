@@ -89,7 +89,7 @@ Module Contents
    :rtype: bool
 
 
-.. py:function:: sse_asynchronous_generator(endpoint, body)
+.. py:function:: sse_asynchronous_generator(endpoint, headers, body)
    :async:
 
 
@@ -104,6 +104,16 @@ Module Contents
    Response object for agent to support attachments, section data and normal data
 
 
+   .. py:attribute:: data_list
+      :value: []
+
+
+
+   .. py:attribute:: section_data_list
+      :value: []
+
+
+
    .. py:method:: to_dict()
 
 
@@ -115,6 +125,12 @@ Module Contents
    :type exception_on_404: bool
    :param server: The default server endpoint to use for API requests
    :type server: str
+
+
+   .. py:attribute:: exception_on_404
+
+
+   .. py:attribute:: server
 
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
@@ -132,6 +148,18 @@ Module Contents
    :type exception: str
    :param request_id: The request id
    :type request_id: str
+
+
+   .. py:attribute:: message
+
+
+   .. py:attribute:: http_status
+
+
+   .. py:attribute:: exception
+
+
+   .. py:attribute:: request_id
 
 
    .. py:method:: __str__()
@@ -508,8 +536,59 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.5'
+      :value: '1.4.6'
 
+
+
+   .. py:attribute:: api_key
+
+
+   .. py:attribute:: notebook_id
+
+
+   .. py:attribute:: pipeline_id
+
+
+   .. py:attribute:: web_version
+      :value: None
+
+
+
+   .. py:attribute:: api_endpoint
+      :value: None
+
+
+
+   .. py:attribute:: prediction_endpoint
+      :value: None
+
+
+
+   .. py:attribute:: proxy_endpoint
+      :value: None
+
+
+
+   .. py:attribute:: client_options
+
+
+   .. py:attribute:: server
+
+
+   .. py:attribute:: cache_scope
+      :value: None
+
+
+
+   .. py:attribute:: _cache
+
+
+   .. py:attribute:: service_discovery_url
+      :value: None
+
+
+
+   .. py:attribute:: skip_version_check
 
 
    .. py:method:: _get_prediction_endpoint(deployment_id, deployment_token)
@@ -2447,7 +2526,7 @@ Module Contents
       List all custom algorithms, with optional filtering on Problem Type and Project ID
 
       :param problem_type: The problem type to query. If `None`, return all algorithms in the organization.
-      :type problem_type: str
+      :type problem_type: ProblemType
       :param project_id: The ID of the project.
       :type project_id: str
 
@@ -3467,7 +3546,7 @@ Module Contents
 
 
 
-   .. py:method:: run_workflow_graph(workflow_graph, sample_user_inputs = {}, agent_workflow_node_id = None, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
+   .. py:method:: run_workflow_graph(workflow_graph, sample_user_inputs = {}, agent_workflow_node_id = None, agent_interface = None, package_requirements = None)
 
       Validates the workflow graph by running the flow using sample user inputs for an AI Agent.
 
@@ -3995,6 +4074,31 @@ Module Contents
 
 
 
+   .. py:method:: execute_conversation_agent_streaming(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None, agent_workflow_node_id = None)
+
+      Return an asynchronous generator which gives out the agent response stream.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param arguments: A list of arguments to pass to the agent.
+      :type arguments: list
+      :param keyword_arguments: A dictionary of keyword arguments to pass to the agent.
+      :type keyword_arguments: dict
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+      :type deployment_conversation_id: str
+      :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+      :type external_session_id: str
+      :param regenerate: If True, will regenerate the conversation from the start.
+      :type regenerate: bool
+      :param doc_infos: A list of dictionaries containing information about the documents uploaded with the request.
+      :type doc_infos: list
+      :param agent_workflow_node_id: The unique identifier of the agent workflow node to trigger. If not specified, the primary node will be used.
+      :type agent_workflow_node_id: str
+
+
+
    .. py:method:: set_cache_scope(scope)
 
       Set the scope of the cache, for example, deployment id.
@@ -4065,6 +4169,13 @@ Module Contents
       :type response_document_sources: List
 
       :returns: None
+
+
+
+   .. py:method:: get_initialized_data()
+
+      Returns the object returned by the initialize_function during agent creation.
+      :returns: Object returned in the initialize_function.
 
 
 
@@ -8154,6 +8265,23 @@ Module Contents
 
 
 
+   .. py:method:: get_matrix_agent_schema(deployment_token, deployment_id, query, deployment_conversation_id = None, external_session_id = None)
+
+      Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param query: User input query to initialize the matrix computation.
+      :type query: str
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+
+
+
    .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None, agent_workflow_node_id = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
@@ -9583,7 +9711,7 @@ Module Contents
 
 
 
-   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, agent_connectors = None)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -9607,13 +9735,17 @@ Module Contents
       :type included_modules: List
       :param agent_connectors: A dictionary of application connectors that are required for the agent mapped with oauth list for them.
       :type agent_connectors: dict
+      :param initialize_function_name: The name of the function to be used for initialization.
+      :type initialize_function_name: str
+      :param initialize_function_code: The function code to be used for initialization.
+      :type initialize_function_code: str
 
       :returns: The new agent.
       :rtype: Agent
 
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -9633,6 +9765,10 @@ Module Contents
       :type included_modules: List
       :param agent_connectors: A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
       :type agent_connectors: dict
+      :param initialize_function_name: The name of the function to be used for initialization.
+      :type initialize_function_name: str
+      :param initialize_function_code: The function code to be used for initialization.
+      :type initialize_function_code: str
 
       :returns: The updated agent.
       :rtype: Agent
@@ -9650,7 +9786,7 @@ Module Contents
 
 
 
-   .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
+   .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None, stop_sequences = None)
 
       Generate response to the prompt using the specified model.
 
@@ -9670,6 +9806,8 @@ Module Contents
       :type response_type: str
       :param json_response_schema: A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
       :type json_response_schema: dict
+      :param stop_sequences: Specifies the strings on which the LLM will stop generation.
+      :type stop_sequences: list
 
       :returns: The response from the model, raw text and parsed components.
       :rtype: LlmResponse

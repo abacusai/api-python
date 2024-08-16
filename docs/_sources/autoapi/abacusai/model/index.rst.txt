@@ -96,6 +96,114 @@ Module Contents
    :type modelConfig: TrainingConfig
 
 
+   .. py:attribute:: name
+
+
+   .. py:attribute:: model_id
+
+
+   .. py:attribute:: model_config_type
+
+
+   .. py:attribute:: model_prediction_config
+
+
+   .. py:attribute:: created_at
+
+
+   .. py:attribute:: project_id
+
+
+   .. py:attribute:: shared
+
+
+   .. py:attribute:: shared_at
+
+
+   .. py:attribute:: train_function_name
+
+
+   .. py:attribute:: predict_function_name
+
+
+   .. py:attribute:: predict_many_function_name
+
+
+   .. py:attribute:: initialize_function_name
+
+
+   .. py:attribute:: training_input_tables
+
+
+   .. py:attribute:: source_code
+
+
+   .. py:attribute:: cpu_size
+
+
+   .. py:attribute:: memory
+
+
+   .. py:attribute:: training_feature_group_ids
+
+
+   .. py:attribute:: algorithm_model_configs
+
+
+   .. py:attribute:: training_vector_store_versions
+
+
+   .. py:attribute:: document_retrievers
+
+
+   .. py:attribute:: document_retriever_ids
+
+
+   .. py:attribute:: is_python_model
+
+
+   .. py:attribute:: default_algorithm
+
+
+   .. py:attribute:: custom_algorithm_configs
+
+
+   .. py:attribute:: restricted_algorithms
+
+
+   .. py:attribute:: use_gpu
+
+
+   .. py:attribute:: notebook_id
+
+
+   .. py:attribute:: training_required
+
+
+   .. py:attribute:: location
+
+
+   .. py:attribute:: refresh_schedules
+
+
+   .. py:attribute:: code_source
+
+
+   .. py:attribute:: database_connector
+
+
+   .. py:attribute:: data_llm_feature_groups
+
+
+   .. py:attribute:: latest_model_version
+
+
+   .. py:attribute:: model_config
+
+
+   .. py:attribute:: deprecated_keys
+
+
    .. py:method:: __repr__()
 
       Return repr(self).
@@ -393,7 +501,7 @@ Module Contents
 
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -411,6 +519,10 @@ Module Contents
       :type included_modules: List
       :param agent_connectors: A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
       :type agent_connectors: dict
+      :param initialize_function_name: The name of the function to be used for initialization.
+      :type initialize_function_name: str
+      :param initialize_function_code: The function code to be used for initialization.
+      :type initialize_function_code: str
 
       :returns: The updated agent.
       :rtype: Agent

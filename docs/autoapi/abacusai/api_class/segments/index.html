@@ -146,6 +146,9 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.segments.ChartResponseSection" title="abacusai.api_class.segments.ChartResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChartResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render a chart.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.segments.DataframeResponseSection" title="abacusai.api_class.segments.DataframeResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataframeResponseSection</span></code></a></p></td>
+<td><p>A response section that an agent can return to render a pandas dataframe.</p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -498,6 +501,36 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.segments.ChartResponseSection.chart">
 <span class="sig-name descname"><span class="pre">chart</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.api_class.segments.ChartResponseSection.chart" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.segments.DataframeResponseSection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.segments.</span></span><span class="sig-name descname"><span class="pre">DataframeResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.DataframeResponseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.segments.ResponseSection" title="abacusai.api_class.segments.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
+<p>A response section that an agent can return to render a pandas dataframe.
+:param df: The dataframe to be displayed.
+:type df: pandas.DataFrame
+:param header: Heading of the table to be displayed.
+:type header: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>Any</em>)</p></li>
+<li><p><strong>header</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+<li><p><strong>section_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.segments.DataframeResponseSection.df">
+<span class="sig-name descname"><span class="pre">df</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#abacusai.api_class.segments.DataframeResponseSection.df" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.segments.DataframeResponseSection.header">
+<span class="sig-name descname"><span class="pre">header</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.segments.DataframeResponseSection.header" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

@@ -50,6 +50,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../abacus_api/index.html">abacusai.abacus_api</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../address/index.html">abacusai.address</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent/index.html">abacusai.agent</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_conversation/index.html">abacusai.agent_conversation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_document_info/index.html">abacusai.agent_data_document_info</a></li>
@@ -315,7 +316,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.document_retriever_lookup_result.</span></span><span class="sig-name descname"><span class="pre">DocumentRetrieverLookupResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundingBoxes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">documentSource</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imageId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.document_retriever_lookup_result.</span></span><span class="sig-name descname"><span class="pre">DocumentRetrieverLookupResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundingBoxes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">documentSource</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imageIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Result of a document retriever lookup.</p>
 <dl class="field-list simple">
@@ -328,10 +329,50 @@
 <li><p><strong>pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Pages of the retrieved text from the original document.</p></li>
 <li><p><strong>boundingBoxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Bounding boxes of the retrieved text from the original document.</p></li>
 <li><p><strong>documentSource</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Document source name.</p></li>
-<li><p><strong>imageId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Image ID of the document chunk.</p></li>
+<li><p><strong>imageIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of Image IDs for all the pages.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.document">
+<span class="sig-name descname"><span class="pre">document</span></span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.document" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.score">
+<span class="sig-name descname"><span class="pre">score</span></span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.score" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.properties">
+<span class="sig-name descname"><span class="pre">properties</span></span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.properties" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.pages">
+<span class="sig-name descname"><span class="pre">pages</span></span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.pages" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.bounding_boxes">
+<span class="sig-name descname"><span class="pre">bounding_boxes</span></span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.bounding_boxes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.document_source">
+<span class="sig-name descname"><span class="pre">document_source</span></span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.document_source" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.image_ids">
+<span class="sig-name descname"><span class="pre">image_ids</span></span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.image_ids" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.deprecated_keys">
+<span class="sig-name descname"><span class="pre">deprecated_keys</span></span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.deprecated_keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.__repr__">
 <span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult.__repr__" title="Link to this definition"></a></dt>

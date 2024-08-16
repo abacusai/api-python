@@ -1,5 +1,5 @@
 import dataclasses
-from typing import List
+from typing import Any, List
 
 from . import enums
 from .abstract import ApiClass
@@ -249,3 +249,25 @@ class ChartResponseSection(ResponseSection):
     def __init__(self, chart: dict, section_key: str = None):
         super().__init__(enums.ResponseSectionType.CHART, id=section_key)
         self.chart = chart
+
+
+@dataclasses.dataclass
+class DataframeResponseSection(ResponseSection):
+    """
+    A response section that an agent can return to render a pandas dataframe.
+    Args:
+        df (pandas.DataFrame): The dataframe to be displayed.
+        header (str): Heading of the table to be displayed.
+    """
+
+    df: Any
+    header: str
+
+    def __init__(self, df: Any, header: str = None, section_key: str = None):
+        if type(df).__name__ != 'DataFrame':
+            raise ValueError('Invalid dataframe instance. Argument "df" must be a pandas DataFrame.')
+        super().__init__(enums.ResponseSectionType.TABLE, id=section_key)
+        if not header:
+            header = 'Data' if df.shape[0] <= 50 else 'Truncated Data Preview'
+        self.df = df
+        self.header = header

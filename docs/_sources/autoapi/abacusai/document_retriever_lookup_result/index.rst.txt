@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageId=None)
+.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,8 +36,32 @@ Module Contents
    :type boundingBoxes: list
    :param documentSource: Document source name.
    :type documentSource: str
-   :param imageId: Image ID of the document chunk.
-   :type imageId: str
+   :param imageIds: List of Image IDs for all the pages.
+   :type imageIds: list
+
+
+   .. py:attribute:: document
+
+
+   .. py:attribute:: score
+
+
+   .. py:attribute:: properties
+
+
+   .. py:attribute:: pages
+
+
+   .. py:attribute:: bounding_boxes
+
+
+   .. py:attribute:: document_source
+
+
+   .. py:attribute:: image_ids
+
+
+   .. py:attribute:: deprecated_keys
 
 
    .. py:method:: __repr__()

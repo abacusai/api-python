@@ -29,6 +29,7 @@ Classes
    abacusai.api_class.segments.CollapseResponseSection
    abacusai.api_class.segments.ListResponseSection
    abacusai.api_class.segments.ChartResponseSection
+   abacusai.api_class.segments.DataframeResponseSection
 
 
 Module Contents
@@ -311,5 +312,25 @@ Module Contents
 
    .. py:attribute:: chart
       :type:  dict
+
+
+.. py:class:: DataframeResponseSection(df, header = None, section_key = None)
+
+   Bases: :py:obj:`ResponseSection`
+
+
+   A response section that an agent can return to render a pandas dataframe.
+   :param df: The dataframe to be displayed.
+   :type df: pandas.DataFrame
+   :param header: Heading of the table to be displayed.
+   :type header: str
+
+
+   .. py:attribute:: df
+      :type:  Any
+
+
+   .. py:attribute:: header
+      :type:  str
 
 
