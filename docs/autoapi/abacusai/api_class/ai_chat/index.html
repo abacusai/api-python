@@ -103,9 +103,6 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_chat.HotkeyPrompt" title="abacusai.api_class.ai_chat.HotkeyPrompt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HotkeyPrompt</span></code></a></p></td>
 <td><p>A config class for a Data Science Co-Pilot Hotkey</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_chat.AgentConversationMessage" title="abacusai.api_class.ai_chat.AgentConversationMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentConversationMessage</span></code></a></p></td>
-<td><p>Message format for agent conversation</p></td>
-</tr>
 </tbody>
 </table>
 </section>
@@ -143,45 +140,6 @@
 <dt class="sig sig-object py" id="abacusai.api_class.ai_chat.HotkeyPrompt.ignore_history">
 <span class="sig-name descname"><span class="pre">ignore_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_chat.HotkeyPrompt.ignore_history" title="Link to this definition"></a></dt>
 <dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="abacusai.api_class.ai_chat.AgentConversationMessage">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_chat.</span></span><span class="sig-name descname"><span class="pre">AgentConversationMessage</span></span><a class="headerlink" href="#abacusai.api_class.ai_chat.AgentConversationMessage" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>Message format for agent conversation</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>is_user</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the message is from the user.</p></li>
-<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The message’s text.</p></li>
-<li><p><strong>document_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Document text in case of any document present.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ai_chat.AgentConversationMessage.is_user">
-<span class="sig-name descname"><span class="pre">is_user</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_chat.AgentConversationMessage.is_user" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ai_chat.AgentConversationMessage.text">
-<span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_chat.AgentConversationMessage.text" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ai_chat.AgentConversationMessage.document_content">
-<span class="sig-name descname"><span class="pre">document_content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_chat.AgentConversationMessage.document_content" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.api_class.ai_chat.AgentConversationMessage.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_chat.AgentConversationMessage.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
 
 </dd></dl>
 

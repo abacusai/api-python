@@ -55,9 +55,12 @@ Classes
    abacusai.api_class.WorkflowGraphNode
    abacusai.api_class.WorkflowGraphEdge
    abacusai.api_class.WorkflowGraph
+   abacusai.api_class.AgentConversationMessage
+   abacusai.api_class.WorkflowNodeTemplateConfig
+   abacusai.api_class.WorkflowNodeTemplateInput
+   abacusai.api_class.WorkflowNodeTemplateOutput
    abacusai.api_class.ApiClass
    abacusai.api_class.HotkeyPrompt
-   abacusai.api_class.AgentConversationMessage
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.BatchPredictionArgs
@@ -81,6 +84,7 @@ Classes
    abacusai.api_class.KafkaDatasetConfig
    abacusai.api_class._StreamingConnectorDatasetConfigFactory
    abacusai.api_class.ApiClass
+   abacusai.api_class.DocumentType
    abacusai.api_class.OcrMode
    abacusai.api_class.DatasetConfig
    abacusai.api_class.ParsingConfig
@@ -171,6 +175,7 @@ Classes
    abacusai.api_class.WorkflowNodeInputType
    abacusai.api_class.WorkflowNodeOutputType
    abacusai.api_class.OcrMode
+   abacusai.api_class.DocumentType
    abacusai.api_class.StdDevThresholdType
    abacusai.api_class.DataType
    abacusai.api_class.AgentInterface
@@ -444,11 +449,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(schema)
       :classmethod:
@@ -484,11 +484,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -538,11 +533,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -572,18 +562,13 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
 
 
 
-.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None)
+.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, _template_metadata = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -606,26 +591,15 @@ Package Contents
    :raises ValueError: If neither `function` nor `function_name` and `source_code` are provided or the inputs are invalid.
 
 
-   .. py:attribute:: _user_args
+   .. py:attribute:: _template_metadata
 
 
-   .. py:attribute:: name
-
-
-   .. py:attribute:: arg_defaults
-
-
-   .. py:attribute:: is_shortform_input_mappings
-      :value: False
+   .. py:method:: from_template(template_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
+      :classmethod:
 
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(node)
@@ -709,13 +683,121 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(graph)
+      :classmethod:
+
+
+
+.. py:class:: AgentConversationMessage
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Message format for agent conversation
+
+   :param is_user: Whether the message is from the user.
+   :type is_user: bool
+   :param text: The message's text.
+   :type text: str
+   :param document_contents: Dict of document name to document text in case of any document present.
+   :type document_contents: dict
+
+
+   .. py:attribute:: is_user
+      :type:  bool
+
+
+   .. py:attribute:: text
+      :type:  str
+
+
+   .. py:attribute:: document_contents
+      :type:  dict
+
+
+   .. py:method:: to_dict()
+
+
+.. py:class:: WorkflowNodeTemplateConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Represents a WorkflowNode template config.
+
+   :param name: A unique name of the config.
+   :type name: str
+   :param description: The description of this config.
+   :type description: str
+   :param default_value: Default value of the config to be used if value is not provided during node initialization.
+   :type default_value: str
+   :param is_required: Indicates whether the config is required. Defaults to False.
+   :type is_required: bool
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: description
+      :type:  str
+
+
+   .. py:attribute:: default_value
+      :type:  str
+
+
+   .. py:attribute:: is_required
+      :type:  bool
+
+
+.. py:class:: WorkflowNodeTemplateInput
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Represents an input to the workflow node generated using template.
+
+   :param name: A unique name of the input.
+   :type name: str
+   :param is_required: Indicates whether the input is required. Defaults to False.
+   :type is_required: bool
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: is_required
+      :type:  bool
+
+
+.. py:class:: WorkflowNodeTemplateOutput
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Represents an output returned by the workflow node generated using template.
+
+   :param name: The name of the output.
+   :type name: str
+   :param variable_type: The type of the output.
+   :type variable_type: WorkflowNodeOutputType
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: variable_type
+      :type:  abacusai.api_class.enums.WorkflowNodeOutputType
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(mapping)
       :classmethod:
 
 
@@ -809,41 +891,6 @@ Package Contents
 
    .. py:attribute:: ignore_history
       :type:  bool
-
-
-.. py:class:: AgentConversationMessage
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   Message format for agent conversation
-
-   :param is_user: Whether the message is from the user.
-   :type is_user: bool
-   :param text: The message's text.
-   :type text: str
-   :param document_content: Document text in case of any document present.
-   :type document_content: str
-
-
-   .. py:attribute:: is_user
-      :type:  bool
-
-
-   .. py:attribute:: text
-      :type:  str
-
-
-   .. py:attribute:: document_content
-      :type:  str
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ApiClass
@@ -1306,10 +1353,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -1520,10 +1563,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -1597,6 +1636,36 @@ Package Contents
 
 
 
+.. py:class:: DocumentType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: TEXT
+      :value: 'TEXT'
+
+
+
+   .. py:attribute:: TABLES_AND_FORMS
+      :value: 'TABLES_AND_FORMS'
+
+
+
+   .. py:attribute:: EMBEDDED_IMAGES
+      :value: 'EMBEDDED_IMAGES'
+
+
+
+   .. py:attribute:: SCANNED_TEXT
+      :value: 'SCANNED_TEXT'
+
+
+
 .. py:class:: OcrMode
 
    Bases: :py:obj:`ApiEnum`
@@ -1605,6 +1674,11 @@ Package Contents
    Generic enumeration.
 
    Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: AUTO
+      :value: 'AUTO'
+
 
 
    .. py:attribute:: DEFAULT
@@ -1701,6 +1775,10 @@ Package Contents
 
    Document processing configuration.
 
+   :param document_type: Type of document. Can be one of Text, Tables and Forms, Embedded Images, etc. If not specified, type will be decided automatically.
+   :type document_type: DocumentType
+   :param highlight_relevant_text: Whether to extract bounding boxes and highlight relevant text in search results. Defaults to False.
+   :type highlight_relevant_text: bool
    :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
    :type extract_bounding_boxes: bool
    :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
@@ -1715,6 +1793,18 @@ Package Contents
    :type convert_to_markdown: bool
    :param mask_pii: Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.
    :type mask_pii: bool
+
+
+   .. py:attribute:: document_type
+      :type:  abacusai.api_class.enums.DocumentType
+      :value: None
+
+
+
+   .. py:attribute:: highlight_relevant_text
+      :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
@@ -1755,6 +1845,12 @@ Package Contents
       :type:  bool
       :value: False
 
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _detect_ocr_mode()
 
 
 .. py:class:: DatasetDocumentProcessingConfig
@@ -2163,10 +2259,6 @@ Package Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -2579,10 +2671,6 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -5042,6 +5130,11 @@ Package Contents
    Derive from this class to define new enumerations.
 
 
+   .. py:attribute:: AUTO
+      :value: 'AUTO'
+
+
+
    .. py:attribute:: DEFAULT
       :value: 'DEFAULT'
 
@@ -5084,6 +5177,36 @@ Package Contents
 
    .. py:attribute:: AUGMENTED_LLM
       :value: 'AUGMENTED_LLM'
+
+
+
+.. py:class:: DocumentType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: TEXT
+      :value: 'TEXT'
+
+
+
+   .. py:attribute:: TABLES_AND_FORMS
+      :value: 'TABLES_AND_FORMS'
+
+
+
+   .. py:attribute:: EMBEDDED_IMAGES
+      :value: 'EMBEDDED_IMAGES'
+
+
+
+   .. py:attribute:: SCANNED_TEXT
+      :value: 'SCANNED_TEXT'
 
 
 
@@ -5498,6 +5621,10 @@ Package Contents
 
    Document processing configuration.
 
+   :param document_type: Type of document. Can be one of Text, Tables and Forms, Embedded Images, etc. If not specified, type will be decided automatically.
+   :type document_type: DocumentType
+   :param highlight_relevant_text: Whether to extract bounding boxes and highlight relevant text in search results. Defaults to False.
+   :type highlight_relevant_text: bool
    :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
    :type extract_bounding_boxes: bool
    :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
@@ -5512,6 +5639,18 @@ Package Contents
    :type convert_to_markdown: bool
    :param mask_pii: Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.
    :type mask_pii: bool
+
+
+   .. py:attribute:: document_type
+      :type:  abacusai.api_class.enums.DocumentType
+      :value: None
+
+
+
+   .. py:attribute:: highlight_relevant_text
+      :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
@@ -5552,6 +5691,12 @@ Package Contents
       :type:  bool
       :value: False
 
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _detect_ocr_mode()
 
 
 .. py:class:: SamplingConfig
@@ -7856,10 +8001,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -8533,10 +8674,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -8599,10 +8736,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -8640,11 +8773,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ApiClass
@@ -8890,10 +9018,6 @@ Package Contents
 .. py:class:: _ProjectFeatureGroupConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -9161,11 +9285,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -9217,19 +9336,10 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -9334,11 +9444,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(data)
       :classmethod:
@@ -9368,11 +9473,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:data:: Segment
 
@@ -9392,11 +9492,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(data)
@@ -9547,11 +9642,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ListResponseSection(items, section_key = None)

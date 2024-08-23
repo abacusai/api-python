@@ -605,7 +605,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.6'
+    client_version = '1.4.7'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2112,18 +2112,18 @@ class ReadOnlyClient(BaseApiClient):
             ModelTrainingTypeForDeployment: Model training types for deployment."""
         return self._call_api('getModelTrainingTypesForDeployment', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm}, parse_type=ModelTrainingTypeForDeployment)
 
-    def get_prediction_logs_records(self, deployment_id: str, limit: int = 10, start_after_request_id: str = '', start_after_timestamp: int = None) -> List[PredictionLogRecord]:
+    def get_prediction_logs_records(self, deployment_id: str, limit: int = 10, last_log_request_id: str = '', last_log_timestamp: int = None) -> List[PredictionLogRecord]:
         """Retrieves the prediction request IDs for the most recent predictions made to the deployment.
 
         Args:
             deployment_id (str): The unique identifier of a deployment created under the project.
             limit (int): The number of prediction log entries to retrieve up to the specified limit.
-            start_after_request_id (str): The request ID of the last log entry to retrieve.
-            start_after_timestamp (int): A Unix timestamp in milliseconds specifying the start point for retrieving log entries.
+            last_log_request_id (str): The request ID of the last log entry to retrieve.
+            last_log_timestamp (int): A Unix timestamp in milliseconds specifying the timestamp for the last log entry.
 
         Returns:
             list[PredictionLogRecord]: A list of prediction log records."""
-        return self._call_api('getPredictionLogsRecords', 'GET', query_params={'deploymentId': deployment_id, 'limit': limit, 'startAfterRequestId': start_after_request_id, 'startAfterTimestamp': start_after_timestamp}, parse_type=PredictionLogRecord)
+        return self._call_api('getPredictionLogsRecords', 'GET', query_params={'deploymentId': deployment_id, 'limit': limit, 'lastLogRequestId': last_log_request_id, 'lastLogTimestamp': last_log_timestamp}, parse_type=PredictionLogRecord)
 
     def list_deployment_alerts(self, deployment_id: str) -> List[MonitorAlert]:
         """List the monitor alerts associated with the deployment id.
@@ -7304,18 +7304,19 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
 
-    def get_matrix_agent_schema(self, deployment_token: str, deployment_id: str, query: str, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
+    def get_matrix_agent_schema(self, deployment_token: str, deployment_id: str, query: str, doc_infos: list = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): A unique string identifier for the deployment created under the project.
             query (str): User input query to initialize the matrix computation.
+            doc_infos (list): An optional list of documents use for constructing the matrix. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
             deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
             external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getMatrixAgentSchema', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'query': query, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url, timeout=1500)
+        return self._call_api('getMatrixAgentSchema', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'query': query, 'docInfos': doc_infos, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url, timeout=1500)
 
     def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None, agent_workflow_node_id: str = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
@@ -8422,7 +8423,7 @@ Creates a new feature group defined as the union of other feature group versions
             llm_name (LLMName): Name of the underlying LLM to be used for generation. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
             temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
-            messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
+            messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2}]
             response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
             json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
             stop_sequences (list): Specifies the strings on which the LLM will stop generation.

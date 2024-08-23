@@ -285,19 +285,19 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_default_prediction_arguments(self.deployment_id, prediction_arguments, set_as_override)
 
-    def get_prediction_logs_records(self, limit: int = 10, start_after_request_id: str = '', start_after_timestamp: int = None):
+    def get_prediction_logs_records(self, limit: int = 10, last_log_request_id: str = '', last_log_timestamp: int = None):
         """
         Retrieves the prediction request IDs for the most recent predictions made to the deployment.
 
         Args:
             limit (int): The number of prediction log entries to retrieve up to the specified limit.
-            start_after_request_id (str): The request ID of the last log entry to retrieve.
-            start_after_timestamp (int): A Unix timestamp in milliseconds specifying the start point for retrieving log entries.
+            last_log_request_id (str): The request ID of the last log entry to retrieve.
+            last_log_timestamp (int): A Unix timestamp in milliseconds specifying the timestamp for the last log entry.
 
         Returns:
             list[PredictionLogRecord]: A list of prediction log records.
         """
-        return self.client.get_prediction_logs_records(self.deployment_id, limit, start_after_request_id, start_after_timestamp)
+        return self.client.get_prediction_logs_records(self.deployment_id, limit, last_log_request_id, last_log_timestamp)
 
     def create_alert(self, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]):
         """

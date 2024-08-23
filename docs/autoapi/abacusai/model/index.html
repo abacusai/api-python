@@ -264,6 +264,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
@@ -351,9 +352,9 @@
 <li><p><strong>useGpu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If this model uses gpu.</p></li>
 <li><p><strong>notebookId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The notebook associated with this model.</p></li>
 <li><p><strong>trainingRequired</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If training is required to keep the model up-to-date.</p></li>
-<li><p><strong>latestModelVersion</strong> (<a class="reference internal" href="../model_version/index.html#abacusai.model_version.ModelVersion" title="abacusai.model_version.ModelVersion"><em>ModelVersion</em></a>) – The latest model version.</p></li>
-<li><p><strong>location</strong> (<a class="reference internal" href="../model_location/index.html#abacusai.model_location.ModelLocation" title="abacusai.model_location.ModelLocation"><em>ModelLocation</em></a>) – Location information for models that are imported.</p></li>
-<li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../refresh_schedule/index.html#abacusai.refresh_schedule.RefreshSchedule" title="abacusai.refresh_schedule.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of refresh schedules that indicate when the next model version will be trained</p></li>
+<li><p><strong>latestModelVersion</strong> (<a class="reference internal" href="../index.html#abacusai.ModelVersion" title="abacusai.ModelVersion"><em>ModelVersion</em></a>) – The latest model version.</p></li>
+<li><p><strong>location</strong> (<a class="reference internal" href="../index.html#abacusai.ModelLocation" title="abacusai.ModelLocation"><em>ModelLocation</em></a>) – Location information for models that are imported.</p></li>
+<li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../index.html#abacusai.RefreshSchedule" title="abacusai.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of refresh schedules that indicate when the next model version will be trained</p></li>
 <li><p><strong>codeSource</strong> (<a class="reference internal" href="../code_source/index.html#abacusai.code_source.CodeSource" title="abacusai.code_source.CodeSource"><em>CodeSource</em></a>) – If a python model, information on the source code</p></li>
 <li><p><strong>databaseConnector</strong> (<a class="reference internal" href="../database_connector/index.html#abacusai.database_connector.DatabaseConnector" title="abacusai.database_connector.DatabaseConnector"><em>DatabaseConnector</em></a>) – Database connector used by the model.</p></li>
 <li><p><strong>dataLlmFeatureGroups</strong> (<a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup"><em>FeatureGroup</em></a>) – List of feature groups used by the model for queries</p></li>
@@ -544,8 +545,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.model.Model.__repr__">
 <span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model.__repr__" title="Link to this definition"></a></dt>
-<dd><p>Return repr(self).</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.model.Model.to_dict">
@@ -675,7 +675,7 @@
 <dd class="field-even"><p>The updated model.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../upload/index.html#abacusai.upload.Upload" title="abacusai.upload.Upload">Upload</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.Upload" title="abacusai.Upload">Upload</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -765,7 +765,7 @@
 <dd class="field-even"><p>An object containing the model metrics and explanations for what each metric means.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../model_metrics/index.html#abacusai.model_metrics.ModelMetrics" title="abacusai.model_metrics.ModelMetrics">ModelMetrics</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.ModelMetrics" title="abacusai.ModelMetrics">ModelMetrics</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -785,7 +785,7 @@
 <dd class="field-even"><p>An array of model versions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../model_version/index.html#abacusai.model_version.ModelVersion" title="abacusai.model_version.ModelVersion">ModelVersion</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.ModelVersion" title="abacusai.ModelVersion">ModelVersion</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -854,7 +854,7 @@
 <dd class="field-even"><p>List of model artifacts exports.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../model_artifacts_export/index.html#abacusai.model_artifacts_export.ModelArtifactsExport" title="abacusai.model_artifacts_export.ModelArtifactsExport">ModelArtifactsExport</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.ModelArtifactsExport" title="abacusai.ModelArtifactsExport">ModelArtifactsExport</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -874,7 +874,7 @@
 <dd class="field-even"><p>Model training types for deployment.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../model_training_type_for_deployment/index.html#abacusai.model_training_type_for_deployment.ModelTrainingTypeForDeployment" title="abacusai.model_training_type_for_deployment.ModelTrainingTypeForDeployment">ModelTrainingTypeForDeployment</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.ModelTrainingTypeForDeployment" title="abacusai.ModelTrainingTypeForDeployment">ModelTrainingTypeForDeployment</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -984,7 +984,7 @@
 <dd class="field-even"><p>The refresh policy object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../refresh_policy/index.html#abacusai.refresh_policy.RefreshPolicy" title="abacusai.refresh_policy.RefreshPolicy">RefreshPolicy</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.RefreshPolicy" title="abacusai.RefreshPolicy">RefreshPolicy</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -998,7 +998,7 @@
 <dd class="field-odd"><p>A list of refresh policy objects.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="../refresh_policy/index.html#abacusai.refresh_policy.RefreshPolicy" title="abacusai.refresh_policy.RefreshPolicy">RefreshPolicy</a>]</p>
+<dd class="field-even"><p>List[<a class="reference internal" href="../index.html#abacusai.RefreshPolicy" title="abacusai.RefreshPolicy">RefreshPolicy</a>]</p>
 </dd>
 </dl>
 </dd></dl>

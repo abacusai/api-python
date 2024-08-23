@@ -264,6 +264,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
@@ -350,7 +351,7 @@
 <li><p><strong>onlineFeatureGroupId</strong> (<em>id</em>) – The online feature group ID that the deployment is running on</p></li>
 <li><p><strong>outputOnlineFeatureGroupId</strong> (<em>id</em>) – The online feature group ID that the deployment is outputting results to</p></li>
 <li><p><strong>realtimeMonitorId</strong> (<em>id</em>) – The realtime monitor ID of the realtime-monitor that is associated with the deployment</p></li>
-<li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../refresh_schedule/index.html#abacusai.refresh_schedule.RefreshSchedule" title="abacusai.refresh_schedule.RefreshSchedule"><em>RefreshSchedule</em></a>) – A list of refresh schedules that indicate when the deployment will be updated to the latest model version.</p></li>
+<li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../index.html#abacusai.RefreshSchedule" title="abacusai.RefreshSchedule"><em>RefreshSchedule</em></a>) – A list of refresh schedules that indicate when the deployment will be updated to the latest model version.</p></li>
 <li><p><strong>featureGroupExportConfig</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.FeatureGroupExportConfig" title="abacusai.api_class.FeatureGroupExportConfig"><em>FeatureGroupExportConfig</em></a>) – The export config (file connector or database connector information) for feature group deployment exports.</p></li>
 <li><p><strong>defaultPredictionArguments</strong> (<a class="reference internal" href="../api_class/deployment/index.html#abacusai.api_class.deployment.PredictionArguments" title="abacusai.api_class.deployment.PredictionArguments"><em>PredictionArguments</em></a>) – The default prediction arguments for prediction APIs</p></li>
 </ul>
@@ -514,8 +515,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.deployment.Deployment.__repr__">
 <span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.deployment.Deployment.__repr__" title="Link to this definition"></a></dt>
-<dd><p>Return repr(self).</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.deployment.Deployment.to_dict">
@@ -547,7 +547,7 @@
 <dd class="field-even"><p>The webhook attached to the deployment.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../webhook/index.html#abacusai.webhook.Webhook" title="abacusai.webhook.Webhook">Webhook</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.Webhook" title="abacusai.Webhook">Webhook</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -564,7 +564,7 @@
 <dd class="field-even"><p>List of the webhooks attached to the given deployment ID.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../webhook/index.html#abacusai.webhook.Webhook" title="abacusai.webhook.Webhook">Webhook</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.Webhook" title="abacusai.Webhook">Webhook</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -773,21 +773,21 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.deployment.Deployment.get_prediction_logs_records">
-<span class="sig-name descname"><span class="pre">get_prediction_logs_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_request_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.deployment.Deployment.get_prediction_logs_records" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_prediction_logs_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_log_request_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_log_timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.deployment.Deployment.get_prediction_logs_records" title="Link to this definition"></a></dt>
 <dd><p>Retrieves the prediction request IDs for the most recent predictions made to the deployment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of prediction log entries to retrieve up to the specified limit.</p></li>
-<li><p><strong>start_after_request_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The request ID of the last log entry to retrieve.</p></li>
-<li><p><strong>start_after_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – A Unix timestamp in milliseconds specifying the start point for retrieving log entries.</p></li>
+<li><p><strong>last_log_request_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The request ID of the last log entry to retrieve.</p></li>
+<li><p><strong>last_log_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – A Unix timestamp in milliseconds specifying the timestamp for the last log entry.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of prediction log records.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../prediction_log_record/index.html#abacusai.prediction_log_record.PredictionLogRecord" title="abacusai.prediction_log_record.PredictionLogRecord">PredictionLogRecord</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.PredictionLogRecord" title="abacusai.PredictionLogRecord">PredictionLogRecord</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -809,7 +809,7 @@
 <dd class="field-even"><p>Object describing the deployment alert.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../monitor_alert/index.html#abacusai.monitor_alert.MonitorAlert" title="abacusai.monitor_alert.MonitorAlert">MonitorAlert</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.MonitorAlert" title="abacusai.MonitorAlert">MonitorAlert</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -826,7 +826,7 @@
 <dd class="field-even"><p>An array of deployment alerts.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../monitor_alert/index.html#abacusai.monitor_alert.MonitorAlert" title="abacusai.monitor_alert.MonitorAlert">MonitorAlert</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.MonitorAlert" title="abacusai.MonitorAlert">MonitorAlert</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -846,7 +846,7 @@
 <dd class="field-even"><p>Object describing the real-time monitor.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../realtime_monitor/index.html#abacusai.realtime_monitor.RealtimeMonitor" title="abacusai.realtime_monitor.RealtimeMonitor">RealtimeMonitor</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.RealtimeMonitor" title="abacusai.RealtimeMonitor">RealtimeMonitor</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1170,7 +1170,7 @@
 <dd class="field-even"><p>The refresh policy object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../refresh_policy/index.html#abacusai.refresh_policy.RefreshPolicy" title="abacusai.refresh_policy.RefreshPolicy">RefreshPolicy</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.RefreshPolicy" title="abacusai.RefreshPolicy">RefreshPolicy</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1184,7 +1184,7 @@
 <dd class="field-odd"><p>A list of refresh policy objects.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="../refresh_policy/index.html#abacusai.refresh_policy.RefreshPolicy" title="abacusai.refresh_policy.RefreshPolicy">RefreshPolicy</a>]</p>
+<dd class="field-even"><p>List[<a class="reference internal" href="../index.html#abacusai.RefreshPolicy" title="abacusai.RefreshPolicy">RefreshPolicy</a>]</p>
 </dd>
 </dl>
 </dd></dl>

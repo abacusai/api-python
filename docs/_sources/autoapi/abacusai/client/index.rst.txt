@@ -536,7 +536,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.6'
+      :value: '1.4.7'
 
 
 
@@ -2125,7 +2125,7 @@ Module Contents
 
 
 
-   .. py:method:: get_prediction_logs_records(deployment_id, limit = 10, start_after_request_id = '', start_after_timestamp = None)
+   .. py:method:: get_prediction_logs_records(deployment_id, limit = 10, last_log_request_id = '', last_log_timestamp = None)
 
       Retrieves the prediction request IDs for the most recent predictions made to the deployment.
 
@@ -2133,10 +2133,10 @@ Module Contents
       :type deployment_id: str
       :param limit: The number of prediction log entries to retrieve up to the specified limit.
       :type limit: int
-      :param start_after_request_id: The request ID of the last log entry to retrieve.
-      :type start_after_request_id: str
-      :param start_after_timestamp: A Unix timestamp in milliseconds specifying the start point for retrieving log entries.
-      :type start_after_timestamp: int
+      :param last_log_request_id: The request ID of the last log entry to retrieve.
+      :type last_log_request_id: str
+      :param last_log_timestamp: A Unix timestamp in milliseconds specifying the timestamp for the last log entry.
+      :type last_log_timestamp: int
 
       :returns: A list of prediction log records.
       :rtype: list[PredictionLogRecord]
@@ -8265,7 +8265,7 @@ Module Contents
 
 
 
-   .. py:method:: get_matrix_agent_schema(deployment_token, deployment_id, query, deployment_conversation_id = None, external_session_id = None)
+   .. py:method:: get_matrix_agent_schema(deployment_token, deployment_id, query, doc_infos = None, deployment_conversation_id = None, external_session_id = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -8275,6 +8275,8 @@ Module Contents
       :type deployment_id: str
       :param query: User input query to initialize the matrix computation.
       :type query: str
+      :param doc_infos: An optional list of documents use for constructing the matrix. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
+      :type doc_infos: list
       :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
       :type deployment_conversation_id: str
       :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
@@ -9800,7 +9802,7 @@ Module Contents
       :type max_tokens: int
       :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
       :type temperature: float
-      :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
+      :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2}]
       :type messages: list
       :param response_type: Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
       :type response_type: str

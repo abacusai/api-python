@@ -64,6 +64,7 @@ Classes
    abacusai.api_class.enums.WorkflowNodeInputType
    abacusai.api_class.enums.WorkflowNodeOutputType
    abacusai.api_class.enums.OcrMode
+   abacusai.api_class.enums.DocumentType
    abacusai.api_class.enums.StdDevThresholdType
    abacusai.api_class.enums.DataType
    abacusai.api_class.enums.AgentInterface
@@ -2375,6 +2376,11 @@ Module Contents
    Derive from this class to define new enumerations.
 
 
+   .. py:attribute:: AUTO
+      :value: 'AUTO'
+
+
+
    .. py:attribute:: DEFAULT
       :value: 'DEFAULT'
 
@@ -2417,6 +2423,36 @@ Module Contents
 
    .. py:attribute:: AUGMENTED_LLM
       :value: 'AUGMENTED_LLM'
+
+
+
+.. py:class:: DocumentType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: TEXT
+      :value: 'TEXT'
+
+
+
+   .. py:attribute:: TABLES_AND_FORMS
+      :value: 'TABLES_AND_FORMS'
+
+
+
+   .. py:attribute:: EMBEDDED_IMAGES
+      :value: 'EMBEDDED_IMAGES'
+
+
+
+   .. py:attribute:: SCANNED_TEXT
+      :value: 'SCANNED_TEXT'
 
 
 

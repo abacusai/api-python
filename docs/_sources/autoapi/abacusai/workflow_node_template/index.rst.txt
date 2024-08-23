@@ -1,0 +1,91 @@
+abacusai.workflow_node_template
+===============================
+
+.. py:module:: abacusai.workflow_node_template
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.workflow_node_template.WorkflowNodeTemplate
+
+
+Module Contents
+---------------
+
+.. py:class:: WorkflowNodeTemplate(client, workflowNodeTemplateId=None, name=None, functionName=None, sourceCode=None, description=None, packageRequirements=None, inputs={}, outputs={}, templateConfigs={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A workflow node template.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param workflowNodeTemplateId: The unique identifier of the workflow node template.
+   :type workflowNodeTemplateId: str
+   :param name: The name of the workflow node template.
+   :type name: str
+   :param functionName: The function name of the workflow node function.
+   :type functionName: str
+   :param sourceCode: The source code of the function that the workflow node template will execute.
+   :type sourceCode: str
+   :param description: A description of the workflow node template.
+   :type description: str
+   :param packageRequirements: A list of package requirements that the node source code may need.
+   :type packageRequirements: list[str]
+   :param inputs: A list of inputs that the workflow node template will use.
+   :type inputs: WorkflowNodeTemplateInput
+   :param outputs: A list of outputs that the workflow node template will give.
+   :type outputs: WorkflowNodeTemplateOutput
+   :param templateConfigs: A list of template configs that are hydrated into source to get complete code.
+   :type templateConfigs: WorkflowNodeTemplateConfig
+
+
+   .. py:attribute:: workflow_node_template_id
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: function_name
+
+
+   .. py:attribute:: source_code
+
+
+   .. py:attribute:: description
+
+
+   .. py:attribute:: package_requirements
+
+
+   .. py:attribute:: inputs
+
+
+   .. py:attribute:: outputs
+
+
+   .. py:attribute:: template_configs
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

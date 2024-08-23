@@ -562,6 +562,7 @@ class WorkflowNodeOutputType(ApiEnum):
 
 
 class OcrMode(ApiEnum):
+    AUTO = 'AUTO'
     DEFAULT = 'DEFAULT'
     LAYOUT = 'LAYOUT'
     SCANNED = 'SCANNED'
@@ -571,6 +572,13 @@ class OcrMode(ApiEnum):
     TESSERACT_FAST = 'TESSERACT_FAST'
     LLM = 'LLM'
     AUGMENTED_LLM = 'AUGMENTED_LLM'
+
+
+class DocumentType(ApiEnum):
+    TEXT = 'TEXT'
+    TABLES_AND_FORMS = 'TABLES_AND_FORMS'
+    EMBEDDED_IMAGES = 'EMBEDDED_IMAGES'
+    SCANNED_TEXT = 'SCANNED_TEXT'
 
 
 class StdDevThresholdType(ApiEnum):

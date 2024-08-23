@@ -264,6 +264,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
@@ -359,15 +360,15 @@
 <li><p><strong>useGpu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether this feature group is using gpu</p></li>
 <li><p><strong>features</strong> (<a class="reference internal" href="../feature/index.html#abacusai.feature.Feature" title="abacusai.feature.Feature"><em>Feature</em></a>) – List of resolved features.</p></li>
 <li><p><strong>duplicateFeatures</strong> (<a class="reference internal" href="../feature/index.html#abacusai.feature.Feature" title="abacusai.feature.Feature"><em>Feature</em></a>) – List of duplicate features.</p></li>
-<li><p><strong>pointInTimeGroups</strong> (<a class="reference internal" href="../point_in_time_group/index.html#abacusai.point_in_time_group.PointInTimeGroup" title="abacusai.point_in_time_group.PointInTimeGroup"><em>PointInTimeGroup</em></a>) – List of Point In Time Groups.</p></li>
+<li><p><strong>pointInTimeGroups</strong> (<a class="reference internal" href="../index.html#abacusai.PointInTimeGroup" title="abacusai.PointInTimeGroup"><em>PointInTimeGroup</em></a>) – List of Point In Time Groups.</p></li>
 <li><p><strong>annotationConfig</strong> (<a class="reference internal" href="../annotation_config/index.html#abacusai.annotation_config.AnnotationConfig" title="abacusai.annotation_config.AnnotationConfig"><em>AnnotationConfig</em></a>) – Annotation config for this feature</p></li>
 <li><p><strong>latestFeatureGroupVersion</strong> (<a class="reference internal" href="../feature_group_version/index.html#abacusai.feature_group_version.FeatureGroupVersion" title="abacusai.feature_group_version.FeatureGroupVersion"><em>FeatureGroupVersion</em></a>) – Latest feature group version.</p></li>
 <li><p><strong>concatenationConfig</strong> (<a class="reference internal" href="../concatenation_config/index.html#abacusai.concatenation_config.ConcatenationConfig" title="abacusai.concatenation_config.ConcatenationConfig"><em>ConcatenationConfig</em></a>) – Feature group ID whose data will be concatenated into this feature group.</p></li>
-<li><p><strong>indexingConfig</strong> (<a class="reference internal" href="../indexing_config/index.html#abacusai.indexing_config.IndexingConfig" title="abacusai.indexing_config.IndexingConfig"><em>IndexingConfig</em></a>) – Indexing config for the feature group for feature store</p></li>
+<li><p><strong>indexingConfig</strong> (<a class="reference internal" href="../index.html#abacusai.IndexingConfig" title="abacusai.IndexingConfig"><em>IndexingConfig</em></a>) – Indexing config for the feature group for feature store</p></li>
 <li><p><strong>codeSource</strong> (<a class="reference internal" href="../code_source/index.html#abacusai.code_source.CodeSource" title="abacusai.code_source.CodeSource"><em>CodeSource</em></a>) – If a Python feature group, information on the source code.</p></li>
 <li><p><strong>featureGroupTemplate</strong> (<a class="reference internal" href="../feature_group_template/index.html#abacusai.feature_group_template.FeatureGroupTemplate" title="abacusai.feature_group_template.FeatureGroupTemplate"><em>FeatureGroupTemplate</em></a>) – FeatureGroupTemplate to use when this feature group is attached to a template.</p></li>
-<li><p><strong>explanation</strong> (<a class="reference internal" href="../natural_language_explanation/index.html#abacusai.natural_language_explanation.NaturalLanguageExplanation" title="abacusai.natural_language_explanation.NaturalLanguageExplanation"><em>NaturalLanguageExplanation</em></a>) – Natural language explanation of the feature group</p></li>
-<li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../refresh_schedule/index.html#abacusai.refresh_schedule.RefreshSchedule" title="abacusai.refresh_schedule.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of schedules that determines when the next version of the feature group will be created.</p></li>
+<li><p><strong>explanation</strong> (<a class="reference internal" href="../index.html#abacusai.NaturalLanguageExplanation" title="abacusai.NaturalLanguageExplanation"><em>NaturalLanguageExplanation</em></a>) – Natural language explanation of the feature group</p></li>
+<li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../index.html#abacusai.RefreshSchedule" title="abacusai.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of schedules that determines when the next version of the feature group will be created.</p></li>
 <li><p><strong>operatorConfig</strong> (<a class="reference internal" href="../api_class/feature_group/index.html#abacusai.api_class.feature_group.OperatorConfig" title="abacusai.api_class.feature_group.OperatorConfig"><em>OperatorConfig</em></a>) – Operator configuration settings for the feature group.</p></li>
 </ul>
 </dd>
@@ -667,7 +668,7 @@
 <dd class="field-even"><p>The feature group’s project configuration.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../project_config/index.html#abacusai.project_config.ProjectConfig" title="abacusai.project_config.ProjectConfig">ProjectConfig</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.ProjectConfig" title="abacusai.ProjectConfig">ProjectConfig</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1385,7 +1386,7 @@
 <dd class="field-even"><p>The feature group after the data_type is applied.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../schema/index.html#abacusai.schema.Schema" title="abacusai.schema.Schema">Schema</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.Schema" title="abacusai.Schema">Schema</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1651,7 +1652,7 @@ feature groups for those input feature groups.</p>
 <dd class="field-even"><p>Information about the modification lock status and groups/organizations added to the feature group.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../modification_lock_info/index.html#abacusai.modification_lock_info.ModificationLockInfo" title="abacusai.modification_lock_info.ModificationLockInfo">ModificationLockInfo</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.ModificationLockInfo" title="abacusai.ModificationLockInfo">ModificationLockInfo</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1914,7 +1915,7 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 <dd class="field-even"><p>The object containing natural language explanation(s) as field(s).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../natural_language_explanation/index.html#abacusai.natural_language_explanation.NaturalLanguageExplanation" title="abacusai.natural_language_explanation.NaturalLanguageExplanation">NaturalLanguageExplanation</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.NaturalLanguageExplanation" title="abacusai.NaturalLanguageExplanation">NaturalLanguageExplanation</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1934,7 +1935,7 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 <dd class="field-even"><p>The object containing natural language explanation(s) as field(s).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../natural_language_explanation/index.html#abacusai.natural_language_explanation.NaturalLanguageExplanation" title="abacusai.natural_language_explanation.NaturalLanguageExplanation">NaturalLanguageExplanation</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.NaturalLanguageExplanation" title="abacusai.NaturalLanguageExplanation">NaturalLanguageExplanation</a></p>
 </dd>
 </dl>
 </dd></dl>

@@ -181,9 +181,6 @@ Module Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -388,16 +385,16 @@ Module Contents
 
 
 
-   .. py:method:: get_prediction_logs_records(limit = 10, start_after_request_id = '', start_after_timestamp = None)
+   .. py:method:: get_prediction_logs_records(limit = 10, last_log_request_id = '', last_log_timestamp = None)
 
       Retrieves the prediction request IDs for the most recent predictions made to the deployment.
 
       :param limit: The number of prediction log entries to retrieve up to the specified limit.
       :type limit: int
-      :param start_after_request_id: The request ID of the last log entry to retrieve.
-      :type start_after_request_id: str
-      :param start_after_timestamp: A Unix timestamp in milliseconds specifying the start point for retrieving log entries.
-      :type start_after_timestamp: int
+      :param last_log_request_id: The request ID of the last log entry to retrieve.
+      :type last_log_request_id: str
+      :param last_log_timestamp: A Unix timestamp in milliseconds specifying the timestamp for the last log entry.
+      :type last_log_timestamp: int
 
       :returns: A list of prediction log records.
       :rtype: list[PredictionLogRecord]

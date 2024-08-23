@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, tag=None, createdAt=None)
+.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, tag=None, createdAt=None, expiresAt=None, isExpired=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,10 @@ Module Contents
    :type tag: str
    :param createdAt: The timestamp when the API key was created.
    :type createdAt: str
+   :param expiresAt: The timestamp when the API key will expire.
+   :type expiresAt: str
+   :param isExpired: Whether the API key has expired.
+   :type isExpired: bool
 
 
    .. py:attribute:: api_key_id
@@ -44,6 +48,12 @@ Module Contents
 
 
    .. py:attribute:: created_at
+
+
+   .. py:attribute:: expires_at
+
+
+   .. py:attribute:: is_expired
 
 
    .. py:attribute:: deprecated_keys

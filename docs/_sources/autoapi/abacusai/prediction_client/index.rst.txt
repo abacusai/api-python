@@ -883,7 +883,7 @@ Module Contents
 
 
 
-   .. py:method:: get_matrix_agent_schema(deployment_token, deployment_id, query, deployment_conversation_id = None, external_session_id = None)
+   .. py:method:: get_matrix_agent_schema(deployment_token, deployment_id, query, doc_infos = None, deployment_conversation_id = None, external_session_id = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -893,6 +893,8 @@ Module Contents
       :type deployment_id: str
       :param query: User input query to initialize the matrix computation.
       :type query: str
+      :param doc_infos: An optional list of documents use for constructing the matrix. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
+      :type doc_infos: list
       :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
       :type deployment_conversation_id: str
       :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.

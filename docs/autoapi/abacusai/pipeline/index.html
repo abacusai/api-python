@@ -264,6 +264,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
@@ -332,9 +333,9 @@
 <li><p><strong>isProd</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether this pipeline is a production pipeline.</p></li>
 <li><p><strong>warning</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Warning message for possible errors that might occur if the pipeline is run.</p></li>
 <li><p><strong>createdBy</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The email of the user who created the pipeline</p></li>
-<li><p><strong>steps</strong> (<a class="reference internal" href="../pipeline_step/index.html#abacusai.pipeline_step.PipelineStep" title="abacusai.pipeline_step.PipelineStep"><em>PipelineStep</em></a>) – A list of the pipeline steps attached to the pipeline.</p></li>
-<li><p><strong>pipelineReferences</strong> (<a class="reference internal" href="../pipeline_reference/index.html#abacusai.pipeline_reference.PipelineReference" title="abacusai.pipeline_reference.PipelineReference"><em>PipelineReference</em></a>) – A list of references from the pipeline to other objects</p></li>
-<li><p><strong>latestPipelineVersion</strong> (<a class="reference internal" href="../pipeline_version/index.html#abacusai.pipeline_version.PipelineVersion" title="abacusai.pipeline_version.PipelineVersion"><em>PipelineVersion</em></a>) – The latest version of the pipeline.</p></li>
+<li><p><strong>steps</strong> (<a class="reference internal" href="../index.html#abacusai.PipelineStep" title="abacusai.PipelineStep"><em>PipelineStep</em></a>) – A list of the pipeline steps attached to the pipeline.</p></li>
+<li><p><strong>pipelineReferences</strong> (<a class="reference internal" href="../index.html#abacusai.PipelineReference" title="abacusai.PipelineReference"><em>PipelineReference</em></a>) – A list of references from the pipeline to other objects</p></li>
+<li><p><strong>latestPipelineVersion</strong> (<a class="reference internal" href="../index.html#abacusai.PipelineVersion" title="abacusai.PipelineVersion"><em>PipelineVersion</em></a>) – The latest version of the pipeline.</p></li>
 <li><p><strong>codeSource</strong> (<a class="reference internal" href="../code_source/index.html#abacusai.code_source.CodeSource" title="abacusai.code_source.CodeSource"><em>CodeSource</em></a>) – information on the source code</p></li>
 <li><p><strong>pipelineVariableMappings</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.PythonFunctionArgument" title="abacusai.api_class.PythonFunctionArgument"><em>PythonFunctionArgument</em></a>) – A description of the function variables into the pipeline.</p></li>
 </ul>
@@ -528,7 +529,7 @@
 <dd class="field-even"><p>A list of pipeline versions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../pipeline_version/index.html#abacusai.pipeline_version.PipelineVersion" title="abacusai.pipeline_version.PipelineVersion">PipelineVersion</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.PipelineVersion" title="abacusai.PipelineVersion">PipelineVersion</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -545,7 +546,7 @@
 <dd class="field-even"><p>The object describing the pipeline</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../pipeline_version/index.html#abacusai.pipeline_version.PipelineVersion" title="abacusai.pipeline_version.PipelineVersion">PipelineVersion</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.PipelineVersion" title="abacusai.PipelineVersion">PipelineVersion</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -590,7 +591,7 @@
 <dd class="field-even"><p>An object describing the pipeline step.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../pipeline_step/index.html#abacusai.pipeline_step.PipelineStep" title="abacusai.pipeline_step.PipelineStep">PipelineStep</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.PipelineStep" title="abacusai.PipelineStep">PipelineStep</a></p>
 </dd>
 </dl>
 </dd></dl>

@@ -1,7 +1,7 @@
 import dataclasses
 
 from .abstract import ApiClass
-from .enums import OcrMode
+from .enums import DocumentType, OcrMode
 
 
 @dataclasses.dataclass
@@ -36,6 +36,8 @@ class DocumentProcessingConfig(ApiClass):
     Document processing configuration.
 
     Args:
+        document_type (DocumentType): Type of document. Can be one of Text, Tables and Forms, Embedded Images, etc. If not specified, type will be decided automatically.
+        highlight_relevant_text (bool): Whether to extract bounding boxes and highlight relevant text in search results. Defaults to False.
         extract_bounding_boxes (bool): Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
         ocr_mode (OcrMode): OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
         use_full_ocr (bool): Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
@@ -45,6 +47,8 @@ class DocumentProcessingConfig(ApiClass):
         mask_pii (bool): Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.
     """
     # NOTE: The defaults should match with clouddb.document_processing_results table defaults
+    document_type: DocumentType = None
+    highlight_relevant_text: bool = None
     extract_bounding_boxes: bool = False
     ocr_mode: OcrMode = OcrMode.DEFAULT
     use_full_ocr: bool = None
@@ -52,6 +56,22 @@ class DocumentProcessingConfig(ApiClass):
     remove_watermarks: bool = True
     convert_to_markdown: bool = False
     mask_pii: bool = False
+
+    def __post_init__(self):
+        self.ocr_mode = self._detect_ocr_mode()
+        if self.highlight_relevant_text is not None:
+            self.extract_bounding_boxes = self.highlight_relevant_text  # Highlight_relevant text acts as a wrapper over extract_bounding_boxes
+
+    def _detect_ocr_mode(self):
+        if self.document_type is None:  # Maps to Auto mode
+            return self.ocr_mode  # TODO: Link with paddle OCR
+        if self.document_type == DocumentType.TEXT:
+            return OcrMode.DEFAULT
+        elif self.document_type == DocumentType.TABLES_AND_FORMS:
+            return OcrMode.LAYOUT
+        elif self.document_type == DocumentType.EMBEDDED_IMAGES:
+            return OcrMode.SCANNED
+        return OcrMode.DEFAULT
 
 
 @dataclasses.dataclass

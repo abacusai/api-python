@@ -11,19 +11,23 @@ class ApiKey(AbstractApiClass):
             apiKey (str): The unique API key scoped to a specific organization. Value will be partially obscured.
             tag (str): A user-friendly tag for the API key.
             createdAt (str): The timestamp when the API key was created.
+            expiresAt (str): The timestamp when the API key will expire.
+            isExpired (bool): Whether the API key has expired.
     """
 
-    def __init__(self, client, apiKeyId=None, apiKey=None, tag=None, createdAt=None):
+    def __init__(self, client, apiKeyId=None, apiKey=None, tag=None, createdAt=None, expiresAt=None, isExpired=None):
         super().__init__(client, apiKeyId)
         self.api_key_id = apiKeyId
         self.api_key = apiKey
         self.tag = tag
         self.created_at = createdAt
+        self.expires_at = expiresAt
+        self.is_expired = isExpired
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'api_key_id': repr(self.api_key_id), f'api_key': repr(
-            self.api_key), f'tag': repr(self.tag), f'created_at': repr(self.created_at)}
+        repr_dict = {f'api_key_id': repr(self.api_key_id), f'api_key': repr(self.api_key), f'tag': repr(
+            self.tag), f'created_at': repr(self.created_at), f'expires_at': repr(self.expires_at), f'is_expired': repr(self.is_expired)}
         class_name = "ApiKey"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -36,8 +40,8 @@ class ApiKey(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'api_key_id': self.api_key_id, 'api_key': self.api_key,
-                'tag': self.tag, 'created_at': self.created_at}
+        resp = {'api_key_id': self.api_key_id, 'api_key': self.api_key, 'tag': self.tag,
+                'created_at': self.created_at, 'expires_at': self.expires_at, 'is_expired': self.is_expired}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def delete(self):

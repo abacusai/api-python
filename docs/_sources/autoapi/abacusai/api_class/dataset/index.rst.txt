@@ -68,6 +68,10 @@ Module Contents
 
    Document processing configuration.
 
+   :param document_type: Type of document. Can be one of Text, Tables and Forms, Embedded Images, etc. If not specified, type will be decided automatically.
+   :type document_type: DocumentType
+   :param highlight_relevant_text: Whether to extract bounding boxes and highlight relevant text in search results. Defaults to False.
+   :type highlight_relevant_text: bool
    :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
    :type extract_bounding_boxes: bool
    :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
@@ -82,6 +86,18 @@ Module Contents
    :type convert_to_markdown: bool
    :param mask_pii: Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.
    :type mask_pii: bool
+
+
+   .. py:attribute:: document_type
+      :type:  abacusai.api_class.enums.DocumentType
+      :value: None
+
+
+
+   .. py:attribute:: highlight_relevant_text
+      :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
@@ -122,6 +138,12 @@ Module Contents
       :type:  bool
       :value: False
 
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _detect_ocr_mode()
 
 
 .. py:class:: DatasetDocumentProcessingConfig
