@@ -34,15 +34,16 @@ from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
     AgentInterface, AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    ApplicationConnectorDatasetConfig, BatchPredictionArgs, Blob, BlobInput,
-    CPUSize, DatasetDocumentProcessingConfig, DataType,
-    DeploymentConversationType, DocumentProcessingConfig, EvalArtifactType,
-    FeatureGroupExportConfig, ForecastingMonitorConfig,
-    IncrementalDatabaseConnectorConfig, LLMName, MemorySize, MergeConfig,
-    OperatorConfig, ParsingConfig, PredictionArguments, ProblemType,
-    ProjectFeatureGroupConfig, PythonFunctionType, ResponseSection,
-    SamplingConfig, Segment, StreamingConnectorDatasetConfig, TrainingConfig,
-    VectorStoreConfig, WorkflowGraph, get_clean_function_source_code_for_agent
+    ApplicationConnectorDatasetConfig, ApplicationConnectorType,
+    BatchPredictionArgs, Blob, BlobInput, CPUSize,
+    DatasetDocumentProcessingConfig, DataType, DeploymentConversationType,
+    DocumentProcessingConfig, EvalArtifactType, FeatureGroupExportConfig,
+    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
+    MemorySize, MergeConfig, OperatorConfig, ParsingConfig,
+    PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
+    PythonFunctionType, ResponseSection, SamplingConfig, Segment,
+    StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
+    WorkflowGraph, get_clean_function_source_code_for_agent
 )
 from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
 from .api_class.ai_agents import WorkflowGraph
@@ -605,7 +606,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.7'
+    client_version = '1.4.8'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1213,6 +1214,17 @@ class ReadOnlyClient(BaseApiClient):
             chunk_size (int): The size of the chunk"""
         return self._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'featureGroupOperationRunId': feature_group_operation_run_id, 'part': part, 'offset': offset, 'chunkSize': chunk_size}, streamable_response=True)
 
+    def update_feature_group_version_limit(self, feature_group_id: str, version_limit: int) -> FeatureGroup:
+        """Updates the version limit for the feature group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            version_limit (int): The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+
+        Returns:
+            FeatureGroup: The updated feature group."""
+        return self._call_api('updateFeatureGroupVersionLimit', 'GET', query_params={'featureGroupId': feature_group_id, 'versionLimit': version_limit}, parse_type=FeatureGroup)
+
     def get_feature_group_version_export_download_url(self, feature_group_export_id: str) -> FeatureGroupExportDownloadUrl:
         """Get a link to download the feature group version.
 
@@ -1398,6 +1410,17 @@ class ReadOnlyClient(BaseApiClient):
             DataMetrics: The metrics for the specified Dataset version."""
         return self._call_api('getDatasetVersionMetrics', 'GET', query_params={'datasetVersion': dataset_version, 'selectedColumns': selected_columns, 'includeCharts': include_charts, 'includeStatistics': include_statistics}, parse_type=DataMetrics)
 
+    def update_dataset_version_limit(self, dataset_id: str, version_limit: int) -> Dataset:
+        """Updates the version limit for the specified dataset.
+
+        Args:
+            dataset_id (str): The unique ID associated with the dataset.
+            version_limit (int): The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+
+        Returns:
+            Dataset: The updated dataset."""
+        return self._call_api('updateDatasetVersionLimit', 'GET', query_params={'datasetId': dataset_id, 'versionLimit': version_limit}, parse_type=Dataset)
+
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
         """Retrieves verification information to create a data connector to a cloud storage bucket.
 
@@ -1465,11 +1488,11 @@ class ReadOnlyClient(BaseApiClient):
             application_connector_id (str): Unique string identifier for the application connector."""
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
-    def get_connector_auth(self, service: str = None) -> ApplicationConnector:
+    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None) -> ApplicationConnector:
         """Get the authentication details for a given connector.
 
         Args:
-            service (str): The service name.
+            service (ApplicationConnectorType): The service name.
 
         Returns:
             ApplicationConnector: The application connector with the authentication details."""
@@ -2755,7 +2778,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Args:
             document_retriever_id (str): A unique string identifier associated with the document retriever.
-            limit (int): The number of vector store versions to retrieve.
+            limit (int): The number of vector store versions to retrieve. The maximum value is 100.
             start_after_version (str): An offset parameter to exclude all document retriever versions up to this specified one.
 
         Returns:
@@ -3816,6 +3839,41 @@ class ApiClient(ReadOnlyClient):
                                           temperature=temperature, messages=messages, response_type=response_type, json_response_schema=json_response_schema).content
         return StreamingHandler(result, _request_context, section_key=section_key)
 
+    def execute_python(self, source_code: str):
+        """
+        Executes the given source code.
+
+        Args:
+            source_code (str): The source code to execute.
+
+        Returns:
+            stdout, stderr, exception for source_code execution
+        """
+
+        custom_globals = {}
+        try:
+            from abacus_internal.cloud_copy import original_builtin_print
+            custom_globals['print'] = original_builtin_print
+        except ImportError:
+            pass
+
+        from contextlib import redirect_stderr, redirect_stdout
+        stdout_capture = io.StringIO()
+        stderr_capture = io.StringIO()
+        exec_exception = None
+
+        with redirect_stdout(stdout_capture), redirect_stderr(stderr_capture):
+            try:
+                # Execute the source code
+                exec(source_code, custom_globals)
+            except Exception as e:
+                exec_exception = e
+
+        # Retrieve the captured output
+        exec_stdout = stdout_capture.getvalue()
+        exec_stderr = stderr_capture.getvalue()
+        return exec_stdout, exec_stderr, exec_exception
+
     def _get_agent_app_request_id(self):
         """
         Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.
@@ -4641,19 +4699,20 @@ class ApiClient(ReadOnlyClient):
             AnnotationConfig: The annotation config for the feature group."""
         return self._call_api('importAnnotationLabels', 'POST', query_params={}, data={'featureGroupId': json.dumps(feature_group_id) if (feature_group_id is not None and not isinstance(feature_group_id, str)) else feature_group_id, 'annotationType': json.dumps(annotation_type) if (annotation_type is not None and not isinstance(annotation_type, str)) else annotation_type}, parse_type=AnnotationConfig, files={'file': file})
 
-    def create_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
+    def create_feature_group(self, table_name: str, sql: str, description: str = None, version_limit: int = 30) -> FeatureGroup:
         """Creates a new FeatureGroup from a SQL statement.
 
         Args:
             table_name (str): The unique name to be given to the FeatureGroup. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             sql (str): Input SQL statement for forming the FeatureGroup.
             description (str): The description about the FeatureGroup.
+            version_limit (int): The number of versions to preserve for the FeatureGroup (minimum 30).
 
         Returns:
             FeatureGroup: The created FeatureGroup."""
-        return self._call_api('createFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description}, parse_type=FeatureGroup)
+        return self._call_api('createFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description, 'versionLimit': version_limit}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_template(self, table_name: str, feature_group_template_id: str, template_bindings: list = None, should_attach_feature_group_to_template: bool = True, description: str = None) -> FeatureGroup:
+    def create_feature_group_from_template(self, table_name: str, feature_group_template_id: str, template_bindings: list = None, should_attach_feature_group_to_template: bool = True, description: str = None, version_limit: int = 30) -> FeatureGroup:
         """Creates a new feature group from a SQL statement.
 
         Args:
@@ -4662,12 +4721,13 @@ class ApiClient(ReadOnlyClient):
             template_bindings (list): Variable bindings that override the template's variable values.
             should_attach_feature_group_to_template (bool): Set to `False` to create a feature group but not leave it attached to the template that created it.
             description (str): A user-friendly description of this feature group.
+            version_limit (int): The number of versions to preserve for the feature group (minimum 30).
 
         Returns:
             FeatureGroup: The created feature group."""
-        return self._call_api('createFeatureGroupFromTemplate', 'POST', query_params={}, body={'tableName': table_name, 'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'shouldAttachFeatureGroupToTemplate': should_attach_feature_group_to_template, 'description': description}, parse_type=FeatureGroup)
+        return self._call_api('createFeatureGroupFromTemplate', 'POST', query_params={}, body={'tableName': table_name, 'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'shouldAttachFeatureGroupToTemplate': should_attach_feature_group_to_template, 'description': description, 'versionLimit': version_limit}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_function(self, table_name: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, description: str = None, cpu_size: Union[CPUSize, str] = None, memory: Union[MemorySize, str] = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_name: str = None, python_function_bindings: List = None, use_gpu: bool = None) -> FeatureGroup:
+    def create_feature_group_from_function(self, table_name: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, description: str = None, cpu_size: Union[CPUSize, str] = None, memory: Union[MemorySize, str] = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_name: str = None, python_function_bindings: List = None, use_gpu: bool = None, version_limit: int = 30) -> FeatureGroup:
         """Creates a new feature in a Feature Group from user-provided code. Currently supported code languages are Python.
 
         If a list of input feature groups are supplied, we will provide DataFrames (pandas, in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
@@ -4688,10 +4748,11 @@ class ApiClient(ReadOnlyClient):
             python_function_name (str): Name of Python Function that contains the source code and function arguments.
             python_function_bindings (List): List of python function arguments.
             use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
+            version_limit (int): The number of versions to preserve for the feature group (minimum 30).
 
         Returns:
             FeatureGroup: The created feature group"""
-        return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings, 'useGpu': use_gpu}, parse_type=FeatureGroup)
+        return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings, 'useGpu': use_gpu, 'versionLimit': version_limit}, parse_type=FeatureGroup)
 
     def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: Union[dict, SamplingConfig], description: str = None) -> FeatureGroup:
         """Creates a new Feature Group defined as a sample of rows from another Feature Group.
@@ -5457,7 +5518,7 @@ Creates a new feature group defined as the union of other feature group versions
             Upload: The upload object associated with the process, containing details of the file."""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
+    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None, version_limit: int = 30) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
@@ -5478,10 +5539,11 @@ Creates a new feature group defined as the union of other feature group versions
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.
             reference_only_documentset (bool): Signifies if the data reference only policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
+            version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
 
         Returns:
             Dataset: The dataset created."""
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'documentProcessingConfig': document_processing_config, 'mergeFileSchemas': merge_file_schemas, 'referenceOnlyDocumentset': reference_only_documentset, 'parsingConfig': parsing_config}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'documentProcessingConfig': document_processing_config, 'mergeFileSchemas': merge_file_schemas, 'referenceOnlyDocumentset': reference_only_documentset, 'parsingConfig': parsing_config, 'versionLimit': version_limit}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
@@ -5498,7 +5560,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, incremental_database_connector_config: Union[dict, IncrementalDatabaseConnectorConfig] = None, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None) -> Dataset:
+    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, incremental_database_connector_config: Union[dict, IncrementalDatabaseConnectorConfig] = None, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, version_limit: int = 30) -> Dataset:
         """Creates a dataset from a Database Connector.
 
         Args:
@@ -5512,12 +5574,13 @@ Creates a new feature group defined as the union of other feature group versions
             incremental (bool): Signifies if the dataset is an incremental dataset.
             incremental_database_connector_config (IncrementalDatabaseConnectorConfig): The config for incremental datasets. Only valid if incremental is True
             document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).
+            version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'incrementalDatabaseConnectorConfig': incremental_database_connector_config, 'documentProcessingConfig': document_processing_config}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'incrementalDatabaseConnectorConfig': incremental_database_connector_config, 'documentProcessingConfig': document_processing_config, 'versionLimit': version_limit}, parse_type=Dataset)
 
-    def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None, refresh_schedule: str = None) -> Dataset:
+    def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None, refresh_schedule: str = None, version_limit: int = 30) -> Dataset:
         """Creates a dataset from an Application Connector.
 
         Args:
@@ -5525,10 +5588,11 @@ Creates a new feature group defined as the union of other feature group versions
             application_connector_id (str): Unique string identifier of the application connector to download data from.
             dataset_config (ApplicationConnectorDatasetConfig): Dataset config for the application connector.
             refresh_schedule (str): Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
+            version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'tableName': table_name, 'applicationConnectorId': application_connector_id, 'datasetConfig': dataset_config, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'tableName': table_name, 'applicationConnectorId': application_connector_id, 'datasetConfig': dataset_config, 'refreshSchedule': refresh_schedule, 'versionLimit': version_limit}, parse_type=Dataset)
 
     def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
@@ -5555,7 +5619,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'datasetConfig': dataset_config}, parse_type=DatasetVersion)
 
-    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None, merge_file_schemas: bool = False, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None) -> Upload:
+    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None, merge_file_schemas: bool = False, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, version_limit: int = 30) -> Upload:
         """Creates a dataset and returns an upload ID that can be used to upload a file.
 
         Args:
@@ -5567,10 +5631,11 @@ Creates a new feature group defined as the union of other feature group versions
             parsing_config (ParsingConfig): Custom config for dataset parsing.
             merge_file_schemas (bool): Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.
             document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True.
+            version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
 
         Returns:
             Upload: A reference to be used when uploading file parts."""
-        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'parsingConfig': parsing_config, 'mergeFileSchemas': merge_file_schemas, 'documentProcessingConfig': document_processing_config}, parse_type=Upload)
+        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'parsingConfig': parsing_config, 'mergeFileSchemas': merge_file_schemas, 'documentProcessingConfig': document_processing_config, 'versionLimit': version_limit}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
         """Creates a new version of the specified dataset using a local file upload.
@@ -5594,7 +5659,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new dataset version created."""
         return self._call_api('createDatasetVersionFromDocumentReprocessing', 'POST', query_params={'datasetId': dataset_id}, body={'documentProcessingConfig': document_processing_config}, parse_type=DatasetVersion)
 
-    def create_streaming_dataset(self, table_name: str, primary_key: str = None, update_timestamp_key: str = None, lookup_keys: list = None) -> Dataset:
+    def create_streaming_dataset(self, table_name: str, primary_key: str = None, update_timestamp_key: str = None, lookup_keys: list = None, version_limit: int = 30) -> Dataset:
         """Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
 
         Args:
@@ -5602,10 +5667,11 @@ Creates a new feature group defined as the union of other feature group versions
             primary_key (str): The optional primary key column name for the dataset.
             update_timestamp_key (str): Name of the feature which defines the update timestamp of the feature group. Used in concatenation and primary key deduplication. Only relevant if lookup keys are set.
             lookup_keys (list): List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
+            version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
 
         Returns:
             Dataset: The streaming dataset created."""
-        return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'tableName': table_name, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys}, parse_type=Dataset)
+        return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'tableName': table_name, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys, 'versionLimit': version_limit}, parse_type=Dataset)
 
     def snapshot_streaming_data(self, dataset_id: str) -> DatasetVersion:
         """Snapshots the current data in the streaming dataset.
@@ -5629,7 +5695,7 @@ Creates a new feature group defined as the union of other feature group versions
             Dataset: The dataset and schema after the data type has been set."""
         return self._call_api('setDatasetColumnDataType', 'POST', query_params={'datasetId': dataset_id}, body={'column': column, 'dataType': data_type}, parse_type=Dataset)
 
-    def create_dataset_from_streaming_connector(self, table_name: str, streaming_connector_id: str, dataset_config: Union[dict, StreamingConnectorDatasetConfig] = None, refresh_schedule: str = None) -> Dataset:
+    def create_dataset_from_streaming_connector(self, table_name: str, streaming_connector_id: str, dataset_config: Union[dict, StreamingConnectorDatasetConfig] = None, refresh_schedule: str = None, version_limit: int = 30) -> Dataset:
         """Creates a dataset from a Streaming Connector
 
         Args:
@@ -5637,10 +5703,11 @@ Creates a new feature group defined as the union of other feature group versions
             streaming_connector_id (str): Unique String Identifier for the Streaming Connector to import the dataset from
             dataset_config (StreamingConnectorDatasetConfig): Streaming dataset config
             refresh_schedule (str): Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. Time is specified in UTC.
+            version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromStreamingConnector', 'POST', query_params={}, body={'tableName': table_name, 'streamingConnectorId': streaming_connector_id, 'datasetConfig': dataset_config, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+        return self._call_api('createDatasetFromStreamingConnector', 'POST', query_params={}, body={'tableName': table_name, 'streamingConnectorId': streaming_connector_id, 'datasetConfig': dataset_config, 'refreshSchedule': refresh_schedule, 'versionLimit': version_limit}, parse_type=Dataset)
 
     def set_streaming_retention_policy(self, dataset_id: str, retention_hours: int = None, retention_row_count: int = None, ignore_records_before_timestamp: int = None):
         """Sets the streaming retention policy.
@@ -6679,7 +6746,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
 
-    def predict(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def predict(self, deployment_token: str, deployment_id: str, query_data: dict, **kwargs) -> Dict:
         """Returns a prediction for Predictive Modeling
 
         Args:
@@ -6688,7 +6755,7 @@ Creates a new feature group defined as the union of other feature group versions
             query_data (dict): A dictionary where the key is the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed, and the value is the unique value of the same entity."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, **kwargs}, body={'queryData': query_data, **kwargs}, server_override=prediction_url)
 
     def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: list) -> Dict:
         """Returns a list of predictions for predictive modeling.
@@ -8406,13 +8473,14 @@ Creates a new feature group defined as the union of other feature group versions
             Agent: The updated agent."""
         return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'agentConnectors': agent_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code}, parse_type=Agent)
 
-    def generate_agent_code(self, project_id: str, prompt: str) -> list:
+    def generate_agent_code(self, project_id: str, prompt: str, fast_mode: bool = None) -> list:
         """Generates the code for defining an AI Agent
 
         Args:
             project_id (str): The unique ID associated with the project.
-            prompt (str): A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out"""
-        return self._call_api('generateAgentCode', 'POST', query_params={}, body={'projectId': project_id, 'prompt': prompt})
+            prompt (str): A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out
+            fast_mode (bool): If True, runs a faster but slightly less accurate code generation pipeline"""
+        return self._call_api('generateAgentCode', 'POST', query_params={}, body={'projectId': project_id, 'prompt': prompt, 'fastMode': fast_mode})
 
     def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, stop_sequences: list = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.

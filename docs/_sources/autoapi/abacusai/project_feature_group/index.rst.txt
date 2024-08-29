@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ProjectFeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, featureGroupType=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectFeatureGroupSchema={}, projectConfig={}, latestFeatureGroupVersion={}, operatorConfig={})
+.. py:class:: ProjectFeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, versionLimit=None, featureGroupType=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectFeatureGroupSchema={}, projectConfig={}, latestFeatureGroupVersion={}, operatorConfig={})
 
    Bases: :py:obj:`abacusai.feature_group.FeatureGroup`
 
@@ -92,6 +92,8 @@ Module Contents
    :type pythonFunctionName: str
    :param useGpu: Whether this feature group is using gpu
    :type useGpu: bool
+   :param versionLimit: Version limit for the feature group.
+   :type versionLimit: int
    :param featureGroupType: Project type when the feature group is used in the context of a project.
    :type featureGroupType: str
    :param features: List of resolved features.
@@ -224,6 +226,9 @@ Module Contents
 
 
    .. py:attribute:: use_gpu
+
+
+   .. py:attribute:: version_limit
 
 
    .. py:attribute:: feature_group_type

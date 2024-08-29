@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={})
+.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -60,6 +60,8 @@ Module Contents
    :type mergeFileSchemas: bool
    :param referenceOnlyDocumentset: Signifies whether to save the data reference only. Only valid if is_documentset if True.
    :type referenceOnlyDocumentset: bool
+   :param versionLimit: Version limit for the dataset.
+   :type versionLimit: int
    :param latestDatasetVersion: The latest version of this dataset.
    :type latestDatasetVersion: DatasetVersion
    :param schema: List of resolved columns.
@@ -124,6 +126,9 @@ Module Contents
 
 
    .. py:attribute:: reference_only_documentset
+
+
+   .. py:attribute:: version_limit
 
 
    .. py:attribute:: schema
@@ -298,6 +303,18 @@ Module Contents
       :type query_arguments: str
       :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns` and `query_arguments`.
       :type sql_query: str
+
+
+
+   .. py:method:: update_version_limit(version_limit)
+
+      Updates the version limit for the specified dataset.
+
+      :param version_limit: The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+      :type version_limit: int
+
+      :returns: The updated dataset.
+      :rtype: Dataset
 
 
 

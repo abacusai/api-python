@@ -170,6 +170,8 @@ class WorkflowNodeInputMapping(ApiClass):
     @classmethod
     def from_dict(cls, mapping: dict):
         validate_input_dict_param(mapping, friendly_class_name='input_mapping', must_contain=['name', 'variable_type'])
+        if mapping['variable_type'] not in enums.WorkflowNodeInputType.__members__:
+            raise ValueError('input_mapping', f"Invalid enum argument {mapping['variable_type']}. Provided argument should be of enum type WorkflowNodeInputType.")
         return cls(
             name=mapping['name'],
             variable_type=enums.WorkflowNodeInputType(mapping['variable_type']),
@@ -201,9 +203,12 @@ class WorkflowNodeOutputMapping(ApiClass):
     @classmethod
     def from_dict(cls, mapping: dict):
         validate_input_dict_param(mapping, friendly_class_name='output_mapping', must_contain=['name'])
+        variable_type = mapping.get('variable_type', 'ANY')
+        if variable_type not in enums.WorkflowNodeOutputType.__members__:
+            raise ValueError('output_mapping', f'Invalid enum argument {variable_type}. Provided argument should be of enum type WorkflowNodeOutputType.')
         return cls(
             name=mapping['name'],
-            variable_type=enums.WorkflowNodeOutputType(mapping.get('variable_type', 'ANY'))
+            variable_type=enums.WorkflowNodeOutputType(variable_type)
         )
 
 
@@ -225,9 +230,9 @@ class WorkflowGraphNode(ApiClass):
         ValueError: If neither `function` nor `function_name` and `source_code` are provided or the inputs are invalid.
     """
 
-    def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, _template_metadata: dict = None):
-        self._template_metadata = _template_metadata
-        if self._template_metadata and not self._template_metadata.get('initialized'):
+    def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, template_metadata: dict = None):
+        self.template_metadata = template_metadata
+        if self.template_metadata and not self.template_metadata.get('initialized'):
             self.name = name
             self.function_name = None
             self.source_code = None
@@ -352,7 +357,7 @@ class WorkflowGraphNode(ApiClass):
             input_mappings=instance_input_mappings,
             input_schema=instance_input_schema,
             output_schema=instance_output_schema,
-            _template_metadata={
+            template_metadata={
                 'template_name': template_name,
                 'configs': configs,
                 'initialized': False
@@ -368,7 +373,7 @@ class WorkflowGraphNode(ApiClass):
             'output_mappings': [mapping.to_dict() for mapping in self.output_mappings],
             'input_schema': self.input_schema.to_dict(),
             'output_schema': self.output_schema.to_dict(),
-            '_template_metadata': self._template_metadata
+            'template_metadata': self.template_metadata
         }
 
     @classmethod
@@ -382,7 +387,7 @@ class WorkflowGraphNode(ApiClass):
             output_mappings=[WorkflowNodeOutputMapping.from_dict(mapping) for mapping in node['output_mappings']],
             input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
             output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
-            _template_metadata=node.get('_template_metadata')
+            template_metadata=node.get('template_metadata')
         )
         return instance
 

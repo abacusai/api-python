@@ -592,14 +592,14 @@ class DocstoreUtils:
                 cls.EMBEDDED_TEXT) or info.get(cls.PAGE_TEXT) or '' for info in page_infos)
             page_texts = None
             for k in [cls.PAGE_MARKDOWN, cls.PAGE_LLM_OCR, cls.PAGE_TABLE_TEXT]:
-                if k in page_infos[0] and not document_data.get(cls.PAGE_MARKDOWN):
+                if page_infos[0].get(k) and not document_data.get(cls.PAGE_MARKDOWN):
                     document_data[cls.PAGE_MARKDOWN] = page_texts = [
                         page.get(k, '') for page in page_infos]
                     break
-            if not page_texts and cls.EXTRACTED_TEXT in page_infos[0]:
+            if not page_texts and page_infos[0].get(cls.EXTRACTED_TEXT):
                 page_texts = [page.get(cls.EXTRACTED_TEXT, '')
                               for page in page_infos]
-            elif not page_texts and cls.TOKENS in page_infos[0]:
+            elif not page_texts and page_infos[0].get(cls.TOKENS):
                 page_texts = [tokens_to_text(pg[cls.TOKENS])
                               for pg in page_infos]
             if page_texts:

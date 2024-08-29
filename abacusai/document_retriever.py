@@ -107,7 +107,7 @@ class DocumentRetriever(AbstractApiClass):
         List all the document retriever versions with a given ID.
 
         Args:
-            limit (int): The number of vector store versions to retrieve.
+            limit (int): The number of vector store versions to retrieve. The maximum value is 100.
             start_after_version (str): An offset parameter to exclude all document retriever versions up to this specified one.
 
         Returns:

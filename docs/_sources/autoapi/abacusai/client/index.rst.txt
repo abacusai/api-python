@@ -536,7 +536,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.7'
+      :value: '1.4.8'
 
 
 
@@ -986,6 +986,20 @@ Module Contents
 
 
 
+   .. py:method:: update_feature_group_version_limit(feature_group_id, version_limit)
+
+      Updates the version limit for the feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param version_limit: The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+      :type version_limit: int
+
+      :returns: The updated feature group.
+      :rtype: FeatureGroup
+
+
+
    .. py:method:: get_feature_group_version_export_download_url(feature_group_export_id)
 
       Get a link to download the feature group version.
@@ -1226,6 +1240,20 @@ Module Contents
 
 
 
+   .. py:method:: update_dataset_version_limit(dataset_id, version_limit)
+
+      Updates the version limit for the specified dataset.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param version_limit: The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+      :type version_limit: int
+
+      :returns: The updated dataset.
+      :rtype: Dataset
+
+
+
    .. py:method:: get_file_connector_instructions(bucket, write_permission = False)
 
       Retrieves verification information to create a data connector to a cloud storage bucket.
@@ -1319,7 +1347,7 @@ Module Contents
       Get the authentication details for a given connector.
 
       :param service: The service name.
-      :type service: str
+      :type service: ApplicationConnectorType
 
       :returns: The application connector with the authentication details.
       :rtype: ApplicationConnector
@@ -2936,7 +2964,7 @@ Module Contents
 
       :param document_retriever_id: A unique string identifier associated with the document retriever.
       :type document_retriever_id: str
-      :param limit: The number of vector store versions to retrieve.
+      :param limit: The number of vector store versions to retrieve. The maximum value is 100.
       :type limit: int
       :param start_after_version: An offset parameter to exclude all document retriever versions up to this specified one.
       :type start_after_version: str
@@ -3781,6 +3809,17 @@ Module Contents
 
 
 
+   .. py:method:: execute_python(source_code)
+
+      Executes the given source code.
+
+      :param source_code: The source code to execute.
+      :type source_code: str
+
+      :returns: stdout, stderr, exception for source_code execution
+
+
+
    .. py:method:: _get_agent_app_request_id()
 
       Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.
@@ -4582,7 +4621,7 @@ Module Contents
 
 
 
-   .. py:method:: create_feature_group(table_name, sql, description = None)
+   .. py:method:: create_feature_group(table_name, sql, description = None, version_limit = 30)
 
       Creates a new FeatureGroup from a SQL statement.
 
@@ -4592,13 +4631,15 @@ Module Contents
       :type sql: str
       :param description: The description about the FeatureGroup.
       :type description: str
+      :param version_limit: The number of versions to preserve for the FeatureGroup (minimum 30).
+      :type version_limit: int
 
       :returns: The created FeatureGroup.
       :rtype: FeatureGroup
 
 
 
-   .. py:method:: create_feature_group_from_template(table_name, feature_group_template_id, template_bindings = None, should_attach_feature_group_to_template = True, description = None)
+   .. py:method:: create_feature_group_from_template(table_name, feature_group_template_id, template_bindings = None, should_attach_feature_group_to_template = True, description = None, version_limit = 30)
 
       Creates a new feature group from a SQL statement.
 
@@ -4612,13 +4653,15 @@ Module Contents
       :type should_attach_feature_group_to_template: bool
       :param description: A user-friendly description of this feature group.
       :type description: str
+      :param version_limit: The number of versions to preserve for the feature group (minimum 30).
+      :type version_limit: int
 
       :returns: The created feature group.
       :rtype: FeatureGroup
 
 
 
-   .. py:method:: create_feature_group_from_function(table_name, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None, use_gpu = None)
+   .. py:method:: create_feature_group_from_function(table_name, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None, use_gpu = None, version_limit = 30)
 
       Creates a new feature in a Feature Group from user-provided code. Currently supported code languages are Python.
 
@@ -4651,6 +4694,8 @@ Module Contents
       :type python_function_bindings: List
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
+      :param version_limit: The number of versions to preserve for the feature group (minimum 30).
+      :type version_limit: int
 
       :returns: The created feature group
       :rtype: FeatureGroup
@@ -5708,7 +5753,7 @@ Module Contents
 
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, document_processing_config = None, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, document_processing_config = None, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None, version_limit = 30)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -5746,6 +5791,8 @@ Module Contents
       :type reference_only_documentset: bool
       :param parsing_config: Custom config for dataset parsing.
       :type parsing_config: ParsingConfig
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The dataset created.
       :rtype: Dataset
@@ -5774,7 +5821,7 @@ Module Contents
 
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None, document_processing_config = None)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None, document_processing_config = None, version_limit = 30)
 
       Creates a dataset from a Database Connector.
 
@@ -5798,13 +5845,15 @@ Module Contents
       :type incremental_database_connector_config: IncrementalDatabaseConnectorConfig
       :param document_processing_config: The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).
       :type document_processing_config: DatasetDocumentProcessingConfig
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The created dataset.
       :rtype: Dataset
 
 
 
-   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, dataset_config = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, dataset_config = None, refresh_schedule = None, version_limit = 30)
 
       Creates a dataset from an Application Connector.
 
@@ -5816,6 +5865,8 @@ Module Contents
       :type dataset_config: ApplicationConnectorDatasetConfig
       :param refresh_schedule: Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
       :type refresh_schedule: str
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The created dataset.
       :rtype: Dataset
@@ -5856,7 +5907,7 @@ Module Contents
 
 
 
-   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False, document_processing_config = None)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False, document_processing_config = None, version_limit = 30)
 
       Creates a dataset and returns an upload ID that can be used to upload a file.
 
@@ -5876,6 +5927,8 @@ Module Contents
       :type merge_file_schemas: bool
       :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
       :type document_processing_config: DatasetDocumentProcessingConfig
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: A reference to be used when uploading file parts.
       :rtype: Upload
@@ -5910,7 +5963,7 @@ Module Contents
 
 
 
-   .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None)
+   .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None, version_limit = 30)
 
       Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
 
@@ -5922,6 +5975,8 @@ Module Contents
       :type update_timestamp_key: str
       :param lookup_keys: List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
       :type lookup_keys: list
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The streaming dataset created.
       :rtype: Dataset
@@ -5956,7 +6011,7 @@ Module Contents
 
 
 
-   .. py:method:: create_dataset_from_streaming_connector(table_name, streaming_connector_id, dataset_config = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_streaming_connector(table_name, streaming_connector_id, dataset_config = None, refresh_schedule = None, version_limit = 30)
 
       Creates a dataset from a Streaming Connector
 
@@ -5968,6 +6023,8 @@ Module Contents
       :type dataset_config: StreamingConnectorDatasetConfig
       :param refresh_schedule: Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. Time is specified in UTC.
       :type refresh_schedule: str
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The created dataset.
       :rtype: Dataset
@@ -7438,7 +7495,7 @@ Module Contents
 
 
 
-   .. py:method:: predict(deployment_token, deployment_id, query_data)
+   .. py:method:: predict(deployment_token, deployment_id, query_data, **kwargs)
 
       Returns a prediction for Predictive Modeling
 
@@ -9777,7 +9834,7 @@ Module Contents
 
 
 
-   .. py:method:: generate_agent_code(project_id, prompt)
+   .. py:method:: generate_agent_code(project_id, prompt, fast_mode = None)
 
       Generates the code for defining an AI Agent
 
@@ -9785,6 +9842,8 @@ Module Contents
       :type project_id: str
       :param prompt: A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out
       :type prompt: str
+      :param fast_mode: If True, runs a faster but slightly less accurate code generation pipeline
+      :type fast_mode: bool
 
 
 

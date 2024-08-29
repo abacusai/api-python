@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: FeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={}, operatorConfig={})
+.. py:class:: FeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, versionLimit=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={}, operatorConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -92,6 +92,8 @@ Module Contents
    :type pythonFunctionName: str
    :param useGpu: Whether this feature group is using gpu
    :type useGpu: bool
+   :param versionLimit: Version limit for the feature group.
+   :type versionLimit: int
    :param features: List of resolved features.
    :type features: Feature
    :param duplicateFeatures: List of duplicate features.
@@ -218,6 +220,9 @@ Module Contents
 
 
    .. py:attribute:: use_gpu
+
+
+   .. py:attribute:: version_limit
 
 
    .. py:attribute:: features
@@ -1052,6 +1057,18 @@ Module Contents
 
       :param feature_expression: The input SQL statement for the feature group.
       :type feature_expression: str
+
+      :returns: The updated feature group.
+      :rtype: FeatureGroup
+
+
+
+   .. py:method:: update_version_limit(version_limit)
+
+      Updates the version limit for the feature group.
+
+      :param version_limit: The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+      :type version_limit: int
 
       :returns: The updated feature group.
       :rtype: FeatureGroup

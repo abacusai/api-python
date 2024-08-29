@@ -568,7 +568,7 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, _template_metadata = None)
+.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -591,7 +591,7 @@ Package Contents
    :raises ValueError: If neither `function` nor `function_name` and `source_code` are provided or the inputs are invalid.
 
 
-   .. py:attribute:: _template_metadata
+   .. py:attribute:: template_metadata
 
 
    .. py:method:: from_template(template_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
@@ -2002,10 +2002,10 @@ Package Contents
    Dataset config for Confluence Application Connector
    :param location: The location of the pages to fetch
    :type location: str
+   :param space_key: The space key of the space from which we fetch pages
+   :type space_key: str
    :param pull_attachments: Whether to pull attachments for each page
    :type pull_attachments: bool
-   :param space_key: The space key to fetch pages from
-   :type space_key: str
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
    :type extract_bounding_boxes: bool
 
@@ -2014,12 +2014,12 @@ Package Contents
       :type:  str
 
 
-   .. py:attribute:: pull_attachments
-      :type:  bool
-
-
    .. py:attribute:: space_key
       :type:  str
+
+
+   .. py:attribute:: pull_attachments
+      :type:  bool
 
 
    .. py:attribute:: extract_bounding_boxes
@@ -3672,6 +3672,36 @@ Package Contents
 
    .. py:attribute:: MP4
       :value: 'MP4'
+
+
+
+   .. py:attribute:: FLV
+      :value: 'flv'
+
+
+
+   .. py:attribute:: MOV
+      :value: 'mov'
+
+
+
+   .. py:attribute:: MPG
+      :value: 'mpg'
+
+
+
+   .. py:attribute:: MPEG
+      :value: 'mpeg'
+
+
+
+   .. py:attribute:: WEBM
+      :value: 'webm'
+
+
+
+   .. py:attribute:: WMV
+      :value: 'wmv'
 
 
 

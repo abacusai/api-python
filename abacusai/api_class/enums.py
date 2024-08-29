@@ -201,6 +201,12 @@ class FileFormat(ApiEnum):
     EML = 'eml'
     MP3 = 'MP3'
     MP4 = 'MP4'
+    FLV = 'flv'
+    MOV = 'mov'
+    MPG = 'mpg'
+    MPEG = 'mpeg'
+    WEBM = 'webm'
+    WMV = 'wmv'
 
 
 class ExperimentationMode(ApiEnum):

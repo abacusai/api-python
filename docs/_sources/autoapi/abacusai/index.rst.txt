@@ -1919,7 +1919,7 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, _template_metadata = None)
+.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -1942,7 +1942,7 @@ Package Contents
    :raises ValueError: If neither `function` nor `function_name` and `source_code` are provided or the inputs are invalid.
 
 
-   .. py:attribute:: _template_metadata
+   .. py:attribute:: template_metadata
 
 
    .. py:method:: from_template(template_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
@@ -2992,10 +2992,10 @@ Package Contents
    Dataset config for Confluence Application Connector
    :param location: The location of the pages to fetch
    :type location: str
+   :param space_key: The space key of the space from which we fetch pages
+   :type space_key: str
    :param pull_attachments: Whether to pull attachments for each page
    :type pull_attachments: bool
-   :param space_key: The space key to fetch pages from
-   :type space_key: str
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
    :type extract_bounding_boxes: bool
 
@@ -3004,12 +3004,12 @@ Package Contents
       :type:  str
 
 
-   .. py:attribute:: pull_attachments
-      :type:  bool
-
-
    .. py:attribute:: space_key
       :type:  str
+
+
+   .. py:attribute:: pull_attachments
+      :type:  bool
 
 
    .. py:attribute:: extract_bounding_boxes
@@ -4511,6 +4511,36 @@ Package Contents
 
    .. py:attribute:: MP4
       :value: 'MP4'
+
+
+
+   .. py:attribute:: FLV
+      :value: 'flv'
+
+
+
+   .. py:attribute:: MOV
+      :value: 'mov'
+
+
+
+   .. py:attribute:: MPG
+      :value: 'mpg'
+
+
+
+   .. py:attribute:: MPEG
+      :value: 'mpeg'
+
+
+
+   .. py:attribute:: WEBM
+      :value: 'webm'
+
+
+
+   .. py:attribute:: WMV
+      :value: 'wmv'
 
 
 
@@ -11897,6 +11927,17 @@ Package Contents
 
 
 
+   .. py:method:: execute_python(source_code)
+
+      Executes the given source code.
+
+      :param source_code: The source code to execute.
+      :type source_code: str
+
+      :returns: stdout, stderr, exception for source_code execution
+
+
+
    .. py:method:: _get_agent_app_request_id()
 
       Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.
@@ -12698,7 +12739,7 @@ Package Contents
 
 
 
-   .. py:method:: create_feature_group(table_name, sql, description = None)
+   .. py:method:: create_feature_group(table_name, sql, description = None, version_limit = 30)
 
       Creates a new FeatureGroup from a SQL statement.
 
@@ -12708,13 +12749,15 @@ Package Contents
       :type sql: str
       :param description: The description about the FeatureGroup.
       :type description: str
+      :param version_limit: The number of versions to preserve for the FeatureGroup (minimum 30).
+      :type version_limit: int
 
       :returns: The created FeatureGroup.
       :rtype: FeatureGroup
 
 
 
-   .. py:method:: create_feature_group_from_template(table_name, feature_group_template_id, template_bindings = None, should_attach_feature_group_to_template = True, description = None)
+   .. py:method:: create_feature_group_from_template(table_name, feature_group_template_id, template_bindings = None, should_attach_feature_group_to_template = True, description = None, version_limit = 30)
 
       Creates a new feature group from a SQL statement.
 
@@ -12728,13 +12771,15 @@ Package Contents
       :type should_attach_feature_group_to_template: bool
       :param description: A user-friendly description of this feature group.
       :type description: str
+      :param version_limit: The number of versions to preserve for the feature group (minimum 30).
+      :type version_limit: int
 
       :returns: The created feature group.
       :rtype: FeatureGroup
 
 
 
-   .. py:method:: create_feature_group_from_function(table_name, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None, use_gpu = None)
+   .. py:method:: create_feature_group_from_function(table_name, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None, use_gpu = None, version_limit = 30)
 
       Creates a new feature in a Feature Group from user-provided code. Currently supported code languages are Python.
 
@@ -12767,6 +12812,8 @@ Package Contents
       :type python_function_bindings: List
       :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
       :type use_gpu: bool
+      :param version_limit: The number of versions to preserve for the feature group (minimum 30).
+      :type version_limit: int
 
       :returns: The created feature group
       :rtype: FeatureGroup
@@ -13824,7 +13871,7 @@ Package Contents
 
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, document_processing_config = None, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, document_processing_config = None, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None, version_limit = 30)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -13862,6 +13909,8 @@ Package Contents
       :type reference_only_documentset: bool
       :param parsing_config: Custom config for dataset parsing.
       :type parsing_config: ParsingConfig
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The dataset created.
       :rtype: Dataset
@@ -13890,7 +13939,7 @@ Package Contents
 
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None, document_processing_config = None)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None, document_processing_config = None, version_limit = 30)
 
       Creates a dataset from a Database Connector.
 
@@ -13914,13 +13963,15 @@ Package Contents
       :type incremental_database_connector_config: IncrementalDatabaseConnectorConfig
       :param document_processing_config: The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).
       :type document_processing_config: DatasetDocumentProcessingConfig
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The created dataset.
       :rtype: Dataset
 
 
 
-   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, dataset_config = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, dataset_config = None, refresh_schedule = None, version_limit = 30)
 
       Creates a dataset from an Application Connector.
 
@@ -13932,6 +13983,8 @@ Package Contents
       :type dataset_config: ApplicationConnectorDatasetConfig
       :param refresh_schedule: Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
       :type refresh_schedule: str
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The created dataset.
       :rtype: Dataset
@@ -13972,7 +14025,7 @@ Package Contents
 
 
 
-   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False, document_processing_config = None)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False, document_processing_config = None, version_limit = 30)
 
       Creates a dataset and returns an upload ID that can be used to upload a file.
 
@@ -13992,6 +14045,8 @@ Package Contents
       :type merge_file_schemas: bool
       :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
       :type document_processing_config: DatasetDocumentProcessingConfig
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: A reference to be used when uploading file parts.
       :rtype: Upload
@@ -14026,7 +14081,7 @@ Package Contents
 
 
 
-   .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None)
+   .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None, version_limit = 30)
 
       Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
 
@@ -14038,6 +14093,8 @@ Package Contents
       :type update_timestamp_key: str
       :param lookup_keys: List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
       :type lookup_keys: list
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The streaming dataset created.
       :rtype: Dataset
@@ -14072,7 +14129,7 @@ Package Contents
 
 
 
-   .. py:method:: create_dataset_from_streaming_connector(table_name, streaming_connector_id, dataset_config = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_streaming_connector(table_name, streaming_connector_id, dataset_config = None, refresh_schedule = None, version_limit = 30)
 
       Creates a dataset from a Streaming Connector
 
@@ -14084,6 +14141,8 @@ Package Contents
       :type dataset_config: StreamingConnectorDatasetConfig
       :param refresh_schedule: Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. Time is specified in UTC.
       :type refresh_schedule: str
+      :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
+      :type version_limit: int
 
       :returns: The created dataset.
       :rtype: Dataset
@@ -15554,7 +15613,7 @@ Package Contents
 
 
 
-   .. py:method:: predict(deployment_token, deployment_id, query_data)
+   .. py:method:: predict(deployment_token, deployment_id, query_data, **kwargs)
 
       Returns a prediction for Predictive Modeling
 
@@ -17893,7 +17952,7 @@ Package Contents
 
 
 
-   .. py:method:: generate_agent_code(project_id, prompt)
+   .. py:method:: generate_agent_code(project_id, prompt, fast_mode = None)
 
       Generates the code for defining an AI Agent
 
@@ -17901,6 +17960,8 @@ Package Contents
       :type project_id: str
       :param prompt: A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out
       :type prompt: str
+      :param fast_mode: If True, runs a faster but slightly less accurate code generation pipeline
+      :type fast_mode: bool
 
 
 
@@ -18612,6 +18673,20 @@ Package Contents
 
 
 
+   .. py:method:: update_feature_group_version_limit(feature_group_id, version_limit)
+
+      Updates the version limit for the feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param version_limit: The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+      :type version_limit: int
+
+      :returns: The updated feature group.
+      :rtype: FeatureGroup
+
+
+
    .. py:method:: get_feature_group_version_export_download_url(feature_group_export_id)
 
       Get a link to download the feature group version.
@@ -18852,6 +18927,20 @@ Package Contents
 
 
 
+   .. py:method:: update_dataset_version_limit(dataset_id, version_limit)
+
+      Updates the version limit for the specified dataset.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param version_limit: The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+      :type version_limit: int
+
+      :returns: The updated dataset.
+      :rtype: Dataset
+
+
+
    .. py:method:: get_file_connector_instructions(bucket, write_permission = False)
 
       Retrieves verification information to create a data connector to a cloud storage bucket.
@@ -18945,7 +19034,7 @@ Package Contents
       Get the authentication details for a given connector.
 
       :param service: The service name.
-      :type service: str
+      :type service: ApplicationConnectorType
 
       :returns: The application connector with the authentication details.
       :rtype: ApplicationConnector
@@ -20562,7 +20651,7 @@ Package Contents
 
       :param document_retriever_id: A unique string identifier associated with the document retriever.
       :type document_retriever_id: str
-      :param limit: The number of vector store versions to retrieve.
+      :param limit: The number of vector store versions to retrieve. The maximum value is 100.
       :type limit: int
       :param start_after_version: An offset parameter to exclude all document retriever versions up to this specified one.
       :type start_after_version: str
@@ -21495,7 +21584,7 @@ Package Contents
 
 
 
-.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={})
+.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -21540,6 +21629,8 @@ Package Contents
    :type mergeFileSchemas: bool
    :param referenceOnlyDocumentset: Signifies whether to save the data reference only. Only valid if is_documentset if True.
    :type referenceOnlyDocumentset: bool
+   :param versionLimit: Version limit for the dataset.
+   :type versionLimit: int
    :param latestDatasetVersion: The latest version of this dataset.
    :type latestDatasetVersion: DatasetVersion
    :param schema: List of resolved columns.
@@ -21604,6 +21695,9 @@ Package Contents
 
 
    .. py:attribute:: reference_only_documentset
+
+
+   .. py:attribute:: version_limit
 
 
    .. py:attribute:: schema
@@ -21778,6 +21872,18 @@ Package Contents
       :type query_arguments: str
       :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns` and `query_arguments`.
       :type sql_query: str
+
+
+
+   .. py:method:: update_version_limit(version_limit)
+
+      Updates the version limit for the specified dataset.
+
+      :param version_limit: The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+      :type version_limit: int
+
+      :returns: The updated dataset.
+      :rtype: Dataset
 
 
 
@@ -23150,7 +23256,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23211,6 +23317,8 @@ Package Contents
    :type llmDisplayName: str
    :param llmBotIcon: The icon location of the LLM model used to generate the response. Only used for system-created bots.
    :type llmBotIcon: str
+   :param formResponse: Contains form data response from the user when a Form Segment is given out by the bot.
+   :type formResponse: dict
 
 
    .. py:attribute:: role
@@ -23289,6 +23397,9 @@ Package Contents
 
 
    .. py:attribute:: llm_bot_icon
+
+
+   .. py:attribute:: form_response
 
 
    .. py:attribute:: deprecated_keys
@@ -23606,7 +23717,7 @@ Package Contents
 
       List all the document retriever versions with a given ID.
 
-      :param limit: The number of vector store versions to retrieve.
+      :param limit: The number of vector store versions to retrieve. The maximum value is 100.
       :type limit: int
       :param start_after_version: An offset parameter to exclude all document retriever versions up to this specified one.
       :type start_after_version: str
@@ -25561,7 +25672,7 @@ Package Contents
 
 
 
-.. py:class:: FeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={}, operatorConfig={})
+.. py:class:: FeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, versionLimit=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={}, operatorConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25638,6 +25749,8 @@ Package Contents
    :type pythonFunctionName: str
    :param useGpu: Whether this feature group is using gpu
    :type useGpu: bool
+   :param versionLimit: Version limit for the feature group.
+   :type versionLimit: int
    :param features: List of resolved features.
    :type features: Feature
    :param duplicateFeatures: List of duplicate features.
@@ -25764,6 +25877,9 @@ Package Contents
 
 
    .. py:attribute:: use_gpu
+
+
+   .. py:attribute:: version_limit
 
 
    .. py:attribute:: features
@@ -26598,6 +26714,18 @@ Package Contents
 
       :param feature_expression: The input SQL statement for the feature group.
       :type feature_expression: str
+
+      :returns: The updated feature group.
+      :rtype: FeatureGroup
+
+
+
+   .. py:method:: update_version_limit(version_limit)
+
+      Updates the version limit for the feature group.
+
+      :param version_limit: The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.
+      :type version_limit: int
 
       :returns: The updated feature group.
       :rtype: FeatureGroup
@@ -34527,7 +34655,7 @@ Package Contents
 
 
 
-   .. py:method:: predict(deployment_token, deployment_id, query_data)
+   .. py:method:: predict(deployment_token, deployment_id, query_data, **kwargs)
 
       Returns a prediction for Predictive Modeling
 
@@ -36777,12 +36905,14 @@ Package Contents
 
 
 
-   .. py:method:: generate_agent_code(prompt)
+   .. py:method:: generate_agent_code(prompt, fast_mode = None)
 
       Generates the code for defining an AI Agent
 
       :param prompt: A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out
       :type prompt: str
+      :param fast_mode: If True, runs a faster but slightly less accurate code generation pipeline
+      :type fast_mode: bool
 
 
 
@@ -36892,7 +37022,7 @@ Package Contents
 
 
 
-.. py:class:: ProjectFeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, featureGroupType=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectFeatureGroupSchema={}, projectConfig={}, latestFeatureGroupVersion={}, operatorConfig={})
+.. py:class:: ProjectFeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, versionLimit=None, featureGroupType=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectFeatureGroupSchema={}, projectConfig={}, latestFeatureGroupVersion={}, operatorConfig={})
 
    Bases: :py:obj:`abacusai.feature_group.FeatureGroup`
 
@@ -36969,6 +37099,8 @@ Package Contents
    :type pythonFunctionName: str
    :param useGpu: Whether this feature group is using gpu
    :type useGpu: bool
+   :param versionLimit: Version limit for the feature group.
+   :type versionLimit: int
    :param featureGroupType: Project type when the feature group is used in the context of a project.
    :type featureGroupType: str
    :param features: List of resolved features.
@@ -37101,6 +37233,9 @@ Package Contents
 
 
    .. py:attribute:: use_gpu
+
+
+   .. py:attribute:: version_limit
 
 
    .. py:attribute:: feature_group_type
@@ -39350,6 +39485,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.7'
+   :value: '1.4.8'
 
 

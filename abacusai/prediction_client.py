@@ -45,7 +45,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
 
-    def predict(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def predict(self, deployment_token: str, deployment_id: str, query_data: dict, **kwargs) -> Dict:
         """Returns a prediction for Predictive Modeling
 
         Args:
@@ -54,7 +54,7 @@ class PredictionClient(BaseApiClient):
             query_data (dict): A dictionary where the key is the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed, and the value is the unique value of the same entity."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, **kwargs}, body={'queryData': query_data, **kwargs}, server_override=prediction_url)
 
     def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: list) -> Dict:
         """Returns a list of predictions for predictive modeling.

@@ -631,14 +631,15 @@ class Project(AbstractApiClass):
         """
         return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id, agent_input_schema, agent_output_schema, workflow_graph, agent_interface, included_modules, agent_connectors, initialize_function_name, initialize_function_code)
 
-    def generate_agent_code(self, prompt: str):
+    def generate_agent_code(self, prompt: str, fast_mode: bool = None):
         """
         Generates the code for defining an AI Agent
 
         Args:
             prompt (str): A natural language prompt which describes agent specification. Describe what the agent will do, what inputs it will expect, and what outputs it will give out
+            fast_mode (bool): If True, runs a faster but slightly less accurate code generation pipeline
         """
-        return self.client.generate_agent_code(self.project_id, prompt)
+        return self.client.generate_agent_code(self.project_id, prompt, fast_mode)
 
     def list_agents(self):
         """

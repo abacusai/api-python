@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -76,6 +76,8 @@ Module Contents
    :type llmDisplayName: str
    :param llmBotIcon: The icon location of the LLM model used to generate the response. Only used for system-created bots.
    :type llmBotIcon: str
+   :param formResponse: Contains form data response from the user when a Form Segment is given out by the bot.
+   :type formResponse: dict
 
 
    .. py:attribute:: role
@@ -154,6 +156,9 @@ Module Contents
 
 
    .. py:attribute:: llm_bot_icon
+
+
+   .. py:attribute:: form_response
 
 
    .. py:attribute:: deprecated_keys

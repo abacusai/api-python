@@ -1278,7 +1278,7 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.WorkflowGraphNode">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraphNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_template_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.WorkflowGraphNode" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraphNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.WorkflowGraphNode" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
 <p>Represents a node in an Agent workflow graph.</p>
 <dl class="field-list simple">
@@ -1292,7 +1292,7 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <li><p><strong>output_schema</strong> (<a class="reference internal" href="#abacusai.api_class.WorkflowNodeOutputSchema" title="abacusai.api_class.WorkflowNodeOutputSchema"><em>WorkflowNodeOutputSchema</em></a>) – The react json schema for the output to be shown on UI.</p></li>
 <li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
 <li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
-<li><p><strong>_template_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
+<li><p><strong>template_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -1300,8 +1300,8 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.WorkflowGraphNode._template_metadata">
-<span class="sig-name descname"><span class="pre">_template_metadata</span></span><a class="headerlink" href="#abacusai.api_class.WorkflowGraphNode._template_metadata" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.WorkflowGraphNode.template_metadata">
+<span class="sig-name descname"><span class="pre">template_metadata</span></span><a class="headerlink" href="#abacusai.api_class.WorkflowGraphNode.template_metadata" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3132,10 +3132,10 @@ inheritance.</p>
 <p>Dataset config for Confluence Application Connector
 :param location: The location of the pages to fetch
 :type location: str
+:param space_key: The space key of the space from which we fetch pages
+:type space_key: str
 :param pull_attachments: Whether to pull attachments for each page
 :type pull_attachments: bool
-:param space_key: The space key to fetch pages from
-:type space_key: str
 :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
 :type extract_bounding_boxes: bool</p>
 <dl class="py attribute">
@@ -3144,13 +3144,13 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ConfluenceDatasetConfig.pull_attachments">
-<span class="sig-name descname"><span class="pre">pull_attachments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.ConfluenceDatasetConfig.pull_attachments" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.ConfluenceDatasetConfig.space_key">
+<span class="sig-name descname"><span class="pre">space_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ConfluenceDatasetConfig.space_key" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ConfluenceDatasetConfig.space_key">
-<span class="sig-name descname"><span class="pre">space_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ConfluenceDatasetConfig.space_key" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.ConfluenceDatasetConfig.pull_attachments">
+<span class="sig-name descname"><span class="pre">pull_attachments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.ConfluenceDatasetConfig.pull_attachments" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4990,6 +4990,36 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.FileFormat.MP4">
 <span class="sig-name descname"><span class="pre">MP4</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MP4'</span></em><a class="headerlink" href="#abacusai.api_class.FileFormat.MP4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FileFormat.FLV">
+<span class="sig-name descname"><span class="pre">FLV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flv'</span></em><a class="headerlink" href="#abacusai.api_class.FileFormat.FLV" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FileFormat.MOV">
+<span class="sig-name descname"><span class="pre">MOV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mov'</span></em><a class="headerlink" href="#abacusai.api_class.FileFormat.MOV" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FileFormat.MPG">
+<span class="sig-name descname"><span class="pre">MPG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mpg'</span></em><a class="headerlink" href="#abacusai.api_class.FileFormat.MPG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FileFormat.MPEG">
+<span class="sig-name descname"><span class="pre">MPEG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mpeg'</span></em><a class="headerlink" href="#abacusai.api_class.FileFormat.MPEG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FileFormat.WEBM">
+<span class="sig-name descname"><span class="pre">WEBM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webm'</span></em><a class="headerlink" href="#abacusai.api_class.FileFormat.WEBM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FileFormat.WMV">
+<span class="sig-name descname"><span class="pre">WMV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wmv'</span></em><a class="headerlink" href="#abacusai.api_class.FileFormat.WMV" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
