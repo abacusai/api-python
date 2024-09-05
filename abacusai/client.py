@@ -219,6 +219,8 @@ async def sse_asynchronous_generator(endpoint: str, headers: dict, body: dict):
                             resp = json.loads(resp)
                             resp = {snake_case(
                                 key): value for key, value in resp.items()}
+                            if 'ping' in resp:
+                                continue
                             yield resp
 
 
@@ -606,7 +608,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.8'
+    client_version = '1.4.9'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1488,7 +1490,7 @@ class ReadOnlyClient(BaseApiClient):
             application_connector_id (str): Unique string identifier for the application connector."""
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
-    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None) -> ApplicationConnector:
+    def get_connector_auth(self, service: Union[ApplicationConnectorType, str]) -> ApplicationConnector:
         """Get the authentication details for a given connector.
 
         Args:

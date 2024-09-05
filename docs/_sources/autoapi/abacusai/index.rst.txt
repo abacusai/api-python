@@ -170,6 +170,7 @@ Submodules
    /autoapi/abacusai/natural_language_explanation/index
    /autoapi/abacusai/nested_feature/index
    /autoapi/abacusai/nested_feature_schema/index
+   /autoapi/abacusai/news_search_result/index
    /autoapi/abacusai/null_violation/index
    /autoapi/abacusai/organization_external_application_settings/index
    /autoapi/abacusai/organization_group/index
@@ -221,12 +222,14 @@ Submodules
    /autoapi/abacusai/test_point_predictions/index
    /autoapi/abacusai/tone_details/index
    /autoapi/abacusai/training_config_options/index
+   /autoapi/abacusai/twitter_search_result/index
    /autoapi/abacusai/upload/index
    /autoapi/abacusai/upload_part/index
    /autoapi/abacusai/use_case/index
    /autoapi/abacusai/use_case_requirements/index
    /autoapi/abacusai/user/index
    /autoapi/abacusai/user_exception/index
+   /autoapi/abacusai/video_search_result/index
    /autoapi/abacusai/web_search_response/index
    /autoapi/abacusai/web_search_result/index
    /autoapi/abacusai/webhook/index
@@ -617,6 +620,7 @@ Classes
    abacusai.NaturalLanguageExplanation
    abacusai.NestedFeature
    abacusai.NestedFeatureSchema
+   abacusai.NewsSearchResult
    abacusai.NullViolation
    abacusai.OrganizationExternalApplicationSettings
    abacusai.OrganizationGroup
@@ -666,12 +670,14 @@ Classes
    abacusai.TestPointPredictions
    abacusai.ToneDetails
    abacusai.TrainingConfigOptions
+   abacusai.TwitterSearchResult
    abacusai.Upload
    abacusai.UploadPart
    abacusai.UseCase
    abacusai.UseCaseRequirements
    abacusai.User
    abacusai.UserException
+   abacusai.VideoSearchResult
    abacusai.WebSearchResponse
    abacusai.WebSearchResult
    abacusai.Webhook
@@ -981,6 +987,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -1032,6 +1041,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -1072,6 +1084,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -1236,6 +1251,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -1500,6 +1518,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -1639,6 +1660,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -1800,6 +1824,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(schema)
       :classmethod:
@@ -1835,6 +1864,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -1884,6 +1918,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -1912,6 +1951,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -1951,6 +1995,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -2034,6 +2083,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -2068,6 +2122,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -2146,6 +2205,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -2580,6 +2644,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -2699,6 +2767,10 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -3251,6 +3323,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -3574,6 +3650,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -3602,6 +3682,11 @@ Package Contents
 
    .. py:attribute:: OPENAI
       :value: 'OPENAI'
+
+
+
+   .. py:attribute:: OPENAI_COMPACT
+      :value: 'OPENAI_COMPACT'
 
 
 
@@ -8477,6 +8562,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -8974,6 +9063,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -9036,6 +9129,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -9073,6 +9170,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: FeatureMappingConfig
@@ -9231,6 +9333,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -9345,6 +9451,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -9396,10 +9507,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -9442,6 +9562,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(data)
       :classmethod:
@@ -9471,6 +9596,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:data:: Segment
 
@@ -9490,6 +9620,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(data)
@@ -9641,6 +9776,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ListResponseSection(items, section_key = None)
 
@@ -9751,7 +9891,7 @@ Package Contents
 
 
 
-.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, tag=None, createdAt=None, expiresAt=None, isExpired=None)
+.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, apiKeySuffix=None, tag=None, createdAt=None, expiresAt=None, isExpired=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -9764,6 +9904,8 @@ Package Contents
    :type apiKeyId: str
    :param apiKey: The unique API key scoped to a specific organization. Value will be partially obscured.
    :type apiKey: str
+   :param apiKeySuffix: The last 4 characters of the API key.
+   :type apiKeySuffix: str
    :param tag: A user-friendly tag for the API key.
    :type tag: str
    :param createdAt: The timestamp when the API key was created.
@@ -9778,6 +9920,9 @@ Package Contents
 
 
    .. py:attribute:: api_key
+
+
+   .. py:attribute:: api_key_suffix
 
 
    .. py:attribute:: tag
@@ -11081,6 +11226,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -19029,7 +19177,7 @@ Package Contents
 
 
 
-   .. py:method:: get_connector_auth(service = None)
+   .. py:method:: get_connector_auth(service)
 
       Get the authentication details for a given connector.
 
@@ -22446,6 +22594,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -23935,6 +24086,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -24550,6 +24704,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -24729,6 +24886,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -24974,6 +25134,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -25284,6 +25447,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -25661,6 +25827,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -27241,6 +27410,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -27676,6 +27848,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -27744,6 +27919,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -28119,6 +28297,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -28342,6 +28523,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -28397,6 +28581,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -28831,6 +29018,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -28931,6 +29121,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -29110,6 +29303,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -29626,6 +29822,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -29692,6 +29891,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -29743,6 +29945,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -29778,6 +29983,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -29858,6 +30066,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -30289,6 +30500,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -30911,6 +31125,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -31542,6 +31759,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -31734,6 +31954,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -31873,6 +32096,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -32272,6 +32498,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -32312,6 +32541,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -32918,6 +33150,75 @@ Package Contents
 
 
 
+.. py:class:: NewsSearchResult(client, title=None, url=None, description=None, thumbnailUrl=None, thumbnailWidth=None, thumbnailHeight=None, faviconUrl=None, datePublished=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A single news search result.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param title: The title of the news.
+   :type title: str
+   :param url: The URL of the news.
+   :type url: str
+   :param description: The description of the news.
+   :type description: str
+   :param thumbnailUrl: The URL of the image of the news.
+   :type thumbnailUrl: str
+   :param thumbnailWidth: The width of the image of the news.
+   :type thumbnailWidth: int
+   :param thumbnailHeight: The height of the image of the news.
+   :type thumbnailHeight: int
+   :param faviconUrl: The URL of the favicon of the news.
+   :type faviconUrl: str
+   :param datePublished: The date the news was published.
+   :type datePublished: str
+
+
+   .. py:attribute:: title
+
+
+   .. py:attribute:: url
+
+
+   .. py:attribute:: description
+
+
+   .. py:attribute:: thumbnail_url
+
+
+   .. py:attribute:: thumbnail_width
+
+
+   .. py:attribute:: thumbnail_height
+
+
+   .. py:attribute:: favicon_url
+
+
+   .. py:attribute:: date_published
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: NullViolation(client, name=None, violation=None, trainingNullFreq=None, predictionNullFreq=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -33061,6 +33362,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -33796,6 +34100,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -34431,6 +34738,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -36096,6 +36406,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -37288,6 +37601,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -37411,6 +37727,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -37661,6 +37980,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -38281,6 +38603,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -38526,6 +38851,9 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -38566,6 +38894,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -38789,6 +39120,70 @@ Package Contents
 
 
 
+.. py:class:: TwitterSearchResult(client, title=None, url=None, twitterName=None, twitterHandle=None, thumbnailUrl=None, thumbnailWidth=None, thumbnailHeight=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A single twitter search result.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param title: The title of the tweet.
+   :type title: str
+   :param url: The URL of the tweet.
+   :type url: str
+   :param twitterName: The name of the twitter user.
+   :type twitterName: str
+   :param twitterHandle: The handle of the twitter user.
+   :type twitterHandle: str
+   :param thumbnailUrl: The URL of the thumbnail of the tweet.
+   :type thumbnailUrl: str
+   :param thumbnailWidth: The width of the thumbnail of the tweet.
+   :type thumbnailWidth: int
+   :param thumbnailHeight: The height of the thumbnail of the tweet.
+   :type thumbnailHeight: int
+
+
+   .. py:attribute:: title
+
+
+   .. py:attribute:: url
+
+
+   .. py:attribute:: twitter_name
+
+
+   .. py:attribute:: twitter_handle
+
+
+   .. py:attribute:: thumbnail_url
+
+
+   .. py:attribute:: thumbnail_width
+
+
+   .. py:attribute:: thumbnail_height
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: Upload(client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelId=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -38854,6 +39249,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -39206,6 +39604,63 @@ Package Contents
 
    .. py:method:: __repr__()
 
+      Return repr(self).
+
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: VideoSearchResult(client, title=None, url=None, thumbnailUrl=None, motionThumbnailUrl=None, embedUrl=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A single video search result.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param title: The title of the video.
+   :type title: str
+   :param url: The URL of the video.
+   :type url: str
+   :param thumbnailUrl: The URL of the thumbnail of the video.
+   :type thumbnailUrl: str
+   :param motionThumbnailUrl: The URL of the motion thumbnail of the video.
+   :type motionThumbnailUrl: str
+   :param embedUrl: The URL of the embed of the video.
+   :type embedUrl: str
+
+
+   .. py:attribute:: title
+
+
+   .. py:attribute:: url
+
+
+   .. py:attribute:: thumbnail_url
+
+
+   .. py:attribute:: motion_thumbnail_url
+
+
+   .. py:attribute:: embed_url
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
 
    .. py:method:: to_dict()
 
@@ -39236,6 +39691,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -39297,6 +39755,9 @@ Package Contents
 
 
    .. py:method:: __repr__()
+
+      Return repr(self).
+
 
 
    .. py:method:: to_dict()
@@ -39485,6 +39946,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.8'
+   :value: '1.4.9'
 
 

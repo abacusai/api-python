@@ -147,6 +147,7 @@ from .monitor_drift_and_distributions import MonitorDriftAndDistributions
 from .natural_language_explanation import NaturalLanguageExplanation
 from .nested_feature import NestedFeature
 from .nested_feature_schema import NestedFeatureSchema
+from .news_search_result import NewsSearchResult
 from .notebook_completion import NotebookCompletion
 from .notebook_template import NotebookTemplate
 from .null_violation import NullViolation
@@ -198,16 +199,18 @@ from .streaming_sample_code import StreamingSampleCode
 from .test_point_predictions import TestPointPredictions
 from .tone_details import ToneDetails
 from .training_config_options import TrainingConfigOptions
+from .twitter_search_result import TwitterSearchResult
 from .upload import Upload
 from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
 from .user_exception import UserException
+from .video_search_result import VideoSearchResult
 from .web_search_response import WebSearchResponse
 from .web_search_result import WebSearchResult
 from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.8"
+__version__ = "1.4.9"

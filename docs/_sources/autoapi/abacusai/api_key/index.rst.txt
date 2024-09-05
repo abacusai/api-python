@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, tag=None, createdAt=None, expiresAt=None, isExpired=None)
+.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, apiKeySuffix=None, tag=None, createdAt=None, expiresAt=None, isExpired=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,8 @@ Module Contents
    :type apiKeyId: str
    :param apiKey: The unique API key scoped to a specific organization. Value will be partially obscured.
    :type apiKey: str
+   :param apiKeySuffix: The last 4 characters of the API key.
+   :type apiKeySuffix: str
    :param tag: A user-friendly tag for the API key.
    :type tag: str
    :param createdAt: The timestamp when the API key was created.
@@ -42,6 +44,9 @@ Module Contents
 
 
    .. py:attribute:: api_key
+
+
+   .. py:attribute:: api_key_suffix
 
 
    .. py:attribute:: tag

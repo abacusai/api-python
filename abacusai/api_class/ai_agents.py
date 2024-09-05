@@ -264,6 +264,8 @@ class WorkflowGraphNode(ApiClass):
                     arg_defaults = dict(zip(input_arguments, defaults))
 
             is_shortform_input_mappings = False
+            if input_mappings is None:
+                input_mappings = []
             if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
                 self.input_mappings = input_mappings
                 input_mapping_args = [input.name for input in input_mappings]
@@ -283,6 +285,8 @@ class WorkflowGraphNode(ApiClass):
             else:
                 raise ValueError('workflow_graph_node', 'Invalid input mappings. Must be a list of WorkflowNodeInputMapping or a dictionary of input mappings in the form {arg_name: node_name.outputs.prop_name}.')
 
+            if output_mappings is None:
+                output_mappings = []
             if isinstance(output_mappings, List):
                 if all(isinstance(output, WorkflowNodeOutputMapping) for output in output_mappings):
                     self.output_mappings = output_mappings
@@ -378,13 +382,13 @@ class WorkflowGraphNode(ApiClass):
 
     @classmethod
     def from_dict(cls, node: dict):
-        validate_input_dict_param(node, friendly_class_name='workflow_graph_node', must_contain=['name', 'function_name', 'source_code', 'input_mappings', 'output_mappings'])
+        validate_input_dict_param(node, friendly_class_name='workflow_graph_node', must_contain=['name', 'function_name', 'source_code'])
         instance = cls(
             name=node['name'],
             function_name=node['function_name'],
             source_code=node['source_code'],
-            input_mappings=[WorkflowNodeInputMapping.from_dict(mapping) for mapping in node['input_mappings']],
-            output_mappings=[WorkflowNodeOutputMapping.from_dict(mapping) for mapping in node['output_mappings']],
+            input_mappings=[WorkflowNodeInputMapping.from_dict(mapping) for mapping in node.get('input_mappings', [])],
+            output_mappings=[WorkflowNodeOutputMapping.from_dict(mapping) for mapping in node.get('output_mappings', [])],
             input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
             output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
             template_metadata=node.get('template_metadata')
