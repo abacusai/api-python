@@ -338,7 +338,7 @@ class WorkflowGraphNode(ApiClass):
 
         instance_input_schema = None
         if input_schema is None:
-            instance_input_schema = None
+            instance_input_schema = WorkflowNodeInputSchema(json_schema={}, ui_schema={})
         elif isinstance(input_schema, WorkflowNodeInputSchema):
             instance_input_schema = input_schema
         elif isinstance(input_schema, list) and all(isinstance(field, str) for field in input_schema):
@@ -348,7 +348,7 @@ class WorkflowGraphNode(ApiClass):
 
         instance_output_schema = None
         if output_schema is None:
-            instance_output_schema = None
+            instance_output_schema = WorkflowNodeOutputSchema(json_schema={})
         elif isinstance(output_schema, WorkflowNodeOutputSchema):
             instance_output_schema = output_schema
         elif isinstance(output_schema, list) and all(isinstance(field, str) for field in output_schema):
@@ -363,7 +363,7 @@ class WorkflowGraphNode(ApiClass):
             output_schema=instance_output_schema,
             template_metadata={
                 'template_name': template_name,
-                'configs': configs,
+                'configs': configs or {},
                 'initialized': False
             }
         )
@@ -416,13 +416,13 @@ class WorkflowGraphEdge(ApiClass):
     """
     Represents an edge in an Agent workflow graph.
 
-    To make an edge conditional, provide 'EXECUTION_CONDITION': <condition> key-value in the details dictionary.
-    The condition should be a Python expression that evaluates to a boolean value and only depends on the outputs of the source node.
+    To make an edge conditional, provide {'EXECUTION_CONDITION': '<condition>'} key-value in the details dictionary.
+    The condition should be a Pythonic expression string that evaluates to a boolean value and only depends on the outputs of the source node of the edge.
 
     Args:
         source (str): The name of the source node of the edge.
         target (str): The name of the target node of the edge.
-        details (dict): Additional details about the edge.
+        details (dict): Additional details about the edge. Like the condition for edge execution.
     """
     source: Union[str, WorkflowGraphNode]
     target: Union[str, WorkflowGraphNode]
@@ -518,6 +518,23 @@ class WorkflowNodeTemplateConfig(ApiClass):
     default_value: str = dataclasses.field(default=None)
     is_required: bool = dataclasses.field(default=False)
 
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'description': self.description,
+            'default_value': self.default_value,
+            'is_required': self.is_required
+        }
+
+    @classmethod
+    def from_dict(cls, mapping: dict):
+        return cls(
+            name=mapping['name'],
+            description=mapping.get('description'),
+            default_value=mapping.get('default_value'),
+            is_required=mapping.get('is_required', False)
+        )
+
 
 @dataclasses.dataclass
 class WorkflowNodeTemplateInput(ApiClass):
@@ -530,6 +547,19 @@ class WorkflowNodeTemplateInput(ApiClass):
     """
     name: str
     is_required: bool = dataclasses.field(default=False)
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'is_required': self.is_required
+        }
+
+    @classmethod
+    def from_dict(cls, mapping: dict):
+        return cls(
+            name=mapping['name'],
+            is_required=mapping.get('is_required', False)
+        )
 
 
 @dataclasses.dataclass

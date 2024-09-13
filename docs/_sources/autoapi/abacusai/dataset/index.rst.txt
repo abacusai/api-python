@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={})
+.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}, attachmentParsingConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -72,6 +72,8 @@ Module Contents
    :type parsingConfig: ParsingConfig
    :param documentProcessingConfig: The document processing config used for dataset (when is_documentset is True).
    :type documentProcessingConfig: DocumentProcessingConfig
+   :param attachmentParsingConfig: The attachment parsing config used for dataset (eg. for salesforce attachment parsing)
+   :type attachmentParsingConfig: AttachmentParsingConfig
 
 
    .. py:attribute:: dataset_id
@@ -146,13 +148,13 @@ Module Contents
    .. py:attribute:: document_processing_config
 
 
+   .. py:attribute:: attachment_parsing_config
+
+
    .. py:attribute:: deprecated_keys
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()

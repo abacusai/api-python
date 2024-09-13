@@ -91,6 +91,7 @@ Classes
    abacusai.api_class.DocumentProcessingConfig
    abacusai.api_class.DatasetDocumentProcessingConfig
    abacusai.api_class.IncrementalDatabaseConnectorConfig
+   abacusai.api_class.AttachmentParsingConfig
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.DatasetConfig
    abacusai.api_class.DatasetDocumentProcessingConfig
@@ -325,9 +326,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -651,14 +649,14 @@ Package Contents
 
    Represents an edge in an Agent workflow graph.
 
-   To make an edge conditional, provide 'EXECUTION_CONDITION': <condition> key-value in the details dictionary.
-   The condition should be a Python expression that evaluates to a boolean value and only depends on the outputs of the source node.
+   To make an edge conditional, provide {'EXECUTION_CONDITION': '<condition>'} key-value in the details dictionary.
+   The condition should be a Pythonic expression string that evaluates to a boolean value and only depends on the outputs of the source node of the edge.
 
    :param source: The name of the source node of the edge.
    :type source: str
    :param target: The name of the target node of the edge.
    :type target: str
-   :param details: Additional details about the edge.
+   :param details: Additional details about the edge. Like the condition for edge execution.
    :type details: dict
 
 
@@ -787,6 +785,19 @@ Package Contents
       :type:  bool
 
 
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(mapping)
+      :classmethod:
+
+
+
 .. py:class:: WorkflowNodeTemplateInput
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -806,6 +817,19 @@ Package Contents
 
    .. py:attribute:: is_required
       :type:  bool
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(mapping)
+      :classmethod:
+
 
 
 .. py:class:: WorkflowNodeTemplateOutput
@@ -868,9 +892,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -959,9 +980,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -1435,9 +1453,6 @@ Package Contents
 
    .. py:method:: __str__()
 
-      Return str(self).
-
-
 
    .. py:method:: _repr_html_()
 
@@ -1475,7 +1490,8 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   Binary large object data.
+   An object for storing and passing file data.
+   In AI Agents, if a function accepts file upload as an argument, the uploaded file BlobInput
 
    :param filename: The original filename of the blob.
    :type filename: str
@@ -1518,8 +1534,17 @@ Package Contents
    Bases: :py:obj:`Blob`
 
 
-   Binary large object data.
-   An alias for Blob, used to indicate that this is an input object.
+   An object for storing and passing file data.
+   In AI Agents, if a function accepts file upload as an argument, the uploaded file is passed as a BlobInput object.
+
+   :param filename: The original filename of the blob.
+   :type filename: str
+   :param contents: The binary contents of the blob.
+   :type contents: bytes
+   :param mime_type: The mime type of the blob.
+   :type mime_type: str
+   :param size: The size of the blob in bytes.
+   :type size: int
 
 
 .. py:class:: _ApiClassFactory
@@ -1648,9 +1673,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -1942,6 +1964,33 @@ Package Contents
 
 
    .. py:attribute:: timestamp_column
+      :type:  str
+
+
+.. py:class:: AttachmentParsingConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Config information for parsing attachments
+
+   :param feature_group_name: feature group name
+   :type feature_group_name: str
+   :param column_name: column name
+   :type column_name: str
+   :param urls: list of urls
+   :type urls: str
+
+
+   .. py:attribute:: feature_group_name
+      :type:  str
+
+
+   .. py:attribute:: column_name
+      :type:  str
+
+
+   .. py:attribute:: urls
       :type:  str
 
 
@@ -2350,9 +2399,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -2767,9 +2813,6 @@ Package Contents
 
    .. py:method:: __str__()
 
-      Return str(self).
-
-
 
    .. py:method:: _repr_html_()
 
@@ -2906,14 +2949,8 @@ Package Contents
 
    .. py:method:: __eq__(other)
 
-      Return self==value.
-
-
 
    .. py:method:: __hash__()
-
-      Return hash(self).
-
 
 
 .. py:class:: ProblemType
@@ -3673,6 +3710,11 @@ Package Contents
 
    .. py:attribute:: PDF
       :value: 'PDF'
+
+
+
+   .. py:attribute:: MD
+      :value: 'md'
 
 
 
@@ -5648,9 +5690,6 @@ Package Contents
 
    .. py:method:: __str__()
 
-      Return str(self).
-
-
 
    .. py:method:: _repr_html_()
 
@@ -6308,9 +6347,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -8172,9 +8208,6 @@ Package Contents
 
    .. py:method:: __str__()
 
-      Return str(self).
-
-
 
    .. py:method:: _repr_html_()
 
@@ -8504,9 +8537,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -8915,9 +8945,6 @@ Package Contents
 
    .. py:method:: __str__()
 
-      Return str(self).
-
-
 
    .. py:method:: _repr_html_()
 
@@ -9175,9 +9202,6 @@ Package Contents
 
    .. py:method:: __str__()
 
-      Return str(self).
-
-
 
    .. py:method:: _repr_html_()
 
@@ -9296,9 +9320,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -9510,9 +9531,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()

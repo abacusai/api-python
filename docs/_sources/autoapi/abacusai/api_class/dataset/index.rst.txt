@@ -14,6 +14,7 @@ Classes
    abacusai.api_class.dataset.DocumentProcessingConfig
    abacusai.api_class.dataset.DatasetDocumentProcessingConfig
    abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig
+   abacusai.api_class.dataset.AttachmentParsingConfig
 
 
 Module Contents
@@ -187,6 +188,33 @@ Module Contents
 
 
    .. py:attribute:: timestamp_column
+      :type:  str
+
+
+.. py:class:: AttachmentParsingConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Config information for parsing attachments
+
+   :param feature_group_name: feature group name
+   :type feature_group_name: str
+   :param column_name: column name
+   :type column_name: str
+   :param urls: list of urls
+   :type urls: str
+
+
+   .. py:attribute:: feature_group_name
+      :type:  str
+
+
+   .. py:attribute:: column_name
+      :type:  str
+
+
+   .. py:attribute:: urls
       :type:  str
 
 

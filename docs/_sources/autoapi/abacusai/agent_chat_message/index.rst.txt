@@ -1,0 +1,83 @@
+abacusai.agent_chat_message
+===========================
+
+.. py:module:: abacusai.agent_chat_message
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.agent_chat_message.AgentChatMessage
+
+
+Module Contents
+---------------
+
+.. py:class:: AgentChatMessage(client, role=None, text=None, docIds=None, keywordArguments=None, segments=None, streamedData=None, streamedSectionData=None, agentWorkflowNodeId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A single chat message with Agent Chat.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param role: The role of the message sender
+   :type role: str
+   :param text: A list of text segments for the message
+   :type text: list[dict]
+   :param docIds: A list of IDs of the uploaded document if the message has
+   :type docIds: list[str]
+   :param keywordArguments: User message only. A dictionary of keyword arguments used to generate response.
+   :type keywordArguments: dict
+   :param segments: A list of segments for the message
+   :type segments: list[dict]
+   :param streamedData: The streamed data for the message
+   :type streamedData: str
+   :param streamedSectionData: A list of streamed section data for the message
+   :type streamedSectionData: list
+   :param agentWorkflowNodeId: The workflow node name associated with the agent response.
+   :type agentWorkflowNodeId: str
+
+
+   .. py:attribute:: role
+
+
+   .. py:attribute:: text
+
+
+   .. py:attribute:: doc_ids
+
+
+   .. py:attribute:: keyword_arguments
+
+
+   .. py:attribute:: segments
+
+
+   .. py:attribute:: streamed_data
+
+
+   .. py:attribute:: streamed_section_data
+
+
+   .. py:attribute:: agent_workflow_node_id
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

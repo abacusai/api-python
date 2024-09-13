@@ -1,8 +1,9 @@
 from typing import Union
 
 from .api_class import (
-    ApplicationConnectorDatasetConfig, DatasetDocumentProcessingConfig,
-    DataType, DocumentProcessingConfig, ParsingConfig
+    ApplicationConnectorDatasetConfig, AttachmentParsingConfig,
+    DatasetDocumentProcessingConfig, DataType, DocumentProcessingConfig,
+    ParsingConfig
 )
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
@@ -40,9 +41,10 @@ class Dataset(AbstractApiClass):
             refreshSchedules (RefreshSchedule): List of schedules that determines when the next version of the dataset will be created.
             parsingConfig (ParsingConfig): The parsing config used for dataset.
             documentProcessingConfig (DocumentProcessingConfig): The document processing config used for dataset (when is_documentset is True).
+            attachmentParsingConfig (AttachmentParsingConfig): The attachment parsing config used for dataset (eg. for salesforce attachment parsing)
     """
 
-    def __init__(self, client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}):
+    def __init__(self, client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}, attachmentParsingConfig={}):
         super().__init__(client, datasetId)
         self.dataset_id = datasetId
         self.source_type = sourceType
@@ -71,11 +73,13 @@ class Dataset(AbstractApiClass):
         self.parsing_config = client._build_class(ParsingConfig, parsingConfig)
         self.document_processing_config = client._build_class(
             DocumentProcessingConfig, documentProcessingConfig)
+        self.attachment_parsing_config = client._build_class(
+            AttachmentParsingConfig, attachmentParsingConfig)
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'dataset_id': repr(self.dataset_id), f'source_type': repr(self.source_type), f'data_source': repr(self.data_source), f'created_at': repr(self.created_at), f'ignore_before': repr(self.ignore_before), f'ephemeral': repr(self.ephemeral), f'lookback_days': repr(self.lookback_days), f'database_connector_id': repr(self.database_connector_id), f'database_connector_config': repr(self.database_connector_config), f'connector_type': repr(self.connector_type), f'feature_group_table_name': repr(self.feature_group_table_name), f'application_connector_id': repr(self.application_connector_id), f'application_connector_config': repr(
-            self.application_connector_config), f'incremental': repr(self.incremental), f'is_documentset': repr(self.is_documentset), f'extract_bounding_boxes': repr(self.extract_bounding_boxes), f'merge_file_schemas': repr(self.merge_file_schemas), f'reference_only_documentset': repr(self.reference_only_documentset), f'version_limit': repr(self.version_limit), f'schema': repr(self.schema), f'refresh_schedules': repr(self.refresh_schedules), f'latest_dataset_version': repr(self.latest_dataset_version), f'parsing_config': repr(self.parsing_config), f'document_processing_config': repr(self.document_processing_config)}
+            self.application_connector_config), f'incremental': repr(self.incremental), f'is_documentset': repr(self.is_documentset), f'extract_bounding_boxes': repr(self.extract_bounding_boxes), f'merge_file_schemas': repr(self.merge_file_schemas), f'reference_only_documentset': repr(self.reference_only_documentset), f'version_limit': repr(self.version_limit), f'schema': repr(self.schema), f'refresh_schedules': repr(self.refresh_schedules), f'latest_dataset_version': repr(self.latest_dataset_version), f'parsing_config': repr(self.parsing_config), f'document_processing_config': repr(self.document_processing_config), f'attachment_parsing_config': repr(self.attachment_parsing_config)}
         class_name = "Dataset"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -88,8 +92,8 @@ class Dataset(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'dataset_id': self.dataset_id, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'feature_group_table_name': self.feature_group_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'incremental': self.incremental,
-                'is_documentset': self.is_documentset, 'extract_bounding_boxes': self.extract_bounding_boxes, 'merge_file_schemas': self.merge_file_schemas, 'reference_only_documentset': self.reference_only_documentset, 'version_limit': self.version_limit, 'schema': self._get_attribute_as_dict(self.schema), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_dataset_version': self._get_attribute_as_dict(self.latest_dataset_version), 'parsing_config': self._get_attribute_as_dict(self.parsing_config), 'document_processing_config': self._get_attribute_as_dict(self.document_processing_config)}
+        resp = {'dataset_id': self.dataset_id, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'feature_group_table_name': self.feature_group_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'incremental': self.incremental, 'is_documentset': self.is_documentset,
+                'extract_bounding_boxes': self.extract_bounding_boxes, 'merge_file_schemas': self.merge_file_schemas, 'reference_only_documentset': self.reference_only_documentset, 'version_limit': self.version_limit, 'schema': self._get_attribute_as_dict(self.schema), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_dataset_version': self._get_attribute_as_dict(self.latest_dataset_version), 'parsing_config': self._get_attribute_as_dict(self.parsing_config), 'document_processing_config': self._get_attribute_as_dict(self.document_processing_config), 'attachment_parsing_config': self._get_attribute_as_dict(self.attachment_parsing_config)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def create_version_from_file_connector(self, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None):

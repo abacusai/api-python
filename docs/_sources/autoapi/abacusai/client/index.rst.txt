@@ -536,7 +536,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.9'
+      :value: '1.4.10'
 
 
 
@@ -3665,7 +3665,7 @@ Module Contents
       execute function.
 
       :returns: The chat history for the current request being processed by the Agent.
-      :rtype: List[ChatMessage]
+      :rtype: List[AgentChatMessage]
 
 
 
@@ -3674,7 +3674,17 @@ Module Contents
       Sets the history of chat messages from the current request context.
 
       :param chat_history: The chat history associated with the current request context.
-      :type chat_history: List[ChatMessage]
+      :type chat_history: List[AgentChatMessage]
+
+
+
+   .. py:method:: get_agent_context_chat_history_for_llm()
+
+      Gets a history of chat messages from the current request context. Applicable within a AIAgent
+      execute function.
+
+      :returns: The messages in format suitable for llm.
+      :rtype: AgentConversation
 
 
 
@@ -5821,7 +5831,7 @@ Module Contents
 
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None, document_processing_config = None, version_limit = 30)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, attachment_parsing_config = None, incremental_database_connector_config = None, document_processing_config = None, version_limit = 30)
 
       Creates a dataset from a Database Connector.
 
@@ -5841,6 +5851,8 @@ Module Contents
       :type sql_query: str
       :param incremental: Signifies if the dataset is an incremental dataset.
       :type incremental: bool
+      :param attachment_parsing_config: The attachment parsing configuration. Only valid when attachments are being imported, either will take fg name and column name, or we will take list of urls to import (e.g. importing attachments via Salesforce).
+      :type attachment_parsing_config: AttachmentParsingConfig
       :param incremental_database_connector_config: The config for incremental datasets. Only valid if incremental is True
       :type incremental_database_connector_config: IncrementalDatabaseConnectorConfig
       :param document_processing_config: The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).
@@ -5979,6 +5991,22 @@ Module Contents
       :type version_limit: int
 
       :returns: The streaming dataset created.
+      :rtype: Dataset
+
+
+
+   .. py:method:: create_realtime_content_store(table_name, application_connector_id, dataset_config = None)
+
+      Creates a real-time content store dataset.
+
+      :param table_name: Organization-unique table name.
+      :type table_name: str
+      :param application_connector_id: Unique string identifier of the application connector to download data from.
+      :type application_connector_id: str
+      :param dataset_config: Dataset config for the application connector.
+      :type dataset_config: ApplicationConnectorDatasetConfig
+
+      :returns: The created dataset.
       :rtype: Dataset
 
 
@@ -9847,7 +9875,7 @@ Module Contents
 
 
 
-   .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None, stop_sequences = None)
+   .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None, stop_sequences = None, top_p = None)
 
       Generate response to the prompt using the specified model.
 
@@ -9869,6 +9897,8 @@ Module Contents
       :type json_response_schema: dict
       :param stop_sequences: Specifies the strings on which the LLM will stop generation.
       :type stop_sequences: list
+      :param top_p: The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability `top_p`. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.
+      :type top_p: float
 
       :returns: The response from the model, raw text and parsed components.
       :rtype: LlmResponse

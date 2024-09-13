@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, history={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -54,6 +54,8 @@ Module Contents
    :type llmDisplayName: str
    :param llmBotIcon: The icon location of the LLM model used to generate the most recent response. Only used for system-created bots.
    :type llmBotIcon: str
+   :param searchSuggestions: The list of search suggestions for the conversation.
+   :type searchSuggestions: list
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
 
@@ -103,6 +105,9 @@ Module Contents
    .. py:attribute:: llm_bot_icon
 
 
+   .. py:attribute:: search_suggestions
+
+
    .. py:attribute:: history
 
 
@@ -110,9 +115,6 @@ Module Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()

@@ -100,3 +100,18 @@ class IncrementalDatabaseConnectorConfig(ApiClass):
         timestamp_column (str): If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
     """
     timestamp_column: str = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class AttachmentParsingConfig(ApiClass):
+    """
+    Config information for parsing attachments
+
+    Args:
+        feature_group_name (str): feature group name
+        column_name (str): column name
+        urls (str): list of urls
+    """
+    feature_group_name: str = dataclasses.field(default=None)
+    column_name: str = dataclasses.field(default=None)
+    urls: str = dataclasses.field(default=None)

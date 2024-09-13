@@ -7,7 +7,8 @@ from .abstract import ApiClass
 @dataclasses.dataclass
 class Blob(ApiClass):
     """
-    Binary large object data.
+    An object for storing and passing file data.
+    In AI Agents, if a function accepts file upload as an argument, the uploaded file BlobInput
 
     Args:
         filename (str): The original filename of the blob.
@@ -55,8 +56,14 @@ class Blob(ApiClass):
 @dataclasses.dataclass
 class BlobInput(Blob):
     """
-    Binary large object data.
-    An alias for Blob, used to indicate that this is an input object.
+    An object for storing and passing file data.
+    In AI Agents, if a function accepts file upload as an argument, the uploaded file is passed as a BlobInput object.
+
+    Args:
+        filename (str): The original filename of the blob.
+        contents (bytes): The binary contents of the blob.
+        mime_type (str): The mime type of the blob.
+        size (int): The size of the blob in bytes.
     """
 
     def __init__(self, filename: str = None, contents: bytes = None, mime_type: str = None, size: int = None):

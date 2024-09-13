@@ -1,6 +1,7 @@
 from .abacus_api import AbacusApi
 from .address import Address
 from .agent import Agent
+from .agent_chat_message import AgentChatMessage
 from .agent_conversation import AgentConversation
 from .agent_data_document_info import AgentDataDocumentInfo
 from .agent_data_execution_result import AgentDataExecutionResult
@@ -213,4 +214,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.9"
+__version__ = "1.4.10"

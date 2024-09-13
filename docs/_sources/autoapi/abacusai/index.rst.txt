@@ -22,6 +22,7 @@ Submodules
    /autoapi/abacusai/abacus_api/index
    /autoapi/abacusai/address/index
    /autoapi/abacusai/agent/index
+   /autoapi/abacusai/agent_chat_message/index
    /autoapi/abacusai/agent_conversation/index
    /autoapi/abacusai/agent_data_document_info/index
    /autoapi/abacusai/agent_data_execution_result/index
@@ -263,6 +264,7 @@ Classes
    abacusai.AbacusApi
    abacusai.Address
    abacusai.Agent
+   abacusai.AgentChatMessage
    abacusai.AgentConversation
    abacusai.AgentDataDocumentInfo
    abacusai.AgentDataExecutionResult
@@ -314,6 +316,7 @@ Classes
    abacusai.DocumentProcessingConfig
    abacusai.DatasetDocumentProcessingConfig
    abacusai.IncrementalDatabaseConnectorConfig
+   abacusai.AttachmentParsingConfig
    abacusai.ApplicationConnectorDatasetConfig
    abacusai.ConfluenceDatasetConfig
    abacusai.GoogleAnalyticsDatasetConfig
@@ -728,9 +731,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -791,9 +791,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -891,9 +888,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -966,6 +960,72 @@ Package Contents
 
 
 
+.. py:class:: AgentChatMessage(client, role=None, text=None, docIds=None, keywordArguments=None, segments=None, streamedData=None, streamedSectionData=None, agentWorkflowNodeId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A single chat message with Agent Chat.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param role: The role of the message sender
+   :type role: str
+   :param text: A list of text segments for the message
+   :type text: list[dict]
+   :param docIds: A list of IDs of the uploaded document if the message has
+   :type docIds: list[str]
+   :param keywordArguments: User message only. A dictionary of keyword arguments used to generate response.
+   :type keywordArguments: dict
+   :param segments: A list of segments for the message
+   :type segments: list[dict]
+   :param streamedData: The streamed data for the message
+   :type streamedData: str
+   :param streamedSectionData: A list of streamed section data for the message
+   :type streamedSectionData: list
+   :param agentWorkflowNodeId: The workflow node name associated with the agent response.
+   :type agentWorkflowNodeId: str
+
+
+   .. py:attribute:: role
+
+
+   .. py:attribute:: text
+
+
+   .. py:attribute:: doc_ids
+
+
+   .. py:attribute:: keyword_arguments
+
+
+   .. py:attribute:: segments
+
+
+   .. py:attribute:: streamed_data
+
+
+   .. py:attribute:: streamed_section_data
+
+
+   .. py:attribute:: agent_workflow_node_id
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: AgentConversation(client, messages={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -986,9 +1046,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -1041,9 +1098,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -1084,9 +1138,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -1174,9 +1225,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -1251,9 +1299,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -1361,9 +1406,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -1409,9 +1451,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -1464,9 +1503,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -1517,9 +1553,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -1597,9 +1630,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -1661,9 +1691,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -1700,9 +1727,6 @@ Package Contents
 
 
    .. py:method:: __str__()
-
-      Return str(self).
-
 
 
    .. py:method:: _repr_html_()
@@ -2026,14 +2050,14 @@ Package Contents
 
    Represents an edge in an Agent workflow graph.
 
-   To make an edge conditional, provide 'EXECUTION_CONDITION': <condition> key-value in the details dictionary.
-   The condition should be a Python expression that evaluates to a boolean value and only depends on the outputs of the source node.
+   To make an edge conditional, provide {'EXECUTION_CONDITION': '<condition>'} key-value in the details dictionary.
+   The condition should be a Pythonic expression string that evaluates to a boolean value and only depends on the outputs of the source node of the edge.
 
    :param source: The name of the source node of the edge.
    :type source: str
    :param target: The name of the target node of the edge.
    :type target: str
-   :param details: Additional details about the edge.
+   :param details: Additional details about the edge. Like the condition for edge execution.
    :type details: dict
 
 
@@ -2162,6 +2186,19 @@ Package Contents
       :type:  bool
 
 
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(mapping)
+      :classmethod:
+
+
+
 .. py:class:: WorkflowNodeTemplateInput
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -2181,6 +2218,19 @@ Package Contents
 
    .. py:attribute:: is_required
       :type:  bool
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(mapping)
+      :classmethod:
+
 
 
 .. py:class:: WorkflowNodeTemplateOutput
@@ -2664,7 +2714,8 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   Binary large object data.
+   An object for storing and passing file data.
+   In AI Agents, if a function accepts file upload as an argument, the uploaded file BlobInput
 
    :param filename: The original filename of the blob.
    :type filename: str
@@ -2707,8 +2758,17 @@ Package Contents
    Bases: :py:obj:`Blob`
 
 
-   Binary large object data.
-   An alias for Blob, used to indicate that this is an input object.
+   An object for storing and passing file data.
+   In AI Agents, if a function accepts file upload as an argument, the uploaded file is passed as a BlobInput object.
+
+   :param filename: The original filename of the blob.
+   :type filename: str
+   :param contents: The binary contents of the blob.
+   :type contents: bytes
+   :param mime_type: The mime type of the blob.
+   :type mime_type: str
+   :param size: The size of the blob in bytes.
+   :type size: int
 
 
 .. py:class:: DatasetConfig
@@ -3027,6 +3087,33 @@ Package Contents
 
 
    .. py:attribute:: timestamp_column
+      :type:  str
+
+
+.. py:class:: AttachmentParsingConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Config information for parsing attachments
+
+   :param feature_group_name: feature group name
+   :type feature_group_name: str
+   :param column_name: column name
+   :type column_name: str
+   :param urls: list of urls
+   :type urls: str
+
+
+   .. py:attribute:: feature_group_name
+      :type:  str
+
+
+   .. py:attribute:: column_name
+      :type:  str
+
+
+   .. py:attribute:: urls
       :type:  str
 
 
@@ -3769,14 +3856,8 @@ Package Contents
 
    .. py:method:: __eq__(other)
 
-      Return self==value.
-
-
 
    .. py:method:: __hash__()
-
-      Return hash(self).
-
 
 
 .. py:class:: ProblemType
@@ -4536,6 +4617,11 @@ Package Contents
 
    .. py:attribute:: PDF
       :value: 'PDF'
+
+
+
+   .. py:attribute:: MD
+      :value: 'md'
 
 
 
@@ -9878,9 +9964,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -9941,9 +10024,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -10025,9 +10105,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -10083,9 +10160,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -10298,9 +10372,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -10761,9 +10832,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -10898,9 +10966,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -10947,9 +11012,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -10990,9 +11052,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -11064,9 +11123,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -11149,9 +11205,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -11226,9 +11279,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -11931,7 +11981,7 @@ Package Contents
       execute function.
 
       :returns: The chat history for the current request being processed by the Agent.
-      :rtype: List[ChatMessage]
+      :rtype: List[AgentChatMessage]
 
 
 
@@ -11940,7 +11990,17 @@ Package Contents
       Sets the history of chat messages from the current request context.
 
       :param chat_history: The chat history associated with the current request context.
-      :type chat_history: List[ChatMessage]
+      :type chat_history: List[AgentChatMessage]
+
+
+
+   .. py:method:: get_agent_context_chat_history_for_llm()
+
+      Gets a history of chat messages from the current request context. Applicable within a AIAgent
+      execute function.
+
+      :returns: The messages in format suitable for llm.
+      :rtype: AgentConversation
 
 
 
@@ -14087,7 +14147,7 @@ Package Contents
 
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None, document_processing_config = None, version_limit = 30)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, attachment_parsing_config = None, incremental_database_connector_config = None, document_processing_config = None, version_limit = 30)
 
       Creates a dataset from a Database Connector.
 
@@ -14107,6 +14167,8 @@ Package Contents
       :type sql_query: str
       :param incremental: Signifies if the dataset is an incremental dataset.
       :type incremental: bool
+      :param attachment_parsing_config: The attachment parsing configuration. Only valid when attachments are being imported, either will take fg name and column name, or we will take list of urls to import (e.g. importing attachments via Salesforce).
+      :type attachment_parsing_config: AttachmentParsingConfig
       :param incremental_database_connector_config: The config for incremental datasets. Only valid if incremental is True
       :type incremental_database_connector_config: IncrementalDatabaseConnectorConfig
       :param document_processing_config: The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).
@@ -14245,6 +14307,22 @@ Package Contents
       :type version_limit: int
 
       :returns: The streaming dataset created.
+      :rtype: Dataset
+
+
+
+   .. py:method:: create_realtime_content_store(table_name, application_connector_id, dataset_config = None)
+
+      Creates a real-time content store dataset.
+
+      :param table_name: Organization-unique table name.
+      :type table_name: str
+      :param application_connector_id: Unique string identifier of the application connector to download data from.
+      :type application_connector_id: str
+      :param dataset_config: Dataset config for the application connector.
+      :type dataset_config: ApplicationConnectorDatasetConfig
+
+      :returns: The created dataset.
       :rtype: Dataset
 
 
@@ -18113,7 +18191,7 @@ Package Contents
 
 
 
-   .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None, stop_sequences = None)
+   .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None, stop_sequences = None, top_p = None)
 
       Generate response to the prompt using the specified model.
 
@@ -18135,6 +18213,8 @@ Package Contents
       :type json_response_schema: dict
       :param stop_sequences: Specifies the strings on which the LLM will stop generation.
       :type stop_sequences: list
+      :param top_p: The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability `top_p`. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.
+      :type top_p: float
 
       :returns: The response from the model, raw text and parsed components.
       :rtype: LlmResponse
@@ -20884,9 +20964,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -20939,9 +21016,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -20977,9 +21051,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -21037,9 +21108,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -21095,9 +21163,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -21155,9 +21220,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -21208,9 +21270,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -21279,9 +21338,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -21322,9 +21378,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -21377,9 +21430,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -21411,9 +21461,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -21444,9 +21491,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -21484,9 +21528,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -21522,9 +21563,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -21581,9 +21619,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -21680,9 +21715,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -21719,9 +21751,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -21732,7 +21761,7 @@ Package Contents
 
 
 
-.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={})
+.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}, attachmentParsingConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -21789,6 +21818,8 @@ Package Contents
    :type parsingConfig: ParsingConfig
    :param documentProcessingConfig: The document processing config used for dataset (when is_documentset is True).
    :type documentProcessingConfig: DocumentProcessingConfig
+   :param attachmentParsingConfig: The attachment parsing config used for dataset (eg. for salesforce attachment parsing)
+   :type attachmentParsingConfig: AttachmentParsingConfig
 
 
    .. py:attribute:: dataset_id
@@ -21863,13 +21894,13 @@ Package Contents
    .. py:attribute:: document_processing_config
 
 
+   .. py:attribute:: attachment_parsing_config
+
+
    .. py:attribute:: deprecated_keys
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -22197,9 +22228,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -22295,9 +22323,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -22414,9 +22439,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -22593,9 +22615,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -23179,9 +23198,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -23192,7 +23208,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, history={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23231,6 +23247,8 @@ Package Contents
    :type llmDisplayName: str
    :param llmBotIcon: The icon location of the LLM model used to generate the most recent response. Only used for system-created bots.
    :type llmBotIcon: str
+   :param searchSuggestions: The list of search suggestions for the conversation.
+   :type searchSuggestions: list
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
 
@@ -23280,6 +23298,9 @@ Package Contents
    .. py:attribute:: llm_bot_icon
 
 
+   .. py:attribute:: search_suggestions
+
+
    .. py:attribute:: history
 
 
@@ -23287,9 +23308,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -23558,9 +23576,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -23596,9 +23611,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -23645,9 +23657,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -23735,9 +23744,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -23803,9 +23809,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -24022,9 +24025,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -24085,9 +24085,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -24174,9 +24171,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -24290,9 +24284,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -24333,9 +24324,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -24412,9 +24400,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -24517,9 +24502,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -24570,9 +24552,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -24634,9 +24613,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -24704,9 +24680,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -24747,9 +24720,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -24887,9 +24857,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -24955,9 +24922,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -25135,9 +25099,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -25183,9 +25144,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -25347,9 +25305,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -25448,9 +25403,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -25486,9 +25438,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -25586,9 +25535,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -25649,9 +25595,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -25718,9 +25661,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -25827,9 +25767,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -26091,9 +26028,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -27286,9 +27220,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -27409,9 +27340,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -27548,9 +27476,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -27587,9 +27512,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -27625,9 +27547,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -27700,9 +27619,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -27753,9 +27669,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -27848,9 +27761,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -27920,9 +27830,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -27973,9 +27880,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -28047,9 +27951,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -28152,9 +28053,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -28296,9 +28194,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -28523,9 +28418,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -28582,9 +28474,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -28620,9 +28509,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -28665,9 +28551,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -28698,9 +28581,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -28748,9 +28628,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -28792,9 +28669,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -28830,9 +28704,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -28910,9 +28781,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -28979,9 +28847,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29017,9 +28882,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -29122,9 +28984,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29181,9 +29040,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29229,9 +29085,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -29303,9 +29156,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -29401,9 +29251,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -29533,9 +29380,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29621,9 +29465,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29665,9 +29506,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29698,9 +29536,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -29737,9 +29572,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -29822,9 +29654,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29891,9 +29720,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29945,9 +29771,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -29983,9 +29806,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -30033,9 +29853,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -30066,9 +29883,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -30101,9 +29915,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -30134,9 +29945,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -30189,9 +29997,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -30227,9 +30032,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -30296,9 +30098,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -30500,9 +30299,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -30950,9 +30746,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -31033,9 +30826,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -31087,9 +30877,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -31125,9 +30912,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -31199,9 +30983,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -31369,9 +31150,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -31527,9 +31305,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -31581,9 +31356,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -31619,9 +31391,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -31758,9 +31527,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -31954,9 +31720,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -31992,9 +31755,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -32096,9 +31856,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -32285,9 +32042,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -32498,9 +32252,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -32541,9 +32292,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -32590,9 +32338,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -32684,9 +32429,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -32867,9 +32609,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -32960,9 +32699,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -33008,9 +32744,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -33073,9 +32806,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -33136,9 +32866,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -33206,9 +32933,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -33255,9 +32979,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -33303,9 +33024,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -33362,9 +33080,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -33487,9 +33202,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -33530,9 +33242,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -33624,9 +33333,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -33723,9 +33429,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -34006,9 +33709,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -34099,9 +33799,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -34294,9 +33991,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -34375,9 +34069,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -34465,9 +34156,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -34548,9 +34236,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -34660,9 +34345,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -34739,9 +34421,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -34777,9 +34456,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -34862,9 +34538,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -34910,9 +34583,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -35957,9 +35627,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -36011,9 +35678,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -36059,9 +35723,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -36113,9 +35774,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -36222,9 +35880,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -36406,9 +36061,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -36463,9 +36115,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -36522,9 +36171,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -37322,9 +36968,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -37601,9 +37244,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -37650,9 +37290,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -37683,9 +37320,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -37727,9 +37361,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -37806,9 +37437,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -37917,9 +37545,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -37981,9 +37606,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -38039,9 +37661,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -38177,9 +37796,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -38336,9 +37952,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -38475,9 +38088,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -38528,9 +38138,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -38603,9 +38210,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -38641,9 +38245,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -38785,9 +38386,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -38851,9 +38449,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -38894,9 +38489,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -38953,9 +38545,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -39022,9 +38611,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -39107,9 +38693,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -39170,9 +38753,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -39249,9 +38829,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -39393,9 +38970,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -39441,9 +39015,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -39506,9 +39077,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -39560,9 +39128,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -39603,9 +39168,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -39658,9 +39220,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -39691,9 +39250,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -39756,9 +39312,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -39814,9 +39367,6 @@ Package Contents
 
 
    .. py:method:: __repr__()
-
-      Return repr(self).
-
 
 
    .. py:method:: to_dict()
@@ -39932,9 +39482,6 @@ Package Contents
 
    .. py:method:: __repr__()
 
-      Return repr(self).
-
-
 
    .. py:method:: to_dict()
 
@@ -39946,6 +39493,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.9'
+   :value: '1.4.10'
 
 

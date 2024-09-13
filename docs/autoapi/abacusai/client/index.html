@@ -52,6 +52,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../abacus_api/index.html">abacusai.abacus_api</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../address/index.html">abacusai.address</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent/index.html">abacusai.agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_chat_message/index.html">abacusai.agent_chat_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_conversation/index.html">abacusai.agent_conversation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_document_info/index.html">abacusai.agent_data_document_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_execution_result/index.html">abacusai.agent_data_execution_result</a></li>
@@ -979,7 +980,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.9'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.10'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -5170,7 +5171,7 @@ execute function.</p>
 <dd class="field-odd"><p>The chat history for the current request being processed by the Agent.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="../chat_message/index.html#abacusai.chat_message.ChatMessage" title="abacusai.chat_message.ChatMessage">ChatMessage</a>]</p>
+<dd class="field-even"><p>List[<a class="reference internal" href="../agent_chat_message/index.html#abacusai.agent_chat_message.AgentChatMessage" title="abacusai.agent_chat_message.AgentChatMessage">AgentChatMessage</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -5181,7 +5182,22 @@ execute function.</p>
 <dd><p>Sets the history of chat messages from the current request context.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_history</strong> (<em>List</em><em>[</em><a class="reference internal" href="../chat_message/index.html#abacusai.chat_message.ChatMessage" title="abacusai.chat_message.ChatMessage"><em>ChatMessage</em></a><em>]</em>) – The chat history associated with the current request context.</p>
+<dd class="field-odd"><p><strong>chat_history</strong> (<em>List</em><em>[</em><a class="reference internal" href="../agent_chat_message/index.html#abacusai.agent_chat_message.AgentChatMessage" title="abacusai.agent_chat_message.AgentChatMessage"><em>AgentChatMessage</em></a><em>]</em>) – The chat history associated with the current request context.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_agent_context_chat_history_for_llm">
+<span class="sig-name descname"><span class="pre">get_agent_context_chat_history_for_llm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_agent_context_chat_history_for_llm" title="Link to this definition"></a></dt>
+<dd><p>Gets a history of chat messages from the current request context. Applicable within a AIAgent
+execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The messages in format suitable for llm.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../agent_conversation/index.html#abacusai.agent_conversation.AgentConversation" title="abacusai.agent_conversation.AgentConversation">AgentConversation</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -7715,7 +7731,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_dataset_from_database_connector">
-<span class="sig-name descname"><span class="pre">create_dataset_from_database_connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sql_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental_database_connector_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_processing_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_dataset_from_database_connector" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_dataset_from_database_connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sql_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_parsing_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental_database_connector_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_processing_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_dataset_from_database_connector" title="Link to this definition"></a></dt>
 <dd><p>Creates a dataset from a Database Connector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -7728,6 +7744,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>refresh_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.</p></li>
 <li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override <cite>object_name</cite>, <cite>columns</cite>, <cite>timestamp_column</cite>, and <cite>query_arguments</cite>.</p></li>
 <li><p><strong>incremental</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the dataset is an incremental dataset.</p></li>
+<li><p><strong>attachment_parsing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.AttachmentParsingConfig" title="abacusai.api_class.dataset.AttachmentParsingConfig"><em>AttachmentParsingConfig</em></a>) – The attachment parsing configuration. Only valid when attachments are being imported, either will take fg name and column name, or we will take list of urls to import (e.g. importing attachments via Salesforce).</p></li>
 <li><p><strong>incremental_database_connector_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig" title="abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig"><em>IncrementalDatabaseConnectorConfig</em></a>) – The config for incremental datasets. Only valid if incremental is True</p></li>
 <li><p><strong>document_processing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><em>DatasetDocumentProcessingConfig</em></a>) – The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).</p></li>
 <li><p><strong>version_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of recent versions to preserve for the dataset (minimum 30).</p></li>
@@ -7891,6 +7908,27 @@ feature groups for those input feature groups.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The streaming dataset created.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../dataset/index.html#abacusai.dataset.Dataset" title="abacusai.dataset.Dataset">Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.create_realtime_content_store">
+<span class="sig-name descname"><span class="pre">create_realtime_content_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">application_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_realtime_content_store" title="Link to this definition"></a></dt>
+<dd><p>Creates a real-time content store dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Organization-unique table name.</p></li>
+<li><p><strong>application_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier of the application connector to download data from.</p></li>
+<li><p><strong>dataset_config</strong> (<a class="reference internal" href="../api_class/dataset_application_connector/index.html#abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig" title="abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig"><em>ApplicationConnectorDatasetConfig</em></a>) – Dataset config for the application connector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created dataset.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../dataset/index.html#abacusai.dataset.Dataset" title="abacusai.dataset.Dataset">Dataset</a></p>
@@ -12335,7 +12373,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.evaluate_prompt">
-<span class="sig-name descname"><span class="pre">evaluate_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_response_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_sequences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.evaluate_prompt" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">evaluate_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_response_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_sequences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.evaluate_prompt" title="Link to this definition"></a></dt>
 <dd><p>Generate response to the prompt using the specified model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -12349,6 +12387,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>response_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specifies the type of response to request from the LLM. One of ‘text’ and ‘json’. If set to ‘json’, the LLM will respond with a json formatted string whose schema can be specified <cite>json_response_schema</cite>. Defaults to ‘text’</p></li>
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when <cite>response_type</cite> is ‘json’. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         ‘title’: {‘type’: ‘string’, ‘description’: ‘Article title’, ‘is_required’: true},         ‘body’: {‘type’: ‘string’, ‘description’: ‘Article body’},     }</p></li>
 <li><p><strong>stop_sequences</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Specifies the strings on which the LLM will stop generation.</p></li>
+<li><p><strong>top_p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability <cite>top_p</cite>. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

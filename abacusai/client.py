@@ -35,7 +35,7 @@ from .annotations_status import AnnotationsStatus
 from .api_class import (
     AgentInterface, AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
     ApplicationConnectorDatasetConfig, ApplicationConnectorType,
-    BatchPredictionArgs, Blob, BlobInput, CPUSize,
+    AttachmentParsingConfig, BatchPredictionArgs, Blob, BlobInput, CPUSize,
     DatasetDocumentProcessingConfig, DataType, DeploymentConversationType,
     DocumentProcessingConfig, EvalArtifactType, FeatureGroupExportConfig,
     ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
@@ -608,7 +608,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.9'
+    client_version = '1.4.10'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3689,19 +3689,30 @@ class ApiClient(ReadOnlyClient):
         execute function.
 
         Returns:
-            List[ChatMessage]: The chat history for the current request being processed by the Agent.
+            List[AgentChatMessage]: The chat history for the current request being processed by the Agent.
         """
-        from .chat_message import ChatMessage
-        return get_object_from_context(self, _request_context, 'chat_history', List[ChatMessage]) or []
+        from .agent_chat_message import AgentChatMessage
+        return get_object_from_context(self, _request_context, 'chat_history', List[AgentChatMessage]) or []
 
     def set_agent_context_chat_history(self, chat_history):
         """
         Sets the history of chat messages from the current request context.
 
         Args:
-            chat_history (List[ChatMessage]): The chat history associated with the current request context.
+            chat_history (List[AgentChatMessage]): The chat history associated with the current request context.
         """
         _request_context.chat_history = chat_history
+
+    def get_agent_context_chat_history_for_llm(self):
+        """
+        Gets a history of chat messages from the current request context. Applicable within a AIAgent
+        execute function.
+
+        Returns:
+            AgentConversation: The messages in format suitable for llm.
+        """
+        deployment_conversation_id = self.get_agent_context_conversation_id()
+        return self.construct_agent_conversation_messages_for_llm(deployment_conversation_id)
 
     def get_agent_context_conversation_id(self):
         """
@@ -3833,6 +3844,10 @@ class ApiClient(ReadOnlyClient):
         """
         caller = self._get_agent_async_app_caller()
         request_id = self._get_agent_app_request_id()
+        if prompt and not isinstance(prompt, str):
+            raise ValueError('prompt must be a string')
+        if system_message and not isinstance(system_message, str):
+            raise ValueError('system_message must be a string')
         if caller and request_id:
             result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens, temperature=temperature,
                                            messages=messages, response_type=response_type, json_response_schema=json_response_schema, section_key=section_key)
@@ -5562,7 +5577,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, incremental_database_connector_config: Union[dict, IncrementalDatabaseConnectorConfig] = None, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, version_limit: int = 30) -> Dataset:
+    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, attachment_parsing_config: Union[dict, AttachmentParsingConfig] = None, incremental_database_connector_config: Union[dict, IncrementalDatabaseConnectorConfig] = None, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, version_limit: int = 30) -> Dataset:
         """Creates a dataset from a Database Connector.
 
         Args:
@@ -5574,13 +5589,14 @@ Creates a new feature group defined as the union of other feature group versions
             refresh_schedule (str): The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
             sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns`, `timestamp_column`, and `query_arguments`.
             incremental (bool): Signifies if the dataset is an incremental dataset.
+            attachment_parsing_config (AttachmentParsingConfig): The attachment parsing configuration. Only valid when attachments are being imported, either will take fg name and column name, or we will take list of urls to import (e.g. importing attachments via Salesforce).
             incremental_database_connector_config (IncrementalDatabaseConnectorConfig): The config for incremental datasets. Only valid if incremental is True
             document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).
             version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'incrementalDatabaseConnectorConfig': incremental_database_connector_config, 'documentProcessingConfig': document_processing_config, 'versionLimit': version_limit}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'attachmentParsingConfig': attachment_parsing_config, 'incrementalDatabaseConnectorConfig': incremental_database_connector_config, 'documentProcessingConfig': document_processing_config, 'versionLimit': version_limit}, parse_type=Dataset)
 
     def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None, refresh_schedule: str = None, version_limit: int = 30) -> Dataset:
         """Creates a dataset from an Application Connector.
@@ -5674,6 +5690,18 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             Dataset: The streaming dataset created."""
         return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'tableName': table_name, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys, 'versionLimit': version_limit}, parse_type=Dataset)
+
+    def create_realtime_content_store(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None) -> Dataset:
+        """Creates a real-time content store dataset.
+
+        Args:
+            table_name (str): Organization-unique table name.
+            application_connector_id (str): Unique string identifier of the application connector to download data from.
+            dataset_config (ApplicationConnectorDatasetConfig): Dataset config for the application connector.
+
+        Returns:
+            Dataset: The created dataset."""
+        return self._call_api('createRealtimeContentStore', 'POST', query_params={}, body={'tableName': table_name, 'applicationConnectorId': application_connector_id, 'datasetConfig': dataset_config}, parse_type=Dataset)
 
     def snapshot_streaming_data(self, dataset_id: str) -> DatasetVersion:
         """Snapshots the current data in the streaming dataset.
@@ -8484,7 +8512,7 @@ Creates a new feature group defined as the union of other feature group versions
             fast_mode (bool): If True, runs a faster but slightly less accurate code generation pipeline"""
         return self._call_api('generateAgentCode', 'POST', query_params={}, body={'projectId': project_id, 'prompt': prompt, 'fastMode': fast_mode})
 
-    def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, stop_sequences: list = None) -> LlmResponse:
+    def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, stop_sequences: list = None, top_p: float = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
 
         Args:
@@ -8497,10 +8525,11 @@ Creates a new feature group defined as the union of other feature group versions
             response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
             json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
             stop_sequences (list): Specifies the strings on which the LLM will stop generation.
+            top_p (float): The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability `top_p`. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
-        return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'responseType': response_type, 'jsonResponseSchema': json_response_schema, 'stopSequences': stop_sequences}, parse_type=LlmResponse)
+        return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'responseType': response_type, 'jsonResponseSchema': json_response_schema, 'stopSequences': stop_sequences, 'topP': top_p}, parse_type=LlmResponse)
 
     def render_feature_groups_for_llm(self, feature_group_ids: List, token_budget: int = None, include_definition: bool = True) -> List[LlmInput]:
         """Encode feature groups as language model inputs.

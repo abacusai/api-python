@@ -189,6 +189,7 @@ class FileFormat(ApiEnum):
     TAR = 'TAR'
     DOCX = 'DOCX'
     PDF = 'PDF'
+    MD = 'md'
     RAR = 'RAR'
     JPEG = 'JPG'
     PNG = 'PNG'

@@ -21,7 +21,8 @@ Module Contents
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   Binary large object data.
+   An object for storing and passing file data.
+   In AI Agents, if a function accepts file upload as an argument, the uploaded file BlobInput
 
    :param filename: The original filename of the blob.
    :type filename: str
@@ -64,7 +65,16 @@ Module Contents
    Bases: :py:obj:`Blob`
 
 
-   Binary large object data.
-   An alias for Blob, used to indicate that this is an input object.
+   An object for storing and passing file data.
+   In AI Agents, if a function accepts file upload as an argument, the uploaded file is passed as a BlobInput object.
+
+   :param filename: The original filename of the blob.
+   :type filename: str
+   :param contents: The binary contents of the blob.
+   :type contents: bytes
+   :param mime_type: The mime type of the blob.
+   :type mime_type: str
+   :param size: The size of the blob in bytes.
+   :type size: int
 
 
