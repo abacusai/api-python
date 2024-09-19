@@ -608,7 +608,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.10'
+    client_version = '1.4.11'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -5455,6 +5455,22 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroupVersion: A feature group version."""
         return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'variableBindings': variable_bindings}, parse_type=FeatureGroupVersion)
 
+    def set_feature_group_export_connector_config(self, feature_group_id: str, feature_group_export_config: Union[dict, FeatureGroupExportConfig]):
+        """Sets FG export config for the given feature group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the pre-existing Feature Group for which export config is to be set.
+            feature_group_export_config (FeatureGroupExportConfig): The export config to be set for the given feature group."""
+        return self._call_api('setFeatureGroupExportConnectorConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureGroupExportConfig': feature_group_export_config})
+
+    def set_export_on_materialization(self, feature_group_id: str, enable: bool):
+        """Can be used to enable or disable exporting feature group data to the export connector associated with the feature group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the pre-existing Feature Group for which export config is to be set.
+            enable (bool): If true, will enable exporting feature group to the connector. If false, will disable."""
+        return self._call_api('setExportOnMaterialization', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'enable': enable})
+
     def create_feature_group_template(self, feature_group_id: str, name: str, template_sql: str, template_variables: list, description: str = None, template_bindings: list = None, should_attach_feature_group_to_template: bool = False) -> FeatureGroupTemplate:
         """Create a feature group template.
 
@@ -7113,12 +7129,13 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config}, files=attachments, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, deployment_token: str = None, doc_infos: list = None) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
             deployment_id (str): The unique identifier to a deployment created under the project.
             message (str): A message from the user
+            deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
             external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
             llm_name (str): Name of the specific LLM backend to use to power the chat experience
@@ -7128,7 +7145,6 @@ Creates a new feature group defined as the union of other feature group versions
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
-            deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
@@ -7490,6 +7506,30 @@ Creates a new feature group defined as the union of other feature group versions
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
+
+    def start_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
+        """Starts an agent conversation.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
+            arguments (list): Positional arguments to the agent execute function.
+            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('startAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
+
+    def pause_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
+        """Pauses an agent conversation.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('pauseAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id}, server_override=prediction_url, timeout=1500)
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, batch_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.

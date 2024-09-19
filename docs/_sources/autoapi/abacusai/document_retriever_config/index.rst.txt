@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None, pruneVectors=None)
+.. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None, pruneVectors=None, indexMetadataColumns=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type scoreMultiplierColumn: str
    :param pruneVectors: Corpus specific transformation of vectors that applies dimensional reduction techniques to strip common components from the vectors.
    :type pruneVectors: bool
+   :param indexMetadataColumns: If True, metadata columns of the FG will also be used for indexing and querying.
+   :type indexMetadataColumns: bool
 
 
    .. py:attribute:: chunk_size
@@ -49,6 +51,9 @@ Module Contents
 
 
    .. py:attribute:: prune_vectors
+
+
+   .. py:attribute:: index_metadata_columns
 
 
    .. py:attribute:: deprecated_keys

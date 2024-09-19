@@ -2,7 +2,10 @@ import io
 from typing import List, Union
 
 from .annotation_config import AnnotationConfig
-from .api_class import CPUSize, MemorySize, MergeConfig, OperatorConfig, ProjectFeatureGroupConfig, SamplingConfig
+from .api_class import (
+    CPUSize, FeatureGroupExportConfig, MemorySize, MergeConfig, OperatorConfig,
+    ProjectFeatureGroupConfig, SamplingConfig
+)
 from .code_source import CodeSource
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature
@@ -983,6 +986,24 @@ class FeatureGroup(AbstractApiClass):
             list[FeatureGroupVersion]: A list of feature group versions.
         """
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_version)
+
+    def set_export_connector_config(self, feature_group_export_config: Union[dict, FeatureGroupExportConfig]):
+        """
+        Sets FG export config for the given feature group.
+
+        Args:
+            feature_group_export_config (FeatureGroupExportConfig): The export config to be set for the given feature group.
+        """
+        return self.client.set_feature_group_export_connector_config(self.feature_group_id, feature_group_export_config)
+
+    def set_export_on_materialization(self, enable: bool):
+        """
+        Can be used to enable or disable exporting feature group data to the export connector associated with the feature group.
+
+        Args:
+            enable (bool): If true, will enable exporting feature group to the connector. If false, will disable.
+        """
+        return self.client.set_export_on_materialization(self.feature_group_id, enable)
 
     def create_template(self, name: str, template_sql: str, template_variables: list, description: str = None, template_bindings: list = None, should_attach_feature_group_to_template: bool = False):
         """

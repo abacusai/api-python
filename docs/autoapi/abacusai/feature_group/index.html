@@ -1793,6 +1793,28 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.set_export_connector_config">
+<span class="sig-name descname"><span class="pre">set_export_connector_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_export_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.set_export_connector_config" title="Link to this definition"></a></dt>
+<dd><p>Sets FG export config for the given feature group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>feature_group_export_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.FeatureGroupExportConfig" title="abacusai.api_class.FeatureGroupExportConfig"><em>FeatureGroupExportConfig</em></a>) – The export config to be set for the given feature group.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.set_export_on_materialization">
+<span class="sig-name descname"><span class="pre">set_export_on_materialization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.set_export_on_materialization" title="Link to this definition"></a></dt>
+<dd><p>Can be used to enable or disable exporting feature group data to the export connector associated with the feature group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, will enable exporting feature group to the connector. If false, will disable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.create_template">
 <span class="sig-name descname"><span class="pre">create_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_sql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_variables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">should_attach_feature_group_to_template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.create_template" title="Link to this definition"></a></dt>
 <dd><p>Create a feature group template.</p>

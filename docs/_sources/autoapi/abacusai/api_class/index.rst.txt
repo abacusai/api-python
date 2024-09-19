@@ -104,6 +104,7 @@ Classes
    abacusai.api_class.SharepointDatasetConfig
    abacusai.api_class.ZendeskDatasetConfig
    abacusai.api_class.AbacusUsageMetricsDatasetConfig
+   abacusai.api_class.TeamsScraperDatasetConfig
    abacusai.api_class.FreshserviceDatasetConfig
    abacusai.api_class._ApplicationConnectorDatasetConfigFactory
    abacusai.api_class.ApiClass
@@ -1781,6 +1782,11 @@ Package Contents
 
 
 
+   .. py:attribute:: COMPREHENSIVE_FORM_AND_TABLE_MD
+      :value: 'COMPREHENSIVE_FORM_AND_TABLE_MD'
+
+
+
    .. py:attribute:: TESSERACT_FAST
       :value: 'TESSERACT_FAST'
 
@@ -1793,6 +1799,11 @@ Package Contents
 
    .. py:attribute:: AUGMENTED_LLM
       :value: 'AUGMENTED_LLM'
+
+
+
+   .. py:method:: aws_ocr_modes()
+      :classmethod:
 
 
 
@@ -2337,6 +2348,17 @@ Package Contents
 
    .. py:attribute:: include_all_feedback
       :type:  bool
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: TeamsScraperDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Teams Scraper Application Connector
 
 
    .. py:method:: __post_init__()
@@ -2909,6 +2931,8 @@ Package Contents
    :type score_multiplier_column: str
    :param prune_vectors: Transform vectors using SVD so that the average component of vectors in the corpus are removed.
    :type prune_vectors: bool
+   :param index_metadata_columns: If True, metadata columns of the FG will also be used for indexing and querying.
+   :type index_metadata_columns: bool
 
 
    .. py:attribute:: chunk_size
@@ -2932,6 +2956,10 @@ Package Contents
 
 
    .. py:attribute:: prune_vectors
+      :type:  bool
+
+
+   .. py:attribute:: index_metadata_columns
       :type:  bool
 
 
@@ -4608,6 +4636,11 @@ Package Contents
 
 
 
+   .. py:attribute:: TEAMSSCRAPER
+      :value: 'TEAMSSCRAPER'
+
+
+
 .. py:class:: StreamingConnectorType
 
    Bases: :py:obj:`ApiEnum`
@@ -5303,6 +5336,11 @@ Package Contents
 
 
 
+   .. py:attribute:: COMPREHENSIVE_FORM_AND_TABLE_MD
+      :value: 'COMPREHENSIVE_FORM_AND_TABLE_MD'
+
+
+
    .. py:attribute:: TESSERACT_FAST
       :value: 'TESSERACT_FAST'
 
@@ -5315,6 +5353,11 @@ Package Contents
 
    .. py:attribute:: AUGMENTED_LLM
       :value: 'AUGMENTED_LLM'
+
+
+
+   .. py:method:: aws_ocr_modes()
+      :classmethod:
 
 
 
@@ -5455,6 +5498,11 @@ Package Contents
 
    .. py:attribute:: MATRIX
       :value: 'MATRIX'
+
+
+
+   .. py:attribute:: AUTONOMOUS
+      :value: 'AUTONOMOUS'
 
 
 

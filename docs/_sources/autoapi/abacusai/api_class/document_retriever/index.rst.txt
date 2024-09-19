@@ -42,6 +42,8 @@ Module Contents
    :type score_multiplier_column: str
    :param prune_vectors: Transform vectors using SVD so that the average component of vectors in the corpus are removed.
    :type prune_vectors: bool
+   :param index_metadata_columns: If True, metadata columns of the FG will also be used for indexing and querying.
+   :type index_metadata_columns: bool
 
 
    .. py:attribute:: chunk_size
@@ -65,6 +67,10 @@ Module Contents
 
 
    .. py:attribute:: prune_vectors
+      :type:  bool
+
+
+   .. py:attribute:: index_metadata_columns
       :type:  bool
 
 

@@ -396,6 +396,7 @@ class ApplicationConnectorType(ApiEnum):
     GOOGLEDOCSUSER = 'GOOGLEDOCSUSER'
     ONEDRIVEUSER = 'ONEDRIVEUSER'
     JIRAAUTH = 'JIRAAUTH'
+    TEAMSSCRAPER = 'TEAMSSCRAPER'
 
 
 class StreamingConnectorType(ApiEnum):
@@ -577,9 +578,14 @@ class OcrMode(ApiEnum):
     COMPREHENSIVE = 'COMPREHENSIVE'
     COMPREHENSIVE_V2 = 'COMPREHENSIVE_V2'
     COMPREHENSIVE_TABLE_MD = 'COMPREHENSIVE_TABLE_MD'
+    COMPREHENSIVE_FORM_AND_TABLE_MD = 'COMPREHENSIVE_FORM_AND_TABLE_MD'
     TESSERACT_FAST = 'TESSERACT_FAST'
     LLM = 'LLM'
     AUGMENTED_LLM = 'AUGMENTED_LLM'
+
+    @classmethod
+    def aws_ocr_modes(cls):
+        return [cls.COMPREHENSIVE_V2, cls.COMPREHENSIVE_TABLE_MD, cls.COMPREHENSIVE_FORM_AND_TABLE_MD]
 
 
 class DocumentType(ApiEnum):
@@ -613,6 +619,7 @@ class AgentInterface(ApiEnum):
     DEFAULT = 'DEFAULT'
     CHAT = 'CHAT'
     MATRIX = 'MATRIX'
+    AUTONOMOUS = 'AUTONOMOUS'
 
 
 class ProjectConfigType(ApiEnum):

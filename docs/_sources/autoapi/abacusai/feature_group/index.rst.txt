@@ -1204,6 +1204,24 @@ Module Contents
 
 
 
+   .. py:method:: set_export_connector_config(feature_group_export_config)
+
+      Sets FG export config for the given feature group.
+
+      :param feature_group_export_config: The export config to be set for the given feature group.
+      :type feature_group_export_config: FeatureGroupExportConfig
+
+
+
+   .. py:method:: set_export_on_materialization(enable)
+
+      Can be used to enable or disable exporting feature group data to the export connector associated with the feature group.
+
+      :param enable: If true, will enable exporting feature group to the connector. If false, will disable.
+      :type enable: bool
+
+
+
    .. py:method:: create_template(name, template_sql, template_variables, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
 
       Create a feature group template.

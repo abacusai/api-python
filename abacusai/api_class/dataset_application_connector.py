@@ -172,6 +172,16 @@ class AbacusUsageMetricsDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class TeamsScraperDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for Teams Scraper Application Connector
+    """
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.TEAMSSCRAPER
+        self.is_documentset = True
+
+
+@dataclasses.dataclass
 class FreshserviceDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Freshservice Application Connector
@@ -195,4 +205,5 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.ZENDESK: ZendeskDatasetConfig,
         enums.ApplicationConnectorType.ABACUSUSAGEMETRICS: AbacusUsageMetricsDatasetConfig,
         enums.ApplicationConnectorType.FRESHSERVICE: FreshserviceDatasetConfig,
+        enums.ApplicationConnectorType.TEAMSSCRAPER: TeamsScraperDatasetConfig,
     }

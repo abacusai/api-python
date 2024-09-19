@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WorkflowNodeTemplate(client, workflowNodeTemplateId=None, name=None, functionName=None, sourceCode=None, description=None, packageRequirements=None, inputs={}, outputs={}, templateConfigs={})
+.. py:class:: WorkflowNodeTemplate(client, workflowNodeTemplateId=None, name=None, functionName=None, sourceCode=None, description=None, packageRequirements=None, tags=None, inputs={}, outputs={}, templateConfigs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type description: str
    :param packageRequirements: A list of package requirements that the node source code may need.
    :type packageRequirements: list[str]
+   :param tags: Tags to add to the workflow node template. It contains information on the intended usage of template.
+   :type tags: dict
    :param inputs: A list of inputs that the workflow node template will use.
    :type inputs: WorkflowNodeTemplateInput
    :param outputs: A list of outputs that the workflow node template will give.
@@ -60,6 +62,9 @@ Module Contents
 
 
    .. py:attribute:: package_requirements
+
+
+   .. py:attribute:: tags
 
 
    .. py:attribute:: inputs

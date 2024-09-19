@@ -536,7 +536,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.10'
+      :value: '1.4.11'
 
 
 
@@ -5653,6 +5653,28 @@ Module Contents
 
 
 
+   .. py:method:: set_feature_group_export_connector_config(feature_group_id, feature_group_export_config)
+
+      Sets FG export config for the given feature group.
+
+      :param feature_group_id: The unique ID associated with the pre-existing Feature Group for which export config is to be set.
+      :type feature_group_id: str
+      :param feature_group_export_config: The export config to be set for the given feature group.
+      :type feature_group_export_config: FeatureGroupExportConfig
+
+
+
+   .. py:method:: set_export_on_materialization(feature_group_id, enable)
+
+      Can be used to enable or disable exporting feature group data to the export connector associated with the feature group.
+
+      :param feature_group_id: The unique ID associated with the pre-existing Feature Group for which export config is to be set.
+      :type feature_group_id: str
+      :param enable: If true, will enable exporting feature group to the connector. If false, will disable.
+      :type enable: bool
+
+
+
    .. py:method:: create_feature_group_template(feature_group_id, name, template_sql, template_variables, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
 
       Create a feature group template.
@@ -7981,7 +8003,7 @@ Module Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, deployment_token = None, doc_infos = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -7989,6 +8011,8 @@ Module Contents
       :type deployment_id: str
       :param message: A message from the user
       :type message: str
+      :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
       :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
       :type deployment_conversation_id: str
       :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
@@ -8007,8 +8031,6 @@ Module Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
-      :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-      :type deployment_token: str
       :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
       :type doc_infos: list
 
@@ -8471,6 +8493,36 @@ Module Contents
 
       :returns: The result of the agent execution
       :rtype: AgentDataExecutionResult
+
+
+
+   .. py:method:: start_agent(deployment_token, deployment_id, deployment_conversation_id, arguments = None, keyword_arguments = None)
+
+      Starts an agent conversation.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
+
+
+
+   .. py:method:: pause_agent(deployment_token, deployment_id, deployment_conversation_id)
+
+      Pauses an agent conversation.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
 
 
 

@@ -132,6 +132,7 @@
 <li><p><strong>chunk_size_factors</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to <cite>chunk_size</cite>.</p></li>
 <li><p><strong>score_multiplier_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If provided, will use the values in this metadata column to modify the relevance score of returned chunks for all queries.</p></li>
 <li><p><strong>prune_vectors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Transform vectors using SVD so that the average component of vectors in the corpus are removed.</p></li>
+<li><p><strong>index_metadata_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, metadata columns of the FG will also be used for indexing and querying.</p></li>
 </ul>
 </dd>
 </dl>
@@ -163,6 +164,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.document_retriever.VectorStoreConfig.prune_vectors">
 <span class="sig-name descname"><span class="pre">prune_vectors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.document_retriever.VectorStoreConfig.prune_vectors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.document_retriever.VectorStoreConfig.index_metadata_columns">
+<span class="sig-name descname"><span class="pre">index_metadata_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.document_retriever.VectorStoreConfig.index_metadata_columns" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

@@ -321,7 +321,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.llm_response.LlmResponse">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.llm_response.</span></span><span class="sig-name descname"><span class="pre">LlmResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stopReason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codeBlocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.llm_response.LlmResponse" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.llm_response.</span></span><span class="sig-name descname"><span class="pre">LlmResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stopReason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputTokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputTokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">totalTokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codeBlocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.llm_response.LlmResponse" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>The response returned by LLM</p>
 <dl class="field-list simple">
@@ -332,6 +332,9 @@
 <li><p><strong>tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of tokens in the response.</p></li>
 <li><p><strong>stopReason</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The reason due to which the response generation stopped.</p></li>
 <li><p><strong>llmName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the LLM model used to generate the response.</p></li>
+<li><p><strong>inputTokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of input tokens used in the LLM call.</p></li>
+<li><p><strong>outputTokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of output tokens generated in the LLM response.</p></li>
+<li><p><strong>totalTokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The total number of tokens (input + output) used in the LLM interaction.</p></li>
 <li><p><strong>codeBlocks</strong> (<a class="reference internal" href="../index.html#abacusai.LlmCodeBlock" title="abacusai.LlmCodeBlock"><em>LlmCodeBlock</em></a>) – A list of parsed code blocks from raw LLM Response</p></li>
 </ul>
 </dd>
@@ -354,6 +357,21 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.llm_response.LlmResponse.llm_name">
 <span class="sig-name descname"><span class="pre">llm_name</span></span><a class="headerlink" href="#abacusai.llm_response.LlmResponse.llm_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.llm_response.LlmResponse.input_tokens">
+<span class="sig-name descname"><span class="pre">input_tokens</span></span><a class="headerlink" href="#abacusai.llm_response.LlmResponse.input_tokens" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.llm_response.LlmResponse.output_tokens">
+<span class="sig-name descname"><span class="pre">output_tokens</span></span><a class="headerlink" href="#abacusai.llm_response.LlmResponse.output_tokens" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.llm_response.LlmResponse.total_tokens">
+<span class="sig-name descname"><span class="pre">total_tokens</span></span><a class="headerlink" href="#abacusai.llm_response.LlmResponse.total_tokens" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
