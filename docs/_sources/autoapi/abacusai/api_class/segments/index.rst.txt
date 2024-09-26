@@ -17,9 +17,7 @@ Classes
 
 .. autoapisummary::
 
-   abacusai.api_class.segments.Attachment
    abacusai.api_class.segments.ResponseSection
-   abacusai.api_class.segments.AttachmentsResponseSection
    abacusai.api_class.segments.AgentFlowButtonResponseSection
    abacusai.api_class.segments.ImageUrlResponseSection
    abacusai.api_class.segments.TextResponseSection
@@ -34,46 +32,6 @@ Classes
 
 Module Contents
 ---------------
-
-.. py:class:: Attachment
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   An attachment that an agent can return to render attachments.
-
-   :param filename: The name of the file.
-   :type filename: str
-   :param mime_type: The MIME type of the file.
-   :type mime_type: str
-   :param attachment_id: The ID of the attachment.
-   :type attachment_id: str
-
-
-   .. py:attribute:: filename
-      :type:  str
-
-
-   .. py:attribute:: mime_type
-      :type:  str
-
-
-   .. py:attribute:: attachment_id
-      :type:  str
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(data)
-      :classmethod:
-
-
 
 .. py:class:: ResponseSection
 
@@ -98,41 +56,8 @@ Module Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:data:: Segment
-
-.. py:class:: AttachmentsResponseSection(attachments, section_key = None)
-
-   Bases: :py:obj:`ResponseSection`
-
-
-   A response section that an agent can return to render attachments.
-
-   :param attachments: The list of attachments to be displayed.
-   :type attachments: List[Attachment]
-
-
-   .. py:attribute:: attachments
-      :type:  List[Attachment]
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-
-   .. py:method:: from_dict(data)
-      :classmethod:
-
-
 
 .. py:class:: AgentFlowButtonResponseSection(label, agent_workflow_node_name, section_key = None)
 
@@ -202,8 +127,8 @@ Module Contents
    Bases: :py:obj:`ResponseSection`
 
 
-   A segment that an agent can return to render json and ui schema for workflow nodes.
-   This is primarily to generate dynamic schema for subsequent workflow nodes.
+   A segment that an agent can return to render json and ui schema in react-jsonschema-form format for workflow nodes.
+   This is primarily used to generate dynamic forms at runtime. If a node returns a runtime schema variable, the UI will render the form upon node execution.
 
    :param json_schema: json schema in RJSF format.
    :type json_schema: dict
@@ -277,11 +202,6 @@ Module Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ListResponseSection(items, section_key = None)

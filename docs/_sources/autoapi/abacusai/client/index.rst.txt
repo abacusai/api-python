@@ -536,7 +536,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.11'
+      :value: '1.4.12'
 
 
 
@@ -2381,7 +2381,7 @@ Module Contents
 
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
-      :param primary_key: The primary key value for which to find the feature group row
+      :param primary_key: The primary key value for which to retrieve the feature group row (only for online feature groups).
       :type primary_key: str
       :param num_rows: Maximum number of rows to return from the feature group
       :type num_rows: int
@@ -2741,7 +2741,7 @@ Module Contents
 
 
 
-   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, deployment_token = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
+   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
 
       Gets a deployment conversation.
 
@@ -2751,8 +2751,6 @@ Module Contents
       :type external_session_id: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
       :param filter_intermediate_conversation_events: If true, intermediate conversation events will be filtered out. Default is true.
       :type filter_intermediate_conversation_events: bool
       :param get_unused_document_uploads: If true, unused document uploads will be returned. Default is false.
@@ -3792,8 +3790,7 @@ Module Contents
 
    .. py:method:: streaming_evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None, section_key = None)
 
-      Generate response to the prompt using the specified model.
-      This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
+      Generate response to the prompt using the specified model. This works the same as `evaluate_prompt` but would stream the text to the UI section while generating and returns the streamed text as an object of a `str` subclass.
 
       :param prompt: Prompt to use for generation.
       :type prompt: str
@@ -3946,7 +3943,7 @@ Module Contents
    .. py:method:: _get_doc_retriever_deployment_info(document_retriever_id)
 
 
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = False)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -3981,6 +3978,8 @@ Module Contents
       :type filter_clause: str
       :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
       :type crowding_limits: dict
+      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+      :type include_text_search: bool
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -8416,7 +8415,7 @@ Module Contents
 
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = False)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -8453,6 +8452,8 @@ Module Contents
       :type filter_clause: str
       :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set. An entry in the map can also be a map specifying the limit per attribute value rather than a single limit for all values. This allows a per value limit for attributes. If an attribute value is not present in the map its limit defaults to zero.
       :type crowding_limits: dict
+      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+      :type include_text_search: bool
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -8498,7 +8499,7 @@ Module Contents
 
    .. py:method:: start_agent(deployment_token, deployment_id, deployment_conversation_id, arguments = None, keyword_arguments = None)
 
-      Starts an agent conversation.
+      Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
       :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
       :type deployment_token: str
@@ -8515,7 +8516,7 @@ Module Contents
 
    .. py:method:: pause_agent(deployment_token, deployment_id, deployment_conversation_id)
 
-      Pauses an agent conversation.
+      Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.
 
       :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
       :type deployment_token: str
@@ -9611,7 +9612,7 @@ Module Contents
 
 
 
-   .. py:method:: create_deployment_conversation(deployment_id = None, name = None, deployment_token = None, external_application_id = None)
+   .. py:method:: create_deployment_conversation(deployment_id = None, name = None, external_application_id = None)
 
       Creates a deployment conversation.
 
@@ -9619,8 +9620,6 @@ Module Contents
       :type deployment_id: str
       :param name: The name of the conversation.
       :type name: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
       :param external_application_id: The external application id associated with the deployment conversation.
       :type external_application_id: str
 
@@ -9629,7 +9628,7 @@ Module Contents
 
 
 
-   .. py:method:: delete_deployment_conversation(deployment_conversation_id, deployment_id = None, deployment_token = None)
+   .. py:method:: delete_deployment_conversation(deployment_conversation_id, deployment_id = None)
 
       Delete a Deployment Conversation.
 
@@ -9637,12 +9636,10 @@ Module Contents
       :type deployment_conversation_id: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
 
 
 
-   .. py:method:: clear_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, deployment_token = None, user_message_indices = None)
+   .. py:method:: clear_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, user_message_indices = None)
 
       Clear the message history of a Deployment Conversation.
 
@@ -9652,14 +9649,12 @@ Module Contents
       :type external_session_id: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
       :param user_message_indices: Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.
       :type user_message_indices: list
 
 
 
-   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None, deployment_token = None)
+   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None)
 
       Sets a deployment conversation message as useful or not useful
 
@@ -9677,12 +9672,10 @@ Module Contents
       :type feedback_type: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
 
 
 
-   .. py:method:: rename_deployment_conversation(deployment_conversation_id, name, deployment_id = None, deployment_token = None)
+   .. py:method:: rename_deployment_conversation(deployment_conversation_id, name, deployment_id = None)
 
       Rename a Deployment Conversation.
 
@@ -9692,8 +9685,6 @@ Module Contents
       :type name: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
 
 
 
@@ -9941,11 +9932,11 @@ Module Contents
       :type max_tokens: int
       :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
       :type temperature: float
-      :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2}]
+      :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
       :type messages: list
       :param response_type: Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
       :type response_type: str
-      :param json_response_schema: A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
+      :param json_response_schema: A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter. description (str) (required): Description of the parameter. is_required (bool) (optional): Whether the parameter is required or not. Example: json_response_schema = {'title': {'type': 'string', 'description': 'Article title', 'is_required': true}, 'body': {'type': 'string', 'description': 'Article body'}}
       :type json_response_schema: dict
       :param stop_sequences: Specifies the strings on which the LLM will stop generation.
       :type stop_sequences: list

@@ -7,8 +7,8 @@ class ExtractedFields(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            data (dict): The data for the document.
-            rawLlmResponse (str): The raw llm response. Only returned if it could not be parsed to json.
+            data (dict): The fields/data extracted from the document.
+            rawLlmResponse (str): The raw llm response. Only returned if it could not be parsed to json dict.
     """
 
     def __init__(self, client, data=None, rawLlmResponse=None):

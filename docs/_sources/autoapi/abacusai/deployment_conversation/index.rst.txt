@@ -126,7 +126,7 @@ Module Contents
 
 
 
-   .. py:method:: get(external_session_id = None, deployment_id = None, deployment_token = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
+   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
 
       Gets a deployment conversation.
 
@@ -134,8 +134,6 @@ Module Contents
       :type external_session_id: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
       :param filter_intermediate_conversation_events: If true, intermediate conversation events will be filtered out. Default is true.
       :type filter_intermediate_conversation_events: bool
       :param get_unused_document_uploads: If true, unused document uploads will be returned. Default is false.
@@ -146,18 +144,16 @@ Module Contents
 
 
 
-   .. py:method:: delete(deployment_id = None, deployment_token = None)
+   .. py:method:: delete(deployment_id = None)
 
       Delete a Deployment Conversation.
 
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
 
 
 
-   .. py:method:: clear(external_session_id = None, deployment_id = None, deployment_token = None, user_message_indices = None)
+   .. py:method:: clear(external_session_id = None, deployment_id = None, user_message_indices = None)
 
       Clear the message history of a Deployment Conversation.
 
@@ -165,14 +161,12 @@ Module Contents
       :type external_session_id: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
       :param user_message_indices: Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.
       :type user_message_indices: list
 
 
 
-   .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None, deployment_token = None)
+   .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None)
 
       Sets a deployment conversation message as useful or not useful
 
@@ -188,12 +182,10 @@ Module Contents
       :type feedback_type: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
 
 
 
-   .. py:method:: rename(name, deployment_id = None, deployment_token = None)
+   .. py:method:: rename(name, deployment_id = None)
 
       Rename a Deployment Conversation.
 
@@ -201,8 +193,6 @@ Module Contents
       :type name: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
-      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
-      :type deployment_token: str
 
 
 

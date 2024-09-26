@@ -68,45 +68,42 @@ class DeploymentConversation(AbstractApiClass):
                 self.unused_document_upload_ids, 'humanize_instructions': self.humanize_instructions, 'conversation_warning': self.conversation_warning, 'conversation_type': self.conversation_type, 'metadata': self.metadata, 'llm_display_name': self.llm_display_name, 'llm_bot_icon': self.llm_bot_icon, 'search_suggestions': self.search_suggestions, 'history': self._get_attribute_as_dict(self.history)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
-    def get(self, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False):
+    def get(self, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False):
         """
         Gets a deployment conversation.
 
         Args:
             external_session_id (str): External session ID of the conversation.
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
             filter_intermediate_conversation_events (bool): If true, intermediate conversation events will be filtered out. Default is true.
             get_unused_document_uploads (bool): If true, unused document uploads will be returned. Default is false.
 
         Returns:
             DeploymentConversation: The deployment conversation.
         """
-        return self.client.get_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, deployment_token, filter_intermediate_conversation_events, get_unused_document_uploads)
+        return self.client.get_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, filter_intermediate_conversation_events, get_unused_document_uploads)
 
-    def delete(self, deployment_id: str = None, deployment_token: str = None):
+    def delete(self, deployment_id: str = None):
         """
         Delete a Deployment Conversation.
 
         Args:
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
         """
-        return self.client.delete_deployment_conversation(self.deployment_conversation_id, deployment_id, deployment_token)
+        return self.client.delete_deployment_conversation(self.deployment_conversation_id, deployment_id)
 
-    def clear(self, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, user_message_indices: list = None):
+    def clear(self, external_session_id: str = None, deployment_id: str = None, user_message_indices: list = None):
         """
         Clear the message history of a Deployment Conversation.
 
         Args:
             external_session_id (str): The external session id associated with the deployment conversation.
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
             user_message_indices (list): Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.
         """
-        return self.client.clear_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, deployment_token, user_message_indices)
+        return self.client.clear_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, user_message_indices)
 
-    def set_feedback(self, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, feedback_type: str = None, deployment_id: str = None, deployment_token: str = None):
+    def set_feedback(self, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, feedback_type: str = None, deployment_id: str = None):
         """
         Sets a deployment conversation message as useful or not useful
 
@@ -117,20 +114,18 @@ class DeploymentConversation(AbstractApiClass):
             feedback (str): Optional feedback on why the message is useful or not useful
             feedback_type (str): Optional feedback type
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
         """
-        return self.client.set_deployment_conversation_feedback(self.deployment_conversation_id, message_index, is_useful, is_not_useful, feedback, feedback_type, deployment_id, deployment_token)
+        return self.client.set_deployment_conversation_feedback(self.deployment_conversation_id, message_index, is_useful, is_not_useful, feedback, feedback_type, deployment_id)
 
-    def rename(self, name: str, deployment_id: str = None, deployment_token: str = None):
+    def rename(self, name: str, deployment_id: str = None):
         """
         Rename a Deployment Conversation.
 
         Args:
             name (str): The new name of the conversation.
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
         """
-        return self.client.rename_deployment_conversation(self.deployment_conversation_id, name, deployment_id, deployment_token)
+        return self.client.rename_deployment_conversation(self.deployment_conversation_id, name, deployment_id)
 
     def export(self, external_session_id: str = None):
         """

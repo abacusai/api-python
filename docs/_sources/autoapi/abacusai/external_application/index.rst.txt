@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -54,6 +54,8 @@ Module Contents
    :type isSystemCreated: bool
    :param isCustomizable: Whether the external application is customizable.
    :type isCustomizable: bool
+   :param isDeprecated: Whether the external application is deprecated. Only applicable for system created bots. Deprecated external applications will not show in the UI.
+   :type isDeprecated: bool
 
 
    .. py:attribute:: name
@@ -99,6 +101,9 @@ Module Contents
 
 
    .. py:attribute:: is_customizable
+
+
+   .. py:attribute:: is_deprecated
 
 
    .. py:attribute:: deprecated_keys

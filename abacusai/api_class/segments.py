@@ -6,34 +6,6 @@ from .abstract import ApiClass
 
 
 @dataclasses.dataclass
-class Attachment(ApiClass):
-    """
-    An attachment that an agent can return to render attachments.
-
-    Args:
-        filename (str): The name of the file.
-        mime_type (str): The MIME type of the file.
-        attachment_id (str): The ID of the attachment.
-    """
-
-    filename: str
-    mime_type: str
-    attachment_id: str
-
-    def to_dict(self):
-        return {
-            'type': 'attachment',
-            'filename': self.filename,
-            'mime_type': self.mime_type,
-            'attachment_id': self.attachment_id
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict):
-        return cls(filename=data['filename'], mime_type=data['mime_type'], attachment_id=data['attachment_id'])
-
-
-@dataclasses.dataclass
 class ResponseSection(ApiClass):
     """
     A response section that an agent can return to render specific UI elements.
@@ -51,33 +23,6 @@ class ResponseSection(ApiClass):
 
 
 Segment = ResponseSection
-
-
-@dataclasses.dataclass
-class AttachmentsResponseSection(ResponseSection):
-    """
-    A response section that an agent can return to render attachments.
-
-    Args:
-        attachments (List[Attachment]): The list of attachments to be displayed.
-    """
-
-    attachments: List[Attachment]
-
-    def __init__(self, attachments: List[Attachment], section_key: str = None):
-        super().__init__(type=enums.ResponseSectionType.ATTACHMENTS, id=section_key)
-        self.attachments = attachments
-
-    def to_dict(self):
-        return {
-            'type': self.type.value,
-            'id': self.id,
-            'attachments': [attachment.to_dict() for attachment in self.attachments]
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict):
-        return cls(attachments=[Attachment.from_dict(attachment) for attachment in data['attachments']])
 
 
 @dataclasses.dataclass
@@ -140,8 +85,8 @@ class TextResponseSection(ResponseSection):
 @dataclasses.dataclass
 class RuntimeSchemaResponseSection(ResponseSection):
     """
-    A segment that an agent can return to render json and ui schema for workflow nodes.
-    This is primarily to generate dynamic schema for subsequent workflow nodes.
+    A segment that an agent can return to render json and ui schema in react-jsonschema-form format for workflow nodes.
+    This is primarily used to generate dynamic forms at runtime. If a node returns a runtime schema variable, the UI will render the form upon node execution.
 
     Args:
         json_schema (dict): json schema in RJSF format.

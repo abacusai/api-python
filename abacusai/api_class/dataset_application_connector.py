@@ -175,7 +175,14 @@ class AbacusUsageMetricsDatasetConfig(ApplicationConnectorDatasetConfig):
 class TeamsScraperDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Teams Scraper Application Connector
+
+    Args:
+        pull_messages (bool): Whether to pull messages for each channel
+        pull_transcripts (bool): Whether to pull transcripts for each channel
     """
+    pull_messages: bool = dataclasses.field(default=False)
+    pull_transcripts: bool = dataclasses.field(default=False)
+
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.TEAMSSCRAPER
         self.is_documentset = True

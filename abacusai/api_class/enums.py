@@ -2,7 +2,19 @@ from enum import Enum
 from typing import Union
 
 
+def deprecated_enums(*enum_values):
+    def enum_class_wrapper(cls):
+        cls.__deprecated_values__ = list(enum_values)
+        return cls
+    return enum_class_wrapper
+
+
 class ApiEnum(Enum):
+    __deprecated_values__ = []
+
+    def is_deprecated(self):
+        return self.value in self.__deprecated_values__
+
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value.upper() == other.upper()
@@ -135,6 +147,7 @@ class OperatorType(ApiEnum):
     CRAWLER = 'CRAWLER'
     EXTRACT_DOCUMENT_DATA = 'EXTRACT_DOCUMENT_DATA'
     DATA_GENERATION = 'DATA_GENERATION'
+    UNION = 'UNION'
 
 
 class MarkdownOperatorInputType(ApiEnum):

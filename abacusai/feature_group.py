@@ -1095,7 +1095,7 @@ class FeatureGroup(AbstractApiClass):
 
 
         Args:
-            primary_key (str): The primary key value for which to find the feature group row
+            primary_key (str): The primary key value for which to retrieve the feature group row (only for online feature groups).
             num_rows (int): Maximum number of rows to return from the feature group
 
         Returns:

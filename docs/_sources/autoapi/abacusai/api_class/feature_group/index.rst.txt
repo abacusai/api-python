@@ -23,6 +23,7 @@ Classes
    abacusai.api_class.feature_group.CrawlerTransformConfig
    abacusai.api_class.feature_group.ExtractDocumentDataConfig
    abacusai.api_class.feature_group.DataGenerationConfig
+   abacusai.api_class.feature_group.UnionTransformConfig
    abacusai.api_class.feature_group._OperatorConfigFactory
 
 
@@ -492,6 +493,30 @@ Module Contents
 
    .. py:attribute:: seed
       :type:  int
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: UnionTransformConfig
+
+   Bases: :py:obj:`OperatorConfig`
+
+
+   Takes Union of current feature group with 1 or more selected feature groups of same type.
+
+   :param feature_group_ids: List of feature group IDs to union with source FG.
+   :type feature_group_ids: List[str]
+   :param drop_non_intersecting_columns: If true, will drop columns that are not present in all feature groups. If false fills missing columns with nulls.
+   :type drop_non_intersecting_columns: bool
+
+
+   .. py:attribute:: feature_group_ids
+      :type:  List[str]
+
+
+   .. py:attribute:: drop_non_intersecting_columns
+      :type:  bool
 
 
    .. py:method:: __post_init__()

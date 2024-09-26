@@ -191,12 +191,14 @@ from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
 from .refresh_schedule import RefreshSchedule
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
+from .routing_action import RoutingAction
 from .schema import Schema
 from .streaming_auth_token import StreamingAuthToken
 from .streaming_client import StreamingClient
 from .streaming_connector import StreamingConnector
 from .streaming_row_count import StreamingRowCount
 from .streaming_sample_code import StreamingSampleCode
+from .template_node_details import TemplateNodeDetails
 from .test_point_predictions import TestPointPredictions
 from .tone_details import ToneDetails
 from .training_config_options import TrainingConfigOptions
@@ -207,6 +209,7 @@ from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
 from .user_exception import UserException
+from .video_gen_settings import VideoGenSettings
 from .video_search_result import VideoSearchResult
 from .web_search_response import WebSearchResponse
 from .web_search_result import WebSearchResult
@@ -214,4 +217,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.11"
+__version__ = "1.4.12"

@@ -310,6 +310,19 @@ Module Contents
 
    Dataset config for Teams Scraper Application Connector
 
+   :param pull_messages: Whether to pull messages for each channel
+   :type pull_messages: bool
+   :param pull_transcripts: Whether to pull transcripts for each channel
+   :type pull_transcripts: bool
+
+
+   .. py:attribute:: pull_messages
+      :type:  bool
+
+
+   .. py:attribute:: pull_transcripts
+      :type:  bool
+
 
    .. py:method:: __post_init__()
 
@@ -328,10 +341,6 @@ Module Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class

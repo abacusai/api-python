@@ -480,19 +480,18 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_feature_group_row_process_logs_by_key(self.deployment_id, primary_key_value)
 
-    def create_conversation(self, name: str = None, deployment_token: str = None, external_application_id: str = None):
+    def create_conversation(self, name: str = None, external_application_id: str = None):
         """
         Creates a deployment conversation.
 
         Args:
             name (str): The name of the conversation.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
             external_application_id (str): The external application id associated with the deployment conversation.
 
         Returns:
             DeploymentConversation: The deployment conversation.
         """
-        return self.client.create_deployment_conversation(self.deployment_id, name, deployment_token, external_application_id)
+        return self.client.create_deployment_conversation(self.deployment_id, name, external_application_id)
 
     def list_conversations(self, external_application_id: str = None, conversation_type: Union[dict, DeploymentConversationType] = None, fetch_last_llm_info: bool = False):
         """

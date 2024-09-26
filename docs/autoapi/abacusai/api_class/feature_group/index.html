@@ -142,7 +142,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.DataGenerationConfig" title="abacusai.api_class.feature_group.DataGenerationConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataGenerationConfig</span></code></a></p></td>
 <td><p>Generate synthetic data using a model for finetuning an LLM.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group._OperatorConfigFactory" title="abacusai.api_class.feature_group._OperatorConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_OperatorConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.UnionTransformConfig" title="abacusai.api_class.feature_group.UnionTransformConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnionTransformConfig</span></code></a></p></td>
+<td><p>Takes Union of current feature group with 1 or more selected feature groups of same type.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group._OperatorConfigFactory" title="abacusai.api_class.feature_group._OperatorConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_OperatorConfigFactory</span></code></a></p></td>
 <td><p>A class to select and return the the correct type of Operator Config based on a serialized OperatorConfig instance.</p></td>
 </tr>
 </tbody>
@@ -682,6 +685,36 @@ inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.feature_group.DataGenerationConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.feature_group.DataGenerationConfig.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.UnionTransformConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.feature_group.</span></span><span class="sig-name descname"><span class="pre">UnionTransformConfig</span></span><a class="headerlink" href="#abacusai.api_class.feature_group.UnionTransformConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.feature_group.OperatorConfig" title="abacusai.api_class.feature_group.OperatorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OperatorConfig</span></code></a></p>
+<p>Takes Union of current feature group with 1 or more selected feature groups of same type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_group_ids</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of feature group IDs to union with source FG.</p></li>
+<li><p><strong>drop_non_intersecting_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, will drop columns that are not present in all feature groups. If false fills missing columns with nulls.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.UnionTransformConfig.feature_group_ids">
+<span class="sig-name descname"><span class="pre">feature_group_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.feature_group.UnionTransformConfig.feature_group_ids" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.UnionTransformConfig.drop_non_intersecting_columns">
+<span class="sig-name descname"><span class="pre">drop_non_intersecting_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.UnionTransformConfig.drop_non_intersecting_columns" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.UnionTransformConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.feature_group.UnionTransformConfig.__post_init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

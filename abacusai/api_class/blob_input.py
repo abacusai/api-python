@@ -8,12 +8,12 @@ from .abstract import ApiClass
 class Blob(ApiClass):
     """
     An object for storing and passing file data.
-    In AI Agents, if a function accepts file upload as an argument, the uploaded file BlobInput
+    In AI Agents, if a function accepts file upload as an argument, the uploaded file is passed as a Blob object. If a function returns a Blob object, it will be rendered as a file download.
 
     Args:
-        filename (str): The original filename of the blob.
         contents (bytes): The binary contents of the blob.
         mime_type (str): The mime type of the blob.
+        filename (str): The original filename of the blob.
         size (int): The size of the blob in bytes.
     """
     filename: str

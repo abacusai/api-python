@@ -22,14 +22,14 @@ Module Contents
 
 
    An object for storing and passing file data.
-   In AI Agents, if a function accepts file upload as an argument, the uploaded file BlobInput
+   In AI Agents, if a function accepts file upload as an argument, the uploaded file is passed as a Blob object. If a function returns a Blob object, it will be rendered as a file download.
 
-   :param filename: The original filename of the blob.
-   :type filename: str
    :param contents: The binary contents of the blob.
    :type contents: bytes
    :param mime_type: The mime type of the blob.
    :type mime_type: str
+   :param filename: The original filename of the blob.
+   :type filename: str
    :param size: The size of the blob in bytes.
    :type size: int
 

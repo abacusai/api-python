@@ -110,14 +110,8 @@
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.segments.Attachment" title="abacusai.api_class.segments.Attachment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Attachment</span></code></a></p></td>
-<td><p>An attachment that an agent can return to render attachments.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.segments.ResponseSection" title="abacusai.api_class.segments.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.segments.ResponseSection" title="abacusai.api_class.segments.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render specific UI elements.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.segments.AttachmentsResponseSection" title="abacusai.api_class.segments.AttachmentsResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AttachmentsResponseSection</span></code></a></p></td>
-<td><p>A response section that an agent can return to render attachments.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.segments.AgentFlowButtonResponseSection" title="abacusai.api_class.segments.AgentFlowButtonResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentFlowButtonResponseSection</span></code></a></p></td>
 <td><p>A response section that an AI Agent can return to render a button.</p></td>
@@ -129,7 +123,7 @@
 <td><p>A response section that an agent can return to render text.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.segments.RuntimeSchemaResponseSection" title="abacusai.api_class.segments.RuntimeSchemaResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeSchemaResponseSection</span></code></a></p></td>
-<td><p>A segment that an agent can return to render json and ui schema for workflow nodes.</p></td>
+<td><p>A segment that an agent can return to render json and ui schema in react-jsonschema-form format for workflow nodes.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.segments.CodeResponseSection" title="abacusai.api_class.segments.CodeResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render code.</p></td>
@@ -154,55 +148,6 @@
 </section>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.Attachment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.segments.</span></span><span class="sig-name descname"><span class="pre">Attachment</span></span><a class="headerlink" href="#abacusai.api_class.segments.Attachment" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>An attachment that an agent can return to render attachments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the file.</p></li>
-<li><p><strong>mime_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The MIME type of the file.</p></li>
-<li><p><strong>attachment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the attachment.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.Attachment.filename">
-<span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.segments.Attachment.filename" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.Attachment.mime_type">
-<span class="sig-name descname"><span class="pre">mime_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.segments.Attachment.mime_type" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.Attachment.attachment_id">
-<span class="sig-name descname"><span class="pre">attachment_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.segments.Attachment.attachment_id" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.Attachment.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.Attachment.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.Attachment.from_dict">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.Attachment.from_dict" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.segments.ResponseSection">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.segments.</span></span><span class="sig-name descname"><span class="pre">ResponseSection</span></span><a class="headerlink" href="#abacusai.api_class.segments.ResponseSection" title="Link to this definition"></a></dt>
@@ -229,10 +174,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.segments.ResponseSection.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.ResponseSection.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -240,44 +182,6 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dt class="sig sig-object py" id="abacusai.api_class.segments.Segment">
 <span class="sig-prename descclassname"><span class="pre">abacusai.api_class.segments.</span></span><span class="sig-name descname"><span class="pre">Segment</span></span><a class="headerlink" href="#abacusai.api_class.segments.Segment" title="Link to this definition"></a></dt>
 <dd></dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.AttachmentsResponseSection">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.segments.</span></span><span class="sig-name descname"><span class="pre">AttachmentsResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attachments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.AttachmentsResponseSection" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.segments.ResponseSection" title="abacusai.api_class.segments.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
-<p>A response section that an agent can return to render attachments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>attachments</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.segments.Attachment" title="abacusai.api_class.segments.Attachment"><em>Attachment</em></a><em>]</em>) – The list of attachments to be displayed.</p></li>
-<li><p><strong>section_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>)</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.AttachmentsResponseSection.attachments">
-<span class="sig-name descname"><span class="pre">attachments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#abacusai.api_class.segments.Attachment" title="abacusai.api_class.segments.Attachment"><span class="pre">Attachment</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.segments.AttachmentsResponseSection.attachments" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.AttachmentsResponseSection.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.AttachmentsResponseSection.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.api_class.segments.AttachmentsResponseSection.from_dict">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.AttachmentsResponseSection.from_dict" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.segments.AgentFlowButtonResponseSection">
@@ -362,8 +266,8 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dt class="sig sig-object py" id="abacusai.api_class.segments.RuntimeSchemaResponseSection">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.segments.</span></span><span class="sig-name descname"><span class="pre">RuntimeSchemaResponseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_schema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ui_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_prop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.RuntimeSchemaResponseSection" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.segments.ResponseSection" title="abacusai.api_class.segments.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p>
-<p>A segment that an agent can return to render json and ui schema for workflow nodes.
-This is primarily to generate dynamic schema for subsequent workflow nodes.</p>
+<p>A segment that an agent can return to render json and ui schema in react-jsonschema-form format for workflow nodes.
+This is primarily used to generate dynamic forms at runtime. If a node returns a runtime schema variable, the UI will render the form upon node execution.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -458,10 +362,7 @@ This is primarily to generate dynamic schema for subsequent workflow nodes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.segments.CollapseResponseSection.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.segments.CollapseResponseSection.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 

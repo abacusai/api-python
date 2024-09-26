@@ -608,7 +608,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.11'
+    client_version = '1.4.12'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2316,7 +2316,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
-            primary_key (str): The primary key value for which to find the feature group row
+            primary_key (str): The primary key value for which to retrieve the feature group row (only for online feature groups).
             num_rows (int): Maximum number of rows to return from the feature group
 
         Returns:
@@ -2607,20 +2607,19 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat sessions with Data Science Co-pilot"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
-    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False) -> DeploymentConversation:
+    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False) -> DeploymentConversation:
         """Gets a deployment conversation.
 
         Args:
             deployment_conversation_id (str): Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
             external_session_id (str): External session ID of the conversation.
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
             filter_intermediate_conversation_events (bool): If true, intermediate conversation events will be filtered out. Default is true.
             get_unused_document_uploads (bool): If true, unused document uploads will be returned. Default is false.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads}, parse_type=DeploymentConversation, is_sync=True)
 
     def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
@@ -3825,8 +3824,7 @@ class ApiClient(ReadOnlyClient):
 
     def streaming_evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, section_key: str = None):
         """
-        Generate response to the prompt using the specified model.
-        This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
+        Generate response to the prompt using the specified model. This works the same as `evaluate_prompt` but would stream the text to the UI section while generating and returns the streamed text as an object of a `str` subclass.
 
         Args:
             prompt (str): Prompt to use for generation.
@@ -4121,7 +4119,8 @@ class ApiClient(ReadOnlyClient):
 
     def get_matching_documents(self, document_retriever_id: str, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None,
                                max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None,
-                               filter_clause: str = None, crowding_limits: Dict[str, int] = None) -> List[DocumentRetrieverLookupResult]:
+                               filter_clause: str = None, crowding_limits: Dict[str, int] = None,
+                               include_text_search: bool = False) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -4143,12 +4142,13 @@ class ApiClient(ReadOnlyClient):
             required_phrases (list): If provided, each result will have at least one of the phrases.
             filter_clause (str): If provided, filter the results of the query using this sql where clause.
             crowding_limits (dict): A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
+            include_text_search (bool): If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
 
         deployment_token, deployment_id = self._get_doc_retriever_deployment_info(
             document_retriever_id)
-        return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column, min_score, required_phrases, filter_clause, crowding_limits)
+        return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column, min_score, required_phrases, filter_clause, crowding_limits, include_text_search=include_text_search)
 
     def create_model_from_files(self, project_id: str, location: str, name: str = None, custom_artifact_filenames: dict = {}, model_config: dict = {}) -> Model:
         """Creates a new Model and returns Upload IDs for uploading the model artifacts.
@@ -7448,7 +7448,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos, 'agentWorkflowNodeId': agent_workflow_node_id}, server_override=prediction_url)
 
-    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: dict = None) -> List[DocumentRetrieverLookupResult]:
+    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: dict = None, include_text_search: bool = False) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -7471,12 +7471,13 @@ Creates a new feature group defined as the union of other feature group versions
             required_phrases (list): If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
             filter_clause (str): If provided, filter the results of the query using this sql where clause.
             crowding_limits (dict): A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set. An entry in the map can also be a map specifying the limit per attribute value rather than a single limit for all values. This allows a per value limit for attributes. If an attribute value is not present in the map its limit defaults to zero.
+            include_text_search (bool): If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column, 'minScore': min_score, 'requiredPhrases': required_phrases, 'filterClause': filter_clause, 'crowdingLimits': crowding_limits}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
+        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column, 'minScore': min_score, 'requiredPhrases': required_phrases, 'filterClause': filter_clause, 'crowdingLimits': crowding_limits, 'includeTextSearch': include_text_search}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
 
     def get_completion(self, deployment_token: str, deployment_id: str, prompt: str) -> Dict:
         """Returns the finetuned LLM generated completion of the prompt.
@@ -7508,7 +7509,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
 
     def start_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
-        """Starts an agent conversation.
+        """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
@@ -7521,7 +7522,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('startAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
 
     def pause_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
-        """Pauses an agent conversation.
+        """Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
@@ -8332,40 +8333,37 @@ Creates a new feature group defined as the union of other feature group versions
             list[AbacusApi]: A list of suggested Abacus APIs"""
         return self._call_api('suggestAbacusApis', 'POST', query_params={}, body={'query': query, 'verbosity': verbosity, 'limit': limit, 'includeScores': include_scores}, parse_type=AbacusApi)
 
-    def create_deployment_conversation(self, deployment_id: str = None, name: str = None, deployment_token: str = None, external_application_id: str = None) -> DeploymentConversation:
+    def create_deployment_conversation(self, deployment_id: str = None, name: str = None, external_application_id: str = None) -> DeploymentConversation:
         """Creates a deployment conversation.
 
         Args:
             deployment_id (str): The deployment this conversation belongs to.
             name (str): The name of the conversation.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
             external_application_id (str): The external application id associated with the deployment conversation.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._proxy_request('createDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'name': name, 'externalApplicationId': external_application_id}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('createDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'externalApplicationId': external_application_id}, parse_type=DeploymentConversation, is_sync=True)
 
-    def delete_deployment_conversation(self, deployment_conversation_id: str, deployment_id: str = None, deployment_token: str = None):
+    def delete_deployment_conversation(self, deployment_conversation_id: str, deployment_id: str = None):
         """Delete a Deployment Conversation.
 
         Args:
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
-            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
-        return self._proxy_request('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token}, is_sync=True)
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in."""
+        return self._proxy_request('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id}, is_sync=True)
 
-    def clear_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, user_message_indices: list = None):
+    def clear_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, user_message_indices: list = None):
         """Clear the message history of a Deployment Conversation.
 
         Args:
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
             external_session_id (str): The external session id associated with the deployment conversation.
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
             user_message_indices (list): Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared."""
-        return self._proxy_request('clearDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'userMessageIndices': user_message_indices}, is_sync=True)
+        return self._proxy_request('clearDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'userMessageIndices': user_message_indices}, is_sync=True)
 
-    def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, feedback_type: str = None, deployment_id: str = None, deployment_token: str = None):
+    def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, feedback_type: str = None, deployment_id: str = None):
         """Sets a deployment conversation message as useful or not useful
 
         Args:
@@ -8375,19 +8373,17 @@ Creates a new feature group defined as the union of other feature group versions
             is_not_useful (bool): If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.
             feedback (str): Optional feedback on why the message is useful or not useful
             feedback_type (str): Optional feedback type
-            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
-        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback, 'feedbackType': feedback_type})
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in."""
+        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback, 'feedbackType': feedback_type})
 
-    def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None, deployment_token: str = None):
+    def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None):
         """Rename a Deployment Conversation.
 
         Args:
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
             name (str): The new name of the conversation.
-            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
-            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
-        return self._proxy_request('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'name': name}, is_sync=True)
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in."""
+        return self._proxy_request('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'name': name}, is_sync=True)
 
     def create_app_user_group(self, name: str) -> AppUserGroup:
         """Creates a new App User Group. This User Group is used to have permissions to access the external chatbots.
@@ -8561,9 +8557,9 @@ Creates a new feature group defined as the union of other feature group versions
             llm_name (LLMName): Name of the underlying LLM to be used for generation. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
             temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
-            messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2}]
+            messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
             response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
-            json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
+            json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter. description (str) (required): Description of the parameter. is_required (bool) (optional): Whether the parameter is required or not. Example: json_response_schema = {'title': {'type': 'string', 'description': 'Article title', 'is_required': true}, 'body': {'type': 'string', 'description': 'Article body'}}
             stop_sequences (list): Specifies the strings on which the LLM will stop generation.
             top_p (float): The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability `top_p`. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.
 

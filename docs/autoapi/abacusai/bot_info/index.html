@@ -248,12 +248,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../refresh_schedule/index.html">abacusai.refresh_schedule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../resolved_feature_group_template/index.html">abacusai.resolved_feature_group_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../return_class/index.html">abacusai.return_class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../routing_action/index.html">abacusai.routing_action</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../schema/index.html">abacusai.schema</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html">abacusai.streaming_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html">abacusai.streaming_client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_connector/index.html">abacusai.streaming_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_row_count/index.html">abacusai.streaming_row_count</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_sample_code/index.html">abacusai.streaming_sample_code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../template_node_details/index.html">abacusai.template_node_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../tone_details/index.html">abacusai.tone_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html">abacusai.training_config_options</a></li>
@@ -264,6 +266,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_search_result/index.html">abacusai.video_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
@@ -321,7 +324,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.bot_info.BotInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.bot_info.</span></span><span class="sig-name descname"><span class="pre">BotInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalApplicationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmDisplayName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmBotIcon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.bot_info.BotInfo" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.bot_info.</span></span><span class="sig-name descname"><span class="pre">BotInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalApplicationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.bot_info.BotInfo" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Information about an external application and LLM.</p>
 <dl class="field-list simple">
@@ -329,30 +332,12 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
 <li><p><strong>externalApplicationId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The external application ID.</p></li>
-<li><p><strong>llmName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the LLM model. Only used for system-created bots.</p></li>
-<li><p><strong>llmDisplayName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The display name of the LLM model. Only used for system-created bots.</p></li>
-<li><p><strong>llmBotIcon</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The icon location of the LLM model. Only used for system-created bots.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.bot_info.BotInfo.external_application_id">
 <span class="sig-name descname"><span class="pre">external_application_id</span></span><a class="headerlink" href="#abacusai.bot_info.BotInfo.external_application_id" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.bot_info.BotInfo.llm_name">
-<span class="sig-name descname"><span class="pre">llm_name</span></span><a class="headerlink" href="#abacusai.bot_info.BotInfo.llm_name" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.bot_info.BotInfo.llm_display_name">
-<span class="sig-name descname"><span class="pre">llm_display_name</span></span><a class="headerlink" href="#abacusai.bot_info.BotInfo.llm_display_name" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.bot_info.BotInfo.llm_bot_icon">
-<span class="sig-name descname"><span class="pre">llm_bot_icon</span></span><a class="headerlink" href="#abacusai.bot_info.BotInfo.llm_bot_icon" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

@@ -267,6 +267,21 @@ class DataGenerationConfig(OperatorConfig):
 
 
 @dataclasses.dataclass
+class UnionTransformConfig(OperatorConfig):
+    """Takes Union of current feature group with 1 or more selected feature groups of same type.
+
+    Args:
+        feature_group_ids (List[str]): List of feature group IDs to union with source FG.
+        drop_non_intersecting_columns (bool): If true, will drop columns that are not present in all feature groups. If false fills missing columns with nulls.
+    """
+    feature_group_ids: List[str] = dataclasses.field(default=None)
+    drop_non_intersecting_columns: bool = dataclasses.field(default=False)
+
+    def __post_init__(self):
+        self.operator_type = enums.OperatorType.UNION
+
+
+@dataclasses.dataclass
 class _OperatorConfigFactory(_ApiClassFactory):
     """A class to select and return the the correct type of Operator Config based on a serialized OperatorConfig instance. """
     config_abstract_class = OperatorConfig
@@ -277,4 +292,5 @@ class _OperatorConfigFactory(_ApiClassFactory):
         enums.OperatorType.CRAWLER: CrawlerTransformConfig,
         enums.OperatorType.EXTRACT_DOCUMENT_DATA: ExtractDocumentDataConfig,
         enums.OperatorType.DATA_GENERATION: DataGenerationConfig,
+        enums.OperatorType.UNION: UnionTransformConfig,
     }
