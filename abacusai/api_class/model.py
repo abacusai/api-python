@@ -461,7 +461,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         include_general_knowledge (bool): Allow the LLM to rely not just on RAG search results, but to fall back on general knowledge. Disabled by default.
         enable_web_search (bool) : Allow the LLM to use Web Search Engines to retrieve information for better results.
         behavior_instructions (str): Customize the overall behaviour of the model. This controls things like - when to execute code (if enabled), write sql query, search web (if enabled), etc.
-        response_instructions (str): Customized instructions for how the model should respond.
+        response_instructions (str): Customized instructions for how the model should respond inlcuding the format, persona and tone of the answers.
         enable_llm_rewrite (bool): If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.
         column_filtering_instructions (str): Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
         keyword_requirement_instructions (str): Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.

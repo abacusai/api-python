@@ -96,7 +96,7 @@ class Dataset(AbstractApiClass):
                 'extract_bounding_boxes': self.extract_bounding_boxes, 'merge_file_schemas': self.merge_file_schemas, 'reference_only_documentset': self.reference_only_documentset, 'version_limit': self.version_limit, 'schema': self._get_attribute_as_dict(self.schema), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_dataset_version': self._get_attribute_as_dict(self.latest_dataset_version), 'parsing_config': self._get_attribute_as_dict(self.parsing_config), 'document_processing_config': self._get_attribute_as_dict(self.document_processing_config), 'attachment_parsing_config': self._get_attribute_as_dict(self.attachment_parsing_config)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
-    def create_version_from_file_connector(self, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None):
+    def create_version_from_file_connector(self, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None, sql_query: str = None):
         """
         Creates a new version of the specified dataset.
 
@@ -106,11 +106,12 @@ class Dataset(AbstractApiClass):
             csv_delimiter (str): If the file format is CSV, use a specific CSV delimiter.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
+            sql_query (str): The SQL query to use when fetching data from the specified location. Use `__TABLE__` as a placeholder for the table name. For example: "SELECT * FROM __TABLE__ WHERE event_date > '2021-01-01'". If not provided, the entire dataset from the specified location will be imported.
 
         Returns:
             DatasetVersion: The new Dataset Version created.
         """
-        return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format, csv_delimiter, merge_file_schemas, parsing_config)
+        return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format, csv_delimiter, merge_file_schemas, parsing_config, sql_query)
 
     def create_version_from_database_connector(self, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None):
         """

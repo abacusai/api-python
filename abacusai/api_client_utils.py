@@ -475,7 +475,7 @@ class DocstoreUtils:
                     page_data = json.loads(page_content.decode('utf-8'))
                     pages_list.append((row['content_hash'], page_data))
 
-            json_pages_list = [{doc_id_column: content_hash_to_doc_id[content_hash], **(page or {})}
+            json_pages_list = [{**(page or {}), doc_id_column: content_hash_to_doc_id[content_hash]}
                                for content_hash, page in pages_list]
             pages_df_with_config = pd.DataFrame(json_pages_list)
             pages_df_with_config = pages_df_with_config.replace(

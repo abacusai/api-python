@@ -166,7 +166,7 @@ Module Contents
 
 
 
-   .. py:method:: create_version_from_file_connector(location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None, parsing_config = None)
+   .. py:method:: create_version_from_file_connector(location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None, parsing_config = None, sql_query = None)
 
       Creates a new version of the specified dataset.
 
@@ -180,6 +180,8 @@ Module Contents
       :type merge_file_schemas: bool
       :param parsing_config: Custom config for dataset parsing.
       :type parsing_config: ParsingConfig
+      :param sql_query: The SQL query to use when fetching data from the specified location. Use `__TABLE__` as a placeholder for the table name. For example: "SELECT * FROM __TABLE__ WHERE event_date > '2021-01-01'". If not provided, the entire dataset from the specified location will be imported.
+      :type sql_query: str
 
       :returns: The new Dataset Version created.
       :rtype: DatasetVersion

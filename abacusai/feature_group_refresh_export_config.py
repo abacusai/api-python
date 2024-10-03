@@ -3,7 +3,7 @@ from .return_class import AbstractApiClass
 
 class FeatureGroupRefreshExportConfig(AbstractApiClass):
     """
-        A Feature Group Refresh Export Config outlines the export configuration for a feature group.
+        A Feature Group Connector Export Config outlines the export configuration for a feature group.
 
         Args:
             client (ApiClient): An authenticated API Client instance

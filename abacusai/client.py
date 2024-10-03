@@ -608,7 +608,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.12'
+    client_version = '1.4.13'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1490,15 +1490,16 @@ class ReadOnlyClient(BaseApiClient):
             application_connector_id (str): Unique string identifier for the application connector."""
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
-    def get_connector_auth(self, service: Union[ApplicationConnectorType, str]) -> ApplicationConnector:
+    def get_connector_auth(self, service: Union[ApplicationConnectorType, str], scopes: List = None) -> ApplicationConnector:
         """Get the authentication details for a given connector.
 
         Args:
             service (ApplicationConnectorType): The service name.
+            scopes (List): The scopes to request for the connector.
 
         Returns:
             ApplicationConnector: The application connector with the authentication details."""
-        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service}, parse_type=ApplicationConnector)
+        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes}, parse_type=ApplicationConnector)
 
     def list_streaming_connectors(self) -> List[StreamingConnector]:
         """Retrieves a list of all streaming connectors along with their corresponding attributes.
@@ -5551,7 +5552,7 @@ Creates a new feature group defined as the union of other feature group versions
             Upload: The upload object associated with the process, containing details of the file."""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None, version_limit: int = 30) -> Dataset:
+    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, sql_query: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None, version_limit: int = 30) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
@@ -5563,6 +5564,7 @@ Creates a new feature group defined as the union of other feature group versions
             filename_column (str): Adds a new column to the dataset with the external URI path.
             start_prefix (str): The start prefix (inclusive) for a range based search on a cloud storage location URI.
             until_prefix (str): The end prefix (exclusive) for a range based search on a cloud storage location URI.
+            sql_query (str): The SQL query to use when fetching data from the specified location. Use `__TABLE__` as a placeholder for the table name. For example: "SELECT * FROM __TABLE__ WHERE event_date > '2021-01-01'". If not provided, the entire dataset from the specified location will be imported.
             location_date_format (str): The date format in which the data is partitioned in the cloud storage location. For example, if the data is partitioned as s3://bucket1/dir1/dir2/event_date=YYYY-MM-DD/dir4/filename.parquet, then the `location_date_format` is YYYY-MM-DD. This format needs to be consistent across all files within the specified location.
             date_format_lookback_days (int): The number of days to look back from the current day for import locations that are date partitioned. For example, import date 2021-06-04 with `date_format_lookback_days` = 3 will retrieve data for all the dates in the range [2021-06-02, 2021-06-04].
             incremental (bool): Signifies if the dataset is an incremental dataset.
@@ -5576,9 +5578,9 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             Dataset: The dataset created."""
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'documentProcessingConfig': document_processing_config, 'mergeFileSchemas': merge_file_schemas, 'referenceOnlyDocumentset': reference_only_documentset, 'parsingConfig': parsing_config, 'versionLimit': version_limit}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'sqlQuery': sql_query, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'documentProcessingConfig': document_processing_config, 'mergeFileSchemas': merge_file_schemas, 'referenceOnlyDocumentset': reference_only_documentset, 'parsingConfig': parsing_config, 'versionLimit': version_limit}, parse_type=Dataset)
 
-    def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None) -> DatasetVersion:
+    def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None, sql_query: str = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
 
         Args:
@@ -5588,10 +5590,11 @@ Creates a new feature group defined as the union of other feature group versions
             csv_delimiter (str): If the file format is CSV, use a specific CSV delimiter.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
+            sql_query (str): The SQL query to use when fetching data from the specified location. Use `__TABLE__` as a placeholder for the table name. For example: "SELECT * FROM __TABLE__ WHERE event_date > '2021-01-01'". If not provided, the entire dataset from the specified location will be imported.
 
         Returns:
             DatasetVersion: The new Dataset Version created."""
-        return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config}, parse_type=DatasetVersion)
+        return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config, 'sqlQuery': sql_query}, parse_type=DatasetVersion)
 
     def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, attachment_parsing_config: Union[dict, AttachmentParsingConfig] = None, incremental_database_connector_config: Union[dict, IncrementalDatabaseConnectorConfig] = None, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, version_limit: int = 30) -> Dataset:
         """Creates a dataset from a Database Connector.
@@ -5893,8 +5896,8 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             doc_id (str): A unique Docstore string identifier for the document.
             page (int): The page number to retrieve. Page numbers start from 0.
-            document_processing_config (DocumentProcessingConfig): The document processing configuration to use for returning the data. If not provided, the latest available data or the default configuration will be used.
-            document_processing_version (str): The document processing version to use for returning the data. If not provided, the latest version will be used.
+            document_processing_config (DocumentProcessingConfig): The document processing configuration to use for returning the data when the document is processed via EXTRACT_DOCUMENT_DATA Feature Group Operator. If Feature Group Operator is not used, this parameter should be kept as None. If Feature Group Operator is used but this parameter is not provided, the latest available data or the default configuration will be used.
+            document_processing_version (str): The document processing version to use for returning the data when the document is processed via EXTRACT_DOCUMENT_DATA Feature Group Operator. If Feature Group Operator is not used, this parameter should be kept as None. If Feature Group Operator is used but this parameter is not provided, the latest version will be used.
 
         Returns:
             PageData: The extracted page data."""
@@ -5905,8 +5908,8 @@ Creates a new feature group defined as the union of other feature group versions
 
         Args:
             doc_id (str): A unique Docstore string identifier for the document.
-            document_processing_config (DocumentProcessingConfig): The document processing configuration to use for returning the data. If not provided, the latest available data or the default configuration will be used.
-            document_processing_version (str): The document processing version to use for returning the data. If not provided, the latest version will be used.
+            document_processing_config (DocumentProcessingConfig): The document processing configuration to use for returning the data when the document is processed via EXTRACT_DOCUMENT_DATA Feature Group Operator. If Feature Group Operator is not used, this parameter should be kept as None. If Feature Group Operator is used but this parameter is not provided, the latest available data or the default configuration will be used.
+            document_processing_version (str): The document processing version to use for returning the data when the document is processed via EXTRACT_DOCUMENT_DATA Feature Group Operator. If Feature Group Operator is not used, this parameter should be kept as None. If Feature Group Operator is used but this parameter is not provided, the latest version will be used.
             return_extracted_page_text (bool): Specifies whether to include a list of extracted text for each page in the response. Defaults to false if not provided.
 
         Returns:
@@ -6161,7 +6164,7 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: The created feature group."""
         return self._call_api('exportModelArtifactAsFeatureGroup', 'POST', query_params={}, body={'modelVersion': model_version, 'tableName': table_name, 'artifactType': artifact_type}, parse_type=FeatureGroup)
 
-    def set_default_model_algorithm(self, model_id: str = None, algorithm: str = None, data_cluster_type: str = None):
+    def set_default_model_algorithm(self, model_id: str, algorithm: str = None, data_cluster_type: str = None):
         """Sets the model's algorithm to default for all new deployments
 
         Args:
@@ -7508,7 +7511,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
 
-    def start_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
+    def start_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
@@ -7519,9 +7522,9 @@ Creates a new feature group defined as the union of other feature group versions
             keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('startAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
+        return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
 
-    def pause_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
+    def pause_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
         """Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.
 
         Args:
@@ -7530,7 +7533,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('pauseAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id}, server_override=prediction_url, timeout=1500)
+        return self._call_api('pauseAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id}, server_override=prediction_url, timeout=1500)
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, batch_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.

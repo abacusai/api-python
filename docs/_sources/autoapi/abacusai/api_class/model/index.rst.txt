@@ -1135,7 +1135,7 @@ Module Contents
    :type enable_web_search: bool
    :param behavior_instructions: Customize the overall behaviour of the model. This controls things like - when to execute code (if enabled), write sql query, search web (if enabled), etc.
    :type behavior_instructions: str
-   :param response_instructions: Customized instructions for how the model should respond.
+   :param response_instructions: Customized instructions for how the model should respond inlcuding the format, persona and tone of the answers.
    :type response_instructions: str
    :param enable_llm_rewrite: If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.
    :type enable_llm_rewrite: bool
@@ -1762,6 +1762,10 @@ Module Contents
 .. py:class:: _TrainingConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class

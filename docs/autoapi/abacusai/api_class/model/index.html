@@ -167,7 +167,7 @@
 <td><p>Training config for the OPTIMIZATION problem type</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model._TrainingConfigFactory" title="abacusai.api_class.model._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.DeployableAlgorithm" title="abacusai.api_class.model.DeployableAlgorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></p></td>
 <td><p>Algorithm that can be deployed to a model.</p></td>
@@ -1287,7 +1287,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>include_general_knowledge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to rely not just on RAG search results, but to fall back on general knowledge. Disabled by default.</p></li>
 <li><p><strong>enable_web_search</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to use Web Search Engines to retrieve information for better results.</p></li>
 <li><p><strong>behavior_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize the overall behaviour of the model. This controls things like - when to execute code (if enabled), write sql query, search web (if enabled), etc.</p></li>
-<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customized instructions for how the model should respond.</p></li>
+<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customized instructions for how the model should respond inlcuding the format, persona and tone of the answers.</p></li>
 <li><p><strong>enable_llm_rewrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If enabled, an LLM will rewrite the RAG queries sent to document retriever. Disabled by default.</p></li>
 <li><p><strong>column_filtering_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.</p></li>
 <li><p><strong>keyword_requirement_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate keyword requirements to retrieve relevant documents for the conversation.</p></li>
@@ -2014,6 +2014,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dt class="sig sig-object py" id="abacusai.api_class.model._TrainingConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">_TrainingConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.model._TrainingConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model._TrainingConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.model._TrainingConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>

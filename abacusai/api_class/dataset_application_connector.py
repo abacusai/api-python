@@ -177,10 +177,12 @@ class TeamsScraperDatasetConfig(ApplicationConnectorDatasetConfig):
     Dataset config for Teams Scraper Application Connector
 
     Args:
-        pull_messages (bool): Whether to pull messages for each channel
-        pull_transcripts (bool): Whether to pull transcripts for each channel
+        pull_chat_messages (bool): Whether to pull teams chat messages
+        pull_channel_posts (bool): Whether to pull posts for each channel
+        pull_transcripts (bool): Whether to pull transcripts for calendar meetings
     """
-    pull_messages: bool = dataclasses.field(default=False)
+    pull_chat_messages: bool = dataclasses.field(default=False)
+    pull_channel_posts: bool = dataclasses.field(default=False)
     pull_transcripts: bool = dataclasses.field(default=False)
 
     def __post_init__(self):

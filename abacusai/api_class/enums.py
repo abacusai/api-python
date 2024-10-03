@@ -458,6 +458,7 @@ class VectorStoreTextEncoder(ApiEnum):
     CODE_BERT = 'CODE_BERT'
 
 
+@deprecated_enums('OPENAI_GPT4_32K', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT', 'LLAMA3_LARGE_CHAT', 'CLAUDE_V3_OPUS', 'CLAUDE_V3_SONNET')
 class LLMName(ApiEnum):
     OPENAI_GPT4 = 'OPENAI_GPT4'
     OPENAI_GPT4_32K = 'OPENAI_GPT4_32K'
