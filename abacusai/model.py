@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import Dict, List, Union
 
 from . import api_class
 from .api_class import AgentInterface, TrainingConfig, WorkflowGraph
@@ -355,7 +355,7 @@ class Model(AbstractApiClass):
         """
         return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
 
-    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = None, included_modules: List = None, agent_connectors: dict = None, initialize_function_name: str = None, initialize_function_code: str = None):
+    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = None, included_modules: List = None, agent_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None):
         """
         Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -366,7 +366,7 @@ class Model(AbstractApiClass):
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             included_modules (List): A list of user created custom modules to include in the agent's environment.
-            agent_connectors (dict): A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
+            agent_connectors (Dict): A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
             initialize_function_name (str): The name of the function to be used for initialization.
             initialize_function_code (str): The function code to be used for initialization.
 

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
@@ -6,19 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class.monitor &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -131,19 +129,19 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>window_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The duration of the window.</p></li>
-<li><p><strong>window_from_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the window should be from the start of the time series.</p></li>
+<li><p><strong>window_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The duration of the window.</p></li>
+<li><p><strong>window_from_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the window should be from the start of the time series.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.TimeWindowConfig.window_duration">
-<span class="sig-name descname"><span class="pre">window_duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.TimeWindowConfig.window_duration" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">window_duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.TimeWindowConfig.window_duration" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.TimeWindowConfig.window_from_start">
-<span class="sig-name descname"><span class="pre">window_from_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.TimeWindowConfig.window_from_start" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">window_from_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.TimeWindowConfig.window_from_start" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -164,38 +162,38 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the column that contains the unique identifier for the time series.</p></li>
-<li><p><strong>timestamp_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the column that contains the timestamp for the time series.</p></li>
-<li><p><strong>target_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the column that contains the target value for the time series.</p></li>
-<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start time of the time series data.</p></li>
-<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end time of the time series data.</p></li>
+<li><p><strong>id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the column that contains the unique identifier for the time series.</p></li>
+<li><p><strong>timestamp_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the column that contains the timestamp for the time series.</p></li>
+<li><p><strong>target_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the column that contains the target value for the time series.</p></li>
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The start time of the time series data.</p></li>
+<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The end time of the time series data.</p></li>
 <li><p><strong>window_config</strong> (<a class="reference internal" href="#abacusai.api_class.monitor.TimeWindowConfig" title="abacusai.api_class.monitor.TimeWindowConfig"><em>TimeWindowConfig</em></a>) – The windowing configuration for the time series data.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.id_column">
-<span class="sig-name descname"><span class="pre">id_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.id_column" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">id_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.id_column" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.timestamp_column">
-<span class="sig-name descname"><span class="pre">timestamp_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.timestamp_column" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">timestamp_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.timestamp_column" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.target_column">
-<span class="sig-name descname"><span class="pre">target_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.target_column" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">target_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.target_column" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.start_time">
-<span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.start_time" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.start_time" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.end_time">
-<span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.end_time" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.end_time" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -222,7 +220,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>threshold_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.StdDevThresholdType" title="abacusai.api_class.enums.StdDevThresholdType"><em>StdDevThresholdType</em></a>) – Type of threshold to apply to the item attributes.</p></li>
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Value to use for the threshold.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Value to use for the threshold.</p></li>
 </ul>
 </dd>
 </dl>
@@ -233,7 +231,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.StdDevThreshold.value">
-<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.StdDevThreshold.value" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.StdDevThreshold.value" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -287,43 +285,43 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the feature to restrict the monitor to.</p></li>
-<li><p><strong>restricted_feature_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – The values of the feature to restrict the monitor to if feature is a categorical.</p></li>
-<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start time of the timestamp feature to filter from</p></li>
-<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end time of the timestamp feature to filter until</p></li>
-<li><p><strong>min_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Value to filter the numerical feature above</p></li>
-<li><p><strong>max_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Filtering the numerical feature to below this value</p></li>
+<li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the feature to restrict the monitor to.</p></li>
+<li><p><strong>restricted_feature_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – The values of the feature to restrict the monitor to if feature is a categorical.</p></li>
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The start time of the timestamp feature to filter from</p></li>
+<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The end time of the timestamp feature to filter until</p></li>
+<li><p><strong>min_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Value to filter the numerical feature above</p></li>
+<li><p><strong>max_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Filtering the numerical feature to below this value</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.feature_name">
-<span class="sig-name descname"><span class="pre">feature_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.feature_name" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">feature_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.feature_name" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.restricted_feature_values">
-<span class="sig-name descname"><span class="pre">restricted_feature_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.restricted_feature_values" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">restricted_feature_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.restricted_feature_values" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.start_time">
-<span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.start_time" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.start_time" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.end_time">
-<span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.end_time" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.end_time" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.min_value">
-<span class="sig-name descname"><span class="pre">min_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.min_value" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">min_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.min_value" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.RestrictFeatureMappings.max_value">
-<span class="sig-name descname"><span class="pre">max_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.max_value" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">max_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.RestrictFeatureMappings.max_value" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -344,23 +342,23 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start time of the prediction time col</p></li>
-<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end time of the prediction time col</p></li>
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The start time of the prediction time col</p></li>
+<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The end time of the prediction time col</p></li>
 <li><p><strong>restrict_feature_mappings</strong> (<a class="reference internal" href="#abacusai.api_class.monitor.RestrictFeatureMappings" title="abacusai.api_class.monitor.RestrictFeatureMappings"><em>RestrictFeatureMappings</em></a>) – The feature mapping to restrict the monitor to.</p></li>
-<li><p><strong>target_class</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The target class to restrict the monitor to.</p></li>
-<li><p><strong>train_target_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Set the target feature for the training data.</p></li>
-<li><p><strong>prediction_target_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Set the target feature for the prediction data.</p></li>
+<li><p><strong>target_class</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The target class to restrict the monitor to.</p></li>
+<li><p><strong>train_target_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Set the target feature for the training data.</p></li>
+<li><p><strong>prediction_target_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Set the target feature for the prediction data.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.start_time">
-<span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.start_time" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.start_time" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.end_time">
-<span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.end_time" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.end_time" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -370,17 +368,17 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.target_class">
-<span class="sig-name descname"><span class="pre">target_class</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.target_class" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">target_class</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.target_class" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.train_target_feature">
-<span class="sig-name descname"><span class="pre">train_target_feature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.train_target_feature" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">train_target_feature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.train_target_feature" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.MonitorFilteringConfig.prediction_target_feature">
-<span class="sig-name descname"><span class="pre">prediction_target_feature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.prediction_target_feature" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">prediction_target_feature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.MonitorFilteringConfig.prediction_target_feature" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

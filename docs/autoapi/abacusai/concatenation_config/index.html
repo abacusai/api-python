@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
@@ -6,24 +8,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.concatenation_config &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="abacusai.cpu_gpu_memory_specs" href="../cpu_gpu_memory_specs/index.html" />
-    <link rel="prev" title="abacusai.code_source" href="../code_source/index.html" /> 
+    <link rel="prev" title="abacusai.compute_point_info" href="../compute_point_info/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -79,6 +77,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../client/index.html">abacusai.client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">abacusai.concatenation_config</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
@@ -331,10 +330,10 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>concatenatedTable</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The feature group to concatenate with the destination feature group.</p></li>
-<li><p><strong>mergeType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of merge to perform, either <cite>UNION</cite> or <cite>INTERSECTION</cite>.</p></li>
-<li><p><strong>replaceUntilTimestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The Unix timestamp to specify the point up to which data from the source feature group will be replaced.</p></li>
-<li><p><strong>skipMaterialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If <cite>True</cite>, the concatenated feature group will not be materialized.</p></li>
+<li><p><strong>concatenatedTable</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The feature group to concatenate with the destination feature group.</p></li>
+<li><p><strong>mergeType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The type of merge to perform, either <cite>UNION</cite> or <cite>INTERSECTION</cite>.</p></li>
+<li><p><strong>replaceUntilTimestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The Unix timestamp to specify the point up to which data from the source feature group will be replaced.</p></li>
+<li><p><strong>skipMaterialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <cite>True</cite>, the concatenated feature group will not be materialized.</p></li>
 </ul>
 </dd>
 </dl>
@@ -377,7 +376,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -391,7 +390,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../code_source/index.html" class="btn btn-neutral float-left" title="abacusai.code_source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../compute_point_info/index.html" class="btn btn-neutral float-left" title="abacusai.compute_point_info" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../cpu_gpu_memory_specs/index.html" class="btn btn-neutral float-right" title="abacusai.cpu_gpu_memory_specs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

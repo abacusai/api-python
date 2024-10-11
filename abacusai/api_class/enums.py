@@ -410,6 +410,8 @@ class ApplicationConnectorType(ApiEnum):
     ONEDRIVEUSER = 'ONEDRIVEUSER'
     JIRAAUTH = 'JIRAAUTH'
     TEAMSSCRAPER = 'TEAMSSCRAPER'
+    GITHUBUSER = 'GITHUBUSER'
+    OKTASAML = 'OKTASAML'
 
 
 class StreamingConnectorType(ApiEnum):

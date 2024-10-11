@@ -243,6 +243,7 @@ class WorkflowGraphNode(ApiClass):
         else:
             self._user_args = locals()
             if function:
+                self.function = function
                 self.function_name = function.__name__
                 self.source_code = get_clean_function_source_code_for_agent(function)
             elif function_name and source_code:

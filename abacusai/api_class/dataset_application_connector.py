@@ -12,9 +12,11 @@ class ApplicationConnectorDatasetConfig(DatasetConfig):
 
     Args:
         application_connector_type (enums.ApplicationConnectorType): The type of application connector
+        application_connector_id (str): The ID of the application connector
         document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True for the dataset.
     """
     application_connector_type: enums.ApplicationConnectorType = dataclasses.field(default=None, repr=False, init=False)
+    application_connector_id: str = dataclasses.field(default=None)
     document_processing_config: DatasetDocumentProcessingConfig = dataclasses.field(default=None)
 
     @classmethod

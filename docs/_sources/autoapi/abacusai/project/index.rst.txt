@@ -741,8 +741,8 @@ Module Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary of application connectors that are required for the agent mapped with oauth list for them.
-      :type agent_connectors: dict
+      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type agent_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.

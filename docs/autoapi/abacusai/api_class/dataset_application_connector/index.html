@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
@@ -6,19 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class.dataset_application_connector &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -150,6 +148,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>application_connector_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><em>enums.ApplicationConnectorType</em></a>) – The type of application connector</p></li>
+<li><p><strong>application_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The ID of the application connector</p></li>
 <li><p><strong>document_processing_config</strong> (<a class="reference internal" href="../dataset/index.html#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><em>DatasetDocumentProcessingConfig</em></a>) – The document processing configuration. Only valid if is_documentset is True for the dataset.</p></li>
 </ul>
 </dd>
@@ -157,6 +156,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig.application_connector_type">
 <span class="sig-name descname"><span class="pre">application_connector_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><span class="pre">abacusai.api_class.enums.ApplicationConnectorType</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig.application_connector_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig.application_connector_id">
+<span class="sig-name descname"><span class="pre">application_connector_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig.application_connector_id" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -186,22 +190,22 @@
 :type extract_bounding_boxes: bool</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.location">
-<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.location" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.location" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.space_key">
-<span class="sig-name descname"><span class="pre">space_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.space_key" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">space_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.space_key" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.pull_attachments">
-<span class="sig-name descname"><span class="pre">pull_attachments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.pull_attachments" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pull_attachments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.pull_attachments" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.extract_bounding_boxes">
-<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -219,25 +223,25 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The view id of the report in the connector to fetch</p></li>
-<li><p><strong>start_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Unix timestamp of the start of the period that will be queried</p></li>
-<li><p><strong>end_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Unix timestamp of the end of the period that will be queried</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The view id of the report in the connector to fetch</p></li>
+<li><p><strong>start_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Unix timestamp of the start of the period that will be queried</p></li>
+<li><p><strong>end_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Unix timestamp of the end of the period that will be queried</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.location">
-<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.location" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.location" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.start_timestamp">
-<span class="sig-name descname"><span class="pre">start_timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.start_timestamp" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.start_timestamp" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.end_timestamp">
-<span class="sig-name descname"><span class="pre">end_timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.end_timestamp" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">end_timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.end_timestamp" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -255,31 +259,31 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
-<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
-<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
-<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
+<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.location">
-<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.location" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.location" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.csv_delimiter">
-<span class="sig-name descname"><span class="pre">csv_delimiter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.csv_delimiter" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">csv_delimiter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.csv_delimiter" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.extract_bounding_boxes">
-<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.merge_file_schemas">
-<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -297,31 +301,31 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>jql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The JQL query for fetching issues</p></li>
-<li><p><strong>custom_fields</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of custom fields to include in the dataset</p></li>
-<li><p><strong>include_comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Fetch comments for each issue</p></li>
-<li><p><strong>include_watchers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Fetch watchers for each issue</p></li>
+<li><p><strong>jql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The JQL query for fetching issues</p></li>
+<li><p><strong>custom_fields</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of custom fields to include in the dataset</p></li>
+<li><p><strong>include_comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Fetch comments for each issue</p></li>
+<li><p><strong>include_watchers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Fetch watchers for each issue</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.jql">
-<span class="sig-name descname"><span class="pre">jql</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.jql" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">jql</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.jql" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.custom_fields">
-<span class="sig-name descname"><span class="pre">custom_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.custom_fields" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">custom_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.custom_fields" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_comments">
-<span class="sig-name descname"><span class="pre">include_comments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_comments" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">include_comments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_comments" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_watchers">
-<span class="sig-name descname"><span class="pre">include_watchers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_watchers" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">include_watchers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_watchers" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -339,31 +343,31 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
-<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
-<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
-<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
+<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.location">
-<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.location" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.location" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.csv_delimiter">
-<span class="sig-name descname"><span class="pre">csv_delimiter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.csv_delimiter" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">csv_delimiter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.csv_delimiter" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.extract_bounding_boxes">
-<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.merge_file_schemas">
-<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -381,31 +385,31 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
-<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
-<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
-<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
+<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.location">
-<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.location" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.location" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.csv_delimiter">
-<span class="sig-name descname"><span class="pre">csv_delimiter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.csv_delimiter" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">csv_delimiter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.csv_delimiter" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.extract_bounding_boxes">
-<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.merge_file_schemas">
-<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -422,12 +426,12 @@
 <p>Dataset config for Zendesk Application Connector</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The regex location of the files to fetch</p>
+<dd class="field-odd"><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The regex location of the files to fetch</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig.location">
-<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig.location" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig.location" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -445,19 +449,19 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>include_entire_conversation_history</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to show the entire history for this deployment conversation</p></li>
-<li><p><strong>include_all_feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to include all feedback for this deployment conversation</p></li>
+<li><p><strong>include_entire_conversation_history</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to show the entire history for this deployment conversation</p></li>
+<li><p><strong>include_all_feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to include all feedback for this deployment conversation</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig.include_entire_conversation_history">
-<span class="sig-name descname"><span class="pre">include_entire_conversation_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig.include_entire_conversation_history" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">include_entire_conversation_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig.include_entire_conversation_history" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig.include_all_feedback">
-<span class="sig-name descname"><span class="pre">include_all_feedback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig.include_all_feedback" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">include_all_feedback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig.include_all_feedback" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -475,25 +479,25 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pull_chat_messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to pull teams chat messages</p></li>
-<li><p><strong>pull_channel_posts</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to pull posts for each channel</p></li>
-<li><p><strong>pull_transcripts</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to pull transcripts for calendar meetings</p></li>
+<li><p><strong>pull_chat_messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to pull teams chat messages</p></li>
+<li><p><strong>pull_channel_posts</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to pull posts for each channel</p></li>
+<li><p><strong>pull_transcripts</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to pull transcripts for calendar meetings</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_chat_messages">
-<span class="sig-name descname"><span class="pre">pull_chat_messages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_chat_messages" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pull_chat_messages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_chat_messages" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_channel_posts">
-<span class="sig-name descname"><span class="pre">pull_channel_posts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_channel_posts" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pull_channel_posts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_channel_posts" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_transcripts">
-<span class="sig-name descname"><span class="pre">pull_transcripts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_transcripts" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pull_transcripts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig.pull_transcripts" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

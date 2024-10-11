@@ -49,6 +49,7 @@ Submodules
    /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/client/index
    /autoapi/abacusai/code_source/index
+   /autoapi/abacusai/compute_point_info/index
    /autoapi/abacusai/concatenation_config/index
    /autoapi/abacusai/cpu_gpu_memory_specs/index
    /autoapi/abacusai/cryptography/index
@@ -506,6 +507,7 @@ Classes
    abacusai.ClientOptions
    abacusai.ReadOnlyClient
    abacusai.CodeSource
+   abacusai.ComputePointInfo
    abacusai.ConcatenationConfig
    abacusai.CpuGpuMemorySpecs
    abacusai.CustomChatInstructions
@@ -3147,12 +3149,18 @@ Package Contents
 
    :param application_connector_type: The type of application connector
    :type application_connector_type: enums.ApplicationConnectorType
+   :param application_connector_id: The ID of the application connector
+   :type application_connector_id: str
    :param document_processing_config: The document processing configuration. Only valid if is_documentset is True for the dataset.
    :type document_processing_config: DatasetDocumentProcessingConfig
 
 
    .. py:attribute:: application_connector_type
       :type:  abacusai.api_class.enums.ApplicationConnectorType
+
+
+   .. py:attribute:: application_connector_id
+      :type:  str
 
 
    .. py:attribute:: document_processing_config
@@ -5589,6 +5597,16 @@ Package Contents
 
    .. py:attribute:: TEAMSSCRAPER
       :value: 'TEAMSSCRAPER'
+
+
+
+   .. py:attribute:: GITHUBUSER
+      :value: 'GITHUBUSER'
+
+
+
+   .. py:attribute:: OKTASAML
+      :value: 'OKTASAML'
 
 
 
@@ -18208,8 +18226,8 @@ Package Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary of application connectors that are required for the agent mapped with oauth list for them.
-      :type agent_connectors: dict
+      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type agent_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -18238,8 +18256,8 @@ Package Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
-      :type agent_connectors: dict
+      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type agent_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -21049,6 +21067,62 @@ Package Contents
    .. py:method:: import_as_cell()
 
       Adds the source code as an unexecuted cell in the notebook.
+
+
+
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The compute point info of the organization
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param updatedAt: The last time the compute point info was updated
+   :type updatedAt: str
+   :param last24HoursUsage: The 24 hours usage of the organization
+   :type last24HoursUsage: int
+   :param last7DaysUsage: The 7 days usage of the organization
+   :type last7DaysUsage: int
+   :param currMonthAvailPoints: The current month's available compute points
+   :type currMonthAvailPoints: int
+   :param currMonthUsage: The current month's usage compute points
+   :type currMonthUsage: int
+   :param lastThrottlePopUp: The last time the organization was throttled
+   :type lastThrottlePopUp: str
+
+
+   .. py:attribute:: updated_at
+
+
+   .. py:attribute:: last_24_hours_usage
+
+
+   .. py:attribute:: last_7_days_usage
+
+
+   .. py:attribute:: curr_month_avail_points
+
+
+   .. py:attribute:: curr_month_usage
+
+
+   .. py:attribute:: last_throttle_pop_up
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 
@@ -30730,8 +30804,8 @@ Package Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
-      :type agent_connectors: dict
+      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type agent_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -32425,7 +32499,7 @@ Package Contents
 
 
 
-.. py:class:: Module(client, name=None, createdAt=None, notebookId=None, codeSource={})
+.. py:class:: Module(client, name=None, createdAt=None, notebookId=None, hideModuleCode=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32440,6 +32514,8 @@ Package Contents
    :type createdAt: str
    :param notebookId: The unique string identifier of the notebook used to create or edit the module.
    :type notebookId: str
+   :param hideModuleCode: Whether the module code is hidden from external users
+   :type hideModuleCode: bool
    :param codeSource: Information about the source code of the Python function.
    :type codeSource: CodeSource
 
@@ -32451,6 +32527,9 @@ Package Contents
 
 
    .. py:attribute:: notebook_id
+
+
+   .. py:attribute:: hide_module_code
 
 
    .. py:attribute:: code_source
@@ -37006,8 +37085,8 @@ Package Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary of application connectors that are required for the agent mapped with oauth list for them.
-      :type agent_connectors: dict
+      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type agent_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -38313,7 +38392,7 @@ Package Contents
 
 
 
-.. py:class:: RoutingAction(client, name=None, displayName=None, value=None)
+.. py:class:: RoutingAction(client, id=None, title=None, prompt=None, placeholder=None, value=None, displayName=None, isLarge=None, isMedium=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38322,21 +38401,46 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param name: The name of the action.
-   :type name: str
-   :param displayName: The display name of the action.
-   :type displayName: str
-   :param value: The value of the action.
+   :param id: The id of the routing action.
+   :type id: str
+   :param title: The title of the routing action.
+   :type title: str
+   :param prompt: The prompt of the routing action.
+   :type prompt: str
+   :param placeholder: The placeholder of the routing action.
+   :type placeholder: str
+   :param value: The value of the routing action.
    :type value: str
+   :param displayName: The display name of the routing action.
+   :type displayName: str
+   :param isLarge: UI placement
+   :type isLarge: bool
+   :param isMedium: UI placement
+   :type isMedium: bool
 
 
-   .. py:attribute:: name
+   .. py:attribute:: id
+
+
+   .. py:attribute:: title
+
+
+   .. py:attribute:: prompt
+
+
+   .. py:attribute:: placeholder
+
+
+   .. py:attribute:: value
 
 
    .. py:attribute:: display_name
 
 
-   .. py:attribute:: value
+   .. py:attribute:: is_large
+
+
+   .. py:attribute:: is_medium
 
 
    .. py:attribute:: deprecated_keys
@@ -39420,7 +39524,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenSettings(client, prompt=None, aspectRatio=None, loop=None, rewritePrompt=None, startFrame=None, endFrame=None)
+.. py:class:: VideoGenSettings(client, prompt=None, negativePrompt=None, cfgScale=None, mode=None, aspectRatio=None, duration=None, loop=None, startFrame=None, endFrame=None, rewritePrompt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39431,34 +39535,54 @@ Package Contents
    :type client: ApiClient
    :param prompt: The prompt for the video.
    :type prompt: dict
-   :param aspectRatio: The aspect ratio of the video.
+   :param negativePrompt: The negative prompt for the video.
+   :type negativePrompt: dict
+   :param cfgScale: The flexibility scale for video generation.
+   :type cfgScale: dict
+   :param mode: The video generation mode (standard or professional).
+   :type mode: dict
+   :param aspectRatio: The aspect ratio of the video in seconds.
    :type aspectRatio: dict
+   :param duration: The duration of the video.
+   :type duration: dict
    :param loop: Whether the video should loop.
    :type loop: dict
-   :param rewritePrompt: weather to rewrite the prompt.
-   :type rewritePrompt: dict
    :param startFrame: The start frame of the video.
    :type startFrame: dict
    :param endFrame: The end frame of the video.
    :type endFrame: dict
+   :param rewritePrompt: Whether to rewrite the prompt.
+   :type rewritePrompt: dict
 
 
    .. py:attribute:: prompt
 
 
+   .. py:attribute:: negative_prompt
+
+
+   .. py:attribute:: cfg_scale
+
+
+   .. py:attribute:: mode
+
+
    .. py:attribute:: aspect_ratio
 
 
+   .. py:attribute:: duration
+
+
    .. py:attribute:: loop
-
-
-   .. py:attribute:: rewrite_prompt
 
 
    .. py:attribute:: start_frame
 
 
    .. py:attribute:: end_frame
+
+
+   .. py:attribute:: rewrite_prompt
 
 
    .. py:attribute:: deprecated_keys
@@ -39795,6 +39919,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.13'
+   :value: '1.4.14'
 
 

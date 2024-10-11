@@ -608,7 +608,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.13'
+    client_version = '1.4.14'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -8502,7 +8502,7 @@ Creates a new feature group defined as the union of other feature group versions
             external_application_id (str): The ID of the External Application."""
         return self._call_api('deleteExternalApplication', 'DELETE', query_params={'externalApplicationId': external_application_id})
 
-    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, agent_connectors: dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
+    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, agent_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
         """Creates a new AI agent using the given agent workflow graph definition.
 
         Args:
@@ -8515,7 +8515,7 @@ Creates a new feature group defined as the union of other feature group versions
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             included_modules (List): A list of user created custom modules to include in the agent's environment.
-            agent_connectors (dict): A dictionary of application connectors that are required for the agent mapped with oauth list for them.
+            agent_connectors (Dict): A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
             initialize_function_name (str): The name of the function to be used for initialization.
             initialize_function_code (str): The function code to be used for initialization.
 
@@ -8523,7 +8523,7 @@ Creates a new feature group defined as the union of other feature group versions
             Agent: The new agent."""
         return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'agentConnectors': agent_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code}, parse_type=Agent)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, agent_connectors: dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, agent_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
         """Updates an existing AI Agent. A new version of the agent will be created and published.
 
         Args:
@@ -8534,7 +8534,7 @@ Creates a new feature group defined as the union of other feature group versions
             workflow_graph (WorkflowGraph): The workflow graph for the agent.
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             included_modules (List): A list of user created custom modules to include in the agent's environment.
-            agent_connectors (dict): A dictionary of application connectors mapped with list of the oauth scopes required that are required for the agent.
+            agent_connectors (Dict): A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
             initialize_function_name (str): The name of the function to be used for initialization.
             initialize_function_code (str): The function code to be used for initialization.
 

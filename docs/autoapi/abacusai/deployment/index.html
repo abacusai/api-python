@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
@@ -6,19 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.deployment &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -79,6 +77,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../client/index.html">abacusai.client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cpu_gpu_memory_specs/index.html">abacusai.cpu_gpu_memory_specs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cryptography/index.html">abacusai.cryptography</a></li>
@@ -331,30 +330,30 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>deploymentId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique identifier for the deployment.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A user-friendly name for the deployment.</p></li>
-<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The status of the deployment.</p></li>
-<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A description of the deployment.</p></li>
-<li><p><strong>deployedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The date and time when the deployment became active, in ISO-8601 format.</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The date and time when the deployment was created, in ISO-8601 format.</p></li>
-<li><p><strong>projectId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique identifier for the project this deployment belongs to.</p></li>
-<li><p><strong>modelId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The model that is currently deployed.</p></li>
-<li><p><strong>modelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The model version ID that is currently deployed.</p></li>
-<li><p><strong>featureGroupId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The feature group that is currently deployed.</p></li>
-<li><p><strong>featureGroupVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The feature group version ID that is currently deployed.</p></li>
-<li><p><strong>callsPerSecond</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of calls per second the deployment can handle.</p></li>
-<li><p><strong>autoDeploy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – A flag marking the deployment as eligible for auto deployments whenever any model in the project finishes training.</p></li>
-<li><p><strong>skipMetricsCheck</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – A flag to skip metric regression with this current deployment. This field is only relevant when auto_deploy is on</p></li>
-<li><p><strong>algoName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the algorithm that is currently deployed.</p></li>
-<li><p><strong>regions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of regions that the deployment has been deployed to.</p></li>
-<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The relevant error, if the status is FAILED.</p></li>
-<li><p><strong>batchStreamingUpdates</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – A flag marking the feature group deployment as having enabled a background process which caches streamed-in rows for quicker lookup.</p></li>
-<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The algorithm that is currently deployed.</p></li>
-<li><p><strong>pendingModelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The model that the deployment is switching to, or being stopped.</p></li>
-<li><p><strong>modelDeploymentConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The config for which model to be deployed.</p></li>
-<li><p><strong>predictionOperatorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The prediction operator ID that is currently deployed.</p></li>
-<li><p><strong>predictionOperatorVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The prediction operator version ID that is currently deployed.</p></li>
-<li><p><strong>pendingPredictionOperatorVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The prediction operator version ID that the deployment is switching to, or being stopped.</p></li>
+<li><p><strong>deploymentId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique identifier for the deployment.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A user-friendly name for the deployment.</p></li>
+<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The status of the deployment.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A description of the deployment.</p></li>
+<li><p><strong>deployedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The date and time when the deployment became active, in ISO-8601 format.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The date and time when the deployment was created, in ISO-8601 format.</p></li>
+<li><p><strong>projectId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique identifier for the project this deployment belongs to.</p></li>
+<li><p><strong>modelId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The model that is currently deployed.</p></li>
+<li><p><strong>modelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The model version ID that is currently deployed.</p></li>
+<li><p><strong>featureGroupId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The feature group that is currently deployed.</p></li>
+<li><p><strong>featureGroupVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The feature group version ID that is currently deployed.</p></li>
+<li><p><strong>callsPerSecond</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of calls per second the deployment can handle.</p></li>
+<li><p><strong>autoDeploy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag marking the deployment as eligible for auto deployments whenever any model in the project finishes training.</p></li>
+<li><p><strong>skipMetricsCheck</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag to skip metric regression with this current deployment. This field is only relevant when auto_deploy is on</p></li>
+<li><p><strong>algoName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the algorithm that is currently deployed.</p></li>
+<li><p><strong>regions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of regions that the deployment has been deployed to.</p></li>
+<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The relevant error, if the status is FAILED.</p></li>
+<li><p><strong>batchStreamingUpdates</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag marking the feature group deployment as having enabled a background process which caches streamed-in rows for quicker lookup.</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The algorithm that is currently deployed.</p></li>
+<li><p><strong>pendingModelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The model that the deployment is switching to, or being stopped.</p></li>
+<li><p><strong>modelDeploymentConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The config for which model to be deployed.</p></li>
+<li><p><strong>predictionOperatorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The prediction operator ID that is currently deployed.</p></li>
+<li><p><strong>predictionOperatorVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The prediction operator version ID that is currently deployed.</p></li>
+<li><p><strong>pendingPredictionOperatorVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The prediction operator version ID that the deployment is switching to, or being stopped.</p></li>
 <li><p><strong>onlineFeatureGroupId</strong> (<em>id</em>) – The online feature group ID that the deployment is running on</p></li>
 <li><p><strong>outputOnlineFeatureGroupId</strong> (<em>id</em>) – The online feature group ID that the deployment is outputting results to</p></li>
 <li><p><strong>realtimeMonitorId</strong> (<em>id</em>) – The realtime monitor ID of the realtime-monitor that is associated with the deployment</p></li>
@@ -533,7 +532,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -545,9 +544,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>endpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – URI that the webhook will send HTTP POST requests to.</p></li>
-<li><p><strong>webhook_event_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – One of ‘DEPLOYMENT_START’, ‘DEPLOYMENT_SUCCESS’, or ‘DEPLOYMENT_FAILED’.</p></li>
-<li><p><strong>payload_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Template for the body of the HTTP POST requests. Defaults to {}.</p></li>
+<li><p><strong>endpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – URI that the webhook will send HTTP POST requests to.</p></li>
+<li><p><strong>webhook_event_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – One of ‘DEPLOYMENT_START’, ‘DEPLOYMENT_SUCCESS’, or ‘DEPLOYMENT_FAILED’.</p></li>
+<li><p><strong>payload_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Template for the body of the HTTP POST requests. Defaults to {}.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -565,13 +564,13 @@
 <dd><p>List all the webhooks attached to a given deployment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique identifier of the target deployment.</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique identifier of the target deployment.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of the webhooks attached to the given deployment ID.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.Webhook" title="abacusai.Webhook">Webhook</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../index.html#abacusai.Webhook" title="abacusai.Webhook">Webhook</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -596,7 +595,7 @@
 <dd><p>Retrieves a full description of the specified deployment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier associated with the deployment.</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier associated with the deployment.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Description of the deployment.</p>
@@ -614,9 +613,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The new description for the deployment.</p></li>
-<li><p><strong>auto_deploy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Flag to enable the automatic deployment when a new Model Version finishes training.</p></li>
-<li><p><strong>skip_metrics_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Flag to skip metric regression with this current deployment. This field is only relevant when auto_deploy is on</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The new description for the deployment.</p></li>
+<li><p><strong>auto_deploy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag to enable the automatic deployment when a new Model Version finishes training.</p></li>
+<li><p><strong>skip_metrics_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag to skip metric regression with this current deployment. This field is only relevant when auto_deploy is on</p></li>
 </ul>
 </dd>
 </dl>
@@ -628,7 +627,7 @@
 <dd><p>Updates a deployment’s name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The new deployment name.</p>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The new deployment name.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -640,7 +639,7 @@
 <p>When a model is scheduled to retrain, deployments with auto deployment enabled will be marked to automatically promote the new model version. After the newly trained model completes, a check on its metrics in comparison to the currently deployed model version will be performed. If the metrics are comparable or better, the newly trained model version is automatically promoted. If not, it will be marked as a failed model version promotion with an error indicating poor metrics performance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable or disable the autoDeploy property of the deployment.</p>
+<dd class="field-odd"><p><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Enable or disable the autoDeploy property of the deployment.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -652,9 +651,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique identifier for the model version.</p></li>
-<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.</p></li>
-<li><p><strong>model_deployment_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The deployment configuration for the model to deploy.</p></li>
+<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique identifier for the model version.</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.</p></li>
+<li><p><strong>model_deployment_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The deployment configuration for the model to deploy.</p></li>
 </ul>
 </dd>
 </dl>
@@ -666,7 +665,7 @@
 <dd><p>Promotes a feature group version to be served in the deployment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>feature_group_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the feature group version.</p>
+<dd class="field-odd"><p><strong>feature_group_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier for the feature group version.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -677,7 +676,7 @@
 <dd><p>Promotes a prediction operator version to be served in the deployment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>prediction_operator_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the prediction operator version.</p>
+<dd class="field-odd"><p><strong>prediction_operator_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier for the prediction operator version.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -688,7 +687,7 @@
 <dd><p>Restarts the specified deployment that was previously suspended.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier associated with the deployment.</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique string identifier associated with the deployment.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -699,7 +698,7 @@
 <dd><p>Stops the specified deployment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier of the deployment to be stopped.</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier of the deployment to be stopped.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -710,7 +709,7 @@
 <dd><p>Deletes the specified deployment. The deployment’s models will not be affected. Note that the deployments are not recoverable after they are deleted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier of the deployment to delete.</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier of the deployment to delete.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -722,8 +721,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of export output, either CSV or JSON.</p></li>
-<li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The file connector (cloud) location where the output should be exported.</p></li>
+<li><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The type of export output, either CSV or JSON.</p></li>
+<li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file connector (cloud) location where the output should be exported.</p></li>
 </ul>
 </dd>
 </dl>
@@ -736,12 +735,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique string identifier of the database connector used.</p></li>
-<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The object of the database connector to write to.</p></li>
-<li><p><strong>write_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The write mode to use when writing to the database connector, either UPSERT or INSERT.</p></li>
-<li><p><strong>database_feature_mapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The column/feature pairs mapping the features to the database columns.</p></li>
-<li><p><strong>id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The id column to use as the upsert key.</p></li>
-<li><p><strong>additional_id_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – For database connectors which support it, a list of additional ID columns to use as a complex key for upserting.</p></li>
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique string identifier of the database connector used.</p></li>
+<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The object of the database connector to write to.</p></li>
+<li><p><strong>write_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The write mode to use when writing to the database connector, either UPSERT or INSERT.</p></li>
+<li><p><strong>database_feature_mapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The column/feature pairs mapping the features to the database columns.</p></li>
+<li><p><strong>id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The id column to use as the upsert key.</p></li>
+<li><p><strong>additional_id_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – For database connectors which support it, a list of additional ID columns to use as a complex key for upserting.</p></li>
 </ul>
 </dd>
 </dl>
@@ -753,7 +752,7 @@
 <dd><p>Removes the export type that is set for the Feature Group Deployment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the deployment for which the export type is set.</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The ID of the deployment for which the export type is set.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -766,7 +765,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>prediction_arguments</strong> (<a class="reference internal" href="../api_class/deployment/index.html#abacusai.api_class.deployment.PredictionArguments" title="abacusai.api_class.deployment.PredictionArguments"><em>PredictionArguments</em></a>) – The prediction arguments to set.</p></li>
-<li><p><strong>set_as_override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, use these arguments as overrides instead of defaults for predict calls</p></li>
+<li><p><strong>set_as_override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, use these arguments as overrides instead of defaults for predict calls</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -785,16 +784,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of prediction log entries to retrieve up to the specified limit.</p></li>
-<li><p><strong>last_log_request_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The request ID of the last log entry to retrieve.</p></li>
-<li><p><strong>last_log_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – A Unix timestamp in milliseconds specifying the timestamp for the last log entry.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of prediction log entries to retrieve up to the specified limit.</p></li>
+<li><p><strong>last_log_request_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The request ID of the last log entry to retrieve.</p></li>
+<li><p><strong>last_log_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A Unix timestamp in milliseconds specifying the timestamp for the last log entry.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of prediction log records.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.PredictionLogRecord" title="abacusai.PredictionLogRecord">PredictionLogRecord</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../index.html#abacusai.PredictionLogRecord" title="abacusai.PredictionLogRecord">PredictionLogRecord</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -807,7 +806,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>alert_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the alert.</p></li>
+<li><p><strong>alert_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the alert.</p></li>
 <li><p><strong>condition_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.AlertConditionConfig" title="abacusai.api_class.AlertConditionConfig"><em>AlertConditionConfig</em></a>) – Condition to run the actions for the alert.</p></li>
 <li><p><strong>action_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.AlertActionConfig" title="abacusai.api_class.AlertActionConfig"><em>AlertActionConfig</em></a>) – Configuration for the action of the alert.</p></li>
 </ul>
@@ -827,13 +826,13 @@
 <dd><p>List the monitor alerts associated with the deployment id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the deployment.</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier for the deployment.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An array of deployment alerts.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../index.html#abacusai.MonitorAlert" title="abacusai.MonitorAlert">MonitorAlert</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../index.html#abacusai.MonitorAlert" title="abacusai.MonitorAlert">MonitorAlert</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -845,8 +844,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>realtime_monitor_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The cron expression for triggering monitor.</p></li>
-<li><p><strong>lookback_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Lookback time (in seconds) for each monitor trigger</p></li>
+<li><p><strong>realtime_monitor_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The cron expression for triggering monitor.</p></li>
+<li><p><strong>lookback_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Lookback time (in seconds) for each monitor trigger</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -865,18 +864,18 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A message from the user</p></li>
-<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
-<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.</p></li>
-<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.</p></li>
-<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the specific LLM backend to use to power the chat experience</p></li>
-<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Default for maximum number of tokens for chat answers</p></li>
-<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The generative LLM system message</p></li>
-<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The generative LLM temperature</p></li>
-<li><p><strong>filter_key_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrived search results.</p></li>
-<li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Cutoff for the document retriever score. Matching search results below this score will be ignored.</p></li>
-<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary specifiying the query chat config override.</p></li>
-<li><p><strong>doc_infos</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – An optional list of documents use for the conversation. A keyword ‘doc_id’ is expected to be present in each document for retrieving contents from docstore.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A message from the user</p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
+<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.</p></li>
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.</p></li>
+<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the specific LLM backend to use to power the chat experience</p></li>
+<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Default for maximum number of tokens for chat answers</p></li>
+<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The generative LLM system message</p></li>
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The generative LLM temperature</p></li>
+<li><p><strong>filter_key_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrived search results.</p></li>
+<li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Cutoff for the document retriever score. Matching search results below this score will be ignored.</p></li>
+<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary specifiying the query chat config override.</p></li>
+<li><p><strong>doc_infos</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – An optional list of documents use for the conversation. A keyword ‘doc_id’ is expected to be present in each document for retrieving contents from docstore.</p></li>
 </ul>
 </dd>
 </dl>
@@ -889,17 +888,17 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A message from the user</p></li>
-<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.</p></li>
-<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.</p></li>
-<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the specific LLM backend to use to power the chat experience</p></li>
-<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Default for maximum number of tokens for chat answers</p></li>
-<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The generative LLM system message</p></li>
-<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The generative LLM temperature</p></li>
-<li><p><strong>filter_key_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrived search results.</p></li>
-<li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Cutoff for the document retriever score. Matching search results below this score will be ignored.</p></li>
-<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary specifiying the query chat config override.</p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A message from the user</p></li>
+<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.</p></li>
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.</p></li>
+<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the specific LLM backend to use to power the chat experience</p></li>
+<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Default for maximum number of tokens for chat answers</p></li>
+<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The generative LLM system message</p></li>
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The generative LLM temperature</p></li>
+<li><p><strong>filter_key_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrived search results.</p></li>
+<li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Cutoff for the document retriever score. Matching search results below this score will be ignored.</p></li>
+<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary specifiying the query chat config override.</p></li>
 <li><p><strong>attachments</strong> (<em>None</em>) – A dictionary of binary data to use to answer the queries.</p></li>
 </ul>
 </dd>
@@ -913,22 +912,22 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the batch prediction job.</p></li>
+<li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the batch prediction job.</p></li>
 <li><p><strong>batch_prediction_args</strong> (<a class="reference internal" href="../api_class/batch_prediction/index.html#abacusai.api_class.batch_prediction.BatchPredictionArgs" title="abacusai.api_class.batch_prediction.BatchPredictionArgs"><em>BatchPredictionArgs</em></a>) – Batch Prediction args specific to problem type.</p></li>
-<li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Format of the batch prediction output (CSV or JSON).</p></li>
-<li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.</p></li>
-<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique identifier of a Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.</p></li>
-<li><p><strong>database_output_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Key-value pair of columns/values to write to the database connector. Only available if databaseConnectorId is specified.</p></li>
-<li><p><strong>refresh_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Cron-style string that describes a schedule in UTC to automatically run the batch prediction.</p></li>
-<li><p><strong>csv_input_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prefix to prepend to the input columns, only applies when output format is CSV.</p></li>
-<li><p><strong>csv_prediction_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prefix to prepend to the prediction columns, only applies when output format is CSV.</p></li>
-<li><p><strong>csv_explanations_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prefix to prepend to the explanation columns, only applies when output format is CSV.</p></li>
-<li><p><strong>output_includes_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, output will contain columns including prediction start time, batch prediction version, and model version.</p></li>
-<li><p><strong>result_input_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – If present, will limit result files or feature groups to only include columns present in this list.</p></li>
-<li><p><strong>input_feature_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dict of {‘&lt;feature_group_type&gt;’: ‘&lt;feature_group_id&gt;’} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.</p></li>
-<li><p><strong>global_prediction_args</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em>, </em><a class="reference internal" href="../api_class/index.html#abacusai.api_class.BatchPredictionArgs" title="abacusai.api_class.BatchPredictionArgs"><em>abacusai.api_class.BatchPredictionArgs</em></a><em>]</em>)</p></li>
-<li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>)</p></li>
+<li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Format of the batch prediction output (CSV or JSON).</p></li>
+<li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.</p></li>
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique identifier of a Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.</p></li>
+<li><p><strong>database_output_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Key-value pair of columns/values to write to the database connector. Only available if databaseConnectorId is specified.</p></li>
+<li><p><strong>refresh_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Cron-style string that describes a schedule in UTC to automatically run the batch prediction.</p></li>
+<li><p><strong>csv_input_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Prefix to prepend to the input columns, only applies when output format is CSV.</p></li>
+<li><p><strong>csv_prediction_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Prefix to prepend to the prediction columns, only applies when output format is CSV.</p></li>
+<li><p><strong>csv_explanations_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Prefix to prepend to the explanation columns, only applies when output format is CSV.</p></li>
+<li><p><strong>output_includes_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, output will contain columns including prediction start time, batch prediction version, and model version.</p></li>
+<li><p><strong>result_input_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – If present, will limit result files or feature groups to only include columns present in this list.</p></li>
+<li><p><strong>input_feature_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dict of {‘&lt;feature_group_type&gt;’: ‘&lt;feature_group_id&gt;’} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.</p></li>
+<li><p><strong>global_prediction_args</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>, </em><a class="reference internal" href="../api_class/index.html#abacusai.api_class.BatchPredictionArgs" title="abacusai.api_class.BatchPredictionArgs"><em>abacusai.api_class.BatchPredictionArgs</em></a><em>]</em>)</p></li>
+<li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -947,8 +946,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>start_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Timeline start date in ISO format.</p></li>
-<li><p><strong>end_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Timeline end date in ISO format. The date range must be 7 days or less.</p></li>
+<li><p><strong>start_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Timeline start date in ISO format.</p></li>
+<li><p><strong>end_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Timeline end date in ISO format. The date range must be 7 days or less.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -966,7 +965,7 @@
 <dd><p>Gets the feature group row process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The primary key value</p>
+<dd class="field-odd"><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The primary key value</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An object representing the feature group row process</p>
@@ -984,15 +983,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of processes to return. Defaults to None.</p></li>
-<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The status of the processes to return. Defaults to None.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The maximum number of processes to return. Defaults to None.</p></li>
+<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The status of the processes to return. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of object representing the feature group row process</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../feature_group_row_process/index.html#abacusai.feature_group_row_process.FeatureGroupRowProcess" title="abacusai.feature_group_row_process.FeatureGroupRowProcess">FeatureGroupRowProcess</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../feature_group_row_process/index.html#abacusai.feature_group_row_process.FeatureGroupRowProcess" title="abacusai.feature_group_row_process.FeatureGroupRowProcess">FeatureGroupRowProcess</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1003,7 +1002,7 @@
 <dd><p>Gets a summary of the statuses of the individual feature group processes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment id for the process</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The deployment id for the process</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An object representing the summary of the statuses of the individual feature group processes</p>
@@ -1020,7 +1019,7 @@
 <dd><p>Resets a feature group row process so that it can be reprocessed</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The primary key value</p>
+<dd class="field-odd"><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The primary key value</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An object representing the feature group row process.</p>
@@ -1037,7 +1036,7 @@
 <dd><p>Gets the logs for a feature group row process</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The primary key value</p>
+<dd class="field-odd"><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The primary key value</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An object representing the logs for the feature group row process</p>
@@ -1055,8 +1054,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the conversation.</p></li>
-<li><p><strong>external_application_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The external application id associated with the deployment conversation.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the conversation.</p></li>
+<li><p><strong>external_application_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The external application id associated with the deployment conversation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1075,16 +1074,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>external_application_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.</p></li>
+<li><p><strong>external_application_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.</p></li>
 <li><p><strong>conversation_type</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.DeploymentConversationType" title="abacusai.api_class.enums.DeploymentConversationType"><em>DeploymentConversationType</em></a>) – The type of the conversation indicating its origin.</p></li>
-<li><p><strong>fetch_last_llm_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.</p></li>
+<li><p><strong>fetch_last_llm_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The deployment conversations.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../deployment_conversation/index.html#abacusai.deployment_conversation.DeploymentConversation" title="abacusai.deployment_conversation.DeploymentConversation">DeploymentConversation</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../deployment_conversation/index.html#abacusai.deployment_conversation.DeploymentConversation" title="abacusai.deployment_conversation.DeploymentConversation">DeploymentConversation</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1096,10 +1095,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the External Application. If not provided, the name of the deployment will be used.</p></li>
-<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The description of the External Application. This will be shown to users when they access the External Application. If not provided, the description of the deployment will be used.</p></li>
-<li><p><strong>logo</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The logo to be displayed.</p></li>
-<li><p><strong>theme</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The visual theme of the External Application.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the External Application. If not provided, the name of the deployment will be used.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The description of the External Application. This will be shown to users when they access the External Application. If not provided, the description of the deployment will be used.</p></li>
+<li><p><strong>logo</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The logo to be displayed.</p></li>
+<li><p><strong>theme</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The visual theme of the External Application.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1117,7 +1116,7 @@
 <dd><p>Return an agent attachment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>attachment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The attachment ID.</p>
+<dd class="field-odd"><p><strong>attachment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The attachment ID.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1128,7 +1127,7 @@
 <dd><p>A waiting call until deployment is completed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1139,7 +1138,7 @@
 <dd><p>A waiting call until deployment is in a stable state, that pending model switch is completed and previous model is stopped.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the latest deployment object.</p>
@@ -1159,7 +1158,7 @@
 <dd class="field-odd"><p>A string describing the status of a deploymet (pending, deploying, active, etc.).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1170,7 +1169,7 @@
 <dd><p>To create a refresh policy for a deployment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A cron style string to set the refresh time.</p>
+<dd class="field-odd"><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A cron style string to set the refresh time.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The refresh policy object.</p>

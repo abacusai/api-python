@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Module(client, name=None, createdAt=None, notebookId=None, codeSource={})
+.. py:class:: Module(client, name=None, createdAt=None, notebookId=None, hideModuleCode=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type createdAt: str
    :param notebookId: The unique string identifier of the notebook used to create or edit the module.
    :type notebookId: str
+   :param hideModuleCode: Whether the module code is hidden from external users
+   :type hideModuleCode: bool
    :param codeSource: Information about the source code of the Python function.
    :type codeSource: CodeSource
 
@@ -41,6 +43,9 @@ Module Contents
 
 
    .. py:attribute:: notebook_id
+
+
+   .. py:attribute:: hide_module_code
 
 
    .. py:attribute:: code_source

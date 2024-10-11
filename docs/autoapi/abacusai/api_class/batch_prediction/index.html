@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
@@ -6,19 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class.batch_prediction &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -148,12 +146,12 @@
 <p>An abstract class for Batch Prediction args specific to problem type.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.BatchPredictionArgs._support_kwargs">
-<span class="sig-name descname"><span class="pre">_support_kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs._support_kwargs" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_support_kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs._support_kwargs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.BatchPredictionArgs.kwargs">
-<span class="sig-name descname"><span class="pre">kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs.kwargs" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs.kwargs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -176,55 +174,55 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation</p></li>
-<li><p><strong>predictions_start_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start date for predictions. Accepts timestamp integers and strings in many standard formats such as YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, or YYYY-MM-DDTHH:MM:SS. If not specified, the prediction start date will be automatically defined.</p></li>
-<li><p><strong>use_prediction_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, use prediction offset.</p></li>
-<li><p><strong>start_date_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Sets prediction start date as this offset relative to the prediction start date.</p></li>
-<li><p><strong>forecasting_horizon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of timestamps to predict in the future. Range: [1, 1000].</p></li>
-<li><p><strong>item_attributes_to_include_in_the_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of columns to include in the prediction output.</p></li>
-<li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, calculates explanations for the forecasted values along with predictions.</p></li>
-<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
+<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation</p></li>
+<li><p><strong>predictions_start_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The start date for predictions. Accepts timestamp integers and strings in many standard formats such as YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, or YYYY-MM-DDTHH:MM:SS. If not specified, the prediction start date will be automatically defined.</p></li>
+<li><p><strong>use_prediction_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, use prediction offset.</p></li>
+<li><p><strong>start_date_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Sets prediction start date as this offset relative to the prediction start date.</p></li>
+<li><p><strong>forecasting_horizon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of timestamps to predict in the future. Range: [1, 1000].</p></li>
+<li><p><strong>item_attributes_to_include_in_the_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of columns to include in the prediction output.</p></li>
+<li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, calculates explanations for the forecasted values along with predictions.</p></li>
+<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.predictions_start_date">
-<span class="sig-name descname"><span class="pre">predictions_start_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.predictions_start_date" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">predictions_start_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.predictions_start_date" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.use_prediction_offset">
-<span class="sig-name descname"><span class="pre">use_prediction_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.use_prediction_offset" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">use_prediction_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.use_prediction_offset" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.start_date_offset">
-<span class="sig-name descname"><span class="pre">start_date_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.start_date_offset" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_date_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.start_date_offset" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.forecasting_horizon">
-<span class="sig-name descname"><span class="pre">forecasting_horizon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.forecasting_horizon" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">forecasting_horizon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.forecasting_horizon" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.item_attributes_to_include_in_the_result">
-<span class="sig-name descname"><span class="pre">item_attributes_to_include_in_the_result</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.item_attributes_to_include_in_the_result" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">item_attributes_to_include_in_the_result</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.item_attributes_to_include_in_the_result" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.explain_predictions">
-<span class="sig-name descname"><span class="pre">explain_predictions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.explain_predictions" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">explain_predictions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.explain_predictions" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.create_monitor">
-<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.create_monitor" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs.create_monitor" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -241,12 +239,12 @@
 <p>Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p>
+<dd class="field-odd"><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.NamedEntityExtractionBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.NamedEntityExtractionBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.NamedEntityExtractionBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -264,31 +262,31 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
-<li><p><strong>number_of_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of items to recommend.</p></li>
-<li><p><strong>item_attributes_to_include_in_the_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of columns to include in the prediction output.</p></li>
-<li><p><strong>score_field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If specified, relative item scores will be returned using a field with this name</p></li>
+<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
+<li><p><strong>number_of_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of items to recommend.</p></li>
+<li><p><strong>item_attributes_to_include_in_the_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of columns to include in the prediction output.</p></li>
+<li><p><strong>score_field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If specified, relative item scores will be returned using a field with this name</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.number_of_items">
-<span class="sig-name descname"><span class="pre">number_of_items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.number_of_items" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">number_of_items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.number_of_items" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.item_attributes_to_include_in_the_result">
-<span class="sig-name descname"><span class="pre">item_attributes_to_include_in_the_result</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.item_attributes_to_include_in_the_result" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">item_attributes_to_include_in_the_result</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.item_attributes_to_include_in_the_result" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.score_field">
-<span class="sig-name descname"><span class="pre">score_field</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.score_field" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score_field</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs.score_field" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -306,24 +304,24 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
+<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
 <li><p><strong>explainer_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ExplainerType" title="abacusai.api_class.enums.ExplainerType"><em>enums.ExplainerType</em></a>) – The type of explainer to use to generate explanations on the batch prediction.</p></li>
-<li><p><strong>number_of_samples_to_use_for_explainer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number Of Samples To Use For Kernel Explainer.</p></li>
-<li><p><strong>include_multi_class_explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, Includes explanations for all classes in multi-class classification.</p></li>
-<li><p><strong>features_considered_constant_for_explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Comma separate list of fields to treat as constant in SHAP explanations.</p></li>
-<li><p><strong>importance_of_records_in_nested_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Returns importance of each index in the specified nested column instead of SHAP column explanations.</p></li>
-<li><p><strong>explanation_filter_lower_bound</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – If set explanations will be limited to predictions above this value, Range: [0, 1].</p></li>
-<li><p><strong>explanation_filter_upper_bound</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – If set explanations will be limited to predictions below this value, Range: [0, 1].</p></li>
-<li><p><strong>explanation_filter_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – For classification problems specifies the label to which the explanation bounds are applied.</p></li>
-<li><p><strong>output_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of column names to include in the prediction result.</p></li>
-<li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, calculates explanations for the predicted values along with predictions.</p></li>
-<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
+<li><p><strong>number_of_samples_to_use_for_explainer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number Of Samples To Use For Kernel Explainer.</p></li>
+<li><p><strong>include_multi_class_explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, Includes explanations for all classes in multi-class classification.</p></li>
+<li><p><strong>features_considered_constant_for_explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Comma separate list of fields to treat as constant in SHAP explanations.</p></li>
+<li><p><strong>importance_of_records_in_nested_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Returns importance of each index in the specified nested column instead of SHAP column explanations.</p></li>
+<li><p><strong>explanation_filter_lower_bound</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – If set explanations will be limited to predictions above this value, Range: [0, 1].</p></li>
+<li><p><strong>explanation_filter_upper_bound</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – If set explanations will be limited to predictions below this value, Range: [0, 1].</p></li>
+<li><p><strong>explanation_filter_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – For classification problems specifies the label to which the explanation bounds are applied.</p></li>
+<li><p><strong>output_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of column names to include in the prediction result.</p></li>
+<li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, calculates explanations for the predicted values along with predictions.</p></li>
+<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -333,52 +331,52 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.number_of_samples_to_use_for_explainer">
-<span class="sig-name descname"><span class="pre">number_of_samples_to_use_for_explainer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.number_of_samples_to_use_for_explainer" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">number_of_samples_to_use_for_explainer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.number_of_samples_to_use_for_explainer" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.include_multi_class_explanations">
-<span class="sig-name descname"><span class="pre">include_multi_class_explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.include_multi_class_explanations" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">include_multi_class_explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.include_multi_class_explanations" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.features_considered_constant_for_explanations">
-<span class="sig-name descname"><span class="pre">features_considered_constant_for_explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.features_considered_constant_for_explanations" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">features_considered_constant_for_explanations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.features_considered_constant_for_explanations" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.importance_of_records_in_nested_columns">
-<span class="sig-name descname"><span class="pre">importance_of_records_in_nested_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.importance_of_records_in_nested_columns" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">importance_of_records_in_nested_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.importance_of_records_in_nested_columns" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_lower_bound">
-<span class="sig-name descname"><span class="pre">explanation_filter_lower_bound</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_lower_bound" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">explanation_filter_lower_bound</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_lower_bound" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_upper_bound">
-<span class="sig-name descname"><span class="pre">explanation_filter_upper_bound</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_upper_bound" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">explanation_filter_upper_bound</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_upper_bound" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_label">
-<span class="sig-name descname"><span class="pre">explanation_filter_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_label" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">explanation_filter_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explanation_filter_label" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.output_columns">
-<span class="sig-name descname"><span class="pre">output_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.output_columns" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">output_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.output_columns" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explain_predictions">
-<span class="sig-name descname"><span class="pre">explain_predictions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explain_predictions" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">explain_predictions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.explain_predictions" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.create_monitor">
-<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.create_monitor" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs.create_monitor" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -396,25 +394,25 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
-<li><p><strong>files_output_location_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The output location prefix for the files.</p></li>
-<li><p><strong>channel_id_to_label_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – JSON string for the map from channel ids to their labels.</p></li>
+<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
+<li><p><strong>files_output_location_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The output location prefix for the files.</p></li>
+<li><p><strong>channel_id_to_label_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – JSON string for the map from channel ids to their labels.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.files_output_location_prefix">
-<span class="sig-name descname"><span class="pre">files_output_location_prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.files_output_location_prefix" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">files_output_location_prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.files_output_location_prefix" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.channel_id_to_label_map">
-<span class="sig-name descname"><span class="pre">channel_id_to_label_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.channel_id_to_label_map" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">channel_id_to_label_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs.channel_id_to_label_map" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -432,19 +430,19 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation</p></li>
-<li><p><strong>explode_output</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Explode data so there is one sentence per row.</p></li>
+<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation</p></li>
+<li><p><strong>explode_output</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Explode data so there is one sentence per row.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.SentenceBoundaryDetectionBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.SentenceBoundaryDetectionBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.SentenceBoundaryDetectionBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.SentenceBoundaryDetectionBatchPredictionArgs.explode_output">
-<span class="sig-name descname"><span class="pre">explode_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.SentenceBoundaryDetectionBatchPredictionArgs.explode_output" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">explode_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.SentenceBoundaryDetectionBatchPredictionArgs.explode_output" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -462,31 +460,31 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
-<li><p><strong>analysis_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The length of each analysis interval.</p></li>
-<li><p><strong>start_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end point for predictions.</p></li>
-<li><p><strong>analysis_days</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – How many days to analyze.</p></li>
+<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
+<li><p><strong>analysis_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The length of each analysis interval.</p></li>
+<li><p><strong>start_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The end point for predictions.</p></li>
+<li><p><strong>analysis_days</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – How many days to analyze.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.analysis_frequency">
-<span class="sig-name descname"><span class="pre">analysis_frequency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.analysis_frequency" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">analysis_frequency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.analysis_frequency" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.start_date">
-<span class="sig-name descname"><span class="pre">start_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.start_date" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.start_date" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.analysis_days">
-<span class="sig-name descname"><span class="pre">analysis_days</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.analysis_days" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">analysis_days</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.analysis_days" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -503,12 +501,12 @@
 <p>Batch Prediction Config for the ChatLLM problem type</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p>
+<dd class="field-odd"><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -526,19 +524,19 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
-<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
+<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
+<li><p><strong>create_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Controls whether to automatically create a monitor to calculate the drift each time the batch prediction is run. Defaults to true if not specified.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.create_monitor">
-<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.create_monitor" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_monitor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs.create_monitor" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

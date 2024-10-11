@@ -28,6 +28,7 @@ from .chat_session import ChatSession
 from .chatllm_referral_invite import ChatllmReferralInvite
 from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, _request_context
 from .code_source import CodeSource
+from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
 from .cpu_gpu_memory_specs import CpuGpuMemorySpecs
 from .custom_chat_instructions import CustomChatInstructions
@@ -217,4 +218,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.13"
+__version__ = "1.4.14"

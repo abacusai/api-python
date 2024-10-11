@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: RoutingAction(client, name=None, displayName=None, value=None)
+.. py:class:: RoutingAction(client, id=None, title=None, prompt=None, placeholder=None, value=None, displayName=None, isLarge=None, isMedium=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,21 +24,46 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param name: The name of the action.
-   :type name: str
-   :param displayName: The display name of the action.
-   :type displayName: str
-   :param value: The value of the action.
+   :param id: The id of the routing action.
+   :type id: str
+   :param title: The title of the routing action.
+   :type title: str
+   :param prompt: The prompt of the routing action.
+   :type prompt: str
+   :param placeholder: The placeholder of the routing action.
+   :type placeholder: str
+   :param value: The value of the routing action.
    :type value: str
+   :param displayName: The display name of the routing action.
+   :type displayName: str
+   :param isLarge: UI placement
+   :type isLarge: bool
+   :param isMedium: UI placement
+   :type isMedium: bool
 
 
-   .. py:attribute:: name
+   .. py:attribute:: id
+
+
+   .. py:attribute:: title
+
+
+   .. py:attribute:: prompt
+
+
+   .. py:attribute:: placeholder
+
+
+   .. py:attribute:: value
 
 
    .. py:attribute:: display_name
 
 
-   .. py:attribute:: value
+   .. py:attribute:: is_large
+
+
+   .. py:attribute:: is_medium
 
 
    .. py:attribute:: deprecated_keys
