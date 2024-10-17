@@ -17,7 +17,7 @@ class DocumentData(AbstractApiClass):
             tokens (list): List of extracted tokens in the document obtained from OCR.
             metadata (list): List of metadata for each page in the document.
             pageMarkdown (list): The markdown text for the page.
-            extractedPageText (list): List of extracted text for each page in the document obtained from OCR.
+            extractedPageText (list): List of extracted text for each page in the document obtained from OCR. Available when return_extracted_page_text parameter is set to True in the document data retrieval API.
             augmentedPageText (list): List of extracted text for each page in the document obtained from OCR augmented with embedded links in the document.
     """
 

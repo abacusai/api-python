@@ -165,10 +165,14 @@ class WorkflowNodeOutputMapping(ApiClass):
 
     Args:
         name (str): The name of the output.
-        variable_type (WorkflowNodeOutputType): The type of the output.
+        variable_type (Union[WorkflowNodeOutputType, str]): The type of the output in the form of an enum or a string.
     """
     name: str
-    variable_type: enums.WorkflowNodeOutputType = dataclasses.field(default=enums.WorkflowNodeOutputType.ANY)
+    variable_type: Union[enums.WorkflowNodeOutputType, str] = dataclasses.field(default=enums.WorkflowNodeOutputType.ANY)
+
+    def __post_init__(self):
+        if isinstance(self.variable_type, str):
+            self.variable_type = enums.WorkflowNodeOutputType(self.variable_type)
 
     def to_dict(self):
         return {
@@ -226,8 +230,9 @@ class WorkflowGraphNode(ApiClass):
         input_schema (WorkflowNodeInputSchema): The react json schema for the user input variables.
         output_schema (WorkflowNodeOutputSchema): The react json schema for the output to be shown on UI.
 
-    Raises:
-        ValueError: If neither `function` nor `function_name` and `source_code` are provided or the inputs are invalid.
+    Additional Attributes:
+        function_name (str): The name of the function.
+        source_code (str): The source code of the function.
     """
 
     def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, template_metadata: dict = None):
@@ -241,7 +246,6 @@ class WorkflowGraphNode(ApiClass):
             self.input_schema = input_schema
             self.output_schema = output_schema
         else:
-            self._user_args = locals()
             if function:
                 self.function = function
                 self.function_name = function.__name__
@@ -329,6 +333,26 @@ class WorkflowGraphNode(ApiClass):
                 raise ValueError('workflow_graph_node', 'Invalid output schema. Must be a WorkflowNodeOutputSchema or a list of output section names.')
 
     @classmethod
+    def _raw_init(cls, name: str, input_mappings: List[WorkflowNodeInputMapping] = None, output_mappings: List[WorkflowNodeOutputMapping] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, template_metadata: dict = None):
+        workflow_node = cls.__new__(cls, name, input_mappings, output_mappings, input_schema, output_schema, template_metadata)
+        workflow_node.name = name
+        if function:
+            workflow_node.function = function
+            workflow_node.function_name = function.__name__
+            workflow_node.source_code = get_clean_function_source_code_for_agent(function)
+        elif function_name and source_code:
+            workflow_node.function_name = function_name
+            workflow_node.source_code = source_code
+        else:
+            raise ValueError('workflow_graph_node', 'Either function or function_name and source_code must be provided.')
+        workflow_node.input_mappings = input_mappings
+        workflow_node.output_mappings = output_mappings
+        workflow_node.input_schema = input_schema
+        workflow_node.output_schema = output_schema
+        workflow_node.template_metadata = template_metadata
+        return workflow_node
+
+    @classmethod
     def from_template(cls, template_name: str, name: str, configs: dict = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None):
 
         instance_input_mappings = []
@@ -388,7 +412,8 @@ class WorkflowGraphNode(ApiClass):
     @classmethod
     def from_dict(cls, node: dict):
         validate_input_dict_param(node, friendly_class_name='workflow_graph_node', must_contain=['name', 'function_name', 'source_code'])
-        instance = cls(
+        _cls = cls._raw_init if node.get('__return_filter') else cls
+        instance = _cls(
             name=node['name'],
             function_name=node['function_name'],
             source_code=node['source_code'],
@@ -399,6 +424,24 @@ class WorkflowGraphNode(ApiClass):
             template_metadata=node.get('template_metadata')
         )
         return instance
+
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+        if name == 'function':
+            if value:
+                self.function_name = value.__name__
+                self.source_code = get_clean_function_source_code_for_agent(value)
+
+    def __getattribute__(self, name):
+        if name == 'function':
+            try:
+                val = super().__getattribute__(name)
+            except AttributeError:
+                val = None
+            if val is None and self.function_name and self.source_code:
+                raise AttributeError("This WorkflowGraphNode object was not created using a callable `function`. Please refer to `function_name` and `source_code` attributes to get it's function's details.")
+            return val
+        return super().__getattribute__(name)
 
     class Outputs:
         def __init__(self, node: 'WorkflowGraphNode'):
@@ -471,6 +514,9 @@ class WorkflowGraph(ApiClass):
     @classmethod
     def from_dict(cls, graph: dict):
         validate_input_dict_param(graph, friendly_class_name='workflow_graph')
+        if graph.get('__return_filter'):
+            for node in graph.get('nodes', []):
+                node['__return_filter'] = True
         nodes = [WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])]
         edges = [WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]
         if graph.get('primary_start_node') is None:

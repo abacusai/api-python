@@ -1174,6 +1174,10 @@ Module Contents
    :type enable_response_caching: bool
    :param unknown_answer_phrase: Fallback response when the LLM can't find an answer.
    :type unknown_answer_phrase: str
+   :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc.
+   :type enable_tool_bar: bool
+   :param enable_inline_source_citations: Enable inline citations of the sources in the response.
+   :type enable_inline_source_citations: bool
 
 
    .. py:attribute:: document_retrievers
@@ -1294,6 +1298,14 @@ Module Contents
 
    .. py:attribute:: unknown_answer_phrase
       :type:  str
+
+
+   .. py:attribute:: enable_tool_bar
+      :type:  bool
+
+
+   .. py:attribute:: enable_inline_source_citations
+      :type:  bool
 
 
    .. py:method:: __post_init__()

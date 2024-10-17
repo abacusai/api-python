@@ -481,6 +481,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
         enable_code_execution (bool): Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
         enable_response_caching (bool): Enable caching of LLM responses to speed up response times and improve reproducibility.
         unknown_answer_phrase (str): Fallback response when the LLM can't find an answer.
+        enable_tool_bar (bool): Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc.
+        enable_inline_source_citations (bool): Enable inline citations of the sources in the response.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -512,6 +514,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
     lookup_rewrite_instructions: str = dataclasses.field(default=None, metadata={'deprecated': True})
     enable_response_caching: bool = dataclasses.field(default=None)
     unknown_answer_phrase: str = dataclasses.field(default=None)
+    enable_tool_bar: bool = dataclasses.field(default=None)
+    enable_inline_source_citations: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

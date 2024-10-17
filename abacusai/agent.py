@@ -99,6 +99,27 @@ class Agent(AbstractApiClass):
         """
         return self.client.list_agent_versions(self.agent_id, limit, start_after_version)
 
+    @property
+    def description(self) -> str:
+        """
+        The description of the agent.
+        """
+        return (self.agent_config or {}).get('DESCRIPTION')
+
+    @property
+    def agent_interface(self) -> str:
+        """
+        The interface that the agent will be deployed with.
+        """
+        return (self.agent_config or {}).get('AGENT_INTERFACE')
+
+    @property
+    def agent_connectors(self) -> dict:
+        """
+        A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
+        """
+        return (self.agent_config or {}).get('AGENT_CONNECTORS')
+
     def wait_for_publish(self, timeout=None):
         """
         A waiting call until agent is published.

@@ -942,6 +942,24 @@ Package Contents
 
 
 
+   .. py:property:: description
+      :type: str
+
+      The description of the agent.
+
+
+   .. py:property:: agent_interface
+      :type: str
+
+      The interface that the agent will be deployed with.
+
+
+   .. py:property:: agent_connectors
+      :type: dict
+
+      A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
+
+
    .. py:method:: wait_for_publish(timeout=None)
 
       A waiting call until agent is published.
@@ -1943,8 +1961,8 @@ Package Contents
 
    :param name: The name of the output.
    :type name: str
-   :param variable_type: The type of the output.
-   :type variable_type: WorkflowNodeOutputType
+   :param variable_type: The type of the output in the form of an enum or a string.
+   :type variable_type: Union[WorkflowNodeOutputType, str]
 
 
    .. py:attribute:: name
@@ -1952,7 +1970,10 @@ Package Contents
 
 
    .. py:attribute:: variable_type
-      :type:  abacusai.api_class.enums.WorkflowNodeOutputType
+      :type:  Union[abacusai.api_class.enums.WorkflowNodeOutputType, str]
+
+
+   .. py:method:: __post_init__()
 
 
    .. py:method:: to_dict()
@@ -2016,10 +2037,17 @@ Package Contents
    :param output_schema: The react json schema for the output to be shown on UI.
    :type output_schema: WorkflowNodeOutputSchema
 
-   :raises ValueError: If neither `function` nor `function_name` and `source_code` are provided or the inputs are invalid.
+   Additional Attributes:
+       function_name (str): The name of the function.
+       source_code (str): The source code of the function.
 
 
    .. py:attribute:: template_metadata
+
+
+   .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None)
+      :classmethod:
+
 
 
    .. py:method:: from_template(template_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
@@ -2038,6 +2066,12 @@ Package Contents
    .. py:method:: from_dict(node)
       :classmethod:
 
+
+
+   .. py:method:: __setattr__(name, value)
+
+
+   .. py:method:: __getattribute__(name)
 
 
    .. py:class:: Outputs(node)
@@ -4792,6 +4826,11 @@ Package Contents
 
    .. py:attribute:: WMV
       :value: 'wmv'
+
+
+
+   .. py:attribute:: MSG
+      :value: 'msg'
 
 
 
@@ -8182,6 +8221,10 @@ Package Contents
    :type enable_response_caching: bool
    :param unknown_answer_phrase: Fallback response when the LLM can't find an answer.
    :type unknown_answer_phrase: str
+   :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc.
+   :type enable_tool_bar: bool
+   :param enable_inline_source_citations: Enable inline citations of the sources in the response.
+   :type enable_inline_source_citations: bool
 
 
    .. py:attribute:: document_retrievers
@@ -8302,6 +8345,14 @@ Package Contents
 
    .. py:attribute:: unknown_answer_phrase
       :type:  str
+
+
+   .. py:attribute:: enable_tool_bar
+      :type:  bool
+
+
+   .. py:attribute:: enable_inline_source_citations
+      :type:  bool
 
 
    .. py:method:: __post_init__()
@@ -11347,6 +11398,9 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+
+   .. py:method:: __getattr__(item)
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False, include_tb = False)
@@ -23833,7 +23887,7 @@ Package Contents
    :type metadata: list
    :param pageMarkdown: The markdown text for the page.
    :type pageMarkdown: list
-   :param extractedPageText: List of extracted text for each page in the document obtained from OCR.
+   :param extractedPageText: List of extracted text for each page in the document obtained from OCR. Available when return_extracted_page_text parameter is set to True in the document data retrieval API.
    :type extractedPageText: list
    :param augmentedPageText: List of extracted text for each page in the document obtained from OCR augmented with embedded links in the document.
    :type augmentedPageText: list
@@ -39919,6 +39973,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.14'
+   :value: '1.4.15'
 
 

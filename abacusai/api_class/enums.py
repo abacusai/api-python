@@ -221,6 +221,7 @@ class FileFormat(ApiEnum):
     MPEG = 'mpeg'
     WEBM = 'webm'
     WMV = 'wmv'
+    MSG = 'msg'
 
 
 class ExperimentationMode(ApiEnum):

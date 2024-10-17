@@ -294,6 +294,14 @@ class AgentResponse:
                     result[k] = v
         return result
 
+    def __getattr__(self, item):
+        for section_data in self.section_data_list:
+            for k, v in section_data.items():
+                if k == item:
+                    return v
+        raise AttributeError(
+            f"'{self.__class__.__name__}' object has no attribute '{item}'")
+
 
 class ClientOptions:
     """
@@ -608,7 +616,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.14'
+    client_version = '1.4.15'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
