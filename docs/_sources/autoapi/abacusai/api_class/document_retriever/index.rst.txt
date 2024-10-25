@@ -44,6 +44,10 @@ Module Contents
    :type prune_vectors: bool
    :param index_metadata_columns: If True, metadata columns of the FG will also be used for indexing and querying.
    :type index_metadata_columns: bool
+   :param use_document_summary: If True, uses the summary of the document in addition to chunks of the document for indexing and querying.
+   :type use_document_summary: bool
+   :param summary_instructions: Instructions for the LLM to generate the document summary.
+   :type summary_instructions: str
 
 
    .. py:attribute:: chunk_size
@@ -72,6 +76,14 @@ Module Contents
 
    .. py:attribute:: index_metadata_columns
       :type:  bool
+
+
+   .. py:attribute:: use_document_summary
+      :type:  bool
+
+
+   .. py:attribute:: summary_instructions
+      :type:  str
 
 
 .. py:data:: DocumentRetrieverConfig

@@ -63,15 +63,18 @@ class DocumentProcessingConfig(ApiClass):
             self.extract_bounding_boxes = self.highlight_relevant_text  # Highlight_relevant text acts as a wrapper over extract_bounding_boxes
 
     def _detect_ocr_mode(self):
-        if self.document_type is None:  # Maps to Auto mode
-            return self.ocr_mode  # TODO: Link with paddle OCR
-        if self.document_type == DocumentType.TEXT:
-            return OcrMode.DEFAULT
-        elif self.document_type == DocumentType.TABLES_AND_FORMS:
-            return OcrMode.LAYOUT
-        elif self.document_type == DocumentType.EMBEDDED_IMAGES:
-            return OcrMode.SCANNED
-        return OcrMode.DEFAULT
+        if self.document_type is not None:
+            if self.document_type == DocumentType.TEXT:
+                return OcrMode.DEFAULT
+            elif self.document_type == DocumentType.TABLES_AND_FORMS:
+                return OcrMode.LAYOUT
+            elif self.document_type == DocumentType.EMBEDDED_IMAGES:
+                return OcrMode.SCANNED
+            elif self.document_type == DocumentType.SCANNED_TEXT:
+                return OcrMode.DEFAULT
+        if self.ocr_mode is not None:
+            return self.ocr_mode
+        return OcrMode.AUTO
 
 
 @dataclasses.dataclass

@@ -598,21 +598,25 @@ class WorkflowNodeTemplateInput(ApiClass):
     Args:
         name (str): A unique name of the input.
         is_required (bool): Indicates whether the input is required. Defaults to False.
+        description (str): The description of this input.
     """
     name: str
     is_required: bool = dataclasses.field(default=False)
+    description: str = dataclasses.field(default='')
 
     def to_dict(self):
         return {
             'name': self.name,
-            'is_required': self.is_required
+            'is_required': self.is_required,
+            'description': self.description
         }
 
     @classmethod
     def from_dict(cls, mapping: dict):
         return cls(
             name=mapping['name'],
-            is_required=mapping.get('is_required', False)
+            is_required=mapping.get('is_required', False),
+            description=mapping.get('description', '')
         )
 
 
@@ -624,19 +628,23 @@ class WorkflowNodeTemplateOutput(ApiClass):
     Args:
         name (str): The name of the output.
         variable_type (WorkflowNodeOutputType): The type of the output.
+        description (str): The description of this output.
     """
     name: str
     variable_type: enums.WorkflowNodeOutputType = dataclasses.field(default=enums.WorkflowNodeOutputType.ANY)
+    description: str = dataclasses.field(default='')
 
     def to_dict(self):
         return {
             'name': self.name,
-            'variable_type': self.variable_type.value
+            'variable_type': self.variable_type.value,
+            'description': self.description
         }
 
     @classmethod
     def from_dict(cls, mapping: dict):
         return cls(
             name=mapping['name'],
-            variable_type=enums.WorkflowNodeOutputType(mapping.get('variable_type', 'ANY'))
+            variable_type=enums.WorkflowNodeOutputType(mapping.get('variable_type', 'ANY')),
+            description=mapping.get('description', '')
         )

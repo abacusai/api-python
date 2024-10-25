@@ -218,4 +218,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.15"
+__version__ = "1.4.16"

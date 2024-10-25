@@ -1178,6 +1178,11 @@ Module Contents
    :type enable_tool_bar: bool
    :param enable_inline_source_citations: Enable inline citations of the sources in the response.
    :type enable_inline_source_citations: bool
+   :param response_format: (str): When set to 'JSON', the LLM will generate a JSON formatted string.
+   :param json_response_instructions: Instructions to be followed while generating the json_response if `response_format` is set to "JSON". This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.
+   :type json_response_instructions: str
+   :param json_response_schema: Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
+   :type json_response_schema: str
 
 
    .. py:attribute:: document_retrievers
@@ -1306,6 +1311,18 @@ Module Contents
 
    .. py:attribute:: enable_inline_source_citations
       :type:  bool
+
+
+   .. py:attribute:: response_format
+      :type:  str
+
+
+   .. py:attribute:: json_response_instructions
+      :type:  str
+
+
+   .. py:attribute:: json_response_schema
+      :type:  str
 
 
    .. py:method:: __post_init__()

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None, pruneVectors=None, indexMetadataColumns=None)
+.. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None, pruneVectors=None, indexMetadataColumns=None, useDocumentSummary=None, summaryInstructions=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,10 @@ Module Contents
    :type pruneVectors: bool
    :param indexMetadataColumns: If True, metadata columns of the FG will also be used for indexing and querying.
    :type indexMetadataColumns: bool
+   :param useDocumentSummary: If True, uses the summary of the document in addition to chunks of the document for indexing and querying.
+   :type useDocumentSummary: bool
+   :param summaryInstructions: Instructions for the LLM to generate the document summary.
+   :type summaryInstructions: str
 
 
    .. py:attribute:: chunk_size
@@ -54,6 +58,12 @@ Module Contents
 
 
    .. py:attribute:: index_metadata_columns
+
+
+   .. py:attribute:: use_document_summary
+
+
+   .. py:attribute:: summary_instructions
 
 
    .. py:attribute:: deprecated_keys

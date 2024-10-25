@@ -616,7 +616,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.15'
+    client_version = '1.4.16'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1498,16 +1498,18 @@ class ReadOnlyClient(BaseApiClient):
             application_connector_id (str): Unique string identifier for the application connector."""
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
-    def get_connector_auth(self, service: Union[ApplicationConnectorType, str], scopes: List = None) -> ApplicationConnector:
+    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None, scopes: List = None, name: str = None, is_user_level: bool = True) -> ApplicationConnector:
         """Get the authentication details for a given connector.
 
         Args:
             service (ApplicationConnectorType): The service name.
             scopes (List): The scopes to request for the connector.
+            name (str): Name of the connector.
+            is_user_level (bool): Type of connector to be fetched (user level or org level).
 
         Returns:
             ApplicationConnector: The application connector with the authentication details."""
-        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes}, parse_type=ApplicationConnector)
+        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes, 'name': name, 'isUserLevel': is_user_level}, parse_type=ApplicationConnector)
 
     def list_streaming_connectors(self) -> List[StreamingConnector]:
         """Retrieves a list of all streaming connectors along with their corresponding attributes.

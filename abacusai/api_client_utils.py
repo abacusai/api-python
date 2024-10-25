@@ -400,6 +400,7 @@ class DocstoreUtils:
     PAGE_LLM_OCR = 'page_llm_ocr'
     PAGE_TABLE_TEXT = 'page_table_text'
     MARKDOWN_FEATURES = 'markdown_features'
+    MULTI_MODE_OCR_TEXT = 'multi_mode_ocr_text'
     DOCUMENT_PROCESSING_CONFIG = 'document_processing_config'
     DOCUMENT_PROCESSING_VERSION = 'document_processing_version'
 
@@ -591,7 +592,7 @@ class DocstoreUtils:
             document_data[cls.EMBEDDED_TEXT] = combine_page_texts(info.get(
                 cls.EMBEDDED_TEXT) or info.get(cls.PAGE_TEXT) or '' for info in page_infos)
             page_texts = None
-            for k in [cls.PAGE_MARKDOWN, cls.PAGE_LLM_OCR, cls.PAGE_TABLE_TEXT]:
+            for k in [cls.MULTI_MODE_OCR_TEXT, cls.PAGE_MARKDOWN, cls.PAGE_LLM_OCR, cls.PAGE_TABLE_TEXT]:
                 if page_infos[0].get(k) and not document_data.get(cls.PAGE_MARKDOWN):
                     document_data[cls.PAGE_MARKDOWN] = page_texts = [
                         page.get(k, '') for page in page_infos]
