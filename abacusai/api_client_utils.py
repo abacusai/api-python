@@ -51,14 +51,15 @@ def get_non_nullable_type(types):
 
 
 class StreamingHandler(str):
-    def __new__(cls, value, context=None, section_key=None, data_type='text'):
+    def __new__(cls, value, context=None, section_key=None, data_type='text', is_transient=False):
         if context:
-            cls.process_streaming_data(value, context, section_key, data_type)
+            cls.process_streaming_data(
+                value, context, section_key, data_type, is_transient)
         return str.__new__(cls, value)
 
     @classmethod
-    def process_streaming_data(cls, value, context, section_key, data_type):
-        if hasattr(context, 'streamed_section_response') and hasattr(context, 'streamed_response'):
+    def process_streaming_data(cls, value, context, section_key, data_type, is_transient):
+        if hasattr(context, 'streamed_section_response') and hasattr(context, 'streamed_response') and not is_transient:
             if data_type == 'text':
                 if section_key:
                     entry_exists = False

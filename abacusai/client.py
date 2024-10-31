@@ -43,10 +43,11 @@ from .api_class import (
     PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
     PythonFunctionType, ResponseSection, SamplingConfig, Segment,
     StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
-    WorkflowGraph, get_clean_function_source_code_for_agent
+    WorkflowGraph, WorkflowGraphNode, WorkflowNodeTemplateConfig,
+    get_clean_function_source_code_for_agent
 )
 from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
-from .api_class.ai_agents import WorkflowGraph
+from .api_class.ai_agents import WorkflowGraph, WorkflowNodeTemplateConfig
 from .api_class.blob_input import Blob, BlobInput
 from .api_class.enums import AgentInterface
 from .api_class.segments import ResponseSection, Segment
@@ -177,6 +178,7 @@ from .use_case_requirements import UseCaseRequirements
 from .user import User
 from .web_search_response import WebSearchResponse
 from .webhook import Webhook
+from .workflow_node_template import WorkflowNodeTemplate
 
 
 DEFAULT_SERVER = 'https://api.abacus.ai'
@@ -616,7 +618,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.16'
+    client_version = '1.4.17'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3609,6 +3611,35 @@ class ApiClient(ReadOnlyClient):
         _request_context.topological_dfs_stack = workflow_info['topological_dfs_stack']
         return workflow_info['run_info']
 
+    def execute_workflow_node(self, node: WorkflowGraphNode, inputs: dict):
+        source_code = None
+        function_name = None
+        if node.template_metadata:
+            template_metadata = node.template_metadata
+            template_name = template_metadata.get('template_name')
+            template = self._call_api('_getWorkflowNodeTemplate', 'GET', query_params={
+                                      'name': template_name}, parse_type=WorkflowNodeTemplate)
+            if not template:
+                raise Exception(f'Template {template_name} not found')
+            function_name = template.function_name
+            configs = template_metadata.get('configs') or {}
+            template_configs = [WorkflowNodeTemplateConfig.from_dict(
+                template_config) for template_config in template.template_configs]
+            for template_config in template_configs:
+                if template_config.name not in configs:
+                    if template_config.is_required:
+                        raise Exception(
+                            f'Missing value for required template config {template_config.name}')
+                    else:
+                        configs[template_config.name] = template_config.default_value
+            source_code = template.source_code.format(**configs)
+        else:
+            source_code = node.source_code
+            function_name = node.function_name
+        exec(source_code, globals())
+        func = eval(function_name)
+        return func(**inputs)
+
     def create_agent_from_function(self, project_id: str, agent_function: callable, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, evaluation_feature_group_id: str = None, workflow_graph: WorkflowGraph = None):
         """
         [Deprecated]
@@ -3927,26 +3958,27 @@ class ApiClient(ReadOnlyClient):
         """
         return get_object_from_context(self, _request_context, 'proxy_app_caller', str) is not None
 
-    def stream_message(self, message: str) -> None:
+    def stream_message(self, message: str, is_transient: bool = False) -> None:
         """
         Streams a message to the current request context. Applicable within a AIAgent execute function.
         If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
 
         Args:
             message (str): The message to be streamed.
+            is_transient (bool): If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.
         """
         request_id = self._get_agent_app_request_id()
         caller = self._get_agent_async_app_caller()
         proxy_caller = self._is_proxy_app_caller()
         if request_id and caller:
             extra_args = {'stream_type': StreamType.MESSAGE.value,
-                          'response_version': '1.0'}
+                          'response_version': '1.0', 'is_transient': is_transient}
             if hasattr(_request_context, 'agent_workflow_node_id'):
                 extra_args.update(
                     {'agent_workflow_node_id': _request_context.agent_workflow_node_id})
             self._call_aiagent_app_send_message(
                 request_id, caller, message=message, extra_args=extra_args, proxy_caller=proxy_caller)
-        return StreamingHandler(message, _request_context)
+        return StreamingHandler(message, _request_context, is_transient=is_transient)
 
     def stream_section_output(self, section_key: str, value: str) -> None:
         """
@@ -8655,17 +8687,6 @@ Creates a new feature group defined as the union of other feature group versions
             AgentConversation: Contains a list of AgentConversationMessage that represents the conversation."""
         return self._proxy_request('constructAgentConversationMessagesForLLM', 'POST', query_params={}, body={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'includeDocumentContents': include_document_contents}, parse_type=AgentConversation, is_sync=True)
 
-    def get_llm_app_response(self, llm_app_name: str, prompt: str) -> LlmResponse:
-        """Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
-
-        Args:
-            llm_app_name (str): The name of the LLM App to use for generation.
-            prompt (str): The prompt to use for generation.
-
-        Returns:
-            LlmResponse: The response from the LLM App."""
-        return self._call_api('getLLMAppResponse', 'POST', query_params={}, body={'llmAppName': llm_app_name, 'prompt': prompt}, parse_type=LlmResponse)
-
     def validate_workflow_graph(self, workflow_graph: Union[dict, WorkflowGraph], agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, package_requirements: list = []) -> dict:
         """Validates the workflow graph for an AI Agent.
 
@@ -8683,6 +8704,17 @@ Creates a new feature group defined as the union of other feature group versions
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']."""
         return self._call_api('extractAgentWorkflowInformation', 'POST', query_params={}, body={'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'packageRequirements': package_requirements})
+
+    def get_llm_app_response(self, llm_app_name: str, prompt: str) -> LlmResponse:
+        """Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
+
+        Args:
+            llm_app_name (str): The name of the LLM App to use for generation.
+            prompt (str): The prompt to use for generation.
+
+        Returns:
+            LlmResponse: The response from the LLM App."""
+        return self._call_api('getLLMAppResponse', 'POST', query_params={}, body={'llmAppName': llm_app_name, 'prompt': prompt}, parse_type=LlmResponse)
 
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, VectorStoreConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.

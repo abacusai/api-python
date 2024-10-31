@@ -340,7 +340,7 @@ class WorkflowGraphNode(ApiClass):
             workflow_node.function = function
             workflow_node.function_name = function.__name__
             workflow_node.source_code = get_clean_function_source_code_for_agent(function)
-        elif function_name and source_code:
+        elif function_name and (source_code or template_metadata):
             workflow_node.function_name = function_name
             workflow_node.source_code = source_code
         else:
@@ -371,7 +371,7 @@ class WorkflowGraphNode(ApiClass):
         elif isinstance(input_schema, WorkflowNodeInputSchema):
             instance_input_schema = input_schema
         elif isinstance(input_schema, list) and all(isinstance(field, str) for field in input_schema):
-            instance_input_schema = JSONSchema.from_fields_list(input_schema)
+            instance_input_schema = WorkflowNodeInputSchema.from_fields_list(input_schema)
         else:
             raise ValueError('workflow_graph_node', 'Invalid input schema. Must be a WorkflowNodeInputSchema or a list of field names.')
 
@@ -381,7 +381,7 @@ class WorkflowGraphNode(ApiClass):
         elif isinstance(output_schema, WorkflowNodeOutputSchema):
             instance_output_schema = output_schema
         elif isinstance(output_schema, list) and all(isinstance(field, str) for field in output_schema):
-            instance_output_schema = JSONSchema.from_fields_list(output_schema)
+            instance_output_schema = WorkflowNodeOutputSchema.from_fields_list(output_schema)
         else:
             raise ValueError('workflow_graph_node', 'Invalid output schema. Must be a WorkflowNodeOutputSchema or a list of output section names.')
 

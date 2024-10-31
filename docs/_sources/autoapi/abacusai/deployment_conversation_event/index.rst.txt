@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -78,6 +78,8 @@ Module Contents
    :type llmBotIcon: str
    :param formResponse: Contains form data response from the user when a Form Segment is given out by the bot.
    :type formResponse: dict
+   :param routedLlm: The LLM that was chosen by RouteLLM to generate the response.
+   :type routedLlm: str
 
 
    .. py:attribute:: role
@@ -159,6 +161,9 @@ Module Contents
 
 
    .. py:attribute:: form_response
+
+
+   .. py:attribute:: routed_llm
 
 
    .. py:attribute:: deprecated_keys

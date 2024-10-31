@@ -45,7 +45,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">abacusai</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../abacus_api/index.html">abacusai.abacus_api</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../address/index.html">abacusai.address</a></li>
@@ -62,6 +61,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../annotation_document/index.html">abacusai.annotation_document</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotation_entry/index.html">abacusai.annotation_entry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotations_status/index.html">abacusai.annotations_status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_class/index.html">abacusai.api_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html">abacusai.api_client_utils</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_endpoint/index.html">abacusai.api_endpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html">abacusai.api_key</a></li>
@@ -248,6 +248,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html">abacusai.refresh_pipeline_run</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_policy/index.html">abacusai.refresh_policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_schedule/index.html">abacusai.refresh_schedule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regenerate_llm_external_application/index.html">abacusai.regenerate_llm_external_application</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../resolved_feature_group_template/index.html">abacusai.resolved_feature_group_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../return_class/index.html">abacusai.return_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../routing_action/index.html">abacusai.routing_action</a></li>
@@ -987,7 +988,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.16'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.17'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1048,11 +1049,6 @@ encounters an unexpected error while processing the request.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.service_discovery_url">
 <span class="sig-name descname"><span class="pre">service_discovery_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.service_discovery_url" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.client.BaseApiClient.skip_version_check">
-<span class="sig-name descname"><span class="pre">skip_version_check</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.skip_version_check" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -5106,6 +5102,19 @@ This will be equivalent to including from that module file.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.execute_workflow_node">
+<span class="sig-name descname"><span class="pre">execute_workflow_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.execute_workflow_node" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.WorkflowGraphNode" title="abacusai.api_class.WorkflowGraphNode"><em>abacusai.api_class.WorkflowGraphNode</em></a>)</p></li>
+<li><p><strong>inputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_agent_from_function">
 <span class="sig-name descname"><span class="pre">create_agent_from_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation_feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_agent_from_function" title="Link to this definition"></a></dt>
 <dd><p>[Deprecated]
@@ -5438,12 +5447,15 @@ Applicable within a AIAgent execute function.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.stream_message">
-<span class="sig-name descname"><span class="pre">stream_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.stream_message" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">stream_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_transient</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.stream_message" title="Link to this definition"></a></dt>
 <dd><p>Streams a message to the current request context. Applicable within a AIAgent execute function.
 If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The message to be streamed.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The message to be streamed.</p></li>
+<li><p><strong>is_transient</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -12593,26 +12605,6 @@ content returned in the response.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_llm_app_response">
-<span class="sig-name descname"><span class="pre">get_llm_app_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_llm_app_response" title="Link to this definition"></a></dt>
-<dd><p>Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service’s API.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>llm_app_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the LLM App to use for generation.</p></li>
-<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The prompt to use for generation.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The response from the LLM App.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.LlmResponse" title="abacusai.LlmResponse">LlmResponse</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.validate_workflow_graph">
 <span class="sig-name descname"><span class="pre">validate_workflow_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AgentInterface.DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.validate_workflow_graph" title="Link to this definition"></a></dt>
 <dd><p>Validates the workflow graph for an AI Agent.</p>
@@ -12644,6 +12636,26 @@ content returned in the response.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_llm_app_response">
+<span class="sig-name descname"><span class="pre">get_llm_app_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_llm_app_response" title="Link to this definition"></a></dt>
+<dd><p>Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service’s API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>llm_app_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the LLM App to use for generation.</p></li>
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The prompt to use for generation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the LLM App.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.LlmResponse" title="abacusai.LlmResponse">LlmResponse</a></p>
 </dd>
 </dl>
 </dd></dl>

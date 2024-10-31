@@ -539,7 +539,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.16'
+      :value: '1.4.17'
 
 
 
@@ -589,9 +589,6 @@ Module Contents
    .. py:attribute:: service_discovery_url
       :value: None
 
-
-
-   .. py:attribute:: skip_version_check
 
 
    .. py:method:: _get_prediction_endpoint(deployment_id, deployment_token)
@@ -3601,6 +3598,9 @@ Module Contents
 
 
 
+   .. py:method:: execute_workflow_node(node, inputs)
+
+
    .. py:method:: create_agent_from_function(project_id, agent_function, name = None, memory = None, package_requirements = None, description = None, evaluation_feature_group_id = None, workflow_graph = None)
 
       [Deprecated]
@@ -3863,13 +3863,15 @@ Module Contents
 
 
 
-   .. py:method:: stream_message(message)
+   .. py:method:: stream_message(message, is_transient = False)
 
       Streams a message to the current request context. Applicable within a AIAgent execute function.
       If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
 
       :param message: The message to be streamed.
       :type message: str
+      :param is_transient: If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.
+      :type is_transient: bool
 
 
 
@@ -10065,20 +10067,6 @@ Module Contents
 
 
 
-   .. py:method:: get_llm_app_response(llm_app_name, prompt)
-
-      Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
-
-      :param llm_app_name: The name of the LLM App to use for generation.
-      :type llm_app_name: str
-      :param prompt: The prompt to use for generation.
-      :type prompt: str
-
-      :returns: The response from the LLM App.
-      :rtype: LlmResponse
-
-
-
    .. py:method:: validate_workflow_graph(workflow_graph, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
 
       Validates the workflow graph for an AI Agent.
@@ -10102,6 +10090,20 @@ Module Contents
       :type agent_interface: AgentInterface
       :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+
+
+
+   .. py:method:: get_llm_app_response(llm_app_name, prompt)
+
+      Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
+
+      :param llm_app_name: The name of the LLM App to use for generation.
+      :type llm_app_name: str
+      :param prompt: The prompt to use for generation.
+      :type prompt: str
+
+      :returns: The response from the LLM App.
+      :rtype: LlmResponse
 
 
 

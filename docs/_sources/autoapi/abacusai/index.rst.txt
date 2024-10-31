@@ -4,15 +4,6 @@ abacusai
 .. py:module:: abacusai
 
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 1
-
-   /autoapi/abacusai/api_class/index
-
-
 Submodules
 ----------
 
@@ -34,6 +25,7 @@ Submodules
    /autoapi/abacusai/annotation_document/index
    /autoapi/abacusai/annotation_entry/index
    /autoapi/abacusai/annotations_status/index
+   /autoapi/abacusai/api_class/index
    /autoapi/abacusai/api_client_utils/index
    /autoapi/abacusai/api_endpoint/index
    /autoapi/abacusai/api_key/index
@@ -213,6 +205,7 @@ Submodules
    /autoapi/abacusai/refresh_pipeline_run/index
    /autoapi/abacusai/refresh_policy/index
    /autoapi/abacusai/refresh_schedule/index
+   /autoapi/abacusai/regenerate_llm_external_application/index
    /autoapi/abacusai/resolved_feature_group_template/index
    /autoapi/abacusai/return_class/index
    /autoapi/abacusai/routing_action/index
@@ -668,6 +661,7 @@ Classes
    abacusai.RefreshPipelineRun
    abacusai.RefreshPolicy
    abacusai.RefreshSchedule
+   abacusai.RegenerateLlmExternalApplication
    abacusai.ResolvedFeatureGroupTemplate
    abacusai.RoutingAction
    abacusai.Schema
@@ -945,17 +939,20 @@ Package Contents
    .. py:property:: description
       :type: str
 
+
       The description of the agent.
 
 
    .. py:property:: agent_interface
       :type: str
 
+
       The interface that the agent will be deployed with.
 
 
    .. py:property:: agent_connectors
       :type: dict
+
 
       A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
 
@@ -12041,6 +12038,9 @@ Package Contents
 
 
 
+   .. py:method:: execute_workflow_node(node, inputs)
+
+
    .. py:method:: create_agent_from_function(project_id, agent_function, name = None, memory = None, package_requirements = None, description = None, evaluation_feature_group_id = None, workflow_graph = None)
 
       [Deprecated]
@@ -12303,13 +12303,15 @@ Package Contents
 
 
 
-   .. py:method:: stream_message(message)
+   .. py:method:: stream_message(message, is_transient = False)
 
       Streams a message to the current request context. Applicable within a AIAgent execute function.
       If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
 
       :param message: The message to be streamed.
       :type message: str
+      :param is_transient: If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.
+      :type is_transient: bool
 
 
 
@@ -18505,20 +18507,6 @@ Package Contents
 
 
 
-   .. py:method:: get_llm_app_response(llm_app_name, prompt)
-
-      Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
-
-      :param llm_app_name: The name of the LLM App to use for generation.
-      :type llm_app_name: str
-      :param prompt: The prompt to use for generation.
-      :type prompt: str
-
-      :returns: The response from the LLM App.
-      :rtype: LlmResponse
-
-
-
    .. py:method:: validate_workflow_graph(workflow_graph, agent_interface = AgentInterface.DEFAULT, package_requirements = [])
 
       Validates the workflow graph for an AI Agent.
@@ -18542,6 +18530,20 @@ Package Contents
       :type agent_interface: AgentInterface
       :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+
+
+
+   .. py:method:: get_llm_app_response(llm_app_name, prompt)
+
+      Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
+
+      :param llm_app_name: The name of the LLM App to use for generation.
+      :type llm_app_name: str
+      :param prompt: The prompt to use for generation.
+      :type prompt: str
+
+      :returns: The response from the LLM App.
+      :rtype: LlmResponse
 
 
 
@@ -23655,7 +23657,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23718,6 +23720,8 @@ Package Contents
    :type llmBotIcon: str
    :param formResponse: Contains form data response from the user when a Form Segment is given out by the bot.
    :type formResponse: dict
+   :param routedLlm: The LLM that was chosen by RouteLLM to generate the response.
+   :type routedLlm: str
 
 
    .. py:attribute:: role
@@ -23799,6 +23803,9 @@ Package Contents
 
 
    .. py:attribute:: form_response
+
+
+   .. py:attribute:: routed_llm
 
 
    .. py:attribute:: deprecated_keys
@@ -38445,6 +38452,42 @@ Package Contents
 
 
 
+.. py:class:: RegenerateLlmExternalApplication(client, name=None, externalApplicationId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   An external application that specifies an LLM user can regenerate with in RouteLLM.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The external name of the LLM.
+   :type name: str
+   :param externalApplicationId: The unique identifier of the external application.
+   :type externalApplicationId: str
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: external_application_id
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ResolvedFeatureGroupTemplate(client, featureGroupTemplateId=None, resolvedVariables=None, resolvedSql=None, templateSql=None, sqlError=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -39946,7 +39989,7 @@ Package Contents
 
 
 
-.. py:class:: WorkflowNodeTemplate(client, workflowNodeTemplateId=None, name=None, functionName=None, sourceCode=None, description=None, packageRequirements=None, tags=None, inputs={}, outputs={}, templateConfigs={})
+.. py:class:: WorkflowNodeTemplate(client, workflowNodeTemplateId=None, name=None, functionName=None, sourceCode=None, description=None, packageRequirements=None, tags=None, additionalConfigs=None, inputs={}, outputs={}, templateConfigs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39969,6 +40012,8 @@ Package Contents
    :type packageRequirements: list[str]
    :param tags: Tags to add to the workflow node template. It contains information on the intended usage of template.
    :type tags: dict
+   :param additionalConfigs: Additional configurations for the workflow node template.
+   :type additionalConfigs: dict
    :param inputs: A list of inputs that the workflow node template will use.
    :type inputs: WorkflowNodeTemplateInput
    :param outputs: A list of outputs that the workflow node template will give.
@@ -39998,6 +40043,9 @@ Package Contents
    .. py:attribute:: tags
 
 
+   .. py:attribute:: additional_configs
+
+
    .. py:attribute:: inputs
 
 
@@ -40023,6 +40071,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.16'
+   :value: '1.4.17'
 
 

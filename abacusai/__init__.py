@@ -191,6 +191,7 @@ from .realtime_monitor import RealtimeMonitor
 from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
 from .refresh_schedule import RefreshSchedule
+from .regenerate_llm_external_application import RegenerateLlmExternalApplication
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
 from .routing_action import RoutingAction
 from .schema import Schema
@@ -218,4 +219,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.16"
+__version__ = "1.4.17"
