@@ -285,6 +285,9 @@ class AgentResponse:
             self.section_data_list.append({key: value})
 
     def to_dict(self):
+        """
+        Get a dict representation of the response object
+        """
         result = {}
         if self.data_list:
             result['data_list'] = self.data_list
@@ -589,6 +592,9 @@ class _ApiExceptionFactory:
     """
     @classmethod
     def from_response(cls, message: str, http_status: int, exception: str = None, request_id: str = None):
+        """
+        Creates an appropriate exception instance based on HTTP response data.
+        """
         if http_status == 504:
             message = 'Gateway timeout, please try again later'
             return GatewayTimeoutError(message, http_status, exception, request_id)
@@ -618,7 +624,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.17'
+    client_version = '1.4.18'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3612,6 +3618,9 @@ class ApiClient(ReadOnlyClient):
         return workflow_info['run_info']
 
     def execute_workflow_node(self, node: WorkflowGraphNode, inputs: dict):
+        """
+        Executes a workflow node.
+        """
         source_code = None
         function_name = None
         if node.template_metadata:

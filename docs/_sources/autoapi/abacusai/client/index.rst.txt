@@ -116,6 +116,9 @@ Module Contents
 
    .. py:method:: to_dict()
 
+      Get a dict representation of the response object
+
+
 
    .. py:method:: __getattr__(item)
 
@@ -523,6 +526,9 @@ Module Contents
       :classmethod:
 
 
+      Creates an appropriate exception instance based on HTTP response data.
+
+
 
 .. py:class:: BaseApiClient(api_key = None, server = None, client_options = None, skip_version_check = False, include_tb = False)
 
@@ -539,7 +545,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.17'
+      :value: '1.4.18'
 
 
 
@@ -589,6 +595,9 @@ Module Contents
    .. py:attribute:: service_discovery_url
       :value: None
 
+
+
+   .. py:attribute:: skip_version_check
 
 
    .. py:method:: _get_prediction_endpoint(deployment_id, deployment_token)
@@ -3599,6 +3608,9 @@ Module Contents
 
 
    .. py:method:: execute_workflow_node(node, inputs)
+
+      Executes a workflow node.
+
 
 
    .. py:method:: create_agent_from_function(project_id, agent_function, name = None, memory = None, package_requirements = None, description = None, evaluation_feature_group_id = None, workflow_graph = None)

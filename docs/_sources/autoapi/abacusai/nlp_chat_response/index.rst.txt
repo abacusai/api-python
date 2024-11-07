@@ -1,0 +1,53 @@
+abacusai.nlp_chat_response
+==========================
+
+.. py:module:: abacusai.nlp_chat_response
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.nlp_chat_response.NlpChatResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: NlpChatResponse(client, deploymentConversationId=None, messages=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A chat response from an LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The unique identifier of the deployment conversation.
+   :type deploymentConversationId: str
+   :param messages: The conversation messages in the chat.
+   :type messages: list
+
+
+   .. py:attribute:: deployment_conversation_id
+
+
+   .. py:attribute:: messages
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

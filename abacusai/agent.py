@@ -23,10 +23,11 @@ class Agent(AbstractApiClass):
             agentExecutionConfig (dict): The config for arguments used to execute the agent.
             latestAgentVersion (AgentVersion): The latest agent version.
             codeSource (CodeSource): If a python model, information on the source code
+            draftWorkflowGraph (WorkflowGraph): The last saved draft of workflow graph for the agent.
             workflowGraph (WorkflowGraph): The workflow graph for the agent.
     """
 
-    def __init__(self, client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, workflowGraph={}):
+    def __init__(self, client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, draftWorkflowGraph={}, workflowGraph={}):
         super().__init__(client, agentId)
         self.name = name
         self.agent_id = agentId
@@ -42,12 +43,14 @@ class Agent(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
         self.latest_agent_version = client._build_class(
             AgentVersion, latestAgentVersion)
+        self.draft_workflow_graph = client._build_class(
+            WorkflowGraph, draftWorkflowGraph)
         self.workflow_graph = client._build_class(WorkflowGraph, workflowGraph)
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'agent_id': repr(self.agent_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'notebook_id': repr(self.notebook_id), f'predict_function_name': repr(self.predict_function_name), f'source_code': repr(self.source_code), f'agent_config': repr(
-            self.agent_config), f'memory': repr(self.memory), f'training_required': repr(self.training_required), f'agent_execution_config': repr(self.agent_execution_config), f'code_source': repr(self.code_source), f'latest_agent_version': repr(self.latest_agent_version), f'workflow_graph': repr(self.workflow_graph)}
+        repr_dict = {f'name': repr(self.name), f'agent_id': repr(self.agent_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'notebook_id': repr(self.notebook_id), f'predict_function_name': repr(self.predict_function_name), f'source_code': repr(self.source_code), f'agent_config': repr(self.agent_config), f'memory': repr(
+            self.memory), f'training_required': repr(self.training_required), f'agent_execution_config': repr(self.agent_execution_config), f'code_source': repr(self.code_source), f'latest_agent_version': repr(self.latest_agent_version), f'draft_workflow_graph': repr(self.draft_workflow_graph), f'workflow_graph': repr(self.workflow_graph)}
         class_name = "Agent"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -60,8 +63,8 @@ class Agent(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'agent_id': self.agent_id, 'created_at': self.created_at, 'project_id': self.project_id, 'notebook_id': self.notebook_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code, 'agent_config': self.agent_config, 'memory': self.memory,
-                'training_required': self.training_required, 'agent_execution_config': self.agent_execution_config, 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_agent_version': self._get_attribute_as_dict(self.latest_agent_version), 'workflow_graph': self._get_attribute_as_dict(self.workflow_graph)}
+        resp = {'name': self.name, 'agent_id': self.agent_id, 'created_at': self.created_at, 'project_id': self.project_id, 'notebook_id': self.notebook_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code, 'agent_config': self.agent_config, 'memory': self.memory, 'training_required': self.training_required,
+                'agent_execution_config': self.agent_execution_config, 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_agent_version': self._get_attribute_as_dict(self.latest_agent_version), 'draft_workflow_graph': self._get_attribute_as_dict(self.draft_workflow_graph), 'workflow_graph': self._get_attribute_as_dict(self.workflow_graph)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):

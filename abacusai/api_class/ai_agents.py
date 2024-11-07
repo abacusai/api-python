@@ -1,6 +1,6 @@
 import ast
 import dataclasses
-from typing import Dict, List, Union
+from typing import Any, Dict, List, Union
 
 from . import enums
 from .abstract import ApiClass, get_clean_function_source_code_for_agent, validate_constructor_arg_types
@@ -67,6 +67,7 @@ class WorkflowNodeInputMapping(ApiClass):
     variable_source: str = dataclasses.field(default=None)
     source_prop: str = dataclasses.field(default=None)
     is_required: bool = dataclasses.field(default=True)
+    default_value: Any = dataclasses.field(default=None)
 
     def to_dict(self):
         return {
@@ -74,7 +75,8 @@ class WorkflowNodeInputMapping(ApiClass):
             'variable_type': self.variable_type.value,
             'variable_source': self.variable_source,
             'source_prop': self.source_prop or self.name,
-            'is_required': self.is_required
+            'is_required': self.is_required,
+            'default_value': self.default_value
         }
 
     @classmethod
@@ -87,7 +89,8 @@ class WorkflowNodeInputMapping(ApiClass):
             variable_type=enums.WorkflowNodeInputType(mapping['variable_type']),
             variable_source=mapping.get('variable_source'),
             source_prop=mapping.get('source_prop') or mapping['name'] if mapping.get('variable_source') else None,
-            is_required=mapping.get('is_required', True)
+            is_required=mapping.get('is_required', True),
+            default_value=mapping.get('default_value')
         )
 
 
@@ -283,14 +286,14 @@ class WorkflowGraphNode(ApiClass):
                         raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{input_name}" not found in function "{self.function_name}".')
                 for arg, default in arg_defaults.items():
                     if arg not in input_mapping_args:
-                        self.input_mappings.append(WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None))
+                        self.input_mappings.append(WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None, default_value=default.value if default else None))
             elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, WorkflowNodeInputMapping) for key, value in input_mappings.items()):
                 is_shortform_input_mappings = True
-                self.input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None) for arg, default in arg_defaults.items() if arg not in input_mappings]
+                self.input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None, default_value=default.value if default else None) for arg, default in arg_defaults.items() if arg not in input_mappings]
                 for key, value in input_mappings.items():
                     if key not in arg_defaults:
                         raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{key}" not found in function "{self.function_name}".')
-                    self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=value.variable_type, variable_source=value.variable_source, source_prop=value.source_prop, is_required=arg_defaults.get(key) is None))
+                    self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=value.variable_type, variable_source=value.variable_source, source_prop=value.source_prop, is_required=arg_defaults.get(key) is None, default_value=value.default_value))
             else:
                 raise ValueError('workflow_graph_node', 'Invalid input mappings. Must be a list of WorkflowNodeInputMapping or a dictionary of input mappings in the form {arg_name: node_name.outputs.prop_name}.')
 
@@ -359,7 +362,7 @@ class WorkflowGraphNode(ApiClass):
         if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
             instance_input_mappings = input_mappings
         elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, WorkflowNodeInputMapping) for key, value in input_mappings.items()):
-            instance_input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=mapping.variable_type, variable_source=mapping.variable_source, source_prop=mapping.source_prop) for arg, mapping in input_mappings]
+            instance_input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=mapping.variable_type, variable_source=mapping.variable_source, source_prop=mapping.source_prop, is_required=mapping.is_required, default_value=mapping.default_value) for arg, mapping in input_mappings]
         elif input_mappings is None:
             instance_input_mappings = []
         else:

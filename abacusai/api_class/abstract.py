@@ -25,6 +25,8 @@ ALL_CAP_RE = re.compile('([a-z0-9])([A-Z])')
 def _validate_instance(value, expected_type):
     if expected_type == callable:
         return callable(value)
+    if expected_type is Any:
+        return True
     elif isinstance(expected_type, _GenericAlias):
         if expected_type.__origin__ == list:
             if not isinstance(value, list):

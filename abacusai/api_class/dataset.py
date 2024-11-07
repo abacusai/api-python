@@ -71,7 +71,7 @@ class DocumentProcessingConfig(ApiClass):
             elif self.document_type == DocumentType.EMBEDDED_IMAGES:
                 return OcrMode.SCANNED
             elif self.document_type == DocumentType.SCANNED_TEXT:
-                return OcrMode.DEFAULT
+                return OcrMode.SCANNED
         if self.ocr_mode is not None:
             return self.ocr_mode
         return OcrMode.AUTO

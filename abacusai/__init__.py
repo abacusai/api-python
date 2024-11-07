@@ -150,6 +150,7 @@ from .natural_language_explanation import NaturalLanguageExplanation
 from .nested_feature import NestedFeature
 from .nested_feature_schema import NestedFeatureSchema
 from .news_search_result import NewsSearchResult
+from .nlp_chat_response import NlpChatResponse
 from .notebook_completion import NotebookCompletion
 from .notebook_template import NotebookTemplate
 from .null_violation import NullViolation
@@ -166,6 +167,7 @@ from .pipeline_step_version_logs import PipelineStepVersionLogs
 from .pipeline_step_version_reference import PipelineStepVersionReference
 from .pipeline_version import PipelineVersion
 from .pipeline_version_logs import PipelineVersionLogs
+from .playground_text import PlaygroundText
 from .point_in_time_feature import PointInTimeFeature
 from .point_in_time_feature_info import PointInTimeFeatureInfo
 from .point_in_time_group import PointInTimeGroup
@@ -219,4 +221,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.17"
+__version__ = "1.4.18"
