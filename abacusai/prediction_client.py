@@ -171,7 +171,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'threshold': threshold, 'histogram': histogram}, server_override=prediction_url)
 
-    def get_timeseries_anomalies(self, deployment_token: str, deployment_id: str, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: list = None) -> Dict:
+    def get_timeseries_anomalies(self, deployment_token: str, deployment_id: str, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: List = None) -> Dict:
         """Returns a list of anomalous timestamps from the training dataset.
 
         Args:
@@ -181,7 +181,7 @@ class PredictionClient(BaseApiClient):
             end_timestamp (str): timestamp to which anomalies have to be detected in the training data
             query_data (dict): additional data on which anomaly detection has to be performed, it can either be a single record or list of records or a json string representing list of records
             get_all_item_data (bool): set this to true if anomaly detection has to be performed on all the data related to input ids
-            series_ids (list): list of series ids on which the anomaly detection has to be performed"""
+            series_ids (List): list of series ids on which the anomaly detection has to be performed"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getTimeseriesAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'queryData': query_data, 'getAllItemData': get_all_item_data, 'seriesIds': series_ids}, server_override=prediction_url)
@@ -761,7 +761,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
 
-    def start_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
+    def start_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str = None, arguments: list = None, keyword_arguments: dict = None, save_conversations: bool = True) -> Dict:
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
@@ -769,10 +769,11 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier for the deployment created under the project.
             deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
             arguments (list): Positional arguments to the agent execute function.
-            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
+            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+            save_conversations (bool): If true then a new conversation will be created for every run of the workflow associated with the agent."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
+        return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'saveConversations': save_conversations}, server_override=prediction_url, timeout=1500)
 
     def pause_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
         """Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.

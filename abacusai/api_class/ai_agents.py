@@ -356,7 +356,7 @@ class WorkflowGraphNode(ApiClass):
         return workflow_node
 
     @classmethod
-    def from_template(cls, template_name: str, name: str, configs: dict = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None):
+    def from_template(cls, template_name: str, name: str, configs: dict = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, sleep_time: int = None):
 
         instance_input_mappings = []
         if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
@@ -396,7 +396,8 @@ class WorkflowGraphNode(ApiClass):
             template_metadata={
                 'template_name': template_name,
                 'configs': configs or {},
-                'initialized': False
+                'initialized': False,
+                'sleep_time': sleep_time,
             }
         )
 

@@ -911,15 +911,6 @@ Module Contents
 
 
 
-   .. py:method:: invalidate_streaming_data(invalid_before_timestamp)
-
-      Invalidates all streaming data with timestamp before invalidBeforeTimestamp
-
-      :param invalid_before_timestamp: Unix timestamp; any data with a timestamp before this time will be invalidated
-      :type invalid_before_timestamp: int
-
-
-
    .. py:method:: concatenate_data(source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
 
       Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
@@ -1214,7 +1205,7 @@ Module Contents
 
 
 
-   .. py:method:: set_export_connector_config(feature_group_export_config)
+   .. py:method:: set_export_connector_config(feature_group_export_config = None)
 
       Sets FG export config for the given feature group.
 

@@ -59,12 +59,14 @@ class DocumentProcessingConfig(ApiClass):
 
     def __post_init__(self):
         self.ocr_mode = self._detect_ocr_mode()
+        if self.document_type is not None and DocumentType.is_ocr_forced(self.document_type):
+            self.highlight_relevant_text = True
         if self.highlight_relevant_text is not None:
             self.extract_bounding_boxes = self.highlight_relevant_text  # Highlight_relevant text acts as a wrapper over extract_bounding_boxes
 
     def _detect_ocr_mode(self):
         if self.document_type is not None:
-            if self.document_type == DocumentType.TEXT:
+            if self.document_type == DocumentType.TEXT or self.document_type == DocumentType.SIMPLE_TEXT:
                 return OcrMode.DEFAULT
             elif self.document_type == DocumentType.TABLES_AND_FORMS:
                 return OcrMode.LAYOUT
@@ -75,6 +77,15 @@ class DocumentProcessingConfig(ApiClass):
         if self.ocr_mode is not None:
             return self.ocr_mode
         return OcrMode.AUTO
+
+    @classmethod
+    def _get_filtered_dict(cls, config: dict):
+        """Filters out default values from the config"""
+        from reainternal.utils import snake_case
+        return {
+            k: v for k, v in config.items()
+            if v is not None and v != getattr(cls, snake_case(k), None)
+        }
 
 
 @dataclasses.dataclass

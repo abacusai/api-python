@@ -68,6 +68,7 @@ Classes
    abacusai.api_class.enums.StdDevThresholdType
    abacusai.api_class.enums.DataType
    abacusai.api_class.enums.AgentInterface
+   abacusai.api_class.enums.WorkflowNodeTemplateType
    abacusai.api_class.enums.ProjectConfigType
    abacusai.api_class.enums.CPUSize
    abacusai.api_class.enums.MemorySize
@@ -1753,18 +1754,18 @@ Module Contents
 
 
 
-   .. py:attribute:: GOOGLECALENDARUSER
-      :value: 'GOOGLECALENDARUSER'
+   .. py:attribute:: GOOGLECALENDAR
+      :value: 'GOOGLECALENDAR'
 
 
 
-   .. py:attribute:: GOOGLESHEETSUSER
-      :value: 'GOOGLESHEETSUSER'
+   .. py:attribute:: GOOGLESHEETS
+      :value: 'GOOGLESHEETS'
 
 
 
-   .. py:attribute:: GOOGLEDOCSUSER
-      :value: 'GOOGLEDOCSUSER'
+   .. py:attribute:: GOOGLEDOCS
+      :value: 'GOOGLEDOCS'
 
 
 
@@ -2105,6 +2106,11 @@ Module Contents
 
    .. py:attribute:: ABACUS_DRACARYS
       :value: 'ABACUS_DRACARYS'
+
+
+
+   .. py:attribute:: QWEN_2_5_32B
+      :value: 'QWEN_2_5_32B'
 
 
 
@@ -2533,6 +2539,11 @@ Module Contents
    Derive from this class to define new enumerations.
 
 
+   .. py:attribute:: SIMPLE_TEXT
+      :value: 'SIMPLE_TEXT'
+
+
+
    .. py:attribute:: TEXT
       :value: 'TEXT'
 
@@ -2550,6 +2561,11 @@ Module Contents
 
    .. py:attribute:: SCANNED_TEXT
       :value: 'SCANNED_TEXT'
+
+
+
+   .. py:method:: is_ocr_forced(document_type)
+      :classmethod:
 
 
 
@@ -2665,6 +2681,26 @@ Module Contents
 
    .. py:attribute:: AUTONOMOUS
       :value: 'AUTONOMOUS'
+
+
+
+.. py:class:: WorkflowNodeTemplateType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: TRIGGER
+      :value: 'trigger'
+
+
+
+   .. py:attribute:: DEFAULT
+      :value: 'default'
 
 
 
@@ -2870,6 +2906,16 @@ Module Contents
 
    .. py:attribute:: COPILOT
       :value: 'COPILOT'
+
+
+
+   .. py:attribute:: AGENT_CONTROLLER
+      :value: 'AGENT_CONTROLLER'
+
+
+
+   .. py:attribute:: CODE_LLM
+      :value: 'CODE_LLM'
 
 
 

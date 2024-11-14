@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
@@ -6,19 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.client &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -47,7 +45,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">abacusai</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../abacus_api/index.html">abacusai.abacus_api</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../address/index.html">abacusai.address</a></li>
@@ -64,6 +61,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../annotation_document/index.html">abacusai.annotation_document</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotation_entry/index.html">abacusai.annotation_entry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotations_status/index.html">abacusai.annotations_status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_class/index.html">abacusai.api_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html">abacusai.api_client_utils</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_endpoint/index.html">abacusai.api_endpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html">abacusai.api_key</a></li>
@@ -399,6 +397,9 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.client.InternalServerError" title="abacusai.client.InternalServerError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InternalServerError</span></code></a></p></td>
 <td><p>Internal server error raised by APIs. This is usually raised when the server</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.client.UnsuccessfulTrigger" title="abacusai.client.UnsuccessfulTrigger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnsuccessfulTrigger</span></code></a></p></td>
+<td><p>Error class to indicate that the trigger is unsuccessful for autonomous agents</p></td>
 </tr>
 </tbody>
 </table>
@@ -955,6 +956,24 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 </dd></dl>
 
+<dl class="py exception">
+<dt class="sig sig-object py" id="abacusai.client.UnsuccessfulTrigger">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.client.</span></span><span class="sig-name descname"><span class="pre">UnsuccessfulTrigger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.UnsuccessfulTrigger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.client.ApiException" title="abacusai.client.ApiException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiException</span></code></a></p>
+<p>Error class to indicate that the trigger is unsuccessful for autonomous agents
+and avoids execution of the further workflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error message</p></li>
+<li><p><strong>http_status</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The https status code raised by the server</p></li>
+<li><p><strong>exception</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The exception class raised by the server</p></li>
+<li><p><strong>request_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The request id</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.client._ApiExceptionFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.client.</span></span><span class="sig-name descname"><span class="pre">_ApiExceptionFactory</span></span><a class="headerlink" href="#abacusai.client._ApiExceptionFactory" title="Link to this definition"></a></dt>
@@ -994,7 +1013,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.18'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.19'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1055,11 +1074,6 @@ encounters an unexpected error while processing the request.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.service_discovery_url">
 <span class="sig-name descname"><span class="pre">service_discovery_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.service_discovery_url" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.client.BaseApiClient.skip_version_check">
-<span class="sig-name descname"><span class="pre">skip_version_check</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.skip_version_check" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -7125,20 +7139,6 @@ Creates a new feature group defined as the union of other feature group versions
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.invalidate_streaming_feature_group_data">
-<span class="sig-name descname"><span class="pre">invalidate_streaming_feature_group_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalid_before_timestamp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.invalidate_streaming_feature_group_data" title="Link to this definition"></a></dt>
-<dd><p>Invalidates all streaming data with timestamp before invalidBeforeTimestamp</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier of the streaming feature group to record data to</p></li>
-<li><p><strong>invalid_before_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Unix timestamp; any data with a timestamp before this time will be invalidated</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.concatenate_feature_group_data">
 <span class="sig-name descname"><span class="pre">concatenate_feature_group_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'UNION'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_until_timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_materialize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.concatenate_feature_group_data" title="Link to this definition"></a></dt>
 <dd><p>Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special <cite>updateTimestampKey</cite> column, and (if set) the <cite>primaryKey</cite> column. The second operand in the concatenate operation will be appended to the first operand (merge target).</p>
@@ -7575,7 +7575,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.set_feature_group_export_connector_config">
-<span class="sig-name descname"><span class="pre">set_feature_group_export_connector_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_export_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_feature_group_export_connector_config" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_feature_group_export_connector_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_export_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_feature_group_export_connector_config" title="Link to this definition"></a></dt>
 <dd><p>Sets FG export config for the given feature group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -9888,7 +9888,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>end_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – timestamp to which anomalies have to be detected in the training data</p></li>
 <li><p><strong>query_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – additional data on which anomaly detection has to be performed, it can either be a single record or list of records or a json string representing list of records</p></li>
 <li><p><strong>get_all_item_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – set this to true if anomaly detection has to be performed on all the data related to input ids</p></li>
-<li><p><strong>series_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – list of series ids on which the anomaly detection has to be performed</p></li>
+<li><p><strong>series_ids</strong> (<em>List</em>) – list of series ids on which the anomaly detection has to be performed</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -10757,7 +10757,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.start_autonomous_agent">
-<span class="sig-name descname"><span class="pre">start_autonomous_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.start_autonomous_agent" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_autonomous_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_conversations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.start_autonomous_agent" title="Link to this definition"></a></dt>
 <dd><p>Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -10767,6 +10767,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique string identifier for the deployment conversation used for the conversation.</p></li>
 <li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Positional arguments to the agent execute function.</p></li>
 <li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the parameter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
+<li><p><strong>save_conversations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true then a new conversation will be created for every run of the workflow associated with the agent.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

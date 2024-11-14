@@ -4,15 +4,6 @@ abacusai
 .. py:module:: abacusai
 
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 1
-
-   /autoapi/abacusai/api_class/index
-
-
 Submodules
 ----------
 
@@ -34,6 +25,7 @@ Submodules
    /autoapi/abacusai/annotation_document/index
    /autoapi/abacusai/annotation_entry/index
    /autoapi/abacusai/annotations_status/index
+   /autoapi/abacusai/api_class/index
    /autoapi/abacusai/api_client_utils/index
    /autoapi/abacusai/api_endpoint/index
    /autoapi/abacusai/api_key/index
@@ -404,6 +396,7 @@ Classes
    abacusai.StdDevThresholdType
    abacusai.DataType
    abacusai.AgentInterface
+   abacusai.WorkflowNodeTemplateType
    abacusai.ProjectConfigType
    abacusai.CPUSize
    abacusai.MemorySize
@@ -817,7 +810,7 @@ Package Contents
 
 
 
-.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, draftWorkflowGraph={}, workflowGraph={})
+.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, workflowGraph={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -852,8 +845,6 @@ Package Contents
    :type latestAgentVersion: AgentVersion
    :param codeSource: If a python model, information on the source code
    :type codeSource: CodeSource
-   :param draftWorkflowGraph: The last saved draft of workflow graph for the agent.
-   :type draftWorkflowGraph: WorkflowGraph
    :param workflowGraph: The workflow graph for the agent.
    :type workflowGraph: WorkflowGraph
 
@@ -895,9 +886,6 @@ Package Contents
 
 
    .. py:attribute:: latest_agent_version
-
-
-   .. py:attribute:: draft_workflow_graph
 
 
    .. py:attribute:: workflow_graph
@@ -956,17 +944,20 @@ Package Contents
    .. py:property:: description
       :type: str
 
+
       The description of the agent.
 
 
    .. py:property:: agent_interface
       :type: str
 
+
       The interface that the agent will be deployed with.
 
 
    .. py:property:: agent_connectors
       :type: dict
+
 
       A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
 
@@ -2065,7 +2056,7 @@ Package Contents
 
 
 
-   .. py:method:: from_template(template_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
+   .. py:method:: from_template(template_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None, sleep_time = None)
       :classmethod:
 
 
@@ -2928,6 +2919,11 @@ Package Contents
    Derive from this class to define new enumerations.
 
 
+   .. py:attribute:: SIMPLE_TEXT
+      :value: 'SIMPLE_TEXT'
+
+
+
    .. py:attribute:: TEXT
       :value: 'TEXT'
 
@@ -2945,6 +2941,11 @@ Package Contents
 
    .. py:attribute:: SCANNED_TEXT
       :value: 'SCANNED_TEXT'
+
+
+
+   .. py:method:: is_ocr_forced(document_type)
+      :classmethod:
 
 
 
@@ -3133,6 +3134,14 @@ Package Contents
 
 
    .. py:method:: _detect_ocr_mode()
+
+
+   .. py:method:: _get_filtered_dict(config)
+      :classmethod:
+
+
+      Filters out default values from the config
+
 
 
 .. py:class:: DatasetDocumentProcessingConfig
@@ -5653,18 +5662,18 @@ Package Contents
 
 
 
-   .. py:attribute:: GOOGLECALENDARUSER
-      :value: 'GOOGLECALENDARUSER'
+   .. py:attribute:: GOOGLECALENDAR
+      :value: 'GOOGLECALENDAR'
 
 
 
-   .. py:attribute:: GOOGLESHEETSUSER
-      :value: 'GOOGLESHEETSUSER'
+   .. py:attribute:: GOOGLESHEETS
+      :value: 'GOOGLESHEETS'
 
 
 
-   .. py:attribute:: GOOGLEDOCSUSER
-      :value: 'GOOGLEDOCSUSER'
+   .. py:attribute:: GOOGLEDOCS
+      :value: 'GOOGLEDOCS'
 
 
 
@@ -5960,6 +5969,11 @@ Package Contents
 
    .. py:attribute:: ABACUS_DRACARYS
       :value: 'ABACUS_DRACARYS'
+
+
+
+   .. py:attribute:: QWEN_2_5_32B
+      :value: 'QWEN_2_5_32B'
 
 
 
@@ -6418,6 +6432,26 @@ Package Contents
 
 
 
+.. py:class:: WorkflowNodeTemplateType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: TRIGGER
+      :value: 'trigger'
+
+
+
+   .. py:attribute:: DEFAULT
+      :value: 'default'
+
+
+
 .. py:class:: ProjectConfigType
 
    Bases: :py:obj:`ApiEnum`
@@ -6620,6 +6654,16 @@ Package Contents
 
    .. py:attribute:: COPILOT
       :value: 'COPILOT'
+
+
+
+   .. py:attribute:: AGENT_CONTROLLER
+      :value: 'AGENT_CONTROLLER'
+
+
+
+   .. py:attribute:: CODE_LLM
+      :value: 'CODE_LLM'
 
 
 
@@ -10147,7 +10191,7 @@ Package Contents
 
 
 
-.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, apiKeySuffix=None, tag=None, createdAt=None, expiresAt=None, isExpired=None)
+.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, apiKeySuffix=None, tag=None, type=None, createdAt=None, expiresAt=None, isExpired=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -10164,6 +10208,8 @@ Package Contents
    :type apiKeySuffix: str
    :param tag: A user-friendly tag for the API key.
    :type tag: str
+   :param type: The type of the API key, either 'default' or 'code-llm'.
+   :type type: str
    :param createdAt: The timestamp when the API key was created.
    :type createdAt: str
    :param expiresAt: The timestamp when the API key will expire.
@@ -10182,6 +10228,9 @@ Package Contents
 
 
    .. py:attribute:: tag
+
+
+   .. py:attribute:: type
 
 
    .. py:attribute:: created_at
@@ -13783,17 +13832,6 @@ Package Contents
 
 
 
-   .. py:method:: invalidate_streaming_feature_group_data(feature_group_id, invalid_before_timestamp)
-
-      Invalidates all streaming data with timestamp before invalidBeforeTimestamp
-
-      :param feature_group_id: Unique string identifier of the streaming feature group to record data to
-      :type feature_group_id: str
-      :param invalid_before_timestamp: Unix timestamp; any data with a timestamp before this time will be invalidated
-      :type invalid_before_timestamp: int
-
-
-
    .. py:method:: concatenate_feature_group_data(feature_group_id, source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
 
       Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
@@ -14142,7 +14180,7 @@ Package Contents
 
 
 
-   .. py:method:: set_feature_group_export_connector_config(feature_group_id, feature_group_export_config)
+   .. py:method:: set_feature_group_export_connector_config(feature_group_id, feature_group_export_config = None)
 
       Sets FG export config for the given feature group.
 
@@ -16217,7 +16255,7 @@ Package Contents
       :param get_all_item_data: set this to true if anomaly detection has to be performed on all the data related to input ids
       :type get_all_item_data: bool
       :param series_ids: list of series ids on which the anomaly detection has to be performed
-      :type series_ids: list
+      :type series_ids: List
 
 
 
@@ -16991,7 +17029,7 @@ Package Contents
 
 
 
-   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id, arguments = None, keyword_arguments = None)
+   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id = None, arguments = None, keyword_arguments = None, save_conversations = True)
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
@@ -17005,6 +17043,8 @@ Package Contents
       :type arguments: list
       :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
       :type keyword_arguments: dict
+      :param save_conversations: If true then a new conversation will be created for every run of the workflow associated with the agent.
+      :type save_conversations: bool
 
 
 
@@ -26977,15 +27017,6 @@ Package Contents
 
 
 
-   .. py:method:: invalidate_streaming_data(invalid_before_timestamp)
-
-      Invalidates all streaming data with timestamp before invalidBeforeTimestamp
-
-      :param invalid_before_timestamp: Unix timestamp; any data with a timestamp before this time will be invalidated
-      :type invalid_before_timestamp: int
-
-
-
    .. py:method:: concatenate_data(source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
 
       Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
@@ -27280,7 +27311,7 @@ Package Contents
 
 
 
-   .. py:method:: set_export_connector_config(feature_group_export_config)
+   .. py:method:: set_export_connector_config(feature_group_export_config = None)
 
       Sets FG export config for the given feature group.
 
@@ -35237,7 +35268,7 @@ Package Contents
       :param get_all_item_data: set this to true if anomaly detection has to be performed on all the data related to input ids
       :type get_all_item_data: bool
       :param series_ids: list of series ids on which the anomaly detection has to be performed
-      :type series_ids: list
+      :type series_ids: List
 
 
 
@@ -36011,7 +36042,7 @@ Package Contents
 
 
 
-   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id, arguments = None, keyword_arguments = None)
+   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id = None, arguments = None, keyword_arguments = None, save_conversations = True)
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
@@ -36025,6 +36056,8 @@ Package Contents
       :type arguments: list
       :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
       :type keyword_arguments: dict
+      :param save_conversations: If true then a new conversation will be created for every run of the workflow associated with the agent.
+      :type save_conversations: bool
 
 
 
@@ -40182,6 +40215,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.18'
+   :value: '1.4.19'
 
 

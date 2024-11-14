@@ -702,15 +702,6 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_type(self.feature_group_id, feature, feature_type, project_id)
 
-    def invalidate_streaming_data(self, invalid_before_timestamp: int):
-        """
-        Invalidates all streaming data with timestamp before invalidBeforeTimestamp
-
-        Args:
-            invalid_before_timestamp (int): Unix timestamp; any data with a timestamp before this time will be invalidated
-        """
-        return self.client.invalidate_streaming_feature_group_data(self.feature_group_id, invalid_before_timestamp)
-
     def concatenate_data(self, source_feature_group_id: str, merge_type: str = 'UNION', replace_until_timestamp: int = None, skip_materialize: bool = False):
         """
         Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
@@ -993,7 +984,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_version)
 
-    def set_export_connector_config(self, feature_group_export_config: Union[dict, FeatureGroupExportConfig]):
+    def set_export_connector_config(self, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None):
         """
         Sets FG export config for the given feature group.
 

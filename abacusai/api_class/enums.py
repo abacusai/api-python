@@ -405,9 +405,9 @@ class ApplicationConnectorType(ApiEnum):
     GOOGLEDRIVEUSER = 'GOOGLEDRIVEUSER'
     GOOGLEWORKSPACEUSER = 'GOOGLEWORKSPACEUSER'
     GMAILUSER = 'GMAILUSER'
-    GOOGLECALENDARUSER = 'GOOGLECALENDARUSER'
-    GOOGLESHEETSUSER = 'GOOGLESHEETSUSER'
-    GOOGLEDOCSUSER = 'GOOGLEDOCSUSER'
+    GOOGLECALENDAR = 'GOOGLECALENDAR'
+    GOOGLESHEETS = 'GOOGLESHEETS'
+    GOOGLEDOCS = 'GOOGLEDOCS'
     ONEDRIVEUSER = 'ONEDRIVEUSER'
     TEAMSSCRAPER = 'TEAMSSCRAPER'
     GITHUBUSER = 'GITHUBUSER'
@@ -482,6 +482,7 @@ class LLMName(ApiEnum):
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'
     ABACUS_SMAUG3 = 'ABACUS_SMAUG3'
     ABACUS_DRACARYS = 'ABACUS_DRACARYS'
+    QWEN_2_5_32B = 'QWEN_2_5_32B'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
 
 
@@ -608,10 +609,15 @@ class OcrMode(ApiEnum):
 
 
 class DocumentType(ApiEnum):
-    TEXT = 'TEXT'
-    TABLES_AND_FORMS = 'TABLES_AND_FORMS'
-    EMBEDDED_IMAGES = 'EMBEDDED_IMAGES'
-    SCANNED_TEXT = 'SCANNED_TEXT'
+    SIMPLE_TEXT = 'SIMPLE_TEXT'                 # digital text
+    TEXT = 'TEXT'                               # general text with OCR
+    TABLES_AND_FORMS = 'TABLES_AND_FORMS'       # tables and forms with OCR
+    EMBEDDED_IMAGES = 'EMBEDDED_IMAGES'         # embedded images with OCR TODO: remove?
+    SCANNED_TEXT = 'SCANNED_TEXT'               # scanned text with OCR
+
+    @classmethod
+    def is_ocr_forced(cls, document_type: 'DocumentType'):
+        return document_type in [cls.TEXT, cls.TABLES_AND_FORMS, cls.EMBEDDED_IMAGES, cls.SCANNED_TEXT]
 
 
 class StdDevThresholdType(ApiEnum):
@@ -639,6 +645,11 @@ class AgentInterface(ApiEnum):
     CHAT = 'CHAT'
     MATRIX = 'MATRIX'
     AUTONOMOUS = 'AUTONOMOUS'
+
+
+class WorkflowNodeTemplateType(ApiEnum):
+    TRIGGER = 'trigger'
+    DEFAULT = 'default'
 
 
 class ProjectConfigType(ApiEnum):
@@ -693,3 +704,5 @@ class DeploymentConversationType(ApiEnum):
     COMPLEX_AGENT = 'COMPLEX_AGENT'
     WORKFLOW_AGENT = 'WORKFLOW_AGENT'
     COPILOT = 'COPILOT'
+    AGENT_CONTROLLER = 'AGENT_CONTROLLER'
+    CODE_LLM = 'CODE_LLM'

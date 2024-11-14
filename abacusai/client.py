@@ -585,6 +585,22 @@ class InternalServerError(ApiException):
     """
 
 
+class UnsuccessfulTrigger(ApiException):
+    """
+    Error class to indicate that the trigger is unsuccessful for autonomous agents
+    and avoids execution of the further workflow.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+    def __init__(self, message: str):
+        super().__init__(message, 430)
+
+
 class _ApiExceptionFactory:
     """
     Factory class to build exceptions raised by APIs
@@ -624,7 +640,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.18'
+    client_version = '1.4.19'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -5241,14 +5257,6 @@ Creates a new feature group defined as the union of other feature group versions
             Schema: The feature group after the data_type is applied."""
         return self._call_api('setFeatureType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'feature': feature, 'featureType': feature_type, 'projectId': project_id}, parse_type=Schema)
 
-    def invalidate_streaming_feature_group_data(self, feature_group_id: str, invalid_before_timestamp: int):
-        """Invalidates all streaming data with timestamp before invalidBeforeTimestamp
-
-        Args:
-            feature_group_id (str): Unique string identifier of the streaming feature group to record data to
-            invalid_before_timestamp (int): Unix timestamp; any data with a timestamp before this time will be invalidated"""
-        return self._call_api('invalidateStreamingFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'invalidBeforeTimestamp': invalid_before_timestamp})
-
     def concatenate_feature_group_data(self, feature_group_id: str, source_feature_group_id: str, merge_type: str = 'UNION', replace_until_timestamp: int = None, skip_materialize: bool = False):
         """Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
@@ -5507,7 +5515,7 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroupVersion: A feature group version."""
         return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'variableBindings': variable_bindings}, parse_type=FeatureGroupVersion)
 
-    def set_feature_group_export_connector_config(self, feature_group_id: str, feature_group_export_config: Union[dict, FeatureGroupExportConfig]):
+    def set_feature_group_export_connector_config(self, feature_group_id: str, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None):
         """Sets FG export config for the given feature group.
 
         Args:
@@ -6972,7 +6980,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'threshold': threshold, 'histogram': histogram}, server_override=prediction_url)
 
-    def get_timeseries_anomalies(self, deployment_token: str, deployment_id: str, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: list = None) -> Dict:
+    def get_timeseries_anomalies(self, deployment_token: str, deployment_id: str, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: List = None) -> Dict:
         """Returns a list of anomalous timestamps from the training dataset.
 
         Args:
@@ -6982,7 +6990,7 @@ Creates a new feature group defined as the union of other feature group versions
             end_timestamp (str): timestamp to which anomalies have to be detected in the training data
             query_data (dict): additional data on which anomaly detection has to be performed, it can either be a single record or list of records or a json string representing list of records
             get_all_item_data (bool): set this to true if anomaly detection has to be performed on all the data related to input ids
-            series_ids (list): list of series ids on which the anomaly detection has to be performed"""
+            series_ids (List): list of series ids on which the anomaly detection has to be performed"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getTimeseriesAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'queryData': query_data, 'getAllItemData': get_all_item_data, 'seriesIds': series_ids}, server_override=prediction_url)
@@ -7562,7 +7570,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
 
-    def start_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
+    def start_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str = None, arguments: list = None, keyword_arguments: dict = None, save_conversations: bool = True) -> Dict:
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
@@ -7570,10 +7578,11 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier for the deployment created under the project.
             deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
             arguments (list): Positional arguments to the agent execute function.
-            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
+            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+            save_conversations (bool): If true then a new conversation will be created for every run of the workflow associated with the agent."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
+        return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'saveConversations': save_conversations}, server_override=prediction_url, timeout=1500)
 
     def pause_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
         """Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.

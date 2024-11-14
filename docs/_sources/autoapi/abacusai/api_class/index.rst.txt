@@ -181,6 +181,7 @@ Classes
    abacusai.api_class.StdDevThresholdType
    abacusai.api_class.DataType
    abacusai.api_class.AgentInterface
+   abacusai.api_class.WorkflowNodeTemplateType
    abacusai.api_class.ProjectConfigType
    abacusai.api_class.CPUSize
    abacusai.api_class.MemorySize
@@ -627,7 +628,7 @@ Package Contents
 
 
 
-   .. py:method:: from_template(template_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
+   .. py:method:: from_template(template_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None, sleep_time = None)
       :classmethod:
 
 
@@ -1753,6 +1754,11 @@ Package Contents
    Derive from this class to define new enumerations.
 
 
+   .. py:attribute:: SIMPLE_TEXT
+      :value: 'SIMPLE_TEXT'
+
+
+
    .. py:attribute:: TEXT
       :value: 'TEXT'
 
@@ -1770,6 +1776,11 @@ Package Contents
 
    .. py:attribute:: SCANNED_TEXT
       :value: 'SCANNED_TEXT'
+
+
+
+   .. py:method:: is_ocr_forced(document_type)
+      :classmethod:
 
 
 
@@ -1973,6 +1984,14 @@ Package Contents
 
 
    .. py:method:: _detect_ocr_mode()
+
+
+   .. py:method:: _get_filtered_dict(config)
+      :classmethod:
+
+
+      Filters out default values from the config
+
 
 
 .. py:class:: DatasetDocumentProcessingConfig
@@ -4709,18 +4728,18 @@ Package Contents
 
 
 
-   .. py:attribute:: GOOGLECALENDARUSER
-      :value: 'GOOGLECALENDARUSER'
+   .. py:attribute:: GOOGLECALENDAR
+      :value: 'GOOGLECALENDAR'
 
 
 
-   .. py:attribute:: GOOGLESHEETSUSER
-      :value: 'GOOGLESHEETSUSER'
+   .. py:attribute:: GOOGLESHEETS
+      :value: 'GOOGLESHEETS'
 
 
 
-   .. py:attribute:: GOOGLEDOCSUSER
-      :value: 'GOOGLEDOCSUSER'
+   .. py:attribute:: GOOGLEDOCS
+      :value: 'GOOGLEDOCS'
 
 
 
@@ -5061,6 +5080,11 @@ Package Contents
 
    .. py:attribute:: ABACUS_DRACARYS
       :value: 'ABACUS_DRACARYS'
+
+
+
+   .. py:attribute:: QWEN_2_5_32B
+      :value: 'QWEN_2_5_32B'
 
 
 
@@ -5489,6 +5513,11 @@ Package Contents
    Derive from this class to define new enumerations.
 
 
+   .. py:attribute:: SIMPLE_TEXT
+      :value: 'SIMPLE_TEXT'
+
+
+
    .. py:attribute:: TEXT
       :value: 'TEXT'
 
@@ -5506,6 +5535,11 @@ Package Contents
 
    .. py:attribute:: SCANNED_TEXT
       :value: 'SCANNED_TEXT'
+
+
+
+   .. py:method:: is_ocr_forced(document_type)
+      :classmethod:
 
 
 
@@ -5621,6 +5655,26 @@ Package Contents
 
    .. py:attribute:: AUTONOMOUS
       :value: 'AUTONOMOUS'
+
+
+
+.. py:class:: WorkflowNodeTemplateType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: TRIGGER
+      :value: 'trigger'
+
+
+
+   .. py:attribute:: DEFAULT
+      :value: 'default'
 
 
 
@@ -5829,6 +5883,16 @@ Package Contents
 
 
 
+   .. py:attribute:: AGENT_CONTROLLER
+      :value: 'AGENT_CONTROLLER'
+
+
+
+   .. py:attribute:: CODE_LLM
+      :value: 'CODE_LLM'
+
+
+
 .. py:class:: ApiClass
 
    Bases: :py:obj:`abc.ABC`
@@ -5998,6 +6062,14 @@ Package Contents
 
 
    .. py:method:: _detect_ocr_mode()
+
+
+   .. py:method:: _get_filtered_dict(config)
+      :classmethod:
+
+
+      Filters out default values from the config
+
 
 
 .. py:class:: SamplingConfig

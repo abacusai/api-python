@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, draftWorkflowGraph={}, workflowGraph={})
+.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, workflowGraph={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,8 +50,6 @@ Module Contents
    :type latestAgentVersion: AgentVersion
    :param codeSource: If a python model, information on the source code
    :type codeSource: CodeSource
-   :param draftWorkflowGraph: The last saved draft of workflow graph for the agent.
-   :type draftWorkflowGraph: WorkflowGraph
    :param workflowGraph: The workflow graph for the agent.
    :type workflowGraph: WorkflowGraph
 
@@ -93,9 +91,6 @@ Module Contents
 
 
    .. py:attribute:: latest_agent_version
-
-
-   .. py:attribute:: draft_workflow_graph
 
 
    .. py:attribute:: workflow_graph
@@ -154,17 +149,20 @@ Module Contents
    .. py:property:: description
       :type: str
 
+
       The description of the agent.
 
 
    .. py:property:: agent_interface
       :type: str
 
+
       The interface that the agent will be deployed with.
 
 
    .. py:property:: agent_connectors
       :type: dict
+
 
       A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
 

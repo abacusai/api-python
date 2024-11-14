@@ -40,6 +40,7 @@ Exceptions
    abacusai.client.InstanceNotModifiedError
    abacusai.client.GatewayTimeoutError
    abacusai.client.InternalServerError
+   abacusai.client.UnsuccessfulTrigger
 
 
 Classes
@@ -516,6 +517,24 @@ Module Contents
    :type request_id: str
 
 
+.. py:exception:: UnsuccessfulTrigger(message)
+
+   Bases: :py:obj:`ApiException`
+
+
+   Error class to indicate that the trigger is unsuccessful for autonomous agents
+   and avoids execution of the further workflow.
+
+   :param message: The error message
+   :type message: str
+   :param http_status: The https status code raised by the server
+   :type http_status: int
+   :param exception: The exception class raised by the server
+   :type exception: str
+   :param request_id: The request id
+   :type request_id: str
+
+
 .. py:class:: _ApiExceptionFactory
 
    Factory class to build exceptions raised by APIs
@@ -545,7 +564,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.18'
+      :value: '1.4.19'
 
 
 
@@ -595,9 +614,6 @@ Module Contents
    .. py:attribute:: service_discovery_url
       :value: None
 
-
-
-   .. py:attribute:: skip_version_check
 
 
    .. py:method:: _get_prediction_endpoint(deployment_id, deployment_token)
@@ -5316,17 +5332,6 @@ Module Contents
 
 
 
-   .. py:method:: invalidate_streaming_feature_group_data(feature_group_id, invalid_before_timestamp)
-
-      Invalidates all streaming data with timestamp before invalidBeforeTimestamp
-
-      :param feature_group_id: Unique string identifier of the streaming feature group to record data to
-      :type feature_group_id: str
-      :param invalid_before_timestamp: Unix timestamp; any data with a timestamp before this time will be invalidated
-      :type invalid_before_timestamp: int
-
-
-
    .. py:method:: concatenate_feature_group_data(feature_group_id, source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
 
       Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
@@ -5675,7 +5680,7 @@ Module Contents
 
 
 
-   .. py:method:: set_feature_group_export_connector_config(feature_group_id, feature_group_export_config)
+   .. py:method:: set_feature_group_export_connector_config(feature_group_id, feature_group_export_config = None)
 
       Sets FG export config for the given feature group.
 
@@ -7750,7 +7755,7 @@ Module Contents
       :param get_all_item_data: set this to true if anomaly detection has to be performed on all the data related to input ids
       :type get_all_item_data: bool
       :param series_ids: list of series ids on which the anomaly detection has to be performed
-      :type series_ids: list
+      :type series_ids: List
 
 
 
@@ -8524,7 +8529,7 @@ Module Contents
 
 
 
-   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id, arguments = None, keyword_arguments = None)
+   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id = None, arguments = None, keyword_arguments = None, save_conversations = True)
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
@@ -8538,6 +8543,8 @@ Module Contents
       :type arguments: list
       :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
       :type keyword_arguments: dict
+      :param save_conversations: If true then a new conversation will be created for every run of the workflow associated with the agent.
+      :type save_conversations: bool
 
 
 
