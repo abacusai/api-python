@@ -40,6 +40,8 @@ Submodules
    /autoapi/abacusai/chat_session/index
    /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/client/index
+   /autoapi/abacusai/code_autocomplete_response/index
+   /autoapi/abacusai/code_edit_response/index
    /autoapi/abacusai/code_source/index
    /autoapi/abacusai/compute_point_info/index
    /autoapi/abacusai/concatenation_config/index
@@ -126,6 +128,7 @@ Submodules
    /autoapi/abacusai/holdout_analysis/index
    /autoapi/abacusai/holdout_analysis_version/index
    /autoapi/abacusai/hosted_model_token/index
+   /autoapi/abacusai/image_gen_settings/index
    /autoapi/abacusai/indexing_config/index
    /autoapi/abacusai/inferred_database_column_to_feature_mappings/index
    /autoapi/abacusai/inferred_feature_mappings/index
@@ -502,6 +505,8 @@ Classes
    abacusai.ApiClient
    abacusai.ClientOptions
    abacusai.ReadOnlyClient
+   abacusai.CodeAutocompleteResponse
+   abacusai.CodeEditResponse
    abacusai.CodeSource
    abacusai.ComputePointInfo
    abacusai.ConcatenationConfig
@@ -586,6 +591,7 @@ Classes
    abacusai.HoldoutAnalysis
    abacusai.HoldoutAnalysisVersion
    abacusai.HostedModelToken
+   abacusai.ImageGenSettings
    abacusai.IndexingConfig
    abacusai.InferredDatabaseColumnToFeatureMappings
    abacusai.InferredFeatureMappings
@@ -810,7 +816,7 @@ Package Contents
 
 
 
-.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, workflowGraph={})
+.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, draftWorkflowGraph={}, workflowGraph={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -845,6 +851,8 @@ Package Contents
    :type latestAgentVersion: AgentVersion
    :param codeSource: If a python model, information on the source code
    :type codeSource: CodeSource
+   :param draftWorkflowGraph: The saved draft state of the workflow graph for the agent.
+   :type draftWorkflowGraph: WorkflowGraph
    :param workflowGraph: The workflow graph for the agent.
    :type workflowGraph: WorkflowGraph
 
@@ -886,6 +894,9 @@ Package Contents
 
 
    .. py:attribute:: latest_agent_version
+
+
+   .. py:attribute:: draft_workflow_graph
 
 
    .. py:attribute:: workflow_graph
@@ -12125,7 +12136,15 @@ Package Contents
 
    .. py:method:: execute_workflow_node(node, inputs)
 
-      Executes a workflow node.
+      Execute the workflow node given input arguments.
+
+      :param node: The workflow node to be executed.
+      :type node: WorkflowGraphNode
+      :param inputs: The inputs to be passed to the node function.
+      :type inputs: dict
+
+      :returns: The outputs returned by node execution.
+      :rtype: dict
 
 
 
@@ -18375,7 +18394,7 @@ Package Contents
 
 
 
-   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -18397,8 +18416,10 @@ Package Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
-      :type agent_connectors: Dict
+      :param org_level_connectors: A list of org level connector ids to be used by the agent.
+      :type org_level_connectors: List
+      :param user_level_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type user_level_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -18409,7 +18430,7 @@ Package Contents
 
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -18427,8 +18448,10 @@ Package Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
-      :type agent_connectors: Dict
+      :param org_level_connectors: A list of org level connector ids to be used by the agent.
+      :type org_level_connectors: List
+      :param user_level_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type user_level_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -19518,18 +19541,16 @@ Package Contents
 
 
 
-   .. py:method:: get_connector_auth(service = None, scopes = None, name = None, is_user_level = True)
+   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None)
 
-      Get the authentication details for a given connector.
+      Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
       :param service: The service name.
       :type service: ApplicationConnectorType
+      :param application_connector_id: The unique ID associated with the connector.
+      :type application_connector_id: str
       :param scopes: The scopes to request for the connector.
       :type scopes: List
-      :param name: Name of the connector.
-      :type name: str
-      :param is_user_level: Type of connector to be fetched (user level or org level).
-      :type is_user_level: bool
 
       :returns: The application connector with the authentication details.
       :rtype: ApplicationConnector
@@ -21167,6 +21188,73 @@ Package Contents
 
 
 .. py:data:: _request_context
+
+.. py:class:: CodeAutocompleteResponse(client, autocompleteResponse=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A autocomplete response from an LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param autocompleteResponse: autocomplete code
+   :type autocompleteResponse: str
+
+
+   .. py:attribute:: autocomplete_response
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CodeEditResponse(client, codeChanges=None, deploymentConversationId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A code edit response from an LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param codeChanges: The code changes to be applied.
+   :type codeChanges: list
+   :param deploymentConversationId: The unique identifier of the deployment conversation.
+   :type deploymentConversationId: str
+
+
+   .. py:attribute:: code_changes
+
+
+   .. py:attribute:: deployment_conversation_id
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
 
 .. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
 
@@ -29837,6 +29925,42 @@ Package Contents
 
 
 
+.. py:class:: ImageGenSettings(client, model=None, settings=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Image generation settings
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param model: Dropdown for models available for image generation.
+   :type model: dict
+   :param settings: The settings for each model.
+   :type settings: dict
+
+
+   .. py:attribute:: model
+
+
+   .. py:attribute:: settings
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: IndexingConfig(client, primaryKey=None, updateTimestampKey=None, lookupKeys=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -30969,7 +31093,7 @@ Package Contents
 
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -30985,8 +31109,10 @@ Package Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
-      :type agent_connectors: Dict
+      :param org_level_connectors: A list of org level connector ids to be used by the agent.
+      :type org_level_connectors: List
+      :param user_level_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type user_level_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -37320,7 +37446,7 @@ Package Contents
 
 
 
-   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -37340,8 +37466,10 @@ Package Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
-      :type agent_connectors: Dict
+      :param org_level_connectors: A list of org level connector ids to be used by the agent.
+      :type org_level_connectors: List
+      :param user_level_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type user_level_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -40215,6 +40343,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.19'
+   :value: '1.4.20'
 
 

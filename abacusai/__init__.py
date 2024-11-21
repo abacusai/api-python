@@ -27,6 +27,8 @@ from .chat_message import ChatMessage
 from .chat_session import ChatSession
 from .chatllm_referral_invite import ChatllmReferralInvite
 from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, _request_context
+from .code_autocomplete_response import CodeAutocompleteResponse
+from .code_edit_response import CodeEditResponse
 from .code_source import CodeSource
 from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
@@ -111,6 +113,7 @@ from .graph_dashboard import GraphDashboard
 from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
 from .hosted_model_token import HostedModelToken
+from .image_gen_settings import ImageGenSettings
 from .indexing_config import IndexingConfig
 from .inferred_database_column_to_feature_mappings import InferredDatabaseColumnToFeatureMappings
 from .inferred_feature_mappings import InferredFeatureMappings
@@ -221,4 +224,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.19"
+__version__ = "1.4.20"

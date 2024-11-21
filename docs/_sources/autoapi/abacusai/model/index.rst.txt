@@ -498,7 +498,7 @@ Module Contents
 
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -514,8 +514,10 @@ Module Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
-      :type agent_connectors: Dict
+      :param org_level_connectors: A list of org level connector ids to be used by the agent.
+      :type org_level_connectors: List
+      :param user_level_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type user_level_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.

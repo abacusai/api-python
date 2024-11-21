@@ -1,0 +1,53 @@
+abacusai.code_edit_response
+===========================
+
+.. py:module:: abacusai.code_edit_response
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.code_edit_response.CodeEditResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: CodeEditResponse(client, codeChanges=None, deploymentConversationId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A code edit response from an LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param codeChanges: The code changes to be applied.
+   :type codeChanges: list
+   :param deploymentConversationId: The unique identifier of the deployment conversation.
+   :type deploymentConversationId: str
+
+
+   .. py:attribute:: code_changes
+
+
+   .. py:attribute:: deployment_conversation_id
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

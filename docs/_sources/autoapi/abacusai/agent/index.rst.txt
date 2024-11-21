@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, workflowGraph={})
+.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, agentExecutionConfig=None, codeSource={}, latestAgentVersion={}, draftWorkflowGraph={}, workflowGraph={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,6 +50,8 @@ Module Contents
    :type latestAgentVersion: AgentVersion
    :param codeSource: If a python model, information on the source code
    :type codeSource: CodeSource
+   :param draftWorkflowGraph: The saved draft state of the workflow graph for the agent.
+   :type draftWorkflowGraph: WorkflowGraph
    :param workflowGraph: The workflow graph for the agent.
    :type workflowGraph: WorkflowGraph
 
@@ -91,6 +93,9 @@ Module Contents
 
 
    .. py:attribute:: latest_agent_version
+
+
+   .. py:attribute:: draft_workflow_graph
 
 
    .. py:attribute:: workflow_graph

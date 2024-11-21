@@ -564,7 +564,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.19'
+      :value: '1.4.20'
 
 
 
@@ -1367,18 +1367,16 @@ Module Contents
 
 
 
-   .. py:method:: get_connector_auth(service = None, scopes = None, name = None, is_user_level = True)
+   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None)
 
-      Get the authentication details for a given connector.
+      Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
       :param service: The service name.
       :type service: ApplicationConnectorType
+      :param application_connector_id: The unique ID associated with the connector.
+      :type application_connector_id: str
       :param scopes: The scopes to request for the connector.
       :type scopes: List
-      :param name: Name of the connector.
-      :type name: str
-      :param is_user_level: Type of connector to be fetched (user level or org level).
-      :type is_user_level: bool
 
       :returns: The application connector with the authentication details.
       :rtype: ApplicationConnector
@@ -3625,7 +3623,15 @@ Module Contents
 
    .. py:method:: execute_workflow_node(node, inputs)
 
-      Executes a workflow node.
+      Execute the workflow node given input arguments.
+
+      :param node: The workflow node to be executed.
+      :type node: WorkflowGraphNode
+      :param inputs: The inputs to be passed to the node function.
+      :type inputs: dict
+
+      :returns: The outputs returned by node execution.
+      :rtype: dict
 
 
 
@@ -9875,7 +9881,7 @@ Module Contents
 
 
 
-   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -9897,8 +9903,10 @@ Module Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
-      :type agent_connectors: Dict
+      :param org_level_connectors: A list of org level connector ids to be used by the agent.
+      :type org_level_connectors: List
+      :param user_level_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type user_level_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
@@ -9909,7 +9917,7 @@ Module Contents
 
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, agent_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -9927,8 +9935,10 @@ Module Contents
       :type agent_interface: AgentInterface
       :param included_modules: A list of user created custom modules to include in the agent's environment.
       :type included_modules: List
-      :param agent_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific application connector, while the value is a list of scopes that define the permissions granted to the application.
-      :type agent_connectors: Dict
+      :param org_level_connectors: A list of org level connector ids to be used by the agent.
+      :type org_level_connectors: List
+      :param user_level_connectors: A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
+      :type user_level_connectors: Dict
       :param initialize_function_name: The name of the function to be used for initialization.
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
