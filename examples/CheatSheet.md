@@ -9,7 +9,7 @@ Please note that from within the platform's UI, you will have access to template
 - [Python Modules](https://abacus.ai/app/modules_list)
 - And others...
 
-Furthermore, the platform's `AI Engineer`, which is a ChatBot located on the bottom right of the screen, inside any project, also has access to our API's and will be able to provide you with examples.
+Furthermore, the platform's `AI Engineer`, also has access to our API's and will be able to provide you with any code that you require.
 
 #### Abacus.AI - API Command Cheatsheet
 Here is a list of important methods you should keep saved somewhere. You can find examples for all of these methods inside the notebooks, or you can refer to the official documentation.
