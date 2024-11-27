@@ -26,7 +26,7 @@ You can find your API key from here: [API KEY](https://abacus.ai/app/profile/api
 
 - Python SDK Documentation: [Abacus.AI Python SDK](https://abacusai.github.io/api-python/autoapi/abacusai/index.html)
 - Full list of API's and examples: [Abacus.AI APIs Reference](https://abacus.ai/app/help/ref/overview)
-- Python Example usage: [Examples Repository](https://github.com/abacusai/api-python/blob/main/examples)
+- Python usage examples: [Examples Repository](https://github.com/abacusai/api-python/blob/main/examples)
 
 ## License
 [MIT](https://github.com/abacusai/api-python/blob/main/LICENSE)
