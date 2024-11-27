@@ -12,7 +12,7 @@ $ pip install abacusai
 ## Documentation
 
 - Python SDK Documentation: [Abacus.AI Python SDK](https://abacusai.github.io/api-python/autoapi/abacusai/index.html)
-- Full list of API's and examples: [Abacus.AI APIs Reference]((https://abacus.ai/app/help/ref/overview)
+- Full list of API's and examples: [Abacus.AI APIs Reference](https://abacus.ai/app/help/ref/overview)
 - Python Example usage: [Here](https://github.com/abacusai/api-python/blob/main/examples)
 
 ## Getting Started
