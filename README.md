@@ -27,7 +27,9 @@ client = ApiClient('YOUR_API_KEY')
 ```
 
 [API KEY](https://abacus.ai/app/profile/apikey)
+
 [Abacus.AI CheatSheet](https://github.com/abacusai/api-python/blob/main/examples/CheatSheet.md)
+
 [Abacus.AI API Examples](https://github.com/abacusai/api-python/blob/main/examples)
 
 ## License
