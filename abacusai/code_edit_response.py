@@ -8,18 +8,15 @@ class CodeEditResponse(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             codeChanges (list): The code changes to be applied.
-            deploymentConversationId (str): The unique identifier of the deployment conversation.
     """
 
-    def __init__(self, client, codeChanges=None, deploymentConversationId=None):
+    def __init__(self, client, codeChanges=None):
         super().__init__(client, None)
         self.code_changes = codeChanges
-        self.deployment_conversation_id = deploymentConversationId
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'code_changes': repr(
-            self.code_changes), f'deployment_conversation_id': repr(self.deployment_conversation_id)}
+        repr_dict = {f'code_changes': repr(self.code_changes)}
         class_name = "CodeEditResponse"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -32,6 +29,5 @@ class CodeEditResponse(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'code_changes': self.code_changes,
-                'deployment_conversation_id': self.deployment_conversation_id}
+        resp = {'code_changes': self.code_changes}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

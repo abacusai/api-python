@@ -66,6 +66,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../api_endpoint/index.html">abacusai.api_endpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html">abacusai.api_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../app_user_group/index.html">abacusai.app_user_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../app_user_group_sign_in_token/index.html">abacusai.app_user_group_sign_in_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html">abacusai.batch_prediction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
@@ -329,74 +330,26 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.video_gen_settings.</span></span><span class="sig-name descname"><span class="pre">VideoGenSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negativePrompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfgScale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspectRatio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startFrame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endFrame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rewritePrompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.video_gen_settings.</span></span><span class="sig-name descname"><span class="pre">VideoGenSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Video generation settings</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The prompt for the video.</p></li>
-<li><p><strong>negativePrompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The negative prompt for the video.</p></li>
-<li><p><strong>cfgScale</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The flexibility scale for video generation.</p></li>
-<li><p><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The video generation mode (standard or professional).</p></li>
-<li><p><strong>aspectRatio</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The aspect ratio of the video in seconds.</p></li>
-<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The duration of the video.</p></li>
-<li><p><strong>loop</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Whether the video should loop.</p></li>
-<li><p><strong>startFrame</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The start frame of the video.</p></li>
-<li><p><strong>endFrame</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The end frame of the video.</p></li>
-<li><p><strong>rewritePrompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Whether to rewrite the prompt.</p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The model settings.</p></li>
+<li><p><strong>settings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The settings for each model.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.prompt">
-<span class="sig-name descname"><span class="pre">prompt</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.prompt" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.model" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.negative_prompt">
-<span class="sig-name descname"><span class="pre">negative_prompt</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.negative_prompt" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.cfg_scale">
-<span class="sig-name descname"><span class="pre">cfg_scale</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.cfg_scale" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.mode">
-<span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.mode" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.aspect_ratio">
-<span class="sig-name descname"><span class="pre">aspect_ratio</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.aspect_ratio" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.duration">
-<span class="sig-name descname"><span class="pre">duration</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.duration" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.loop">
-<span class="sig-name descname"><span class="pre">loop</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.loop" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.start_frame">
-<span class="sig-name descname"><span class="pre">start_frame</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.start_frame" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.end_frame">
-<span class="sig-name descname"><span class="pre">end_frame</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.end_frame" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.rewrite_prompt">
-<span class="sig-name descname"><span class="pre">rewrite_prompt</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.rewrite_prompt" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.settings">
+<span class="sig-name descname"><span class="pre">settings</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.settings" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

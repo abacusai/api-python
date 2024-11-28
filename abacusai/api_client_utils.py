@@ -438,8 +438,8 @@ class DocstoreUtils:
         chunk_size = 10 * 1024 * 1024
 
         pages_df_with_config = None
-        df_with_config = df[df[document_column].apply(
-            lambda x: isinstance(x, dict) and cls.DOCUMENT_PROCESSING_CONFIG in x)]
+        df_with_config = df[df[document_column].apply(lambda x: isinstance(
+            x, dict) and x.get(cls.DOCUMENT_PROCESSING_CONFIG) is not None)]
         df = df[~df[doc_id_column].isin(df_with_config[doc_id_column])]
 
         if len(df_with_config) > 0:

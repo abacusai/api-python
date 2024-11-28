@@ -58,6 +58,7 @@ from .api_client_utils import (
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
 from .app_user_group import AppUserGroup
+from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
@@ -640,7 +641,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.20'
+    client_version = '1.4.21'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -832,7 +833,7 @@ class BaseApiClient:
 
     def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, data: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
         headers = {'APIKEY': self.api_key}
-        deployment_id = os.getenv('ABACUS_DEPLOYMENT_ID')
+        deployment_id = os.getenv('ABACUS_EXEC_SERVICE_DEPLOYMENT_ID')
         if deployment_id:
             query_params = {**(query_params or {}),
                             'environmentDeploymentId': deployment_id}
@@ -2584,6 +2585,18 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[OrganizationSecret]: list of secrets belonging to the organization."""
         return self._call_api('listOrganizationSecrets', 'GET', query_params={}, parse_type=OrganizationSecret)
+
+    def get_app_user_group_sign_in_token(self, user_group_id: str, email: str, name: str) -> AppUserGroupSignInToken:
+        """Get a token for a user group user to sign in.
+
+        Args:
+            user_group_id (str): The ID of the user group.
+            email (str): The email of the user.
+            name (str): The name of the user.
+
+        Returns:
+            AppUserGroupSignInToken: The token to sign in the user"""
+        return self._call_api('getAppUserGroupSignInToken', 'GET', query_params={'userGroupId': user_group_id, 'email': email, 'name': name}, parse_type=AppUserGroupSignInToken)
 
     def query_feature_group_code_generator(self, query: str, language: str, project_id: str = None) -> LlmResponse:
         """Send a query to the feature group code generator tool to generate code for the query.
@@ -4420,7 +4433,8 @@ class ApiClient(ReadOnlyClient):
         Raises:
             InvalidParameterError: If key, value or expiration_time is invalid.
         """
-        scope = self.cache_scope or os.getenv('ABACUS_DEPLOYMENT_ID')
+        scope = self.cache_scope or os.getenv(
+            'ABACUS_EXEC_SERVICE_DEPLOYMENT_ID')
         if scope:
             return self._proxy_request('_setScopedCacheValue', 'POST', body={'key': key, 'value': value, 'scope': scope, 'expirationTime': expiration_time}, is_sync=True)
         else:
@@ -4440,7 +4454,8 @@ class ApiClient(ReadOnlyClient):
         Raises:
             Generic404Error: if the key doesn't exist.
         """
-        scope = self.cache_scope or os.getenv('ABACUS_DEPLOYMENT_ID')
+        scope = self.cache_scope or os.getenv(
+            'ABACUS_EXEC_SERVICE_DEPLOYMENT_ID')
         if scope:
             return self._proxy_request('_getScopedCacheValue', 'GET', query_params={'key': key, 'scope': scope}, is_sync=True)
         else:
@@ -4460,7 +4475,8 @@ class ApiClient(ReadOnlyClient):
         Returns:
             None
         """
-        scope = self.cache_scope or os.getenv('ABACUS_DEPLOYMENT_ID')
+        scope = self.cache_scope or os.getenv(
+            'ABACUS_EXEC_SERVICE_DEPLOYMENT_ID')
         if scope:
             return self._proxy_request('_deleteScopedCacheKey', 'POST', query_params={'key': key, 'scope': scope}, is_sync=True)
         else:

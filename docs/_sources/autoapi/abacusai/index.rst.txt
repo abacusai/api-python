@@ -30,6 +30,7 @@ Submodules
    /autoapi/abacusai/api_endpoint/index
    /autoapi/abacusai/api_key/index
    /autoapi/abacusai/app_user_group/index
+   /autoapi/abacusai/app_user_group_sign_in_token/index
    /autoapi/abacusai/application_connector/index
    /autoapi/abacusai/batch_prediction/index
    /autoapi/abacusai/batch_prediction_version/index
@@ -492,6 +493,7 @@ Classes
    abacusai.ApiEndpoint
    abacusai.ApiKey
    abacusai.AppUserGroup
+   abacusai.AppUserGroupSignInToken
    abacusai.ApplicationConnector
    abacusai.BatchPrediction
    abacusai.BatchPredictionVersion
@@ -5688,11 +5690,6 @@ Package Contents
 
 
 
-   .. py:attribute:: ONEDRIVEUSER
-      :value: 'ONEDRIVEUSER'
-
-
-
    .. py:attribute:: TEAMSSCRAPER
       :value: 'TEAMSSCRAPER'
 
@@ -5990,6 +5987,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_1_5_FLASH
       :value: 'GEMINI_1_5_FLASH'
+
+
+
+   .. py:attribute:: XAI_GROK
+      :value: 'XAI_GROK'
 
 
 
@@ -9629,7 +9631,7 @@ Package Contents
    :type constant: float
    :param operator: The operator for the constraint. Could be 'EQ', 'LE', 'GE'
    :type operator: str
-   :param enforcement: The enforcement for the constraint. Could be 'HARD' or 'SOFT'. Default is 'HARD'
+   :param enforcement: The enforcement for the constraint. Could be 'HARD' or 'SOFT' or 'SKIP'. Default is 'HARD'
    :type enforcement: str
    :param code: The code for the constraint.
    :type code: str
@@ -10331,6 +10333,37 @@ Package Contents
 
 
    .. py:attribute:: users
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AppUserGroupSignInToken(client, token=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   User Group Sign In Token
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param token: The token to sign in the user
+   :type token: str
+
+
+   .. py:attribute:: token
 
 
    .. py:attribute:: deprecated_keys
@@ -20872,6 +20905,22 @@ Package Contents
 
 
 
+   .. py:method:: get_app_user_group_sign_in_token(user_group_id, email, name)
+
+      Get a token for a user group user to sign in.
+
+      :param user_group_id: The ID of the user group.
+      :type user_group_id: str
+      :param email: The email of the user.
+      :type email: str
+      :param name: The name of the user.
+      :type name: str
+
+      :returns: The token to sign in the user
+      :rtype: AppUserGroupSignInToken
+
+
+
    .. py:method:: query_feature_group_code_generator(query, language, project_id = None)
 
       Send a query to the feature group code generator tool to generate code for the query.
@@ -21220,7 +21269,7 @@ Package Contents
 
 
 
-.. py:class:: CodeEditResponse(client, codeChanges=None, deploymentConversationId=None)
+.. py:class:: CodeEditResponse(client, codeChanges=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -21231,14 +21280,9 @@ Package Contents
    :type client: ApiClient
    :param codeChanges: The code changes to be applied.
    :type codeChanges: list
-   :param deploymentConversationId: The unique identifier of the deployment conversation.
-   :type deploymentConversationId: str
 
 
    .. py:attribute:: code_changes
-
-
-   .. py:attribute:: deployment_conversation_id
 
 
    .. py:attribute:: deprecated_keys
@@ -27607,14 +27651,14 @@ Package Contents
 
 
 
-   .. py:method:: load_as_pandas_documents(doc_id_column, document_column)
+   .. py:method:: load_as_pandas_documents(doc_id_column = 'doc_id', document_column = 'page_infos')
 
       Loads a feature group with documents data into a pandas dataframe.
 
-      :param doc_id_feature: The name of the feature / column containing the document ID.
-      :type doc_id_feature: str
-      :param document_feature: The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
-      :type document_feature: str
+      :param doc_id_column: The name of the feature / column containing the document ID.
+      :type doc_id_column: str
+      :param document_column: The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
+      :type document_column: str
 
       :returns: A pandas dataframe containing the extracted document data.
       :rtype: DataFrame
@@ -28831,14 +28875,14 @@ Package Contents
 
 
 
-   .. py:method:: load_as_pandas_documents(doc_id_column, document_column, max_workers=10)
+   .. py:method:: load_as_pandas_documents(doc_id_column = 'doc_id', document_column = 'page_infos', max_workers=10)
 
       Loads a feature group with documents data into a pandas dataframe.
 
-      :param doc_id_feature: The name of the feature / column containing the document ID.
-      :type doc_id_feature: str
-      :param document_feature: The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
-      :type document_feature: str
+      :param doc_id_column: The name of the feature / column containing the document ID.
+      :type doc_id_column: str
+      :param document_column: The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
+      :type document_column: str
       :param max_workers: The number of threads.
       :type max_workers: int
 
@@ -39943,7 +39987,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenSettings(client, prompt=None, negativePrompt=None, cfgScale=None, mode=None, aspectRatio=None, duration=None, loop=None, startFrame=None, endFrame=None, rewritePrompt=None)
+.. py:class:: VideoGenSettings(client, model=None, settings=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39952,56 +39996,16 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param prompt: The prompt for the video.
-   :type prompt: dict
-   :param negativePrompt: The negative prompt for the video.
-   :type negativePrompt: dict
-   :param cfgScale: The flexibility scale for video generation.
-   :type cfgScale: dict
-   :param mode: The video generation mode (standard or professional).
-   :type mode: dict
-   :param aspectRatio: The aspect ratio of the video in seconds.
-   :type aspectRatio: dict
-   :param duration: The duration of the video.
-   :type duration: dict
-   :param loop: Whether the video should loop.
-   :type loop: dict
-   :param startFrame: The start frame of the video.
-   :type startFrame: dict
-   :param endFrame: The end frame of the video.
-   :type endFrame: dict
-   :param rewritePrompt: Whether to rewrite the prompt.
-   :type rewritePrompt: dict
+   :param model: The model settings.
+   :type model: dict
+   :param settings: The settings for each model.
+   :type settings: dict
 
 
-   .. py:attribute:: prompt
+   .. py:attribute:: model
 
 
-   .. py:attribute:: negative_prompt
-
-
-   .. py:attribute:: cfg_scale
-
-
-   .. py:attribute:: mode
-
-
-   .. py:attribute:: aspect_ratio
-
-
-   .. py:attribute:: duration
-
-
-   .. py:attribute:: loop
-
-
-   .. py:attribute:: start_frame
-
-
-   .. py:attribute:: end_frame
-
-
-   .. py:attribute:: rewrite_prompt
+   .. py:attribute:: settings
 
 
    .. py:attribute:: deprecated_keys
@@ -40343,6 +40347,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.20'
+   :value: '1.4.21'
 
 

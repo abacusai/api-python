@@ -1413,14 +1413,14 @@ Module Contents
 
 
 
-   .. py:method:: load_as_pandas_documents(doc_id_column, document_column)
+   .. py:method:: load_as_pandas_documents(doc_id_column = 'doc_id', document_column = 'page_infos')
 
       Loads a feature group with documents data into a pandas dataframe.
 
-      :param doc_id_feature: The name of the feature / column containing the document ID.
-      :type doc_id_feature: str
-      :param document_feature: The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
-      :type document_feature: str
+      :param doc_id_column: The name of the feature / column containing the document ID.
+      :type doc_id_column: str
+      :param document_column: The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
+      :type document_column: str
 
       :returns: A pandas dataframe containing the extracted document data.
       :rtype: DataFrame

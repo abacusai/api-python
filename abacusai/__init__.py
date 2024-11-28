@@ -17,6 +17,7 @@ from .api_class import *
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
 from .app_user_group import AppUserGroup
+from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
@@ -224,4 +225,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.20"
+__version__ = "1.4.21"

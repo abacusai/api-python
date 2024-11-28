@@ -564,7 +564,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.20'
+      :value: '1.4.21'
 
 
 
@@ -2695,6 +2695,22 @@ Module Contents
 
       :returns: list of secrets belonging to the organization.
       :rtype: list[OrganizationSecret]
+
+
+
+   .. py:method:: get_app_user_group_sign_in_token(user_group_id, email, name)
+
+      Get a token for a user group user to sign in.
+
+      :param user_group_id: The ID of the user group.
+      :type user_group_id: str
+      :param email: The email of the user.
+      :type email: str
+      :param name: The name of the user.
+      :type name: str
+
+      :returns: The token to sign in the user
+      :rtype: AppUserGroupSignInToken
 
 
 

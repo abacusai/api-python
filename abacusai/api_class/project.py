@@ -49,7 +49,7 @@ class ConstraintConfig(ApiClass):
     Args:
         constant (float): The constant value for the constraint.
         operator (str): The operator for the constraint. Could be 'EQ', 'LE', 'GE'
-        enforcement (str): The enforcement for the constraint. Could be 'HARD' or 'SOFT'. Default is 'HARD'
+        enforcement (str): The enforcement for the constraint. Could be 'HARD' or 'SOFT' or 'SKIP'. Default is 'HARD'
         code (str): The code for the constraint.
         penalty (float): The penalty for violating the constraint.
     """

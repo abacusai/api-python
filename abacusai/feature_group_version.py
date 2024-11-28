@@ -277,13 +277,13 @@ class FeatureGroupVersion(AbstractApiClass):
             '_getFeatureGroupVersionParts', 'GET', query_params={'featureGroupVersion': self.id}, retry_500=True)
         return load_as_pandas_from_avro_files(file_parts, self._download_avro_file, max_workers=max_workers)
 
-    def load_as_pandas_documents(self, doc_id_column: str, document_column: str, max_workers=10):
+    def load_as_pandas_documents(self, doc_id_column: str = 'doc_id', document_column: str = 'page_infos', max_workers=10):
         """
         Loads a feature group with documents data into a pandas dataframe.
 
         Args:
-            doc_id_feature (str): The name of the feature / column containing the document ID.
-            document_feature (str): The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
+            doc_id_column (str): The name of the feature / column containing the document ID.
+            document_column (str): The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
             max_workers (int): The number of threads.
 
         Returns:
