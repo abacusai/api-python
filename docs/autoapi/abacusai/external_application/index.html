@@ -75,6 +75,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../categorical_range_violation/index.html">abacusai.categorical_range_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_message/index.html">abacusai.chat_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_session/index.html">abacusai.chat_session</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_computer/index.html">abacusai.chatllm_computer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../client/index.html">abacusai.client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_response/index.html">abacusai.code_autocomplete_response</a></li>
@@ -330,7 +331,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.external_application.</span></span><span class="sig-name descname"><span class="pre">ExternalApplication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalApplicationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userGroupIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useCase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isAgent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentConversationRetentionHours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">managedUserService</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictionOverrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isSystemCreated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isCustomizable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isDeprecated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.external_application.ExternalApplication" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.external_application.</span></span><span class="sig-name descname"><span class="pre">ExternalApplication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalApplicationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userGroupIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useCase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isAgent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentConversationRetentionHours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">managedUserService</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictionOverrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isSystemCreated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isCustomizable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isDeprecated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isVisible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.external_application.ExternalApplication" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>An external application.</p>
 <dl class="field-list simple">
@@ -353,87 +354,93 @@
 <li><p><strong>isSystemCreated</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the external application is system created.</p></li>
 <li><p><strong>isCustomizable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the external application is customizable.</p></li>
 <li><p><strong>isDeprecated</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the external application is deprecated. Only applicable for system created bots. Deprecated external applications will not show in the UI.</p></li>
+<li><p><strong>isVisible</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the external application should be shown in the dropdown.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.name">
-<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.name" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.name" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.external_application_id">
-<span class="sig-name descname"><span class="pre">external_application_id</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.external_application_id" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">external_application_id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.external_application_id" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.deployment_id">
-<span class="sig-name descname"><span class="pre">deployment_id</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.deployment_id" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">deployment_id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.deployment_id" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.description">
-<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.description" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.description" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.logo">
-<span class="sig-name descname"><span class="pre">logo</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.logo" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">logo</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.logo" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.theme">
-<span class="sig-name descname"><span class="pre">theme</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.theme" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">theme</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.theme" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.user_group_ids">
-<span class="sig-name descname"><span class="pre">user_group_ids</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.user_group_ids" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">user_group_ids</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.user_group_ids" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.use_case">
-<span class="sig-name descname"><span class="pre">use_case</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.use_case" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">use_case</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.use_case" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.is_agent">
-<span class="sig-name descname"><span class="pre">is_agent</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_agent" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">is_agent</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_agent" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.status">
-<span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.status" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.status" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.deployment_conversation_retention_hours">
-<span class="sig-name descname"><span class="pre">deployment_conversation_retention_hours</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.deployment_conversation_retention_hours" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">deployment_conversation_retention_hours</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.deployment_conversation_retention_hours" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.managed_user_service">
-<span class="sig-name descname"><span class="pre">managed_user_service</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.managed_user_service" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">managed_user_service</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.managed_user_service" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.prediction_overrides">
-<span class="sig-name descname"><span class="pre">prediction_overrides</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.prediction_overrides" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">prediction_overrides</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.prediction_overrides" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.is_system_created">
-<span class="sig-name descname"><span class="pre">is_system_created</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_system_created" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">is_system_created</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_system_created" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.is_customizable">
-<span class="sig-name descname"><span class="pre">is_customizable</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_customizable" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">is_customizable</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_customizable" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.is_deprecated">
-<span class="sig-name descname"><span class="pre">is_deprecated</span></span><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_deprecated" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">is_deprecated</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_deprecated" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.external_application.ExternalApplication.is_visible">
+<span class="sig-name descname"><span class="pre">is_visible</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.external_application.ExternalApplication.is_visible" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

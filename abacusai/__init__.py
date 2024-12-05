@@ -26,6 +26,7 @@ from .bot_info import BotInfo
 from .categorical_range_violation import CategoricalRangeViolation
 from .chat_message import ChatMessage
 from .chat_session import ChatSession
+from .chatllm_computer import ChatllmComputer
 from .chatllm_referral_invite import ChatllmReferralInvite
 from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, _request_context
 from .code_autocomplete_response import CodeAutocompleteResponse
@@ -225,4 +226,4 @@ from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.21"
+__version__ = "1.4.22"

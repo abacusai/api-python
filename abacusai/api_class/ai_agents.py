@@ -1,6 +1,6 @@
 import ast
 import dataclasses
-from typing import Any, Dict, List, Union
+from typing import Dict, List, Union
 
 from . import enums
 from .abstract import ApiClass, get_clean_function_source_code_for_agent, validate_constructor_arg_types
@@ -55,7 +55,7 @@ class WorkflowNodeInputMapping(ApiClass):
 
     Args:
         name (str): The name of the input variable of the node function.
-        variable_type (WorkflowNodeInputType): The type of the input.
+        variable_type (Union[WorkflowNodeInputType, str]): The type of the input. If the type is `IGNORE`, the input will be ignored.
         variable_source (str): The name of the node this variable is sourced from.
                                If the type is `WORKFLOW_VARIABLE`, the value given by the source node will be directly used.
                                If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before the user edits it.
@@ -67,7 +67,12 @@ class WorkflowNodeInputMapping(ApiClass):
     variable_source: str = dataclasses.field(default=None)
     source_prop: str = dataclasses.field(default=None)
     is_required: bool = dataclasses.field(default=True)
-    default_value: Any = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        if self.variable_type == enums.WorkflowNodeInputType.IGNORE and self.is_required:
+            raise ValueError('input_mapping', 'Invalid input mapping. The variable type cannot be IGNORE if is_required is True.')
+        if isinstance(self.variable_type, str):
+            self.variable_type = enums.WorkflowNodeInputType(self.variable_type)
 
     def to_dict(self):
         return {
@@ -76,7 +81,6 @@ class WorkflowNodeInputMapping(ApiClass):
             'variable_source': self.variable_source,
             'source_prop': self.source_prop or self.name,
             'is_required': self.is_required,
-            'default_value': self.default_value
         }
 
     @classmethod
@@ -90,7 +94,6 @@ class WorkflowNodeInputMapping(ApiClass):
             variable_source=mapping.get('variable_source'),
             source_prop=mapping.get('source_prop') or mapping['name'] if mapping.get('variable_source') else None,
             is_required=mapping.get('is_required', True),
-            default_value=mapping.get('default_value')
         )
 
 
@@ -219,6 +222,30 @@ class WorkflowNodeOutputSchema(ApiClass, JSONSchema):
         )
 
 
+@validate_constructor_arg_types('trigger_config')
+@dataclasses.dataclass
+class TriggerConfig(ApiClass):
+    """
+    Represents the configuration for a trigger workflow node.
+
+    Args:
+        sleep_time (int): The time in seconds to wait before the node gets executed again.
+    """
+    sleep_time: int = dataclasses.field(default=None)
+
+    def to_dict(self):
+        return {
+            'sleep_time': self.sleep_time
+        }
+
+    @classmethod
+    def from_dict(cls, configs: dict):
+        validate_input_dict_param(configs, friendly_class_name='trigger_config')
+        return cls(
+            sleep_time=configs.get('sleep_time', None)
+        )
+
+
 @validate_constructor_arg_types('workflow_graph_node')
 @dataclasses.dataclass
 class WorkflowGraphNode(ApiClass):
@@ -236,10 +263,12 @@ class WorkflowGraphNode(ApiClass):
     Additional Attributes:
         function_name (str): The name of the function.
         source_code (str): The source code of the function.
+        trigger_config (TriggerConfig): The configuration for a trigger workflow node.
     """
 
-    def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, template_metadata: dict = None):
+    def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, template_metadata: dict = None, trigger_config: TriggerConfig = None):
         self.template_metadata = template_metadata
+        self.trigger_config = trigger_config
         if self.template_metadata and not self.template_metadata.get('initialized'):
             self.name = name
             self.function_name = None
@@ -286,14 +315,14 @@ class WorkflowGraphNode(ApiClass):
                         raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{input_name}" not found in function "{self.function_name}".')
                 for arg, default in arg_defaults.items():
                     if arg not in input_mapping_args:
-                        self.input_mappings.append(WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None, default_value=default.value if default else None))
+                        self.input_mappings.append(WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None))
             elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, WorkflowNodeInputMapping) for key, value in input_mappings.items()):
                 is_shortform_input_mappings = True
-                self.input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None, default_value=default.value if default else None) for arg, default in arg_defaults.items() if arg not in input_mappings]
+                self.input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None) for arg, default in arg_defaults.items() if arg not in input_mappings]
                 for key, value in input_mappings.items():
                     if key not in arg_defaults:
                         raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{key}" not found in function "{self.function_name}".')
-                    self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=value.variable_type, variable_source=value.variable_source, source_prop=value.source_prop, is_required=arg_defaults.get(key) is None, default_value=value.default_value))
+                    self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=value.variable_type, variable_source=value.variable_source, source_prop=value.source_prop, is_required=arg_defaults.get(key) is None))
             else:
                 raise ValueError('workflow_graph_node', 'Invalid input mappings. Must be a list of WorkflowNodeInputMapping or a dictionary of input mappings in the form {arg_name: node_name.outputs.prop_name}.')
 
@@ -336,8 +365,8 @@ class WorkflowGraphNode(ApiClass):
                 raise ValueError('workflow_graph_node', 'Invalid output schema. Must be a WorkflowNodeOutputSchema or a list of output section names.')
 
     @classmethod
-    def _raw_init(cls, name: str, input_mappings: List[WorkflowNodeInputMapping] = None, output_mappings: List[WorkflowNodeOutputMapping] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, template_metadata: dict = None):
-        workflow_node = cls.__new__(cls, name, input_mappings, output_mappings, input_schema, output_schema, template_metadata)
+    def _raw_init(cls, name: str, input_mappings: List[WorkflowNodeInputMapping] = None, output_mappings: List[WorkflowNodeOutputMapping] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, template_metadata: dict = None, trigger_config: TriggerConfig = None):
+        workflow_node = cls.__new__(cls, name, input_mappings, output_mappings, input_schema, output_schema, template_metadata, trigger_config)
         workflow_node.name = name
         if function:
             workflow_node.function = function
@@ -353,6 +382,7 @@ class WorkflowGraphNode(ApiClass):
         workflow_node.input_schema = input_schema
         workflow_node.output_schema = output_schema
         workflow_node.template_metadata = template_metadata
+        workflow_node.trigger_config = trigger_config
         return workflow_node
 
     @classmethod
@@ -362,7 +392,7 @@ class WorkflowGraphNode(ApiClass):
         if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
             instance_input_mappings = input_mappings
         elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, WorkflowNodeInputMapping) for key, value in input_mappings.items()):
-            instance_input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=mapping.variable_type, variable_source=mapping.variable_source, source_prop=mapping.source_prop, is_required=mapping.is_required, default_value=mapping.default_value) for arg, mapping in input_mappings]
+            instance_input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=mapping.variable_type, variable_source=mapping.variable_source, source_prop=mapping.source_prop, is_required=mapping.is_required) for arg, mapping in input_mappings]
         elif input_mappings is None:
             instance_input_mappings = []
         else:
@@ -410,13 +440,17 @@ class WorkflowGraphNode(ApiClass):
             'output_mappings': [mapping.to_dict() for mapping in self.output_mappings],
             'input_schema': self.input_schema.to_dict(),
             'output_schema': self.output_schema.to_dict(),
-            'template_metadata': self.template_metadata
+            'template_metadata': self.template_metadata,
+            'trigger_config': self.trigger_config.to_dict() if self.trigger_config else None
         }
 
     @classmethod
     def from_dict(cls, node: dict):
         validate_input_dict_param(node, friendly_class_name='workflow_graph_node', must_contain=['name', 'function_name', 'source_code'])
         _cls = cls._raw_init if node.get('__return_filter') else cls
+        if node.get('template_metadata') and node.get('template_metadata').get('template_type') == 'trigger':
+            if not node.get('trigger_config'):
+                node['trigger_config'] = {'sleep_time': node.get('template_metadata').get('sleep_time')}
         instance = _cls(
             name=node['name'],
             function_name=node['function_name'],
@@ -425,7 +459,8 @@ class WorkflowGraphNode(ApiClass):
             output_mappings=[WorkflowNodeOutputMapping.from_dict(mapping) for mapping in node.get('output_mappings', [])],
             input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
             output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
-            template_metadata=node.get('template_metadata')
+            template_metadata=node.get('template_metadata'),
+            trigger_config=TriggerConfig.from_dict(node.get('trigger_config')) if node.get('trigger_config') else None
         )
         return instance
 

@@ -11,6 +11,7 @@ Classes
 
    abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig
    abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig
+   abacusai.api_class.dataset_application_connector.BoxDatasetConfig
    abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig
    abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig
    abacusai.api_class.dataset_application_connector.JiraDatasetConfig
@@ -43,14 +44,20 @@ Module Contents
 
    .. py:attribute:: application_connector_type
       :type:  abacusai.api_class.enums.ApplicationConnectorType
+      :value: None
+
 
 
    .. py:attribute:: application_connector_id
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: document_processing_config
       :type:  abacusai.api_class.dataset.DatasetDocumentProcessingConfig
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -76,18 +83,45 @@ Module Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: space_key
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: pull_attachments
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
+      :value: False
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: BoxDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Box Application Connector
+   :param location: The regex location of the files to fetch
+   :type location: str
+
+
+   .. py:attribute:: location
+      :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -110,14 +144,20 @@ Module Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: start_timestamp
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: end_timestamp
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -142,18 +182,26 @@ Module Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: csv_delimiter
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: merge_file_schemas
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -178,18 +226,26 @@ Module Contents
 
    .. py:attribute:: jql
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: custom_fields
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: include_comments
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: include_watchers
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -214,18 +270,26 @@ Module Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: csv_delimiter
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: merge_file_schemas
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -250,18 +314,26 @@ Module Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: csv_delimiter
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: merge_file_schemas
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -280,6 +352,8 @@ Module Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -300,10 +374,14 @@ Module Contents
 
    .. py:attribute:: include_entire_conversation_history
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: include_all_feedback
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -326,14 +404,20 @@ Module Contents
 
    .. py:attribute:: pull_chat_messages
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: pull_channel_posts
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: pull_transcripts
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()

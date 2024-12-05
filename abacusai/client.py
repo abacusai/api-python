@@ -300,14 +300,6 @@ class AgentResponse:
                     result[k] = v
         return result
 
-    def __getattr__(self, item):
-        for section_data in self.section_data_list:
-            for k, v in section_data.items():
-                if k == item:
-                    return v
-        raise AttributeError(
-            f"'{self.__class__.__name__}' object has no attribute '{item}'")
-
 
 class ClientOptions:
     """
@@ -641,7 +633,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.21'
+    client_version = '1.4.22'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -7592,19 +7584,18 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
 
-    def start_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str = None, arguments: list = None, keyword_arguments: dict = None, save_conversations: bool = True) -> Dict:
+    def start_autonomous_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, save_conversations: bool = True) -> Dict:
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
             deployment_id (str): A unique string identifier for the deployment created under the project.
-            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
             arguments (list): Positional arguments to the agent execute function.
             keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
             save_conversations (bool): If true then a new conversation will be created for every run of the workflow associated with the agent."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'saveConversations': save_conversations}, server_override=prediction_url, timeout=1500)
+        return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'saveConversations': save_conversations}, server_override=prediction_url, timeout=1500)
 
     def pause_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
         """Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.

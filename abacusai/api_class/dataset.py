@@ -59,8 +59,11 @@ class DocumentProcessingConfig(ApiClass):
 
     def __post_init__(self):
         self.ocr_mode = self._detect_ocr_mode()
-        if self.document_type is not None and DocumentType.is_ocr_forced(self.document_type):
-            self.highlight_relevant_text = True
+        if self.document_type is not None:
+            if DocumentType.is_ocr_forced(self.document_type):
+                self.highlight_relevant_text = True
+            else:
+                self.highlight_relevant_text = False
         if self.highlight_relevant_text is not None:
             self.extract_bounding_boxes = self.highlight_relevant_text  # Highlight_relevant text acts as a wrapper over extract_bounding_boxes
 

@@ -411,6 +411,7 @@ class ApplicationConnectorType(ApiEnum):
     TEAMSSCRAPER = 'TEAMSSCRAPER'
     GITHUBUSER = 'GITHUBUSER'
     OKTASAML = 'OKTASAML'
+    BOX = 'BOX'
 
 
 class StreamingConnectorType(ApiEnum):
@@ -482,6 +483,7 @@ class LLMName(ApiEnum):
     ABACUS_SMAUG3 = 'ABACUS_SMAUG3'
     ABACUS_DRACARYS = 'ABACUS_DRACARYS'
     QWEN_2_5_32B = 'QWEN_2_5_32B'
+    QWQ_32B = 'QWQ_32B'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     XAI_GROK = 'XAI_GROK'
 
@@ -549,6 +551,7 @@ class WorkflowNodeInputType(ApiEnum):
     # Duplicated in reainternal.enums, both should be kept in sync
     USER_INPUT = 'USER_INPUT'
     WORKFLOW_VARIABLE = 'WORKFLOW_VARIABLE'
+    IGNORE = 'IGNORE'
 
 
 class WorkflowNodeOutputType(ApiEnum):

@@ -39,6 +39,7 @@ Submodules
    /autoapi/abacusai/categorical_range_violation/index
    /autoapi/abacusai/chat_message/index
    /autoapi/abacusai/chat_session/index
+   /autoapi/abacusai/chatllm_computer/index
    /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/client/index
    /autoapi/abacusai/code_autocomplete_response/index
@@ -286,6 +287,7 @@ Classes
    abacusai.WorkflowNodeInputSchema
    abacusai.WorkflowNodeOutputMapping
    abacusai.WorkflowNodeOutputSchema
+   abacusai.TriggerConfig
    abacusai.WorkflowGraphNode
    abacusai.WorkflowGraphEdge
    abacusai.WorkflowGraph
@@ -322,6 +324,7 @@ Classes
    abacusai.AttachmentParsingConfig
    abacusai.ApplicationConnectorDatasetConfig
    abacusai.ConfluenceDatasetConfig
+   abacusai.BoxDatasetConfig
    abacusai.GoogleAnalyticsDatasetConfig
    abacusai.GoogleDriveDatasetConfig
    abacusai.JiraDatasetConfig
@@ -502,6 +505,7 @@ Classes
    abacusai.CategoricalRangeViolation
    abacusai.ChatMessage
    abacusai.ChatSession
+   abacusai.ChatllmComputer
    abacusai.ChatllmReferralInvite
    abacusai.AgentResponse
    abacusai.ApiClient
@@ -734,12 +738,18 @@ Package Contents
 
 
    .. py:attribute:: method
+      :value: None
+
 
 
    .. py:attribute:: docstring
+      :value: None
+
 
 
    .. py:attribute:: score
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -783,24 +793,38 @@ Package Contents
 
 
    .. py:attribute:: address_line_1
+      :value: None
+
 
 
    .. py:attribute:: address_line_2
+      :value: None
+
 
 
    .. py:attribute:: city
+      :value: None
+
 
 
    .. py:attribute:: state_or_province
+      :value: None
+
 
 
    .. py:attribute:: postal_code
+      :value: None
+
 
 
    .. py:attribute:: country
+      :value: None
+
 
 
    .. py:attribute:: additional_info
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -860,36 +884,58 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: agent_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: predict_function_name
+      :value: None
+
 
 
    .. py:attribute:: source_code
+      :value: None
+
 
 
    .. py:attribute:: agent_config
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: training_required
+      :value: None
+
 
 
    .. py:attribute:: agent_execution_config
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -1030,27 +1076,43 @@ Package Contents
 
 
    .. py:attribute:: role
+      :value: None
+
 
 
    .. py:attribute:: text
+      :value: None
+
 
 
    .. py:attribute:: doc_ids
+      :value: None
+
 
 
    .. py:attribute:: keyword_arguments
+      :value: None
+
 
 
    .. py:attribute:: segments
+      :value: None
+
 
 
    .. py:attribute:: streamed_data
+      :value: None
+
 
 
    .. py:attribute:: streamed_section_data
+      :value: None
+
 
 
    .. py:attribute:: agent_workflow_node_id
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -1121,18 +1183,28 @@ Package Contents
 
 
    .. py:attribute:: doc_id
+      :value: None
+
 
 
    .. py:attribute:: filename
+      :value: None
+
 
 
    .. py:attribute:: mime_type
+      :value: None
+
 
 
    .. py:attribute:: size
+      :value: None
+
 
 
    .. py:attribute:: page_count
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -1168,9 +1240,13 @@ Package Contents
 
 
    .. py:attribute:: response
+      :value: None
+
 
 
    .. py:attribute:: deployment_conversation_id
+      :value: None
+
 
 
    .. py:attribute:: doc_infos
@@ -1227,33 +1303,53 @@ Package Contents
 
 
    .. py:attribute:: agent_version
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: agent_id
+      :value: None
+
 
 
    .. py:attribute:: agent_config
+      :value: None
+
 
 
    .. py:attribute:: publishing_started_at
+      :value: None
+
 
 
    .. py:attribute:: publishing_completed_at
+      :value: None
+
 
 
    .. py:attribute:: pending_deployment_ids
+      :value: None
+
 
 
    .. py:attribute:: failed_deployment_ids
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: agent_execution_config
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -1332,9 +1428,13 @@ Package Contents
 
 
    .. py:attribute:: task
+      :value: None
+
 
 
    .. py:attribute:: task_type
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -1396,48 +1496,78 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: problem_type
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: is_default_enabled
+      :value: None
+
 
 
    .. py:attribute:: training_input_mappings
+      :value: None
+
 
 
    .. py:attribute:: train_function_name
+      :value: None
+
 
 
    .. py:attribute:: predict_function_name
+      :value: None
+
 
 
    .. py:attribute:: predict_many_function_name
+      :value: None
+
 
 
    .. py:attribute:: initialize_function_name
+      :value: None
+
 
 
    .. py:attribute:: config_options
+      :value: None
+
 
 
    .. py:attribute:: algorithm_id
+      :value: None
+
 
 
    .. py:attribute:: use_gpu
+      :value: None
+
 
 
    .. py:attribute:: algorithm_training_config
+      :value: None
+
 
 
    .. py:attribute:: only_offline_deployable
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -1478,15 +1608,23 @@ Package Contents
 
 
    .. py:attribute:: annotation_type
+      :value: None
+
 
 
    .. py:attribute:: annotation_value
+      :value: None
+
 
 
    .. py:attribute:: comments
+      :value: None
+
 
 
    .. py:attribute:: metadata
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -1526,18 +1664,28 @@ Package Contents
 
 
    .. py:attribute:: feature_annotation_configs
+      :value: None
+
 
 
    .. py:attribute:: labels
+      :value: None
+
 
 
    .. py:attribute:: status_feature
+      :value: None
+
 
 
    .. py:attribute:: comments_features
+      :value: None
+
 
 
    .. py:attribute:: metadata_feature
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -1577,18 +1725,28 @@ Package Contents
 
 
    .. py:attribute:: doc_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_row_identifier
+      :value: None
+
 
 
    .. py:attribute:: feature_group_row_index
+      :value: None
+
 
 
    .. py:attribute:: total_rows
+      :value: None
+
 
 
    .. py:attribute:: is_annotation_present
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -1638,30 +1796,48 @@ Package Contents
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: feature_name
+      :value: None
+
 
 
    .. py:attribute:: doc_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_row_identifier
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: annotation_entry_marker
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: locked_until
+      :value: None
+
 
 
    .. py:attribute:: verification_info
+      :value: None
+
 
 
    .. py:attribute:: annotation
@@ -1708,21 +1884,33 @@ Package Contents
 
 
    .. py:attribute:: total
+      :value: None
+
 
 
    .. py:attribute:: done
+      :value: None
+
 
 
    .. py:attribute:: in_progress
+      :value: None
+
 
 
    .. py:attribute:: todo
+      :value: None
+
 
 
    .. py:attribute:: latest_updated_at
+      :value: None
+
 
 
    .. py:attribute:: is_materialization_needed
+      :value: None
+
 
 
    .. py:attribute:: latest_materialized_annotation_config
@@ -1754,10 +1942,14 @@ Package Contents
 
    .. py:attribute:: _upper_snake_case_keys
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: _support_kwargs
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -1831,10 +2023,14 @@ Package Contents
 
    .. py:attribute:: description
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: example_extraction
       :type:  Union[str, int, bool, float, list, dict]
+      :value: None
+
 
 
    .. py:attribute:: type
@@ -1862,8 +2058,8 @@ Package Contents
 
    :param name: The name of the input variable of the node function.
    :type name: str
-   :param variable_type: The type of the input.
-   :type variable_type: WorkflowNodeInputType
+   :param variable_type: The type of the input. If the type is `IGNORE`, the input will be ignored.
+   :type variable_type: Union[WorkflowNodeInputType, str]
    :param variable_source: The name of the node this variable is sourced from.
                            If the type is `WORKFLOW_VARIABLE`, the value given by the source node will be directly used.
                            If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before the user edits it.
@@ -1883,18 +2079,23 @@ Package Contents
 
    .. py:attribute:: variable_source
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: source_prop
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: is_required
       :type:  bool
+      :value: True
 
 
-   .. py:attribute:: default_value
-      :type:  Any
+
+   .. py:method:: __post_init__()
 
 
    .. py:method:: to_dict()
@@ -1935,14 +2136,20 @@ Package Contents
 
    .. py:attribute:: schema_source
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: schema_prop
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: runtime_schema
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: to_dict()
@@ -2036,7 +2243,37 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None)
+.. py:class:: TriggerConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Represents the configuration for a trigger workflow node.
+
+   :param sleep_time: The time in seconds to wait before the node gets executed again.
+   :type sleep_time: int
+
+
+   .. py:attribute:: sleep_time
+      :type:  int
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+   .. py:method:: from_dict(configs)
+      :classmethod:
+
+
+
+.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -2059,12 +2296,20 @@ Package Contents
    Additional Attributes:
        function_name (str): The name of the function.
        source_code (str): The source code of the function.
+       trigger_config (TriggerConfig): The configuration for a trigger workflow node.
 
 
    .. py:attribute:: template_metadata
+      :value: None
 
 
-   .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None)
+
+   .. py:attribute:: trigger_config
+      :value: None
+
+
+
+   .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
       :classmethod:
 
 
@@ -2157,18 +2402,26 @@ Package Contents
 
    .. py:attribute:: nodes
       :type:  List[WorkflowGraphNode]
+      :value: []
+
 
 
    .. py:attribute:: edges
       :type:  List[WorkflowGraphEdge]
+      :value: []
+
 
 
    .. py:attribute:: primary_start_node
       :type:  Union[str, WorkflowGraphNode]
+      :value: None
+
 
 
    .. py:attribute:: common_source_code
       :type:  str
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -2201,14 +2454,20 @@ Package Contents
 
    .. py:attribute:: is_user
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: text
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: document_contents
       :type:  dict
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -2242,14 +2501,20 @@ Package Contents
 
    .. py:attribute:: description
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: default_value
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: is_required
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: to_dict()
@@ -2286,10 +2551,14 @@ Package Contents
 
    .. py:attribute:: is_required
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: description
       :type:  str
+      :value: ''
+
 
 
    .. py:method:: to_dict()
@@ -2330,6 +2599,8 @@ Package Contents
 
    .. py:attribute:: description
       :type:  str
+      :value: ''
+
 
 
    .. py:method:: to_dict()
@@ -2364,14 +2635,20 @@ Package Contents
 
    .. py:attribute:: title
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: disable_problem_type_context
       :type:  bool
+      :value: True
+
 
 
    .. py:attribute:: ignore_history
       :type:  bool
+      :value: None
+
 
 
 .. py:class:: _ApiClassFactory
@@ -2411,6 +2688,8 @@ Package Contents
 
    .. py:attribute:: _support_kwargs
       :type:  bool
+      :value: True
+
 
 
    .. py:attribute:: kwargs
@@ -2419,6 +2698,8 @@ Package Contents
 
    .. py:attribute:: problem_type
       :type:  abacusai.api_class.enums.ProblemType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -2453,34 +2734,50 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: predictions_start_date
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: use_prediction_offset
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: start_date_offset
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: forecasting_horizon
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: item_attributes_to_include_in_the_result
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: explain_predictions
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: create_monitor
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2499,6 +2796,8 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2523,18 +2822,26 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: number_of_items
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: item_attributes_to_include_in_the_result
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: score_field
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2575,50 +2882,74 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: explainer_type
       :type:  abacusai.api_class.enums.ExplainerType
+      :value: None
+
 
 
    .. py:attribute:: number_of_samples_to_use_for_explainer
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: include_multi_class_explanations
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: features_considered_constant_for_explanations
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: importance_of_records_in_nested_columns
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: explanation_filter_lower_bound
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: explanation_filter_upper_bound
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: explanation_filter_label
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: output_columns
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: explain_predictions
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: create_monitor
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2641,14 +2972,20 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: files_output_location_prefix
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: channel_id_to_label_map
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2669,10 +3006,14 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: explode_output
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2697,18 +3038,26 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: analysis_frequency
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: start_date
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: analysis_days
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2727,6 +3076,8 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2747,10 +3098,14 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: create_monitor
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -2862,6 +3217,8 @@ Package Contents
 
    .. py:attribute:: is_documentset
       :type:  bool
+      :value: None
+
 
 
 .. py:class:: StreamingConnectorDatasetConfig
@@ -2877,6 +3234,8 @@ Package Contents
 
    .. py:attribute:: streaming_connector_type
       :type:  abacusai.api_class.enums.StreamingConnectorType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -2897,6 +3256,8 @@ Package Contents
 
    .. py:attribute:: topic
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3054,14 +3415,20 @@ Package Contents
 
    .. py:attribute:: escape
       :type:  str
+      :value: '"'
+
 
 
    .. py:attribute:: csv_delimiter
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: file_path_with_schema
       :type:  str
+      :value: None
+
 
 
 .. py:class:: DocumentProcessingConfig
@@ -3199,6 +3566,8 @@ Package Contents
 
    .. py:attribute:: timestamp_column
       :type:  str
+      :value: None
+
 
 
 .. py:class:: AttachmentParsingConfig
@@ -3218,14 +3587,20 @@ Package Contents
 
    .. py:attribute:: feature_group_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: column_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: urls
       :type:  str
+      :value: None
+
 
 
 .. py:class:: ApplicationConnectorDatasetConfig
@@ -3245,14 +3620,20 @@ Package Contents
 
    .. py:attribute:: application_connector_type
       :type:  abacusai.api_class.enums.ApplicationConnectorType
+      :value: None
+
 
 
    .. py:attribute:: application_connector_id
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: document_processing_config
       :type:  abacusai.api_class.dataset.DatasetDocumentProcessingConfig
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -3278,18 +3659,45 @@ Package Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: space_key
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: pull_attachments
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
+      :value: False
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: BoxDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Box Application Connector
+   :param location: The regex location of the files to fetch
+   :type location: str
+
+
+   .. py:attribute:: location
+      :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3312,14 +3720,20 @@ Package Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: start_timestamp
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: end_timestamp
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3344,18 +3758,26 @@ Package Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: csv_delimiter
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: merge_file_schemas
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -3380,18 +3802,26 @@ Package Contents
 
    .. py:attribute:: jql
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: custom_fields
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: include_comments
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: include_watchers
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -3416,18 +3846,26 @@ Package Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: csv_delimiter
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: merge_file_schemas
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -3452,18 +3890,26 @@ Package Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: csv_delimiter
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: merge_file_schemas
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -3482,6 +3928,8 @@ Package Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3502,10 +3950,14 @@ Package Contents
 
    .. py:attribute:: include_entire_conversation_history
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: include_all_feedback
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -3528,14 +3980,20 @@ Package Contents
 
    .. py:attribute:: pull_chat_messages
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: pull_channel_posts
       :type:  bool
+      :value: False
+
 
 
    .. py:attribute:: pull_transcripts
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -3582,6 +4040,8 @@ Package Contents
 
    .. py:attribute:: _support_kwargs
       :type:  bool
+      :value: True
+
 
 
    .. py:attribute:: kwargs
@@ -3590,6 +4050,8 @@ Package Contents
 
    .. py:attribute:: problem_type
       :type:  abacusai.api_class.enums.ProblemType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -3614,14 +4076,20 @@ Package Contents
 
    .. py:attribute:: forced_assignments
       :type:  dict
+      :value: None
+
 
 
    .. py:attribute:: solve_time_limit_seconds
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: include_all_assignments
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3644,14 +4112,20 @@ Package Contents
 
    .. py:attribute:: start_timestamp
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: end_timestamp
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: get_all_item_data
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3680,26 +4154,38 @@ Package Contents
 
    .. py:attribute:: llm_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: num_completion_tokens
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: system_message
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: temperature
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: search_score_cutoff
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: ignore_documents
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3720,10 +4206,14 @@ Package Contents
 
    .. py:attribute:: explain_predictions
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: explainer_type
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3750,22 +4240,32 @@ Package Contents
 
    .. py:attribute:: num_predictions
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: prediction_start
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: explain_predictions
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: explainer_type
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: get_item_data
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3792,22 +4292,32 @@ Package Contents
 
    .. py:attribute:: num_predictions
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: prediction_start
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: explain_predictions
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: explainer_type
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: get_item_data
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3836,26 +4346,38 @@ Package Contents
 
    .. py:attribute:: llm_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: num_completion_tokens
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: system_message
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: temperature
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: search_score_cutoff
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: ignore_documents
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3874,6 +4396,8 @@ Package Contents
 
    .. py:attribute:: limit_results
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -3973,38 +4497,56 @@ Package Contents
 
    .. py:attribute:: chunk_size
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: chunk_overlap_fraction
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: text_encoder
       :type:  abacusai.api_class.enums.VectorStoreTextEncoder
+      :value: None
+
 
 
    .. py:attribute:: chunk_size_factors
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: score_multiplier_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: prune_vectors
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: index_metadata_columns
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: use_document_summary
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: summary_instructions
       :type:  str
+      :value: None
+
 
 
 .. py:data:: DocumentRetrieverConfig
@@ -5705,6 +6247,11 @@ Package Contents
 
 
 
+   .. py:attribute:: BOX
+      :value: 'BOX'
+
+
+
 .. py:class:: StreamingConnectorType
 
    Bases: :py:obj:`ApiEnum`
@@ -5982,6 +6529,11 @@ Package Contents
 
    .. py:attribute:: QWEN_2_5_32B
       :value: 'QWEN_2_5_32B'
+
+
+
+   .. py:attribute:: QWQ_32B
+      :value: 'QWQ_32B'
 
 
 
@@ -6267,6 +6819,11 @@ Package Contents
 
    .. py:attribute:: WORKFLOW_VARIABLE
       :value: 'WORKFLOW_VARIABLE'
+
+
+
+   .. py:attribute:: IGNORE
+      :value: 'IGNORE'
 
 
 
@@ -6690,6 +7247,8 @@ Package Contents
 
    .. py:attribute:: sampling_method
       :type:  abacusai.api_class.enums.SamplingMethodType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -6719,6 +7278,8 @@ Package Contents
 
    .. py:attribute:: key_columns
       :type:  List[str]
+      :value: []
+
 
 
    .. py:method:: __post_init__()
@@ -6743,6 +7304,8 @@ Package Contents
 
    .. py:attribute:: key_columns
       :type:  List[str]
+      :value: []
+
 
 
    .. py:method:: __post_init__()
@@ -6778,6 +7341,8 @@ Package Contents
 
    .. py:attribute:: merge_mode
       :type:  abacusai.api_class.enums.MergeMode
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -6807,6 +7372,8 @@ Package Contents
 
    .. py:attribute:: include_version_timestamp_column
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -6837,6 +7404,8 @@ Package Contents
 
    .. py:attribute:: include_version_timestamp_column
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -6872,6 +7441,8 @@ Package Contents
 
    .. py:attribute:: operator_type
       :type:  abacusai.api_class.enums.OperatorType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -6901,18 +7472,26 @@ Package Contents
 
    .. py:attribute:: columns
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: index_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: value_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: exclude
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -6935,14 +7514,20 @@ Package Contents
 
    .. py:attribute:: input_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: output_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: input_column_type
       :type:  abacusai.api_class.enums.MarkdownOperatorInputType
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -6971,34 +7556,50 @@ Package Contents
 
    .. py:attribute:: input_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: output_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: depth_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: input_column_type
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: crawl_depth
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: disable_host_restriction
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: honour_website_rules
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: user_agent
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -7021,14 +7622,20 @@ Package Contents
 
    .. py:attribute:: doc_id_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: document_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: document_processing_config
       :type:  abacusai.api_class.dataset.DocumentProcessingConfig
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -7079,70 +7686,104 @@ Package Contents
 
    .. py:attribute:: prompt_col
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: completion_col
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: description_col
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: id_col
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: generation_instructions
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: temperature
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: fewshot_examples
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: concurrency
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: examples_per_target
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: subset_size
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: verify_response
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: token_budget
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: oversample
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: documentation_char_limit
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: frequency_penalty
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: model
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: seed
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -7163,10 +7804,14 @@ Package Contents
 
    .. py:attribute:: feature_group_ids
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: drop_non_intersecting_columns
       :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()
@@ -7201,10 +7846,14 @@ Package Contents
 
    .. py:attribute:: _upper_snake_case_keys
       :type:  bool
+      :value: True
+
 
 
    .. py:attribute:: _support_kwargs
       :type:  bool
+      :value: True
+
 
 
    .. py:attribute:: kwargs
@@ -7213,10 +7862,14 @@ Package Contents
 
    .. py:attribute:: problem_type
       :type:  abacusai.api_class.enums.ProblemType
+      :value: None
+
 
 
    .. py:attribute:: algorithm
       :type:  str
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -7311,154 +7964,230 @@ Package Contents
 
    .. py:attribute:: objective
       :type:  abacusai.api_class.enums.PersonalizationObjective
+      :value: None
+
 
 
    .. py:attribute:: sort_objective
       :type:  abacusai.api_class.enums.PersonalizationObjective
+      :value: None
+
 
 
    .. py:attribute:: training_mode
       :type:  abacusai.api_class.enums.PersonalizationTrainingMode
+      :value: None
+
 
 
    .. py:attribute:: target_action_types
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: target_action_weights
       :type:  Dict[str, float]
+      :value: None
+
 
 
    .. py:attribute:: session_event_types
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: recent_days_for_training
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: training_start_date
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: test_on_user_split
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: test_split_on_last_k_items
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: test_last_items_length
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: test_window_length_hours
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: explicit_time_split
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: test_row_indicator
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: full_data_retraining
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: sequential_training
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: data_split_feature_group_table_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: optimized_event_type
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: dropout_rate
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: batch_size
       :type:  abacusai.api_class.enums.BatchSize
+      :value: None
+
 
 
    .. py:attribute:: disable_transformer
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: disable_gpu
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: filter_history
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: action_types_exclusion_days
       :type:  Dict[str, float]
+      :value: None
+
 
 
    .. py:attribute:: max_history_length
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: compute_rerank_metrics
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: add_time_features
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: disable_timestamp_scalar_features
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: compute_session_metrics
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: query_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: item_query_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: use_user_id_feature
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: session_dedupe_mins
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: include_item_id_feature
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: max_user_history_len_percentile
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: downsample_item_popularity_percentile
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: min_item_history
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -7565,182 +8294,272 @@ Package Contents
 
    .. py:attribute:: objective
       :type:  abacusai.api_class.enums.RegressionObjective
+      :value: None
+
 
 
    .. py:attribute:: sort_objective
       :type:  abacusai.api_class.enums.RegressionObjective
+      :value: None
+
 
 
    .. py:attribute:: tree_hpo_mode
       :type:  abacusai.api_class.enums.RegressionTreeHPOMode
+      :value: None
+
 
 
    .. py:attribute:: partial_dependence_analysis
       :type:  abacusai.api_class.enums.PartialDependenceAnalysis
+      :value: None
+
 
 
    .. py:attribute:: type_of_split
       :type:  abacusai.api_class.enums.RegressionTypeOfSplit
+      :value: None
+
 
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: disable_test_val_fold
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: k_fold_cross_validation
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: num_cv_folds
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: timestamp_based_splitting_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: timestamp_based_splitting_method
       :type:  abacusai.api_class.enums.RegressionTimeSplitMethod
+      :value: None
+
 
 
    .. py:attribute:: test_splitting_timestamp
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: sampling_unit_keys
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: test_row_indicator
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: full_data_retraining
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: rebalance_classes
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: rare_class_augmentation_threshold
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: augmentation_strategy
       :type:  abacusai.api_class.enums.RegressionAugmentationStrategy
+      :value: None
+
 
 
    .. py:attribute:: training_rows_downsample_ratio
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: active_labels_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: min_categorical_count
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: sample_weight
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: numeric_clipping_percentile
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: target_transform
       :type:  abacusai.api_class.enums.RegressionTargetTransform
+      :value: None
+
 
 
    .. py:attribute:: ignore_datetime_features
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: max_text_words
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: perform_feature_selection
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: feature_selection_intensity
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: batch_size
       :type:  abacusai.api_class.enums.BatchSize
+      :value: None
+
 
 
    .. py:attribute:: dropout_rate
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: pretrained_model_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: pretrained_llm_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: is_multilingual
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: do_masked_language_model_pretraining
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: max_tokens_in_sentence
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: truncation_strategy
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: loss_function
       :type:  abacusai.api_class.enums.RegressionLossFunction
+      :value: None
+
 
 
    .. py:attribute:: loss_parameters
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: target_encode_categoricals
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: drop_original_categoricals
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: monotonically_increasing_features
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: monotonically_decreasing_features
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: data_split_feature_group_table_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: custom_loss_functions
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: custom_metrics
       :type:  List[str]
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -7880,254 +8699,380 @@ Package Contents
 
    .. py:attribute:: prediction_length
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: objective
       :type:  abacusai.api_class.enums.ForecastingObjective
+      :value: None
+
 
 
    .. py:attribute:: sort_objective
       :type:  abacusai.api_class.enums.ForecastingObjective
+      :value: None
+
 
 
    .. py:attribute:: forecast_frequency
       :type:  abacusai.api_class.enums.ForecastingFrequency
+      :value: None
+
 
 
    .. py:attribute:: probability_quantiles
       :type:  List[float]
+      :value: None
+
 
 
    .. py:attribute:: force_prediction_length
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: filter_items
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: enable_feature_selection
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: enable_padding
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: enable_cold_start
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: enable_multiple_backtests
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: num_backtesting_windows
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: backtesting_window_step_size
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: full_data_retraining
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: additional_forecast_keys
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: experimentation_mode
       :type:  abacusai.api_class.enums.ExperimentationMode
+      :value: None
+
 
 
    .. py:attribute:: type_of_split
       :type:  abacusai.api_class.enums.ForecastingDataSplitType
+      :value: None
+
 
 
    .. py:attribute:: test_by_item
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: test_start
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: loss_function
       :type:  abacusai.api_class.enums.ForecastingLossFunction
+      :value: None
+
 
 
    .. py:attribute:: underprediction_weight
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: disable_networks_without_analytic_quantiles
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: initial_learning_rate
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: l2_regularization_factor
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: dropout_rate
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: recurrent_layers
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: recurrent_units
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: convolutional_layers
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: convolution_filters
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: local_scaling_mode
       :type:  abacusai.api_class.enums.ForecastingLocalScaling
+      :value: None
+
 
 
    .. py:attribute:: zero_predictor
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: skip_missing
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: batch_size
       :type:  abacusai.api_class.enums.BatchSize
+      :value: None
+
 
 
    .. py:attribute:: batch_renormalization
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: history_length
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: prediction_step_size
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: training_point_overlap
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: max_scale_context
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: quantiles_extension_method
       :type:  abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
+      :value: None
+
 
 
    .. py:attribute:: number_of_samples
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: symmetrize_quantiles
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: use_log_transforms
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: smooth_history
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: local_scale_target
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: use_clipping
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: timeseries_weight_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: item_attributes_weight_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: use_timeseries_weights_in_objective
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: use_item_weights_in_objective
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: skip_timeseries_weight_scaling
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: timeseries_loss_weight_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: use_item_id
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: use_all_item_totals
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: handle_zeros_as_missing_values
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: datetime_holiday_calendars
       :type:  List[abacusai.api_class.enums.HolidayCalendars]
+      :value: None
+
 
 
    .. py:attribute:: fill_missing_values
       :type:  List[List[dict]]
+      :value: None
+
 
 
    .. py:attribute:: enable_clustering
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: data_split_feature_group_table_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: custom_loss_functions
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: custom_metrics
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: return_fractional_forecasts
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: allow_training_with_small_history
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8240,26 +9185,38 @@ Package Contents
 
    .. py:attribute:: abacus_internal_model
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: num_completion_tokens
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: larger_embeddings
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: search_chunk_size
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: index_fraction
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: chunk_overlap_fraction
       :type:  float
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8340,142 +9297,212 @@ Package Contents
 
    .. py:attribute:: document_retrievers
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: num_completion_tokens
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: temperature
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: retrieval_columns
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: filter_columns
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: include_general_knowledge
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: enable_web_search
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: behavior_instructions
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: response_instructions
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: enable_llm_rewrite
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: column_filtering_instructions
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: keyword_requirement_instructions
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: query_rewrite_instructions
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: max_search_results
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: data_feature_group_ids
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: data_prompt_context
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: data_prompt_table_context
       :type:  Dict[str, str]
+      :value: None
+
 
 
    .. py:attribute:: data_prompt_column_context
       :type:  Dict[str, str]
+      :value: None
+
 
 
    .. py:attribute:: hide_sql_and_code
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: disable_data_summarization
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: data_columns_to_ignore
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: search_score_cutoff
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: include_bm25_retrieval
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: database_connector_id
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: database_connector_tables
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: enable_code_execution
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: metadata_columns
       :type:  list
+      :value: None
+
 
 
    .. py:attribute:: lookup_rewrite_instructions
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: enable_response_caching
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: unknown_answer_phrase
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: enable_tool_bar
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: enable_inline_source_citations
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: response_format
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: json_response_instructions
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: json_response_schema
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8498,14 +9525,20 @@ Package Contents
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: dropout_rate
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: batch_size
       :type:  abacusai.api_class.enums.BatchSize
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8526,10 +9559,14 @@ Package Contents
 
    .. py:attribute:: sentiment_type
       :type:  abacusai.api_class.enums.SentimentType
+      :value: None
+
 
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8550,10 +9587,14 @@ Package Contents
 
    .. py:attribute:: zero_shot_hypotheses
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8576,14 +9617,20 @@ Package Contents
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: dropout_rate
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: batch_size
       :type:  abacusai.api_class.enums.BatchSize
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8606,14 +9653,20 @@ Package Contents
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: dropout_rate
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: batch_size
       :type:  abacusai.api_class.enums.BatchSize
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8632,6 +9685,8 @@ Package Contents
 
    .. py:attribute:: num_clusters_selection
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8652,10 +9707,14 @@ Package Contents
 
    .. py:attribute:: num_clusters_selection
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: imputation
       :type:  abacusai.api_class.enums.ClusteringImputationMethod
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8674,6 +9733,8 @@ Package Contents
 
    .. py:attribute:: anomaly_fraction
       :type:  float
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8706,46 +9767,74 @@ Package Contents
    :type hyperparameter_calculation_with_heuristics: TimeseriesAnomalyUseHeuristic
    :param threshold_score: Threshold score for anomaly detection
    :type threshold_score: float
+   :param additional_anomaly_ids: List of categorical columns that can act as multi-identifier
+   :type additional_anomaly_ids: List[str]
 
 
    .. py:attribute:: type_of_split
       :type:  abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
+      :value: None
+
 
 
    .. py:attribute:: test_start
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: fill_missing_values
       :type:  List[List[dict]]
+      :value: None
+
 
 
    .. py:attribute:: handle_zeros_as_missing_values
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: timeseries_frequency
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: min_samples_in_normal_region
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: anomaly_type
       :type:  abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
+      :value: None
+
 
 
    .. py:attribute:: hyperparameter_calculation_with_heuristics
       :type:  abacusai.api_class.enums.TimeseriesAnomalyUseHeuristic
+      :value: None
+
 
 
    .. py:attribute:: threshold_score
       :type:  float
+      :value: None
+
+
+
+   .. py:attribute:: additional_anomaly_ids
+      :type:  List[str]
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8774,26 +9863,38 @@ Package Contents
 
    .. py:attribute:: test_split
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: historical_frequency
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: cumulative_prediction_lengths
       :type:  List[int]
+      :value: None
+
 
 
    .. py:attribute:: skip_input_transform
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: skip_target_transform
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: predict_residuals
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8826,26 +9927,38 @@ Package Contents
 
    .. py:attribute:: description
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: agent_interface
       :type:  abacusai.api_class.enums.AgentInterface
+      :value: None
+
 
 
    .. py:attribute:: agent_connectors
       :type:  List[abacusai.api_class.enums.ApplicationConnectorType]
+      :value: None
+
 
 
    .. py:attribute:: enable_binary_input
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: agent_input_schema
       :type:  dict
+      :value: None
+
 
 
    .. py:attribute:: agent_output_schema
       :type:  dict
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8874,26 +9987,38 @@ Package Contents
 
    .. py:attribute:: max_catalog_size
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: max_dimension
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: index_output_path
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: docker_image_uri
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: service_port
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: streaming_embeddings
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8912,6 +10037,8 @@ Package Contents
 
    .. py:attribute:: timeout_minutes
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8932,10 +10059,14 @@ Package Contents
 
    .. py:attribute:: solve_time_limit
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: optimality_gap_limit
       :type:  float
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -8980,18 +10111,26 @@ Package Contents
 
    .. py:attribute:: algorithm
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: only_offline_deployable
       :type:  bool
+      :value: None
+
 
 
    .. py:attribute:: trained_model_types
       :type:  List[dict]
+      :value: None
+
 
 
 .. py:class:: TimeWindowConfig
@@ -9009,10 +10148,14 @@ Package Contents
 
    .. py:attribute:: window_duration
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: window_from_start
       :type:  bool
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -9046,26 +10189,38 @@ Package Contents
 
    .. py:attribute:: id_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: timestamp_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: target_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: start_time
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: end_time
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: window_config
       :type:  TimeWindowConfig
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -9091,10 +10246,14 @@ Package Contents
 
    .. py:attribute:: threshold_type
       :type:  abacusai.api_class.enums.StdDevThresholdType
+      :value: None
+
 
 
    .. py:attribute:: value
       :type:  float
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -9120,10 +10279,14 @@ Package Contents
 
    .. py:attribute:: lower_bound
       :type:  StdDevThreshold
+      :value: None
+
 
 
    .. py:attribute:: upper_bound
       :type:  StdDevThreshold
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -9157,26 +10320,38 @@ Package Contents
 
    .. py:attribute:: feature_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: restricted_feature_values
       :type:  list
+      :value: []
+
 
 
    .. py:attribute:: start_time
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: end_time
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: min_value
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: max_value
       :type:  float
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -9210,26 +10385,38 @@ Package Contents
 
    .. py:attribute:: start_time
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: end_time
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: restrict_feature_mappings
       :type:  List[RestrictFeatureMappings]
+      :value: None
+
 
 
    .. py:attribute:: target_class
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: train_target_feature
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: prediction_target_feature
       :type:  str
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -9250,6 +10437,8 @@ Package Contents
 
    .. py:attribute:: alert_type
       :type:  abacusai.api_class.enums.MonitorAlertType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -9270,6 +10459,8 @@ Package Contents
 
    .. py:attribute:: threshold
       :type:  float
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9294,18 +10485,26 @@ Package Contents
 
    .. py:attribute:: feature_drift_type
       :type:  abacusai.api_class.enums.FeatureDriftType
+      :value: None
+
 
 
    .. py:attribute:: threshold
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: minimum_violations
       :type:  int
+      :value: None
+
 
 
    .. py:attribute:: feature_names
       :type:  List[str]
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9326,10 +10525,14 @@ Package Contents
 
    .. py:attribute:: feature_drift_type
       :type:  abacusai.api_class.enums.FeatureDriftType
+      :value: None
+
 
 
    .. py:attribute:: threshold
       :type:  float
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9350,10 +10553,14 @@ Package Contents
 
    .. py:attribute:: feature_drift_type
       :type:  abacusai.api_class.enums.FeatureDriftType
+      :value: None
+
 
 
    .. py:attribute:: threshold
       :type:  float
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9374,10 +10581,14 @@ Package Contents
 
    .. py:attribute:: data_integrity_type
       :type:  abacusai.api_class.enums.DataIntegrityViolationType
+      :value: None
+
 
 
    .. py:attribute:: minimum_violations
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9400,14 +10611,20 @@ Package Contents
 
    .. py:attribute:: bias_type
       :type:  abacusai.api_class.enums.BiasType
+      :value: None
+
 
 
    .. py:attribute:: threshold
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: minimum_violations
       :type:  int
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9429,14 +10646,20 @@ Package Contents
 
    .. py:attribute:: threshold
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: aggregation_window
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: aggregation_type
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9477,6 +10700,8 @@ Package Contents
 
    .. py:attribute:: action_type
       :type:  abacusai.api_class.enums.AlertActionType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -9499,10 +10724,14 @@ Package Contents
 
    .. py:attribute:: email_recipients
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: email_body
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9543,14 +10772,20 @@ Package Contents
 
    .. py:attribute:: drift_type
       :type:  abacusai.api_class.enums.FeatureDriftType
+      :value: None
+
 
 
    .. py:attribute:: at_risk_threshold
       :type:  float
+      :value: None
+
 
 
    .. py:attribute:: severely_drifting_threshold
       :type:  float
+      :value: None
+
 
 
    .. py:method:: to_dict()
@@ -9582,10 +10817,14 @@ Package Contents
 
    .. py:attribute:: feature_mapping
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: nested_feature_name
       :type:  str
+      :value: None
+
 
 
 .. py:class:: ProjectFeatureGroupTypeMappingsConfig
@@ -9609,6 +10848,8 @@ Package Contents
 
    .. py:attribute:: feature_group_type
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: feature_mappings
@@ -9649,14 +10890,20 @@ Package Contents
 
    .. py:attribute:: enforcement
       :type:  Optional[str]
+      :value: None
+
 
 
    .. py:attribute:: code
       :type:  Optional[str]
+      :value: None
+
 
 
    .. py:attribute:: penalty
       :type:  Optional[float]
+      :value: None
+
 
 
 .. py:class:: ProjectFeatureGroupConfig
@@ -9669,6 +10916,8 @@ Package Contents
 
    .. py:attribute:: type
       :type:  abacusai.api_class.enums.ProjectConfigType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -9753,22 +11002,32 @@ Package Contents
 
    .. py:attribute:: variable_type
       :type:  abacusai.api_class.enums.PythonFunctionArgumentType
+      :value: None
+
 
 
    .. py:attribute:: name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: is_required
       :type:  bool
+      :value: True
+
 
 
    .. py:attribute:: value
       :type:  Any
+      :value: None
+
 
 
    .. py:attribute:: pipeline_variable
       :type:  str
+      :value: None
+
 
 
 .. py:class:: OutputVariableMapping
@@ -9786,10 +11045,14 @@ Package Contents
 
    .. py:attribute:: variable_type
       :type:  abacusai.api_class.enums.PythonFunctionOutputArgumentType
+      :value: None
+
 
 
    .. py:attribute:: name
       :type:  str
+      :value: None
+
 
 
 .. py:class:: FeatureGroupExportConfig
@@ -9802,6 +11065,8 @@ Package Contents
 
    .. py:attribute:: connector_type
       :type:  abacusai.api_class.enums.ConnectorType
+      :value: None
+
 
 
    .. py:method:: _get_builder()
@@ -9824,10 +11089,14 @@ Package Contents
 
    .. py:attribute:: location
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: export_file_format
       :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -9864,26 +11133,38 @@ Package Contents
 
    .. py:attribute:: database_connector_id
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: mode
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: object_name
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: id_column
       :type:  str
+      :value: None
+
 
 
    .. py:attribute:: additional_id_columns
       :type:  List[str]
+      :value: None
+
 
 
    .. py:attribute:: data_columns
       :type:  Dict[str, str]
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -10172,21 +11453,33 @@ Package Contents
 
 
    .. py:attribute:: api_endpoint
+      :value: None
+
 
 
    .. py:attribute:: predict_endpoint
+      :value: None
+
 
 
    .. py:attribute:: proxy_endpoint
+      :value: None
+
 
 
    .. py:attribute:: llm_endpoint
+      :value: None
+
 
 
    .. py:attribute:: external_chat_endpoint
+      :value: None
+
 
 
    .. py:attribute:: dashboard_endpoint
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -10232,27 +11525,43 @@ Package Contents
 
 
    .. py:attribute:: api_key_id
+      :value: None
+
 
 
    .. py:attribute:: api_key
+      :value: None
+
 
 
    .. py:attribute:: api_key_suffix
+      :value: None
+
 
 
    .. py:attribute:: tag
+      :value: None
+
 
 
    .. py:attribute:: type
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: expires_at
+      :value: None
+
 
 
    .. py:attribute:: is_expired
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -10309,27 +11618,43 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: user_group_id
+      :value: None
+
 
 
    .. py:attribute:: external_application_ids
+      :value: None
+
 
 
    .. py:attribute:: invited_user_emails
+      :value: None
+
 
 
    .. py:attribute:: public_user_group
+      :value: None
+
 
 
    .. py:attribute:: has_external_application_reporting
+      :value: None
+
 
 
    .. py:attribute:: is_external_service_group
+      :value: None
+
 
 
    .. py:attribute:: external_service_group_id
+      :value: None
+
 
 
    .. py:attribute:: users
@@ -10364,6 +11689,8 @@ Package Contents
 
 
    .. py:attribute:: token
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -10405,21 +11732,33 @@ Package Contents
 
 
    .. py:attribute:: application_connector_id
+      :value: None
+
 
 
    .. py:attribute:: service
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: auth
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -10545,75 +11884,123 @@ Package Contents
 
 
    .. py:attribute:: batch_prediction_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: file_connector_output_location
+      :value: None
+
 
 
    .. py:attribute:: database_connector_id
+      :value: None
+
 
 
    .. py:attribute:: database_output_configuration
+      :value: None
+
 
 
    .. py:attribute:: file_output_format
+      :value: None
+
 
 
    .. py:attribute:: connector_type
+      :value: None
+
 
 
    .. py:attribute:: legacy_input_location
+      :value: None
+
 
 
    .. py:attribute:: output_feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_table_name
+      :value: None
+
 
 
    .. py:attribute:: output_feature_group_table_name
+      :value: None
+
 
 
    .. py:attribute:: summary_feature_group_table_name
+      :value: None
+
 
 
    .. py:attribute:: csv_input_prefix
+      :value: None
+
 
 
    .. py:attribute:: csv_prediction_prefix
+      :value: None
+
 
 
    .. py:attribute:: csv_explanations_prefix
+      :value: None
+
 
 
    .. py:attribute:: output_includes_metadata
+      :value: None
+
 
 
    .. py:attribute:: result_input_columns
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: bp_across_versions_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: algorithm
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_args_type
+      :value: None
+
 
 
    .. py:attribute:: batch_inputs
@@ -10971,114 +12358,188 @@ Package Contents
 
 
    .. py:attribute:: batch_prediction_version
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_id
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: drift_monitor_status
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: predictions_started_at
+      :value: None
+
 
 
    .. py:attribute:: predictions_completed_at
+      :value: None
+
 
 
    .. py:attribute:: database_output_error
+      :value: None
+
 
 
    .. py:attribute:: total_predictions
+      :value: None
+
 
 
    .. py:attribute:: failed_predictions
+      :value: None
+
 
 
    .. py:attribute:: database_connector_id
+      :value: None
+
 
 
    .. py:attribute:: database_output_configuration
+      :value: None
+
 
 
    .. py:attribute:: file_connector_output_location
+      :value: None
+
 
 
    .. py:attribute:: file_output_format
+      :value: None
+
 
 
    .. py:attribute:: connector_type
+      :value: None
+
 
 
    .. py:attribute:: legacy_input_location
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: drift_monitor_error
+      :value: None
+
 
 
    .. py:attribute:: monitor_warnings
+      :value: None
+
 
 
    .. py:attribute:: csv_input_prefix
+      :value: None
+
 
 
    .. py:attribute:: csv_prediction_prefix
+      :value: None
+
 
 
    .. py:attribute:: csv_explanations_prefix
+      :value: None
+
 
 
    .. py:attribute:: database_output_total_writes
+      :value: None
+
 
 
    .. py:attribute:: database_output_failed_writes
+      :value: None
+
 
 
    .. py:attribute:: output_includes_metadata
+      :value: None
+
 
 
    .. py:attribute:: result_input_columns
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_version
+      :value: None
+
 
 
    .. py:attribute:: algo_name
+      :value: None
+
 
 
    .. py:attribute:: algorithm
+      :value: None
+
 
 
    .. py:attribute:: output_feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: output_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: output_feature_group_table_name
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_warnings
+      :value: None
+
 
 
    .. py:attribute:: bp_across_versions_monitor_version
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_args_type
+      :value: None
+
 
 
    .. py:attribute:: batch_inputs
@@ -11222,9 +12683,13 @@ Package Contents
 
 
    .. py:attribute:: logs
+      :value: None
+
 
 
    .. py:attribute:: warnings
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -11256,6 +12721,8 @@ Package Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -11291,12 +12758,18 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: most_common_values
+      :value: None
+
 
 
    .. py:attribute:: freq_outside_training_range
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -11344,30 +12817,48 @@ Package Contents
 
 
    .. py:attribute:: role
+      :value: None
+
 
 
    .. py:attribute:: text
+      :value: None
+
 
 
    .. py:attribute:: timestamp
+      :value: None
+
 
 
    .. py:attribute:: is_useful
+      :value: None
+
 
 
    .. py:attribute:: feedback
+      :value: None
+
 
 
    .. py:attribute:: doc_ids
+      :value: None
+
 
 
    .. py:attribute:: hotkey_title
+      :value: None
+
 
 
    .. py:attribute:: tasks
+      :value: None
+
 
 
    .. py:attribute:: keyword_arguments
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -11419,30 +12910,48 @@ Package Contents
 
 
    .. py:attribute:: answer
+      :value: None
+
 
 
    .. py:attribute:: chat_session_id
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: ai_building_in_progress
+      :value: None
+
 
 
    .. py:attribute:: notification
+      :value: None
+
 
 
    .. py:attribute:: whiteboard
+      :value: None
+
 
 
    .. py:attribute:: chat_history
@@ -11505,6 +13014,53 @@ Package Contents
 
 
 
+.. py:class:: ChatllmComputer(client, computerId=None, token=None, vncEndpoint=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   ChatLLMComputer
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param computerId: The computer id.
+   :type computerId: int
+   :param token: The token.
+   :type token: str
+   :param vncEndpoint: The VNC endpoint.
+   :type vncEndpoint: str
+
+
+   .. py:attribute:: computer_id
+      :value: None
+
+
+
+   .. py:attribute:: token
+      :value: None
+
+
+
+   .. py:attribute:: vnc_endpoint
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ChatllmReferralInvite(client, userAlreadyExists=None, successfulInvites=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -11521,9 +13077,13 @@ Package Contents
 
 
    .. py:attribute:: user_already_exists
+      :value: None
+
 
 
    .. py:attribute:: successful_invites
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -11560,9 +13120,6 @@ Package Contents
 
       Get a dict representation of the response object
 
-
-
-   .. py:method:: __getattr__(item)
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False, include_tb = False)
@@ -17081,7 +18638,7 @@ Package Contents
 
 
 
-   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id = None, arguments = None, keyword_arguments = None, save_conversations = True)
+   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, save_conversations = True)
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
@@ -17089,8 +18646,6 @@ Package Contents
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
-      :type deployment_conversation_id: str
       :param arguments: Positional arguments to the agent execute function.
       :type arguments: list
       :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
@@ -18832,9 +20387,13 @@ Package Contents
 
 
    .. py:attribute:: exception
+      :value: 'ApiException'
+
 
 
    .. py:attribute:: request_id
+      :value: None
+
 
 
    .. py:method:: __str__()
@@ -18854,9 +20413,13 @@ Package Contents
 
 
    .. py:attribute:: exception_on_404
+      :value: True
+
 
 
    .. py:attribute:: server
+      :value: 'https://api.abacus.ai'
+
 
 
 .. py:class:: ReadOnlyClient(api_key = None, server = None, client_options = None, skip_version_check = False, include_tb = False)
@@ -21252,6 +22815,8 @@ Package Contents
 
 
    .. py:attribute:: autocomplete_response
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21283,6 +22848,8 @@ Package Contents
 
 
    .. py:attribute:: code_changes
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21330,30 +22897,48 @@ Package Contents
 
 
    .. py:attribute:: source_type
+      :value: None
+
 
 
    .. py:attribute:: source_code
+      :value: None
+
 
 
    .. py:attribute:: application_connector_id
+      :value: None
+
 
 
    .. py:attribute:: application_connector_info
+      :value: None
+
 
 
    .. py:attribute:: package_requirements
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: publishing_msg
+      :value: None
+
 
 
    .. py:attribute:: module_dependencies
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21401,21 +22986,33 @@ Package Contents
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: last_24_hours_usage
+      :value: None
+
 
 
    .. py:attribute:: last_7_days_usage
+      :value: None
+
 
 
    .. py:attribute:: curr_month_avail_points
+      :value: None
+
 
 
    .. py:attribute:: curr_month_usage
+      :value: None
+
 
 
    .. py:attribute:: last_throttle_pop_up
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21453,15 +23050,23 @@ Package Contents
 
 
    .. py:attribute:: concatenated_table
+      :value: None
+
 
 
    .. py:attribute:: merge_type
+      :value: None
+
 
 
    .. py:attribute:: replace_until_timestamp
+      :value: None
+
 
 
    .. py:attribute:: skip_materialize
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21495,9 +23100,13 @@ Package Contents
 
 
    .. py:attribute:: default
+      :value: None
+
 
 
    .. py:attribute:: data
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21539,21 +23148,33 @@ Package Contents
 
 
    .. py:attribute:: user_information_instructions
+      :value: None
+
 
 
    .. py:attribute:: response_instructions
+      :value: None
+
 
 
    .. py:attribute:: enable_code_execution
+      :value: None
+
 
 
    .. py:attribute:: enable_image_generation
+      :value: None
+
 
 
    .. py:attribute:: enable_web_search
+      :value: None
+
 
 
    .. py:attribute:: enable_playground
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21595,18 +23216,28 @@ Package Contents
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: loss_function_name
+      :value: None
+
 
 
    .. py:attribute:: loss_function_type
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -21651,18 +23282,28 @@ Package Contents
 
 
    .. py:attribute:: custom_metric_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: problem_type
+      :value: None
+
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: latest_custom_metric_version
@@ -21705,15 +23346,23 @@ Package Contents
 
 
    .. py:attribute:: custom_metric_version
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: custom_metric_function_name
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -21775,15 +23424,23 @@ Package Contents
 
 
    .. py:attribute:: training_data_parameter_name_mapping
+      :value: None
+
 
 
    .. py:attribute:: schema_mappings
+      :value: None
+
 
 
    .. py:attribute:: train_data_parameter_to_feature_group_ids
+      :value: None
+
 
 
    .. py:attribute:: training_config
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21819,9 +23476,13 @@ Package Contents
 
 
    .. py:attribute:: total_count
+      :value: None
+
 
 
    .. py:attribute:: num_duplicates
+      :value: None
+
 
 
    .. py:attribute:: sample
@@ -21864,18 +23525,28 @@ Package Contents
 
 
    .. py:attribute:: metrics
+      :value: None
+
 
 
    .. py:attribute:: schema
+      :value: None
+
 
 
    .. py:attribute:: num_rows
+      :value: None
+
 
 
    .. py:attribute:: num_cols
+      :value: None
+
 
 
    .. py:attribute:: num_duplicate_rows
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21907,6 +23578,8 @@ Package Contents
 
 
    .. py:attribute:: logs
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21938,6 +23611,8 @@ Package Contents
 
 
    .. py:attribute:: results
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -21971,9 +23646,13 @@ Package Contents
 
 
    .. py:attribute:: doc_infos
+      :value: None
+
 
 
    .. py:attribute:: max_count
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -22007,9 +23686,13 @@ Package Contents
 
 
    .. py:attribute:: database_column
+      :value: None
+
 
 
    .. py:attribute:: feature
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -22051,21 +23734,33 @@ Package Contents
 
 
    .. py:attribute:: database_connector_id
+      :value: None
+
 
 
    .. py:attribute:: service
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: auth
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -22158,9 +23853,13 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: external_data_type
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -22194,6 +23893,8 @@ Package Contents
 
 
    .. py:attribute:: table_name
+      :value: None
+
 
 
    .. py:attribute:: columns
@@ -22276,60 +23977,98 @@ Package Contents
 
 
    .. py:attribute:: dataset_id
+      :value: None
+
 
 
    .. py:attribute:: source_type
+      :value: None
+
 
 
    .. py:attribute:: data_source
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: ignore_before
+      :value: None
+
 
 
    .. py:attribute:: ephemeral
+      :value: None
+
 
 
    .. py:attribute:: lookback_days
+      :value: None
+
 
 
    .. py:attribute:: database_connector_id
+      :value: None
+
 
 
    .. py:attribute:: database_connector_config
+      :value: None
+
 
 
    .. py:attribute:: connector_type
+      :value: None
+
 
 
    .. py:attribute:: feature_group_table_name
+      :value: None
+
 
 
    .. py:attribute:: application_connector_id
+      :value: None
+
 
 
    .. py:attribute:: application_connector_config
+      :value: None
+
 
 
    .. py:attribute:: incremental
+      :value: None
+
 
 
    .. py:attribute:: is_documentset
+      :value: None
+
 
 
    .. py:attribute:: extract_bounding_boxes
+      :value: None
+
 
 
    .. py:attribute:: merge_file_schemas
+      :value: None
+
 
 
    .. py:attribute:: reference_only_documentset
+      :value: None
+
 
 
    .. py:attribute:: version_limit
+      :value: None
+
 
 
    .. py:attribute:: schema
@@ -22652,30 +24391,48 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: data_type
+      :value: None
+
 
 
    .. py:attribute:: detected_data_type
+      :value: None
+
 
 
    .. py:attribute:: feature_type
+      :value: None
+
 
 
    .. py:attribute:: detected_feature_type
+      :value: None
+
 
 
    .. py:attribute:: original_name
+      :value: None
+
 
 
    .. py:attribute:: valid_data_types
+      :value: None
+
 
 
    .. py:attribute:: time_format
+      :value: None
+
 
 
    .. py:attribute:: timestamp_frequency
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -22733,45 +24490,73 @@ Package Contents
 
 
    .. py:attribute:: dataset_version
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: dataset_id
+      :value: None
+
 
 
    .. py:attribute:: size
+      :value: None
+
 
 
    .. py:attribute:: row_count
+      :value: None
+
 
 
    .. py:attribute:: file_inspect_metadata
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: incremental_queried_at
+      :value: None
+
 
 
    .. py:attribute:: upload_id
+      :value: None
+
 
 
    .. py:attribute:: merge_file_schemas
+      :value: None
+
 
 
    .. py:attribute:: database_connector_config
+      :value: None
+
 
 
    .. py:attribute:: application_connector_config
+      :value: None
+
 
 
    .. py:attribute:: invalid_records
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -22888,6 +24673,8 @@ Package Contents
 
 
    .. py:attribute:: logs
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -22977,84 +24764,138 @@ Package Contents
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: deployed_at
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: calls_per_second
+      :value: None
+
 
 
    .. py:attribute:: auto_deploy
+      :value: None
+
 
 
    .. py:attribute:: skip_metrics_check
+      :value: None
+
 
 
    .. py:attribute:: algo_name
+      :value: None
+
 
 
    .. py:attribute:: regions
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: batch_streaming_updates
+      :value: None
+
 
 
    .. py:attribute:: algorithm
+      :value: None
+
 
 
    .. py:attribute:: pending_model_version
+      :value: None
+
 
 
    .. py:attribute:: model_deployment_config
+      :value: None
+
 
 
    .. py:attribute:: prediction_operator_id
+      :value: None
+
 
 
    .. py:attribute:: prediction_operator_version
+      :value: None
+
 
 
    .. py:attribute:: pending_prediction_operator_version
+      :value: None
+
 
 
    .. py:attribute:: online_feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: output_online_feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: realtime_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: refresh_schedules
@@ -23638,12 +25479,18 @@ Package Contents
 
 
    .. py:attribute:: deployment_token
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -23707,51 +25554,83 @@ Package Contents
 
 
    .. py:attribute:: deployment_conversation_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: last_event_created_at
+      :value: None
+
 
 
    .. py:attribute:: external_session_id
+      :value: None
+
 
 
    .. py:attribute:: regenerate_attempt
+      :value: None
+
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
 
 
    .. py:attribute:: unused_document_upload_ids
+      :value: None
+
 
 
    .. py:attribute:: humanize_instructions
+      :value: None
+
 
 
    .. py:attribute:: conversation_warning
+      :value: None
+
 
 
    .. py:attribute:: conversation_type
+      :value: None
+
 
 
    .. py:attribute:: metadata
+      :value: None
+
 
 
    .. py:attribute:: llm_display_name
+      :value: None
+
 
 
    .. py:attribute:: llm_bot_icon
+      :value: None
+
 
 
    .. py:attribute:: search_suggestions
+      :value: None
+
 
 
    .. py:attribute:: history
@@ -23936,87 +25815,143 @@ Package Contents
 
 
    .. py:attribute:: role
+      :value: None
+
 
 
    .. py:attribute:: text
+      :value: None
+
 
 
    .. py:attribute:: timestamp
+      :value: None
+
 
 
    .. py:attribute:: message_index
+      :value: None
+
 
 
    .. py:attribute:: regenerate_attempt
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: search_results
+      :value: None
+
 
 
    .. py:attribute:: is_useful
+      :value: None
+
 
 
    .. py:attribute:: feedback
+      :value: None
+
 
 
    .. py:attribute:: feedback_type
+      :value: None
+
 
 
    .. py:attribute:: doc_infos
+      :value: None
+
 
 
    .. py:attribute:: keyword_arguments
+      :value: None
+
 
 
    .. py:attribute:: input_params
+      :value: None
+
 
 
    .. py:attribute:: attachments
+      :value: None
+
 
 
    .. py:attribute:: response_version
+      :value: None
+
 
 
    .. py:attribute:: agent_workflow_node_id
+      :value: None
+
 
 
    .. py:attribute:: next_agent_workflow_node_id
+      :value: None
+
 
 
    .. py:attribute:: chat_type
+      :value: None
+
 
 
    .. py:attribute:: agent_response
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: segments
+      :value: None
+
 
 
    .. py:attribute:: streamed_data
+      :value: None
+
 
 
    .. py:attribute:: streamed_section_data
+      :value: None
+
 
 
    .. py:attribute:: highlights
+      :value: None
+
 
 
    .. py:attribute:: llm_display_name
+      :value: None
+
 
 
    .. py:attribute:: llm_bot_icon
+      :value: None
+
 
 
    .. py:attribute:: form_response
+      :value: None
+
 
 
    .. py:attribute:: routed_llm
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -24050,9 +25985,13 @@ Package Contents
 
 
    .. py:attribute:: deployment_conversation_id
+      :value: None
+
 
 
    .. py:attribute:: conversation_export_html
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -24090,15 +26029,23 @@ Package Contents
 
 
    .. py:attribute:: request_series
+      :value: None
+
 
 
    .. py:attribute:: latency_series
+      :value: None
+
 
 
    .. py:attribute:: date_labels
+      :value: None
+
 
 
    .. py:attribute:: http_status_series
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -24152,39 +26099,63 @@ Package Contents
 
 
    .. py:attribute:: doc_id
+      :value: None
+
 
 
    .. py:attribute:: mime_type
+      :value: None
+
 
 
    .. py:attribute:: page_count
+      :value: None
+
 
 
    .. py:attribute:: total_page_count
+      :value: None
+
 
 
    .. py:attribute:: extracted_text
+      :value: None
+
 
 
    .. py:attribute:: embedded_text
+      :value: None
+
 
 
    .. py:attribute:: pages
+      :value: None
+
 
 
    .. py:attribute:: tokens
+      :value: None
+
 
 
    .. py:attribute:: metadata
+      :value: None
+
 
 
    .. py:attribute:: page_markdown
+      :value: None
+
 
 
    .. py:attribute:: extracted_page_text
+      :value: None
+
 
 
    .. py:attribute:: augmented_page_text
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -24230,21 +26201,33 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: document_retriever_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_name
+      :value: None
+
 
 
    .. py:attribute:: indexing_required
+      :value: None
+
 
 
    .. py:attribute:: latest_document_retriever_version
@@ -24462,27 +26445,43 @@ Package Contents
 
 
    .. py:attribute:: chunk_size
+      :value: None
+
 
 
    .. py:attribute:: chunk_overlap_fraction
+      :value: None
+
 
 
    .. py:attribute:: text_encoder
+      :value: None
+
 
 
    .. py:attribute:: score_multiplier_column
+      :value: None
+
 
 
    .. py:attribute:: prune_vectors
+      :value: None
+
 
 
    .. py:attribute:: index_metadata_columns
+      :value: None
+
 
 
    .. py:attribute:: use_document_summary
+      :value: None
+
 
 
    .. py:attribute:: summary_instructions
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -24526,24 +26525,38 @@ Package Contents
 
 
    .. py:attribute:: document
+      :value: None
+
 
 
    .. py:attribute:: score
+      :value: None
+
 
 
    .. py:attribute:: properties
+      :value: None
+
 
 
    .. py:attribute:: pages
+      :value: None
+
 
 
    .. py:attribute:: bounding_boxes
+      :value: None
+
 
 
    .. py:attribute:: document_source
+      :value: None
+
 
 
    .. py:attribute:: image_ids
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -24597,36 +26610,58 @@ Package Contents
 
 
    .. py:attribute:: document_retriever_id
+      :value: None
+
 
 
    .. py:attribute:: document_retriever_version
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: deployment_status
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: number_of_chunks
+      :value: None
+
 
 
    .. py:attribute:: embedding_file_size
+      :value: None
+
 
 
    .. py:attribute:: warnings
+      :value: None
+
 
 
    .. py:attribute:: resolved_config
@@ -24733,12 +26768,18 @@ Package Contents
 
 
    .. py:attribute:: train_column
+      :value: None
+
 
 
    .. py:attribute:: predicted_column
+      :value: None
+
 
 
    .. py:attribute:: metrics
+      :value: None
+
 
 
    .. py:attribute:: distribution
@@ -24832,27 +26873,43 @@ Package Contents
 
 
    .. py:attribute:: eda_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: reference_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: test_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: eda_configs
+      :value: None
+
 
 
    .. py:attribute:: latest_eda_version
@@ -24957,9 +27014,13 @@ Package Contents
 
 
    .. py:attribute:: chart_type
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -24999,18 +27060,28 @@ Package Contents
 
 
    .. py:attribute:: column_names
+      :value: None
+
 
 
    .. py:attribute:: collinearity_matrix
+      :value: None
+
 
 
    .. py:attribute:: group_feature_dict
+      :value: None
+
 
 
    .. py:attribute:: collinearity_groups
+      :value: None
+
 
 
    .. py:attribute:: column_names_x
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -25054,12 +27125,18 @@ Package Contents
 
 
    .. py:attribute:: column_names
+      :value: None
+
 
 
    .. py:attribute:: primary_keys
+      :value: None
+
 
 
    .. py:attribute:: transformation_column_names
+      :value: None
+
 
 
    .. py:attribute:: base_duplicates
@@ -25117,27 +27194,43 @@ Package Contents
 
 
    .. py:attribute:: data
+      :value: None
+
 
 
    .. py:attribute:: is_scatter
+      :value: None
+
 
 
    .. py:attribute:: is_box_whisker
+      :value: None
+
 
 
    .. py:attribute:: x_axis
+      :value: None
+
 
 
    .. py:attribute:: y_axis
+      :value: None
+
 
 
    .. py:attribute:: x_axis_column_values
+      :value: None
+
 
 
    .. py:attribute:: y_axis_column_values
+      :value: None
+
 
 
    .. py:attribute:: data_columns
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -25173,12 +27266,18 @@ Package Contents
 
 
    .. py:attribute:: selected_feature
+      :value: None
+
 
 
    .. py:attribute:: sorted_column_names
+      :value: None
+
 
 
    .. py:attribute:: feature_collinearity
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -25252,15 +27351,23 @@ Package Contents
 
 
    .. py:attribute:: primary_keys
+      :value: None
+
 
 
    .. py:attribute:: forecasting_target_feature
+      :value: None
+
 
 
    .. py:attribute:: timestamp_feature
+      :value: None
+
 
 
    .. py:attribute:: forecast_frequency
+      :value: None
+
 
 
    .. py:attribute:: sales_across_time
@@ -25360,27 +27467,43 @@ Package Contents
 
 
    .. py:attribute:: eda_version
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: eda_id
+      :value: None
+
 
 
    .. py:attribute:: eda_started_at
+      :value: None
+
 
 
    .. py:attribute:: eda_completed_at
+      :value: None
+
 
 
    .. py:attribute:: reference_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: test_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -25536,24 +27659,38 @@ Package Contents
 
 
    .. py:attribute:: distance
+      :value: None
+
 
 
    .. py:attribute:: js_distance
+      :value: None
+
 
 
    .. py:attribute:: ws_distance
+      :value: None
+
 
 
    .. py:attribute:: ks_statistic
+      :value: None
+
 
 
    .. py:attribute:: psi
+      :value: None
+
 
 
    .. py:attribute:: csi
+      :value: None
+
 
 
    .. py:attribute:: chi_square
+      :value: None
+
 
 
    .. py:attribute:: average_drift
@@ -25594,15 +27731,23 @@ Package Contents
 
 
    .. py:attribute:: feature_group_operation_run_id
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: query
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -25684,7 +27829,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25725,54 +27870,93 @@ Package Contents
    :type isCustomizable: bool
    :param isDeprecated: Whether the external application is deprecated. Only applicable for system created bots. Deprecated external applications will not show in the UI.
    :type isDeprecated: bool
+   :param isVisible: Whether the external application should be shown in the dropdown.
+   :type isVisible: bool
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: logo
+      :value: None
+
 
 
    .. py:attribute:: theme
+      :value: None
+
 
 
    .. py:attribute:: user_group_ids
+      :value: None
+
 
 
    .. py:attribute:: use_case
+      :value: None
+
 
 
    .. py:attribute:: is_agent
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: deployment_conversation_retention_hours
+      :value: None
+
 
 
    .. py:attribute:: managed_user_service
+      :value: None
+
 
 
    .. py:attribute:: prediction_overrides
+      :value: None
+
 
 
    .. py:attribute:: is_system_created
+      :value: None
+
 
 
    .. py:attribute:: is_customizable
+      :value: None
+
 
 
    .. py:attribute:: is_deprecated
+      :value: None
+
+
+
+   .. py:attribute:: is_visible
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -25862,15 +28046,23 @@ Package Contents
 
 
    .. py:attribute:: user_already_in_org
+      :value: None
+
 
 
    .. py:attribute:: user_already_in_app_group
+      :value: None
+
 
 
    .. py:attribute:: user_exists_as_internal
+      :value: None
+
 
 
    .. py:attribute:: successful_invites
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -25904,9 +28096,13 @@ Package Contents
 
 
    .. py:attribute:: data
+      :value: None
+
 
 
    .. py:attribute:: raw_llm_response
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -25964,39 +28160,63 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: select_clause
+      :value: None
+
 
 
    .. py:attribute:: feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: source_table
+      :value: None
+
 
 
    .. py:attribute:: original_name
+      :value: None
+
 
 
    .. py:attribute:: using_clause
+      :value: None
+
 
 
    .. py:attribute:: order_clause
+      :value: None
+
 
 
    .. py:attribute:: where_clause
+      :value: None
+
 
 
    .. py:attribute:: feature_type
+      :value: None
+
 
 
    .. py:attribute:: data_type
+      :value: None
+
 
 
    .. py:attribute:: detected_feature_type
+      :value: None
+
 
 
    .. py:attribute:: detected_data_type
+      :value: None
+
 
 
    .. py:attribute:: columns
@@ -26046,24 +28266,38 @@ Package Contents
 
 
    .. py:attribute:: type
+      :value: None
+
 
 
    .. py:attribute:: training_distribution
+      :value: None
+
 
 
    .. py:attribute:: prediction_distribution
+      :value: None
+
 
 
    .. py:attribute:: numerical_training_distribution
+      :value: None
+
 
 
    .. py:attribute:: numerical_prediction_distribution
+      :value: None
+
 
 
    .. py:attribute:: training_statistics
+      :value: None
+
 
 
    .. py:attribute:: prediction_statistics
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -26109,27 +28343,43 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: distance
+      :value: None
+
 
 
    .. py:attribute:: js_distance
+      :value: None
+
 
 
    .. py:attribute:: ws_distance
+      :value: None
+
 
 
    .. py:attribute:: ks_statistic
+      :value: None
+
 
 
    .. py:attribute:: psi
+      :value: None
+
 
 
    .. py:attribute:: csi
+      :value: None
+
 
 
    .. py:attribute:: chi_square
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -26191,42 +28441,68 @@ Package Contents
 
 
    .. py:attribute:: feature_index
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: distance
+      :value: None
+
 
 
    .. py:attribute:: js_distance
+      :value: None
+
 
 
    .. py:attribute:: ws_distance
+      :value: None
+
 
 
    .. py:attribute:: ks_statistic
+      :value: None
+
 
 
    .. py:attribute:: prediction_drift
+      :value: None
+
 
 
    .. py:attribute:: target_column
+      :value: None
+
 
 
    .. py:attribute:: data_integrity_timeseries
+      :value: None
+
 
 
    .. py:attribute:: nested_summary
+      :value: None
+
 
 
    .. py:attribute:: psi
+      :value: None
+
 
 
    .. py:attribute:: csi
+      :value: None
+
 
 
    .. py:attribute:: chi_square
+      :value: None
+
 
 
    .. py:attribute:: null_violations
@@ -26363,111 +28639,183 @@ Package Contents
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: modification_lock
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: feature_group_source_type
+      :value: None
+
 
 
    .. py:attribute:: table_name
+      :value: None
+
 
 
    .. py:attribute:: sql
+      :value: None
+
 
 
    .. py:attribute:: dataset_id
+      :value: None
+
 
 
    .. py:attribute:: function_source_code
+      :value: None
+
 
 
    .. py:attribute:: function_name
+      :value: None
+
 
 
    .. py:attribute:: source_tables
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: sql_error
+      :value: None
+
 
 
    .. py:attribute:: latest_version_outdated
+      :value: None
+
 
 
    .. py:attribute:: referenced_feature_groups
+      :value: None
+
 
 
    .. py:attribute:: tags
+      :value: None
+
 
 
    .. py:attribute:: primary_key
+      :value: None
+
 
 
    .. py:attribute:: update_timestamp_key
+      :value: None
+
 
 
    .. py:attribute:: lookup_keys
+      :value: None
+
 
 
    .. py:attribute:: streaming_enabled
+      :value: None
+
 
 
    .. py:attribute:: incremental
+      :value: None
+
 
 
    .. py:attribute:: merge_config
+      :value: None
+
 
 
    .. py:attribute:: sampling_config
+      :value: None
+
 
 
    .. py:attribute:: cpu_size
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: streaming_ready
+      :value: None
+
 
 
    .. py:attribute:: feature_tags
+      :value: None
+
 
 
    .. py:attribute:: module_name
+      :value: None
+
 
 
    .. py:attribute:: template_bindings
+      :value: None
+
 
 
    .. py:attribute:: feature_expression
+      :value: None
+
 
 
    .. py:attribute:: use_original_csv_names
+      :value: None
+
 
 
    .. py:attribute:: python_function_bindings
+      :value: None
+
 
 
    .. py:attribute:: python_function_name
+      :value: None
+
 
 
    .. py:attribute:: use_gpu
+      :value: None
+
 
 
    .. py:attribute:: version_limit
+      :value: None
+
 
 
    .. py:attribute:: export_on_materialization
+      :value: None
+
 
 
    .. py:attribute:: features
@@ -27701,12 +30049,18 @@ Package Contents
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: doc_id
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -27774,57 +30128,93 @@ Package Contents
 
 
    .. py:attribute:: feature_group_export_id
+      :value: None
+
 
 
    .. py:attribute:: failed_writes
+      :value: None
+
 
 
    .. py:attribute:: total_writes
+      :value: None
+
 
 
    .. py:attribute:: feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: connector_type
+      :value: None
+
 
 
    .. py:attribute:: output_location
+      :value: None
+
 
 
    .. py:attribute:: file_format
+      :value: None
+
 
 
    .. py:attribute:: database_connector_id
+      :value: None
+
 
 
    .. py:attribute:: object_name
+      :value: None
+
 
 
    .. py:attribute:: write_mode
+      :value: None
+
 
 
    .. py:attribute:: database_feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: id_column
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: export_completed_at
+      :value: None
+
 
 
    .. py:attribute:: additional_id_columns
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: database_output_error
+      :value: None
+
 
 
    .. py:attribute:: project_config
@@ -27942,27 +30332,43 @@ Package Contents
 
 
    .. py:attribute:: output_location
+      :value: None
+
 
 
    .. py:attribute:: file_format
+      :value: None
+
 
 
    .. py:attribute:: database_connector_id
+      :value: None
+
 
 
    .. py:attribute:: object_name
+      :value: None
+
 
 
    .. py:attribute:: write_mode
+      :value: None
+
 
 
    .. py:attribute:: database_feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: id_column
+      :value: None
+
 
 
    .. py:attribute:: additional_id_columns
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -27996,9 +30402,13 @@ Package Contents
 
 
    .. py:attribute:: download_url
+      :value: None
+
 
 
    .. py:attribute:: expires_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28032,9 +30442,13 @@ Package Contents
 
 
    .. py:attribute:: nodes
+      :value: None
+
 
 
    .. py:attribute:: connections
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28082,30 +30496,48 @@ Package Contents
 
 
    .. py:attribute:: connector_type
+      :value: None
+
 
 
    .. py:attribute:: location
+      :value: None
+
 
 
    .. py:attribute:: export_file_format
+      :value: None
+
 
 
    .. py:attribute:: additional_id_columns
+      :value: None
+
 
 
    .. py:attribute:: database_feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: external_connection_id
+      :value: None
+
 
 
    .. py:attribute:: id_column
+      :value: None
+
 
 
    .. py:attribute:: object_name
+      :value: None
+
 
 
    .. py:attribute:: write_mode
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28145,18 +30577,28 @@ Package Contents
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: primary_key
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: contents
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28212,42 +30654,68 @@ Package Contents
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: primary_key_value
+      :value: None
+
 
 
    .. py:attribute:: feature_group_row_process_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: started_at
+      :value: None
+
 
 
    .. py:attribute:: completed_at
+      :value: None
+
 
 
    .. py:attribute:: timeout_at
+      :value: None
+
 
 
    .. py:attribute:: retries_remaining
+      :value: None
+
 
 
    .. py:attribute:: total_attempts_allowed
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28305,18 +30773,28 @@ Package Contents
 
 
    .. py:attribute:: logs
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: primary_key_value
+      :value: None
+
 
 
    .. py:attribute:: feature_group_row_process_id
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28356,18 +30834,28 @@ Package Contents
 
 
    .. py:attribute:: total_processes
+      :value: None
+
 
 
    .. py:attribute:: pending_processes
+      :value: None
+
 
 
    .. py:attribute:: processing_processes
+      :value: None
+
 
 
    .. py:attribute:: complete_processes
+      :value: None
+
 
 
    .. py:attribute:: failed_processes
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28415,30 +30903,48 @@ Package Contents
 
 
    .. py:attribute:: feature_group_template_id
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: is_system_template
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: template_sql
+      :value: None
+
 
 
    .. py:attribute:: template_variables
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28538,9 +31044,13 @@ Package Contents
 
 
    .. py:attribute:: template_variable_options
+      :value: None
+
 
 
    .. py:attribute:: user_feedback
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28616,57 +31126,93 @@ Package Contents
 
 
    .. py:attribute:: feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: sql
+      :value: None
+
 
 
    .. py:attribute:: source_tables
+      :value: None
+
 
 
    .. py:attribute:: source_dataset_versions
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: deployable
+      :value: None
+
 
 
    .. py:attribute:: cpu_size
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: use_original_csv_names
+      :value: None
+
 
 
    .. py:attribute:: python_function_bindings
+      :value: None
+
 
 
    .. py:attribute:: indexing_config_warning_msg
+      :value: None
+
 
 
    .. py:attribute:: materialization_started_at
+      :value: None
+
 
 
    .. py:attribute:: materialization_completed_at
+      :value: None
+
 
 
    .. py:attribute:: columns
+      :value: None
+
 
 
    .. py:attribute:: template_bindings
+      :value: None
+
 
 
    .. py:attribute:: features
@@ -28905,6 +31451,8 @@ Package Contents
 
 
    .. py:attribute:: logs
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28946,21 +31494,33 @@ Package Contents
 
 
    .. py:attribute:: shap_feature_importance
+      :value: None
+
 
 
    .. py:attribute:: lime_feature_importance
+      :value: None
+
 
 
    .. py:attribute:: permutation_feature_importance
+      :value: None
+
 
 
    .. py:attribute:: null_feature_importance
+      :value: None
+
 
 
    .. py:attribute:: lofo_feature_importance
+      :value: None
+
 
 
    .. py:attribute:: ebm_feature_importance
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -28994,9 +31554,13 @@ Package Contents
 
 
    .. py:attribute:: feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: feature_name
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29032,12 +31596,18 @@ Package Contents
 
 
    .. py:attribute:: features
+      :value: None
+
 
 
    .. py:attribute:: feature_metrics
+      :value: None
+
 
 
    .. py:attribute:: metrics_keys
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29069,6 +31639,8 @@ Package Contents
 
 
    .. py:attribute:: data
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29106,15 +31678,23 @@ Package Contents
 
 
    .. py:attribute:: bucket
+      :value: None
+
 
 
    .. py:attribute:: verified
+      :value: None
+
 
 
    .. py:attribute:: write_permission
+      :value: None
+
 
 
    .. py:attribute:: auth_expires_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29150,12 +31730,18 @@ Package Contents
 
 
    .. py:attribute:: verified
+      :value: None
+
 
 
    .. py:attribute:: write_permission
+      :value: None
+
 
 
    .. py:attribute:: auth_options
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29189,9 +31775,13 @@ Package Contents
 
 
    .. py:attribute:: verified
+      :value: None
+
 
 
    .. py:attribute:: write_permission
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29241,33 +31831,53 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: finetuned_pretrained_model_id
+      :value: None
+
 
 
    .. py:attribute:: finetuned_pretrained_model_version
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: config
+      :value: None
+
 
 
    .. py:attribute:: base_model
+      :value: None
+
 
 
    .. py:attribute:: finetuning_dataset_version
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29313,21 +31923,33 @@ Package Contents
 
 
    .. py:attribute:: data
+      :value: None
+
 
 
    .. py:attribute:: x_axis
+      :value: None
+
 
 
    .. py:attribute:: y_axis
+      :value: None
+
 
 
    .. py:attribute:: data_columns
+      :value: None
+
 
 
    .. py:attribute:: chart_name
+      :value: None
+
 
 
    .. py:attribute:: chart_types
+      :value: None
+
 
 
    .. py:attribute:: item_statistics
@@ -29429,24 +32051,38 @@ Package Contents
 
 
    .. py:attribute:: prediction_timestamp_col
+      :value: None
+
 
 
    .. py:attribute:: prediction_target_col
+      :value: None
+
 
 
    .. py:attribute:: training_timestamp_col
+      :value: None
+
 
 
    .. py:attribute:: training_target_col
+      :value: None
+
 
 
    .. py:attribute:: prediction_item_id
+      :value: None
+
 
 
    .. py:attribute:: training_item_id
+      :value: None
+
 
 
    .. py:attribute:: forecast_frequency
+      :value: None
+
 
 
    .. py:attribute:: training_target_across_time
@@ -29512,18 +32148,28 @@ Package Contents
 
 
    .. py:attribute:: function
+      :value: None
+
 
 
    .. py:attribute:: stats
+      :value: None
+
 
 
    .. py:attribute:: stdout
+      :value: None
+
 
 
    .. py:attribute:: stderr
+      :value: None
+
 
 
    .. py:attribute:: algorithm
+      :value: None
+
 
 
    .. py:attribute:: exception
@@ -29564,15 +32210,23 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: display_name
+      :value: None
+
 
 
    .. py:attribute:: default
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29620,30 +32274,48 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: graph_dashboard_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: python_function_ids
+      :value: None
+
 
 
    .. py:attribute:: plot_reference_ids
+      :value: None
+
 
 
    .. py:attribute:: python_function_names
+      :value: None
+
 
 
    .. py:attribute:: project_name
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29727,18 +32399,28 @@ Package Contents
 
 
    .. py:attribute:: holdout_analysis_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: feature_group_ids
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_name
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29837,36 +32519,58 @@ Package Contents
 
 
    .. py:attribute:: holdout_analysis_version
+      :value: None
+
 
 
    .. py:attribute:: holdout_analysis_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: algorithm
+      :value: None
+
 
 
    .. py:attribute:: algo_name
+      :value: None
+
 
 
    .. py:attribute:: metrics
+      :value: None
+
 
 
    .. py:attribute:: metric_infos
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29943,15 +32647,23 @@ Package Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: tag
+      :value: None
+
 
 
    .. py:attribute:: trailing_auth_token
+      :value: None
+
 
 
    .. py:attribute:: hosted_model_token_id
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -29985,9 +32697,13 @@ Package Contents
 
 
    .. py:attribute:: model
+      :value: None
+
 
 
    .. py:attribute:: settings
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30023,12 +32739,18 @@ Package Contents
 
 
    .. py:attribute:: primary_key
+      :value: None
+
 
 
    .. py:attribute:: update_timestamp_key
+      :value: None
+
 
 
    .. py:attribute:: lookup_keys
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30093,6 +32815,8 @@ Package Contents
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: feature_mappings
@@ -30147,36 +32871,58 @@ Package Contents
 
 
    .. py:attribute:: missing_percent
+      :value: None
+
 
 
    .. py:attribute:: count
+      :value: None
+
 
 
    .. py:attribute:: median
+      :value: None
+
 
 
    .. py:attribute:: mean
+      :value: None
+
 
 
    .. py:attribute:: p10
+      :value: None
+
 
 
    .. py:attribute:: p90
+      :value: None
+
 
 
    .. py:attribute:: stddev
+      :value: None
+
 
 
    .. py:attribute:: min
+      :value: None
+
 
 
    .. py:attribute:: max
+      :value: None
+
 
 
    .. py:attribute:: lower_bound
+      :value: None
+
 
 
    .. py:attribute:: upper_bound
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30222,27 +32968,43 @@ Package Contents
 
 
    .. py:attribute:: llm_app_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30282,18 +33044,28 @@ Package Contents
 
 
    .. py:attribute:: language
+      :value: None
+
 
 
    .. py:attribute:: code
+      :value: None
+
 
 
    .. py:attribute:: start
+      :value: None
+
 
 
    .. py:attribute:: end
+      :value: None
+
 
 
    .. py:attribute:: valid
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30327,9 +33099,13 @@ Package Contents
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: sql
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30367,9 +33143,13 @@ Package Contents
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: execution
@@ -30407,6 +33187,8 @@ Package Contents
 
 
    .. py:attribute:: sql
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30438,6 +33220,8 @@ Package Contents
 
 
    .. py:attribute:: content
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30469,6 +33253,8 @@ Package Contents
 
 
    .. py:attribute:: parameters
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30514,24 +33300,38 @@ Package Contents
 
 
    .. py:attribute:: content
+      :value: None
+
 
 
    .. py:attribute:: tokens
+      :value: None
+
 
 
    .. py:attribute:: stop_reason
+      :value: None
+
 
 
    .. py:attribute:: llm_name
+      :value: None
+
 
 
    .. py:attribute:: input_tokens
+      :value: None
+
 
 
    .. py:attribute:: output_tokens
+      :value: None
+
 
 
    .. py:attribute:: total_tokens
+      :value: None
+
 
 
    .. py:attribute:: code_blocks
@@ -30616,27 +33416,43 @@ Package Contents
 
 
    .. py:attribute:: welcome_message
+      :value: None
+
 
 
    .. py:attribute:: default_message
+      :value: None
+
 
 
    .. py:attribute:: disclaimer
+      :value: None
+
 
 
    .. py:attribute:: messaging_bot_name
+      :value: None
+
 
 
    .. py:attribute:: use_default_label
+      :value: None
+
 
 
    .. py:attribute:: init_ack_req
+      :value: None
+
 
 
    .. py:attribute:: default_labels
+      :value: None
+
 
 
    .. py:attribute:: enabled_external_links
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -30736,87 +33552,143 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_config_type
+      :value: None
+
 
 
    .. py:attribute:: model_prediction_config
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: shared
+      :value: None
+
 
 
    .. py:attribute:: shared_at
+      :value: None
+
 
 
    .. py:attribute:: train_function_name
+      :value: None
+
 
 
    .. py:attribute:: predict_function_name
+      :value: None
+
 
 
    .. py:attribute:: predict_many_function_name
+      :value: None
+
 
 
    .. py:attribute:: initialize_function_name
+      :value: None
+
 
 
    .. py:attribute:: training_input_tables
+      :value: None
+
 
 
    .. py:attribute:: source_code
+      :value: None
+
 
 
    .. py:attribute:: cpu_size
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: training_feature_group_ids
+      :value: None
+
 
 
    .. py:attribute:: algorithm_model_configs
+      :value: None
+
 
 
    .. py:attribute:: training_vector_store_versions
+      :value: None
+
 
 
    .. py:attribute:: document_retrievers
+      :value: None
+
 
 
    .. py:attribute:: document_retriever_ids
+      :value: None
+
 
 
    .. py:attribute:: is_python_model
+      :value: None
+
 
 
    .. py:attribute:: default_algorithm
+      :value: None
+
 
 
    .. py:attribute:: custom_algorithm_configs
+      :value: None
+
 
 
    .. py:attribute:: restricted_algorithms
+      :value: None
+
 
 
    .. py:attribute:: use_gpu
+      :value: None
+
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: training_required
+      :value: None
+
 
 
    .. py:attribute:: location
@@ -31268,24 +34140,38 @@ Package Contents
 
 
    .. py:attribute:: model_artifacts_export_id
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: output_location
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: export_completed_at
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -31360,9 +34246,13 @@ Package Contents
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: current_training_config
+      :value: None
+
 
 
    .. py:attribute:: model_blueprint_stages
@@ -31405,18 +34295,28 @@ Package Contents
 
 
    .. py:attribute:: stage_name
+      :value: None
+
 
 
    .. py:attribute:: display_name
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: params
+      :value: None
+
 
 
    .. py:attribute:: predecessors
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -31450,9 +34350,13 @@ Package Contents
 
 
    .. py:attribute:: location
+      :value: None
+
 
 
    .. py:attribute:: artifact_names
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -31500,30 +34404,48 @@ Package Contents
 
 
    .. py:attribute:: algo_metrics
+      :value: None
+
 
 
    .. py:attribute:: selected_algorithm
+      :value: None
+
 
 
    .. py:attribute:: selected_algorithm_name
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: metric_names
+      :value: None
+
 
 
    .. py:attribute:: target_column
+      :value: None
+
 
 
    .. py:attribute:: train_val_test_split
+      :value: None
+
 
 
    .. py:attribute:: training_completed_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -31609,81 +34531,133 @@ Package Contents
 
 
    .. py:attribute:: model_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: training_feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: prediction_feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: prediction_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: training_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: alert_config
+      :value: None
+
 
 
    .. py:attribute:: bias_metric_id
+      :value: None
+
 
 
    .. py:attribute:: metric_configs
+      :value: None
+
 
 
    .. py:attribute:: feature_group_monitor_configs
+      :value: None
+
 
 
    .. py:attribute:: metric_types
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: starred
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_id
+      :value: None
+
 
 
    .. py:attribute:: monitor_type
+      :value: None
+
 
 
    .. py:attribute:: eda_configs
+      :value: None
+
 
 
    .. py:attribute:: training_forecast_config
+      :value: None
+
 
 
    .. py:attribute:: prediction_forecast_config
+      :value: None
+
 
 
    .. py:attribute:: forecast_frequency
+      :value: None
+
 
 
    .. py:attribute:: training_feature_group_sampling
+      :value: None
+
 
 
    .. py:attribute:: prediction_feature_group_sampling
+      :value: None
+
 
 
    .. py:attribute:: monitor_drift_config
+      :value: None
+
 
 
    .. py:attribute:: prediction_data_use_mappings
+      :value: None
+
 
 
    .. py:attribute:: training_data_use_mappings
+      :value: None
+
 
 
    .. py:attribute:: refresh_schedules
@@ -31824,27 +34798,43 @@ Package Contents
 
 
    .. py:attribute:: summary
+      :value: None
+
 
 
    .. py:attribute:: feature_drift
+      :value: None
+
 
 
    .. py:attribute:: label_drift
+      :value: None
+
 
 
    .. py:attribute:: data_integrity
+      :value: None
+
 
 
    .. py:attribute:: performance
+      :value: None
+
 
 
    .. py:attribute:: alerts
+      :value: None
+
 
 
    .. py:attribute:: monitor_data
+      :value: None
+
 
 
    .. py:attribute:: total_starred_monitors
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -31884,18 +34874,28 @@ Package Contents
 
 
    .. py:attribute:: model_accuracy
+      :value: None
+
 
 
    .. py:attribute:: model_drift
+      :value: None
+
 
 
    .. py:attribute:: data_integrity
+      :value: None
+
 
 
    .. py:attribute:: bias_violations
+      :value: None
+
 
 
    .. py:attribute:: alerts
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -31929,9 +34929,13 @@ Package Contents
 
 
    .. py:attribute:: data
+      :value: None
+
 
 
    .. py:attribute:: infos
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -32005,69 +35009,113 @@ Package Contents
 
 
    .. py:attribute:: model_monitor_version
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: monitoring_started_at
+      :value: None
+
 
 
    .. py:attribute:: monitoring_completed_at
+      :value: None
+
 
 
    .. py:attribute:: training_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: prediction_feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: pending_deployment_ids
+      :value: None
+
 
 
    .. py:attribute:: failed_deployment_ids
+      :value: None
+
 
 
    .. py:attribute:: metric_configs
+      :value: None
+
 
 
    .. py:attribute:: feature_group_monitor_configs
+      :value: None
+
 
 
    .. py:attribute:: metric_types
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_version
+      :value: None
+
 
 
    .. py:attribute:: eda_configs
+      :value: None
+
 
 
    .. py:attribute:: training_forecast_config
+      :value: None
+
 
 
    .. py:attribute:: prediction_forecast_config
+      :value: None
+
 
 
    .. py:attribute:: forecast_frequency
+      :value: None
+
 
 
    .. py:attribute:: monitor_drift_config
+      :value: None
+
 
 
    .. py:attribute:: prediction_data_use_mappings
+      :value: None
+
 
 
    .. py:attribute:: training_data_use_mappings
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -32230,36 +35278,58 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: algo_name
+      :value: None
+
 
 
    .. py:attribute:: feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: model_monitor
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_version
+      :value: None
+
 
 
    .. py:attribute:: metric_infos
+      :value: None
+
 
 
    .. py:attribute:: metric_names
+      :value: None
+
 
 
    .. py:attribute:: metrics
+      :value: None
+
 
 
    .. py:attribute:: metric_charts
+      :value: None
+
 
 
    .. py:attribute:: other_metrics
+      :value: None
+
 
 
    .. py:attribute:: actual_values_supported_for_drilldown
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -32293,9 +35363,13 @@ Package Contents
 
 
    .. py:attribute:: label
+      :value: None
+
 
 
    .. py:attribute:: value
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -32355,48 +35429,78 @@ Package Contents
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: model_upload_id
+      :value: None
+
 
 
    .. py:attribute:: embeddings_upload_id
+      :value: None
+
 
 
    .. py:attribute:: artifacts_upload_id
+      :value: None
+
 
 
    .. py:attribute:: verifications_upload_id
+      :value: None
+
 
 
    .. py:attribute:: default_items_upload_id
+      :value: None
+
 
 
    .. py:attribute:: model_file_upload_id
+      :value: None
+
 
 
    .. py:attribute:: model_state_upload_id
+      :value: None
+
 
 
    .. py:attribute:: input_preprocessor_upload_id
+      :value: None
+
 
 
    .. py:attribute:: requirements_upload_id
+      :value: None
+
 
 
    .. py:attribute:: resources_upload_id
+      :value: None
+
 
 
    .. py:attribute:: multi_catalog_embeddings_upload_id
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -32490,90 +35594,148 @@ Package Contents
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: model_config_type
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_prediction_config
+      :value: None
+
 
 
    .. py:attribute:: training_started_at
+      :value: None
+
 
 
    .. py:attribute:: training_completed_at
+      :value: None
+
 
 
    .. py:attribute:: feature_group_versions
+      :value: None
+
 
 
    .. py:attribute:: custom_algorithms
+      :value: None
+
 
 
    .. py:attribute:: builtin_algorithms
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: pending_deployment_ids
+      :value: None
+
 
 
    .. py:attribute:: failed_deployment_ids
+      :value: None
+
 
 
    .. py:attribute:: cpu_size
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: automl_complete
+      :value: None
+
 
 
    .. py:attribute:: training_feature_group_ids
+      :value: None
+
 
 
    .. py:attribute:: training_document_retriever_versions
+      :value: None
+
 
 
    .. py:attribute:: document_retriever_mappings
+      :value: None
+
 
 
    .. py:attribute:: best_algorithm
+      :value: None
+
 
 
    .. py:attribute:: default_algorithm
+      :value: None
+
 
 
    .. py:attribute:: feature_analysis_status
+      :value: None
+
 
 
    .. py:attribute:: data_cluster_info
+      :value: None
+
 
 
    .. py:attribute:: custom_algorithm_configs
+      :value: None
+
 
 
    .. py:attribute:: trained_model_types
+      :value: None
+
 
 
    .. py:attribute:: use_gpu
+      :value: None
+
 
 
    .. py:attribute:: partial_complete
+      :value: None
+
 
 
    .. py:attribute:: model_feature_group_schema_mappings
+      :value: None
+
 
 
    .. py:attribute:: training_config_updated
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -32786,9 +35948,13 @@ Package Contents
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_name
+      :value: None
+
 
 
    .. py:attribute:: schema
@@ -32827,12 +35993,18 @@ Package Contents
 
 
    .. py:attribute:: modification_lock
+      :value: None
+
 
 
    .. py:attribute:: user_emails
+      :value: None
+
 
 
    .. py:attribute:: organization_groups
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -32872,15 +36044,23 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: hide_module_code
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -32939,39 +36119,63 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: monitor_alert_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: realtime_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: condition_config
+      :value: None
+
 
 
    .. py:attribute:: action_config
+      :value: None
+
 
 
    .. py:attribute:: condition_description
+      :value: None
+
 
 
    .. py:attribute:: action_description
+      :value: None
+
 
 
    .. py:attribute:: alert_type
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: latest_monitor_alert_version
@@ -33100,60 +36304,98 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: monitor_alert_version
+      :value: None
+
 
 
    .. py:attribute:: monitor_alert_id
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: alerting_started_at
+      :value: None
+
 
 
    .. py:attribute:: alerting_completed_at
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_version
+      :value: None
+
 
 
    .. py:attribute:: condition_config
+      :value: None
+
 
 
    .. py:attribute:: action_config
+      :value: None
+
 
 
    .. py:attribute:: alert_result
+      :value: None
+
 
 
    .. py:attribute:: action_status
+      :value: None
+
 
 
    .. py:attribute:: action_error
+      :value: None
+
 
 
    .. py:attribute:: action_started_at
+      :value: None
+
 
 
    .. py:attribute:: action_completed_at
+      :value: None
+
 
 
    .. py:attribute:: condition_description
+      :value: None
+
 
 
    .. py:attribute:: action_description
+      :value: None
+
 
 
    .. py:attribute:: alert_type
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33232,12 +36474,18 @@ Package Contents
 
 
    .. py:attribute:: feature_drifts
+      :value: None
+
 
 
    .. py:attribute:: feature_distributions
+      :value: None
+
 
 
    .. py:attribute:: nested_drifts
+      :value: None
+
 
 
    .. py:attribute:: forecasting_monitor_summary
@@ -33281,15 +36529,23 @@ Package Contents
 
 
    .. py:attribute:: short_explanation
+      :value: None
+
 
 
    .. py:attribute:: long_explanation
+      :value: None
+
 
 
    .. py:attribute:: is_outdated
+      :value: None
+
 
 
    .. py:attribute:: html_explanation
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33333,24 +36589,38 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: select_clause
+      :value: None
+
 
 
    .. py:attribute:: feature_type
+      :value: None
+
 
 
    .. py:attribute:: feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: data_type
+      :value: None
+
 
 
    .. py:attribute:: source_table
+      :value: None
+
 
 
    .. py:attribute:: original_name
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33394,21 +36664,33 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: feature_type
+      :value: None
+
 
 
    .. py:attribute:: feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: data_type
+      :value: None
+
 
 
    .. py:attribute:: detected_feature_type
+      :value: None
+
 
 
    .. py:attribute:: source_table
+      :value: None
+
 
 
    .. py:attribute:: point_in_time_info
@@ -33457,27 +36739,43 @@ Package Contents
 
 
    .. py:attribute:: title
+      :value: None
+
 
 
    .. py:attribute:: url
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: thumbnail_url
+      :value: None
+
 
 
    .. py:attribute:: thumbnail_width
+      :value: None
+
 
 
    .. py:attribute:: thumbnail_height
+      :value: None
+
 
 
    .. py:attribute:: favicon_url
+      :value: None
+
 
 
    .. py:attribute:: date_published
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33511,9 +36809,13 @@ Package Contents
 
 
    .. py:attribute:: deployment_conversation_id
+      :value: None
+
 
 
    .. py:attribute:: messages
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33551,15 +36853,23 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: violation
+      :value: None
+
 
 
    .. py:attribute:: training_null_freq
+      :value: None
+
 
 
    .. py:attribute:: prediction_null_freq
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33597,15 +36907,23 @@ Package Contents
 
 
    .. py:attribute:: logo
+      :value: None
+
 
 
    .. py:attribute:: theme
+      :value: None
+
 
 
    .. py:attribute:: managed_user_service
+      :value: None
+
 
 
    .. py:attribute:: passwords_disabled
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33647,21 +36965,33 @@ Package Contents
 
 
    .. py:attribute:: organization_group_id
+      :value: None
+
 
 
    .. py:attribute:: permissions
+      :value: None
+
 
 
    .. py:attribute:: group_name
+      :value: None
+
 
 
    .. py:attribute:: default_group
+      :value: None
+
 
 
    .. py:attribute:: admin
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33774,9 +37104,13 @@ Package Contents
 
 
    .. py:attribute:: score
+      :value: None
+
 
 
    .. py:attribute:: feature_group_context
+      :value: None
+
 
 
    .. py:attribute:: feature_group
@@ -33818,12 +37152,18 @@ Package Contents
 
 
    .. py:attribute:: secret_key
+      :value: None
+
 
 
    .. py:attribute:: value
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33879,42 +37219,68 @@ Package Contents
 
 
    .. py:attribute:: doc_id
+      :value: None
+
 
 
    .. py:attribute:: page
+      :value: None
+
 
 
    .. py:attribute:: height
+      :value: None
+
 
 
    .. py:attribute:: width
+      :value: None
+
 
 
    .. py:attribute:: page_count
+      :value: None
+
 
 
    .. py:attribute:: page_text
+      :value: None
+
 
 
    .. py:attribute:: page_token_start_offset
+      :value: None
+
 
 
    .. py:attribute:: token_count
+      :value: None
+
 
 
    .. py:attribute:: tokens
+      :value: None
+
 
 
    .. py:attribute:: extracted_text
+      :value: None
+
 
 
    .. py:attribute:: rotation_angle
+      :value: None
+
 
 
    .. py:attribute:: page_markdown
+      :value: None
+
 
 
    .. py:attribute:: embedded_text
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33972,30 +37338,48 @@ Package Contents
 
 
    .. py:attribute:: pipeline_name
+      :value: None
+
 
 
    .. py:attribute:: pipeline_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: cron
+      :value: None
+
 
 
    .. py:attribute:: next_run_time
+      :value: None
+
 
 
    .. py:attribute:: is_prod
+      :value: None
+
 
 
    .. py:attribute:: warning
+      :value: None
+
 
 
    .. py:attribute:: created_by
+      :value: None
+
 
 
    .. py:attribute:: steps
@@ -34263,33 +37647,53 @@ Package Contents
 
 
    .. py:attribute:: pipeline_reference_id
+      :value: None
+
 
 
    .. py:attribute:: pipeline_id
+      :value: None
+
 
 
    .. py:attribute:: object_type
+      :value: None
+
 
 
    .. py:attribute:: dataset_id
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_description_id
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -34345,36 +37749,58 @@ Package Contents
 
 
    .. py:attribute:: pipeline_step_id
+      :value: None
+
 
 
    .. py:attribute:: pipeline_id
+      :value: None
+
 
 
    .. py:attribute:: step_name
+      :value: None
+
 
 
    .. py:attribute:: pipeline_name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: python_function_id
+      :value: None
+
 
 
    .. py:attribute:: step_dependencies
+      :value: None
+
 
 
    .. py:attribute:: cpu_size
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: timeout
+      :value: None
+
 
 
    .. py:attribute:: python_function
@@ -34518,54 +37944,88 @@ Package Contents
 
 
    .. py:attribute:: step_name
+      :value: None
+
 
 
    .. py:attribute:: pipeline_step_version
+      :value: None
+
 
 
    .. py:attribute:: pipeline_step_id
+      :value: None
+
 
 
    .. py:attribute:: pipeline_id
+      :value: None
+
 
 
    .. py:attribute:: pipeline_version
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: output_errors
+      :value: None
+
 
 
    .. py:attribute:: python_function_id
+      :value: None
+
 
 
    .. py:attribute:: function_variable_mappings
+      :value: None
+
 
 
    .. py:attribute:: step_dependencies
+      :value: None
+
 
 
    .. py:attribute:: output_variable_mappings
+      :value: None
+
 
 
    .. py:attribute:: cpu_size
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: timeout
+      :value: None
+
 
 
    .. py:attribute:: pipeline_step_version_references
@@ -34642,15 +38102,23 @@ Package Contents
 
 
    .. py:attribute:: step_name
+      :value: None
+
 
 
    .. py:attribute:: pipeline_step_id
+      :value: None
+
 
 
    .. py:attribute:: pipeline_step_version
+      :value: None
+
 
 
    .. py:attribute:: logs
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -34704,39 +38172,63 @@ Package Contents
 
 
    .. py:attribute:: pipeline_step_version_reference_id
+      :value: None
+
 
 
    .. py:attribute:: pipeline_step_version
+      :value: None
+
 
 
    .. py:attribute:: object_type
+      :value: None
+
 
 
    .. py:attribute:: dataset_version
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: deployment_version
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_id
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_version
+      :value: None
+
 
 
    .. py:attribute:: notebook_version
+      :value: None
+
 
 
    .. py:attribute:: feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -34788,27 +38280,43 @@ Package Contents
 
 
    .. py:attribute:: pipeline_name
+      :value: None
+
 
 
    .. py:attribute:: pipeline_id
+      :value: None
+
 
 
    .. py:attribute:: pipeline_version
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: completed_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: step_versions
@@ -34959,9 +38467,13 @@ Package Contents
 
 
    .. py:attribute:: playground_text
+      :value: None
+
 
 
    .. py:attribute:: rendering_code
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -35011,33 +38523,53 @@ Package Contents
 
 
    .. py:attribute:: history_table_name
+      :value: None
+
 
 
    .. py:attribute:: aggregation_keys
+      :value: None
+
 
 
    .. py:attribute:: timestamp_key
+      :value: None
+
 
 
    .. py:attribute:: historical_timestamp_key
+      :value: None
+
 
 
    .. py:attribute:: lookback_window_seconds
+      :value: None
+
 
 
    .. py:attribute:: lookback_window_lag_seconds
+      :value: None
+
 
 
    .. py:attribute:: lookback_count
+      :value: None
+
 
 
    .. py:attribute:: lookback_until_position
+      :value: None
+
 
 
    .. py:attribute:: expression
+      :value: None
+
 
 
    .. py:attribute:: group_name
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -35071,9 +38603,13 @@ Package Contents
 
 
    .. py:attribute:: expression
+      :value: None
+
 
 
    .. py:attribute:: group_name
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -35125,33 +38661,53 @@ Package Contents
 
 
    .. py:attribute:: group_name
+      :value: None
+
 
 
    .. py:attribute:: window_key
+      :value: None
+
 
 
    .. py:attribute:: aggregation_keys
+      :value: None
+
 
 
    .. py:attribute:: lookback_window
+      :value: None
+
 
 
    .. py:attribute:: lookback_window_lag
+      :value: None
+
 
 
    .. py:attribute:: lookback_count
+      :value: None
+
 
 
    .. py:attribute:: lookback_until_position
+      :value: None
+
 
 
    .. py:attribute:: history_table_name
+      :value: None
+
 
 
    .. py:attribute:: history_window_key
+      :value: None
+
 
 
    .. py:attribute:: history_aggregation_keys
+      :value: None
+
 
 
    .. py:attribute:: features
@@ -35192,15 +38748,23 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: expression
+      :value: None
+
 
 
    .. py:attribute:: pit_operation_type
+      :value: None
+
 
 
    .. py:attribute:: pit_operation_config
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -36212,7 +39776,7 @@ Package Contents
 
 
 
-   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id = None, arguments = None, keyword_arguments = None, save_conversations = True)
+   .. py:method:: start_autonomous_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, save_conversations = True)
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
@@ -36220,8 +39784,6 @@ Package Contents
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
-      :type deployment_conversation_id: str
       :param arguments: Positional arguments to the agent execute function.
       :type arguments: list
       :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
@@ -36266,18 +39828,28 @@ Package Contents
 
 
    .. py:attribute:: dataset_id
+      :value: None
+
 
 
    .. py:attribute:: dataset_type
+      :value: None
+
 
 
    .. py:attribute:: dataset_version
+      :value: None
+
 
 
    .. py:attribute:: default
+      :value: None
+
 
 
    .. py:attribute:: required
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -36317,18 +39889,28 @@ Package Contents
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: dataset_type
+      :value: None
+
 
 
    .. py:attribute:: default
+      :value: None
+
 
 
    .. py:attribute:: required
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -36366,9 +39948,13 @@ Package Contents
 
 
    .. py:attribute:: feature_group_dataset_ids
+      :value: None
+
 
 
    .. py:attribute:: dataset_id_remap
+      :value: None
+
 
 
    .. py:attribute:: feature_groups
@@ -36414,18 +40000,28 @@ Package Contents
 
 
    .. py:attribute:: request_id
+      :value: None
+
 
 
    .. py:attribute:: query
+      :value: None
+
 
 
    .. py:attribute:: query_time_ms
+      :value: None
+
 
 
    .. py:attribute:: timestamp_ms
+      :value: None
+
 
 
    .. py:attribute:: response
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -36487,42 +40083,68 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: prediction_operator_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: predict_function_name
+      :value: None
+
 
 
    .. py:attribute:: source_code
+      :value: None
+
 
 
    .. py:attribute:: initialize_function_name
+      :value: None
+
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: use_gpu
+      :value: None
+
 
 
    .. py:attribute:: feature_group_ids
+      :value: None
+
 
 
    .. py:attribute:: feature_group_table_names
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -36679,36 +40301,58 @@ Package Contents
 
 
    .. py:attribute:: prediction_operator_id
+      :value: None
+
 
 
    .. py:attribute:: prediction_operator_version
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: source_code
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: use_gpu
+      :value: None
+
 
 
    .. py:attribute:: feature_group_ids
+      :value: None
+
 
 
    .. py:attribute:: feature_group_versions
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -36758,15 +40402,23 @@ Package Contents
 
 
    .. py:attribute:: problem_type
+      :value: None
+
 
 
    .. py:attribute:: required_feature_group_type
+      :value: None
+
 
 
    .. py:attribute:: optional_feature_group_types
+      :value: None
+
 
 
    .. py:attribute:: use_cases_support_custom_algorithm
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -36808,21 +40460,33 @@ Package Contents
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: use_case
+      :value: None
+
 
 
    .. py:attribute:: problem_type
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: tags
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -37618,6 +41282,8 @@ Package Contents
 
 
    .. py:attribute:: type
+      :value: None
+
 
 
    .. py:attribute:: config
@@ -37754,114 +41420,188 @@ Package Contents
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: modification_lock
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: feature_group_source_type
+      :value: None
+
 
 
    .. py:attribute:: table_name
+      :value: None
+
 
 
    .. py:attribute:: sql
+      :value: None
+
 
 
    .. py:attribute:: dataset_id
+      :value: None
+
 
 
    .. py:attribute:: function_source_code
+      :value: None
+
 
 
    .. py:attribute:: function_name
+      :value: None
+
 
 
    .. py:attribute:: source_tables
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: sql_error
+      :value: None
+
 
 
    .. py:attribute:: latest_version_outdated
+      :value: None
+
 
 
    .. py:attribute:: referenced_feature_groups
+      :value: None
+
 
 
    .. py:attribute:: tags
+      :value: None
+
 
 
    .. py:attribute:: primary_key
+      :value: None
+
 
 
    .. py:attribute:: update_timestamp_key
+      :value: None
+
 
 
    .. py:attribute:: lookup_keys
+      :value: None
+
 
 
    .. py:attribute:: streaming_enabled
+      :value: None
+
 
 
    .. py:attribute:: incremental
+      :value: None
+
 
 
    .. py:attribute:: merge_config
+      :value: None
+
 
 
    .. py:attribute:: sampling_config
+      :value: None
+
 
 
    .. py:attribute:: cpu_size
+      :value: None
+
 
 
    .. py:attribute:: memory
+      :value: None
+
 
 
    .. py:attribute:: streaming_ready
+      :value: None
+
 
 
    .. py:attribute:: feature_tags
+      :value: None
+
 
 
    .. py:attribute:: module_name
+      :value: None
+
 
 
    .. py:attribute:: template_bindings
+      :value: None
+
 
 
    .. py:attribute:: feature_expression
+      :value: None
+
 
 
    .. py:attribute:: use_original_csv_names
+      :value: None
+
 
 
    .. py:attribute:: python_function_bindings
+      :value: None
+
 
 
    .. py:attribute:: python_function_name
+      :value: None
+
 
 
    .. py:attribute:: use_gpu
+      :value: None
+
 
 
    .. py:attribute:: version_limit
+      :value: None
+
 
 
    .. py:attribute:: export_on_materialization
+      :value: None
+
 
 
    .. py:attribute:: feature_group_type
+      :value: None
+
 
 
    .. py:attribute:: features
@@ -37944,6 +41684,8 @@ Package Contents
 
 
    .. py:attribute:: nested_schema
+      :value: None
+
 
 
    .. py:attribute:: schema
@@ -37984,6 +41726,8 @@ Package Contents
 
 
    .. py:attribute:: schema_version
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -38019,12 +41763,18 @@ Package Contents
 
 
    .. py:attribute:: valid
+      :value: None
+
 
 
    .. py:attribute:: dataset_errors
+      :value: None
+
 
 
    .. py:attribute:: column_hints
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -38074,30 +41824,48 @@ Package Contents
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: function_variable_mappings
+      :value: None
+
 
 
    .. py:attribute:: output_variable_mappings
+      :value: None
+
 
 
    .. py:attribute:: function_name
+      :value: None
+
 
 
    .. py:attribute:: python_function_id
+      :value: None
+
 
 
    .. py:attribute:: function_type
+      :value: None
+
 
 
    .. py:attribute:: package_requirements
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -38181,30 +41949,48 @@ Package Contents
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: function_variable_mappings
+      :value: None
+
 
 
    .. py:attribute:: function_name
+      :value: None
+
 
 
    .. py:attribute:: python_function_id
+      :value: None
+
 
 
    .. py:attribute:: function_type
+      :value: None
+
 
 
    .. py:attribute:: plot_name
+      :value: None
+
 
 
    .. py:attribute:: graph_reference_id
+      :value: None
+
 
 
    .. py:attribute:: code_source
@@ -38251,24 +42037,38 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: training_min
+      :value: None
+
 
 
    .. py:attribute:: training_max
+      :value: None
+
 
 
    .. py:attribute:: prediction_min
+      :value: None
+
 
 
    .. py:attribute:: prediction_max
+      :value: None
+
 
 
    .. py:attribute:: freq_above_training_range
+      :value: None
+
 
 
    .. py:attribute:: freq_below_training_range
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -38310,21 +42110,33 @@ Package Contents
 
 
    .. py:attribute:: realtime_monitor_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: lookback_time
+      :value: None
+
 
 
    .. py:attribute:: realtime_monitor_schedule
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -38424,39 +42236,63 @@ Package Contents
 
 
    .. py:attribute:: refresh_pipeline_run_id
+      :value: None
+
 
 
    .. py:attribute:: refresh_policy_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: started_at
+      :value: None
+
 
 
    .. py:attribute:: completed_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: refresh_type
+      :value: None
+
 
 
    .. py:attribute:: dataset_versions
+      :value: None
+
 
 
    .. py:attribute:: feature_group_version
+      :value: None
+
 
 
    .. py:attribute:: model_versions
+      :value: None
+
 
 
    .. py:attribute:: deployment_versions
+      :value: None
+
 
 
    .. py:attribute:: batch_predictions
+      :value: None
+
 
 
    .. py:attribute:: refresh_policy
@@ -38564,54 +42400,88 @@ Package Contents
 
 
    .. py:attribute:: refresh_policy_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: cron
+      :value: None
+
 
 
    .. py:attribute:: next_run_time
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: refresh_type
+      :value: None
+
 
 
    .. py:attribute:: project_id
+      :value: None
+
 
 
    .. py:attribute:: dataset_ids
+      :value: None
+
 
 
    .. py:attribute:: feature_group_id
+      :value: None
+
 
 
    .. py:attribute:: model_ids
+      :value: None
+
 
 
    .. py:attribute:: deployment_ids
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_ids
+      :value: None
+
 
 
    .. py:attribute:: model_monitor_ids
+      :value: None
+
 
 
    .. py:attribute:: notebook_id
+      :value: None
+
 
 
    .. py:attribute:: paused
+      :value: None
+
 
 
    .. py:attribute:: prediction_operator_id
+      :value: None
+
 
 
    .. py:attribute:: pipeline_id
+      :value: None
+
 
 
    .. py:attribute:: feature_group_export_config
@@ -38739,18 +42609,28 @@ Package Contents
 
 
    .. py:attribute:: refresh_policy_id
+      :value: None
+
 
 
    .. py:attribute:: next_run_time
+      :value: None
+
 
 
    .. py:attribute:: cron
+      :value: None
+
 
 
    .. py:attribute:: refresh_type
+      :value: None
+
 
 
    .. py:attribute:: error
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -38784,9 +42664,13 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -38826,18 +42710,28 @@ Package Contents
 
 
    .. py:attribute:: feature_group_template_id
+      :value: None
+
 
 
    .. py:attribute:: resolved_variables
+      :value: None
+
 
 
    .. py:attribute:: resolved_sql
+      :value: None
+
 
 
    .. py:attribute:: template_sql
+      :value: None
+
 
 
    .. py:attribute:: sql_error
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -38883,27 +42777,43 @@ Package Contents
 
 
    .. py:attribute:: id
+      :value: None
+
 
 
    .. py:attribute:: title
+      :value: None
+
 
 
    .. py:attribute:: prompt
+      :value: None
+
 
 
    .. py:attribute:: placeholder
+      :value: None
+
 
 
    .. py:attribute:: value
+      :value: None
+
 
 
    .. py:attribute:: display_name
+      :value: None
+
 
 
    .. py:attribute:: is_large
+      :value: None
+
 
 
    .. py:attribute:: is_medium
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -38951,24 +42861,38 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: detected_feature_mapping
+      :value: None
+
 
 
    .. py:attribute:: feature_type
+      :value: None
+
 
 
    .. py:attribute:: detected_feature_type
+      :value: None
+
 
 
    .. py:attribute:: data_type
+      :value: None
+
 
 
    .. py:attribute:: detected_data_type
+      :value: None
+
 
 
    .. py:attribute:: nested_features
@@ -39008,9 +42932,13 @@ Package Contents
 
 
    .. py:attribute:: streaming_token
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39136,21 +43064,33 @@ Package Contents
 
 
    .. py:attribute:: streaming_connector_id
+      :value: None
+
 
 
    .. py:attribute:: service
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: auth
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39211,9 +43151,13 @@ Package Contents
 
 
    .. py:attribute:: count
+      :value: None
+
 
 
    .. py:attribute:: start_ts_ms
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39249,12 +43193,18 @@ Package Contents
 
 
    .. py:attribute:: python
+      :value: None
+
 
 
    .. py:attribute:: curl
+      :value: None
+
 
 
    .. py:attribute:: console
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39288,6 +43238,8 @@ Package Contents
 
 
    .. py:attribute:: notebook_code
+      :value: None
+
 
 
    .. py:attribute:: workflow_graph_node
@@ -39332,21 +43284,33 @@ Package Contents
 
 
    .. py:attribute:: count
+      :value: None
+
 
 
    .. py:attribute:: columns
+      :value: None
+
 
 
    .. py:attribute:: data
+      :value: None
+
 
 
    .. py:attribute:: metrics_columns
+      :value: None
+
 
 
    .. py:attribute:: summarized_metrics
+      :value: None
+
 
 
    .. py:attribute:: error_description
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39392,27 +43356,43 @@ Package Contents
 
 
    .. py:attribute:: voice_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: gender
+      :value: None
+
 
 
    .. py:attribute:: language
+      :value: None
+
 
 
    .. py:attribute:: age
+      :value: None
+
 
 
    .. py:attribute:: accent
+      :value: None
+
 
 
    .. py:attribute:: use_case
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39464,36 +43444,58 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: data_type
+      :value: None
+
 
 
    .. py:attribute:: value_type
+      :value: None
+
 
 
    .. py:attribute:: value_options
+      :value: None
+
 
 
    .. py:attribute:: value
+      :value: None
+
 
 
    .. py:attribute:: default
+      :value: None
+
 
 
    .. py:attribute:: options
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: required
+      :value: None
+
 
 
    .. py:attribute:: last_model_value
+      :value: None
+
 
 
    .. py:attribute:: needs_refresh
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39537,24 +43539,38 @@ Package Contents
 
 
    .. py:attribute:: title
+      :value: None
+
 
 
    .. py:attribute:: url
+      :value: None
+
 
 
    .. py:attribute:: twitter_name
+      :value: None
+
 
 
    .. py:attribute:: twitter_handle
+      :value: None
+
 
 
    .. py:attribute:: thumbnail_url
+      :value: None
+
 
 
    .. py:attribute:: thumbnail_width
+      :value: None
+
 
 
    .. py:attribute:: thumbnail_height
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39604,33 +43620,53 @@ Package Contents
 
 
    .. py:attribute:: upload_id
+      :value: None
+
 
 
    .. py:attribute:: dataset_upload_id
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: dataset_id
+      :value: None
+
 
 
    .. py:attribute:: dataset_version
+      :value: None
+
 
 
    .. py:attribute:: model_id
+      :value: None
+
 
 
    .. py:attribute:: model_version
+      :value: None
+
 
 
    .. py:attribute:: batch_prediction_id
+      :value: None
+
 
 
    .. py:attribute:: parts
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39768,9 +43804,13 @@ Package Contents
 
 
    .. py:attribute:: etag
+      :value: None
+
 
 
    .. py:attribute:: md5
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39808,15 +43848,23 @@ Package Contents
 
 
    .. py:attribute:: use_case
+      :value: None
+
 
 
    .. py:attribute:: pretty_name
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: problem_type
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39860,24 +43908,38 @@ Package Contents
 
 
    .. py:attribute:: dataset_type
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: required
+      :value: None
+
 
 
    .. py:attribute:: multi
+      :value: None
+
 
 
    .. py:attribute:: allowed_feature_mappings
+      :value: None
+
 
 
    .. py:attribute:: allowed_nested_feature_mappings
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -39917,15 +43979,23 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: email
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: status
+      :value: None
+
 
 
    .. py:attribute:: organization_groups
@@ -39964,12 +44034,18 @@ Package Contents
 
 
    .. py:attribute:: type
+      :value: None
+
 
 
    .. py:attribute:: value
+      :value: None
+
 
 
    .. py:attribute:: traceback
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -40003,9 +44079,13 @@ Package Contents
 
 
    .. py:attribute:: model
+      :value: None
+
 
 
    .. py:attribute:: settings
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -40045,18 +44125,28 @@ Package Contents
 
 
    .. py:attribute:: title
+      :value: None
+
 
 
    .. py:attribute:: url
+      :value: None
+
 
 
    .. py:attribute:: thumbnail_url
+      :value: None
+
 
 
    .. py:attribute:: motion_thumbnail_url
+      :value: None
+
 
 
    .. py:attribute:: embed_url
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -40131,24 +44221,38 @@ Package Contents
 
 
    .. py:attribute:: title
+      :value: None
+
 
 
    .. py:attribute:: url
+      :value: None
+
 
 
    .. py:attribute:: snippet
+      :value: None
+
 
 
    .. py:attribute:: news
+      :value: None
+
 
 
    .. py:attribute:: place
+      :value: None
+
 
 
    .. py:attribute:: entity
+      :value: None
+
 
 
    .. py:attribute:: content
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -40190,21 +44294,33 @@ Package Contents
 
 
    .. py:attribute:: webhook_id
+      :value: None
+
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
 
 
    .. py:attribute:: endpoint
+      :value: None
+
 
 
    .. py:attribute:: webhook_event_type
+      :value: None
+
 
 
    .. py:attribute:: payload_template
+      :value: None
+
 
 
    .. py:attribute:: created_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -40299,27 +44415,43 @@ Package Contents
 
 
    .. py:attribute:: workflow_node_template_id
+      :value: None
+
 
 
    .. py:attribute:: name
+      :value: None
+
 
 
    .. py:attribute:: function_name
+      :value: None
+
 
 
    .. py:attribute:: source_code
+      :value: None
+
 
 
    .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: package_requirements
+      :value: None
+
 
 
    .. py:attribute:: tags
+      :value: None
+
 
 
    .. py:attribute:: additional_configs
+      :value: None
+
 
 
    .. py:attribute:: inputs
@@ -40347,6 +44479,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.21'
+   :value: '1.4.22'
 
 

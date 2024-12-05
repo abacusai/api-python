@@ -681,6 +681,7 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
         anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
         hyperparameter_calculation_with_heuristics (TimeseriesAnomalyUseHeuristic): Enable heuristic calculation to get hyperparameters for the model
         threshold_score (float): Threshold score for anomaly detection
+        additional_anomaly_ids (List[str]): List of categorical columns that can act as multi-identifier
     """
     type_of_split: enums.TimeseriesAnomalyDataSplitType = dataclasses.field(default=None)
     test_start: str = dataclasses.field(default=None)
@@ -692,6 +693,7 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
     anomaly_type: enums.TimeseriesAnomalyTypeOfAnomaly = dataclasses.field(default=None)
     hyperparameter_calculation_with_heuristics: enums.TimeseriesAnomalyUseHeuristic = dataclasses.field(default=None)
     threshold_score: float = dataclasses.field(default=None)
+    additional_anomaly_ids: List[str] = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.TS_ANOMALY

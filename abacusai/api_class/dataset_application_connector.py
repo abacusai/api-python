@@ -45,6 +45,19 @@ class ConfluenceDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class BoxDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for Box Application Connector
+    Args:
+        location (str): The regex location of the files to fetch
+    """
+    location: str = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.BOX
+
+
+@dataclasses.dataclass
 class GoogleAnalyticsDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Google Analytics Application Connector
@@ -217,4 +230,5 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.ABACUSUSAGEMETRICS: AbacusUsageMetricsDatasetConfig,
         enums.ApplicationConnectorType.FRESHSERVICE: FreshserviceDatasetConfig,
         enums.ApplicationConnectorType.TEAMSSCRAPER: TeamsScraperDatasetConfig,
+        enums.ApplicationConnectorType.BOX: BoxDatasetConfig,
     }

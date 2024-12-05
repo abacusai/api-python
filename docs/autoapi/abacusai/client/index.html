@@ -75,6 +75,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../categorical_range_violation/index.html">abacusai.categorical_range_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_message/index.html">abacusai.chat_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_session/index.html">abacusai.chat_session</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_computer/index.html">abacusai.chatllm_computer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">abacusai.client</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
@@ -544,11 +545,6 @@
 <dd><p>Get a dict representation of the response object</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.AgentResponse.__getattr__">
-<span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.AgentResponse.__getattr__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -565,12 +561,12 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.ClientOptions.exception_on_404">
-<span class="sig-name descname"><span class="pre">exception_on_404</span></span><a class="headerlink" href="#abacusai.client.ClientOptions.exception_on_404" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">exception_on_404</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#abacusai.client.ClientOptions.exception_on_404" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.ClientOptions.server">
-<span class="sig-name descname"><span class="pre">server</span></span><a class="headerlink" href="#abacusai.client.ClientOptions.server" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">server</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://api.abacus.ai'</span></em><a class="headerlink" href="#abacusai.client.ClientOptions.server" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -602,12 +598,12 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.ApiException.exception">
-<span class="sig-name descname"><span class="pre">exception</span></span><a class="headerlink" href="#abacusai.client.ApiException.exception" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">exception</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ApiException'</span></em><a class="headerlink" href="#abacusai.client.ApiException.exception" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.ApiException.request_id">
-<span class="sig-name descname"><span class="pre">request_id</span></span><a class="headerlink" href="#abacusai.client.ApiException.request_id" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">request_id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.client.ApiException.request_id" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1017,12 +1013,12 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.21'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.22'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.api_key">
-<span class="sig-name descname"><span class="pre">api_key</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.api_key" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">api_key</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.api_key" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1057,7 +1053,7 @@ and avoids execution of the further workflow.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_options">
-<span class="sig-name descname"><span class="pre">client_options</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_options" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_options</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_options" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -10787,14 +10783,13 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.start_autonomous_agent">
-<span class="sig-name descname"><span class="pre">start_autonomous_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_conversations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.start_autonomous_agent" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_autonomous_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_conversations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.start_autonomous_agent" title="Link to this definition"></a></dt>
 <dd><p>Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
-<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique string identifier for the deployment conversation used for the conversation.</p></li>
 <li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Positional arguments to the agent execute function.</p></li>
 <li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the parameter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
 <li><p><strong>save_conversations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true then a new conversation will be created for every run of the workflow associated with the agent.</p></li>
