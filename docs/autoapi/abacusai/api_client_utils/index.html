@@ -85,6 +85,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../client/index.html">abacusai.client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_response/index.html">abacusai.code_autocomplete_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_bot/index.html">abacusai.code_bot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_edit_response/index.html">abacusai.code_edit_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
@@ -277,6 +278,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_search_result/index.html">abacusai.video_search_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../web_page_response/index.html">abacusai.web_page_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
@@ -355,34 +357,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.avro_to_pandas_dtype" title="abacusai.api_client_utils.avro_to_pandas_dtype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">avro_to_pandas_dtype</span></code></a>(avro_type)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.get_non_nullable_type" title="abacusai.api_client_utils.get_non_nullable_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_non_nullable_type</span></code></a>(types)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils._get_spark_incompatible_columns" title="abacusai.api_client_utils._get_spark_incompatible_columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_spark_incompatible_columns</span></code></a>(df)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.get_object_from_context" title="abacusai.api_client_utils.get_object_from_context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_object_from_context</span></code></a>(client, context, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.get_non_nullable_type" title="abacusai.api_client_utils.get_non_nullable_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_non_nullable_type</span></code></a>(types)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.load_as_pandas_from_avro_fd" title="abacusai.api_client_utils.load_as_pandas_from_avro_fd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_as_pandas_from_avro_fd</span></code></a>(fd)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.get_object_from_context" title="abacusai.api_client_utils.get_object_from_context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_object_from_context</span></code></a>(client, context, ...)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.load_as_pandas_from_avro_files" title="abacusai.api_client_utils.load_as_pandas_from_avro_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_as_pandas_from_avro_files</span></code></a>(files, download_method)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.load_as_pandas_from_avro_fd" title="abacusai.api_client_utils.load_as_pandas_from_avro_fd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_as_pandas_from_avro_fd</span></code></a>(fd)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.validate_workflow_node_inputs" title="abacusai.api_client_utils.validate_workflow_node_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_workflow_node_inputs</span></code></a>(nodes_info, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.load_as_pandas_from_avro_files" title="abacusai.api_client_utils.load_as_pandas_from_avro_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_as_pandas_from_avro_files</span></code></a>(files, download_method)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.run" title="abacusai.api_client_utils.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(nodes, primary_start_node, graph_info[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.validate_workflow_node_inputs" title="abacusai.api_client_utils.validate_workflow_node_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_workflow_node_inputs</span></code></a>(nodes_info, ...)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.evaluate_edge_condition" title="abacusai.api_client_utils.evaluate_edge_condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate_edge_condition</span></code></a>(source, target, details, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.run" title="abacusai.api_client_utils.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(nodes, primary_start_node, graph_info[, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.execute_python_source" title="abacusai.api_client_utils.execute_python_source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">execute_python_source</span></code></a>(python_expression, variables)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.evaluate_edge_condition" title="abacusai.api_client_utils.evaluate_edge_condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate_edge_condition</span></code></a>(source, target, details, ...)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.process_node_response" title="abacusai.api_client_utils.process_node_response"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_node_response</span></code></a>(node_response)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.execute_python_source" title="abacusai.api_client_utils.execute_python_source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">execute_python_source</span></code></a>(python_expression, variables)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.try_abacus_internal_copy" title="abacusai.api_client_utils.try_abacus_internal_copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">try_abacus_internal_copy</span></code></a>(src_suffix, dst_local[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.process_node_response" title="abacusai.api_client_utils.process_node_response"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_node_response</span></code></a>(node_response)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.try_abacus_internal_copy" title="abacusai.api_client_utils.try_abacus_internal_copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">try_abacus_internal_copy</span></code></a>(src_suffix, dst_local[, ...])</p></td>
 <td><p>Retuns true if the file was copied, false otherwise</p></td>
 </tr>
 </tbody>
@@ -403,6 +408,11 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.avro_to_pandas_dtype">
 <span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">avro_to_pandas_dtype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avro_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.avro_to_pandas_dtype" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils._get_spark_incompatible_columns">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">_get_spark_incompatible_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils._get_spark_incompatible_columns" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">

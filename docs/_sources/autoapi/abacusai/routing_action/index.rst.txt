@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: RoutingAction(client, id=None, title=None, prompt=None, placeholder=None, value=None, displayName=None, isLarge=None, isMedium=None)
+.. py:class:: RoutingAction(client, id=None, title=None, prompt=None, placeholder=None, value=None, displayName=None, isLarge=None, isMedium=None, additionalInfo=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type isLarge: bool
    :param isMedium: UI placement
    :type isMedium: bool
+   :param additionalInfo: Additional information for the routing action.
+   :type additionalInfo: dict
 
 
    .. py:attribute:: id
@@ -78,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: is_medium
+      :value: None
+
+
+
+   .. py:attribute:: additional_info
       :value: None
 
 

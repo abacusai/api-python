@@ -569,7 +569,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.22'
+      :value: '1.4.23'
 
 
 
@@ -4402,7 +4402,7 @@ Module Contents
 
 
 
-   .. py:method:: send_email(email, subject, body, is_html = False)
+   .. py:method:: send_email(email, subject, body, is_html = False, attachments = None)
 
       Send an email to the specified email address with provided subject and contents.
 
@@ -4414,6 +4414,8 @@ Module Contents
       :type body: str
       :param is_html: Whether the body is html or not.
       :type is_html: bool
+      :param attachments: A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes).
+      :type attachments: None
 
 
 
@@ -10100,6 +10102,20 @@ Module Contents
 
       :returns: Results of running the search queries.
       :rtype: WebSearchResponse
+
+
+
+   .. py:method:: fetch_web_page(url, convert_to_markdown = True)
+
+      Scrapes the content of a web page and returns it as a string.
+
+      :param url: The url of the web page to scrape.
+      :type url: str
+      :param convert_to_markdown: Whether content should be converted to markdown.
+      :type convert_to_markdown: bool
+
+      :returns: The content of the web page.
+      :rtype: WebPageResponse
 
 
 

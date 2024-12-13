@@ -53,7 +53,8 @@ from .api_class.enums import AgentInterface
 from .api_class.segments import ResponseSection, Segment
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, StreamType,
-    clean_column_name, get_object_from_context, run
+    _get_spark_incompatible_columns, clean_column_name,
+    get_object_from_context, run
 )
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
@@ -177,6 +178,7 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
+from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .webhook import Webhook
 from .workflow_node_template import WorkflowNodeTemplate
@@ -633,7 +635,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.22'
+    client_version = '1.4.23'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -941,6 +943,17 @@ class BaseApiClient:
         if bad_column_names:
             raise ValueError(
                 f'The dataframe\'s Column(s): {bad_column_names} contain illegal characters. Please rename the columns such that they only contain alphanumeric characters and underscores, and must start with an alpha character.')
+
+        incompatible_columns, compatible_pd_dtypes = _get_spark_incompatible_columns(
+            df)
+        if incompatible_columns:
+            error_message = "The following columns have incompatible data types:\n"
+            for col_name, col_dtype in incompatible_columns:
+                error_message += f" - '{col_name}' (type: {col_dtype})\n"
+            error_message += f"Supported data types are: {', '.join(sorted(compatible_pd_dtypes))}\n"
+            error_message += "Please cast these columns to a supported data type and try again.\n"
+            raise ValueError(error_message)
+
         return df
 
     def _upload_from_pandas(self, upload, df, clean_column_names=False) -> Dataset:
@@ -4586,15 +4599,16 @@ class ApiClient(ReadOnlyClient):
             email (str): The email address of the user to remove from the organization."""
         return self._call_api('removeUserFromOrganization', 'DELETE', query_params={'email': email})
 
-    def send_email(self, email: str, subject: str, body: str, is_html: bool = False):
+    def send_email(self, email: str, subject: str, body: str, is_html: bool = False, attachments: None = None):
         """Send an email to the specified email address with provided subject and contents.
 
         Args:
             email (str): The email address to send the email to.
             subject (str): The subject of the email.
             body (str): The body of the email.
-            is_html (bool): Whether the body is html or not."""
-        return self._call_api('sendEmail', 'POST', query_params={}, body={'email': email, 'subject': subject, 'body': body, 'isHtml': is_html})
+            is_html (bool): Whether the body is html or not.
+            attachments (None): A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes)."""
+        return self._call_api('sendEmail', 'POST', query_params={}, data={'email': json.dumps(email) if (email is not None and not isinstance(email, str)) else email, 'subject': json.dumps(subject) if (subject is not None and not isinstance(subject, str)) else subject, 'body': json.dumps(body) if (body is not None and not isinstance(body, str)) else body, 'isHtml': json.dumps(is_html) if (is_html is not None and not isinstance(is_html, str)) else is_html}, files=attachments)
 
     def create_deployment_webhook(self, deployment_id: str, endpoint: str, webhook_event_type: str, payload_template: dict = None) -> Webhook:
         """Create a webhook attached to a given deployment ID.
@@ -6002,7 +6016,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             DocumentData: The extracted document data."""
-        return self._proxy_request('ExtractDocumentData', 'POST', query_params={}, data={'docId': doc_id, 'documentProcessingConfig': json.dumps(document_processing_config), 'startPage': start_page, 'endPage': end_page, 'returnExtractedPageText': return_extracted_page_text}, files={'document': document}, parse_type=DocumentData)
+        return self._proxy_request('ExtractDocumentData', 'POST', query_params={}, data={'docId': doc_id, 'documentProcessingConfig': json.dumps(document_processing_config.to_dict()) if hasattr(document_processing_config, 'to_dict') else json.dumps(document_processing_config), 'startPage': start_page, 'endPage': end_page, 'returnExtractedPageText': return_extracted_page_text}, files={'document': document}, parse_type=DocumentData)
 
     def get_training_config_options(self, project_id: str, feature_group_ids: List = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None) -> List[TrainingConfigOptions]:
         """Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
@@ -7806,7 +7820,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             FeatureGroupRow: The feature group row that was upserted."""
-        return self._proxy_request('upsertData', 'POST', query_params={}, data={'featureGroupId': feature_group_id, 'data': json.dumps(data), 'streamingToken': streaming_token}, files=blobs, parse_type=FeatureGroupRow, is_sync=True)
+        return self._proxy_request('upsertData', 'POST', query_params={}, data={'featureGroupId': feature_group_id, 'data': json.dumps(data.to_dict()) if hasattr(data, 'to_dict') else json.dumps(data), 'streamingToken': streaming_token}, files=blobs, parse_type=FeatureGroupRow, is_sync=True)
 
     def delete_data(self, feature_group_id: str, primary_key: str):
         """Deletes a row from the feature group given the primary key
@@ -8708,6 +8722,17 @@ Creates a new feature group defined as the union of other feature group versions
             WebSearchResponse: Results of running the search queries."""
         return self._proxy_request('SearchWebForLlm', 'POST', query_params={}, body={'queries': queries, 'searchProviders': search_providers, 'maxResults': max_results, 'safe': safe, 'fetchContent': fetch_content, 'maxPageTokens': max_page_tokens, 'convertToMarkdown': convert_to_markdown}, parse_type=WebSearchResponse)
 
+    def fetch_web_page(self, url: str, convert_to_markdown: bool = True) -> WebPageResponse:
+        """Scrapes the content of a web page and returns it as a string.
+
+        Args:
+            url (str): The url of the web page to scrape.
+            convert_to_markdown (bool): Whether content should be converted to markdown.
+
+        Returns:
+            WebPageResponse: The content of the web page."""
+        return self._proxy_request('FetchWebPage', 'POST', query_params={}, body={'url': url, 'convertToMarkdown': convert_to_markdown}, parse_type=WebPageResponse)
+
     def construct_agent_conversation_messages_for_llm(self, deployment_conversation_id: str = None, external_session_id: str = None, include_document_contents: bool = True) -> AgentConversation:
         """Returns conversation history in a format for LLM calls.
 
@@ -8840,4 +8865,4 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
-        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, data={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text}, files=blobs, parse_type=DocumentRetrieverLookupResult)
+        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, data={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config.to_dict()) if hasattr(document_retriever_config, 'to_dict') else json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text}, files=blobs, parse_type=DocumentRetrieverLookupResult)

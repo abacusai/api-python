@@ -43,6 +43,7 @@ Submodules
    /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/client/index
    /autoapi/abacusai/code_autocomplete_response/index
+   /autoapi/abacusai/code_bot/index
    /autoapi/abacusai/code_edit_response/index
    /autoapi/abacusai/code_source/index
    /autoapi/abacusai/compute_point_info/index
@@ -235,6 +236,7 @@ Submodules
    /autoapi/abacusai/user_exception/index
    /autoapi/abacusai/video_gen_settings/index
    /autoapi/abacusai/video_search_result/index
+   /autoapi/abacusai/web_page_response/index
    /autoapi/abacusai/web_search_response/index
    /autoapi/abacusai/web_search_result/index
    /autoapi/abacusai/webhook/index
@@ -512,6 +514,7 @@ Classes
    abacusai.ClientOptions
    abacusai.ReadOnlyClient
    abacusai.CodeAutocompleteResponse
+   abacusai.CodeBot
    abacusai.CodeEditResponse
    abacusai.CodeSource
    abacusai.ComputePointInfo
@@ -700,6 +703,7 @@ Classes
    abacusai.UserException
    abacusai.VideoGenSettings
    abacusai.VideoSearchResult
+   abacusai.WebPageResponse
    abacusai.WebSearchResponse
    abacusai.WebSearchResult
    abacusai.Webhook
@@ -2067,6 +2071,8 @@ Package Contents
    :type variable_source: str
    :param is_required: Indicates whether the input is required. Defaults to True.
    :type is_required: bool
+   :param description: The description of this input.
+   :type description: str
 
 
    .. py:attribute:: name
@@ -2092,6 +2098,12 @@ Package Contents
    .. py:attribute:: is_required
       :type:  bool
       :value: True
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: None
 
 
 
@@ -2189,6 +2201,8 @@ Package Contents
    :type name: str
    :param variable_type: The type of the output in the form of an enum or a string.
    :type variable_type: Union[WorkflowNodeOutputType, str]
+   :param description: The description of this output.
+   :type description: str
 
 
    .. py:attribute:: name
@@ -2197,6 +2211,12 @@ Package Contents
 
    .. py:attribute:: variable_type
       :type:  Union[abacusai.api_class.enums.WorkflowNodeOutputType, str]
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -6482,6 +6502,11 @@ Package Contents
 
 
 
+   .. py:attribute:: LLAMA3_3_70B
+      :value: 'LLAMA3_3_70B'
+
+
+
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
 
@@ -6514,6 +6539,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
+
+
+
+   .. py:attribute:: GEMINI_2_FLASH
+      :value: 'GEMINI_2_FLASH'
 
 
 
@@ -14480,7 +14510,7 @@ Package Contents
 
 
 
-   .. py:method:: send_email(email, subject, body, is_html = False)
+   .. py:method:: send_email(email, subject, body, is_html = False, attachments = None)
 
       Send an email to the specified email address with provided subject and contents.
 
@@ -14492,6 +14522,8 @@ Package Contents
       :type body: str
       :param is_html: Whether the body is html or not.
       :type is_html: bool
+      :param attachments: A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes).
+      :type attachments: None
 
 
 
@@ -20181,6 +20213,20 @@ Package Contents
 
 
 
+   .. py:method:: fetch_web_page(url, convert_to_markdown = True)
+
+      Scrapes the content of a web page and returns it as a string.
+
+      :param url: The url of the web page to scrape.
+      :type url: str
+      :param convert_to_markdown: Whether content should be converted to markdown.
+      :type convert_to_markdown: bool
+
+      :returns: The content of the web page.
+      :rtype: WebPageResponse
+
+
+
    .. py:method:: construct_agent_conversation_messages_for_llm(deployment_conversation_id = None, external_session_id = None, include_document_contents = True)
 
       Returns conversation history in a format for LLM calls.
@@ -22815,6 +22861,46 @@ Package Contents
 
 
    .. py:attribute:: autocomplete_response
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CodeBot(client, llmName=None, name=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A bot option for CodeLLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param llmName: The name of the LLM.
+   :type llmName: str
+   :param name: The name of the bot.
+   :type name: str
+
+
+   .. py:attribute:: llm_name
+      :value: None
+
+
+
+   .. py:attribute:: name
       :value: None
 
 
@@ -42749,7 +42835,7 @@ Package Contents
 
 
 
-.. py:class:: RoutingAction(client, id=None, title=None, prompt=None, placeholder=None, value=None, displayName=None, isLarge=None, isMedium=None)
+.. py:class:: RoutingAction(client, id=None, title=None, prompt=None, placeholder=None, value=None, displayName=None, isLarge=None, isMedium=None, additionalInfo=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42774,6 +42860,8 @@ Package Contents
    :type isLarge: bool
    :param isMedium: UI placement
    :type isMedium: bool
+   :param additionalInfo: Additional information for the routing action.
+   :type additionalInfo: dict
 
 
    .. py:attribute:: id
@@ -42812,6 +42900,11 @@ Package Contents
 
 
    .. py:attribute:: is_medium
+      :value: None
+
+
+
+   .. py:attribute:: additional_info
       :value: None
 
 
@@ -44164,6 +44257,39 @@ Package Contents
 
 
 
+.. py:class:: WebPageResponse(client, content=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A scraped web page response
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param content: The content of the web page.
+   :type content: str
+
+
+   .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebSearchResponse(client, searchResults={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44479,6 +44605,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.22'
+   :value: '1.4.23'
 
 

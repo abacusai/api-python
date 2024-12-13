@@ -7,6 +7,8 @@ from enum import Enum
 from itertools import groupby
 from typing import IO, Callable, List
 
+import pandas as pd
+
 
 INVALID_PANDAS_COLUMN_NAME_CHARACTERS = '[^A-Za-z0-9_]'
 
@@ -42,6 +44,34 @@ def avro_to_pandas_dtype(avro_type):
             avro_type = avro_type['type']
 
     return avro_pandas_dtypes.get(avro_type, 'object')
+
+
+def _get_spark_incompatible_columns(df):
+    # Spark-compatible pandas dtypes
+    spark_compatible_pd_dtypes = {
+        'int8', 'int16', 'int32', 'int64',
+        'float32', 'float64',
+        'bool',           # Standard boolean type
+        'boolean',        # Nullable BooleanDtype
+        'object',         # Assuming they contain strings
+        'string',         # StringDtype introduced in pandas 1.0
+        'datetime64[ns]',
+        'timedelta64[ns]'
+    }
+
+    incompatible_columns = []
+
+    for col in df.columns:
+        dtype = df[col].dtype
+        dtype_str = str(dtype)
+        if pd.api.types.is_extension_array_dtype(dtype):
+            dtype_name = dtype.name.lower()
+            if dtype_name not in spark_compatible_pd_dtypes:
+                incompatible_columns.append((col, dtype_name))
+        elif dtype_str not in spark_compatible_pd_dtypes:
+            incompatible_columns.append((col, dtype_str))
+
+    return incompatible_columns, spark_compatible_pd_dtypes
 
 
 def get_non_nullable_type(types):
@@ -480,8 +510,7 @@ class DocstoreUtils:
             json_pages_list = [{**(page or {}), doc_id_column: content_hash_to_doc_id[content_hash]}
                                for content_hash, page in pages_list]
             pages_df_with_config = pd.DataFrame(json_pages_list)
-            pages_df_with_config = pages_df_with_config.replace(
-                {pd.np.nan: None})
+            pages_df_with_config = pages_df_with_config.replace({np.nan: None})
 
         df = df.drop_duplicates([doc_id_column])
         group_by_archive = df.groupby(

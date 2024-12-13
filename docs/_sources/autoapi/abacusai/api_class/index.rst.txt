@@ -440,6 +440,8 @@ Package Contents
    :type variable_source: str
    :param is_required: Indicates whether the input is required. Defaults to True.
    :type is_required: bool
+   :param description: The description of this input.
+   :type description: str
 
 
    .. py:attribute:: name
@@ -465,6 +467,12 @@ Package Contents
    .. py:attribute:: is_required
       :type:  bool
       :value: True
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: None
 
 
 
@@ -562,6 +570,8 @@ Package Contents
    :type name: str
    :param variable_type: The type of the output in the form of an enum or a string.
    :type variable_type: Union[WorkflowNodeOutputType, str]
+   :param description: The description of this output.
+   :type description: str
 
 
    .. py:attribute:: name
@@ -570,6 +580,12 @@ Package Contents
 
    .. py:attribute:: variable_type
       :type:  Union[abacusai.api_class.enums.WorkflowNodeOutputType, str]
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: None
+
 
 
    .. py:method:: __post_init__()
@@ -5422,6 +5438,11 @@ Package Contents
 
 
 
+   .. py:attribute:: LLAMA3_3_70B
+      :value: 'LLAMA3_3_70B'
+
+
+
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
 
@@ -5454,6 +5475,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
+
+
+
+   .. py:attribute:: GEMINI_2_FLASH
+      :value: 'GEMINI_2_FLASH'
 
 
 

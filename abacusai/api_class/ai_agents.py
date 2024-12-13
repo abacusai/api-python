@@ -61,12 +61,14 @@ class WorkflowNodeInputMapping(ApiClass):
                                If the type is `USER_INPUT`, the value given by the source node will be used as the default initial value before the user edits it.
                                Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
         is_required (bool): Indicates whether the input is required. Defaults to True.
+        description (str): The description of this input.
     """
     name: str
     variable_type: enums.WorkflowNodeInputType
     variable_source: str = dataclasses.field(default=None)
     source_prop: str = dataclasses.field(default=None)
     is_required: bool = dataclasses.field(default=True)
+    description: str = dataclasses.field(default=None)
 
     def __post_init__(self):
         if self.variable_type == enums.WorkflowNodeInputType.IGNORE and self.is_required:
@@ -81,6 +83,7 @@ class WorkflowNodeInputMapping(ApiClass):
             'variable_source': self.variable_source,
             'source_prop': self.source_prop or self.name,
             'is_required': self.is_required,
+            'description': self.description
         }
 
     @classmethod
@@ -94,6 +97,7 @@ class WorkflowNodeInputMapping(ApiClass):
             variable_source=mapping.get('variable_source'),
             source_prop=mapping.get('source_prop') or mapping['name'] if mapping.get('variable_source') else None,
             is_required=mapping.get('is_required', True),
+            description=mapping.get('description')
         )
 
 
@@ -172,9 +176,11 @@ class WorkflowNodeOutputMapping(ApiClass):
     Args:
         name (str): The name of the output.
         variable_type (Union[WorkflowNodeOutputType, str]): The type of the output in the form of an enum or a string.
+        description (str): The description of this output.
     """
     name: str
     variable_type: Union[enums.WorkflowNodeOutputType, str] = dataclasses.field(default=enums.WorkflowNodeOutputType.ANY)
+    description: str = dataclasses.field(default=None)
 
     def __post_init__(self):
         if isinstance(self.variable_type, str):
@@ -183,7 +189,8 @@ class WorkflowNodeOutputMapping(ApiClass):
     def to_dict(self):
         return {
             'name': self.name,
-            'variable_type': self.variable_type.value
+            'variable_type': self.variable_type.value,
+            'description': self.description
         }
 
     @classmethod
@@ -194,7 +201,8 @@ class WorkflowNodeOutputMapping(ApiClass):
             raise ValueError('output_mapping', f'Invalid enum argument {variable_type}. Provided argument should be of enum type WorkflowNodeOutputType.')
         return cls(
             name=mapping['name'],
-            variable_type=enums.WorkflowNodeOutputType(variable_type)
+            variable_type=enums.WorkflowNodeOutputType(variable_type),
+            description=mapping.get('description')
         )
 
 
@@ -392,7 +400,7 @@ class WorkflowGraphNode(ApiClass):
         if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
             instance_input_mappings = input_mappings
         elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, WorkflowNodeInputMapping) for key, value in input_mappings.items()):
-            instance_input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=mapping.variable_type, variable_source=mapping.variable_source, source_prop=mapping.source_prop, is_required=mapping.is_required) for arg, mapping in input_mappings]
+            instance_input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=mapping.variable_type, variable_source=mapping.variable_source, source_prop=mapping.source_prop, is_required=mapping.is_required, description=mapping.description) for arg, mapping in input_mappings]
         elif input_mappings is None:
             instance_input_mappings = []
         else:
