@@ -283,6 +283,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../workflow_graph_node/index.html">abacusai.workflow_graph_node</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
 </ul>
 </li>
@@ -1015,7 +1016,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.23'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.24'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -8357,7 +8358,7 @@ feature groups for those input feature groups.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.extract_document_data">
 <span class="sig-name descname"><span class="pre">extract_document_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_processing_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_page</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_page</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_page_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.extract_document_data" title="Link to this definition"></a></dt>
-<dd><p>Extracts data from a document.</p>
+<dd><p>Extracts data from a document using either OCR (for scanned documents/images) or embedded text extraction (for digital documents like .docx). Configure the extraction method through DocumentProcessingConfig</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -12516,7 +12517,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message’s text. attachments (list): The files attached to the message represented as a list of dictionaries [{“doc_id”: &lt;doc_id1&gt;}, {“doc_id”: &lt;doc_id2&gt;}]</p></li>
 <li><p><strong>response_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Specifies the type of response to request from the LLM. One of ‘text’ and ‘json’. If set to ‘json’, the LLM will respond with a json formatted string whose schema can be specified <cite>json_response_schema</cite>. Defaults to ‘text’</p></li>
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when <cite>response_type</cite> is ‘json’. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter. description (str) (required): Description of the parameter. is_required (bool) (optional): Whether the parameter is required or not. Example: json_response_schema = {‘title’: {‘type’: ‘string’, ‘description’: ‘Article title’, ‘is_required’: true}, ‘body’: {‘type’: ‘string’, ‘description’: ‘Article body’}}</p></li>
-<li><p><strong>stop_sequences</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Specifies the strings on which the LLM will stop generation.</p></li>
+<li><p><strong>stop_sequences</strong> (<em>List</em>) – Specifies the strings on which the LLM will stop generation.</p></li>
 <li><p><strong>top_p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability <cite>top_p</cite>. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.</p></li>
 </ul>
 </dd>

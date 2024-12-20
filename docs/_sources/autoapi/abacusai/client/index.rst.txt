@@ -569,7 +569,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.23'
+      :value: '1.4.24'
 
 
 
@@ -6356,7 +6356,7 @@ Module Contents
 
    .. py:method:: extract_document_data(document = None, doc_id = None, document_processing_config = None, start_page = None, end_page = None, return_extracted_page_text = False)
 
-      Extracts data from a document.
+      Extracts data from a document using either OCR (for scanned documents/images) or embedded text extraction (for digital documents like .docx). Configure the extraction method through DocumentProcessingConfig
 
       :param document: The document to extract data from. One of document or doc_id must be provided.
       :type document: io.TextIOBase
@@ -10008,7 +10008,7 @@ Module Contents
       :param json_response_schema: A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter. description (str) (required): Description of the parameter. is_required (bool) (optional): Whether the parameter is required or not. Example: json_response_schema = {'title': {'type': 'string', 'description': 'Article title', 'is_required': true}, 'body': {'type': 'string', 'description': 'Article body'}}
       :type json_response_schema: dict
       :param stop_sequences: Specifies the strings on which the LLM will stop generation.
-      :type stop_sequences: list
+      :type stop_sequences: List
       :param top_p: The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability `top_p`. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.
       :type top_p: float
 

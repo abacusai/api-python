@@ -181,6 +181,7 @@ from .user import User
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .webhook import Webhook
+from .workflow_graph_node import WorkflowGraphNode
 from .workflow_node_template import WorkflowNodeTemplate
 
 
@@ -635,7 +636,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.23'
+    client_version = '1.4.24'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3743,7 +3744,8 @@ class ApiClient(ReadOnlyClient):
 
                 with self._request(endpoint, 'GET', query_params={'sql': sql}, stream=True, retry_500=True) as response:
                     if response.status_code == 200:
-                        return pd.read_csv(response.raw, sep=',')
+                        buf = io.BytesIO(response.content)
+                        return pd.read_parquet(buf, engine='pyarrow')
                     else:
                         error_json = response.json()
                         error_message = error_json.get('error')
@@ -6004,7 +6006,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._proxy_request('getDocstoreDocumentData', 'POST', query_params={}, body={'docId': doc_id, 'documentProcessingConfig': document_processing_config, 'documentProcessingVersion': document_processing_version, 'returnExtractedPageText': return_extracted_page_text}, parse_type=DocumentData, is_sync=True)
 
     def extract_document_data(self, document: io.TextIOBase = None, doc_id: str = None, document_processing_config: Union[dict, DocumentProcessingConfig] = None, start_page: int = None, end_page: int = None, return_extracted_page_text: bool = False) -> DocumentData:
-        """Extracts data from a document.
+        """Extracts data from a document using either OCR (for scanned documents/images) or embedded text extraction (for digital documents like .docx). Configure the extraction method through DocumentProcessingConfig
 
         Args:
             document (io.TextIOBase): The document to extract data from. One of document or doc_id must be provided.
@@ -8640,7 +8642,7 @@ Creates a new feature group defined as the union of other feature group versions
             fast_mode (bool): If True, runs a faster but slightly less accurate code generation pipeline"""
         return self._call_api('generateAgentCode', 'POST', query_params={}, body={'projectId': project_id, 'prompt': prompt, 'fastMode': fast_mode})
 
-    def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, stop_sequences: list = None, top_p: float = None) -> LlmResponse:
+    def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, stop_sequences: List = None, top_p: float = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
 
         Args:
@@ -8652,7 +8654,7 @@ Creates a new feature group defined as the union of other feature group versions
             messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
             response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
             json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter. description (str) (required): Description of the parameter. is_required (bool) (optional): Whether the parameter is required or not. Example: json_response_schema = {'title': {'type': 'string', 'description': 'Article title', 'is_required': true}, 'body': {'type': 'string', 'description': 'Article body'}}
-            stop_sequences (list): Specifies the strings on which the LLM will stop generation.
+            stop_sequences (List): Specifies the strings on which the LLM will stop generation.
             top_p (float): The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability `top_p`. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.
 
         Returns:

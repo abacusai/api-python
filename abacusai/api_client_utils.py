@@ -617,7 +617,7 @@ class DocstoreUtils:
                 cls.TOKENS: [token for page in page_infos for token in page.get(cls.TOKENS) or []],
                 # default to embedded text
                 cls.PAGES: [page.get(cls.PAGE_TEXT) or '' for page in page_infos],
-                **({cls.DOC_ID: page_infos[0]} if cls.DOC_ID in page_infos[0] else {}),
+                **({cls.DOC_ID: page_infos[0][cls.DOC_ID]} if cls.DOC_ID in page_infos[0] else {}),
             }
             document_data[cls.EMBEDDED_TEXT] = combine_page_texts(info.get(
                 cls.EMBEDDED_TEXT) or info.get(cls.PAGE_TEXT) or '' for info in page_infos)

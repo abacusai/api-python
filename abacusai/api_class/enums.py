@@ -485,6 +485,8 @@ class LLMName(ApiEnum):
     ABACUS_SMAUG3 = 'ABACUS_SMAUG3'
     ABACUS_DRACARYS = 'ABACUS_DRACARYS'
     QWEN_2_5_32B = 'QWEN_2_5_32B'
+    QWEN_2_5_32B_BASE = 'QWEN_2_5_32B_BASE'
+    QWEN_2_5_72B = 'QWEN_2_5_72B'
     QWQ_32B = 'QWQ_32B'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     XAI_GROK = 'XAI_GROK'
@@ -554,6 +556,7 @@ class WorkflowNodeInputType(ApiEnum):
     USER_INPUT = 'USER_INPUT'
     WORKFLOW_VARIABLE = 'WORKFLOW_VARIABLE'
     IGNORE = 'IGNORE'
+    CONSTANT = 'CONSTANT'
 
 
 class WorkflowNodeOutputType(ApiEnum):

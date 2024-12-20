@@ -240,6 +240,7 @@ Submodules
    /autoapi/abacusai/web_search_response/index
    /autoapi/abacusai/web_search_result/index
    /autoapi/abacusai/webhook/index
+   /autoapi/abacusai/workflow_graph_node/index
    /autoapi/abacusai/workflow_node_template/index
 
 
@@ -707,6 +708,7 @@ Classes
    abacusai.WebSearchResponse
    abacusai.WebSearchResult
    abacusai.Webhook
+   abacusai.WorkflowGraphNode
    abacusai.WorkflowNodeTemplate
 
 
@@ -2073,6 +2075,8 @@ Package Contents
    :type is_required: bool
    :param description: The description of this input.
    :type description: str
+   :param constant_value: The constant value of this input if variable type is CONSTANT. Only applicable for template nodes.
+   :type constant_value: str
 
 
    .. py:attribute:: name
@@ -2102,6 +2106,12 @@ Package Contents
 
 
    .. py:attribute:: description
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: constant_value
       :type:  str
       :value: None
 
@@ -2187,6 +2197,17 @@ Package Contents
       :type schema_source: str
       :param schema_prop: The name of the input schema parameter which source node outputs.
       :type schema_prop: str
+
+
+
+   .. py:method:: from_input_mappings(input_mappings)
+      :classmethod:
+
+
+      Creates a json_schema for the input schema of the node from it's input mappings.
+
+      :param input_mappings: The input mappings for the node.
+      :type input_mappings: List[WorkflowNodeInputMapping]
 
 
 
@@ -2293,7 +2314,7 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNode(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
+.. py:class:: WorkflowGraphNode(name, function = None, input_mappings = None, output_mappings = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -2427,7 +2448,7 @@ Package Contents
 
 
    .. py:attribute:: edges
-      :type:  List[WorkflowGraphEdge]
+      :type:  List[Union[WorkflowGraphEdge, Tuple[WorkflowGraphNode, WorkflowGraphNode, dict], Tuple[str, str, dict]]]
       :value: []
 
 
@@ -2442,6 +2463,9 @@ Package Contents
       :type:  str
       :value: None
 
+
+
+   .. py:method:: __post_init__()
 
 
    .. py:method:: to_dict()
@@ -6562,6 +6586,16 @@ Package Contents
 
 
 
+   .. py:attribute:: QWEN_2_5_32B_BASE
+      :value: 'QWEN_2_5_32B_BASE'
+
+
+
+   .. py:attribute:: QWEN_2_5_72B
+      :value: 'QWEN_2_5_72B'
+
+
+
    .. py:attribute:: QWQ_32B
       :value: 'QWQ_32B'
 
@@ -6854,6 +6888,11 @@ Package Contents
 
    .. py:attribute:: IGNORE
       :value: 'IGNORE'
+
+
+
+   .. py:attribute:: CONSTANT
+      :value: 'CONSTANT'
 
 
 
@@ -16464,7 +16503,7 @@ Package Contents
 
    .. py:method:: extract_document_data(document = None, doc_id = None, document_processing_config = None, start_page = None, end_page = None, return_extracted_page_text = False)
 
-      Extracts data from a document.
+      Extracts data from a document using either OCR (for scanned documents/images) or embedded text extraction (for digital documents like .docx). Configure the extraction method through DocumentProcessingConfig
 
       :param document: The document to extract data from. One of document or doc_id must be provided.
       :type document: io.TextIOBase
@@ -20116,7 +20155,7 @@ Package Contents
       :param json_response_schema: A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter. description (str) (required): Description of the parameter. is_required (bool) (optional): Whether the parameter is required or not. Example: json_response_schema = {'title': {'type': 'string', 'description': 'Article title', 'is_required': true}, 'body': {'type': 'string', 'description': 'Article body'}}
       :type json_response_schema: dict
       :param stop_sequences: Specifies the strings on which the LLM will stop generation.
-      :type stop_sequences: list
+      :type stop_sequences: List
       :param top_p: The nucleus sampling value used for this run. If set, the model will sample from the smallest set of tokens whose cumulative probability exceeds the probability `top_p`. Default is 1.0. A range of 0.0 - 1.0 is allowed. It is generally recommended to use either temperature sampling or nucleus sampling, but not both.
       :type top_p: float
 
@@ -22847,7 +22886,7 @@ Package Contents
 
 .. py:data:: _request_context
 
-.. py:class:: CodeAutocompleteResponse(client, autocompleteResponse=None)
+.. py:class:: CodeAutocompleteResponse(client, autocompleteResponse=None, showAutocomplete=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -22858,9 +22897,16 @@ Package Contents
    :type client: ApiClient
    :param autocompleteResponse: autocomplete code
    :type autocompleteResponse: str
+   :param showAutocomplete: Whether to show autocomplete in the client
+   :type showAutocomplete: bool
 
 
    .. py:attribute:: autocomplete_response
+      :value: None
+
+
+
+   .. py:attribute:: show_autocomplete
       :value: None
 
 
@@ -44507,6 +44553,37 @@ Package Contents
 
 
 
+.. py:class:: WorkflowGraphNode(client, workflowGraphNode={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A workflow graph node in the workflow graph.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param workflowGraphNode: The workflow graph node object.
+   :type workflowGraphNode: WorkflowGraphNode
+
+
+   .. py:attribute:: workflow_graph_node
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WorkflowNodeTemplate(client, workflowNodeTemplateId=None, name=None, functionName=None, sourceCode=None, description=None, packageRequirements=None, tags=None, additionalConfigs=None, inputs={}, outputs={}, templateConfigs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44605,6 +44682,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.23'
+   :value: '1.4.24'
 
 

@@ -225,7 +225,8 @@ from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .web_search_result import WebSearchResult
 from .webhook import Webhook
+from .workflow_graph_node import WorkflowGraphNode
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.23"
+__version__ = "1.4.24"
