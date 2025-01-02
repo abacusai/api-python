@@ -2257,6 +2257,10 @@ Module Contents
    :type solve_time_limit: float
    :param optimality_gap_limit: The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
    :type optimality_gap_limit: float
+   :param include_all_partitions: Include all partitions in the model training. Default is False.
+   :type include_all_partitions: bool
+   :param include_specific_partitions: Include specific partitions in partitioned model training. Default is empty list.
+   :type include_specific_partitions: List[str]
 
 
    .. py:attribute:: solve_time_limit
@@ -2267,6 +2271,18 @@ Module Contents
 
    .. py:attribute:: optimality_gap_limit
       :type:  float
+      :value: None
+
+
+
+   .. py:attribute:: include_all_partitions
+      :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: include_specific_partitions
+      :type:  List[str]
       :value: None
 
 

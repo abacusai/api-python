@@ -44,7 +44,9 @@ Submodules
    /autoapi/abacusai/client/index
    /autoapi/abacusai/code_autocomplete_response/index
    /autoapi/abacusai/code_bot/index
+   /autoapi/abacusai/code_edit/index
    /autoapi/abacusai/code_edit_response/index
+   /autoapi/abacusai/code_edits/index
    /autoapi/abacusai/code_source/index
    /autoapi/abacusai/compute_point_info/index
    /autoapi/abacusai/concatenation_config/index
@@ -240,7 +242,7 @@ Submodules
    /autoapi/abacusai/web_search_response/index
    /autoapi/abacusai/web_search_result/index
    /autoapi/abacusai/webhook/index
-   /autoapi/abacusai/workflow_graph_node/index
+   /autoapi/abacusai/workflow_graph_node_details/index
    /autoapi/abacusai/workflow_node_template/index
 
 
@@ -516,7 +518,9 @@ Classes
    abacusai.ReadOnlyClient
    abacusai.CodeAutocompleteResponse
    abacusai.CodeBot
+   abacusai.CodeEdit
    abacusai.CodeEditResponse
+   abacusai.CodeEdits
    abacusai.CodeSource
    abacusai.ComputePointInfo
    abacusai.ConcatenationConfig
@@ -708,7 +712,7 @@ Classes
    abacusai.WebSearchResponse
    abacusai.WebSearchResult
    abacusai.Webhook
-   abacusai.WorkflowGraphNode
+   abacusai.WorkflowGraphNodeDetails
    abacusai.WorkflowNodeTemplate
 
 
@@ -3990,6 +3994,9 @@ Package Contents
    :type include_entire_conversation_history: bool
    :param include_all_feedback: Whether to include all feedback for this deployment conversation
    :type include_all_feedback: bool
+   :param resolve_matching_documents: Whether to get matching document references for response instead of prompt.
+                                      Needs to recalculate them if highlights are unavailable in summary_info
+   :type resolve_matching_documents: bool
 
 
    .. py:attribute:: include_entire_conversation_history
@@ -3999,6 +4006,12 @@ Package Contents
 
 
    .. py:attribute:: include_all_feedback
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: resolve_matching_documents
       :type:  bool
       :value: False
 
@@ -6571,6 +6584,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GEMINI_2_FLASH_THINKING
+      :value: 'GEMINI_2_FLASH_THINKING'
+
+
+
    .. py:attribute:: ABACUS_SMAUG3
       :value: 'ABACUS_SMAUG3'
 
@@ -6608,6 +6626,11 @@ Package Contents
 
    .. py:attribute:: XAI_GROK
       :value: 'XAI_GROK'
+
+
+
+   .. py:attribute:: DEEPSEEK_V3
+      :value: 'DEEPSEEK_V3'
 
 
 
@@ -10124,6 +10147,10 @@ Package Contents
    :type solve_time_limit: float
    :param optimality_gap_limit: The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
    :type optimality_gap_limit: float
+   :param include_all_partitions: Include all partitions in the model training. Default is False.
+   :type include_all_partitions: bool
+   :param include_specific_partitions: Include specific partitions in partitioned model training. Default is empty list.
+   :type include_specific_partitions: List[str]
 
 
    .. py:attribute:: solve_time_limit
@@ -10134,6 +10161,18 @@ Package Contents
 
    .. py:attribute:: optimality_gap_limit
       :type:  float
+      :value: None
+
+
+
+   .. py:attribute:: include_all_partitions
+      :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: include_specific_partitions
+      :type:  List[str]
       :value: None
 
 
@@ -13259,7 +13298,7 @@ Package Contents
 
       Updates a DATASET Feature Group from a local Pandas DataFrame.
 
-      :param table_name: The table name to assign to the feature group created by this call
+      :param table_name: The table name of the existing feature group to update. A feature group with this name must exist and must have source type DATASET.
       :type table_name: str
       :param df: The dataframe to upload
       :type df: pandas.DataFrame
@@ -22966,6 +23005,60 @@ Package Contents
 
 
 
+.. py:class:: CodeEdit(client, filePath=None, startLine=None, endLine=None, text=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A code edit response from an LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param filePath: The path of the file to be edited.
+   :type filePath: str
+   :param startLine: The start line of the code to be replaced.
+   :type startLine: int
+   :param endLine: The end line of the code to be replaced.
+   :type endLine: int
+   :param text: The new text.
+   :type text: str
+
+
+   .. py:attribute:: file_path
+      :value: None
+
+
+
+   .. py:attribute:: start_line
+      :value: None
+
+
+
+   .. py:attribute:: end_line
+      :value: None
+
+
+
+   .. py:attribute:: text
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: CodeEditResponse(client, codeChanges=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -22980,6 +23073,39 @@ Package Contents
 
 
    .. py:attribute:: code_changes
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CodeEdits(client, codeEdits=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A code edit response from an LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param codeEdits: The code changes to be applied.
+   :type codeEdits: list[codeedit]
+
+
+   .. py:attribute:: code_edits
       :value: None
 
 
@@ -25640,7 +25766,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, history={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25659,6 +25785,8 @@ Package Contents
    :type createdAt: str
    :param lastEventCreatedAt: The timestamp at which the most recent corresponding deployment conversation event was created at.
    :type lastEventCreatedAt: str
+   :param hasHistory: Whether the deployment conversation has any history.
+   :type hasHistory: bool
    :param externalSessionId: The external session id associated with the deployment conversation.
    :type externalSessionId: str
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
@@ -25706,6 +25834,11 @@ Package Contents
 
 
    .. py:attribute:: last_event_created_at
+      :value: None
+
+
+
+   .. py:attribute:: has_history
       :value: None
 
 
@@ -44553,7 +44686,7 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNode(client, workflowGraphNode={})
+.. py:class:: WorkflowGraphNodeDetails(client, workflowGraphNode={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44682,6 +44815,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.24'
+   :value: '1.4.25'
 
 

@@ -177,9 +177,12 @@ class AbacusUsageMetricsDatasetConfig(ApplicationConnectorDatasetConfig):
     Args:
         include_entire_conversation_history (bool): Whether to show the entire history for this deployment conversation
         include_all_feedback (bool): Whether to include all feedback for this deployment conversation
+        resolve_matching_documents (bool): Whether to get matching document references for response instead of prompt.
+                                           Needs to recalculate them if highlights are unavailable in summary_info
     """
     include_entire_conversation_history: bool = dataclasses.field(default=False)
     include_all_feedback: bool = dataclasses.field(default=False)
+    resolve_matching_documents: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.ABACUSUSAGEMETRICS

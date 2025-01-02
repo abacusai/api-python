@@ -13,6 +13,7 @@ class DeploymentConversation(AbstractApiClass):
             deploymentId (str): The deployment id associated with the deployment conversation.
             createdAt (str): The timestamp at which the deployment conversation was created.
             lastEventCreatedAt (str): The timestamp at which the most recent corresponding deployment conversation event was created at.
+            hasHistory (bool): Whether the deployment conversation has any history.
             externalSessionId (str): The external session id associated with the deployment conversation.
             regenerateAttempt (int): The sequence number of regeneration. Not regenerated if 0.
             externalApplicationId (str): The external application id associated with the deployment conversation.
@@ -27,13 +28,14 @@ class DeploymentConversation(AbstractApiClass):
             history (DeploymentConversationEvent): The history of the deployment conversation.
     """
 
-    def __init__(self, client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, history={}):
+    def __init__(self, client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, history={}):
         super().__init__(client, deploymentConversationId)
         self.deployment_conversation_id = deploymentConversationId
         self.name = name
         self.deployment_id = deploymentId
         self.created_at = createdAt
         self.last_event_created_at = lastEventCreatedAt
+        self.has_history = hasHistory
         self.external_session_id = externalSessionId
         self.regenerate_attempt = regenerateAttempt
         self.external_application_id = externalApplicationId
@@ -50,8 +52,8 @@ class DeploymentConversation(AbstractApiClass):
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'created_at': repr(self.created_at), f'last_event_created_at': repr(self.last_event_created_at), f'external_session_id': repr(self.external_session_id), f'regenerate_attempt': repr(self.regenerate_attempt), f'external_application_id': repr(self.external_application_id), f'unused_document_upload_ids': repr(
-            self.unused_document_upload_ids), f'humanize_instructions': repr(self.humanize_instructions), f'conversation_warning': repr(self.conversation_warning), f'conversation_type': repr(self.conversation_type), f'metadata': repr(self.metadata), f'llm_display_name': repr(self.llm_display_name), f'llm_bot_icon': repr(self.llm_bot_icon), f'search_suggestions': repr(self.search_suggestions), f'history': repr(self.history)}
+        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'created_at': repr(self.created_at), f'last_event_created_at': repr(self.last_event_created_at), f'has_history': repr(self.has_history), f'external_session_id': repr(self.external_session_id), f'regenerate_attempt': repr(self.regenerate_attempt), f'external_application_id': repr(
+            self.external_application_id), f'unused_document_upload_ids': repr(self.unused_document_upload_ids), f'humanize_instructions': repr(self.humanize_instructions), f'conversation_warning': repr(self.conversation_warning), f'conversation_type': repr(self.conversation_type), f'metadata': repr(self.metadata), f'llm_display_name': repr(self.llm_display_name), f'llm_bot_icon': repr(self.llm_bot_icon), f'search_suggestions': repr(self.search_suggestions), f'history': repr(self.history)}
         class_name = "DeploymentConversation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -64,8 +66,8 @@ class DeploymentConversation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'created_at': self.created_at, 'last_event_created_at': self.last_event_created_at, 'external_session_id': self.external_session_id, 'regenerate_attempt': self.regenerate_attempt, 'external_application_id': self.external_application_id, 'unused_document_upload_ids':
-                self.unused_document_upload_ids, 'humanize_instructions': self.humanize_instructions, 'conversation_warning': self.conversation_warning, 'conversation_type': self.conversation_type, 'metadata': self.metadata, 'llm_display_name': self.llm_display_name, 'llm_bot_icon': self.llm_bot_icon, 'search_suggestions': self.search_suggestions, 'history': self._get_attribute_as_dict(self.history)}
+        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'created_at': self.created_at, 'last_event_created_at': self.last_event_created_at, 'has_history': self.has_history, 'external_session_id': self.external_session_id, 'regenerate_attempt': self.regenerate_attempt, 'external_application_id': self.external_application_id,
+                'unused_document_upload_ids': self.unused_document_upload_ids, 'humanize_instructions': self.humanize_instructions, 'conversation_warning': self.conversation_warning, 'conversation_type': self.conversation_type, 'metadata': self.metadata, 'llm_display_name': self.llm_display_name, 'llm_bot_icon': self.llm_bot_icon, 'search_suggestions': self.search_suggestions, 'history': self._get_attribute_as_dict(self.history)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def get(self, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False):

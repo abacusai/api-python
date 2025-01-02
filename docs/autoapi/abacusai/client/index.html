@@ -87,7 +87,9 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_response/index.html">abacusai.code_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_bot/index.html">abacusai.code_bot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_edit/index.html">abacusai.code_edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_edit_response/index.html">abacusai.code_edit_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_edits/index.html">abacusai.code_edits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
@@ -283,7 +285,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../workflow_graph_node/index.html">abacusai.workflow_graph_node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../workflow_graph_node_details/index.html">abacusai.workflow_graph_node_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
 </ul>
 </li>
@@ -1016,7 +1018,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.24'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.25'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4599,7 +4601,7 @@ Updates an existing dataset from a pandas dataframe</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The table name to assign to the feature group created by this call</p></li>
+<li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The table name of the existing feature group to update. A feature group with this name must exist and must have source type DATASET.</p></li>
 <li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to upload</p></li>
 <li><p><strong>clean_column_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, the dataframe’s column names will be automatically cleaned to be complaint with Abacus.AI’s column requirements. Otherwise it will raise a ValueError.</p></li>
 </ul>

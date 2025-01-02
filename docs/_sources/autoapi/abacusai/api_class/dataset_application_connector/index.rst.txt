@@ -370,6 +370,9 @@ Module Contents
    :type include_entire_conversation_history: bool
    :param include_all_feedback: Whether to include all feedback for this deployment conversation
    :type include_all_feedback: bool
+   :param resolve_matching_documents: Whether to get matching document references for response instead of prompt.
+                                      Needs to recalculate them if highlights are unavailable in summary_info
+   :type resolve_matching_documents: bool
 
 
    .. py:attribute:: include_entire_conversation_history
@@ -379,6 +382,12 @@ Module Contents
 
 
    .. py:attribute:: include_all_feedback
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: resolve_matching_documents
       :type:  bool
       :value: False
 

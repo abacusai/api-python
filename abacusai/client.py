@@ -181,7 +181,6 @@ from .user import User
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .webhook import Webhook
-from .workflow_graph_node import WorkflowGraphNode
 from .workflow_node_template import WorkflowNodeTemplate
 
 
@@ -636,7 +635,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.24'
+    client_version = '1.4.25'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2979,7 +2978,7 @@ class ApiClient(ReadOnlyClient):
         """Updates a DATASET Feature Group from a local Pandas DataFrame.
 
         Args:
-            table_name (str): The table name to assign to the feature group created by this call
+            table_name (str): The table name of the existing feature group to update. A feature group with this name must exist and must have source type DATASET.
             df (pandas.DataFrame): The dataframe to upload
             clean_column_names (bool): If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
         """

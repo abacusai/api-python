@@ -87,7 +87,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../client/index.html">abacusai.client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../code_autocomplete_response/index.html">abacusai.code_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../code_bot/index.html">abacusai.code_bot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../code_edit/index.html">abacusai.code_edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../code_edit_response/index.html">abacusai.code_edit_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../code_edits/index.html">abacusai.code_edits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../code_source/index.html">abacusai.code_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../concatenation_config/index.html">abacusai.concatenation_config</a></li>
@@ -283,7 +285,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../webhook/index.html">abacusai.webhook</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../workflow_graph_node/index.html">abacusai.workflow_graph_node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../workflow_graph_node_details/index.html">abacusai.workflow_graph_node_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
 </ul>
 </li>
@@ -2254,6 +2256,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>solve_time_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.</p></li>
 <li><p><strong>optimality_gap_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.</p></li>
+<li><p><strong>include_all_partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Include all partitions in the model training. Default is False.</p></li>
+<li><p><strong>include_specific_partitions</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – Include specific partitions in partitioned model training. Default is empty list.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2265,6 +2269,16 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.OptimizationTrainingConfig.optimality_gap_limit">
 <span class="sig-name descname"><span class="pre">optimality_gap_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.OptimizationTrainingConfig.optimality_gap_limit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.OptimizationTrainingConfig.include_all_partitions">
+<span class="sig-name descname"><span class="pre">include_all_partitions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.OptimizationTrainingConfig.include_all_partitions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.OptimizationTrainingConfig.include_specific_partitions">
+<span class="sig-name descname"><span class="pre">include_specific_partitions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.OptimizationTrainingConfig.include_specific_partitions" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

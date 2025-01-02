@@ -2726,6 +2726,9 @@ Package Contents
    :type include_entire_conversation_history: bool
    :param include_all_feedback: Whether to include all feedback for this deployment conversation
    :type include_all_feedback: bool
+   :param resolve_matching_documents: Whether to get matching document references for response instead of prompt.
+                                      Needs to recalculate them if highlights are unavailable in summary_info
+   :type resolve_matching_documents: bool
 
 
    .. py:attribute:: include_entire_conversation_history
@@ -2735,6 +2738,12 @@ Package Contents
 
 
    .. py:attribute:: include_all_feedback
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: resolve_matching_documents
       :type:  bool
       :value: False
 
@@ -5505,6 +5514,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GEMINI_2_FLASH_THINKING
+      :value: 'GEMINI_2_FLASH_THINKING'
+
+
+
    .. py:attribute:: ABACUS_SMAUG3
       :value: 'ABACUS_SMAUG3'
 
@@ -5542,6 +5556,11 @@ Package Contents
 
    .. py:attribute:: XAI_GROK
       :value: 'XAI_GROK'
+
+
+
+   .. py:attribute:: DEEPSEEK_V3
+      :value: 'DEEPSEEK_V3'
 
 
 
@@ -9446,6 +9465,10 @@ Package Contents
    :type solve_time_limit: float
    :param optimality_gap_limit: The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
    :type optimality_gap_limit: float
+   :param include_all_partitions: Include all partitions in the model training. Default is False.
+   :type include_all_partitions: bool
+   :param include_specific_partitions: Include specific partitions in partitioned model training. Default is empty list.
+   :type include_specific_partitions: List[str]
 
 
    .. py:attribute:: solve_time_limit
@@ -9456,6 +9479,18 @@ Package Contents
 
    .. py:attribute:: optimality_gap_limit
       :type:  float
+      :value: None
+
+
+
+   .. py:attribute:: include_all_partitions
+      :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: include_specific_partitions
+      :type:  List[str]
       :value: None
 
 

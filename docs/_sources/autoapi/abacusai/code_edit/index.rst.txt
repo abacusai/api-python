@@ -1,0 +1,71 @@
+abacusai.code_edit
+==================
+
+.. py:module:: abacusai.code_edit
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.code_edit.CodeEdit
+
+
+Module Contents
+---------------
+
+.. py:class:: CodeEdit(client, filePath=None, startLine=None, endLine=None, text=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A code edit response from an LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param filePath: The path of the file to be edited.
+   :type filePath: str
+   :param startLine: The start line of the code to be replaced.
+   :type startLine: int
+   :param endLine: The end line of the code to be replaced.
+   :type endLine: int
+   :param text: The new text.
+   :type text: str
+
+
+   .. py:attribute:: file_path
+      :value: None
+
+
+
+   .. py:attribute:: start_line
+      :value: None
+
+
+
+   .. py:attribute:: end_line
+      :value: None
+
+
+
+   .. py:attribute:: text
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

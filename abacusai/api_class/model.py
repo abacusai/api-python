@@ -800,10 +800,13 @@ class OptimizationTrainingConfig(TrainingConfig):
     Args:
         solve_time_limit (float): The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
         optimality_gap_limit (float): The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
-
+        include_all_partitions (bool): Include all partitions in the model training. Default is False.
+        include_specific_partitions (List[str]): Include specific partitions in partitioned model training. Default is empty list.
     """
     solve_time_limit: float = dataclasses.field(default=None)
     optimality_gap_limit: float = dataclasses.field(default=None)
+    include_all_partitions: bool = dataclasses.field(default=None)
+    include_specific_partitions: List[str] = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.OPTIMIZATION
