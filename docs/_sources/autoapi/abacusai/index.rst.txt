@@ -5409,6 +5409,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GIF
+      :value: 'GIF'
+
+
+
    .. py:attribute:: JPEG
       :value: 'JPG'
 
@@ -5481,6 +5486,11 @@ Package Contents
 
    .. py:attribute:: MPEG
       :value: 'mpeg'
+
+
+
+   .. py:attribute:: WEBP
+      :value: 'webp'
 
 
 
@@ -13230,6 +13240,9 @@ Package Contents
 
 
 
+   .. py:method:: __getattr__(item)
+
+
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False, include_tb = False)
 
    Bases: :py:obj:`ReadOnlyClient`
@@ -20187,7 +20200,7 @@ Package Contents
       :type max_tokens: int
       :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
       :type temperature: float
-      :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
+      :param messages: A list of messages to use as conversation history. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
       :type messages: list
       :param response_type: Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
       :type response_type: str
@@ -22965,7 +22978,7 @@ Package Contents
 
 
 
-.. py:class:: CodeBot(client, llmName=None, name=None)
+.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -22978,6 +22991,8 @@ Package Contents
    :type llmName: str
    :param name: The name of the bot.
    :type name: str
+   :param imageUploadSupported: Whether the LLM supports image upload.
+   :type imageUploadSupported: bool
 
 
    .. py:attribute:: llm_name
@@ -22986,6 +23001,11 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: image_upload_supported
       :value: None
 
 
@@ -23382,7 +23402,7 @@ Package Contents
 
 
 
-.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None)
+.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, experimentalFeatures=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23403,6 +23423,8 @@ Package Contents
    :type enableWebSearch: bool
    :param enablePlayground: Whether or not playground is enabled.
    :type enablePlayground: bool
+   :param experimentalFeatures: Experimental features.
+   :type experimentalFeatures: dict
 
 
    .. py:attribute:: user_information_instructions
@@ -23431,6 +23453,11 @@ Package Contents
 
 
    .. py:attribute:: enable_playground
+      :value: None
+
+
+
+   .. py:attribute:: experimental_features
       :value: None
 
 
@@ -44686,7 +44713,7 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNodeDetails(client, workflowGraphNode={})
+.. py:class:: WorkflowGraphNodeDetails(client, packageRequirements=None, workflowGraphNode={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44695,8 +44722,15 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param packageRequirements: A list of package requirements that the node source code will need.
+   :type packageRequirements: list[str]
    :param workflowGraphNode: The workflow graph node object.
    :type workflowGraphNode: WorkflowGraphNode
+
+
+   .. py:attribute:: package_requirements
+      :value: None
+
 
 
    .. py:attribute:: workflow_graph_node
@@ -44815,6 +44849,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.25'
+   :value: '1.4.26'
 
 

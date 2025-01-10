@@ -204,6 +204,7 @@ class FileFormat(ApiEnum):
     PDF = 'PDF'
     MD = 'md'
     RAR = 'RAR'
+    GIF = 'GIF'
     JPEG = 'JPG'
     PNG = 'PNG'
     TIF = 'TIFF'
@@ -219,6 +220,7 @@ class FileFormat(ApiEnum):
     MOV = 'mov'
     MPG = 'mpg'
     MPEG = 'mpeg'
+    WEBP = 'webp'
     WEBM = 'webm'
     WMV = 'wmv'
     MSG = 'msg'
@@ -460,7 +462,7 @@ class VectorStoreTextEncoder(ApiEnum):
     CODE_BERT = 'CODE_BERT'
 
 
-@deprecated_enums('OPENAI_GPT4_32K', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT', 'LLAMA3_LARGE_CHAT', 'CLAUDE_V3_OPUS', 'CLAUDE_V3_SONNET')
+@deprecated_enums('OPENAI_GPT4_32K', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT', 'LLAMA3_LARGE_CHAT', 'CLAUDE_V3_OPUS', 'CLAUDE_V3_SONNET', 'OPENAI_GPT4', 'OPENAI_GPT4_128K')
 class LLMName(ApiEnum):
     OPENAI_GPT4 = 'OPENAI_GPT4'
     OPENAI_GPT4_32K = 'OPENAI_GPT4_32K'

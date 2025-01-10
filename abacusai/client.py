@@ -302,6 +302,14 @@ class AgentResponse:
                     result[k] = v
         return result
 
+    def __getattr__(self, item):
+        for section_data in self.section_data_list:
+            for k, v in section_data.items():
+                if k == item:
+                    return v
+        raise AttributeError(
+            f"'{self.__class__.__name__}' object has no attribute '{item}'")
+
 
 class ClientOptions:
     """
@@ -635,7 +643,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.25'
+    client_version = '1.4.26'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -8650,7 +8658,7 @@ Creates a new feature group defined as the union of other feature group versions
             llm_name (LLMName): Name of the underlying LLM to be used for generation. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
             temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
-            messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
+            messages (list): A list of messages to use as conversation history. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
             response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
             json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter. description (str) (required): Description of the parameter. is_required (bool) (optional): Whether the parameter is required or not. Example: json_response_schema = {'title': {'type': 'string', 'description': 'Article title', 'is_required': true}, 'body': {'type': 'string', 'description': 'Article body'}}
             stop_sequences (List): Specifies the strings on which the LLM will stop generation.

@@ -121,6 +121,9 @@ Module Contents
 
 
 
+   .. py:method:: __getattr__(item)
+
+
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
    Options for configuring the ApiClient
@@ -569,7 +572,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.25'
+      :value: '1.4.26'
 
 
 
@@ -10001,7 +10004,7 @@ Module Contents
       :type max_tokens: int
       :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
       :type temperature: float
-      :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
+      :param messages: A list of messages to use as conversation history. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text. attachments (list): The files attached to the message represented as a list of dictionaries [{"doc_id": <doc_id1>}, {"doc_id": <doc_id2>}]
       :type messages: list
       :param response_type: Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
       :type response_type: str

@@ -550,6 +550,11 @@
 <dd><p>Get a dict representation of the response object</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.AgentResponse.__getattr__">
+<span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.AgentResponse.__getattr__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1018,7 +1023,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.25'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.26'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -12516,7 +12521,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>llm_name</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.LLMName" title="abacusai.api_class.enums.LLMName"><em>LLMName</em></a>) – Name of the underlying LLM to be used for generation. Default is auto selection.</p></li>
 <li><p><strong>max_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.</p></li>
 <li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.</p></li>
-<li><p><strong>messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message’s text. attachments (list): The files attached to the message represented as a list of dictionaries [{“doc_id”: &lt;doc_id1&gt;}, {“doc_id”: &lt;doc_id2&gt;}]</p></li>
+<li><p><strong>messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of messages to use as conversation history. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message’s text. attachments (list): The files attached to the message represented as a list of dictionaries [{“doc_id”: &lt;doc_id1&gt;}, {“doc_id”: &lt;doc_id2&gt;}]</p></li>
 <li><p><strong>response_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Specifies the type of response to request from the LLM. One of ‘text’ and ‘json’. If set to ‘json’, the LLM will respond with a json formatted string whose schema can be specified <cite>json_response_schema</cite>. Defaults to ‘text’</p></li>
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when <cite>response_type</cite> is ‘json’. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter. description (str) (required): Description of the parameter. is_required (bool) (optional): Whether the parameter is required or not. Example: json_response_schema = {‘title’: {‘type’: ‘string’, ‘description’: ‘Article title’, ‘is_required’: true}, ‘body’: {‘type’: ‘string’, ‘description’: ‘Article body’}}</p></li>
 <li><p><strong>stop_sequences</strong> (<em>List</em>) – Specifies the strings on which the LLM will stop generation.</p></li>

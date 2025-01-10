@@ -359,13 +359,16 @@ class WorkflowGraphNode(ApiClass):
                 for arg, default in arg_defaults.items():
                     if arg not in input_mapping_args:
                         self.input_mappings.append(WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None))
-            elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, WorkflowNodeInputMapping) for key, value in input_mappings.items()):
+            elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, (WorkflowNodeInputMapping, WorkflowGraphNode)) for key, value in input_mappings.items()):
                 is_shortform_input_mappings = True
                 self.input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None) for arg, default in arg_defaults.items() if arg not in input_mappings]
                 for key, value in input_mappings.items():
                     if key not in arg_defaults:
                         raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{key}" not found in function "{self.function_name}".')
-                    self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=value.variable_type, variable_source=value.variable_source, source_prop=value.source_prop, is_required=arg_defaults.get(key) is None))
+                    if isinstance(value, WorkflowGraphNode):
+                        self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=enums.WorkflowNodeInputType.WORKFLOW_VARIABLE, variable_source=value.name, source_prop=key, is_required=arg_defaults.get(key) is None))
+                    else:
+                        self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=value.variable_type, variable_source=value.variable_source, source_prop=value.source_prop, is_required=arg_defaults.get(key) is None))
             else:
                 raise ValueError('workflow_graph_node', 'Invalid input mappings. Must be a list of WorkflowNodeInputMapping or a dictionary of input mappings in the form {arg_name: node_name.outputs.prop_name}.')
 
@@ -380,7 +383,7 @@ class WorkflowGraphNode(ApiClass):
 
             if input_schema is not None and is_shortform_input_mappings:
                 # If user provided input_schema and input_mappings in shortform, then we need to update the input_mappings to have the correct variable_type
-                user_input_fields = JSONSchema.to_fields_list(self.input_schema)
+                user_input_fields = JSONSchema.to_fields_list(self.input_schema.json_schema)
                 for mapping in self.input_mappings:
                     if mapping.name in user_input_fields:
                         mapping.variable_type = enums.WorkflowNodeInputType.USER_INPUT
@@ -534,7 +537,7 @@ class WorkflowGraphNode(ApiClass):
         def __getattr__(self, name):
             for mapping in self.node.output_mappings:
                 if mapping.name == name:
-                    return WorkflowNodeInputMapping(None, enums.WorkflowNodeInputType.WORKFLOW_VARIABLE, variable_source=self.node.name, source_prop=name)
+                    return WorkflowNodeInputMapping(name, enums.WorkflowNodeInputType.WORKFLOW_VARIABLE, variable_source=self.node.name, source_prop=name)
             raise AttributeError(f'Output mapping "{name}" not found in node "{self.name}".')
 
     @property
@@ -593,7 +596,7 @@ class WorkflowGraph(ApiClass):
                 if isinstance(edge, Tuple):
                     source = edge[0] if isinstance(edge[0], str) else edge[0].name
                     target = edge[1] if isinstance(edge[1], str) else edge[1].name
-                    details = edge[2] if isinstance(edge[2], dict) else None
+                    details = edge[2] if len(edge) > 2 and isinstance(edge[2], dict) else None
                     self.edges[index] = WorkflowGraphEdge(source=source, target=target, details=details)
 
     def to_dict(self):
