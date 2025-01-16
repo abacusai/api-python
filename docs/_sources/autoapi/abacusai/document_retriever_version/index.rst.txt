@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, deploymentStatus=None, featureGroupId=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={})
+.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, deploymentStatus=None, featureGroupId=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={}, documentRetrieverConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48,6 +48,8 @@ Module Contents
    :type warnings: list
    :param resolvedConfig: The resolved configurations, such as default settings, for indexing documents.
    :type resolvedConfig: DocumentRetrieverConfig
+   :param documentRetrieverConfig: The config used to create the document retriever version.
+   :type documentRetrieverConfig: DocumentRetrieverConfig
 
 
    .. py:attribute:: document_retriever_id
@@ -108,6 +110,9 @@ Module Contents
    .. py:attribute:: resolved_config
 
 
+   .. py:attribute:: document_retriever_config
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -120,6 +125,15 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+
+   .. py:method:: delete()
+
+      Delete a document retriever version.
+
+      :param document_retriever_version: A unique string identifier associated with the document retriever version.
+      :type document_retriever_version: str
 
 
 

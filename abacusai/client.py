@@ -643,7 +643,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.26'
+    client_version = '1.4.27'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -8828,6 +8828,13 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             vector_store_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('deleteDocumentRetriever', 'DELETE', query_params={'vectorStoreId': vector_store_id})
+
+    def delete_document_retriever_version(self, document_retriever_version: str):
+        """Delete a document retriever version.
+
+        Args:
+            document_retriever_version (str): A unique string identifier associated with the document retriever version."""
+        return self._call_api('deleteDocumentRetrieverVersion', 'DELETE', query_params={'documentRetrieverVersion': document_retriever_version})
 
     def get_document_snippet(self, document_retriever_id: str, document_id: str, start_word_index: int = None, end_word_index: int = None) -> DocumentRetrieverLookupResult:
         """Get a snippet from documents in the document retriever.

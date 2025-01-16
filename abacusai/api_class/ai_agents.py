@@ -104,6 +104,8 @@ class WorkflowNodeInputMapping(ApiClass):
     @classmethod
     def from_dict(cls, mapping: dict):
         validate_input_dict_param(mapping, friendly_class_name='input_mapping', must_contain=['name', 'variable_type'])
+        if not isinstance(mapping['variable_type'], str) and not isinstance(mapping['variable_type'], enums.WorkflowNodeInputType):
+            raise ValueError('input_mapping', 'Invalid variable_type. Provided argument should be of type str or WorkflowNodeInputType enum.')
         if mapping['variable_type'] not in enums.WorkflowNodeInputType.__members__:
             raise ValueError('input_mapping', f"Invalid enum argument {mapping['variable_type']}. Provided argument should be of enum type WorkflowNodeInputType.")
         return cls(
@@ -232,6 +234,8 @@ class WorkflowNodeOutputMapping(ApiClass):
     def from_dict(cls, mapping: dict):
         validate_input_dict_param(mapping, friendly_class_name='output_mapping', must_contain=['name'])
         variable_type = mapping.get('variable_type', 'ANY')
+        if not isinstance(variable_type, str) and not isinstance(variable_type, enums.WorkflowNodeOutputType):
+            raise ValueError('output_mapping', 'Invalid variable_type. Provided argument should be of type str or WorkflowNodeOutputType enum.')
         if variable_type not in enums.WorkflowNodeOutputType.__members__:
             raise ValueError('output_mapping', f'Invalid enum argument {variable_type}. Provided argument should be of enum type WorkflowNodeOutputType.')
         return cls(
@@ -335,7 +339,7 @@ class WorkflowGraphNode(ApiClass):
             try:
                 tree = ast.parse(self.source_code)
             except SyntaxError as e:
-                raise ValueError('workflow_graph_node', f'SyntaxError: "{e}"')
+                raise ValueError(f'"{name}" source code', f'SyntaxError: "{e}"')
             arg_defaults = {}
             function_found = False
             for node in ast.iter_child_nodes(tree):
@@ -345,7 +349,7 @@ class WorkflowGraphNode(ApiClass):
                     defaults = [None] * (len(input_arguments) - len(node.args.defaults)) + node.args.defaults
                     arg_defaults = dict(zip(input_arguments, defaults))
             if not function_found:
-                raise ValueError('workflow_graph_node', f'Function "{self.function_name}" not found in the provided source code.')
+                raise ValueError(f'"{name}" source code', f'Function "{self.function_name}" not found in the provided source code.')
 
             is_shortform_input_mappings = False
             if input_mappings is None:

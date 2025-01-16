@@ -21,9 +21,10 @@ class DocumentRetrieverVersion(AbstractApiClass):
             embeddingFileSize (int): The size of embedding file for the document retriever.
             warnings (list): The warning messages when creating the document retriever.
             resolvedConfig (DocumentRetrieverConfig): The resolved configurations, such as default settings, for indexing documents.
+            documentRetrieverConfig (DocumentRetrieverConfig): The config used to create the document retriever version.
     """
 
-    def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, deploymentStatus=None, featureGroupId=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={}):
+    def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, deploymentStatus=None, featureGroupId=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={}, documentRetrieverConfig={}):
         super().__init__(client, documentRetrieverVersion)
         self.document_retriever_id = documentRetrieverId
         self.document_retriever_version = documentRetrieverVersion
@@ -38,11 +39,13 @@ class DocumentRetrieverVersion(AbstractApiClass):
         self.warnings = warnings
         self.resolved_config = client._build_class(
             DocumentRetrieverConfig, resolvedConfig)
+        self.document_retriever_config = client._build_class(
+            DocumentRetrieverConfig, documentRetrieverConfig)
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'document_retriever_id': repr(self.document_retriever_id), f'document_retriever_version': repr(self.document_retriever_version), f'created_at': repr(self.created_at), f'status': repr(self.status), f'deployment_status': repr(self.deployment_status), f'feature_group_id': repr(
-            self.feature_group_id), f'feature_group_version': repr(self.feature_group_version), f'error': repr(self.error), f'number_of_chunks': repr(self.number_of_chunks), f'embedding_file_size': repr(self.embedding_file_size), f'warnings': repr(self.warnings), f'resolved_config': repr(self.resolved_config)}
+        repr_dict = {f'document_retriever_id': repr(self.document_retriever_id), f'document_retriever_version': repr(self.document_retriever_version), f'created_at': repr(self.created_at), f'status': repr(self.status), f'deployment_status': repr(self.deployment_status), f'feature_group_id': repr(self.feature_group_id), f'feature_group_version': repr(
+            self.feature_group_version), f'error': repr(self.error), f'number_of_chunks': repr(self.number_of_chunks), f'embedding_file_size': repr(self.embedding_file_size), f'warnings': repr(self.warnings), f'resolved_config': repr(self.resolved_config), f'document_retriever_config': repr(self.document_retriever_config)}
         class_name = "DocumentRetrieverVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -55,9 +58,18 @@ class DocumentRetrieverVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version, 'created_at': self.created_at, 'status': self.status, 'deployment_status': self.deployment_status, 'feature_group_id': self.feature_group_id,
-                'feature_group_version': self.feature_group_version, 'error': self.error, 'number_of_chunks': self.number_of_chunks, 'embedding_file_size': self.embedding_file_size, 'warnings': self.warnings, 'resolved_config': self._get_attribute_as_dict(self.resolved_config)}
+        resp = {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version, 'created_at': self.created_at, 'status': self.status, 'deployment_status': self.deployment_status, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version,
+                'error': self.error, 'number_of_chunks': self.number_of_chunks, 'embedding_file_size': self.embedding_file_size, 'warnings': self.warnings, 'resolved_config': self._get_attribute_as_dict(self.resolved_config), 'document_retriever_config': self._get_attribute_as_dict(self.document_retriever_config)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
+
+    def delete(self):
+        """
+        Delete a document retriever version.
+
+        Args:
+            document_retriever_version (str): A unique string identifier associated with the document retriever version.
+        """
+        return self.client.delete_document_retriever_version(self.document_retriever_version)
 
     def refresh(self):
         """
