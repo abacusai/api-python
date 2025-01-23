@@ -1,0 +1,33 @@
+from .return_class import AbstractApiClass
+
+
+class AudioGenSettings(AbstractApiClass):
+    """
+        Audio generation settings
+
+        Args:
+            client (ApiClient): An authenticated API Client instance
+            model (dict): Dropdown for models available for audio generation.
+    """
+
+    def __init__(self, client, model=None):
+        super().__init__(client, None)
+        self.model = model
+        self.deprecated_keys = {}
+
+    def __repr__(self):
+        repr_dict = {f'model': repr(self.model)}
+        class_name = "AudioGenSettings"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
+        return f"{class_name}({repr_str})"
+
+    def to_dict(self):
+        """
+        Get a dict representation of the parameters in this class
+
+        Returns:
+            dict: The dict value representation of the class parameters
+        """
+        resp = {'model': self.model}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

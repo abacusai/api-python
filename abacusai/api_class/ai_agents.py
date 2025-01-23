@@ -496,6 +496,12 @@ class WorkflowGraphNode(ApiClass):
             'trigger_config': self.trigger_config.to_dict() if self.trigger_config else None
         }
 
+    def is_template_node(self):
+        return self.template_metadata is not None
+
+    def is_trigger_node(self):
+        return self.trigger_config is not None
+
     @classmethod
     def from_dict(cls, node: dict):
         validate_input_dict_param(node, friendly_class_name='workflow_graph_node', must_contain=['name', 'function_name', 'source_code'])

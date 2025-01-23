@@ -287,6 +287,15 @@ class AgentResponse:
         for key, value in kwargs.items():
             self.section_data_list.append({key: value})
 
+    def __getstate__(self):
+        """Return state values to be pickled."""
+        return {'data_list': self.data_list, 'section_data_list': self.section_data_list}
+
+    def __setstate__(self, state):
+        """Restore state from the unpickled state values."""
+        self.data_list = state['data_list']
+        self.section_data_list = state['section_data_list']
+
     def to_dict(self):
         """
         Get a dict representation of the response object
@@ -643,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.27'
+    client_version = '1.4.28'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -4668,7 +4677,7 @@ class ApiClient(ReadOnlyClient):
             name (str): The new name for the project."""
         return self._call_api('renameProject', 'PATCH', query_params={}, body={'projectId': project_id, 'name': name})
 
-    def delete_project(self, project_id: str):
+    def delete_project(self, project_id: str, force_delete: bool = False):
         """Delete a specified project from your organization.
 
         This method deletes the project, its associated trained models, and deployments. The datasets attached to the specified project remain available for use with other projects in the organization.
@@ -4679,8 +4688,9 @@ class ApiClient(ReadOnlyClient):
 
 
         Args:
-            project_id (str): The unique ID of the project to delete."""
-        return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id})
+            project_id (str): The unique ID of the project to delete.
+            force_delete (bool): If True, the project will be deleted even if it has active deployments."""
+        return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id, 'forceDelete': force_delete})
 
     def add_project_tags(self, project_id: str, tags: list):
         """This method adds a tag to a project.
@@ -8859,7 +8869,7 @@ Creates a new feature group defined as the union of other feature group versions
             document_retriever_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('restartDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id})
 
-    def get_relevant_snippets(self, doc_ids: List = None, blobs: io.TextIOBase = None, query: str = None, document_retriever_config: Union[dict, VectorStoreConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False, text: str = None) -> List[DocumentRetrieverLookupResult]:
+    def get_relevant_snippets(self, doc_ids: List = None, blobs: io.TextIOBase = None, query: str = None, document_retriever_config: Union[dict, VectorStoreConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False, text: str = None, document_processing_config: Union[dict, DocumentProcessingConfig] = None) -> List[DocumentRetrieverLookupResult]:
         """Retrieves snippets relevant to a given query from specified documents. This function supports flexible input options,
 
         allowing for retrieval from a variety of data sources including document IDs, blob data, and plain text. When multiple data
@@ -8878,7 +8888,8 @@ Creates a new feature group defined as the union of other feature group versions
             end_word_index (int): If provided, will end the snippet at the index of (of words in the document) specified.
             including_bounding_boxes (bool): If true, will include the bounding boxes of the snippets if they are available.
             text (str): Plain text from which to retrieve snippets.
+            document_processing_config (DocumentProcessingConfig): The document processing configuration used to extract text when doc_ids or blobs are provided. If provided, this will override including_bounding_boxes parameter.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
-        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, data={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config.to_dict()) if hasattr(document_retriever_config, 'to_dict') else json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text}, files=blobs, parse_type=DocumentRetrieverLookupResult)
+        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, data={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config.to_dict()) if hasattr(document_retriever_config, 'to_dict') else json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text, 'documentProcessingConfig': json.dumps(document_processing_config.to_dict()) if hasattr(document_processing_config, 'to_dict') else json.dumps(document_processing_config)}, files=blobs, parse_type=DocumentRetrieverLookupResult)

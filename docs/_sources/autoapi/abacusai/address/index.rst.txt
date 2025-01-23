@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Address(client, addressLine1=None, addressLine2=None, city=None, stateOrProvince=None, postalCode=None, country=None, additionalInfo=None)
+.. py:class:: Address(client, addressLine1=None, addressLine2=None, city=None, stateOrProvince=None, postalCode=None, country=None, additionalInfo=None, includeReverseCharge=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type country: str
    :param additionalInfo: Additional information for invoice
    :type additionalInfo: str
+   :param includeReverseCharge: Whether the organization needs the reverse charge mechanism applied to invoices.
+   :type includeReverseCharge: bool
 
 
    .. py:attribute:: address_line_1
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: additional_info
+      :value: None
+
+
+
+   .. py:attribute:: include_reverse_charge
       :value: None
 
 

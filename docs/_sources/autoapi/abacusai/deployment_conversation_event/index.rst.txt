@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -80,6 +80,8 @@ Module Contents
    :type formResponse: dict
    :param routedLlm: The LLM that was chosen by RouteLLM to generate the response.
    :type routedLlm: str
+   :param computePointsUsed: The number of compute points used for the message.
+   :type computePointsUsed: int
 
 
    .. py:attribute:: role
@@ -218,6 +220,11 @@ Module Contents
 
 
    .. py:attribute:: routed_llm
+      :value: None
+
+
+
+   .. py:attribute:: compute_points_used
       :value: None
 
 

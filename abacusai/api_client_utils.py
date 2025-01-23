@@ -106,7 +106,7 @@ class StreamingHandler(str):
                         context.streamed_section_response.append(
                             {'id': section_key, 'type': data_type, 'mime_type': 'text/plain', 'contents': value})
                 else:
-                    context.streamed_response.append(value)
+                    context.streamed_response.append(str(value))
             elif data_type == 'segment':
                 context.streamed_section_response.append(value)
 

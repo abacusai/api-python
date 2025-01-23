@@ -115,6 +115,18 @@ Module Contents
 
 
 
+   .. py:method:: __getstate__()
+
+      Return state values to be pickled.
+
+
+
+   .. py:method:: __setstate__(state)
+
+      Restore state from the unpickled state values.
+
+
+
    .. py:method:: to_dict()
 
       Get a dict representation of the response object
@@ -572,7 +584,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.27'
+      :value: '1.4.28'
 
 
 
@@ -4489,7 +4501,7 @@ Module Contents
 
 
 
-   .. py:method:: delete_project(project_id)
+   .. py:method:: delete_project(project_id, force_delete = False)
 
       Delete a specified project from your organization.
 
@@ -4502,6 +4514,8 @@ Module Contents
 
       :param project_id: The unique ID of the project to delete.
       :type project_id: str
+      :param force_delete: If True, the project will be deleted even if it has active deployments.
+      :type force_delete: bool
 
 
 
@@ -10277,7 +10291,7 @@ Module Contents
 
 
 
-   .. py:method:: get_relevant_snippets(doc_ids = None, blobs = None, query = None, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False, text = None)
+   .. py:method:: get_relevant_snippets(doc_ids = None, blobs = None, query = None, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False, text = None, document_processing_config = None)
 
       Retrieves snippets relevant to a given query from specified documents. This function supports flexible input options,
 
@@ -10307,6 +10321,8 @@ Module Contents
       :type including_bounding_boxes: bool
       :param text: Plain text from which to retrieve snippets.
       :type text: str
+      :param document_processing_config: The document processing configuration used to extract text when doc_ids or blobs are provided. If provided, this will override including_bounding_boxes parameter.
+      :type document_processing_config: DocumentProcessingConfig
 
       :returns: The snippets found from the documents.
       :rtype: list[DocumentRetrieverLookupResult]

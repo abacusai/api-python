@@ -81,7 +81,7 @@ class Project(AbstractApiClass):
         """
         return self.client.rename_project(self.project_id, name)
 
-    def delete(self):
+    def delete(self, force_delete: bool = False):
         """
         Delete a specified project from your organization.
 
@@ -93,9 +93,9 @@ class Project(AbstractApiClass):
 
 
         Args:
-            project_id (str): The unique ID of the project to delete.
+            force_delete (bool): If True, the project will be deleted even if it has active deployments.
         """
-        return self.client.delete_project(self.project_id)
+        return self.client.delete_project(self.project_id, force_delete)
 
     def add_tags(self, tags: list):
         """

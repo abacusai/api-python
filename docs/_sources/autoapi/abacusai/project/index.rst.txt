@@ -113,7 +113,7 @@ Module Contents
 
 
 
-   .. py:method:: delete()
+   .. py:method:: delete(force_delete = False)
 
       Delete a specified project from your organization.
 
@@ -124,8 +124,8 @@ Module Contents
       Note: All projects, models, and deployments cannot be recovered once they are deleted.
 
 
-      :param project_id: The unique ID of the project to delete.
-      :type project_id: str
+      :param force_delete: If True, the project will be deleted even if it has active deployments.
+      :type force_delete: bool
 
 
 

@@ -35,9 +35,10 @@ class DeploymentConversationEvent(AbstractApiClass):
             llmBotIcon (str): The icon location of the LLM model used to generate the response. Only used for system-created bots.
             formResponse (dict): Contains form data response from the user when a Form Segment is given out by the bot.
             routedLlm (str): The LLM that was chosen by RouteLLM to generate the response.
+            computePointsUsed (int): The number of compute points used for the message.
     """
 
-    def __init__(self, client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None):
+    def __init__(self, client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None):
         super().__init__(client, None)
         self.role = role
         self.text = text
@@ -67,11 +68,12 @@ class DeploymentConversationEvent(AbstractApiClass):
         self.llm_bot_icon = llmBotIcon
         self.form_response = formResponse
         self.routed_llm = routedLlm
+        self.compute_points_used = computePointsUsed
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'message_index': repr(self.message_index), f'regenerate_attempt': repr(self.regenerate_attempt), f'model_version': repr(self.model_version), f'search_results': repr(self.search_results), f'is_useful': repr(self.is_useful), f'feedback': repr(self.feedback), f'feedback_type': repr(self.feedback_type), f'doc_infos': repr(self.doc_infos), f'keyword_arguments': repr(self.keyword_arguments), f'input_params': repr(self.input_params), f'attachments': repr(self.attachments), f'response_version': repr(
-            self.response_version), f'agent_workflow_node_id': repr(self.agent_workflow_node_id), f'next_agent_workflow_node_id': repr(self.next_agent_workflow_node_id), f'chat_type': repr(self.chat_type), f'agent_response': repr(self.agent_response), f'error': repr(self.error), f'segments': repr(self.segments), f'streamed_data': repr(self.streamed_data), f'streamed_section_data': repr(self.streamed_section_data), f'highlights': repr(self.highlights), f'llm_display_name': repr(self.llm_display_name), f'llm_bot_icon': repr(self.llm_bot_icon), f'form_response': repr(self.form_response), f'routed_llm': repr(self.routed_llm)}
+        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'message_index': repr(self.message_index), f'regenerate_attempt': repr(self.regenerate_attempt), f'model_version': repr(self.model_version), f'search_results': repr(self.search_results), f'is_useful': repr(self.is_useful), f'feedback': repr(self.feedback), f'feedback_type': repr(self.feedback_type), f'doc_infos': repr(self.doc_infos), f'keyword_arguments': repr(self.keyword_arguments), f'input_params': repr(self.input_params), f'attachments': repr(self.attachments), f'response_version': repr(self.response_version), f'agent_workflow_node_id': repr(
+            self.agent_workflow_node_id), f'next_agent_workflow_node_id': repr(self.next_agent_workflow_node_id), f'chat_type': repr(self.chat_type), f'agent_response': repr(self.agent_response), f'error': repr(self.error), f'segments': repr(self.segments), f'streamed_data': repr(self.streamed_data), f'streamed_section_data': repr(self.streamed_section_data), f'highlights': repr(self.highlights), f'llm_display_name': repr(self.llm_display_name), f'llm_bot_icon': repr(self.llm_bot_icon), f'form_response': repr(self.form_response), f'routed_llm': repr(self.routed_llm), f'compute_points_used': repr(self.compute_points_used)}
         class_name = "DeploymentConversationEvent"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -85,5 +87,5 @@ class DeploymentConversationEvent(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'message_index': self.message_index, 'regenerate_attempt': self.regenerate_attempt, 'model_version': self.model_version, 'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback, 'feedback_type': self.feedback_type, 'doc_infos': self.doc_infos, 'keyword_arguments': self.keyword_arguments, 'input_params': self.input_params, 'attachments': self.attachments, 'response_version': self.response_version,
-                'agent_workflow_node_id': self.agent_workflow_node_id, 'next_agent_workflow_node_id': self.next_agent_workflow_node_id, 'chat_type': self.chat_type, 'agent_response': self.agent_response, 'error': self.error, 'segments': self.segments, 'streamed_data': self.streamed_data, 'streamed_section_data': self.streamed_section_data, 'highlights': self.highlights, 'llm_display_name': self.llm_display_name, 'llm_bot_icon': self.llm_bot_icon, 'form_response': self.form_response, 'routed_llm': self.routed_llm}
+                'agent_workflow_node_id': self.agent_workflow_node_id, 'next_agent_workflow_node_id': self.next_agent_workflow_node_id, 'chat_type': self.chat_type, 'agent_response': self.agent_response, 'error': self.error, 'segments': self.segments, 'streamed_data': self.streamed_data, 'streamed_section_data': self.streamed_section_data, 'highlights': self.highlights, 'llm_display_name': self.llm_display_name, 'llm_bot_icon': self.llm_bot_icon, 'form_response': self.form_response, 'routed_llm': self.routed_llm, 'compute_points_used': self.compute_points_used}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

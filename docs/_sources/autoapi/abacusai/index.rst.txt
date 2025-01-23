@@ -32,6 +32,7 @@ Submodules
    /autoapi/abacusai/app_user_group/index
    /autoapi/abacusai/app_user_group_sign_in_token/index
    /autoapi/abacusai/application_connector/index
+   /autoapi/abacusai/audio_gen_settings/index
    /autoapi/abacusai/batch_prediction/index
    /autoapi/abacusai/batch_prediction_version/index
    /autoapi/abacusai/batch_prediction_version_logs/index
@@ -503,6 +504,7 @@ Classes
    abacusai.AppUserGroup
    abacusai.AppUserGroupSignInToken
    abacusai.ApplicationConnector
+   abacusai.AudioGenSettings
    abacusai.BatchPrediction
    abacusai.BatchPredictionVersion
    abacusai.BatchPredictionVersionLogs
@@ -777,7 +779,7 @@ Package Contents
 
 
 
-.. py:class:: Address(client, addressLine1=None, addressLine2=None, city=None, stateOrProvince=None, postalCode=None, country=None, additionalInfo=None)
+.. py:class:: Address(client, addressLine1=None, addressLine2=None, city=None, stateOrProvince=None, postalCode=None, country=None, additionalInfo=None, includeReverseCharge=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -800,6 +802,8 @@ Package Contents
    :type country: str
    :param additionalInfo: Additional information for invoice
    :type additionalInfo: str
+   :param includeReverseCharge: Whether the organization needs the reverse charge mechanism applied to invoices.
+   :type includeReverseCharge: bool
 
 
    .. py:attribute:: address_line_1
@@ -833,6 +837,11 @@ Package Contents
 
 
    .. py:attribute:: additional_info
+      :value: None
+
+
+
+   .. py:attribute:: include_reverse_charge
       :value: None
 
 
@@ -2370,6 +2379,12 @@ Package Contents
       Keys of response dictionary are converted to camel case.
       This also validates the fields ( type, value, etc ) received in the dictionary.
 
+
+
+   .. py:method:: is_template_node()
+
+
+   .. py:method:: is_trigger_node()
 
 
    .. py:method:: from_dict(node)
@@ -6641,6 +6656,11 @@ Package Contents
 
    .. py:attribute:: DEEPSEEK_V3
       :value: 'DEEPSEEK_V3'
+
+
+
+   .. py:attribute:: DEEPSEEK_R1
+      :value: 'DEEPSEEK_R1'
 
 
 
@@ -11930,6 +11950,39 @@ Package Contents
 
 
 
+.. py:class:: AudioGenSettings(client, model=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Audio generation settings
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param model: Dropdown for models available for audio generation.
+   :type model: dict
+
+
+   .. py:attribute:: model
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -13231,6 +13284,18 @@ Package Contents
 
    .. py:attribute:: section_data_list
       :value: []
+
+
+
+   .. py:method:: __getstate__()
+
+      Return state values to be pickled.
+
+
+
+   .. py:method:: __setstate__(state)
+
+      Restore state from the unpickled state values.
 
 
 
@@ -14685,7 +14750,7 @@ Package Contents
 
 
 
-   .. py:method:: delete_project(project_id)
+   .. py:method:: delete_project(project_id, force_delete = False)
 
       Delete a specified project from your organization.
 
@@ -14698,6 +14763,8 @@ Package Contents
 
       :param project_id: The unique ID of the project to delete.
       :type project_id: str
+      :param force_delete: If True, the project will be deleted even if it has active deployments.
+      :type force_delete: bool
 
 
 
@@ -20473,7 +20540,7 @@ Package Contents
 
 
 
-   .. py:method:: get_relevant_snippets(doc_ids = None, blobs = None, query = None, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False, text = None)
+   .. py:method:: get_relevant_snippets(doc_ids = None, blobs = None, query = None, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False, text = None, document_processing_config = None)
 
       Retrieves snippets relevant to a given query from specified documents. This function supports flexible input options,
 
@@ -20503,6 +20570,8 @@ Package Contents
       :type including_bounding_boxes: bool
       :param text: Plain text from which to retrieve snippets.
       :type text: str
+      :param document_processing_config: The document processing configuration used to extract text when doc_ids or blobs are provided. If provided, this will override including_bounding_boxes parameter.
+      :type document_processing_config: DocumentProcessingConfig
 
       :returns: The snippets found from the documents.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -23121,7 +23190,7 @@ Package Contents
 
 
 
-.. py:class:: CodeEdits(client, codeEdits=None)
+.. py:class:: CodeEdits(client, codeEdits=None, codeChanges=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23132,9 +23201,16 @@ Package Contents
    :type client: ApiClient
    :param codeEdits: The code changes to be applied.
    :type codeEdits: list[codeedit]
+   :param codeChanges: The code changes to be applied.
+   :type codeChanges: list
 
 
    .. py:attribute:: code_edits
+      :value: None
+
+
+
+   .. py:attribute:: code_changes
       :value: None
 
 
@@ -26048,7 +26124,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26113,6 +26189,8 @@ Package Contents
    :type formResponse: dict
    :param routedLlm: The LLM that was chosen by RouteLLM to generate the response.
    :type routedLlm: str
+   :param computePointsUsed: The number of compute points used for the message.
+   :type computePointsUsed: int
 
 
    .. py:attribute:: role
@@ -26251,6 +26329,11 @@ Package Contents
 
 
    .. py:attribute:: routed_llm
+      :value: None
+
+
+
+   .. py:attribute:: compute_points_used
       :value: None
 
 
@@ -40849,7 +40932,7 @@ Package Contents
 
 
 
-   .. py:method:: delete()
+   .. py:method:: delete(force_delete = False)
 
       Delete a specified project from your organization.
 
@@ -40860,8 +40943,8 @@ Package Contents
       Note: All projects, models, and deployments cannot be recovered once they are deleted.
 
 
-      :param project_id: The unique ID of the project to delete.
-      :type project_id: str
+      :param force_delete: If True, the project will be deleted even if it has active deployments.
+      :type force_delete: bool
 
 
 
@@ -44872,6 +44955,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.27'
+   :value: '1.4.28'
 
 
