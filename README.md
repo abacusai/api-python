@@ -1,32 +1,32 @@
-Abacus.AI API Python API Client [![PyPI version](https://badge.fury.io/py/abacusai.svg)](https://badge.fury.io/py/abacusai)
+ABACUS.AI API PYTHON API CLIENT [![PyPI version](https://badge.fury.io/py/abacusai.svg)](https://badge.fury.io/py/abacusai)
 ============
 
-The official Python API Client Library for Abacus.AI.
+THE OFFICIAL PYTHON API CLIENT LIBRARY FOR ABACUS.AI. (Summary: Introduces the main purpose of the library)
 
-## Install
+## INSTALL
 
 ```console
 $ pip install abacusai
 ```
 
-## Getting Started
+## GETTING STARTED
 
-### Calling an API
+### CALLING AN API
 
-To call an API, you must first instantiate an `ApiClient`.
+TO CALL AN API, YOU MUST FIRST INSTANTIATE AN `ApiClient`. (Summary: Explains first step for API usage)
 
 ```python
 from abacusai import ApiClient
 client = ApiClient('YOUR_API_KEY')
 ```
 
-You can find your API key from here: [API KEY](https://abacus.ai/app/profile/apikey)
+YOU CAN FIND YOUR API KEY FROM HERE: [API KEY](https://abacus.ai/app/profile/apikey) (Summary: Directs to API key location)
 
-## Documentation
+## DOCUMENTATION
 
-- Python SDK Documentation: [Abacus.AI Python SDK](https://abacusai.github.io/api-python/autoapi/abacusai/index.html)
-- Full list of API's and examples: [Abacus.AI APIs Reference](https://abacus.ai/app/help/ref/overview)
-- Python usage examples: [Examples Repository](https://github.com/abacusai/api-python/blob/main/examples)
+- PYTHON SDK DOCUMENTATION: [ABACUS.AI PYTHON SDK](https://abacusai.github.io/api-python/autoapi/abacusai/index.html) (Summary: Links to SDK docs)
+- FULL LIST OF API'S AND EXAMPLES: [ABACUS.AI APIS REFERENCE](https://abacus.ai/app/help/ref/overview) (Summary: Links to API reference)
+- PYTHON USAGE EXAMPLES: [EXAMPLES REPOSITORY](https://github.com/abacusai/api-python/blob/main/examples) (Summary: Links to example code)
 
-## License
-[MIT](https://github.com/abacusai/api-python/blob/main/LICENSE)
+## LICENSE
+[MIT](https://github.com/abacusai/api-python/blob/main/LICENSE) (Summary: States the license type)
