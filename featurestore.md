@@ -7,6 +7,7 @@ Abacus.AI Feature Store API
 The Abacus.AI platform allows you to process, join and transform raw tabular data present in various data sources (like AWS S3, Snowflake, Redshift, GCS, Salesforce, Marketo) into `features` for the purposes of building machine learning models and running predictions on them. Features are organized into `Feature Groups` and can be easily specified using ANSI-SQL or Python code. Specifying feature groups in Abacus.AI also allows for a clear path to productionizing data pipelines for regular model training, offline predictions and online serving of predictions using a custom or Abacus.AI built model.
 
 ## Core concepts
+*Where we explain the building blocks of our feature store - it's like LEGO, but for data!*
 
 
 |Concept|Definition  |
@@ -19,13 +20,15 @@ The Abacus.AI platform allows you to process, join and transform raw tabular dat
 | Project | Entity in Abacus.AI which can contain machine learning models, deployments for online serving of feature groups, and pipelines for training models on feature group data |
 | Organization | Entity in Abacus.AI which corresponds to a collection of users who belong to an organization. Datasets, Feature Groups, and Projects are scoped to an organization. Table names across datasets and feature groups are unique to an organization. |
 
-## Setting up a new Feature Store Project [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=8idfft0im5ci)
+## Setting up a new Feature Store Project 
+*Time to build your data palace! No hard hat required, but bring your imagination* [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=8idfft0im5ci)
 To create a new Feature Store project, call the `createProject` API with a name and the **FEATURE_STORE** use case.
 ```python
 project = client.create_project(name='My first Feature Store Project', use_case='FEATURE_STORE')
 ```
 
-## Create Dataset Definitions and associated Feature Groups [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=oi6qwR46m71i)
+## Create Dataset Definitions and associated Feature Groups
+*Let's play matchmaker with your data - helping tables find their perfect join partner!* [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=oi6qwR46m71i)
 
 Datasets can be created via uploads [\[example\]](https://github.com/abacusai), file connectors  [\[example\]](https://github.com/abacusai) (blob storage providers such as S3 or GCP Storage), or database connectors  [\[example\]](https://github.com/abacusai) (Salesforce, Snowflake, BigQuery, etc.).
 
@@ -48,6 +51,7 @@ items_dataset = client.create_dataset_from_file_connector(
 Finally, we can create a feature group from these datasets, specifying what columns we want as features, and how to join the two tables together. We can do this via ANSI SQL statements or python functions:
 
 ### ANSI SQL
+*The OG way to talk to your data - because sometimes old school is the best school*
 ```python
 feature_group = client.create_feature_group(
      table_name='joined_events_data', 
@@ -56,6 +60,7 @@ feature_group = client.create_feature_group(
 ```
 
 ### Python Functions
+*For when SQL just isn't cutting it - unleash your inner Pythonista!*
 
 To create a feature group backed by a Python function, we have first provide the source code for the function in a valid python file. In this example, we are using pandas functions in our function. We will run the code in a container which has a Python 3.8 environment with a of standard list of python libraries. 
 
@@ -79,7 +84,8 @@ feature_group = client.create_feature_group_from_function(table_name='joined_eve
 ````
 
 
-### Add New Features  [SQL-Based Feature Groups Only] [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=VT0WqjmfAFdg)
+### Add New Features
+*Time to give your feature group a makeover - think of it as data cosmetic surgery*  [SQL-Based Feature Groups Only] [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=VT0WqjmfAFdg)
 Once you create a feature group, you can add, edit, and remove features by editing the entire sql, or by using utility methods provided:
 ```python
 feature_group.add_feature(name='feature_name', select_expression='CONCAT(col1, col2)')
@@ -93,6 +99,7 @@ feature_group.update_sql(
 
 
 ### Looking at Materialized Data
+*Peek under the hood of your feature store - warning: may contain actual features!*
 
 ````python
 df = feature_group.latest_feature_group_version.load_as_pandas()
@@ -130,6 +137,7 @@ feature_group = client.create_feature_group_from_function(
 ````
 
 ### Point In Time Features
+*Where we bend space and time to get the perfect historical snapshot - Doc Brown would be proud!*
 
 Abacus.AI also supports defining and querying point in time features. Say we want to calculate the number of times a certain event has occurred within a historical window when another event occurred (for e.g, number of views 30 minutes before a purchase), we can associate a historical activity table with another table which records purchases. 
 
@@ -170,6 +178,7 @@ purchases_feature_group.add_point_in_time_feature(
 
 
 ### Tags on Feature Groups
+*Label all the things! Like hashtags, but for your data*
 To better organize feature groups, we can add descriptive tags to our feature group and add it to our project.
 ```python
 feature_group.add_tag('Joined events log')  # Optional
@@ -177,7 +186,8 @@ feature_group.add_tag('Joined events log')  # Optional
 feature_group.add_to_project(project_id=project.project_id)
 ```
 
-### Export Materialized Feature Group Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=ompwZJ4nLkqw)
+### Export Materialized Feature Group Data
+*Time to set your data free into the wild - with proper formatting of course!* [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=ompwZJ4nLkqw)
 
 Feature Groups only contain the transformations to apply to the underlying data. In order to apply the transformations, you need to create a **Feature Group Version**.
 ```python
@@ -192,7 +202,8 @@ Abacus.AI supports "CSV", "JSON" and "AVRO" as the **Export File Format** of the
 feature_group_version.export_to_file_connector(location='s3://your-bucket/export-location.csv', export_file_format='CSV')
 ```
 
-### Deploy Feature Groups for Online Featurization of Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=ZleD66xQnCY_)
+### Deploy Feature Groups for Online Featurization of Data
+*Taking your features live - it's showtime for your data!* [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=ZleD66xQnCY_)
 Feature Groups can be deployed for online data transformations and lookups. Feature Groups with simple join conditions will also support single column id based lookups. The `describeFeatureGroup` method will expose these keys when set. In addition, streaming
 
 Once set, you can deploy the feature group:
@@ -213,7 +224,8 @@ client.lookup_features(deployment_id=deployment.deployment_id,
 
 The response will be a list of feature group rows.
 
-### Streaming Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=2IVYnjlvnF5F)
+### Streaming Data
+*For when batch processing is too slow - gotta go fast with real-time data!* [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=2IVYnjlvnF5F)
 
 A feature group project can be setup to support online updates. To accomplish this, we need to configure a **streaming dataset**.
 
