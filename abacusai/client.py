@@ -652,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.28'
+    client_version = '1.4.30'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2804,6 +2804,17 @@ class ReadOnlyClient(BaseApiClient):
             list[AgentVersion]: An array of Agent versions."""
         return self._call_api('listAgentVersions', 'GET', query_params={'agentId': agent_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=AgentVersion)
 
+    def copy_agent(self, agent_id: str, project_id: str = None) -> Agent:
+        """Creates a copy of the input agent
+
+        Args:
+            agent_id (str): The unique id of the agent whose copy is to be generated.
+            project_id (str): Project id to create the new agent to. By default it picks up the source agent's project id.
+
+        Returns:
+            Agent: The newly generated agent."""
+        return self._call_api('copyAgent', 'GET', query_params={'agentId': agent_id, 'projectId': project_id}, parse_type=Agent)
+
     def list_llm_apps(self) -> List[LlmApp]:
         """Lists all available LLM Apps, which are LLMs tailored to achieve a specific task like code generation for a specific service's API.
 
@@ -3955,9 +3966,15 @@ class ApiClient(ReadOnlyClient):
             raise ValueError('prompt must be a string')
         if system_message and not isinstance(system_message, str):
             raise ValueError('system_message must be a string')
+
         if caller and request_id:
+            is_agent = get_object_from_context(
+                self, _request_context, 'is_agent', bool)
+            is_api = get_object_from_context(
+                self, _request_context, 'is_agent_api', bool)
+
             result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens, temperature=temperature,
-                                           messages=messages, response_type=response_type, json_response_schema=json_response_schema, section_key=section_key)
+                                           messages=messages, response_type=response_type, json_response_schema=json_response_schema, section_key=section_key, is_agent=is_agent, is_api=is_api)
         else:
             result = self.evaluate_prompt(prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens,
                                           temperature=temperature, messages=messages, response_type=response_type, json_response_schema=json_response_schema).content

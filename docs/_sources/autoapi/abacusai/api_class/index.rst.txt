@@ -489,11 +489,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -542,11 +537,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -612,11 +602,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -639,11 +624,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -669,11 +649,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(configs)
@@ -728,11 +703,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: is_template_node()
@@ -812,6 +782,8 @@ Package Contents
    :type edges: List[WorkflowGraphEdge]
    :param primary_start_node: The primary node to start the workflow from.
    :type primary_start_node: Union[str, WorkflowGraphNode]
+   :param common_source_code: Common source code that can be used across all nodes.
+   :type common_source_code: str
 
 
    .. py:attribute:: nodes
@@ -838,15 +810,16 @@ Package Contents
 
 
 
+   .. py:attribute:: specification_type
+      :type:  str
+      :value: 'data_flow'
+
+
+
    .. py:method:: __post_init__()
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(graph)
@@ -888,11 +861,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -936,11 +904,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -980,11 +943,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -1021,11 +979,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(mapping)
@@ -1670,10 +1623,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -1899,10 +1848,6 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -2810,10 +2755,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -3291,10 +3232,6 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -5460,6 +5397,11 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_O1_MINI
+      :value: 'OPENAI_O1_MINI'
+
+
+
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
@@ -5532,6 +5474,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_2_FLASH_THINKING
       :value: 'GEMINI_2_FLASH_THINKING'
+
+
+
+   .. py:attribute:: GEMINI_2_PRO
+      :value: 'GEMINI_2_PRO'
 
 
 
@@ -9524,10 +9471,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -10295,10 +10238,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -10367,10 +10306,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -10414,11 +10349,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ApiClass
@@ -10679,10 +10609,6 @@ Package Contents
 .. py:class:: _ProjectFeatureGroupConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -10972,11 +10898,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -11040,19 +10961,10 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -11150,12 +11062,10 @@ Package Contents
       :type:  str
 
 
+   .. py:method:: __post_init__()
+
+
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:data:: Segment
@@ -11303,11 +11213,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ListResponseSection(items, section_key = None)

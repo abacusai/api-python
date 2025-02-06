@@ -594,27 +594,33 @@ class WorkflowGraph(ApiClass):
         nodes (List[WorkflowGraphNode]): A list of nodes in the workflow graph.
         edges (List[WorkflowGraphEdge]): A list of edges in the workflow graph, where each edge is a tuple of source, target, and details.
         primary_start_node (Union[str, WorkflowGraphNode]): The primary node to start the workflow from.
+        common_source_code (str): Common source code that can be used across all nodes.
     """
     nodes: List[WorkflowGraphNode] = dataclasses.field(default_factory=list)
     edges: List[Union[WorkflowGraphEdge, Tuple[WorkflowGraphNode, WorkflowGraphNode, dict], Tuple[str, str, dict]]] = dataclasses.field(default_factory=list)
     primary_start_node: Union[str, WorkflowGraphNode] = dataclasses.field(default=None)
     common_source_code: str = dataclasses.field(default=None)
+    specification_type: str = dataclasses.field(default='data_flow')
 
     def __post_init__(self):
         if self.edges:
-            for index, edge in enumerate(self.edges):
-                if isinstance(edge, Tuple):
-                    source = edge[0] if isinstance(edge[0], str) else edge[0].name
-                    target = edge[1] if isinstance(edge[1], str) else edge[1].name
-                    details = edge[2] if len(edge) > 2 and isinstance(edge[2], dict) else None
-                    self.edges[index] = WorkflowGraphEdge(source=source, target=target, details=details)
+            if self.specification_type == 'execution_flow':
+                for index, edge in enumerate(self.edges):
+                    if isinstance(edge, Tuple):
+                        source = edge[0] if isinstance(edge[0], str) else edge[0].name
+                        target = edge[1] if isinstance(edge[1], str) else edge[1].name
+                        details = edge[2] if len(edge) > 2 and isinstance(edge[2], dict) else None
+                        self.edges[index] = WorkflowGraphEdge(source=source, target=target, details=details)
+            else:
+                raise ValueError('workflow_graph', 'Workflow Graph no longer supports explicit edges. They are inferred from data flow dependencies.')
 
     def to_dict(self):
         return {
             'nodes': [node.to_dict() for node in self.nodes],
-            'edges': [edge.to_dict() for edge in self.edges],
+            **({'edges': [edge.to_dict() for edge in self.edges]} if self.specification_type == 'execution_flow' else {}),
             'primary_start_node': self.primary_start_node.name if isinstance(self.primary_start_node, WorkflowGraphNode) else self.primary_start_node,
-            'common_source_code': self.common_source_code
+            'common_source_code': self.common_source_code,
+            'specification_type': self.specification_type
         }
 
     @classmethod
@@ -625,19 +631,45 @@ class WorkflowGraph(ApiClass):
                 node['__return_filter'] = True
         nodes = [WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])]
         edges = [WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]
-        if graph.get('primary_start_node') not in [node.name for node in nodes]:
-            non_primary_nodes = set()
-            for edge in edges:
-                non_primary_nodes.add(edge.target)
-            primary_nodes = set([node.name for node in nodes]) - non_primary_nodes
-            graph['primary_start_node'] = primary_nodes.pop() if primary_nodes else None
+        primary_start_node = graph.get('primary_start_node')
+        non_primary_nodes = set()
+        specification_type = graph.get('specification_type', 'execution_flow')
 
-        return cls(
-            nodes=nodes,
-            edges=edges,
-            primary_start_node=graph.get('primary_start_node', None),
-            common_source_code=graph.get('common_source_code', None)
-        )
+        if specification_type == 'execution_flow':
+            if primary_start_node not in [node.name for node in nodes]:
+                for edge in edges:
+                    non_primary_nodes.add(edge.target)
+                primary_nodes = set([node.name for node in nodes]) - non_primary_nodes
+                graph['primary_start_node'] = primary_nodes.pop() if primary_nodes else None
+
+            return cls(
+                nodes=nodes,
+                edges=edges,
+                primary_start_node=graph.get('primary_start_node', None),
+                common_source_code=graph.get('common_source_code', None),
+                specification_type='execution_flow'
+            )
+        else:
+            if edges:
+                raise ValueError('workflow_graph', 'Workflow Graph no longer supports explicit edges. They are inferred from data flow dependencies.')
+
+            if primary_start_node not in [node.name for node in nodes]:
+                for node in nodes:
+                    is_primary_eligible = True
+                    for mapping in node.input_mappings:
+                        if mapping.variable_type == enums.WorkflowNodeInputType.WORKFLOW_VARIABLE:
+                            is_primary_eligible = False
+                            break
+                    if not is_primary_eligible:
+                        non_primary_nodes.add(node.name)
+                primary_nodes = set([node.name for node in nodes]) - non_primary_nodes
+                primary_start_node = primary_nodes.pop() if primary_nodes else None
+            return cls(
+                nodes=nodes,
+                primary_start_node=primary_start_node,
+                common_source_code=graph.get('common_source_code', None),
+                specification_type='data_flow'
+            )
 
 
 @dataclasses.dataclass

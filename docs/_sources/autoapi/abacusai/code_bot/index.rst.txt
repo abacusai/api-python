@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None)
+.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type name: str
    :param imageUploadSupported: Whether the LLM supports image upload.
    :type imageUploadSupported: bool
+   :param codeAgentSupported: Whether the LLM supports code agent.
+   :type codeAgentSupported: bool
 
 
    .. py:attribute:: llm_name
@@ -43,6 +45,11 @@ Module Contents
 
 
    .. py:attribute:: image_upload_supported
+      :value: None
+
+
+
+   .. py:attribute:: code_agent_supported
       :value: None
 
 

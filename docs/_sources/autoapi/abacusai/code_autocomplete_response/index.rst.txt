@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CodeAutocompleteResponse(client, autocompleteResponse=None, showAutocomplete=None)
+.. py:class:: CodeAutocompleteResponse(client, autocompleteResponse=None, showAutocomplete=None, lineNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,8 @@ Module Contents
    :type autocompleteResponse: str
    :param showAutocomplete: Whether to show autocomplete in the client
    :type showAutocomplete: bool
+   :param lineNumber: The line number where autocomplete should be shown
+   :type lineNumber: int
 
 
    .. py:attribute:: autocomplete_response
@@ -36,6 +38,11 @@ Module Contents
 
 
    .. py:attribute:: show_autocomplete
+      :value: None
+
+
+
+   .. py:attribute:: line_number
       :value: None
 
 

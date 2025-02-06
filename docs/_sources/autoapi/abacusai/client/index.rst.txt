@@ -584,7 +584,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.28'
+      :value: '1.4.30'
 
 
 
@@ -2973,6 +2973,20 @@ Module Contents
 
       :returns: An array of Agent versions.
       :rtype: list[AgentVersion]
+
+
+
+   .. py:method:: copy_agent(agent_id, project_id = None)
+
+      Creates a copy of the input agent
+
+      :param agent_id: The unique id of the agent whose copy is to be generated.
+      :type agent_id: str
+      :param project_id: Project id to create the new agent to. By default it picks up the source agent's project id.
+      :type project_id: str
+
+      :returns: The newly generated agent.
+      :rtype: Agent
 
 
 

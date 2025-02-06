@@ -102,6 +102,18 @@ class Agent(AbstractApiClass):
         """
         return self.client.list_agent_versions(self.agent_id, limit, start_after_version)
 
+    def copy(self, project_id: str = None):
+        """
+        Creates a copy of the input agent
+
+        Args:
+            project_id (str): Project id to create the new agent to. By default it picks up the source agent's project id.
+
+        Returns:
+            Agent: The newly generated agent.
+        """
+        return self.client.copy_agent(self.agent_id, project_id)
+
     @property
     def description(self) -> str:
         """

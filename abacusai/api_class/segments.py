@@ -1,4 +1,5 @@
 import dataclasses
+import uuid
 from typing import Any, List
 
 from . import enums
@@ -18,8 +19,11 @@ class ResponseSection(ApiClass):
     type: enums.ResponseSectionType
     id: str
 
+    def __post_init__(self):
+        self.message_id = str(uuid.uuid4())
+
     def to_dict(self):
-        return {k: v.value if isinstance(v, enums.Enum) else v for k, v in dataclasses.asdict(self).items()}
+        return {**{k: v.value if isinstance(v, enums.Enum) else v for k, v in dataclasses.asdict(self).items() if not k.startswith('_')}, 'message_id': self.message_id}
 
 
 Segment = ResponseSection

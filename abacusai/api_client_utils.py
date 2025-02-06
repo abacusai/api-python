@@ -3,6 +3,7 @@ import json
 import os
 import re
 import string
+import uuid
 from enum import Enum
 from itertools import groupby
 from typing import IO, Callable, List
@@ -104,7 +105,7 @@ class StreamingHandler(str):
                             break
                     if not entry_exists:
                         context.streamed_section_response.append(
-                            {'id': section_key, 'type': data_type, 'mime_type': 'text/plain', 'contents': value})
+                            {'id': section_key, 'type': data_type, 'mime_type': 'text/plain', 'contents': value, 'message_id': str(uuid.uuid4())})
                 else:
                     context.streamed_response.append(str(value))
             elif data_type == 'segment':

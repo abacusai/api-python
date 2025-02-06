@@ -1,0 +1,64 @@
+abacusai.code_agent_response
+============================
+
+.. py:module:: abacusai.code_agent_response
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.code_agent_response.CodeAgentResponse
+
+
+Module Contents
+---------------
+
+.. py:class:: CodeAgentResponse(client, deploymentConversationId=None, messages=None, toolUseRequest=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A response from a Code Agent
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The unique identifier of the deployment conversation.
+   :type deploymentConversationId: str
+   :param messages: The conversation messages in the chat.
+   :type messages: list
+   :param toolUseRequest: A request to use an external tool. Contains: - id (str): Unique identifier for the tool use request - input (dict): Input parameters for the tool, e.g. {'command': 'ls'} - name (str): Name of the tool being used, e.g. 'bash' - type (str): Always 'tool_use' to identify this as a tool request
+   :type toolUseRequest: dict
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: messages
+      :value: None
+
+
+
+   .. py:attribute:: tool_use_request
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

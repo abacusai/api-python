@@ -29,7 +29,9 @@ from .chat_message import ChatMessage
 from .chat_session import ChatSession
 from .chatllm_computer import ChatllmComputer
 from .chatllm_referral_invite import ChatllmReferralInvite
+from .chatllm_task import ChatllmTask
 from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, _request_context
+from .code_agent_response import CodeAgentResponse
 from .code_autocomplete_response import CodeAutocompleteResponse
 from .code_bot import CodeBot
 from .code_edit import CodeEdit
@@ -119,6 +121,7 @@ from .graph_dashboard import GraphDashboard
 from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
 from .hosted_model_token import HostedModelToken
+from .hume_voice import HumeVoice
 from .image_gen_settings import ImageGenSettings
 from .indexing_config import IndexingConfig
 from .inferred_database_column_to_feature_mappings import InferredDatabaseColumnToFeatureMappings
@@ -224,6 +227,7 @@ from .user import User
 from .user_exception import UserException
 from .video_gen_settings import VideoGenSettings
 from .video_search_result import VideoSearchResult
+from .voice_gen_details import VoiceGenDetails
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .web_search_result import WebSearchResult
@@ -232,4 +236,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.28"
+__version__ = "1.4.30"
