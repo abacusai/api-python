@@ -19,6 +19,7 @@ class VectorStoreConfig(ApiClass):
         index_metadata_columns (bool): If True, metadata columns of the FG will also be used for indexing and querying.
         use_document_summary (bool): If True, uses the summary of the document in addition to chunks of the document for indexing and querying.
         summary_instructions (str): Instructions for the LLM to generate the document summary.
+        standalone_deployment (bool): If True, the document retriever will be deployed as a standalone deployment.
     """
     chunk_size: int = dataclasses.field(default=None)
     chunk_overlap_fraction: float = dataclasses.field(default=None)
@@ -29,6 +30,7 @@ class VectorStoreConfig(ApiClass):
     index_metadata_columns: bool = dataclasses.field(default=None)
     use_document_summary: bool = dataclasses.field(default=None)
     summary_instructions: str = dataclasses.field(default=None)
+    standalone_deployment: bool = dataclasses.field(default=False)
 
 
 DocumentRetrieverConfig = VectorStoreConfig

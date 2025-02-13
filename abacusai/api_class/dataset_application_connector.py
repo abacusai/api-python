@@ -50,8 +50,12 @@ class BoxDatasetConfig(ApplicationConnectorDatasetConfig):
     Dataset config for Box Application Connector
     Args:
         location (str): The regex location of the files to fetch
+        csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
+        merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
     """
     location: str = dataclasses.field(default=None)
+    csv_delimiter: str = dataclasses.field(default=None)
+    merge_file_schemas: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.BOX

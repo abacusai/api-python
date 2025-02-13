@@ -652,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.30'
+    client_version = '1.4.31'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3935,12 +3935,101 @@ class ApiClient(ReadOnlyClient):
             raise ValueError(
                 'User information not available. Please use UI interface for this agent to work.')
 
+    def get_agent_runtime_config(self, key: str):
+        """
+        Gets the deployment level runtime config for the agent
+
+        Args:
+            key(str): Key for which the config value is to be fetched
+
+        Returns:
+            str: Config value for the input key
+        """
+        runtime_config = get_object_from_context(
+            self, _request_context, 'deployment_runtime_config', dict) or {}
+        return runtime_config.get(key, None)
+
+    def get_request_user_info(self):
+        """
+        Gets the user information for the current request context.
+
+        Returns:
+            dict: Containing email and name of the end user.
+        """
+        user_info = get_object_from_context(
+            self, _request_context, 'user_info', dict)
+        if user_info:
+            return user_info
+        else:
+            raise ValueError('User information not available')
+
     def clear_agent_context(self):
         """
         Clears the current request context.
         """
         if hasattr(_request_context):
             _request_context.clear()
+
+    def execute_chatllm_computer_streaming(self, computer_id: str, prompt: str, is_transient: bool = False):
+        """
+        Executes a prompt on a remote computer and streams computer responses to the external chat UI in real-time. Must be called from agent execution context only.
+
+        Args:
+            computer_id (str): The ID of the computer to use for the agent.
+            prompt (str): The prompt to do tasks on the computer.
+            is_transient (bool): If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.
+
+        Returns:
+            text (str): The text responses from the computer.
+        """
+        request_id = self._get_agent_app_request_id()
+        caller = self._get_agent_async_app_caller()
+        proxy_caller = self._is_proxy_app_caller()
+
+        if not request_id or not caller:
+            raise Exception(
+                'This function can only be called from within an agent execution context')
+
+        if not caller.endswith('/'):
+            caller = caller + '/'
+
+        if proxy_caller:
+            api_endpoint = f'{caller}_executeChatLLMComputerStreaming'
+        else:
+            raise Exception(
+                'This function can only be called from within an agent execution context')
+
+        extra_args = {'stream_type': StreamType.MESSAGE.value,
+                      'response_version': '1.0', 'is_transient': is_transient}
+        if hasattr(_request_context, 'agent_workflow_node_id'):
+            extra_args.update(
+                {'agent_workflow_node_id': _request_context.agent_workflow_node_id})
+
+        computer_use_args = {
+            'computerId': computer_id,
+            'prompt': prompt
+        }
+
+        body = {
+            'requestId': request_id,
+            'computerUseArgs': computer_use_args,
+            'extraArgs': extra_args,
+        }
+        body['connectionId'] = uuid4().hex
+
+        headers = {'APIKEY': self.api_key}
+        self._clean_api_objects(body)
+        for _ in range(3):
+            response = self._request(
+                api_endpoint, method='POST', body=body, headers=headers)
+            if response.status_code == 200:
+                return StreamingHandler(response.json(), _request_context, is_transient=is_transient)
+            elif response.status_code in (502, 503, 504):
+                continue
+            else:
+                break
+        raise Exception(
+            f'Error calling ChatLLM computer streaming endpoint. Status code: {response.status_code}. Response: {response.text}')
 
     def streaming_evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, section_key: str = None):
         """
@@ -7921,7 +8010,7 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroupRowProcessLogs: An object representing the logs for the feature group row process"""
         return self._call_api('getFeatureGroupRowProcessLogsByKey', 'POST', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcessLogs)
 
-    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP') -> PythonFunction:
+    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP', description: str = None, examples: dict = None) -> PythonFunction:
         """Creates a custom Python function that is reusable.
 
         Args:
@@ -7931,12 +8020,14 @@ Creates a new feature group defined as the union of other feature group versions
             function_variable_mappings (List): List of Python function arguments.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             function_type (str): Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
+            description (str): Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
+            examples (dict): Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
 
         Returns:
             PythonFunction: The Python function that can be used (e.g. for feature group transform)."""
-        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'functionType': function_type}, parse_type=PythonFunction)
+        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'functionType': function_type, 'description': description, 'examples': examples}, parse_type=PythonFunction)
 
-    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None) -> PythonFunction:
+    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, description: str = None, examples: dict = None) -> PythonFunction:
         """Update custom python function with user inputs for the given python function.
 
         Args:
@@ -7945,10 +8036,12 @@ Creates a new feature group defined as the union of other feature group versions
             function_name (str): The name of the Python function within `source_code`.
             function_variable_mappings (List): List of arguments required by `function_name`.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+            description (str): Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
+            examples (dict): Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
 
         Returns:
             PythonFunction: The Python function object."""
-        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements}, parse_type=PythonFunction)
+        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'description': description, 'examples': examples}, parse_type=PythonFunction)
 
     def delete_python_function(self, name: str):
         """Removes an existing Python function.

@@ -124,7 +124,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../deployment_statistics/index.html">abacusai.deployment_statistics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_data/index.html">abacusai.document_data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever/index.html">abacusai.document_retriever</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever_config/index.html">abacusai.document_retriever_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html">abacusai.drift_distribution</a></li>
@@ -267,6 +266,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../return_class/index.html">abacusai.return_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../routing_action/index.html">abacusai.routing_action</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../schema/index.html">abacusai.schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sftp_key/index.html">abacusai.sftp_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html">abacusai.streaming_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html">abacusai.streaming_client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_connector/index.html">abacusai.streaming_connector</a></li>
@@ -1040,7 +1040,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.30'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.31'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -5456,9 +5456,61 @@ Applicable within a AIAgent execute function.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_agent_runtime_config">
+<span class="sig-name descname"><span class="pre">get_agent_runtime_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_agent_runtime_config" title="Link to this definition"></a></dt>
+<dd><p>Gets the deployment level runtime config for the agent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Key for which the config value is to be fetched</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Config value for the input key</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_request_user_info">
+<span class="sig-name descname"><span class="pre">get_request_user_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_request_user_info" title="Link to this definition"></a></dt>
+<dd><p>Gets the user information for the current request context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Containing email and name of the end user.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.clear_agent_context">
 <span class="sig-name descname"><span class="pre">clear_agent_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.clear_agent_context" title="Link to this definition"></a></dt>
 <dd><p>Clears the current request context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.execute_chatllm_computer_streaming">
+<span class="sig-name descname"><span class="pre">execute_chatllm_computer_streaming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">computer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_transient</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.execute_chatllm_computer_streaming" title="Link to this definition"></a></dt>
+<dd><p>Executes a prompt on a remote computer and streams computer responses to the external chat UI in real-time. Must be called from agent execution context only.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>computer_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The ID of the computer to use for the agent.</p></li>
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The prompt to do tasks on the computer.</p></li>
+<li><p><strong>is_transient</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The text responses from the computer.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>text (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -11298,7 +11350,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_python_function">
-<span class="sig-name descname"><span class="pre">create_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FEATURE_GROUP'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_python_function" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FEATURE_GROUP'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_python_function" title="Link to this definition"></a></dt>
 <dd><p>Creates a custom Python function that is reusable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -11309,6 +11361,8 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>function_variable_mappings</strong> (<em>List</em>) – List of Python function arguments.</p></li>
 <li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
 <li><p><strong>function_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Description of the Python function. This should include details about the function’s purpose, expected inputs and outputs, and any important usage considerations or limitations.</p></li>
+<li><p><strong>examples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary containing example use cases and anti-patterns. Should include ‘positive_examples’ showing recommended usage and ‘negative_examples’ showing cases to avoid.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -11322,7 +11376,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.update_python_function">
-<span class="sig-name descname"><span class="pre">update_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_python_function" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_python_function" title="Link to this definition"></a></dt>
 <dd><p>Update custom python function with user inputs for the given python function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -11332,6 +11386,8 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the Python function within <cite>source_code</cite>.</p></li>
 <li><p><strong>function_variable_mappings</strong> (<em>List</em>) – List of arguments required by <cite>function_name</cite>.</p></li>
 <li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Description of the Python function. This should include details about the function’s purpose, expected inputs and outputs, and any important usage considerations or limitations.</p></li>
+<li><p><strong>examples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary containing example use cases and anti-patterns. Should include ‘positive_examples’ showing recommended usage and ‘negative_examples’ showing cases to avoid.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

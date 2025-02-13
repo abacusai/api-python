@@ -541,6 +541,7 @@ class PythonFunctionType(ApiEnum):
     FEATURE_GROUP = 'FEATURE_GROUP'
     PLOTLY_FIG = 'PLOTLY_FIG'
     STEP_FUNCTION = 'STEP_FUNCTION'
+    USERCODE_TOOL = 'USERCODE_TOOL'
 
 
 class EvalArtifactType(ApiEnum):

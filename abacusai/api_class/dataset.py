@@ -45,6 +45,7 @@ class DocumentProcessingConfig(ApiClass):
         remove_watermarks (bool): Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
         convert_to_markdown (bool): Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
         mask_pii (bool): Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.
+        extract_images (bool): Whether to extract images from the document e.g. diagrams in a PDF page. Defaults to False.
     """
     # NOTE: The defaults should match with clouddb.document_processing_results table defaults
     document_type: DocumentType = None
@@ -56,6 +57,7 @@ class DocumentProcessingConfig(ApiClass):
     remove_watermarks: bool = True
     convert_to_markdown: bool = False
     mask_pii: bool = False
+    extract_images: bool = False
 
     def __post_init__(self):
         self.ocr_mode = self._detect_ocr_mode()

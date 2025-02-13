@@ -1,5 +1,4 @@
-from .api_class import DocumentRetrieverConfig
-from .document_retriever_config import DocumentRetrieverConfig
+from .api_class import VectorStoreConfig
 from .return_class import AbstractApiClass
 
 
@@ -20,8 +19,8 @@ class DocumentRetrieverVersion(AbstractApiClass):
             numberOfChunks (int): The number of chunks for the document retriever.
             embeddingFileSize (int): The size of embedding file for the document retriever.
             warnings (list): The warning messages when creating the document retriever.
-            resolvedConfig (DocumentRetrieverConfig): The resolved configurations, such as default settings, for indexing documents.
-            documentRetrieverConfig (DocumentRetrieverConfig): The config used to create the document retriever version.
+            resolvedConfig (VectorStoreConfig): The resolved configurations, such as default settings, for indexing documents.
+            documentRetrieverConfig (VectorStoreConfig): The config used to create the document retriever version.
     """
 
     def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, deploymentStatus=None, featureGroupId=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={}, documentRetrieverConfig={}):
@@ -38,9 +37,9 @@ class DocumentRetrieverVersion(AbstractApiClass):
         self.embedding_file_size = embeddingFileSize
         self.warnings = warnings
         self.resolved_config = client._build_class(
-            DocumentRetrieverConfig, resolvedConfig)
+            VectorStoreConfig, resolvedConfig)
         self.document_retriever_config = client._build_class(
-            DocumentRetrieverConfig, documentRetrieverConfig)
+            VectorStoreConfig, documentRetrieverConfig)
         self.deprecated_keys = {}
 
     def __repr__(self):

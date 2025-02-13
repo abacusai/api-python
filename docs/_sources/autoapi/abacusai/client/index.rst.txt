@@ -584,7 +584,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.30'
+      :value: '1.4.31'
 
 
 
@@ -3879,9 +3879,46 @@ Module Contents
 
 
 
+   .. py:method:: get_agent_runtime_config(key)
+
+      Gets the deployment level runtime config for the agent
+
+      :param key: Key for which the config value is to be fetched
+      :type key: str
+
+      :returns: Config value for the input key
+      :rtype: str
+
+
+
+   .. py:method:: get_request_user_info()
+
+      Gets the user information for the current request context.
+
+      :returns: Containing email and name of the end user.
+      :rtype: dict
+
+
+
    .. py:method:: clear_agent_context()
 
       Clears the current request context.
+
+
+
+   .. py:method:: execute_chatllm_computer_streaming(computer_id, prompt, is_transient = False)
+
+      Executes a prompt on a remote computer and streams computer responses to the external chat UI in real-time. Must be called from agent execution context only.
+
+      :param computer_id: The ID of the computer to use for the agent.
+      :type computer_id: str
+      :param prompt: The prompt to do tasks on the computer.
+      :type prompt: str
+      :param is_transient: If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.
+      :type is_transient: bool
+
+      :returns: The text responses from the computer.
+      :rtype: text (str)
 
 
 
@@ -8974,7 +9011,7 @@ Module Contents
 
 
 
-   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP')
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None)
 
       Creates a custom Python function that is reusable.
 
@@ -8990,13 +9027,17 @@ Module Contents
       :type package_requirements: list
       :param function_type: Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
       :type function_type: str
+      :param description: Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
+      :type description: str
+      :param examples: Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
+      :type examples: dict
 
       :returns: The Python function that can be used (e.g. for feature group transform).
       :rtype: PythonFunction
 
 
 
-   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None)
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -9010,6 +9051,10 @@ Module Contents
       :type function_variable_mappings: List
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param description: Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
+      :type description: str
+      :param examples: Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
+      :type examples: dict
 
       :returns: The Python function object.
       :rtype: PythonFunction

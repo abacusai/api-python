@@ -1,7 +1,6 @@
 from typing import Dict, Union
 
-from .api_class import DocumentRetrieverConfig, VectorStoreConfig
-from .document_retriever_config import DocumentRetrieverConfig
+from .api_class import VectorStoreConfig
 from .document_retriever_version import DocumentRetrieverVersion
 from .return_class import AbstractApiClass
 
@@ -19,7 +18,7 @@ class DocumentRetriever(AbstractApiClass):
             featureGroupName (str): The feature group name associated with the document retriever.
             indexingRequired (bool): Whether the document retriever is required to be indexed due to changes in underlying data.
             latestDocumentRetrieverVersion (DocumentRetrieverVersion): The latest version of vector store.
-            documentRetrieverConfig (DocumentRetrieverConfig): The config for vector store creation.
+            documentRetrieverConfig (VectorStoreConfig): The config for vector store creation.
     """
 
     def __init__(self, client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, featureGroupName=None, indexingRequired=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={}):
@@ -33,7 +32,7 @@ class DocumentRetriever(AbstractApiClass):
         self.latest_document_retriever_version = client._build_class(
             DocumentRetrieverVersion, latestDocumentRetrieverVersion)
         self.document_retriever_config = client._build_class(
-            DocumentRetrieverConfig, documentRetrieverConfig)
+            VectorStoreConfig, documentRetrieverConfig)
         self.deprecated_keys = {}
 
     def __repr__(self):

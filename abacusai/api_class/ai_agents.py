@@ -427,6 +427,9 @@ class WorkflowGraphNode(ApiClass):
         elif function_name and (source_code or template_metadata):
             workflow_node.function_name = function_name
             workflow_node.source_code = source_code
+        elif template_metadata and not template_metadata.get('initialized'):
+            workflow_node.function_name = function_name
+            workflow_node.source_code = source_code
         else:
             raise ValueError('workflow_graph_node', 'Either function or function_name and source_code must be provided.')
         workflow_node.input_mappings = input_mappings
@@ -504,6 +507,10 @@ class WorkflowGraphNode(ApiClass):
 
     @classmethod
     def from_dict(cls, node: dict):
+        if node.get('template_metadata'):
+            node['function_name'] = node.get('function_name')
+            node['source_code'] = node.get('source_code')
+
         validate_input_dict_param(node, friendly_class_name='workflow_graph_node', must_contain=['name', 'function_name', 'source_code'])
         _cls = cls._raw_init if node.get('__return_filter') else cls
         if node.get('template_metadata') and node.get('template_metadata').get('template_type') == 'trigger':

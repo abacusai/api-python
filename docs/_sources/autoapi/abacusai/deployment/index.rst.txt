@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -78,6 +78,8 @@ Module Contents
    :type outputOnlineFeatureGroupId: id
    :param realtimeMonitorId: The realtime monitor ID of the realtime-monitor that is associated with the deployment
    :type realtimeMonitorId: id
+   :param runtimeConfigs: The runtime configurations of a deployment which is used by some of the usecases during prediction.
+   :type runtimeConfigs: dict
    :param refreshSchedules: A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
    :type refreshSchedules: RefreshSchedule
    :param featureGroupExportConfig: The export config (file connector or database connector information) for feature group deployment exports.
@@ -217,6 +219,11 @@ Module Contents
 
 
    .. py:attribute:: realtime_monitor_id
+      :value: None
+
+
+
+   .. py:attribute:: runtime_configs
       :value: None
 
 

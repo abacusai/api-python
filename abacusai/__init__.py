@@ -67,7 +67,6 @@ from .deployment_conversation_export import DeploymentConversationExport
 from .deployment_statistics import DeploymentStatistics
 from .document_data import DocumentData
 from .document_retriever import DocumentRetriever
-from .document_retriever_config import DocumentRetrieverConfig
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
 from .document_retriever_version import DocumentRetrieverVersion
 from .drift_distribution import DriftDistribution
@@ -209,6 +208,7 @@ from .regenerate_llm_external_application import RegenerateLlmExternalApplicatio
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
 from .routing_action import RoutingAction
 from .schema import Schema
+from .sftp_key import SftpKey
 from .streaming_auth_token import StreamingAuthToken
 from .streaming_client import StreamingClient
 from .streaming_connector import StreamingConnector
@@ -236,4 +236,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.30"
+__version__ = "1.4.31"

@@ -116,11 +116,27 @@ Module Contents
    Dataset config for Box Application Connector
    :param location: The regex location of the files to fetch
    :type location: str
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+   :type merge_file_schemas: bool
 
 
    .. py:attribute:: location
       :type:  str
       :value: None
+
+
+
+   .. py:attribute:: csv_delimiter
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: merge_file_schemas
+      :type:  bool
+      :value: False
 
 
 
@@ -446,6 +462,10 @@ Module Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class

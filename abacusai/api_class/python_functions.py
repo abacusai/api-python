@@ -16,12 +16,16 @@ class PythonFunctionArgument(ApiClass):
         is_required (bool): Whether the argument is required
         value (Any): The value of the argument
         pipeline_variable (str): The name of the pipeline variable to use as the value
+        description (str): The description of the argument
+        item_type (str): Type of items when variable_type is LIST
     """
     variable_type: enums.PythonFunctionArgumentType = dataclasses.field(default=None)
     name: str = dataclasses.field(default=None)
     is_required: bool = dataclasses.field(default=True)
     value: Any = dataclasses.field(default=None)
     pipeline_variable: str = dataclasses.field(default=None)
+    description: str = dataclasses.field(default=None)
+    item_type: str = dataclasses.field(default=None)
 
 
 @dataclasses.dataclass

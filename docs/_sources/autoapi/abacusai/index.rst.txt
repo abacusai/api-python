@@ -81,7 +81,6 @@ Submodules
    /autoapi/abacusai/deployment_statistics/index
    /autoapi/abacusai/document_data/index
    /autoapi/abacusai/document_retriever/index
-   /autoapi/abacusai/document_retriever_config/index
    /autoapi/abacusai/document_retriever_lookup_result/index
    /autoapi/abacusai/document_retriever_version/index
    /autoapi/abacusai/drift_distribution/index
@@ -224,6 +223,7 @@ Submodules
    /autoapi/abacusai/return_class/index
    /autoapi/abacusai/routing_action/index
    /autoapi/abacusai/schema/index
+   /autoapi/abacusai/sftp_key/index
    /autoapi/abacusai/streaming_auth_token/index
    /autoapi/abacusai/streaming_client/index
    /autoapi/abacusai/streaming_connector/index
@@ -559,7 +559,6 @@ Classes
    abacusai.DeploymentStatistics
    abacusai.DocumentData
    abacusai.DocumentRetriever
-   abacusai.DocumentRetrieverConfig
    abacusai.DocumentRetrieverLookupResult
    abacusai.DocumentRetrieverVersion
    abacusai.DriftDistribution
@@ -699,6 +698,7 @@ Classes
    abacusai.ResolvedFeatureGroupTemplate
    abacusai.RoutingAction
    abacusai.Schema
+   abacusai.SftpKey
    abacusai.StreamingAuthToken
    abacusai.StreamingClient
    abacusai.StreamingConnector
@@ -2155,6 +2155,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2203,6 +2208,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2268,6 +2278,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2290,6 +2305,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2315,6 +2335,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -2369,6 +2394,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: is_template_node()
@@ -2487,6 +2517,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -2527,6 +2562,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -2570,6 +2610,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2609,6 +2654,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2645,6 +2695,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3163,6 +3218,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -3298,6 +3357,10 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -3484,6 +3547,8 @@ Package Contents
    :type convert_to_markdown: bool
    :param mask_pii: Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.
    :type mask_pii: bool
+   :param extract_images: Whether to extract images from the document e.g. diagrams in a PDF page. Defaults to False.
+   :type extract_images: bool
 
 
    .. py:attribute:: document_type
@@ -3533,6 +3598,12 @@ Package Contents
 
 
    .. py:attribute:: mask_pii
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: extract_images
       :type:  bool
       :value: False
 
@@ -3720,11 +3791,27 @@ Package Contents
    Dataset config for Box Application Connector
    :param location: The regex location of the files to fetch
    :type location: str
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+   :type merge_file_schemas: bool
 
 
    .. py:attribute:: location
       :type:  str
       :value: None
+
+
+
+   .. py:attribute:: csv_delimiter
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: merge_file_schemas
+      :type:  bool
+      :value: False
 
 
 
@@ -4050,6 +4137,10 @@ Package Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4441,6 +4532,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -4522,6 +4617,8 @@ Package Contents
    :type use_document_summary: bool
    :param summary_instructions: Instructions for the LLM to generate the document summary.
    :type summary_instructions: str
+   :param standalone_deployment: If True, the document retriever will be deployed as a standalone deployment.
+   :type standalone_deployment: bool
 
 
    .. py:attribute:: chunk_size
@@ -4575,6 +4672,12 @@ Package Contents
    .. py:attribute:: summary_instructions
       :type:  str
       :value: None
+
+
+
+   .. py:attribute:: standalone_deployment
+      :type:  bool
+      :value: False
 
 
 
@@ -6818,6 +6921,11 @@ Package Contents
 
    .. py:attribute:: STEP_FUNCTION
       :value: 'STEP_FUNCTION'
+
+
+
+   .. py:attribute:: USERCODE_TOOL
+      :value: 'USERCODE_TOOL'
 
 
 
@@ -10182,6 +10290,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -10771,6 +10883,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -10839,6 +10955,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -10882,6 +11002,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: FeatureMappingConfig
@@ -11054,6 +11179,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11082,6 +11211,10 @@ Package Contents
    :type value: Any
    :param pipeline_variable: The name of the pipeline variable to use as the value
    :type pipeline_variable: str
+   :param description: The description of the argument
+   :type description: str
+   :param item_type: Type of items when variable_type is LIST
+   :type item_type: str
 
 
    .. py:attribute:: variable_type
@@ -11109,6 +11242,18 @@ Package Contents
 
 
    .. py:attribute:: pipeline_variable
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: item_type
       :type:  str
       :value: None
 
@@ -11188,6 +11333,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -11251,10 +11401,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -11293,6 +11452,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:data:: Segment
@@ -11440,6 +11604,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: ListResponseSection(items, section_key = None)
@@ -14128,9 +14297,46 @@ Package Contents
 
 
 
+   .. py:method:: get_agent_runtime_config(key)
+
+      Gets the deployment level runtime config for the agent
+
+      :param key: Key for which the config value is to be fetched
+      :type key: str
+
+      :returns: Config value for the input key
+      :rtype: str
+
+
+
+   .. py:method:: get_request_user_info()
+
+      Gets the user information for the current request context.
+
+      :returns: Containing email and name of the end user.
+      :rtype: dict
+
+
+
    .. py:method:: clear_agent_context()
 
       Clears the current request context.
+
+
+
+   .. py:method:: execute_chatllm_computer_streaming(computer_id, prompt, is_transient = False)
+
+      Executes a prompt on a remote computer and streams computer responses to the external chat UI in real-time. Must be called from agent execution context only.
+
+      :param computer_id: The ID of the computer to use for the agent.
+      :type computer_id: str
+      :param prompt: The prompt to do tasks on the computer.
+      :type prompt: str
+      :param is_transient: If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.
+      :type is_transient: bool
+
+      :returns: The text responses from the computer.
+      :rtype: text (str)
 
 
 
@@ -19223,7 +19429,7 @@ Package Contents
 
 
 
-   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP')
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None)
 
       Creates a custom Python function that is reusable.
 
@@ -19239,13 +19445,17 @@ Package Contents
       :type package_requirements: list
       :param function_type: Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
       :type function_type: str
+      :param description: Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
+      :type description: str
+      :param examples: Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
+      :type examples: dict
 
       :returns: The Python function that can be used (e.g. for feature group transform).
       :rtype: PythonFunction
 
 
 
-   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None)
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -19259,6 +19469,10 @@ Package Contents
       :type function_variable_mappings: List
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param description: Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
+      :type description: str
+      :param examples: Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
+      :type examples: dict
 
       :returns: The Python function object.
       :rtype: PythonFunction
@@ -23138,7 +23352,7 @@ Package Contents
 
 
 
-.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None)
+.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None, isPremium=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23155,6 +23369,8 @@ Package Contents
    :type imageUploadSupported: bool
    :param codeAgentSupported: Whether the LLM supports code agent.
    :type codeAgentSupported: bool
+   :param isPremium: Whether the LLM is a premium LLM.
+   :type isPremium: bool
 
 
    .. py:attribute:: llm_name
@@ -23173,6 +23389,11 @@ Package Contents
 
 
    .. py:attribute:: code_agent_supported
+      :value: None
+
+
+
+   .. py:attribute:: is_premium
       :value: None
 
 
@@ -25151,7 +25372,7 @@ Package Contents
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25214,6 +25435,8 @@ Package Contents
    :type outputOnlineFeatureGroupId: id
    :param realtimeMonitorId: The realtime monitor ID of the realtime-monitor that is associated with the deployment
    :type realtimeMonitorId: id
+   :param runtimeConfigs: The runtime configurations of a deployment which is used by some of the usecases during prediction.
+   :type runtimeConfigs: dict
    :param refreshSchedules: A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
    :type refreshSchedules: RefreshSchedule
    :param featureGroupExportConfig: The export config (file connector or database connector information) for feature group deployment exports.
@@ -25353,6 +25576,11 @@ Package Contents
 
 
    .. py:attribute:: realtime_monitor_id
+      :value: None
+
+
+
+   .. py:attribute:: runtime_configs
       :value: None
 
 
@@ -25967,7 +26195,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, history={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26010,6 +26238,8 @@ Package Contents
    :type llmBotIcon: str
    :param searchSuggestions: The list of search suggestions for the conversation.
    :type searchSuggestions: list
+   :param chatllmTaskId: The chatllm task id associated with the deployment conversation.
+   :type chatllmTaskId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
 
@@ -26095,6 +26325,11 @@ Package Contents
 
 
    .. py:attribute:: search_suggestions
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_task_id
       :value: None
 
 
@@ -26213,7 +26448,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26284,6 +26519,8 @@ Package Contents
    :type computerFiles: list
    :param toolUseRequest: The tool use request for the message.
    :type toolUseRequest: dict
+   :param verificationSummary: The summary of the verification process for the message.
+   :type verificationSummary: str
 
 
    .. py:attribute:: role
@@ -26437,6 +26674,11 @@ Package Contents
 
 
    .. py:attribute:: tool_use_request
+      :value: None
+
+
+
+   .. py:attribute:: verification_summary
       :value: None
 
 
@@ -26684,7 +26926,7 @@ Package Contents
    :param latestDocumentRetrieverVersion: The latest version of vector store.
    :type latestDocumentRetrieverVersion: DocumentRetrieverVersion
    :param documentRetrieverConfig: The config for vector store creation.
-   :type documentRetrieverConfig: DocumentRetrieverConfig
+   :type documentRetrieverConfig: VectorStoreConfig
 
 
    .. py:attribute:: name
@@ -26904,88 +27146,6 @@ Package Contents
 
 
 
-.. py:class:: DocumentRetrieverConfig(client, chunkSize=None, chunkOverlapFraction=None, textEncoder=None, scoreMultiplierColumn=None, pruneVectors=None, indexMetadataColumns=None, useDocumentSummary=None, summaryInstructions=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A config for document retriever creation.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param chunkSize: The size of chunks for vector store, i.e., maximum number of words in the chunk.
-   :type chunkSize: int
-   :param chunkOverlapFraction: The fraction of overlap between two consecutive chunks.
-   :type chunkOverlapFraction: float
-   :param textEncoder: The text encoder used to encode texts in the vector store.
-   :type textEncoder: str
-   :param scoreMultiplierColumn: The values in this metadata column are used to modify the relevance scores of returned chunks.
-   :type scoreMultiplierColumn: str
-   :param pruneVectors: Corpus specific transformation of vectors that applies dimensional reduction techniques to strip common components from the vectors.
-   :type pruneVectors: bool
-   :param indexMetadataColumns: If True, metadata columns of the FG will also be used for indexing and querying.
-   :type indexMetadataColumns: bool
-   :param useDocumentSummary: If True, uses the summary of the document in addition to chunks of the document for indexing and querying.
-   :type useDocumentSummary: bool
-   :param summaryInstructions: Instructions for the LLM to generate the document summary.
-   :type summaryInstructions: str
-
-
-   .. py:attribute:: chunk_size
-      :value: None
-
-
-
-   .. py:attribute:: chunk_overlap_fraction
-      :value: None
-
-
-
-   .. py:attribute:: text_encoder
-      :value: None
-
-
-
-   .. py:attribute:: score_multiplier_column
-      :value: None
-
-
-
-   .. py:attribute:: prune_vectors
-      :value: None
-
-
-
-   .. py:attribute:: index_metadata_columns
-      :value: None
-
-
-
-   .. py:attribute:: use_document_summary
-      :value: None
-
-
-
-   .. py:attribute:: summary_instructions
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
 .. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -27093,9 +27253,9 @@ Package Contents
    :param warnings: The warning messages when creating the document retriever.
    :type warnings: list
    :param resolvedConfig: The resolved configurations, such as default settings, for indexing documents.
-   :type resolvedConfig: DocumentRetrieverConfig
+   :type resolvedConfig: VectorStoreConfig
    :param documentRetrieverConfig: The config used to create the document retriever version.
-   :type documentRetrieverConfig: DocumentRetrieverConfig
+   :type documentRetrieverConfig: VectorStoreConfig
 
 
    .. py:attribute:: document_retriever_id
@@ -42333,7 +42493,7 @@ Package Contents
 
 
 
-.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, codeSource={})
+.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42360,6 +42520,10 @@ Package Contents
    :type functionType: str
    :param packageRequirements: The pip package dependencies required to run the code
    :type packageRequirements: list
+   :param description: Description of the Python function.
+   :type description: str
+   :param examples: Dictionary containing example use cases and anti-patterns. Includes 'positive' examples showing recommended usage and 'negative' examples showing cases to avoid.
+   :type examples: dict[str, list[str]]
    :param codeSource: Information about the source code of the Python function.
    :type codeSource: CodeSource
 
@@ -42405,6 +42569,16 @@ Package Contents
 
 
    .. py:attribute:: package_requirements
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: examples
       :value: None
 
 
@@ -43447,6 +43621,46 @@ Package Contents
 
 
    .. py:attribute:: point_in_time_info
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: SftpKey(client, keyName=None, publicKey=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   An SFTP key
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param keyName: The name of the key
+   :type keyName: str
+   :param publicKey: The public key
+   :type publicKey: str
+
+
+   .. py:attribute:: key_name
+      :value: None
+
+
+
+   .. py:attribute:: public_key
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -45138,6 +45352,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.30'
+   :value: '1.4.31'
 
 

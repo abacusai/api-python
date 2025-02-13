@@ -124,7 +124,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../deployment_statistics/index.html">abacusai.deployment_statistics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../document_data/index.html">abacusai.document_data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever/index.html">abacusai.document_retriever</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../document_retriever_config/index.html">abacusai.document_retriever_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../drift_distribution/index.html">abacusai.drift_distribution</a></li>
@@ -267,6 +266,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../return_class/index.html">abacusai.return_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../routing_action/index.html">abacusai.routing_action</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../schema/index.html">abacusai.schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sftp_key/index.html">abacusai.sftp_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../streaming_auth_token/index.html">abacusai.streaming_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../streaming_client/index.html">abacusai.streaming_client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../streaming_connector/index.html">abacusai.streaming_connector</a></li>
@@ -423,6 +423,7 @@
 <li><p><strong>remove_watermarks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>convert_to_markdown</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.</p></li>
 <li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to mask personally identifiable information (PII) in the document text/tokens. Defaults to False.</p></li>
+<li><p><strong>extract_images</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to extract images from the document e.g. diagrams in a PDF page. Defaults to False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -469,6 +470,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset.DocumentProcessingConfig.mask_pii">
 <span class="sig-name descname"><span class="pre">mask_pii</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.dataset.DocumentProcessingConfig.mask_pii" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.DocumentProcessingConfig.extract_images">
+<span class="sig-name descname"><span class="pre">extract_images</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.dataset.DocumentProcessingConfig.extract_images" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

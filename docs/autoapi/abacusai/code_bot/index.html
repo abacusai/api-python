@@ -121,7 +121,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../deployment_statistics/index.html">abacusai.deployment_statistics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_data/index.html">abacusai.document_data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever/index.html">abacusai.document_retriever</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever_config/index.html">abacusai.document_retriever_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html">abacusai.drift_distribution</a></li>
@@ -264,6 +263,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../return_class/index.html">abacusai.return_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../routing_action/index.html">abacusai.routing_action</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../schema/index.html">abacusai.schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sftp_key/index.html">abacusai.sftp_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html">abacusai.streaming_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html">abacusai.streaming_client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_connector/index.html">abacusai.streaming_connector</a></li>
@@ -341,7 +341,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.code_bot.CodeBot">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.code_bot.</span></span><span class="sig-name descname"><span class="pre">CodeBot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imageUploadSupported</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codeAgentSupported</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.code_bot.CodeBot" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.code_bot.</span></span><span class="sig-name descname"><span class="pre">CodeBot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imageUploadSupported</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codeAgentSupported</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isPremium</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.code_bot.CodeBot" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>A bot option for CodeLLM</p>
 <dl class="field-list simple">
@@ -352,6 +352,7 @@
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the bot.</p></li>
 <li><p><strong>imageUploadSupported</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the LLM supports image upload.</p></li>
 <li><p><strong>codeAgentSupported</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the LLM supports code agent.</p></li>
+<li><p><strong>isPremium</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the LLM is a premium LLM.</p></li>
 </ul>
 </dd>
 </dl>
@@ -373,6 +374,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.code_bot.CodeBot.code_agent_supported">
 <span class="sig-name descname"><span class="pre">code_agent_supported</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.code_bot.CodeBot.code_agent_supported" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.code_bot.CodeBot.is_premium">
+<span class="sig-name descname"><span class="pre">is_premium</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.code_bot.CodeBot.is_premium" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
