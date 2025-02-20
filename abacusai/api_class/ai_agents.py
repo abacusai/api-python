@@ -302,10 +302,10 @@ class WorkflowGraphNode(ApiClass):
     Args:
         name (str): A unique name for the workflow node.
         input_mappings (List[WorkflowNodeInputMapping]): List of input mappings for the node. Each arg/kwarg of the node function should have a corresponding input mapping.
-        output_mappings (List[WorkflowNodeOutputMapping]): List of output mappings for the node. Each field in the returned dict/AgentResponse must have a corresponding output mapping.
+        output_mappings (List[str]): List of outputs for the node. Each field in the returned dict/AgentResponse must have a corresponding output in the list.
         function (callable): The callable node function reference.
         input_schema (WorkflowNodeInputSchema): The react json schema for the user input variables.
-        output_schema (WorkflowNodeOutputSchema): The react json schema for the output to be shown on UI.
+        output_schema (List[str]): The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.
 
     Additional Attributes:
         function_name (str): The name of the function.
@@ -595,16 +595,13 @@ class WorkflowGraph(ApiClass):
     """
     Represents an Agent workflow graph.
 
-    The edges define the node invocation order.
-
     Args:
         nodes (List[WorkflowGraphNode]): A list of nodes in the workflow graph.
-        edges (List[WorkflowGraphEdge]): A list of edges in the workflow graph, where each edge is a tuple of source, target, and details.
         primary_start_node (Union[str, WorkflowGraphNode]): The primary node to start the workflow from.
         common_source_code (str): Common source code that can be used across all nodes.
     """
     nodes: List[WorkflowGraphNode] = dataclasses.field(default_factory=list)
-    edges: List[Union[WorkflowGraphEdge, Tuple[WorkflowGraphNode, WorkflowGraphNode, dict], Tuple[str, str, dict]]] = dataclasses.field(default_factory=list)
+    edges: List[Union[WorkflowGraphEdge, Tuple[WorkflowGraphNode, WorkflowGraphNode, dict], Tuple[str, str, dict]]] = dataclasses.field(default_factory=list, metadata={'deprecated': True})
     primary_start_node: Union[str, WorkflowGraphNode] = dataclasses.field(default=None)
     common_source_code: str = dataclasses.field(default=None)
     specification_type: str = dataclasses.field(default='data_flow')

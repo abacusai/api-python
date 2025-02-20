@@ -96,6 +96,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cpu_gpu_memory_specs/index.html">abacusai.cpu_gpu_memory_specs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cryptography/index.html">abacusai.cryptography</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_chat_instructions/index.html">abacusai.custom_chat_instructions</a></li>
@@ -1621,10 +1622,10 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A unique name for the workflow node.</p></li>
 <li><p><strong>input_mappings</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputMapping" title="abacusai.api_class.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em>) – List of input mappings for the node. Each arg/kwarg of the node function should have a corresponding input mapping.</p></li>
-<li><p><strong>output_mappings</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeOutputMapping" title="abacusai.api_class.WorkflowNodeOutputMapping"><em>WorkflowNodeOutputMapping</em></a><em>]</em>) – List of output mappings for the node. Each field in the returned dict/AgentResponse must have a corresponding output mapping.</p></li>
+<li><p><strong>output_mappings</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – List of outputs for the node. Each field in the returned dict/AgentResponse must have a corresponding output in the list.</p></li>
 <li><p><strong>function</strong> (<em>callable</em>) – The callable node function reference.</p></li>
 <li><p><strong>input_schema</strong> (<a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputSchema" title="abacusai.api_class.WorkflowNodeInputSchema"><em>WorkflowNodeInputSchema</em></a>) – The react json schema for the user input variables.</p></li>
-<li><p><strong>output_schema</strong> (<a class="reference internal" href="#abacusai.api_class.WorkflowNodeOutputSchema" title="abacusai.api_class.WorkflowNodeOutputSchema"><em>WorkflowNodeOutputSchema</em></a>) – The react json schema for the output to be shown on UI.</p></li>
+<li><p><strong>output_schema</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.</p></li>
 <li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
 <li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
 <li><p><strong>template_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>)</p></li>
@@ -1795,12 +1796,10 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">WorkflowGraph</span></span><a class="headerlink" href="#abacusai.api_class.WorkflowGraph" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
 <p>Represents an Agent workflow graph.</p>
-<p>The edges define the node invocation order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>nodes</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.WorkflowGraphNode" title="abacusai.api_class.WorkflowGraphNode"><em>WorkflowGraphNode</em></a><em>]</em>) – A list of nodes in the workflow graph.</p></li>
-<li><p><strong>edges</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.WorkflowGraphEdge" title="abacusai.api_class.WorkflowGraphEdge"><em>WorkflowGraphEdge</em></a><em>]</em>) – A list of edges in the workflow graph, where each edge is a tuple of source, target, and details.</p></li>
 <li><p><strong>primary_start_node</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference internal" href="#abacusai.api_class.WorkflowGraphNode" title="abacusai.api_class.WorkflowGraphNode"><em>WorkflowGraphNode</em></a><em>]</em>) – The primary node to start the workflow from.</p></li>
 <li><p><strong>common_source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Common source code that can be used across all nodes.</p></li>
 </ul>
@@ -7641,6 +7640,26 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.CODE_LLM">
 <span class="sig-name descname"><span class="pre">CODE_LLM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CODE_LLM'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.CODE_LLM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.CODE_LLM_AGENT">
+<span class="sig-name descname"><span class="pre">CODE_LLM_AGENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CODE_LLM_AGENT'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.CODE_LLM_AGENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.CHAT_LLM_TASK">
+<span class="sig-name descname"><span class="pre">CHAT_LLM_TASK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CHAT_LLM_TASK'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.CHAT_LLM_TASK" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.COMPUTER_AGENT">
+<span class="sig-name descname"><span class="pre">COMPUTER_AGENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'COMPUTER_AGENT'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.COMPUTER_AGENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.SEARCH_LLM">
+<span class="sig-name descname"><span class="pre">SEARCH_LLM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SEARCH_LLM'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.SEARCH_LLM" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

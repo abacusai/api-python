@@ -40,6 +40,7 @@ from .code_edits import CodeEdits
 from .code_source import CodeSource
 from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
+from .constants_autocomplete_response import ConstantsAutocompleteResponse
 from .cpu_gpu_memory_specs import CpuGpuMemorySpecs
 from .custom_chat_instructions import CustomChatInstructions
 from .custom_loss_function import CustomLossFunction
@@ -236,4 +237,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.31"
+__version__ = "1.4.32"

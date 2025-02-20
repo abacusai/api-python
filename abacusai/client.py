@@ -652,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.31'
+    client_version = '1.4.32'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3935,9 +3935,9 @@ class ApiClient(ReadOnlyClient):
             raise ValueError(
                 'User information not available. Please use UI interface for this agent to work.')
 
-    def get_agent_runtime_config(self, key: str):
+    def get_runtime_config(self, key: str):
         """
-        Gets the deployment level runtime config for the agent
+        Gets the deployment level runtime config value given the key
 
         Args:
             key(str): Key for which the config value is to be fetched

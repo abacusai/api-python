@@ -357,14 +357,14 @@ Module Contents
    :type name: str
    :param input_mappings: List of input mappings for the node. Each arg/kwarg of the node function should have a corresponding input mapping.
    :type input_mappings: List[WorkflowNodeInputMapping]
-   :param output_mappings: List of output mappings for the node. Each field in the returned dict/AgentResponse must have a corresponding output mapping.
-   :type output_mappings: List[WorkflowNodeOutputMapping]
+   :param output_mappings: List of outputs for the node. Each field in the returned dict/AgentResponse must have a corresponding output in the list.
+   :type output_mappings: List[str]
    :param function: The callable node function reference.
    :type function: callable
    :param input_schema: The react json schema for the user input variables.
    :type input_schema: WorkflowNodeInputSchema
-   :param output_schema: The react json schema for the output to be shown on UI.
-   :type output_schema: WorkflowNodeOutputSchema
+   :param output_schema: The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.
+   :type output_schema: List[str]
 
    Additional Attributes:
        function_name (str): The name of the function.
@@ -469,12 +469,8 @@ Module Contents
 
    Represents an Agent workflow graph.
 
-   The edges define the node invocation order.
-
    :param nodes: A list of nodes in the workflow graph.
    :type nodes: List[WorkflowGraphNode]
-   :param edges: A list of edges in the workflow graph, where each edge is a tuple of source, target, and details.
-   :type edges: List[WorkflowGraphEdge]
    :param primary_start_node: The primary node to start the workflow from.
    :type primary_start_node: Union[str, WorkflowGraphNode]
    :param common_source_code: Common source code that can be used across all nodes.
