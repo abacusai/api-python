@@ -652,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.32'
+    client_version = '1.4.33'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3983,7 +3983,7 @@ class ApiClient(ReadOnlyClient):
             text (str): The text responses from the computer.
         """
         request_id = self._get_agent_app_request_id()
-        caller = self._get_agent_async_app_caller()
+        caller = self._get_agent_caller()
         proxy_caller = self._is_proxy_app_caller()
 
         if not request_id or not caller:
@@ -4049,7 +4049,7 @@ class ApiClient(ReadOnlyClient):
         Returns:
             text (str): The response from the model.
         """
-        caller = self._get_agent_async_app_caller()
+        caller = self._get_agent_caller()
         request_id = self._get_agent_app_request_id()
         if prompt and not isinstance(prompt, str):
             raise ValueError('prompt must be a string')
@@ -4113,9 +4113,9 @@ class ApiClient(ReadOnlyClient):
         """
         return get_object_from_context(self, _request_context, 'request_id', str)
 
-    def _get_agent_async_app_caller(self):
+    def _get_agent_caller(self):
         """
-        Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+        Gets the caller for the current request context. Applicable within a AIAgent execute function.
 
         Returns:
             str: The caller for the current request being processed by the Agent.
@@ -4124,12 +4124,21 @@ class ApiClient(ReadOnlyClient):
 
     def _is_proxy_app_caller(self):
         """
-        Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+        Checks if the caller is cluster-proxy app.
 
         Returns:
-            bool: True if the caller is proxy app.
+            bool: True if the caller is cluster-proxy app.
         """
         return get_object_from_context(self, _request_context, 'proxy_app_caller', str) is not None
+
+    def _is_async_app_caller(self):
+        """
+        Checks if the caller is async app.
+
+        Returns:
+            bool: True if the caller is async app.
+        """
+        return get_object_from_context(self, _request_context, 'async_app_caller', str) is not None
 
     def stream_message(self, message: str, is_transient: bool = False) -> None:
         """
@@ -4141,7 +4150,7 @@ class ApiClient(ReadOnlyClient):
             is_transient (bool): If True, the message will be marked as transient and will not be persisted on reload in external chatllm UI. Transient messages are useful for streaming interim updates or results.
         """
         request_id = self._get_agent_app_request_id()
-        caller = self._get_agent_async_app_caller()
+        caller = self._get_agent_caller()
         proxy_caller = self._is_proxy_app_caller()
         if request_id and caller:
             extra_args = {'stream_type': StreamType.MESSAGE.value,
@@ -4163,7 +4172,7 @@ class ApiClient(ReadOnlyClient):
             value (Any): The output contents.
         """
         request_id = self._get_agent_app_request_id()
-        caller = self._get_agent_async_app_caller()
+        caller = self._get_agent_caller()
         proxy_caller = self._is_proxy_app_caller()
         if _is_json_serializable(value):
             message_args = {'id': section_key,
@@ -4189,7 +4198,7 @@ class ApiClient(ReadOnlyClient):
             response_section (ResponseSection): The response section to be streamed.
         """
         request_id = self._get_agent_app_request_id()
-        caller = self._get_agent_async_app_caller()
+        caller = self._get_agent_caller()
         proxy_caller = self._is_proxy_app_caller()
         if request_id and caller:
             segment = response_section.to_dict()
@@ -4203,7 +4212,7 @@ class ApiClient(ReadOnlyClient):
 
     def _stream_llm_call(self, section_key=None, **kwargs):
         request_id = self._get_agent_app_request_id()
-        caller = self._get_agent_async_app_caller()
+        caller = self._get_agent_caller()
         proxy_caller = self._is_proxy_app_caller()
         if not request_id or not caller:
             logging.info('Please use evaluate_prompt for local testing.')
@@ -8010,7 +8019,7 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroupRowProcessLogs: An object representing the logs for the feature group row process"""
         return self._call_api('getFeatureGroupRowProcessLogsByKey', 'POST', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcessLogs)
 
-    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP', description: str = None, examples: dict = None) -> PythonFunction:
+    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP', description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: list = None, output_variable_mappings: List = None) -> PythonFunction:
         """Creates a custom Python function that is reusable.
 
         Args:
@@ -8021,13 +8030,16 @@ Creates a new feature group defined as the union of other feature group versions
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             function_type (str): Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
             description (str): Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
-            examples (dict): Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
+            examples (dict): Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.])
+            user_level_connectors (Dict): Dictionary containing user level connectors.
+            org_level_connectors (list): List containing organization level connectors.
+            output_variable_mappings (List): List of output variable mappings that defines the elements of the function's return value.
 
         Returns:
             PythonFunction: The Python function that can be used (e.g. for feature group transform)."""
-        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'functionType': function_type, 'description': description, 'examples': examples}, parse_type=PythonFunction)
+        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'functionType': function_type, 'description': description, 'examples': examples, 'userLevelConnectors': user_level_connectors, 'orgLevelConnectors': org_level_connectors, 'outputVariableMappings': output_variable_mappings}, parse_type=PythonFunction)
 
-    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, description: str = None, examples: dict = None) -> PythonFunction:
+    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: List = None, output_variable_mappings: List = None) -> PythonFunction:
         """Update custom python function with user inputs for the given python function.
 
         Args:
@@ -8038,10 +8050,13 @@ Creates a new feature group defined as the union of other feature group versions
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             description (str): Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
             examples (dict): Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
+            user_level_connectors (Dict): Dictionary containing user level connectors.
+            org_level_connectors (List): List of organization level connectors.
+            output_variable_mappings (List): List of output variable mappings that defines the elements of the function's return value.
 
         Returns:
             PythonFunction: The Python function object."""
-        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'description': description, 'examples': examples}, parse_type=PythonFunction)
+        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'description': description, 'examples': examples, 'userLevelConnectors': user_level_connectors, 'orgLevelConnectors': org_level_connectors, 'outputVariableMappings': output_variable_mappings}, parse_type=PythonFunction)
 
     def delete_python_function(self, name: str):
         """Removes an existing Python function.

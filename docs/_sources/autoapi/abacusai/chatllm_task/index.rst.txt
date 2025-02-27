@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, enableEmailAlerts=None, email=None, computePointsUsed=None, wasSeen=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,10 +42,10 @@ Module Contents
    :type enableEmailAlerts: bool
    :param email: The email to send alerts to.
    :type email: str
+   :param numUnreadTaskInstances: The number of unread task instances for the chatllm task.
+   :type numUnreadTaskInstances: int
    :param computePointsUsed: The compute points used for the chatllm task.
    :type computePointsUsed: int
-   :param wasSeen: Whether the chatllm task has been seen.
-   :type wasSeen: bool
 
 
    .. py:attribute:: chatllm_task_id
@@ -93,12 +93,12 @@ Module Contents
 
 
 
-   .. py:attribute:: compute_points_used
+   .. py:attribute:: num_unread_task_instances
       :value: None
 
 
 
-   .. py:attribute:: was_seen
+   .. py:attribute:: compute_points_used
       :value: None
 
 

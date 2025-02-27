@@ -38,6 +38,7 @@ from .code_edit import CodeEdit
 from .code_edit_response import CodeEditResponse
 from .code_edits import CodeEdits
 from .code_source import CodeSource
+from .code_suggestion_validation_response import CodeSuggestionValidationResponse
 from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
@@ -237,4 +238,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.32"
+__version__ = "1.4.33"

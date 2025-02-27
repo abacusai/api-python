@@ -51,6 +51,7 @@ Submodules
    /autoapi/abacusai/code_edit_response/index
    /autoapi/abacusai/code_edits/index
    /autoapi/abacusai/code_source/index
+   /autoapi/abacusai/code_suggestion_validation_response/index
    /autoapi/abacusai/compute_point_info/index
    /autoapi/abacusai/concatenation_config/index
    /autoapi/abacusai/constants_autocomplete_response/index
@@ -345,6 +346,7 @@ Classes
    abacusai.AbacusUsageMetricsDatasetConfig
    abacusai.TeamsScraperDatasetConfig
    abacusai.FreshserviceDatasetConfig
+   abacusai.SftpDatasetConfig
    abacusai._ApplicationConnectorDatasetConfigFactory
    abacusai.PredictionArguments
    abacusai.OptimizationPredictionArguments
@@ -531,6 +533,7 @@ Classes
    abacusai.CodeEditResponse
    abacusai.CodeEdits
    abacusai.CodeSource
+   abacusai.CodeSuggestionValidationResponse
    abacusai.ComputePointInfo
    abacusai.ConcatenationConfig
    abacusai.ConstantsAutocompleteResponse
@@ -4132,6 +4135,50 @@ Package Contents
    .. py:method:: __post_init__()
 
 
+.. py:class:: SftpDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for SFTP Application Connector
+
+   :param location: The regex location of the files to fetch
+   :type location: str
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str
+   :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+   :type extract_bounding_boxes: bool
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+   :type merge_file_schemas: bool
+
+
+   .. py:attribute:: location
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: csv_delimiter
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: extract_bounding_boxes
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: merge_file_schemas
+      :type:  bool
+      :value: False
+
+
+
+   .. py:method:: __post_init__()
+
+
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
@@ -6392,6 +6439,11 @@ Package Contents
 
 
 
+   .. py:attribute:: SFTPAPPLICATION
+      :value: 'SFTPAPPLICATION'
+
+
+
 .. py:class:: StreamingConnectorType
 
    Bases: :py:obj:`ApiEnum`
@@ -6654,6 +6706,11 @@ Package Contents
 
    .. py:attribute:: CLAUDE_V3_5_SONNET
       :value: 'CLAUDE_V3_5_SONNET'
+
+
+
+   .. py:attribute:: CLAUDE_V3_7_SONNET
+      :value: 'CLAUDE_V3_7_SONNET'
 
 
 
@@ -7449,6 +7506,11 @@ Package Contents
 
    .. py:attribute:: SEARCH_LLM
       :value: 'SEARCH_LLM'
+
+
+
+   .. py:attribute:: APP_LLM
+      :value: 'APP_LLM'
 
 
 
@@ -13384,7 +13446,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, enableEmailAlerts=None, email=None, computePointsUsed=None, wasSeen=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -13411,10 +13473,10 @@ Package Contents
    :type enableEmailAlerts: bool
    :param email: The email to send alerts to.
    :type email: str
+   :param numUnreadTaskInstances: The number of unread task instances for the chatllm task.
+   :type numUnreadTaskInstances: int
    :param computePointsUsed: The compute points used for the chatllm task.
    :type computePointsUsed: int
-   :param wasSeen: Whether the chatllm task has been seen.
-   :type wasSeen: bool
 
 
    .. py:attribute:: chatllm_task_id
@@ -13462,12 +13524,12 @@ Package Contents
 
 
 
-   .. py:attribute:: compute_points_used
+   .. py:attribute:: num_unread_task_instances
       :value: None
 
 
 
-   .. py:attribute:: was_seen
+   .. py:attribute:: compute_points_used
       :value: None
 
 
@@ -14420,9 +14482,9 @@ Package Contents
 
 
 
-   .. py:method:: _get_agent_async_app_caller()
+   .. py:method:: _get_agent_caller()
 
-      Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+      Gets the caller for the current request context. Applicable within a AIAgent execute function.
 
       :returns: The caller for the current request being processed by the Agent.
       :rtype: str
@@ -14431,9 +14493,18 @@ Package Contents
 
    .. py:method:: _is_proxy_app_caller()
 
-      Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+      Checks if the caller is cluster-proxy app.
 
-      :returns: True if the caller is proxy app.
+      :returns: True if the caller is cluster-proxy app.
+      :rtype: bool
+
+
+
+   .. py:method:: _is_async_app_caller()
+
+      Checks if the caller is async app.
+
+      :returns: True if the caller is async app.
       :rtype: bool
 
 
@@ -19461,7 +19532,7 @@ Package Contents
 
 
 
-   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None)
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None)
 
       Creates a custom Python function that is reusable.
 
@@ -19479,15 +19550,21 @@ Package Contents
       :type function_type: str
       :param description: Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
       :type description: str
-      :param examples: Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
+      :param examples: Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.])
       :type examples: dict
+      :param user_level_connectors: Dictionary containing user level connectors.
+      :type user_level_connectors: Dict
+      :param org_level_connectors: List containing organization level connectors.
+      :type org_level_connectors: list
+      :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
+      :type output_variable_mappings: List
 
       :returns: The Python function that can be used (e.g. for feature group transform).
       :rtype: PythonFunction
 
 
 
-   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None)
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -19505,6 +19582,12 @@ Package Contents
       :type description: str
       :param examples: Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.
       :type examples: dict
+      :param user_level_connectors: Dictionary containing user level connectors.
+      :type user_level_connectors: Dict
+      :param org_level_connectors: List of organization level connectors.
+      :type org_level_connectors: List
+      :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
+      :type output_variable_mappings: List
 
       :returns: The Python function object.
       :rtype: PythonFunction
@@ -23384,7 +23467,7 @@ Package Contents
 
 
 
-.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None, isPremium=None)
+.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23401,8 +23484,12 @@ Package Contents
    :type imageUploadSupported: bool
    :param codeAgentSupported: Whether the LLM supports code agent.
    :type codeAgentSupported: bool
+   :param codeEditSupported: Whether the LLM supports code edit.
+   :type codeEditSupported: bool
    :param isPremium: Whether the LLM is a premium LLM.
    :type isPremium: bool
+   :param llmBotIcon: The icon of the LLM bot.
+   :type llmBotIcon: str
 
 
    .. py:attribute:: llm_name
@@ -23425,7 +23512,17 @@ Package Contents
 
 
 
+   .. py:attribute:: code_edit_supported
+      :value: None
+
+
+
    .. py:attribute:: is_premium
+      :value: None
+
+
+
+   .. py:attribute:: llm_bot_icon
       :value: None
 
 
@@ -23667,6 +23764,39 @@ Package Contents
 
 
 
+.. py:class:: CodeSuggestionValidationResponse(client, isValid=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A response from an LLM to validate a code suggestion.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param isValid: Whether the code suggestion is valid.
+   :type isValid: bool
+
+
+   .. py:attribute:: is_valid
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -23789,7 +23919,7 @@ Package Contents
 
 
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23804,6 +23934,12 @@ Package Contents
    :type acceptanceDelay: int
    :param debounceDelay: The debounce delay.
    :type debounceDelay: int
+   :param recordUserAction: Whether to record user action.
+   :type recordUserAction: bool
+   :param validateSuggestion: Whether to validate the suggestion.
+   :type validateSuggestion: bool
+   :param validationLinesThreshold: The number of lines to validate the suggestion.
+   :type validationLinesThreshold: int
 
 
    .. py:attribute:: max_pending_requests
@@ -23817,6 +23953,21 @@ Package Contents
 
 
    .. py:attribute:: debounce_delay
+      :value: None
+
+
+
+   .. py:attribute:: record_user_action
+      :value: None
+
+
+
+   .. py:attribute:: validate_suggestion
+      :value: None
+
+
+
+   .. py:attribute:: validation_lines_threshold
       :value: None
 
 
@@ -28569,7 +28720,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28612,6 +28763,8 @@ Package Contents
    :type isDeprecated: bool
    :param isVisible: Whether the external application should be shown in the dropdown.
    :type isVisible: bool
+   :param hasThinkingOption: Whether to show the thinking option in the toolbar.
+   :type hasThinkingOption: bool
 
 
    .. py:attribute:: name
@@ -28695,6 +28848,11 @@ Package Contents
 
 
    .. py:attribute:: is_visible
+      :value: None
+
+
+
+   .. py:attribute:: has_thinking_option
       :value: None
 
 
@@ -42572,7 +42730,7 @@ Package Contents
 
 
 
-.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, codeSource={})
+.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, connectors=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42603,6 +42761,8 @@ Package Contents
    :type description: str
    :param examples: Dictionary containing example use cases and anti-patterns. Includes 'positive' examples showing recommended usage and 'negative' examples showing cases to avoid.
    :type examples: dict[str, list[str]]
+   :param connectors: Dictionary containing user-level and organization-level connectors
+   :type connectors: dict
    :param codeSource: Information about the source code of the Python function.
    :type codeSource: CodeSource
 
@@ -42658,6 +42818,11 @@ Package Contents
 
 
    .. py:attribute:: examples
+      :value: None
+
+
+
+   .. py:attribute:: connectors
       :value: None
 
 
@@ -45431,6 +45596,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.32'
+   :value: '1.4.33'
 
 

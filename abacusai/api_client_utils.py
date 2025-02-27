@@ -613,7 +613,7 @@ class DocstoreUtils:
         def combine_doc_info(group):
             page_infos = group.to_dict(orient='records')
             document_data = {
-                cls.METADATA: [{cls.HEIGHT: page.get(cls.HEIGHT, None), cls.WIDTH: page.get(cls.WIDTH, None), cls.PAGE: page_no + 1, cls.MARKDOWN_FEATURES: page.get(cls.MARKDOWN_FEATURES)}
+                cls.METADATA: [{cls.HEIGHT: page.get(cls.HEIGHT, None), cls.WIDTH: page.get(cls.WIDTH, None), cls.PAGE: page_no, cls.MARKDOWN_FEATURES: page.get(cls.MARKDOWN_FEATURES)}
                                for page_no, page in enumerate(page_infos)],
                 cls.TOKENS: [token for page in page_infos for token in page.get(cls.TOKENS) or []],
                 # default to embedded text

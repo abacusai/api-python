@@ -94,6 +94,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../code_edit_response/index.html">abacusai.code_edit_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_edits/index.html">abacusai.code_edits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_suggestion_validation_response/index.html">abacusai.code_suggestion_validation_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
@@ -563,410 +564,458 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FreshserviceDatasetConfig" title="abacusai.api_class.FreshserviceDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FreshserviceDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Freshservice Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SftpDatasetConfig" title="abacusai.api_class.SftpDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SftpDatasetConfig</span></code></a></p></td>
+<td><p>Dataset config for SFTP Application Connector</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PredictionArguments" title="abacusai.api_class.PredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionArguments</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PredictionArguments" title="abacusai.api_class.PredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionArguments</span></code></a></p></td>
 <td><p>An abstract class for prediction arguments specific to problem type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.OptimizationPredictionArguments" title="abacusai.api_class.OptimizationPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationPredictionArguments</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.OptimizationPredictionArguments" title="abacusai.api_class.OptimizationPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the OPTIMIZATION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyPredictionArguments" title="abacusai.api_class.TimeseriesAnomalyPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyPredictionArguments</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyPredictionArguments" title="abacusai.api_class.TimeseriesAnomalyPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the TS_ANOMALY problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ChatLLMPredictionArguments" title="abacusai.api_class.ChatLLMPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMPredictionArguments</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ChatLLMPredictionArguments" title="abacusai.api_class.ChatLLMPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the CHAT_LLM problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionPredictionArguments" title="abacusai.api_class.RegressionPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionPredictionArguments</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionPredictionArguments" title="abacusai.api_class.RegressionPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the PREDICTIVE_MODELING problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingPredictionArguments" title="abacusai.api_class.ForecastingPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingPredictionArguments</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingPredictionArguments" title="abacusai.api_class.ForecastingPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the FORECASTING problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CumulativeForecastingPredictionArguments" title="abacusai.api_class.CumulativeForecastingPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CumulativeForecastingPredictionArguments</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CumulativeForecastingPredictionArguments" title="abacusai.api_class.CumulativeForecastingPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CumulativeForecastingPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the CUMULATIVE_FORECASTING problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.NaturalLanguageSearchPredictionArguments" title="abacusai.api_class.NaturalLanguageSearchPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NaturalLanguageSearchPredictionArguments</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.NaturalLanguageSearchPredictionArguments" title="abacusai.api_class.NaturalLanguageSearchPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NaturalLanguageSearchPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the NATURAL_LANGUAGE_SEARCH problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureStorePredictionArguments" title="abacusai.api_class.FeatureStorePredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureStorePredictionArguments</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureStorePredictionArguments" title="abacusai.api_class.FeatureStorePredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureStorePredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the FEATURE_STORE problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._PredictionArgumentsFactory" title="abacusai.api_class._PredictionArgumentsFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_PredictionArgumentsFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._PredictionArgumentsFactory" title="abacusai.api_class._PredictionArgumentsFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_PredictionArgumentsFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id105" title="abacusai.api_class.VectorStoreTextEncoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VectorStoreTextEncoder</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id105" title="abacusai.api_class.VectorStoreTextEncoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VectorStoreTextEncoder</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.VectorStoreConfig" title="abacusai.api_class.VectorStoreConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VectorStoreConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.VectorStoreConfig" title="abacusai.api_class.VectorStoreConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VectorStoreConfig</span></code></a></p></td>
 <td><p>Config for indexing options of a document retriever. Default values of optional arguments are heuristically selected by the Abacus.AI platform based on the underlying data.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ApiEnum" title="abacusai.api_class.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ApiEnum" title="abacusai.api_class.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ProblemType" title="abacusai.api_class.ProblemType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProblemType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ProblemType" title="abacusai.api_class.ProblemType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProblemType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionObjective" title="abacusai.api_class.RegressionObjective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionObjective</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionObjective" title="abacusai.api_class.RegressionObjective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionObjective</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTreeHPOMode" title="abacusai.api_class.RegressionTreeHPOMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTreeHPOMode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTreeHPOMode" title="abacusai.api_class.RegressionTreeHPOMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTreeHPOMode</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PartialDependenceAnalysis" title="abacusai.api_class.PartialDependenceAnalysis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PartialDependenceAnalysis</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PartialDependenceAnalysis" title="abacusai.api_class.PartialDependenceAnalysis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PartialDependenceAnalysis</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionAugmentationStrategy" title="abacusai.api_class.RegressionAugmentationStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionAugmentationStrategy</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionAugmentationStrategy" title="abacusai.api_class.RegressionAugmentationStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionAugmentationStrategy</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTargetTransform" title="abacusai.api_class.RegressionTargetTransform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTargetTransform</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTargetTransform" title="abacusai.api_class.RegressionTargetTransform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTargetTransform</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTypeOfSplit" title="abacusai.api_class.RegressionTypeOfSplit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTypeOfSplit</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTypeOfSplit" title="abacusai.api_class.RegressionTypeOfSplit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTypeOfSplit</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTimeSplitMethod" title="abacusai.api_class.RegressionTimeSplitMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTimeSplitMethod</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTimeSplitMethod" title="abacusai.api_class.RegressionTimeSplitMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTimeSplitMethod</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionLossFunction" title="abacusai.api_class.RegressionLossFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionLossFunction</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionLossFunction" title="abacusai.api_class.RegressionLossFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionLossFunction</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ExplainerType" title="abacusai.api_class.ExplainerType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExplainerType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ExplainerType" title="abacusai.api_class.ExplainerType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExplainerType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.SamplingMethodType" title="abacusai.api_class.SamplingMethodType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingMethodType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SamplingMethodType" title="abacusai.api_class.SamplingMethodType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingMethodType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MergeMode" title="abacusai.api_class.MergeMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MergeMode</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.MergeMode" title="abacusai.api_class.MergeMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MergeMode</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.OperatorType" title="abacusai.api_class.OperatorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OperatorType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.OperatorType" title="abacusai.api_class.OperatorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OperatorType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MarkdownOperatorInputType" title="abacusai.api_class.MarkdownOperatorInputType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MarkdownOperatorInputType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.MarkdownOperatorInputType" title="abacusai.api_class.MarkdownOperatorInputType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MarkdownOperatorInputType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FillLogic" title="abacusai.api_class.FillLogic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FillLogic</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FillLogic" title="abacusai.api_class.FillLogic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FillLogic</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.BatchSize" title="abacusai.api_class.BatchSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchSize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.BatchSize" title="abacusai.api_class.BatchSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchSize</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.HolidayCalendars" title="abacusai.api_class.HolidayCalendars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HolidayCalendars</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.HolidayCalendars" title="abacusai.api_class.HolidayCalendars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HolidayCalendars</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FileFormat" title="abacusai.api_class.FileFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileFormat</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FileFormat" title="abacusai.api_class.FileFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileFormat</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ExperimentationMode" title="abacusai.api_class.ExperimentationMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperimentationMode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ExperimentationMode" title="abacusai.api_class.ExperimentationMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperimentationMode</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PersonalizationTrainingMode" title="abacusai.api_class.PersonalizationTrainingMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationTrainingMode</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PersonalizationTrainingMode" title="abacusai.api_class.PersonalizationTrainingMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationTrainingMode</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PersonalizationObjective" title="abacusai.api_class.PersonalizationObjective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationObjective</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PersonalizationObjective" title="abacusai.api_class.PersonalizationObjective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationObjective</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingObjective" title="abacusai.api_class.ForecastingObjective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingObjective</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingObjective" title="abacusai.api_class.ForecastingObjective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingObjective</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingFrequency" title="abacusai.api_class.ForecastingFrequency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingFrequency</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingFrequency" title="abacusai.api_class.ForecastingFrequency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingFrequency</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingDataSplitType" title="abacusai.api_class.ForecastingDataSplitType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingDataSplitType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingDataSplitType" title="abacusai.api_class.ForecastingDataSplitType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingDataSplitType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingLossFunction" title="abacusai.api_class.ForecastingLossFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingLossFunction</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingLossFunction" title="abacusai.api_class.ForecastingLossFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingLossFunction</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingLocalScaling" title="abacusai.api_class.ForecastingLocalScaling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingLocalScaling</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingLocalScaling" title="abacusai.api_class.ForecastingLocalScaling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingLocalScaling</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingFillMethod" title="abacusai.api_class.ForecastingFillMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingFillMethod</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingFillMethod" title="abacusai.api_class.ForecastingFillMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingFillMethod</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingQuanitlesExtensionMethod" title="abacusai.api_class.ForecastingQuanitlesExtensionMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingQuanitlesExtensionMethod</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingQuanitlesExtensionMethod" title="abacusai.api_class.ForecastingQuanitlesExtensionMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingQuanitlesExtensionMethod</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyDataSplitType" title="abacusai.api_class.TimeseriesAnomalyDataSplitType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyDataSplitType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyDataSplitType" title="abacusai.api_class.TimeseriesAnomalyDataSplitType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyDataSplitType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyTypeOfAnomaly" title="abacusai.api_class.TimeseriesAnomalyTypeOfAnomaly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyTypeOfAnomaly</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyTypeOfAnomaly" title="abacusai.api_class.TimeseriesAnomalyTypeOfAnomaly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyTypeOfAnomaly</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyUseHeuristic" title="abacusai.api_class.TimeseriesAnomalyUseHeuristic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyUseHeuristic</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyUseHeuristic" title="abacusai.api_class.TimeseriesAnomalyUseHeuristic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyUseHeuristic</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.NERObjective" title="abacusai.api_class.NERObjective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NERObjective</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.NERObjective" title="abacusai.api_class.NERObjective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NERObjective</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.NERModelType" title="abacusai.api_class.NERModelType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NERModelType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.NERModelType" title="abacusai.api_class.NERModelType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NERModelType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.NLPDocumentFormat" title="abacusai.api_class.NLPDocumentFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NLPDocumentFormat</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.NLPDocumentFormat" title="abacusai.api_class.NLPDocumentFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NLPDocumentFormat</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.SentimentType" title="abacusai.api_class.SentimentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentimentType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SentimentType" title="abacusai.api_class.SentimentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentimentType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ClusteringImputationMethod" title="abacusai.api_class.ClusteringImputationMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringImputationMethod</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ClusteringImputationMethod" title="abacusai.api_class.ClusteringImputationMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringImputationMethod</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ConnectorType" title="abacusai.api_class.ConnectorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectorType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ConnectorType" title="abacusai.api_class.ConnectorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectorType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ApplicationConnectorType" title="abacusai.api_class.ApplicationConnectorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApplicationConnectorType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ApplicationConnectorType" title="abacusai.api_class.ApplicationConnectorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApplicationConnectorType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.StreamingConnectorType" title="abacusai.api_class.StreamingConnectorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamingConnectorType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.StreamingConnectorType" title="abacusai.api_class.StreamingConnectorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamingConnectorType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PythonFunctionArgumentType" title="abacusai.api_class.PythonFunctionArgumentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionArgumentType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PythonFunctionArgumentType" title="abacusai.api_class.PythonFunctionArgumentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionArgumentType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PythonFunctionOutputArgumentType" title="abacusai.api_class.PythonFunctionOutputArgumentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionOutputArgumentType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PythonFunctionOutputArgumentType" title="abacusai.api_class.PythonFunctionOutputArgumentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionOutputArgumentType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id105" title="abacusai.api_class.VectorStoreTextEncoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VectorStoreTextEncoder</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id105" title="abacusai.api_class.VectorStoreTextEncoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VectorStoreTextEncoder</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.LLMName" title="abacusai.api_class.LLMName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LLMName</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.LLMName" title="abacusai.api_class.LLMName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LLMName</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MonitorAlertType" title="abacusai.api_class.MonitorAlertType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorAlertType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.MonitorAlertType" title="abacusai.api_class.MonitorAlertType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorAlertType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureDriftType" title="abacusai.api_class.FeatureDriftType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureDriftType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureDriftType" title="abacusai.api_class.FeatureDriftType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureDriftType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DataIntegrityViolationType" title="abacusai.api_class.DataIntegrityViolationType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataIntegrityViolationType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DataIntegrityViolationType" title="abacusai.api_class.DataIntegrityViolationType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataIntegrityViolationType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.BiasType" title="abacusai.api_class.BiasType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.BiasType" title="abacusai.api_class.BiasType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.AlertActionType" title="abacusai.api_class.AlertActionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.AlertActionType" title="abacusai.api_class.AlertActionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PythonFunctionType" title="abacusai.api_class.PythonFunctionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PythonFunctionType" title="abacusai.api_class.PythonFunctionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.EvalArtifactType" title="abacusai.api_class.EvalArtifactType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EvalArtifactType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.EvalArtifactType" title="abacusai.api_class.EvalArtifactType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EvalArtifactType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FieldDescriptorType" title="abacusai.api_class.FieldDescriptorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FieldDescriptorType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FieldDescriptorType" title="abacusai.api_class.FieldDescriptorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FieldDescriptorType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputType" title="abacusai.api_class.WorkflowNodeInputType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeInputType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputType" title="abacusai.api_class.WorkflowNodeInputType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeInputType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.WorkflowNodeOutputType" title="abacusai.api_class.WorkflowNodeOutputType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeOutputType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.WorkflowNodeOutputType" title="abacusai.api_class.WorkflowNodeOutputType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeOutputType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id113" title="abacusai.api_class.OcrMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OcrMode</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id113" title="abacusai.api_class.OcrMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OcrMode</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id127" title="abacusai.api_class.DocumentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id127" title="abacusai.api_class.DocumentType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id200" title="abacusai.api_class.StdDevThresholdType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThresholdType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id200" title="abacusai.api_class.StdDevThresholdType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThresholdType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DataType" title="abacusai.api_class.DataType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DataType" title="abacusai.api_class.DataType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.AgentInterface" title="abacusai.api_class.AgentInterface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentInterface</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.AgentInterface" title="abacusai.api_class.AgentInterface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentInterface</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.WorkflowNodeTemplateType" title="abacusai.api_class.WorkflowNodeTemplateType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeTemplateType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.WorkflowNodeTemplateType" title="abacusai.api_class.WorkflowNodeTemplateType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeTemplateType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ProjectConfigType" title="abacusai.api_class.ProjectConfigType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectConfigType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ProjectConfigType" title="abacusai.api_class.ProjectConfigType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectConfigType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CPUSize" title="abacusai.api_class.CPUSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CPUSize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CPUSize" title="abacusai.api_class.CPUSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CPUSize</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MemorySize" title="abacusai.api_class.MemorySize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemorySize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.MemorySize" title="abacusai.api_class.MemorySize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemorySize</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ResponseSectionType" title="abacusai.api_class.ResponseSectionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSectionType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ResponseSectionType" title="abacusai.api_class.ResponseSectionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSectionType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CodeLanguage" title="abacusai.api_class.CodeLanguage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeLanguage</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CodeLanguage" title="abacusai.api_class.CodeLanguage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeLanguage</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DeploymentConversationType" title="abacusai.api_class.DeploymentConversationType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeploymentConversationType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DeploymentConversationType" title="abacusai.api_class.DeploymentConversationType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeploymentConversationType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id153" title="abacusai.api_class.DocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentProcessingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id153" title="abacusai.api_class.DocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentProcessingConfig</span></code></a></p></td>
 <td><p>Document processing configuration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.SamplingConfig" title="abacusai.api_class.SamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SamplingConfig" title="abacusai.api_class.SamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfig</span></code></a></p></td>
 <td><p>An abstract class for the sampling config of a feature group</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.NSamplingConfig" title="abacusai.api_class.NSamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NSamplingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.NSamplingConfig" title="abacusai.api_class.NSamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NSamplingConfig</span></code></a></p></td>
 <td><p>The number of distinct values of the key columns to include in the sample, or number of rows if key columns not specified.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PercentSamplingConfig" title="abacusai.api_class.PercentSamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PercentSamplingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PercentSamplingConfig" title="abacusai.api_class.PercentSamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PercentSamplingConfig</span></code></a></p></td>
 <td><p>The fraction of distinct values of the feature group to include in the sample.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._SamplingConfigFactory" title="abacusai.api_class._SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_SamplingConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._SamplingConfigFactory" title="abacusai.api_class._SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_SamplingConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.MergeConfig" title="abacusai.api_class.MergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MergeConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MergeConfig" title="abacusai.api_class.MergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MergeConfig</span></code></a></p></td>
 <td><p>An abstract class for the merge config of a feature group</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.LastNMergeConfig" title="abacusai.api_class.LastNMergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LastNMergeConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.LastNMergeConfig" title="abacusai.api_class.LastNMergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LastNMergeConfig</span></code></a></p></td>
 <td><p>Merge LAST N chunks/versions of an incremental dataset.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TimeWindowMergeConfig" title="abacusai.api_class.TimeWindowMergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeWindowMergeConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TimeWindowMergeConfig" title="abacusai.api_class.TimeWindowMergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeWindowMergeConfig</span></code></a></p></td>
 <td><p>Merge rows within a given timewindow of the most recent timestamp</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._MergeConfigFactory" title="abacusai.api_class._MergeConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_MergeConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._MergeConfigFactory" title="abacusai.api_class._MergeConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_MergeConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.OperatorConfig" title="abacusai.api_class.OperatorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OperatorConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.OperatorConfig" title="abacusai.api_class.OperatorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OperatorConfig</span></code></a></p></td>
 <td><p>Configuration for a template Feature Group Operation</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.UnpivotConfig" title="abacusai.api_class.UnpivotConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnpivotConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.UnpivotConfig" title="abacusai.api_class.UnpivotConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnpivotConfig</span></code></a></p></td>
 <td><p>Unpivot Columns in a FeatureGroup.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.MarkdownConfig" title="abacusai.api_class.MarkdownConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MarkdownConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MarkdownConfig" title="abacusai.api_class.MarkdownConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MarkdownConfig</span></code></a></p></td>
 <td><p>Transform a input column to a markdown column.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CrawlerTransformConfig" title="abacusai.api_class.CrawlerTransformConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CrawlerTransformConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CrawlerTransformConfig" title="abacusai.api_class.CrawlerTransformConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CrawlerTransformConfig</span></code></a></p></td>
 <td><p>Transform a input column of urls to html text</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ExtractDocumentDataConfig" title="abacusai.api_class.ExtractDocumentDataConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtractDocumentDataConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ExtractDocumentDataConfig" title="abacusai.api_class.ExtractDocumentDataConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtractDocumentDataConfig</span></code></a></p></td>
 <td><p>Extracts data from documents.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DataGenerationConfig" title="abacusai.api_class.DataGenerationConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataGenerationConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DataGenerationConfig" title="abacusai.api_class.DataGenerationConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataGenerationConfig</span></code></a></p></td>
 <td><p>Generate synthetic data using a model for finetuning an LLM.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.UnionTransformConfig" title="abacusai.api_class.UnionTransformConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnionTransformConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.UnionTransformConfig" title="abacusai.api_class.UnionTransformConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnionTransformConfig</span></code></a></p></td>
 <td><p>Takes Union of current feature group with 1 or more selected feature groups of same type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._OperatorConfigFactory" title="abacusai.api_class._OperatorConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_OperatorConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._OperatorConfigFactory" title="abacusai.api_class._OperatorConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_OperatorConfigFactory</span></code></a></p></td>
 <td><p>A class to select and return the the correct type of Operator Config based on a serialized OperatorConfig instance.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p></td>
 <td><p>An abstract class for the training config options used to train the model.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PersonalizationTrainingConfig" title="abacusai.api_class.PersonalizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PersonalizationTrainingConfig" title="abacusai.api_class.PersonalizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the PERSONALIZATION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTrainingConfig" title="abacusai.api_class.RegressionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RegressionTrainingConfig" title="abacusai.api_class.RegressionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressionTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the PREDICTIVE_MODELING problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingTrainingConfig" title="abacusai.api_class.ForecastingTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingTrainingConfig" title="abacusai.api_class.ForecastingTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the FORECASTING problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.NamedEntityExtractionTrainingConfig" title="abacusai.api_class.NamedEntityExtractionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NamedEntityExtractionTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.NamedEntityExtractionTrainingConfig" title="abacusai.api_class.NamedEntityExtractionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NamedEntityExtractionTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the NAMED_ENTITY_EXTRACTION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.NaturalLanguageSearchTrainingConfig" title="abacusai.api_class.NaturalLanguageSearchTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NaturalLanguageSearchTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.NaturalLanguageSearchTrainingConfig" title="abacusai.api_class.NaturalLanguageSearchTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NaturalLanguageSearchTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the NATURAL_LANGUAGE_SEARCH problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ChatLLMTrainingConfig" title="abacusai.api_class.ChatLLMTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ChatLLMTrainingConfig" title="abacusai.api_class.ChatLLMTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CHAT_LLM problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SentenceBoundaryDetectionTrainingConfig" title="abacusai.api_class.SentenceBoundaryDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentenceBoundaryDetectionTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.SentenceBoundaryDetectionTrainingConfig" title="abacusai.api_class.SentenceBoundaryDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentenceBoundaryDetectionTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the SENTENCE_BOUNDARY_DETECTION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.SentimentDetectionTrainingConfig" title="abacusai.api_class.SentimentDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentimentDetectionTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SentimentDetectionTrainingConfig" title="abacusai.api_class.SentimentDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentimentDetectionTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the SENTIMENT_DETECTION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DocumentClassificationTrainingConfig" title="abacusai.api_class.DocumentClassificationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentClassificationTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DocumentClassificationTrainingConfig" title="abacusai.api_class.DocumentClassificationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentClassificationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the DOCUMENT_CLASSIFICATION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DocumentSummarizationTrainingConfig" title="abacusai.api_class.DocumentSummarizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentSummarizationTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DocumentSummarizationTrainingConfig" title="abacusai.api_class.DocumentSummarizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentSummarizationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the DOCUMENT_SUMMARIZATION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DocumentVisualizationTrainingConfig" title="abacusai.api_class.DocumentVisualizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentVisualizationTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DocumentVisualizationTrainingConfig" title="abacusai.api_class.DocumentVisualizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentVisualizationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the DOCUMENT_VISUALIZATION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ClusteringTrainingConfig" title="abacusai.api_class.ClusteringTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ClusteringTrainingConfig" title="abacusai.api_class.ClusteringTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CLUSTERING problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ClusteringTimeseriesTrainingConfig" title="abacusai.api_class.ClusteringTimeseriesTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTimeseriesTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ClusteringTimeseriesTrainingConfig" title="abacusai.api_class.ClusteringTimeseriesTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTimeseriesTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CLUSTERING_TIMESERIES problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.EventAnomalyTrainingConfig" title="abacusai.api_class.EventAnomalyTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EventAnomalyTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.EventAnomalyTrainingConfig" title="abacusai.api_class.EventAnomalyTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EventAnomalyTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the EVENT_ANOMALY problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyTrainingConfig" title="abacusai.api_class.TimeseriesAnomalyTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TimeseriesAnomalyTrainingConfig" title="abacusai.api_class.TimeseriesAnomalyTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the TS_ANOMALY problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CumulativeForecastingTrainingConfig" title="abacusai.api_class.CumulativeForecastingTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CumulativeForecastingTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CumulativeForecastingTrainingConfig" title="abacusai.api_class.CumulativeForecastingTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CumulativeForecastingTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CUMULATIVE_FORECASTING problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ThemeAnalysisTrainingConfig" title="abacusai.api_class.ThemeAnalysisTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ThemeAnalysisTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ThemeAnalysisTrainingConfig" title="abacusai.api_class.ThemeAnalysisTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ThemeAnalysisTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the THEME ANALYSIS problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.AIAgentTrainingConfig" title="abacusai.api_class.AIAgentTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AIAgentTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.AIAgentTrainingConfig" title="abacusai.api_class.AIAgentTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AIAgentTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the AI_AGENT problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CustomTrainedModelTrainingConfig" title="abacusai.api_class.CustomTrainedModelTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomTrainedModelTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CustomTrainedModelTrainingConfig" title="abacusai.api_class.CustomTrainedModelTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomTrainedModelTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CUSTOM_TRAINED_MODEL problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CustomAlgorithmTrainingConfig" title="abacusai.api_class.CustomAlgorithmTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomAlgorithmTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CustomAlgorithmTrainingConfig" title="abacusai.api_class.CustomAlgorithmTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomAlgorithmTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CUSTOM_ALGORITHM problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.OptimizationTrainingConfig" title="abacusai.api_class.OptimizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.OptimizationTrainingConfig" title="abacusai.api_class.OptimizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the OPTIMIZATION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._TrainingConfigFactory" title="abacusai.api_class._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._TrainingConfigFactory" title="abacusai.api_class._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DeployableAlgorithm" title="abacusai.api_class.DeployableAlgorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DeployableAlgorithm" title="abacusai.api_class.DeployableAlgorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></p></td>
 <td><p>Algorithm that can be deployed to a model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id200" title="abacusai.api_class.StdDevThresholdType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThresholdType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id200" title="abacusai.api_class.StdDevThresholdType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThresholdType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TimeWindowConfig" title="abacusai.api_class.TimeWindowConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeWindowConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TimeWindowConfig" title="abacusai.api_class.TimeWindowConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeWindowConfig</span></code></a></p></td>
 <td><p>Time Window Configuration</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingMonitorConfig" title="abacusai.api_class.ForecastingMonitorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ForecastingMonitorConfig" title="abacusai.api_class.ForecastingMonitorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></p></td>
 <td><p>Forecasting Monitor Configuration</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.StdDevThreshold" title="abacusai.api_class.StdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.StdDevThreshold" title="abacusai.api_class.StdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></p></td>
 <td><p>Std Dev Threshold types</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ItemAttributesStdDevThreshold" title="abacusai.api_class.ItemAttributesStdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ItemAttributesStdDevThreshold" title="abacusai.api_class.ItemAttributesStdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></p></td>
 <td><p>Item Attributes Std Dev Threshold for Monitor Alerts</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RestrictFeatureMappings" title="abacusai.api_class.RestrictFeatureMappings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RestrictFeatureMappings</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RestrictFeatureMappings" title="abacusai.api_class.RestrictFeatureMappings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RestrictFeatureMappings</span></code></a></p></td>
 <td><p>Restrict Feature Mappings for Monitor Filtering</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MonitorFilteringConfig" title="abacusai.api_class.MonitorFilteringConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorFilteringConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.MonitorFilteringConfig" title="abacusai.api_class.MonitorFilteringConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorFilteringConfig</span></code></a></p></td>
 <td><p>Monitor Filtering Configuration</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.AlertConditionConfig" title="abacusai.api_class.AlertConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertConditionConfig</span></code></a></p></td>
+<td><p>An abstract class for alert condition configs</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.AccuracyBelowThresholdConditionConfig" title="abacusai.api_class.AccuracyBelowThresholdConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AccuracyBelowThresholdConditionConfig</span></code></a></p></td>
+<td><p>Accuracy Below Threshold Condition Config for Monitor Alerts</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureDriftConditionConfig" title="abacusai.api_class.FeatureDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureDriftConditionConfig</span></code></a></p></td>
+<td><p>Feature Drift Condition Config for Monitor Alerts</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TargetDriftConditionConfig" title="abacusai.api_class.TargetDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TargetDriftConditionConfig</span></code></a></p></td>
+<td><p>Target Drift Condition Config for Monitor Alerts</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.HistoryLengthDriftConditionConfig" title="abacusai.api_class.HistoryLengthDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HistoryLengthDriftConditionConfig</span></code></a></p></td>
+<td><p>History Length Drift Condition Config for Monitor Alerts</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DataIntegrityViolationConditionConfig" title="abacusai.api_class.DataIntegrityViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataIntegrityViolationConditionConfig</span></code></a></p></td>
+<td><p>Data Integrity Violation Condition Config for Monitor Alerts</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.BiasViolationConditionConfig" title="abacusai.api_class.BiasViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasViolationConditionConfig</span></code></a></p></td>
+<td><p>Bias Violation Condition Config for Monitor Alerts</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PredictionCountConditionConfig" title="abacusai.api_class.PredictionCountConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionCountConditionConfig</span></code></a></p></td>
+<td><p>Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._AlertConditionConfigFactory" title="abacusai.api_class._AlertConditionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertConditionConfigFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.AlertActionConfig" title="abacusai.api_class.AlertActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionConfig</span></code></a></p></td>
+<td><p>An abstract class for alert action configs</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.EmailActionConfig" title="abacusai.api_class.EmailActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmailActionConfig</span></code></a></p></td>
+<td><p>Email Action Config for Monitor Alerts</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._AlertActionConfigFactory" title="abacusai.api_class._AlertActionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertActionConfigFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MonitorThresholdConfig" title="abacusai.api_class.MonitorThresholdConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorThresholdConfig</span></code></a></p></td>
+<td><p>Monitor Threshold Config for Monitor Alerts</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
@@ -974,133 +1023,88 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.AlertConditionConfig" title="abacusai.api_class.AlertConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertConditionConfig</span></code></a></p></td>
-<td><p>An abstract class for alert condition configs</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureMappingConfig" title="abacusai.api_class.FeatureMappingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureMappingConfig</span></code></a></p></td>
+<td><p>Feature mapping configuration for a feature group type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.AccuracyBelowThresholdConditionConfig" title="abacusai.api_class.AccuracyBelowThresholdConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AccuracyBelowThresholdConditionConfig</span></code></a></p></td>
-<td><p>Accuracy Below Threshold Condition Config for Monitor Alerts</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ProjectFeatureGroupTypeMappingsConfig" title="abacusai.api_class.ProjectFeatureGroupTypeMappingsConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectFeatureGroupTypeMappingsConfig</span></code></a></p></td>
+<td><p>Project feature group type mappings.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureDriftConditionConfig" title="abacusai.api_class.FeatureDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureDriftConditionConfig</span></code></a></p></td>
-<td><p>Feature Drift Condition Config for Monitor Alerts</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ConstraintConfig" title="abacusai.api_class.ConstraintConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConstraintConfig</span></code></a></p></td>
+<td><p>Constraint configuration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TargetDriftConditionConfig" title="abacusai.api_class.TargetDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TargetDriftConditionConfig</span></code></a></p></td>
-<td><p>Target Drift Condition Config for Monitor Alerts</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ProjectFeatureGroupConfig" title="abacusai.api_class.ProjectFeatureGroupConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectFeatureGroupConfig</span></code></a></p></td>
+<td><p>An abstract class for project feature group configuration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.HistoryLengthDriftConditionConfig" title="abacusai.api_class.HistoryLengthDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HistoryLengthDriftConditionConfig</span></code></a></p></td>
-<td><p>History Length Drift Condition Config for Monitor Alerts</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ConstraintProjectFeatureGroupConfig" title="abacusai.api_class.ConstraintProjectFeatureGroupConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConstraintProjectFeatureGroupConfig</span></code></a></p></td>
+<td><p>Constraint project feature group configuration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DataIntegrityViolationConditionConfig" title="abacusai.api_class.DataIntegrityViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataIntegrityViolationConditionConfig</span></code></a></p></td>
-<td><p>Data Integrity Violation Condition Config for Monitor Alerts</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ReviewModeProjectFeatureGroupConfig" title="abacusai.api_class.ReviewModeProjectFeatureGroupConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReviewModeProjectFeatureGroupConfig</span></code></a></p></td>
+<td><p>Review mode project feature group configuration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.BiasViolationConditionConfig" title="abacusai.api_class.BiasViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasViolationConditionConfig</span></code></a></p></td>
-<td><p>Bias Violation Condition Config for Monitor Alerts</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PredictionCountConditionConfig" title="abacusai.api_class.PredictionCountConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionCountConditionConfig</span></code></a></p></td>
-<td><p>Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._AlertConditionConfigFactory" title="abacusai.api_class._AlertConditionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertConditionConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._ProjectFeatureGroupConfigFactory" title="abacusai.api_class._ProjectFeatureGroupConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ProjectFeatureGroupConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.AlertActionConfig" title="abacusai.api_class.AlertActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionConfig</span></code></a></p></td>
-<td><p>An abstract class for alert action configs</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.EmailActionConfig" title="abacusai.api_class.EmailActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmailActionConfig</span></code></a></p></td>
-<td><p>Email Action Config for Monitor Alerts</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._AlertActionConfigFactory" title="abacusai.api_class._AlertActionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertActionConfigFactory</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.MonitorThresholdConfig" title="abacusai.api_class.MonitorThresholdConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorThresholdConfig</span></code></a></p></td>
-<td><p>Monitor Threshold Config for Monitor Alerts</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PythonFunctionArgument" title="abacusai.api_class.PythonFunctionArgument"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionArgument</span></code></a></p></td>
+<td><p>A config class for python function arguments</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.OutputVariableMapping" title="abacusai.api_class.OutputVariableMapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OutputVariableMapping</span></code></a></p></td>
+<td><p>A config class for python function arguments</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureMappingConfig" title="abacusai.api_class.FeatureMappingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureMappingConfig</span></code></a></p></td>
-<td><p>Feature mapping configuration for a feature group type.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ProjectFeatureGroupTypeMappingsConfig" title="abacusai.api_class.ProjectFeatureGroupTypeMappingsConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectFeatureGroupTypeMappingsConfig</span></code></a></p></td>
-<td><p>Project feature group type mappings.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureGroupExportConfig" title="abacusai.api_class.FeatureGroupExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureGroupExportConfig</span></code></a></p></td>
+<td><p>An abstract class for feature group exports.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ConstraintConfig" title="abacusai.api_class.ConstraintConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConstraintConfig</span></code></a></p></td>
-<td><p>Constraint configuration.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FileConnectorExportConfig" title="abacusai.api_class.FileConnectorExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileConnectorExportConfig</span></code></a></p></td>
+<td><p>File connector export config for feature groups</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ProjectFeatureGroupConfig" title="abacusai.api_class.ProjectFeatureGroupConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectFeatureGroupConfig</span></code></a></p></td>
-<td><p>An abstract class for project feature group configuration.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DatabaseConnectorExportConfig" title="abacusai.api_class.DatabaseConnectorExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatabaseConnectorExportConfig</span></code></a></p></td>
+<td><p>Database connector export config for feature groups</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ConstraintProjectFeatureGroupConfig" title="abacusai.api_class.ConstraintProjectFeatureGroupConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConstraintProjectFeatureGroupConfig</span></code></a></p></td>
-<td><p>Constraint project feature group configuration.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ReviewModeProjectFeatureGroupConfig" title="abacusai.api_class.ReviewModeProjectFeatureGroupConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReviewModeProjectFeatureGroupConfig</span></code></a></p></td>
-<td><p>Review mode project feature group configuration.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._ProjectFeatureGroupConfigFactory" title="abacusai.api_class._ProjectFeatureGroupConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ProjectFeatureGroupConfigFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._FeatureGroupExportConfigFactory" title="abacusai.api_class._FeatureGroupExportConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_FeatureGroupExportConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.PythonFunctionArgument" title="abacusai.api_class.PythonFunctionArgument"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionArgument</span></code></a></p></td>
-<td><p>A config class for python function arguments</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.OutputVariableMapping" title="abacusai.api_class.OutputVariableMapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OutputVariableMapping</span></code></a></p></td>
-<td><p>A config class for python function arguments</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id270" title="abacusai.api_class._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.FeatureGroupExportConfig" title="abacusai.api_class.FeatureGroupExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureGroupExportConfig</span></code></a></p></td>
-<td><p>An abstract class for feature group exports.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.FileConnectorExportConfig" title="abacusai.api_class.FileConnectorExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileConnectorExportConfig</span></code></a></p></td>
-<td><p>File connector export config for feature groups</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DatabaseConnectorExportConfig" title="abacusai.api_class.DatabaseConnectorExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatabaseConnectorExportConfig</span></code></a></p></td>
-<td><p>Database connector export config for feature groups</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._FeatureGroupExportConfigFactory" title="abacusai.api_class._FeatureGroupExportConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_FeatureGroupExportConfigFactory</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id275" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ResponseSection" title="abacusai.api_class.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ResponseSection" title="abacusai.api_class.ResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render specific UI elements.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.AgentFlowButtonResponseSection" title="abacusai.api_class.AgentFlowButtonResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentFlowButtonResponseSection</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.AgentFlowButtonResponseSection" title="abacusai.api_class.AgentFlowButtonResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentFlowButtonResponseSection</span></code></a></p></td>
 <td><p>A response section that an AI Agent can return to render a button.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ImageUrlResponseSection" title="abacusai.api_class.ImageUrlResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageUrlResponseSection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ImageUrlResponseSection" title="abacusai.api_class.ImageUrlResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageUrlResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render an image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.TextResponseSection" title="abacusai.api_class.TextResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextResponseSection</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.TextResponseSection" title="abacusai.api_class.TextResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render text.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.RuntimeSchemaResponseSection" title="abacusai.api_class.RuntimeSchemaResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeSchemaResponseSection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.RuntimeSchemaResponseSection" title="abacusai.api_class.RuntimeSchemaResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeSchemaResponseSection</span></code></a></p></td>
 <td><p>A segment that an agent can return to render json and ui schema in react-jsonschema-form format for workflow nodes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CodeResponseSection" title="abacusai.api_class.CodeResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeResponseSection</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CodeResponseSection" title="abacusai.api_class.CodeResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render code.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.Base64ImageResponseSection" title="abacusai.api_class.Base64ImageResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Base64ImageResponseSection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.Base64ImageResponseSection" title="abacusai.api_class.Base64ImageResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Base64ImageResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render a base64 image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.CollapseResponseSection" title="abacusai.api_class.CollapseResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CollapseResponseSection</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.CollapseResponseSection" title="abacusai.api_class.CollapseResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CollapseResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render a collapsible component.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ListResponseSection" title="abacusai.api_class.ListResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ListResponseSection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ListResponseSection" title="abacusai.api_class.ListResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ListResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render a list.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ChartResponseSection" title="abacusai.api_class.ChartResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChartResponseSection</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ChartResponseSection" title="abacusai.api_class.ChartResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChartResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render a chart.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DataframeResponseSection" title="abacusai.api_class.DataframeResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataframeResponseSection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.DataframeResponseSection" title="abacusai.api_class.DataframeResponseSection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataframeResponseSection</span></code></a></p></td>
 <td><p>A response section that an agent can return to render a pandas dataframe.</p></td>
 </tr>
 </tbody>
@@ -4056,6 +4060,48 @@ Needs to recalculate them if highlights are unavailable in summary_info</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.SftpDatasetConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">SftpDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.SftpDatasetConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.ApplicationConnectorDatasetConfig" title="abacusai.api_class.ApplicationConnectorDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig</span></code></a></p>
+<p>Dataset config for SFTP Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
+<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.SftpDatasetConfig.location">
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.SftpDatasetConfig.location" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.SftpDatasetConfig.csv_delimiter">
+<span class="sig-name descname"><span class="pre">csv_delimiter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.SftpDatasetConfig.csv_delimiter" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.SftpDatasetConfig.extract_bounding_boxes">
+<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.SftpDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.SftpDatasetConfig.merge_file_schemas">
+<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.SftpDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.SftpDatasetConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.SftpDatasetConfig.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class._ApplicationConnectorDatasetConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class._ApplicationConnectorDatasetConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
@@ -6483,6 +6529,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <span class="sig-name descname"><span class="pre">BOX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BOX'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.BOX" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.SFTPAPPLICATION">
+<span class="sig-name descname"><span class="pre">SFTPAPPLICATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SFTPAPPLICATION'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.SFTPAPPLICATION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -6781,6 +6832,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.CLAUDE_V3_5_SONNET">
 <span class="sig-name descname"><span class="pre">CLAUDE_V3_5_SONNET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAUDE_V3_5_SONNET'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.CLAUDE_V3_5_SONNET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.CLAUDE_V3_7_SONNET">
+<span class="sig-name descname"><span class="pre">CLAUDE_V3_7_SONNET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAUDE_V3_7_SONNET'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.CLAUDE_V3_7_SONNET" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -7660,6 +7716,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.SEARCH_LLM">
 <span class="sig-name descname"><span class="pre">SEARCH_LLM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SEARCH_LLM'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.SEARCH_LLM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.APP_LLM">
+<span class="sig-name descname"><span class="pre">APP_LLM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'APP_LLM'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.APP_LLM" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

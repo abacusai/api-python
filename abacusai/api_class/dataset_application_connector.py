@@ -223,6 +223,26 @@ class FreshserviceDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class SftpDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for SFTP Application Connector
+
+    Args:
+        location (str): The regex location of the files to fetch
+        csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
+        extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+        merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+    """
+    location: str = dataclasses.field(default=None)
+    csv_delimiter: str = dataclasses.field(default=None)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
+    merge_file_schemas: bool = dataclasses.field(default=False)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.SFTPAPPLICATION
+
+
+@dataclasses.dataclass
 class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
     config_abstract_class = ApplicationConnectorDatasetConfig
     config_class_key = 'application_connector_type'
@@ -238,4 +258,5 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.FRESHSERVICE: FreshserviceDatasetConfig,
         enums.ApplicationConnectorType.TEAMSSCRAPER: TeamsScraperDatasetConfig,
         enums.ApplicationConnectorType.BOX: BoxDatasetConfig,
+        enums.ApplicationConnectorType.SFTPAPPLICATION: SftpDatasetConfig,
     }

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, codeSource={})
+.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, connectors=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,8 @@ Module Contents
    :type description: str
    :param examples: Dictionary containing example use cases and anti-patterns. Includes 'positive' examples showing recommended usage and 'negative' examples showing cases to avoid.
    :type examples: dict[str, list[str]]
+   :param connectors: Dictionary containing user-level and organization-level connectors
+   :type connectors: dict
    :param codeSource: Information about the source code of the Python function.
    :type codeSource: CodeSource
 
@@ -101,6 +103,11 @@ Module Contents
 
 
    .. py:attribute:: examples
+      :value: None
+
+
+
+   .. py:attribute:: connectors
       :value: None
 
 

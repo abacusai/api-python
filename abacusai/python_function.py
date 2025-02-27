@@ -21,10 +21,11 @@ class PythonFunction(AbstractApiClass):
             packageRequirements (list): The pip package dependencies required to run the code
             description (str): Description of the Python function.
             examples (dict[str, list[str]]): Dictionary containing example use cases and anti-patterns. Includes 'positive' examples showing recommended usage and 'negative' examples showing cases to avoid.
+            connectors (dict): Dictionary containing user-level and organization-level connectors
             codeSource (CodeSource): Information about the source code of the Python function.
     """
 
-    def __init__(self, client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, codeSource={}):
+    def __init__(self, client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, connectors=None, codeSource={}):
         super().__init__(client, pythonFunctionId)
         self.notebook_id = notebookId
         self.name = name
@@ -37,12 +38,13 @@ class PythonFunction(AbstractApiClass):
         self.package_requirements = packageRequirements
         self.description = description
         self.examples = examples
+        self.connectors = connectors
         self.code_source = client._build_class(CodeSource, codeSource)
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'notebook_id': repr(self.notebook_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'function_variable_mappings': repr(self.function_variable_mappings), f'output_variable_mappings': repr(self.output_variable_mappings), f'function_name': repr(
-            self.function_name), f'python_function_id': repr(self.python_function_id), f'function_type': repr(self.function_type), f'package_requirements': repr(self.package_requirements), f'description': repr(self.description), f'examples': repr(self.examples), f'code_source': repr(self.code_source)}
+        repr_dict = {f'notebook_id': repr(self.notebook_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'function_variable_mappings': repr(self.function_variable_mappings), f'output_variable_mappings': repr(self.output_variable_mappings), f'function_name': repr(self.function_name), f'python_function_id': repr(
+            self.python_function_id), f'function_type': repr(self.function_type), f'package_requirements': repr(self.package_requirements), f'description': repr(self.description), f'examples': repr(self.examples), f'connectors': repr(self.connectors), f'code_source': repr(self.code_source)}
         class_name = "PythonFunction"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -56,7 +58,7 @@ class PythonFunction(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'function_variable_mappings': self.function_variable_mappings, 'output_variable_mappings': self.output_variable_mappings, 'function_name': self.function_name,
-                'python_function_id': self.python_function_id, 'function_type': self.function_type, 'package_requirements': self.package_requirements, 'description': self.description, 'examples': self.examples, 'code_source': self._get_attribute_as_dict(self.code_source)}
+                'python_function_id': self.python_function_id, 'function_type': self.function_type, 'package_requirements': self.package_requirements, 'description': self.description, 'examples': self.examples, 'connectors': self.connectors, 'code_source': self._get_attribute_as_dict(self.code_source)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def add_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: List = None, name: str = None):

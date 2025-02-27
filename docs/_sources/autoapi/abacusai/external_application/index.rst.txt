@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58,6 +58,8 @@ Module Contents
    :type isDeprecated: bool
    :param isVisible: Whether the external application should be shown in the dropdown.
    :type isVisible: bool
+   :param hasThinkingOption: Whether to show the thinking option in the toolbar.
+   :type hasThinkingOption: bool
 
 
    .. py:attribute:: name
@@ -141,6 +143,11 @@ Module Contents
 
 
    .. py:attribute:: is_visible
+      :value: None
+
+
+
+   .. py:attribute:: has_thinking_option
       :value: None
 
 

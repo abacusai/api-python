@@ -24,9 +24,10 @@ class ExternalApplication(AbstractApiClass):
             isCustomizable (bool): Whether the external application is customizable.
             isDeprecated (bool): Whether the external application is deprecated. Only applicable for system created bots. Deprecated external applications will not show in the UI.
             isVisible (bool): Whether the external application should be shown in the dropdown.
+            hasThinkingOption (bool): Whether to show the thinking option in the toolbar.
     """
 
-    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None):
+    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None):
         super().__init__(client, externalApplicationId)
         self.name = name
         self.external_application_id = externalApplicationId
@@ -45,11 +46,12 @@ class ExternalApplication(AbstractApiClass):
         self.is_customizable = isCustomizable
         self.is_deprecated = isDeprecated
         self.is_visible = isVisible
+        self.has_thinking_option = hasThinkingOption
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'description': repr(self.description), f'logo': repr(self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case), f'is_agent': repr(self.is_agent), f'status': repr(
-            self.status), f'deployment_conversation_retention_hours': repr(self.deployment_conversation_retention_hours), f'managed_user_service': repr(self.managed_user_service), f'prediction_overrides': repr(self.prediction_overrides), f'is_system_created': repr(self.is_system_created), f'is_customizable': repr(self.is_customizable), f'is_deprecated': repr(self.is_deprecated), f'is_visible': repr(self.is_visible)}
+        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'description': repr(self.description), f'logo': repr(self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case), f'is_agent': repr(self.is_agent), f'status': repr(self.status), f'deployment_conversation_retention_hours': repr(
+            self.deployment_conversation_retention_hours), f'managed_user_service': repr(self.managed_user_service), f'prediction_overrides': repr(self.prediction_overrides), f'is_system_created': repr(self.is_system_created), f'is_customizable': repr(self.is_customizable), f'is_deprecated': repr(self.is_deprecated), f'is_visible': repr(self.is_visible), f'has_thinking_option': repr(self.has_thinking_option)}
         class_name = "ExternalApplication"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -62,8 +64,8 @@ class ExternalApplication(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id, 'description': self.description, 'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids, 'use_case': self.use_case, 'is_agent': self.is_agent, 'status': self.status,
-                'deployment_conversation_retention_hours': self.deployment_conversation_retention_hours, 'managed_user_service': self.managed_user_service, 'prediction_overrides': self.prediction_overrides, 'is_system_created': self.is_system_created, 'is_customizable': self.is_customizable, 'is_deprecated': self.is_deprecated, 'is_visible': self.is_visible}
+        resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id, 'description': self.description, 'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids, 'use_case': self.use_case, 'is_agent': self.is_agent, 'status': self.status, 'deployment_conversation_retention_hours':
+                self.deployment_conversation_retention_hours, 'managed_user_service': self.managed_user_service, 'prediction_overrides': self.prediction_overrides, 'is_system_created': self.is_system_created, 'is_customizable': self.is_customizable, 'is_deprecated': self.is_deprecated, 'is_visible': self.is_visible, 'has_thinking_option': self.has_thinking_option}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def update(self, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False):

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,12 @@ Module Contents
    :type acceptanceDelay: int
    :param debounceDelay: The debounce delay.
    :type debounceDelay: int
+   :param recordUserAction: Whether to record user action.
+   :type recordUserAction: bool
+   :param validateSuggestion: Whether to validate the suggestion.
+   :type validateSuggestion: bool
+   :param validationLinesThreshold: The number of lines to validate the suggestion.
+   :type validationLinesThreshold: int
 
 
    .. py:attribute:: max_pending_requests
@@ -43,6 +49,21 @@ Module Contents
 
 
    .. py:attribute:: debounce_delay
+      :value: None
+
+
+
+   .. py:attribute:: record_user_action
+      :value: None
+
+
+
+   .. py:attribute:: validate_suggestion
+      :value: None
+
+
+
+   .. py:attribute:: validation_lines_threshold
       :value: None
 
 
