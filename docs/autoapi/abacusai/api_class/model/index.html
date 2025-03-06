@@ -138,6 +138,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../eda_feature_collinearity/index.html">abacusai.eda_feature_collinearity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../eda_forecasting_analysis/index.html">abacusai.eda_forecasting_analysis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../eda_version/index.html">abacusai.eda_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../edit_image_models/index.html">abacusai.edit_image_models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../embedding_feature_drift_distribution/index.html">abacusai.embedding_feature_drift_distribution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../execute_feature_group_operation/index.html">abacusai.execute_feature_group_operation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../external_application/index.html">abacusai.external_application</a></li>
@@ -1549,6 +1550,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>response_format</strong> – (str): When set to ‘JSON’, the LLM will generate a JSON formatted string.</p></li>
 <li><p><strong>json_response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Instructions to be followed while generating the json_response if <cite>response_format</cite> is set to “JSON”. This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.</p></li>
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Specifies the JSON schema that the model should adhere to if <cite>response_format</cite> is set to “JSON”. This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields ‘type’, ‘required’ and ‘description’. For example - ‘{“sample_field”: {“type”: “integer”, “required”: true, “description”: “Sample Field”}}’</p></li>
+<li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Mask PII in the prompts and uploaded documents before sending it to the LLM.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1725,6 +1727,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.json_response_schema">
 <span class="sig-name descname"><span class="pre">json_response_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.json_response_schema" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.mask_pii">
+<span class="sig-name descname"><span class="pre">mask_pii</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.mask_pii" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

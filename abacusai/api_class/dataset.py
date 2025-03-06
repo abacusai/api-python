@@ -75,6 +75,8 @@ class DocumentProcessingConfig(ApiClass):
                 return OcrMode.DEFAULT
             elif self.document_type == DocumentType.TABLES_AND_FORMS:
                 return OcrMode.LAYOUT
+            elif self.document_type == DocumentType.COMPREHENSIVE_MARKDOWN:
+                return OcrMode.COMPREHENSIVE_TABLE_MD
             elif self.document_type == DocumentType.EMBEDDED_IMAGES:
                 return OcrMode.SCANNED
             elif self.document_type == DocumentType.SCANNED_TEXT:

@@ -584,7 +584,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.33'
+      :value: '1.4.34'
 
 
 
@@ -3754,6 +3754,15 @@ Module Contents
 
 
 
+   .. py:method:: _get_agent_client_type()
+
+      Returns the client type for the current request context.
+
+      :returns: The client type for the current request context.
+      :rtype: AgentClientType
+
+
+
    .. py:method:: get_agent_context_chat_history()
 
       Gets a history of chat messages from the current request context. Applicable within a AIAgent
@@ -3881,12 +3890,14 @@ Module Contents
 
    .. py:method:: get_runtime_config(key)
 
-      Gets the deployment level runtime config value given the key
+      Retrieve the value of a specified configuration key from the deployment's runtime settings.
+      These settings can be configured in the deployment details page in the UI.
+      Currently supported for AI Agents, Custom Python Model and Prediction Operators.
 
-      :param key: Key for which the config value is to be fetched
+      :param key: The configuration key whose value is to be fetched.
       :type key: str
 
-      :returns: Config value for the input key
+      :returns: The value associated with the specified configuration key, or None if the key does not exist.
       :rtype: str
 
 
@@ -9043,7 +9054,7 @@ Module Contents
       :param user_level_connectors: Dictionary containing user level connectors.
       :type user_level_connectors: Dict
       :param org_level_connectors: List containing organization level connectors.
-      :type org_level_connectors: list
+      :type org_level_connectors: List
       :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
       :type output_variable_mappings: List
 

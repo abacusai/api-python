@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type validateSuggestion: bool
    :param validationLinesThreshold: The number of lines to validate the suggestion.
    :type validationLinesThreshold: int
+   :param maxTrackedRecentChanges: The maximum number of recent file changes to track.
+   :type maxTrackedRecentChanges: int
 
 
    .. py:attribute:: max_pending_requests
@@ -64,6 +66,11 @@ Module Contents
 
 
    .. py:attribute:: validation_lines_threshold
+      :value: None
+
+
+
+   .. py:attribute:: max_tracked_recent_changes
       :value: None
 
 

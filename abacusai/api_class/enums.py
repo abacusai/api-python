@@ -627,11 +627,12 @@ class OcrMode(ApiEnum):
 
 
 class DocumentType(ApiEnum):
-    SIMPLE_TEXT = 'SIMPLE_TEXT'                 # digital text
-    TEXT = 'TEXT'                               # general text with OCR
-    TABLES_AND_FORMS = 'TABLES_AND_FORMS'       # tables and forms with OCR
-    EMBEDDED_IMAGES = 'EMBEDDED_IMAGES'         # embedded images with OCR TODO: remove?
-    SCANNED_TEXT = 'SCANNED_TEXT'               # scanned text with OCR
+    SIMPLE_TEXT = 'SIMPLE_TEXT'                         # digital text
+    TEXT = 'TEXT'                                       # general text with OCR
+    TABLES_AND_FORMS = 'TABLES_AND_FORMS'               # tables and forms with OCR
+    EMBEDDED_IMAGES = 'EMBEDDED_IMAGES'                 # embedded images with OCR TODO: remove?
+    SCANNED_TEXT = 'SCANNED_TEXT'                       # scanned text with OCR
+    COMPREHENSIVE_MARKDOWN = 'COMPREHENSIVE_MARKDOWN'   # comprehensive text with Gemini OCR
 
     @classmethod
     def is_ocr_forced(cls, document_type: 'DocumentType'):
@@ -729,3 +730,10 @@ class DeploymentConversationType(ApiEnum):
     COMPUTER_AGENT = 'COMPUTER_AGENT'
     SEARCH_LLM = 'SEARCH_LLM'
     APP_LLM = 'APP_LLM'
+    TEST_AGENT = 'TEST_AGENT'
+
+
+class AgentClientType(ApiEnum):
+    CHAT_UI = 'CHAT_UI'
+    MESSAGING_APP = 'MESSAGING_APP'
+    API = 'API'

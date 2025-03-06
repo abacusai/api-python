@@ -33,18 +33,18 @@ from .annotation_document import AnnotationDocument
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
-    AgentInterface, AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    ApplicationConnectorDatasetConfig, ApplicationConnectorType,
-    AttachmentParsingConfig, BatchPredictionArgs, Blob, BlobInput, CPUSize,
-    DatasetDocumentProcessingConfig, DataType, DeploymentConversationType,
-    DocumentProcessingConfig, EvalArtifactType, FeatureGroupExportConfig,
-    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
-    MemorySize, MergeConfig, OperatorConfig, ParsingConfig,
-    PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
-    PythonFunctionType, ResponseSection, SamplingConfig, Segment,
-    StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
-    WorkflowGraph, WorkflowGraphNode, WorkflowNodeTemplateConfig,
-    get_clean_function_source_code_for_agent
+    AgentClientType, AgentInterface, AlertActionConfig, AlertConditionConfig,
+    ApiClass, ApiEnum, ApplicationConnectorDatasetConfig,
+    ApplicationConnectorType, AttachmentParsingConfig, BatchPredictionArgs,
+    Blob, BlobInput, CPUSize, DatasetDocumentProcessingConfig, DataType,
+    DeploymentConversationType, DocumentProcessingConfig, EvalArtifactType,
+    FeatureGroupExportConfig, ForecastingMonitorConfig,
+    IncrementalDatabaseConnectorConfig, LLMName, MemorySize, MergeConfig,
+    OperatorConfig, ParsingConfig, PredictionArguments, ProblemType,
+    ProjectFeatureGroupConfig, PythonFunctionType, ResponseSection,
+    SamplingConfig, Segment, StreamingConnectorDatasetConfig, TrainingConfig,
+    VectorStoreConfig, WorkflowGraph, WorkflowGraphNode,
+    WorkflowNodeTemplateConfig, get_clean_function_source_code_for_agent
 )
 from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
 from .api_class.ai_agents import WorkflowGraph, WorkflowNodeTemplateConfig
@@ -652,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.33'
+    client_version = '1.4.34'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3802,6 +3802,20 @@ class ApiClient(ReadOnlyClient):
         execute_query.wait_for_execution(timeout=timeout, delay=delay)
         return execute_query.load_as_pandas()
 
+    def _get_agent_client_type(self):
+        """
+        Returns the client type for the current request context.
+
+        Returns:
+            AgentClientType: The client type for the current request context.
+        """
+        if self._is_async_app_caller():
+            return AgentClientType.MESSAGING_APP
+        elif self._is_proxy_app_caller():
+            return AgentClientType.CHAT_UI
+        else:
+            return AgentClientType.API
+
     def get_agent_context_chat_history(self):
         """
         Gets a history of chat messages from the current request context. Applicable within a AIAgent
@@ -3930,6 +3944,7 @@ class ApiClient(ReadOnlyClient):
         user_info = get_object_from_context(
             self, _request_context, 'user_info', dict)
         if user_info:
+            user_info['client_type'] = self._get_agent_client_type()
             return user_info
         else:
             raise ValueError(
@@ -3937,13 +3952,15 @@ class ApiClient(ReadOnlyClient):
 
     def get_runtime_config(self, key: str):
         """
-        Gets the deployment level runtime config value given the key
+        Retrieve the value of a specified configuration key from the deployment's runtime settings.
+        These settings can be configured in the deployment details page in the UI.
+        Currently supported for AI Agents, Custom Python Model and Prediction Operators.
 
         Args:
-            key(str): Key for which the config value is to be fetched
+            key (str): The configuration key whose value is to be fetched.
 
         Returns:
-            str: Config value for the input key
+            str: The value associated with the specified configuration key, or None if the key does not exist.
         """
         runtime_config = get_object_from_context(
             self, _request_context, 'deployment_runtime_config', dict) or {}
@@ -8019,7 +8036,7 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroupRowProcessLogs: An object representing the logs for the feature group row process"""
         return self._call_api('getFeatureGroupRowProcessLogsByKey', 'POST', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcessLogs)
 
-    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP', description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: list = None, output_variable_mappings: List = None) -> PythonFunction:
+    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP', description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: List = None, output_variable_mappings: List = None) -> PythonFunction:
         """Creates a custom Python function that is reusable.
 
         Args:
@@ -8032,7 +8049,7 @@ Creates a new feature group defined as the union of other feature group versions
             description (str): Description of the Python function. This should include details about the function's purpose, expected inputs and outputs, and any important usage considerations or limitations.
             examples (dict): Dictionary containing example use cases and anti-patterns. Should include 'positive_examples' showing recommended usage and 'negative_examples' showing cases to avoid.])
             user_level_connectors (Dict): Dictionary containing user level connectors.
-            org_level_connectors (list): List containing organization level connectors.
+            org_level_connectors (List): List containing organization level connectors.
             output_variable_mappings (List): List of output variable mappings that defines the elements of the function's return value.
 
         Returns:

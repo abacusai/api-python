@@ -191,6 +191,7 @@ Classes
    abacusai.api_class.ResponseSectionType
    abacusai.api_class.CodeLanguage
    abacusai.api_class.DeploymentConversationType
+   abacusai.api_class.AgentClientType
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.DocumentProcessingConfig
@@ -2016,6 +2017,11 @@ Package Contents
 
    .. py:attribute:: SCANNED_TEXT
       :value: 'SCANNED_TEXT'
+
+
+
+   .. py:attribute:: COMPREHENSIVE_MARKDOWN
+      :value: 'COMPREHENSIVE_MARKDOWN'
 
 
 
@@ -6146,6 +6152,11 @@ Package Contents
 
 
 
+   .. py:attribute:: COMPREHENSIVE_MARKDOWN
+      :value: 'COMPREHENSIVE_MARKDOWN'
+
+
+
    .. py:method:: is_ocr_forced(document_type)
       :classmethod:
 
@@ -6523,6 +6534,36 @@ Package Contents
 
    .. py:attribute:: APP_LLM
       :value: 'APP_LLM'
+
+
+
+   .. py:attribute:: TEST_AGENT
+      :value: 'TEST_AGENT'
+
+
+
+.. py:class:: AgentClientType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: CHAT_UI
+      :value: 'CHAT_UI'
+
+
+
+   .. py:attribute:: MESSAGING_APP
+      :value: 'MESSAGING_APP'
+
+
+
+   .. py:attribute:: API
+      :value: 'API'
 
 
 
@@ -8863,6 +8904,8 @@ Package Contents
    :type json_response_instructions: str
    :param json_response_schema: Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
    :type json_response_schema: str
+   :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM.
+   :type mask_pii: bool
 
 
    .. py:attribute:: document_retrievers
@@ -9071,6 +9114,12 @@ Package Contents
 
    .. py:attribute:: json_response_schema
       :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: mask_pii
+      :type:  bool
       :value: None
 
 

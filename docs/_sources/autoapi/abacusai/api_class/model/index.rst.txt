@@ -1495,6 +1495,8 @@ Module Contents
    :type json_response_instructions: str
    :param json_response_schema: Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
    :type json_response_schema: str
+   :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM.
+   :type mask_pii: bool
 
 
    .. py:attribute:: document_retrievers
@@ -1703,6 +1705,12 @@ Module Contents
 
    .. py:attribute:: json_response_schema
       :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: mask_pii
+      :type:  bool
       :value: None
 
 

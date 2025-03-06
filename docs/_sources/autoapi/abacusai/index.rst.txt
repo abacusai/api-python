@@ -95,6 +95,7 @@ Submodules
    /autoapi/abacusai/eda_feature_collinearity/index
    /autoapi/abacusai/eda_forecasting_analysis/index
    /autoapi/abacusai/eda_version/index
+   /autoapi/abacusai/edit_image_models/index
    /autoapi/abacusai/embedding_feature_drift_distribution/index
    /autoapi/abacusai/execute_feature_group_operation/index
    /autoapi/abacusai/external_application/index
@@ -423,6 +424,7 @@ Classes
    abacusai.ResponseSectionType
    abacusai.CodeLanguage
    abacusai.DeploymentConversationType
+   abacusai.AgentClientType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
    abacusai.PercentSamplingConfig
@@ -576,6 +578,7 @@ Classes
    abacusai.EdaFeatureCollinearity
    abacusai.EdaForecastingAnalysis
    abacusai.EdaVersion
+   abacusai.EditImageModels
    abacusai.EmbeddingFeatureDriftDistribution
    abacusai.ExecuteFeatureGroupOperation
    abacusai.ExternalApplication
@@ -3407,6 +3410,11 @@ Package Contents
 
    .. py:attribute:: SCANNED_TEXT
       :value: 'SCANNED_TEXT'
+
+
+
+   .. py:attribute:: COMPREHENSIVE_MARKDOWN
+      :value: 'COMPREHENSIVE_MARKDOWN'
 
 
 
@@ -7514,6 +7522,36 @@ Package Contents
 
 
 
+   .. py:attribute:: TEST_AGENT
+      :value: 'TEST_AGENT'
+
+
+
+.. py:class:: AgentClientType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+
+   .. py:attribute:: CHAT_UI
+      :value: 'CHAT_UI'
+
+
+
+   .. py:attribute:: MESSAGING_APP
+      :value: 'MESSAGING_APP'
+
+
+
+   .. py:attribute:: API
+      :value: 'API'
+
+
+
 .. py:class:: SamplingConfig
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -9570,6 +9608,8 @@ Package Contents
    :type json_response_instructions: str
    :param json_response_schema: Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
    :type json_response_schema: str
+   :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM.
+   :type mask_pii: bool
 
 
    .. py:attribute:: document_retrievers
@@ -9778,6 +9818,12 @@ Package Contents
 
    .. py:attribute:: json_response_schema
       :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: mask_pii
+      :type:  bool
       :value: None
 
 
@@ -14266,6 +14312,15 @@ Package Contents
 
 
 
+   .. py:method:: _get_agent_client_type()
+
+      Returns the client type for the current request context.
+
+      :returns: The client type for the current request context.
+      :rtype: AgentClientType
+
+
+
    .. py:method:: get_agent_context_chat_history()
 
       Gets a history of chat messages from the current request context. Applicable within a AIAgent
@@ -14393,12 +14448,14 @@ Package Contents
 
    .. py:method:: get_runtime_config(key)
 
-      Gets the deployment level runtime config value given the key
+      Retrieve the value of a specified configuration key from the deployment's runtime settings.
+      These settings can be configured in the deployment details page in the UI.
+      Currently supported for AI Agents, Custom Python Model and Prediction Operators.
 
-      :param key: Key for which the config value is to be fetched
+      :param key: The configuration key whose value is to be fetched.
       :type key: str
 
-      :returns: Config value for the input key
+      :returns: The value associated with the specified configuration key, or None if the key does not exist.
       :rtype: str
 
 
@@ -19555,7 +19612,7 @@ Package Contents
       :param user_level_connectors: Dictionary containing user level connectors.
       :type user_level_connectors: Dict
       :param org_level_connectors: List containing organization level connectors.
-      :type org_level_connectors: list
+      :type org_level_connectors: List
       :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
       :type output_variable_mappings: List
 
@@ -23919,7 +23976,7 @@ Package Contents
 
 
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23940,6 +23997,8 @@ Package Contents
    :type validateSuggestion: bool
    :param validationLinesThreshold: The number of lines to validate the suggestion.
    :type validationLinesThreshold: int
+   :param maxTrackedRecentChanges: The maximum number of recent file changes to track.
+   :type maxTrackedRecentChanges: int
 
 
    .. py:attribute:: max_pending_requests
@@ -23968,6 +24027,11 @@ Package Contents
 
 
    .. py:attribute:: validation_lines_threshold
+      :value: None
+
+
+
+   .. py:attribute:: max_tracked_recent_changes
       :value: None
 
 
@@ -28519,6 +28583,39 @@ Package Contents
 
       :returns: A string describing the status of the model monitor version, for e.g., pending, complete, etc.
       :rtype: str
+
+
+
+.. py:class:: EditImageModels(client, models=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Edit image models
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param models: The models available for edit image.
+   :type models: list
+
+
+   .. py:attribute:: models
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 
@@ -45596,6 +45693,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.33'
+   :value: '1.4.34'
 
 

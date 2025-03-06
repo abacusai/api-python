@@ -81,6 +81,7 @@ from .eda_feature_association import EdaFeatureAssociation
 from .eda_feature_collinearity import EdaFeatureCollinearity
 from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
+from .edit_image_models import EditImageModels
 from .embedding_feature_drift_distribution import EmbeddingFeatureDriftDistribution
 from .execute_feature_group_operation import ExecuteFeatureGroupOperation
 from .external_application import ExternalApplication
@@ -238,4 +239,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.33"
+__version__ = "1.4.34"
