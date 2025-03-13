@@ -28,6 +28,7 @@ from .categorical_range_violation import CategoricalRangeViolation
 from .chat_message import ChatMessage
 from .chat_session import ChatSession
 from .chatllm_computer import ChatllmComputer
+from .chatllm_project import ChatllmProject
 from .chatllm_referral_invite import ChatllmReferralInvite
 from .chatllm_task import ChatllmTask
 from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, _request_context
@@ -239,4 +240,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.34"
+__version__ = "1.4.35"

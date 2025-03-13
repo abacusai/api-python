@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, connectors=None, codeSource={})
+.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, description=None, examples=None, connectors=None, configurations=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48,6 +48,8 @@ Module Contents
    :type examples: dict[str, list[str]]
    :param connectors: Dictionary containing user-level and organization-level connectors
    :type connectors: dict
+   :param configurations: Dictionary containing configurations for the Python function
+   :type configurations: dict
    :param codeSource: Information about the source code of the Python function.
    :type codeSource: CodeSource
 
@@ -108,6 +110,11 @@ Module Contents
 
 
    .. py:attribute:: connectors
+      :value: None
+
+
+
+   .. py:attribute:: configurations
       :value: None
 
 

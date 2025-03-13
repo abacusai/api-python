@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WorkflowGraphNodeDetails(client, packageRequirements=None, workflowGraphNode={})
+.. py:class:: WorkflowGraphNodeDetails(client, packageRequirements=None, connectors=None, workflowGraphNode={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,11 +26,18 @@ Module Contents
    :type client: ApiClient
    :param packageRequirements: A list of package requirements that the node source code will need.
    :type packageRequirements: list[str]
+   :param connectors: A dictionary of connectors that the node source code will need.
+   :type connectors: dict
    :param workflowGraphNode: The workflow graph node object.
    :type workflowGraphNode: WorkflowGraphNode
 
 
    .. py:attribute:: package_requirements
+      :value: None
+
+
+
+   .. py:attribute:: connectors
       :value: None
 
 

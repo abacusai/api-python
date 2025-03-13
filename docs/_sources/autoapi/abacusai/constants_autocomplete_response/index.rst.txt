@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,24 @@ Module Contents
    :type validationLinesThreshold: int
    :param maxTrackedRecentChanges: The maximum number of recent file changes to track.
    :type maxTrackedRecentChanges: int
+   :param diffThreshold: The diff operations threshold.
+   :type diffThreshold: int
+   :param derivativeThreshold: The derivative threshold for deletions
+   :type derivativeThreshold: int
+   :param defaultSurroundingLines: The default number of surrounding lines to include in the recently visited context.
+   :type defaultSurroundingLines: int
+   :param maxTrackedVisitChanges: The maximum number of recently visited ranges to track.
+   :type maxTrackedVisitChanges: int
+   :param selectionCooldownMs: The cooldown time in milliseconds for selection changes.
+   :type selectionCooldownMs: int
+   :param viewingCooldownMs: The cooldown time in milliseconds for viewing changes.
+   :type viewingCooldownMs: int
+   :param maxLines: The maximum number of lines to include in recently visited context.
+   :type maxLines: int
+   :param editCooldownMs: The cooldown time in milliseconds after last edit.
+   :type editCooldownMs: int
+   :param scrollDebounceMs: The debounce time in milliseconds for scroll events.
+   :type scrollDebounceMs: int
 
 
    .. py:attribute:: max_pending_requests
@@ -71,6 +89,51 @@ Module Contents
 
 
    .. py:attribute:: max_tracked_recent_changes
+      :value: None
+
+
+
+   .. py:attribute:: diff_threshold
+      :value: None
+
+
+
+   .. py:attribute:: derivative_threshold
+      :value: None
+
+
+
+   .. py:attribute:: default_surrounding_lines
+      :value: None
+
+
+
+   .. py:attribute:: max_tracked_visit_changes
+      :value: None
+
+
+
+   .. py:attribute:: selection_cooldown_ms
+      :value: None
+
+
+
+   .. py:attribute:: viewing_cooldown_ms
+      :value: None
+
+
+
+   .. py:attribute:: max_lines
+      :value: None
+
+
+
+   .. py:attribute:: edit_cooldown_ms
+      :value: None
+
+
+
+   .. py:attribute:: scroll_debounce_ms
       :value: None
 
 

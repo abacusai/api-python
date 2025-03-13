@@ -415,6 +415,7 @@ class ApplicationConnectorType(ApiEnum):
     OKTASAML = 'OKTASAML'
     BOX = 'BOX'
     SFTPAPPLICATION = 'SFTPAPPLICATION'
+    OAUTH = 'OAUTH'
 
 
 class StreamingConnectorType(ApiEnum):
@@ -435,6 +436,7 @@ class PythonFunctionArgumentType(ApiEnum):
     MONITOR_ID = 'MONITOR_ID'
     BATCH_PREDICTION_ID = 'BATCH_PREDICTION_ID'
     DEPLOYMENT_ID = 'DEPLOYMENT_ID'
+    ATTACHMENT = 'ATTACHMENT'
 
 
 class PythonFunctionOutputArgumentType(ApiEnum):
@@ -451,6 +453,7 @@ class PythonFunctionOutputArgumentType(ApiEnum):
     BATCH_PREDICTION_ID = 'BATCH_PREDICTION_ID'
     DEPLOYMENT_ID = 'DEPLOYMENT_ID'
     ANY = 'ANY'
+    ATTACHMENT = 'ATTACHMENT'
 
 
 class VectorStoreTextEncoder(ApiEnum):
