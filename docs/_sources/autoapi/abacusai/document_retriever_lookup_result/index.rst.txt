@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None)
+.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type documentSource: str
    :param imageIds: List of Image IDs for all the pages.
    :type imageIds: list
+   :param metadata: Metadata column values for the retrieved documents.
+   :type metadata: dict
 
 
    .. py:attribute:: document
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: image_ids
+      :value: None
+
+
+
+   .. py:attribute:: metadata
       :value: None
 
 

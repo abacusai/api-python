@@ -1,0 +1,71 @@
+abacusai.hosted_app_file_read
+=============================
+
+.. py:module:: abacusai.hosted_app_file_read
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.hosted_app_file_read.HostedAppFileRead
+
+
+Module Contents
+---------------
+
+.. py:class:: HostedAppFileRead(client, content=None, start=None, end=None, retcode=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Result of reading file content from a hosted app container.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param content: The contents of the file or a portion of it.
+   :type content: str
+   :param start: If present, the starting position of the read.
+   :type start: int
+   :param end: If present, the last position in the file returned in this read.
+   :type end: int
+   :param retcode: If the read is associated with a log the return code of the command.
+   :type retcode: int
+
+
+   .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: start
+      :value: None
+
+
+
+   .. py:attribute:: end
+      :value: None
+
+
+
+   .. py:attribute:: retcode
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

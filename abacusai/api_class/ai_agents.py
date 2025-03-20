@@ -486,6 +486,25 @@ class WorkflowGraphNode(ApiClass):
             }
         )
 
+    @classmethod
+    def from_tool(cls, tool_name: str, name: str, configs: dict = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None):
+        node = cls.from_template(
+            template_name=tool_name,
+            name=name,
+            configs=configs,
+            input_mappings=input_mappings,
+            input_schema=input_schema,
+            output_schema=output_schema
+        )
+        node.template_metadata['template_type'] = 'tool'
+        return node
+
+    @classmethod
+    def from_system_tool(cls, tool_name: str, name: str, configs: dict = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None):
+        node = cls.from_tool(tool_name, name, configs, input_mappings, input_schema, output_schema)
+        node.template_metadata['is_system_tool'] = True
+        return node
+
     def to_dict(self):
         return {
             'name': self.name,

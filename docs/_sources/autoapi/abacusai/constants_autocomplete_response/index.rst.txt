@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -56,6 +56,12 @@ Module Contents
    :type editCooldownMs: int
    :param scrollDebounceMs: The debounce time in milliseconds for scroll events.
    :type scrollDebounceMs: int
+   :param lspDeadline: The deadline in milliseconds for LSP context.
+   :type lspDeadline: int
+   :param diagnosticsThreshold: The max number of diagnostics to show.
+   :type diagnosticsThreshold: int
+   :param diagnosticEachThreshold: The max number of characters to show for each diagnostic type.
+   :type diagnosticEachThreshold: int
 
 
    .. py:attribute:: max_pending_requests
@@ -134,6 +140,21 @@ Module Contents
 
 
    .. py:attribute:: scroll_debounce_ms
+      :value: None
+
+
+
+   .. py:attribute:: lsp_deadline
+      :value: None
+
+
+
+   .. py:attribute:: diagnostics_threshold
+      :value: None
+
+
+
+   .. py:attribute:: diagnostic_each_threshold
       :value: None
 
 

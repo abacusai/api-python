@@ -110,7 +110,6 @@ from .feature_group_version_logs import FeatureGroupVersionLogs
 from .feature_importance import FeatureImportance
 from .feature_mapping import FeatureMapping
 from .feature_performance_analysis import FeaturePerformanceAnalysis
-from .feature_record import FeatureRecord
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
@@ -118,11 +117,15 @@ from .finetuned_pretrained_model import FinetunedPretrainedModel
 from .forecasting_analysis_graph_data import ForecastingAnalysisGraphData
 from .forecasting_monitor_item_analysis import ForecastingMonitorItemAnalysis
 from .forecasting_monitor_summary import ForecastingMonitorSummary
+from .fs_entry import FsEntry
 from .function_logs import FunctionLogs
 from .generated_pit_feature_config_option import GeneratedPitFeatureConfigOption
 from .graph_dashboard import GraphDashboard
 from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
+from .hosted_app import HostedApp
+from .hosted_app_container import HostedAppContainer
+from .hosted_app_file_read import HostedAppFileRead
 from .hosted_model_token import HostedModelToken
 from .hume_voice import HumeVoice
 from .image_gen_settings import ImageGenSettings
@@ -240,4 +243,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.35"
+__version__ = "1.4.36"

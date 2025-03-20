@@ -547,6 +547,7 @@ class PythonFunctionType(ApiEnum):
     PLOTLY_FIG = 'PLOTLY_FIG'
     STEP_FUNCTION = 'STEP_FUNCTION'
     USERCODE_TOOL = 'USERCODE_TOOL'
+    CONNECTOR_TOOL = 'CONNECTOR_TOOL'
 
 
 class EvalArtifactType(ApiEnum):
@@ -584,9 +585,15 @@ class WorkflowNodeOutputType(ApiEnum):
     ANY = 'ANY'
 
     @classmethod
-    def normalize_type(cls, python_type: Union[str, type, None, 'WorkflowNodeOutputType']) -> 'WorkflowNodeOutputType':
+    def normalize_type(cls, python_type: Union[str, type, None, 'WorkflowNodeOutputType', 'PythonFunctionOutputArgumentType']) -> 'WorkflowNodeOutputType':
         if isinstance(python_type, WorkflowNodeOutputType):
             return python_type
+
+        if isinstance(python_type, PythonFunctionOutputArgumentType):
+            if python_type.value in cls.__members__:
+                return cls(python_type.value)
+            else:
+                return cls.ANY
 
         if isinstance(python_type, type) or isinstance(python_type, str):
             python_type = python_type.__name__ if isinstance(python_type, type) else python_type

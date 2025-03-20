@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None, keywordArguments=None)
+.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None, keywordArguments=None, computePointsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type tasks: list[str]
    :param keywordArguments: A dict of kwargs used to generate the response.
    :type keywordArguments: dict
+   :param computePointsUsed: The number of compute points used for the message.
+   :type computePointsUsed: int
 
 
    .. py:attribute:: role
@@ -85,6 +87,11 @@ Module Contents
 
 
    .. py:attribute:: keyword_arguments
+      :value: None
+
+
+
+   .. py:attribute:: compute_points_used
       :value: None
 
 

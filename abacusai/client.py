@@ -652,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.35'
+    client_version = '1.4.36'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -4661,7 +4661,8 @@ class ApiClient(ReadOnlyClient):
             'source': response_document_source.document_source,
             'image_ids': response_document_source.image_ids,
             'pages': response_document_source.pages,
-            'bounding_boxes': response_document_source.bounding_boxes
+            'bounding_boxes': response_document_source.bounding_boxes,
+            'metadata': response_document_source.metadata
         } for response_document_source in response_document_sources]
 
     def get_initialized_data(self):
@@ -8041,7 +8042,7 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroupRowProcessLogs: An object representing the logs for the feature group row process"""
         return self._call_api('getFeatureGroupRowProcessLogsByKey', 'POST', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcessLogs)
 
-    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP', description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: List = None, output_variable_mappings: List = None, configurations: dict = None) -> PythonFunction:
+    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP', description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: List = None, output_variable_mappings: List = None) -> PythonFunction:
         """Creates a custom Python function that is reusable.
 
         Args:
@@ -8056,13 +8057,12 @@ Creates a new feature group defined as the union of other feature group versions
             user_level_connectors (Dict): Dictionary containing user level connectors.
             org_level_connectors (List): List containing organization level connectors.
             output_variable_mappings (List): List of output variable mappings that defines the elements of the function's return value.
-            configurations (dict): Dictionary containing configurations for the Python function.
 
         Returns:
             PythonFunction: The Python function that can be used (e.g. for feature group transform)."""
-        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'functionType': function_type, 'description': description, 'examples': examples, 'userLevelConnectors': user_level_connectors, 'orgLevelConnectors': org_level_connectors, 'outputVariableMappings': output_variable_mappings, 'configurations': configurations}, parse_type=PythonFunction)
+        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'functionType': function_type, 'description': description, 'examples': examples, 'userLevelConnectors': user_level_connectors, 'orgLevelConnectors': org_level_connectors, 'outputVariableMappings': output_variable_mappings}, parse_type=PythonFunction)
 
-    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: List = None, output_variable_mappings: List = None, configurations: dict = None) -> PythonFunction:
+    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: List = None, output_variable_mappings: List = None) -> PythonFunction:
         """Update custom python function with user inputs for the given python function.
 
         Args:
@@ -8076,11 +8076,10 @@ Creates a new feature group defined as the union of other feature group versions
             user_level_connectors (Dict): Dictionary containing user level connectors.
             org_level_connectors (List): List of organization level connectors.
             output_variable_mappings (List): List of output variable mappings that defines the elements of the function's return value.
-            configurations (dict): Dictionary containing configurations for the Python function.
 
         Returns:
             PythonFunction: The Python function object."""
-        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'description': description, 'examples': examples, 'userLevelConnectors': user_level_connectors, 'orgLevelConnectors': org_level_connectors, 'outputVariableMappings': output_variable_mappings, 'configurations': configurations}, parse_type=PythonFunction)
+        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'description': description, 'examples': examples, 'userLevelConnectors': user_level_connectors, 'orgLevelConnectors': org_level_connectors, 'outputVariableMappings': output_variable_mappings}, parse_type=PythonFunction)
 
     def delete_python_function(self, name: str):
         """Removes an existing Python function.

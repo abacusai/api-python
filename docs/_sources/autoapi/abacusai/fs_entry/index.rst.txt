@@ -1,0 +1,92 @@
+abacusai.fs_entry
+=================
+
+.. py:module:: abacusai.fs_entry
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.fs_entry.FsEntry
+
+
+Module Contents
+---------------
+
+.. py:class:: FsEntry(client, name=None, type=None, path=None, size=None, modified=None, isFolderEmpty=None, children=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   File system entry.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the file/folder
+   :type name: str
+   :param type: The type of entry (file/folder)
+   :type type: str
+   :param path: The path of the entry
+   :type path: str
+   :param size: The size of the entry in bytes
+   :type size: int
+   :param modified: The last modified timestamp
+   :type modified: int
+   :param isFolderEmpty: Whether the folder is empty (only for folders)
+   :type isFolderEmpty: bool
+   :param children: List of child FSEntry objects (only for folders)
+   :type children: list
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: type
+      :value: None
+
+
+
+   .. py:attribute:: path
+      :value: None
+
+
+
+   .. py:attribute:: size
+      :value: None
+
+
+
+   .. py:attribute:: modified
+      :value: None
+
+
+
+   .. py:attribute:: isFolderEmpty
+      :value: None
+
+
+
+   .. py:attribute:: children
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

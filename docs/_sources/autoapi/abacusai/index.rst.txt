@@ -124,7 +124,6 @@ Submodules
    /autoapi/abacusai/feature_importance/index
    /autoapi/abacusai/feature_mapping/index
    /autoapi/abacusai/feature_performance_analysis/index
-   /autoapi/abacusai/feature_record/index
    /autoapi/abacusai/file_connector/index
    /autoapi/abacusai/file_connector_instructions/index
    /autoapi/abacusai/file_connector_verification/index
@@ -132,12 +131,16 @@ Submodules
    /autoapi/abacusai/forecasting_analysis_graph_data/index
    /autoapi/abacusai/forecasting_monitor_item_analysis/index
    /autoapi/abacusai/forecasting_monitor_summary/index
+   /autoapi/abacusai/fs_entry/index
    /autoapi/abacusai/function_logs/index
    /autoapi/abacusai/generated_pit_feature_config_option/index
    /autoapi/abacusai/global_context/index
    /autoapi/abacusai/graph_dashboard/index
    /autoapi/abacusai/holdout_analysis/index
    /autoapi/abacusai/holdout_analysis_version/index
+   /autoapi/abacusai/hosted_app/index
+   /autoapi/abacusai/hosted_app_container/index
+   /autoapi/abacusai/hosted_app_file_read/index
    /autoapi/abacusai/hosted_model_token/index
    /autoapi/abacusai/hume_voice/index
    /autoapi/abacusai/image_gen_settings/index
@@ -608,7 +611,6 @@ Classes
    abacusai.FeatureImportance
    abacusai.FeatureMapping
    abacusai.FeaturePerformanceAnalysis
-   abacusai.FeatureRecord
    abacusai.FileConnector
    abacusai.FileConnectorInstructions
    abacusai.FileConnectorVerification
@@ -616,11 +618,15 @@ Classes
    abacusai.ForecastingAnalysisGraphData
    abacusai.ForecastingMonitorItemAnalysis
    abacusai.ForecastingMonitorSummary
+   abacusai.FsEntry
    abacusai.FunctionLogs
    abacusai.GeneratedPitFeatureConfigOption
    abacusai.GraphDashboard
    abacusai.HoldoutAnalysis
    abacusai.HoldoutAnalysisVersion
+   abacusai.HostedApp
+   abacusai.HostedAppContainer
+   abacusai.HostedAppFileRead
    abacusai.HostedModelToken
    abacusai.HumeVoice
    abacusai.ImageGenSettings
@@ -2165,11 +2171,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2218,11 +2219,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2288,11 +2284,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2315,11 +2306,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2345,11 +2331,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(configs)
@@ -2403,12 +2384,17 @@ Package Contents
 
 
 
+   .. py:method:: from_tool(tool_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
+      :classmethod:
+
+
+
+   .. py:method:: from_system_tool(tool_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
+      :classmethod:
+
+
+
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: is_template_node()
@@ -2523,11 +2509,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -2568,11 +2549,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -2616,11 +2592,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2660,11 +2631,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2701,11 +2667,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(mapping)
@@ -3224,10 +3185,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -3363,10 +3320,6 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4194,10 +4147,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -4585,10 +4534,6 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -7006,6 +6951,11 @@ Package Contents
 
    .. py:attribute:: USERCODE_TOOL
       :value: 'USERCODE_TOOL'
+
+
+
+   .. py:attribute:: CONNECTOR_TOOL
+      :value: 'CONNECTOR_TOOL'
 
 
 
@@ -10433,10 +10383,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11026,10 +10972,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11098,10 +11040,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11145,11 +11083,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: FeatureMappingConfig
@@ -11322,10 +11255,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11476,11 +11405,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -11544,19 +11468,10 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -11595,11 +11510,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:data:: Segment
@@ -11747,11 +11657,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ListResponseSection(items, section_key = None)
@@ -13195,7 +13100,7 @@ Package Contents
 
 
 
-.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None, keywordArguments=None)
+.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None, keywordArguments=None, computePointsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -13222,6 +13127,8 @@ Package Contents
    :type tasks: list[str]
    :param keywordArguments: A dict of kwargs used to generate the response.
    :type keywordArguments: dict
+   :param computePointsUsed: The number of compute points used for the message.
+   :type computePointsUsed: int
 
 
    .. py:attribute:: role
@@ -13265,6 +13172,11 @@ Package Contents
 
 
    .. py:attribute:: keyword_arguments
+      :value: None
+
+
+
+   .. py:attribute:: compute_points_used
       :value: None
 
 
@@ -19674,7 +19586,7 @@ Package Contents
 
 
 
-   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None, configurations = None)
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None)
 
       Creates a custom Python function that is reusable.
 
@@ -19700,15 +19612,13 @@ Package Contents
       :type org_level_connectors: List
       :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
       :type output_variable_mappings: List
-      :param configurations: Dictionary containing configurations for the Python function.
-      :type configurations: dict
 
       :returns: The Python function that can be used (e.g. for feature group transform).
       :rtype: PythonFunction
 
 
 
-   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None, configurations = None)
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -19732,8 +19642,6 @@ Package Contents
       :type org_level_connectors: List
       :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
       :type output_variable_mappings: List
-      :param configurations: Dictionary containing configurations for the Python function.
-      :type configurations: dict
 
       :returns: The Python function object.
       :rtype: PythonFunction
@@ -24065,7 +23973,7 @@ Package Contents
 
 
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24106,6 +24014,12 @@ Package Contents
    :type editCooldownMs: int
    :param scrollDebounceMs: The debounce time in milliseconds for scroll events.
    :type scrollDebounceMs: int
+   :param lspDeadline: The deadline in milliseconds for LSP context.
+   :type lspDeadline: int
+   :param diagnosticsThreshold: The max number of diagnostics to show.
+   :type diagnosticsThreshold: int
+   :param diagnosticEachThreshold: The max number of characters to show for each diagnostic type.
+   :type diagnosticEachThreshold: int
 
 
    .. py:attribute:: max_pending_requests
@@ -24184,6 +24098,21 @@ Package Contents
 
 
    .. py:attribute:: scroll_debounce_ms
+      :value: None
+
+
+
+   .. py:attribute:: lsp_deadline
+      :value: None
+
+
+
+   .. py:attribute:: diagnostics_threshold
+      :value: None
+
+
+
+   .. py:attribute:: diagnostic_each_threshold
       :value: None
 
 
@@ -27592,7 +27521,7 @@ Package Contents
 
 
 
-.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None)
+.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27615,6 +27544,8 @@ Package Contents
    :type documentSource: str
    :param imageIds: List of Image IDs for all the pages.
    :type imageIds: list
+   :param metadata: Metadata column values for the retrieved documents.
+   :type metadata: dict
 
 
    .. py:attribute:: document
@@ -27648,6 +27579,11 @@ Package Contents
 
 
    .. py:attribute:: image_ids
+      :value: None
+
+
+
+   .. py:attribute:: metadata
       :value: None
 
 
@@ -32772,39 +32708,6 @@ Package Contents
 
 
 
-.. py:class:: FeatureRecord(client, data=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A feature record
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param data: the record's current data
-   :type data: dict
-
-
-   .. py:attribute:: data
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
 .. py:class:: FileConnector(client, bucket=None, verified=None, writePermission=None, authExpiresAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -33254,6 +33157,81 @@ Package Contents
 
 
    .. py:attribute:: history_drift
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: FsEntry(client, name=None, type=None, path=None, size=None, modified=None, isFolderEmpty=None, children=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   File system entry.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the file/folder
+   :type name: str
+   :param type: The type of entry (file/folder)
+   :type type: str
+   :param path: The path of the entry
+   :type path: str
+   :param size: The size of the entry in bytes
+   :type size: int
+   :param modified: The last modified timestamp
+   :type modified: int
+   :param isFolderEmpty: Whether the folder is empty (only for folders)
+   :type isFolderEmpty: bool
+   :param children: List of child FSEntry objects (only for folders)
+   :type children: list
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: type
+      :value: None
+
+
+
+   .. py:attribute:: path
+      :value: None
+
+
+
+   .. py:attribute:: size
+      :value: None
+
+
+
+   .. py:attribute:: modified
+      :value: None
+
+
+
+   .. py:attribute:: isFolderEmpty
+      :value: None
+
+
+
+   .. py:attribute:: children
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -33771,6 +33749,231 @@ Package Contents
 
       :returns: A string describing the status of a holdout analysis version (pending, complete, etc.).
       :rtype: str
+
+
+
+.. py:class:: HostedApp(client, hostedAppId=None, deploymentConversationId=None, name=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Hosted App
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param hostedAppId: The ID of the hosted app
+   :type hostedAppId: id
+   :param deploymentConversationId: The ID of the deployment conversation
+   :type deploymentConversationId: id
+   :param name: The name of the hosted app
+   :type name: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+
+
+   .. py:attribute:: hosted_app_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, lifecycle=None, status=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Hosted app container information.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param hostedAppContainerId: The ID of the hosted app container
+   :type hostedAppContainerId: id
+   :param hostedAppId: The ID of the hosted app
+   :type hostedAppId: id
+   :param deploymentConversationId: The deployment conversation ID
+   :type deploymentConversationId: id
+   :param hostedAppVersion: The instance of the hosted app
+   :type hostedAppVersion: id
+   :param name: The name of the hosted app
+   :type name: str
+   :param createdAt: Creation timestamp
+   :type createdAt: str
+   :param updatedAt: Last update timestamp
+   :type updatedAt: str
+   :param containerImage: Container image name
+   :type containerImage: str
+   :param route: Container route
+   :type route: str
+   :param appConfig: App configuration
+   :type appConfig: dict
+   :param isDev: Whether this is a dev container
+   :type isDev: bool
+   :param lifecycle: Container lifecycle status (PENDING/DEPLOYING/ACTIVE/FAILED/STOPPED/DELETING)
+   :type lifecycle: str
+   :param status: Container status (RUNNING/STOPPED/DEPLOYING/FAILED)
+   :type status: str
+
+
+   .. py:attribute:: hosted_app_container_id
+      :value: None
+
+
+
+   .. py:attribute:: hosted_app_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: hosted_app_version
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: container_image
+      :value: None
+
+
+
+   .. py:attribute:: route
+      :value: None
+
+
+
+   .. py:attribute:: app_config
+      :value: None
+
+
+
+   .. py:attribute:: is_dev
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: HostedAppFileRead(client, content=None, start=None, end=None, retcode=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Result of reading file content from a hosted app container.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param content: The contents of the file or a portion of it.
+   :type content: str
+   :param start: If present, the starting position of the read.
+   :type start: int
+   :param end: If present, the last position in the file returned in this read.
+   :type end: int
+   :param retcode: If the read is associated with a log the return code of the command.
+   :type retcode: int
+
+
+   .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: start
+      :value: None
+
+
+
+   .. py:attribute:: end
+      :value: None
+
+
+
+   .. py:attribute:: retcode
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 
@@ -45859,6 +46062,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.35'
+   :value: '1.4.36'
 
 
