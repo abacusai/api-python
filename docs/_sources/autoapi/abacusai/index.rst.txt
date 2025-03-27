@@ -2171,6 +2171,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2219,6 +2224,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2284,6 +2294,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2306,6 +2321,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2331,6 +2351,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -2395,6 +2420,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: is_template_node()
@@ -2509,6 +2539,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -2549,6 +2584,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -2592,6 +2632,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2631,6 +2676,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2667,6 +2717,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3185,6 +3240,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -3320,6 +3379,10 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -3871,35 +3934,11 @@ Package Contents
 
    :param jql: The JQL query for fetching issues
    :type jql: str
-   :param custom_fields: A list of custom fields to include in the dataset
-   :type custom_fields: list
-   :param include_comments: Fetch comments for each issue
-   :type include_comments: bool
-   :param include_watchers: Fetch watchers for each issue
-   :type include_watchers: bool
 
 
    .. py:attribute:: jql
       :type:  str
       :value: None
-
-
-
-   .. py:attribute:: custom_fields
-      :type:  list
-      :value: None
-
-
-
-   .. py:attribute:: include_comments
-      :type:  bool
-      :value: False
-
-
-
-   .. py:attribute:: include_watchers
-      :type:  bool
-      :value: False
 
 
 
@@ -4145,6 +4184,10 @@ Package Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4534,6 +4577,10 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -9577,6 +9624,8 @@ Package Contents
    :type json_response_schema: str
    :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM.
    :type mask_pii: bool
+   :param custom_tools: List of custom tool names to be used in the chat.
+   :type custom_tools: List[str]
 
 
    .. py:attribute:: document_retrievers
@@ -9791,6 +9840,12 @@ Package Contents
 
    .. py:attribute:: mask_pii
       :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: custom_tools
+      :type:  List[str]
       :value: None
 
 
@@ -10383,6 +10438,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -10972,6 +11031,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11040,6 +11103,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11083,6 +11150,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: FeatureMappingConfig
@@ -11255,6 +11327,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11405,6 +11481,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -11468,10 +11549,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -11510,6 +11600,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:data:: Segment
@@ -11658,6 +11753,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ListResponseSection(items, section_key = None)
 
@@ -11709,7 +11809,7 @@ Package Contents
       :type:  str
 
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -11730,6 +11830,8 @@ Package Contents
    :type externalChatEndpoint: str
    :param dashboardEndpoint: The URI that the external chat will use to go back to the dashboard
    :type dashboardEndpoint: str
+   :param hostingDomain: The domain for hosted app deployments
+   :type hostingDomain: str
 
 
    .. py:attribute:: api_endpoint
@@ -11758,6 +11860,11 @@ Package Contents
 
 
    .. py:attribute:: dashboard_endpoint
+      :value: None
+
+
+
+   .. py:attribute:: hosting_domain
       :value: None
 
 
@@ -12092,7 +12199,7 @@ Package Contents
 
 
 
-.. py:class:: AudioGenSettings(client, model=None)
+.. py:class:: AudioGenSettings(client, model=None, settings=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -12101,11 +12208,18 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param model: Dropdown for models available for audio generation.
+   :param model: names of models available for audio generation.
    :type model: dict
+   :param settings: settings for each model.
+   :type settings: dict
 
 
    .. py:attribute:: model
+      :value: None
+
+
+
+   .. py:attribute:: settings
       :value: None
 
 
@@ -13659,6 +13773,29 @@ Package Contents
 
       :returns: The dataset object created
       :rtype: Dataset
+
+
+
+   .. py:method:: get_assignments_online_with_new_inputs(deployment_token, deployment_id, assignments_df = None, constraints_df = None, constraint_equations_df = None, feature_mapping_dict = None, solve_time_limit_seconds = None)
+
+      Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: ID
+      :param assignments_df: A dataframe with all the variables involved in the optimization problem
+      :type assignments_df: pd.DataFrame
+      :param constraints_df: A dataframe of individual constraints, and variables in them
+      :type constraints_df: pd.DataFrame
+      :param constraint_equations_df: A dataframe which tells us about the operator / constant / penalty etc of a constraint
+                                      This gives us some data which is needed to make sense of the constraints_df.
+      :type constraint_equations_df: pd.DataFrame
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
+
+      :returns: The assignments for a given query.
+      :rtype: OptimizationAssignment
 
 
 
@@ -18894,6 +19031,21 @@ Package Contents
 
 
 
+   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with assignment, constraint and constraint_equations_df
+      :type query_data: dict
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
+
+
+
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
 
       Check for any constraints violated by the overrides.
@@ -22078,12 +22230,14 @@ Package Contents
 
 
 
-   .. py:method:: list_model_monitors(project_id)
+   .. py:method:: list_model_monitors(project_id, limit = None)
 
       Retrieves the list of model monitors in the specified project.
 
       :param project_id: Unique string identifier associated with the project.
       :type project_id: str
+      :param limit: Maximum number of model monitors to return. We'll have internal limit if not set.
+      :type limit: int
 
       :returns: A list of model monitors.
       :rtype: list[ModelMonitor]
@@ -22702,12 +22856,14 @@ Package Contents
 
 
 
-   .. py:method:: list_batch_predictions(project_id)
+   .. py:method:: list_batch_predictions(project_id, limit = None)
 
       Retrieves a list of batch predictions in the project.
 
       :param project_id: Unique string identifier of the project.
       :type project_id: str
+      :param limit: Maximum number of batch predictions to return. We'll have internal limit if not set.
+      :type limit: int
 
       :returns: List of batch prediction jobs.
       :rtype: list[BatchPrediction]
@@ -23188,7 +23344,7 @@ Package Contents
 
 
 
-   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False)
+   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None)
 
       Lists all conversations for the given deployment and current user.
 
@@ -23200,6 +23356,10 @@ Package Contents
       :type conversation_type: DeploymentConversationType
       :param fetch_last_llm_info: If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
       :type fetch_last_llm_info: bool
+      :param limit: The number of conversations to return. Defaults to 600.
+      :type limit: int
+      :param search: The search query to filter conversations by title.
+      :type search: str
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -23851,7 +24011,7 @@ Package Contents
 
 
 
-.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None)
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -23872,6 +24032,8 @@ Package Contents
    :type currMonthUsage: int
    :param lastThrottlePopUp: The last time the organization was throttled
    :type lastThrottlePopUp: str
+   :param alwaysDisplay: Whether to always display the compute point toggle
+   :type alwaysDisplay: bool
 
 
    .. py:attribute:: updated_at
@@ -23900,6 +24062,11 @@ Package Contents
 
 
    .. py:attribute:: last_throttle_pop_up
+      :value: None
+
+
+
+   .. py:attribute:: always_display
       :value: None
 
 
@@ -23973,7 +24140,7 @@ Package Contents
 
 
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24020,6 +24187,8 @@ Package Contents
    :type diagnosticsThreshold: int
    :param diagnosticEachThreshold: The max number of characters to show for each diagnostic type.
    :type diagnosticEachThreshold: int
+   :param numVsCodeSuggestions: The number of VS Code suggestions to show.
+   :type numVsCodeSuggestions: int
 
 
    .. py:attribute:: max_pending_requests
@@ -24113,6 +24282,11 @@ Package Contents
 
 
    .. py:attribute:: diagnostic_each_threshold
+      :value: None
+
+
+
+   .. py:attribute:: num_vs_code_suggestions
       :value: None
 
 
@@ -26429,7 +26603,7 @@ Package Contents
 
 
 
-   .. py:method:: list_conversations(external_application_id = None, conversation_type = None, fetch_last_llm_info = False)
+   .. py:method:: list_conversations(external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None)
 
       Lists all conversations for the given deployment and current user.
 
@@ -26439,6 +26613,10 @@ Package Contents
       :type conversation_type: DeploymentConversationType
       :param fetch_last_llm_info: If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
       :type fetch_last_llm_info: bool
+      :param limit: The number of conversations to return. Defaults to 600.
+      :type limit: int
+      :param search: The search query to filter conversations by title.
+      :type search: str
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -28905,7 +29083,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, onlyImageGenEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28950,6 +29128,8 @@ Package Contents
    :type isVisible: bool
    :param hasThinkingOption: Whether to show the thinking option in the toolbar.
    :type hasThinkingOption: bool
+   :param onlyImageGenEnabled: Whether to LLM only allows image generation.
+   :type onlyImageGenEnabled: bool
 
 
    .. py:attribute:: name
@@ -29038,6 +29218,11 @@ Package Contents
 
 
    .. py:attribute:: has_thinking_option
+      :value: None
+
+
+
+   .. py:attribute:: only_image_gen_enabled
       :value: None
 
 
@@ -40855,6 +41040,21 @@ Package Contents
 
 
 
+   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with assignment, constraint and constraint_equations_df
+      :type query_data: dict
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
+
+
+
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
 
       Check for any constraints violated by the overrides.
@@ -42221,12 +42421,12 @@ Package Contents
 
 
 
-   .. py:method:: list_model_monitors()
+   .. py:method:: list_model_monitors(limit = None)
 
       Retrieves the list of model monitors in the specified project.
 
-      :param project_id: Unique string identifier associated with the project.
-      :type project_id: str
+      :param limit: Maximum number of model monitors to return. We'll have internal limit if not set.
+      :type limit: int
 
       :returns: A list of model monitors.
       :rtype: list[ModelMonitor]
@@ -42468,12 +42668,12 @@ Package Contents
 
 
 
-   .. py:method:: list_batch_predictions()
+   .. py:method:: list_batch_predictions(limit = None)
 
       Retrieves a list of batch predictions in the project.
 
-      :param project_id: Unique string identifier of the project.
-      :type project_id: str
+      :param limit: Maximum number of batch predictions to return. We'll have internal limit if not set.
+      :type limit: int
 
       :returns: List of batch prediction jobs.
       :rtype: list[BatchPrediction]
@@ -46062,6 +46262,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.36'
+   :value: '1.4.37'
 
 

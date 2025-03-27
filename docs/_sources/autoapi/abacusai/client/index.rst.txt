@@ -584,7 +584,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.36'
+      :value: '1.4.37'
 
 
 
@@ -1720,12 +1720,14 @@ Module Contents
 
 
 
-   .. py:method:: list_model_monitors(project_id)
+   .. py:method:: list_model_monitors(project_id, limit = None)
 
       Retrieves the list of model monitors in the specified project.
 
       :param project_id: Unique string identifier associated with the project.
       :type project_id: str
+      :param limit: Maximum number of model monitors to return. We'll have internal limit if not set.
+      :type limit: int
 
       :returns: A list of model monitors.
       :rtype: list[ModelMonitor]
@@ -2344,12 +2346,14 @@ Module Contents
 
 
 
-   .. py:method:: list_batch_predictions(project_id)
+   .. py:method:: list_batch_predictions(project_id, limit = None)
 
       Retrieves a list of batch predictions in the project.
 
       :param project_id: Unique string identifier of the project.
       :type project_id: str
+      :param limit: Maximum number of batch predictions to return. We'll have internal limit if not set.
+      :type limit: int
 
       :returns: List of batch prediction jobs.
       :rtype: list[BatchPrediction]
@@ -2830,7 +2834,7 @@ Module Contents
 
 
 
-   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False)
+   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None)
 
       Lists all conversations for the given deployment and current user.
 
@@ -2842,6 +2846,10 @@ Module Contents
       :type conversation_type: DeploymentConversationType
       :param fetch_last_llm_info: If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
       :type fetch_last_llm_info: bool
+      :param limit: The number of conversations to return. Defaults to 600.
+      :type limit: int
+      :param search: The search query to filter conversations by title.
+      :type search: str
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -3104,6 +3112,29 @@ Module Contents
 
       :returns: The dataset object created
       :rtype: Dataset
+
+
+
+   .. py:method:: get_assignments_online_with_new_inputs(deployment_token, deployment_id, assignments_df = None, constraints_df = None, constraint_equations_df = None, feature_mapping_dict = None, solve_time_limit_seconds = None)
+
+      Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: ID
+      :param assignments_df: A dataframe with all the variables involved in the optimization problem
+      :type assignments_df: pd.DataFrame
+      :param constraints_df: A dataframe of individual constraints, and variables in them
+      :type constraints_df: pd.DataFrame
+      :param constraint_equations_df: A dataframe which tells us about the operator / constant / penalty etc of a constraint
+                                      This gives us some data which is needed to make sense of the constraints_df.
+      :type constraint_equations_df: pd.DataFrame
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
+
+      :returns: The assignments for a given query.
+      :rtype: OptimizationAssignment
 
 
 
@@ -8336,6 +8367,21 @@ Module Contents
       :type solve_time_limit_seconds: float
       :param best_alternate_only: When True only the best alternate will be returned, when False multiple alternates are returned
       :type best_alternate_only: bool
+
+
+
+   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with assignment, constraint and constraint_equations_df
+      :type query_data: dict
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
 
 
 

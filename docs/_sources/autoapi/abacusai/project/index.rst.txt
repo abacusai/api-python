@@ -410,12 +410,12 @@ Module Contents
 
 
 
-   .. py:method:: list_model_monitors()
+   .. py:method:: list_model_monitors(limit = None)
 
       Retrieves the list of model monitors in the specified project.
 
-      :param project_id: Unique string identifier associated with the project.
-      :type project_id: str
+      :param limit: Maximum number of model monitors to return. We'll have internal limit if not set.
+      :type limit: int
 
       :returns: A list of model monitors.
       :rtype: list[ModelMonitor]
@@ -657,12 +657,12 @@ Module Contents
 
 
 
-   .. py:method:: list_batch_predictions()
+   .. py:method:: list_batch_predictions(limit = None)
 
       Retrieves a list of batch predictions in the project.
 
-      :param project_id: Unique string identifier of the project.
-      :type project_id: str
+      :param limit: Maximum number of batch predictions to return. We'll have internal limit if not set.
+      :type limit: int
 
       :returns: List of batch prediction jobs.
       :rtype: list[BatchPrediction]

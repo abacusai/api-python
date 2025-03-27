@@ -495,7 +495,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_deployment_conversation(self.deployment_id, name, external_application_id)
 
-    def list_conversations(self, external_application_id: str = None, conversation_type: Union[dict, DeploymentConversationType] = None, fetch_last_llm_info: bool = False):
+    def list_conversations(self, external_application_id: str = None, conversation_type: Union[dict, DeploymentConversationType] = None, fetch_last_llm_info: bool = False, limit: int = None, search: str = None):
         """
         Lists all conversations for the given deployment and current user.
 
@@ -503,11 +503,13 @@ class Deployment(AbstractApiClass):
             external_application_id (str): The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
             conversation_type (DeploymentConversationType): The type of the conversation indicating its origin.
             fetch_last_llm_info (bool): If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
+            limit (int): The number of conversations to return. Defaults to 600.
+            search (str): The search query to filter conversations by title.
 
         Returns:
             list[DeploymentConversation]: The deployment conversations.
         """
-        return self.client.list_deployment_conversations(self.deployment_id, external_application_id, conversation_type, fetch_last_llm_info)
+        return self.client.list_deployment_conversations(self.deployment_id, external_application_id, conversation_type, fetch_last_llm_info, limit, search)
 
     def create_external_application(self, name: str = None, description: str = None, logo: str = None, theme: dict = None):
         """

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None)
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type currMonthUsage: int
    :param lastThrottlePopUp: The last time the organization was throttled
    :type lastThrottlePopUp: str
+   :param alwaysDisplay: Whether to always display the compute point toggle
+   :type alwaysDisplay: bool
 
 
    .. py:attribute:: updated_at
@@ -64,6 +66,11 @@ Module Contents
 
 
    .. py:attribute:: last_throttle_pop_up
+      :value: None
+
+
+
+   .. py:attribute:: always_display
       :value: None
 
 

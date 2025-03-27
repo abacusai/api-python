@@ -326,17 +326,17 @@ class Project(AbstractApiClass):
         """
         return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, target_value_bias, target_value_performance, feature_mappings, model_id, training_feature_mappings, feature_group_base_monitor_config, feature_group_comparison_monitor_config, exclude_interactive_performance_analysis, exclude_bias_analysis, exclude_performance_analysis, exclude_feature_drift_analysis, exclude_data_integrity_analysis)
 
-    def list_model_monitors(self):
+    def list_model_monitors(self, limit: int = None):
         """
         Retrieves the list of model monitors in the specified project.
 
         Args:
-            project_id (str): Unique string identifier associated with the project.
+            limit (int): Maximum number of model monitors to return. We'll have internal limit if not set.
 
         Returns:
             list[ModelMonitor]: A list of model monitors.
         """
-        return self.client.list_model_monitors(self.project_id)
+        return self.client.list_model_monitors(self.project_id, limit)
 
     def create_vision_drift_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str, name: str, feature_mappings: dict, training_feature_mappings: dict, target_value_performance: str = None, refresh_schedule: str = None):
         """
@@ -535,17 +535,17 @@ class Project(AbstractApiClass):
         """
         return self.client.list_refresh_policies(self.project_id, dataset_ids, feature_group_id, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids, notebook_ids)
 
-    def list_batch_predictions(self):
+    def list_batch_predictions(self, limit: int = None):
         """
         Retrieves a list of batch predictions in the project.
 
         Args:
-            project_id (str): Unique string identifier of the project.
+            limit (int): Maximum number of batch predictions to return. We'll have internal limit if not set.
 
         Returns:
             list[BatchPrediction]: List of batch prediction jobs.
         """
-        return self.client.list_batch_predictions(self.project_id)
+        return self.client.list_batch_predictions(self.project_id, limit)
 
     def list_pipelines(self):
         """

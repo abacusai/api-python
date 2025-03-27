@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, onlyImageGenEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -60,6 +60,8 @@ Module Contents
    :type isVisible: bool
    :param hasThinkingOption: Whether to show the thinking option in the toolbar.
    :type hasThinkingOption: bool
+   :param onlyImageGenEnabled: Whether to LLM only allows image generation.
+   :type onlyImageGenEnabled: bool
 
 
    .. py:attribute:: name
@@ -148,6 +150,11 @@ Module Contents
 
 
    .. py:attribute:: has_thinking_option
+      :value: None
+
+
+
+   .. py:attribute:: only_image_gen_enabled
       :value: None
 
 

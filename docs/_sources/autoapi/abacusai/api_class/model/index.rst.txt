@@ -1497,6 +1497,8 @@ Module Contents
    :type json_response_schema: str
    :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM.
    :type mask_pii: bool
+   :param custom_tools: List of custom tool names to be used in the chat.
+   :type custom_tools: List[str]
 
 
    .. py:attribute:: document_retrievers
@@ -1711,6 +1713,12 @@ Module Contents
 
    .. py:attribute:: mask_pii
       :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: custom_tools
+      :type:  List[str]
       :value: None
 
 
@@ -2301,6 +2309,10 @@ Module Contents
 .. py:class:: _TrainingConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class

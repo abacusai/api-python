@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-__version__ = '1.4.36'
+__version__ = '1.4.37'
 
 
 setup(name='abacusai',
@@ -20,7 +20,6 @@ setup(name='abacusai',
           'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',
           'Topic :: Utilities',
-          'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 3',
           'Programming Language :: Python :: 3.8',
           'Programming Language :: Python :: 3.9',

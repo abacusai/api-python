@@ -233,35 +233,11 @@ Module Contents
 
    :param jql: The JQL query for fetching issues
    :type jql: str
-   :param custom_fields: A list of custom fields to include in the dataset
-   :type custom_fields: list
-   :param include_comments: Fetch comments for each issue
-   :type include_comments: bool
-   :param include_watchers: Fetch watchers for each issue
-   :type include_watchers: bool
 
 
    .. py:attribute:: jql
       :type:  str
       :value: None
-
-
-
-   .. py:attribute:: custom_fields
-      :type:  list
-      :value: None
-
-
-
-   .. py:attribute:: include_comments
-      :type:  bool
-      :value: False
-
-
-
-   .. py:attribute:: include_watchers
-      :type:  bool
-      :value: False
 
 
 
@@ -507,6 +483,10 @@ Module Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class

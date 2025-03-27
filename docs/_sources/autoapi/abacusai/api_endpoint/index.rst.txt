@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type externalChatEndpoint: str
    :param dashboardEndpoint: The URI that the external chat will use to go back to the dashboard
    :type dashboardEndpoint: str
+   :param hostingDomain: The domain for hosted app deployments
+   :type hostingDomain: str
 
 
    .. py:attribute:: api_endpoint
@@ -64,6 +66,11 @@ Module Contents
 
 
    .. py:attribute:: dashboard_endpoint
+      :value: None
+
+
+
+   .. py:attribute:: hosting_domain
       :value: None
 
 

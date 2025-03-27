@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -62,6 +62,8 @@ Module Contents
    :type diagnosticsThreshold: int
    :param diagnosticEachThreshold: The max number of characters to show for each diagnostic type.
    :type diagnosticEachThreshold: int
+   :param numVsCodeSuggestions: The number of VS Code suggestions to show.
+   :type numVsCodeSuggestions: int
 
 
    .. py:attribute:: max_pending_requests
@@ -155,6 +157,11 @@ Module Contents
 
 
    .. py:attribute:: diagnostic_each_threshold
+      :value: None
+
+
+
+   .. py:attribute:: num_vs_code_suggestions
       :value: None
 
 

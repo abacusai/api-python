@@ -652,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.36'
+    client_version = '1.4.37'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1806,15 +1806,16 @@ class ReadOnlyClient(BaseApiClient):
             list[ModelArtifactsExport]: List of model artifacts exports."""
         return self._call_api('listModelArtifactsExports', 'GET', query_params={'modelId': model_id, 'limit': limit}, parse_type=ModelArtifactsExport)
 
-    def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
+    def list_model_monitors(self, project_id: str, limit: int = None) -> List[ModelMonitor]:
         """Retrieves the list of model monitors in the specified project.
 
         Args:
             project_id (str): Unique string identifier associated with the project.
+            limit (int): Maximum number of model monitors to return. We'll have internal limit if not set.
 
         Returns:
             list[ModelMonitor]: A list of model monitors."""
-        return self._call_api('listModelMonitors', 'GET', query_params={'projectId': project_id}, parse_type=ModelMonitor)
+        return self._call_api('listModelMonitors', 'GET', query_params={'projectId': project_id, 'limit': limit}, parse_type=ModelMonitor)
 
     def describe_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
         """Retrieves a full description of the specified model monitor.
@@ -2300,15 +2301,16 @@ class ReadOnlyClient(BaseApiClient):
             batch_prediction_version (str): Unique string identifier of the batch prediction job to get the errors for."""
         return self._call_api('getBatchPredictionConnectorErrors', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
 
-    def list_batch_predictions(self, project_id: str) -> List[BatchPrediction]:
+    def list_batch_predictions(self, project_id: str, limit: int = None) -> List[BatchPrediction]:
         """Retrieves a list of batch predictions in the project.
 
         Args:
             project_id (str): Unique string identifier of the project.
+            limit (int): Maximum number of batch predictions to return. We'll have internal limit if not set.
 
         Returns:
             list[BatchPrediction]: List of batch prediction jobs."""
-        return self._call_api('listBatchPredictions', 'GET', query_params={'projectId': project_id}, parse_type=BatchPrediction)
+        return self._call_api('listBatchPredictions', 'GET', query_params={'projectId': project_id, 'limit': limit}, parse_type=BatchPrediction)
 
     def describe_batch_prediction(self, batch_prediction_id: str) -> BatchPrediction:
         """Describe the batch prediction.
@@ -2690,7 +2692,7 @@ class ReadOnlyClient(BaseApiClient):
             DeploymentConversation: The deployment conversation."""
         return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads}, parse_type=DeploymentConversation, is_sync=True)
 
-    def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False) -> List[DeploymentConversation]:
+    def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False, limit: int = None, search: str = None) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
 
         Args:
@@ -2698,10 +2700,12 @@ class ReadOnlyClient(BaseApiClient):
             external_application_id (str): The external application id associated with the deployment conversation. If specified, only conversations created on that application will be listed.
             conversation_type (DeploymentConversationType): The type of the conversation indicating its origin.
             fetch_last_llm_info (bool): If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
+            limit (int): The number of conversations to return. Defaults to 600.
+            search (str): The search query to filter conversations by title.
 
         Returns:
             list[DeploymentConversation]: The deployment conversations."""
-        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id, 'conversationType': conversation_type, 'fetchLastLlmInfo': fetch_last_llm_info}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id, 'conversationType': conversation_type, 'fetchLastLlmInfo': fetch_last_llm_info, 'limit': limit, 'search': search}, parse_type=DeploymentConversation, is_sync=True)
 
     def export_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None) -> DeploymentConversationExport:
         """Export a Deployment Conversation.
@@ -2957,6 +2961,59 @@ class ApiClient(ReadOnlyClient):
         upload = self.create_dataset_from_upload(
             table_name=feature_group_table_name, file_format='PARQUET')
         return self._upload_from_pandas(upload, df)
+
+    def get_assignments_online_with_new_inputs(self, deployment_token: str, deployment_id: str, assignments_df: pd.DataFrame = None, constraints_df: pd.DataFrame = None, constraint_equations_df: pd.DataFrame = None, feature_mapping_dict: dict = None, solve_time_limit_seconds: float = None):
+        """
+        Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+            deployment_id (ID): The unique identifier of a deployment created under the project.
+            assignments_df (pd.DataFrame): A dataframe with all the variables involved in the optimization problem
+            constraints_df (pd.DataFrame): A dataframe of individual constraints, and variables in them
+            constraint_equations_df (pd.DataFrame): A dataframe which tells us about the operator / constant / penalty etc of a constraint
+                                                    This gives us some data which is needed to make sense of the constraints_df.
+            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
+
+        Returns:
+            OptimizationAssignment: The assignments for a given query.
+        """
+
+        def _serialize_df_with_dtypes(df):
+            # Get dtypes dictionary
+            dtypes_dict = df.dtypes.apply(lambda x: str(x)).to_dict()
+
+            # Handle special dtypes
+            for col, dtype in dtypes_dict.items():
+                if 'datetime' in dtype.lower():
+                    dtypes_dict[col] = 'datetime'
+                elif 'category' in dtype.lower():
+                    dtypes_dict[col] = 'category'
+
+            # Convert DataFrame to JSON
+            json_data = df.to_json(date_format='iso')
+
+            # Create final dictionary with both data and dtypes
+            serialized = {
+                'data': json_data,
+                'dtypes': dtypes_dict
+            }
+
+            return json.dumps(serialized)
+
+        serialized_assignments_df = _serialize_df_with_dtypes(assignments_df)
+        serialized_constraints_df = _serialize_df_with_dtypes(constraints_df)
+        serialized_constraint_equations_df = _serialize_df_with_dtypes(
+            constraint_equations_df)
+
+        query_data = {'assignments_df': serialized_assignments_df,
+                      'constraints_df': serialized_constraints_df,
+                      'constraint_equations_df': serialized_constraint_equations_df,
+                      'feature_mapping_dict': feature_mapping_dict}
+
+        result = self.get_assignments_online_with_new_serialized_inputs(
+            deployment_token=deployment_token, deployment_id=deployment_id, query_data=query_data, solve_time_limit_seconds=solve_time_limit_seconds)
+        return result
 
     def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame, clean_column_names: bool = False) -> Dataset:
         """
@@ -7512,6 +7569,18 @@ Creates a new feature group defined as the union of other feature group versions
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'addConstraints': add_constraints, 'solveTimeLimitSeconds': solve_time_limit_seconds, 'bestAlternateOnly': best_alternate_only}, server_override=prediction_url)
+
+    def get_assignments_online_with_new_serialized_inputs(self, deployment_token: str, deployment_id: str, query_data: dict = None, solve_time_limit_seconds: float = None) -> Dict:
+        """Get assignments for given query, with new inputs
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+            deployment_id (str): The unique identifier of a deployment created under the project.
+            query_data (dict): a dictionary with assignment, constraint and constraint_equations_df
+            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('getAssignmentsOnlineWithNewSerializedInputs', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'solveTimeLimitSeconds': solve_time_limit_seconds}, server_override=prediction_url)
 
     def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Check for any constraints violated by the overrides.

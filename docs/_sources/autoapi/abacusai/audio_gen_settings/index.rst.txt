@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AudioGenSettings(client, model=None)
+.. py:class:: AudioGenSettings(client, model=None, settings=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,11 +24,18 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param model: Dropdown for models available for audio generation.
+   :param model: names of models available for audio generation.
    :type model: dict
+   :param settings: settings for each model.
+   :type settings: dict
 
 
    .. py:attribute:: model
+      :value: None
+
+
+
+   .. py:attribute:: settings
       :value: None
 
 

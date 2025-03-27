@@ -106,14 +106,9 @@ class JiraDatasetConfig(ApplicationConnectorDatasetConfig):
 
     Args:
         jql (str): The JQL query for fetching issues
-        custom_fields (list): A list of custom fields to include in the dataset
-        include_comments (bool): Fetch comments for each issue
-        include_watchers (bool): Fetch watchers for each issue
+
     """
     jql: str = dataclasses.field(default=None)
-    custom_fields: list = dataclasses.field(default=None)
-    include_comments: bool = dataclasses.field(default=False)
-    include_watchers: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.JIRA
