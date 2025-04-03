@@ -652,7 +652,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.37'
+    client_version = '1.4.38'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3737,7 +3737,7 @@ class ApiClient(ReadOnlyClient):
 
     def execute_workflow_node(self, node: WorkflowGraphNode, inputs: dict):
         """
-        Execute the workflow node given input arguments.
+        Execute the workflow node given input arguments. This is to be used for testing purposes only.
 
         Args:
             node (WorkflowGraphNode): The workflow node to be executed.

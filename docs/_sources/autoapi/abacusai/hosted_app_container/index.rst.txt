@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, lifecycle=None, status=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,10 @@ Module Contents
    :type appConfig: dict
    :param isDev: Whether this is a dev container
    :type isDev: bool
+   :param isDeployable: Can this version be deployed
+   :type isDeployable: bool
+   :param isPreviewAvailable: Is the dev preview available on the container
+   :type isPreviewAvailable: bool
    :param lifecycle: Container lifecycle status (PENDING/DEPLOYING/ACTIVE/FAILED/STOPPED/DELETING)
    :type lifecycle: str
    :param status: Container status (RUNNING/STOPPED/DEPLOYING/FAILED)
@@ -103,6 +107,16 @@ Module Contents
 
 
    .. py:attribute:: is_dev
+      :value: None
+
+
+
+   .. py:attribute:: is_deployable
+      :value: None
+
+
+
+   .. py:attribute:: is_preview_available
       :value: None
 
 

@@ -27,9 +27,10 @@ class ConstantsAutocompleteResponse(AbstractApiClass):
             diagnosticsThreshold (int): The max number of diagnostics to show.
             diagnosticEachThreshold (int): The max number of characters to show for each diagnostic type.
             numVsCodeSuggestions (int): The number of VS Code suggestions to show.
+            minReindexingInterval (int): The minimum interval between reindexes in ms.
     """
 
-    def __init__(self, client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None):
+    def __init__(self, client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None):
         super().__init__(client, None)
         self.max_pending_requests = maxPendingRequests
         self.acceptance_delay = acceptanceDelay
@@ -51,11 +52,12 @@ class ConstantsAutocompleteResponse(AbstractApiClass):
         self.diagnostics_threshold = diagnosticsThreshold
         self.diagnostic_each_threshold = diagnosticEachThreshold
         self.num_vs_code_suggestions = numVsCodeSuggestions
+        self.min_reindexing_interval = minReindexingInterval
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'max_pending_requests': repr(self.max_pending_requests), f'acceptance_delay': repr(self.acceptance_delay), f'debounce_delay': repr(self.debounce_delay), f'record_user_action': repr(self.record_user_action), f'validate_suggestion': repr(self.validate_suggestion), f'validation_lines_threshold': repr(self.validation_lines_threshold), f'max_tracked_recent_changes': repr(self.max_tracked_recent_changes), f'diff_threshold': repr(self.diff_threshold), f'derivative_threshold': repr(self.derivative_threshold), f'default_surrounding_lines': repr(
-            self.default_surrounding_lines), f'max_tracked_visit_changes': repr(self.max_tracked_visit_changes), f'selection_cooldown_ms': repr(self.selection_cooldown_ms), f'viewing_cooldown_ms': repr(self.viewing_cooldown_ms), f'max_lines': repr(self.max_lines), f'edit_cooldown_ms': repr(self.edit_cooldown_ms), f'scroll_debounce_ms': repr(self.scroll_debounce_ms), f'lsp_deadline': repr(self.lsp_deadline), f'diagnostics_threshold': repr(self.diagnostics_threshold), f'diagnostic_each_threshold': repr(self.diagnostic_each_threshold), f'num_vs_code_suggestions': repr(self.num_vs_code_suggestions)}
+        repr_dict = {f'max_pending_requests': repr(self.max_pending_requests), f'acceptance_delay': repr(self.acceptance_delay), f'debounce_delay': repr(self.debounce_delay), f'record_user_action': repr(self.record_user_action), f'validate_suggestion': repr(self.validate_suggestion), f'validation_lines_threshold': repr(self.validation_lines_threshold), f'max_tracked_recent_changes': repr(self.max_tracked_recent_changes), f'diff_threshold': repr(self.diff_threshold), f'derivative_threshold': repr(self.derivative_threshold), f'default_surrounding_lines': repr(self.default_surrounding_lines), f'max_tracked_visit_changes': repr(
+            self.max_tracked_visit_changes), f'selection_cooldown_ms': repr(self.selection_cooldown_ms), f'viewing_cooldown_ms': repr(self.viewing_cooldown_ms), f'max_lines': repr(self.max_lines), f'edit_cooldown_ms': repr(self.edit_cooldown_ms), f'scroll_debounce_ms': repr(self.scroll_debounce_ms), f'lsp_deadline': repr(self.lsp_deadline), f'diagnostics_threshold': repr(self.diagnostics_threshold), f'diagnostic_each_threshold': repr(self.diagnostic_each_threshold), f'num_vs_code_suggestions': repr(self.num_vs_code_suggestions), f'min_reindexing_interval': repr(self.min_reindexing_interval)}
         class_name = "ConstantsAutocompleteResponse"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -69,5 +71,5 @@ class ConstantsAutocompleteResponse(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'max_pending_requests': self.max_pending_requests, 'acceptance_delay': self.acceptance_delay, 'debounce_delay': self.debounce_delay, 'record_user_action': self.record_user_action, 'validate_suggestion': self.validate_suggestion, 'validation_lines_threshold': self.validation_lines_threshold, 'max_tracked_recent_changes': self.max_tracked_recent_changes, 'diff_threshold': self.diff_threshold, 'derivative_threshold': self.derivative_threshold, 'default_surrounding_lines': self.default_surrounding_lines,
-                'max_tracked_visit_changes': self.max_tracked_visit_changes, 'selection_cooldown_ms': self.selection_cooldown_ms, 'viewing_cooldown_ms': self.viewing_cooldown_ms, 'max_lines': self.max_lines, 'edit_cooldown_ms': self.edit_cooldown_ms, 'scroll_debounce_ms': self.scroll_debounce_ms, 'lsp_deadline': self.lsp_deadline, 'diagnostics_threshold': self.diagnostics_threshold, 'diagnostic_each_threshold': self.diagnostic_each_threshold, 'num_vs_code_suggestions': self.num_vs_code_suggestions}
+                'max_tracked_visit_changes': self.max_tracked_visit_changes, 'selection_cooldown_ms': self.selection_cooldown_ms, 'viewing_cooldown_ms': self.viewing_cooldown_ms, 'max_lines': self.max_lines, 'edit_cooldown_ms': self.edit_cooldown_ms, 'scroll_debounce_ms': self.scroll_debounce_ms, 'lsp_deadline': self.lsp_deadline, 'diagnostics_threshold': self.diagnostics_threshold, 'diagnostic_each_threshold': self.diagnostic_each_threshold, 'num_vs_code_suggestions': self.num_vs_code_suggestions, 'min_reindexing_interval': self.min_reindexing_interval}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

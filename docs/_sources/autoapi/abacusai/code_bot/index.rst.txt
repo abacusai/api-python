@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None)
+.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None, provider=None, isUserApiKeyAllowed=None, isRateLimited=None, apiKeyUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,14 @@ Module Contents
    :type isPremium: bool
    :param llmBotIcon: The icon of the LLM bot.
    :type llmBotIcon: str
+   :param provider: The provider of the LLM.
+   :type provider: str
+   :param isUserApiKeyAllowed: Whether the LLM supports user API key.
+   :type isUserApiKeyAllowed: bool
+   :param isRateLimited: Whether the LLM is rate limited.
+   :type isRateLimited: bool
+   :param apiKeyUrl: The URL to get the API key.
+   :type apiKeyUrl: str
 
 
    .. py:attribute:: llm_name
@@ -71,6 +79,26 @@ Module Contents
 
 
    .. py:attribute:: llm_bot_icon
+      :value: None
+
+
+
+   .. py:attribute:: provider
+      :value: None
+
+
+
+   .. py:attribute:: is_user_api_key_allowed
+      :value: None
+
+
+
+   .. py:attribute:: is_rate_limited
+      :value: None
+
+
+
+   .. py:attribute:: api_key_url
       :value: None
 
 
