@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -66,6 +66,8 @@ Module Contents
    :type numVsCodeSuggestions: int
    :param minReindexingInterval: The minimum interval between reindexes in ms.
    :type minReindexingInterval: int
+   :param minRefreshSummaryInterval: The minimum interval between refresh summary in ms.
+   :type minRefreshSummaryInterval: int
 
 
    .. py:attribute:: max_pending_requests
@@ -169,6 +171,11 @@ Module Contents
 
 
    .. py:attribute:: min_reindexing_interval
+      :value: None
+
+
+
+   .. py:attribute:: min_refresh_summary_interval
       :value: None
 
 

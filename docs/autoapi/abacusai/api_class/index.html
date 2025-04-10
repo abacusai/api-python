@@ -96,6 +96,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../code_edits/index.html">abacusai.code_edits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_suggestion_validation_response/index.html">abacusai.code_suggestion_validation_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_summary_response/index.html">abacusai.code_summary_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
@@ -191,6 +192,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../inferred_database_column_to_feature_mappings/index.html">abacusai.inferred_database_column_to_feature_mappings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../inferred_feature_mappings/index.html">abacusai.inferred_feature_mappings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../item_statistics/index.html">abacusai.item_statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lip_sync_gen_settings/index.html">abacusai.lip_sync_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_app/index.html">abacusai.llm_app</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html">abacusai.llm_code_block</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_preview/index.html">abacusai.llm_execution_preview</a></li>
@@ -2617,6 +2619,7 @@ inheritance.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
+<li><p><strong>files_input_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The input location for the files.</p></li>
 <li><p><strong>files_output_location_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The output location prefix for the files.</p></li>
 <li><p><strong>channel_id_to_label_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – JSON string for the map from channel ids to their labels.</p></li>
 </ul>
@@ -2625,6 +2628,11 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.PretrainedModelsBatchPredictionArgs.for_eval">
 <span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.PretrainedModelsBatchPredictionArgs.for_eval" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.PretrainedModelsBatchPredictionArgs.files_input_location">
+<span class="sig-name descname"><span class="pre">files_input_location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.PretrainedModelsBatchPredictionArgs.files_input_location" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -7739,6 +7747,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <span class="sig-name descname"><span class="pre">TEST_AGENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TEST_AGENT'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.TEST_AGENT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.SUPER_AGENT">
+<span class="sig-name descname"><span class="pre">SUPER_AGENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SUPER_AGENT'</span></em><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.SUPER_AGENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -9884,7 +9897,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>json_response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Instructions to be followed while generating the json_response if <cite>response_format</cite> is set to “JSON”. This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.</p></li>
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Specifies the JSON schema that the model should adhere to if <cite>response_format</cite> is set to “JSON”. This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields ‘type’, ‘required’ and ‘description’. For example - ‘{“sample_field”: {“type”: “integer”, “required”: true, “description”: “Sample Field”}}’</p></li>
 <li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Mask PII in the prompts and uploaded documents before sending it to the LLM.</p></li>
-<li><p><strong>custom_tools</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – List of custom tool names to be used in the chat.</p></li>
 </ul>
 </dd>
 </dl>
@@ -10066,11 +10078,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.mask_pii">
 <span class="sig-name descname"><span class="pre">mask_pii</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.mask_pii" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.custom_tools">
-<span class="sig-name descname"><span class="pre">custom_tools</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.custom_tools" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

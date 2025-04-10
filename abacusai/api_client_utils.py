@@ -468,9 +468,22 @@ class DocstoreUtils:
 
         chunk_size = 10 * 1024 * 1024
 
+        def is_valid_config(x):
+            if not isinstance(x, dict):
+                return False
+            if cls.DOCUMENT_PROCESSING_CONFIG not in x:
+                return False
+            if x[cls.DOCUMENT_PROCESSING_CONFIG] is None:
+                return False
+            if x[cls.DOCUMENT_PROCESSING_CONFIG] == {}:
+                return False
+            # if all keys are None, return False
+            if all(v is None for v in x[cls.DOCUMENT_PROCESSING_CONFIG].values()):
+                return False
+            return True
+
         pages_df_with_config = None
-        df_with_config = df[df[document_column].apply(lambda x: isinstance(
-            x, dict) and x.get(cls.DOCUMENT_PROCESSING_CONFIG) is not None)]
+        df_with_config = df[df[document_column].apply(is_valid_config)]
         df = df[~df[doc_id_column].isin(df_with_config[doc_id_column])]
 
         if len(df_with_config) > 0:

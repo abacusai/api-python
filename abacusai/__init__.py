@@ -40,6 +40,7 @@ from .code_edit_response import CodeEditResponse
 from .code_edits import CodeEdits
 from .code_source import CodeSource
 from .code_suggestion_validation_response import CodeSuggestionValidationResponse
+from .code_summary_response import CodeSummaryResponse
 from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
@@ -133,6 +134,7 @@ from .indexing_config import IndexingConfig
 from .inferred_database_column_to_feature_mappings import InferredDatabaseColumnToFeatureMappings
 from .inferred_feature_mappings import InferredFeatureMappings
 from .item_statistics import ItemStatistics
+from .lip_sync_gen_settings import LipSyncGenSettings
 from .llm_app import LlmApp
 from .llm_code_block import LlmCodeBlock
 from .llm_execution_preview import LlmExecutionPreview
@@ -243,4 +245,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.38"
+__version__ = "1.4.39"

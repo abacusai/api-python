@@ -741,6 +741,7 @@ class DeploymentConversationType(ApiEnum):
     SEARCH_LLM = 'SEARCH_LLM'
     APP_LLM = 'APP_LLM'
     TEST_AGENT = 'TEST_AGENT'
+    SUPER_AGENT = 'SUPER_AGENT'
 
 
 class AgentClientType(ApiEnum):

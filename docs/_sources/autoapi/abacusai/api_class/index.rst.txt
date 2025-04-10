@@ -1468,6 +1468,8 @@ Package Contents
 
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
+   :param files_input_location: The input location for the files.
+   :type files_input_location: str
    :param files_output_location_prefix: The output location prefix for the files.
    :type files_output_location_prefix: str
    :param channel_id_to_label_map: JSON string for the map from channel ids to their labels.
@@ -1476,6 +1478,12 @@ Package Contents
 
    .. py:attribute:: for_eval
       :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: files_input_location
+      :type:  str
       :value: None
 
 
@@ -6477,6 +6485,11 @@ Package Contents
 
 
 
+   .. py:attribute:: SUPER_AGENT
+      :value: 'SUPER_AGENT'
+
+
+
 .. py:class:: AgentClientType
 
    Bases: :py:obj:`ApiEnum`
@@ -8841,8 +8854,6 @@ Package Contents
    :type json_response_schema: str
    :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM.
    :type mask_pii: bool
-   :param custom_tools: List of custom tool names to be used in the chat.
-   :type custom_tools: List[str]
 
 
    .. py:attribute:: document_retrievers
@@ -9057,12 +9068,6 @@ Package Contents
 
    .. py:attribute:: mask_pii
       :type:  bool
-      :value: None
-
-
-
-   .. py:attribute:: custom_tools
-      :type:  List[str]
       :value: None
 
 

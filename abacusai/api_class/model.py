@@ -487,7 +487,6 @@ class ChatLLMTrainingConfig(TrainingConfig):
         json_response_instructions (str): Instructions to be followed while generating the json_response if `response_format` is set to "JSON". This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.
         json_response_schema (str): Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
         mask_pii (bool): Mask PII in the prompts and uploaded documents before sending it to the LLM.
-        custom_tools (List[str]): List of custom tool names to be used in the chat.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -525,7 +524,6 @@ class ChatLLMTrainingConfig(TrainingConfig):
     json_response_instructions: str = dataclasses.field(default=None)
     json_response_schema: str = dataclasses.field(default=None)
     mask_pii: bool = dataclasses.field(default=None)
-    custom_tools: List[str] = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

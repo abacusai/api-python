@@ -124,10 +124,12 @@ class PretrainedModelsBatchPredictionArgs(BatchPredictionArgs):
 
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+        files_input_location (str): The input location for the files.
         files_output_location_prefix (str): The output location prefix for the files.
         channel_id_to_label_map (str): JSON string for the map from channel ids to their labels.
     """
     for_eval: bool = dataclasses.field(default=None)
+    files_input_location: str = dataclasses.field(default=None)
     files_output_location_prefix: str = dataclasses.field(default=None)
     channel_id_to_label_map: str = dataclasses.field(default=None)
 
