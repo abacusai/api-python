@@ -49,6 +49,7 @@ Classes
 .. autoapisummary::
 
    abacusai.client.AgentResponse
+   abacusai.client.ToolResponse
    abacusai.client.ClientOptions
    abacusai.client._ApiExceptionFactory
    abacusai.client.BaseApiClient
@@ -134,6 +135,14 @@ Module Contents
 
 
    .. py:method:: __getattr__(item)
+
+
+.. py:class:: ToolResponse(*args, **kwargs)
+
+   Bases: :py:obj:`AgentResponse`
+
+
+   Response object for tool to support non-text response sections
 
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
@@ -584,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.39'
+      :value: '1.4.40'
 
 
 
@@ -3115,7 +3124,7 @@ Module Contents
 
 
 
-   .. py:method:: get_assignments_online_with_new_inputs(deployment_token, deployment_id, assignments_df = None, constraints_df = None, constraint_equations_df = None, feature_mapping_dict = None, solve_time_limit_seconds = None)
+   .. py:method:: get_assignments_online_with_new_inputs(deployment_token, deployment_id, assignments_df = None, constraints_df = None, constraint_equations_df = None, feature_mapping_dict = None, solve_time_limit_seconds = None, optimality_gap_limit = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -3132,6 +3141,8 @@ Module Contents
       :type constraint_equations_df: pd.DataFrame
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param optimality_gap_limit: Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)
+      :type optimality_gap_limit: float
 
       :returns: The assignments for a given query.
       :rtype: OptimizationAssignment
@@ -8370,7 +8381,7 @@ Module Contents
 
 
 
-   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None)
+   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None, optimality_gap_limit = None)
 
       Get assignments for given query, with new inputs
 
@@ -8382,6 +8393,8 @@ Module Contents
       :type query_data: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param optimality_gap_limit: Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)
+      :type optimality_gap_limit: float
 
 
 

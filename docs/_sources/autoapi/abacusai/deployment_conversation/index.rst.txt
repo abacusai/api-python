@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type name: str
    :param deploymentId: The deployment id associated with the deployment conversation.
    :type deploymentId: str
+   :param ownerUserId: The user id of the owner of the deployment conversation.
+   :type ownerUserId: str
    :param createdAt: The timestamp at which the deployment conversation was created.
    :type createdAt: str
    :param lastEventCreatedAt: The timestamp at which the most recent corresponding deployment conversation event was created at.
@@ -62,6 +64,8 @@ Module Contents
    :type chatllmTaskId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
+   :param hostedArtifacts: Artifacts that have been deployed by this conversation.
+   :type hostedArtifacts: HostedArtifact
 
 
    .. py:attribute:: deployment_conversation_id
@@ -75,6 +79,11 @@ Module Contents
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: owner_user_id
       :value: None
 
 
@@ -155,6 +164,9 @@ Module Contents
 
 
    .. py:attribute:: history
+
+
+   .. py:attribute:: hosted_artifacts
 
 
    .. py:attribute:: deprecated_keys

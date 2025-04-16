@@ -708,9 +708,39 @@ Package Contents
       :classmethod:
 
 
+      Creates and returns a WorkflowGraphNode based on an available user created tool.
+      Note: DO NOT specify the output mapping for the tool; it will be inferred automatically. Doing so will raise an error.
+
+      :param tool_name: The name of the tool. There should already be a tool created in the platform with tool_name.
+      :param name: The name to assign to the WorkflowGraphNode instance.
+      :param configs: The configuration state of the tool to use (if necessary). If not specified, will use the tool's default configuration.
+      :type configs: optional
+      :param input_mappings: The WorkflowNodeInputMappings for this node.
+      :type input_mappings: optional
+      :param input_schema: The WorkflowNodeInputSchema for this node.
+      :type input_schema: optional
+      :param output_schema: The WorkflowNodeOutputSchema for this node.
+      :type output_schema: optional
+
+
 
    .. py:method:: from_system_tool(tool_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
       :classmethod:
+
+
+      Creates and returns a WorkflowGraphNode based on the name of an available system tool.
+      Note: DO NOT specify the output mapping for the tool; it will be inferred automatically. Doing so will raise an error.
+
+      :param tool_name: The name of the tool. There should already be a tool created in the platform with tool_name.
+      :param name: The name to assign to the WorkflowGraphNode instance.
+      :param configs: The configuration state of the tool to use (if necessary). If not specified, will use the tool's default configuration.
+      :type configs: optional
+      :param input_mappings: The WorkflowNodeInputMappings for this node.
+      :type input_mappings: optional
+      :param input_schema: The WorkflowNodeInputSchema for this node.
+      :type input_schema: optional
+      :param output_schema: The WorkflowNodeOutputSchema for this node.
+      :type output_schema: optional
 
 
 
@@ -5495,6 +5525,16 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT4_1
+      :value: 'OPENAI_GPT4_1'
+
+
+
+   .. py:attribute:: OPENAI_GPT4_1_MINI
+      :value: 'OPENAI_GPT4_1_MINI'
+
+
+
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
@@ -5617,6 +5657,16 @@ Package Contents
 
    .. py:attribute:: XAI_GROK
       :value: 'XAI_GROK'
+
+
+
+   .. py:attribute:: XAI_GROK_3
+      :value: 'XAI_GROK_3'
+
+
+
+   .. py:attribute:: XAI_GROK_3_MINI
+      :value: 'XAI_GROK_3_MINI'
 
 
 

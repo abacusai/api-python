@@ -31,7 +31,7 @@ from .chatllm_computer import ChatllmComputer
 from .chatllm_project import ChatllmProject
 from .chatllm_referral_invite import ChatllmReferralInvite
 from .chatllm_task import ChatllmTask
-from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, _request_context
+from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, ToolResponse, _request_context
 from .code_agent_response import CodeAgentResponse
 from .code_autocomplete_response import CodeAutocompleteResponse
 from .code_bot import CodeBot
@@ -127,6 +127,7 @@ from .holdout_analysis_version import HoldoutAnalysisVersion
 from .hosted_app import HostedApp
 from .hosted_app_container import HostedAppContainer
 from .hosted_app_file_read import HostedAppFileRead
+from .hosted_artifact import HostedArtifact
 from .hosted_model_token import HostedModelToken
 from .hume_voice import HumeVoice
 from .image_gen_settings import ImageGenSettings
@@ -245,4 +246,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.39"
+__version__ = "1.4.40"

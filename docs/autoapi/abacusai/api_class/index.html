@@ -185,6 +185,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app/index.html">abacusai.hosted_app</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app_container/index.html">abacusai.hosted_app_container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app_file_read/index.html">abacusai.hosted_app_file_read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_artifact/index.html">abacusai.hosted_artifact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_model_token/index.html">abacusai.hosted_model_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hume_voice/index.html">abacusai.hume_voice</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../image_gen_settings/index.html">abacusai.image_gen_settings</a></li>
@@ -1690,15 +1691,17 @@ trigger_config (TriggerConfig): The configuration for a trigger workflow node.</
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.WorkflowGraphNode.from_tool">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.WorkflowGraphNode.from_tool" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Creates and returns a WorkflowGraphNode based on an available user created tool.
+Note: DO NOT specify the output mapping for the tool; it will be inferred automatically. Doing so will raise an error.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tool_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>)</p></li>
-<li><p><strong>input_mappings</strong> (<em>Union</em><em>[</em><em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputMapping" title="abacusai.api_class.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em><em>, </em><em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputMapping" title="abacusai.api_class.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em><em>]</em>)</p></li>
-<li><p><strong>input_schema</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputSchema" title="abacusai.api_class.WorkflowNodeInputSchema"><em>WorkflowNodeInputSchema</em></a><em>]</em>)</p></li>
-<li><p><strong>output_schema</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeOutputSchema" title="abacusai.api_class.WorkflowNodeOutputSchema"><em>WorkflowNodeOutputSchema</em></a><em>]</em>)</p></li>
+<li><p><strong>tool_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the tool. There should already be a tool created in the platform with tool_name.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name to assign to the WorkflowGraphNode instance.</p></li>
+<li><p><strong>configs</strong> (<em>optional</em>) – The configuration state of the tool to use (if necessary). If not specified, will use the tool’s default configuration.</p></li>
+<li><p><strong>input_mappings</strong> (<em>optional</em>) – The WorkflowNodeInputMappings for this node.</p></li>
+<li><p><strong>input_schema</strong> (<em>optional</em>) – The WorkflowNodeInputSchema for this node.</p></li>
+<li><p><strong>output_schema</strong> (<em>optional</em>) – The WorkflowNodeOutputSchema for this node.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1707,15 +1710,17 @@ trigger_config (TriggerConfig): The configuration for a trigger workflow node.</
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.WorkflowGraphNode.from_system_tool">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_system_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tool_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.WorkflowGraphNode.from_system_tool" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Creates and returns a WorkflowGraphNode based on the name of an available system tool.
+Note: DO NOT specify the output mapping for the tool; it will be inferred automatically. Doing so will raise an error.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tool_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>)</p></li>
-<li><p><strong>input_mappings</strong> (<em>Union</em><em>[</em><em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputMapping" title="abacusai.api_class.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em><em>, </em><em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputMapping" title="abacusai.api_class.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em><em>]</em>)</p></li>
-<li><p><strong>input_schema</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputSchema" title="abacusai.api_class.WorkflowNodeInputSchema"><em>WorkflowNodeInputSchema</em></a><em>]</em>)</p></li>
-<li><p><strong>output_schema</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeOutputSchema" title="abacusai.api_class.WorkflowNodeOutputSchema"><em>WorkflowNodeOutputSchema</em></a><em>]</em>)</p></li>
+<li><p><strong>tool_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the tool. There should already be a tool created in the platform with tool_name.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name to assign to the WorkflowGraphNode instance.</p></li>
+<li><p><strong>configs</strong> (<em>optional</em>) – The configuration state of the tool to use (if necessary). If not specified, will use the tool’s default configuration.</p></li>
+<li><p><strong>input_mappings</strong> (<em>optional</em>) – The WorkflowNodeInputMappings for this node.</p></li>
+<li><p><strong>input_schema</strong> (<em>optional</em>) – The WorkflowNodeInputSchema for this node.</p></li>
+<li><p><strong>output_schema</strong> (<em>optional</em>) – The WorkflowNodeOutputSchema for this node.</p></li>
 </ul>
 </dd>
 </dl>
@@ -6789,6 +6794,16 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.OPENAI_GPT4_1">
+<span class="sig-name descname"><span class="pre">OPENAI_GPT4_1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI_GPT4_1'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.OPENAI_GPT4_1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.OPENAI_GPT4_1_MINI">
+<span class="sig-name descname"><span class="pre">OPENAI_GPT4_1_MINI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI_GPT4_1_MINI'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.OPENAI_GPT4_1_MINI" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.OPENAI_GPT3_5">
 <span class="sig-name descname"><span class="pre">OPENAI_GPT3_5</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI_GPT3_5'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.OPENAI_GPT3_5" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -6911,6 +6926,16 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.XAI_GROK">
 <span class="sig-name descname"><span class="pre">XAI_GROK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XAI_GROK'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.XAI_GROK" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.XAI_GROK_3">
+<span class="sig-name descname"><span class="pre">XAI_GROK_3</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XAI_GROK_3'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.XAI_GROK_3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.XAI_GROK_3_MINI">
+<span class="sig-name descname"><span class="pre">XAI_GROK_3_MINI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XAI_GROK_3_MINI'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.XAI_GROK_3_MINI" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

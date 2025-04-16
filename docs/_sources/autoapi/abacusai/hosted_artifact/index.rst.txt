@@ -1,0 +1,85 @@
+abacusai.hosted_artifact
+========================
+
+.. py:module:: abacusai.hosted_artifact
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.hosted_artifact.HostedArtifact
+
+
+Module Contents
+---------------
+
+.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A hosted artifact being served by the platform.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param hostname: The url at which the application is being hosted.
+   :type hostname: str
+   :param artifactType: The type of artifact being hosted.
+   :type artifactType: str
+   :param llmArtifactId: The artifact id being hosted.
+   :type llmArtifactId: str
+   :param externalApplicationId: Agent that deployed this application.
+   :type externalApplicationId: str
+   :param deploymentConversationId: Conversation that created deployed this artifact, null if not applicable.
+   :type deploymentConversationId: str
+   :param conversationSequenceNumber: Conversation event associated with this artifact, null if not applicable.
+   :type conversationSequenceNumber: number(integer)
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: artifact_type
+      :value: None
+
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: conversation_sequence_number
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

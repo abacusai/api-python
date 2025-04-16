@@ -320,6 +320,15 @@ class AgentResponse:
             f"'{self.__class__.__name__}' object has no attribute '{item}'")
 
 
+class ToolResponse(AgentResponse):
+    """
+    Response object for tool to support non-text response sections
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ClientOptions:
     """
     Options for configuring the ApiClient
@@ -652,7 +661,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.39'
+    client_version = '1.4.40'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2962,7 +2971,7 @@ class ApiClient(ReadOnlyClient):
             table_name=feature_group_table_name, file_format='PARQUET')
         return self._upload_from_pandas(upload, df)
 
-    def get_assignments_online_with_new_inputs(self, deployment_token: str, deployment_id: str, assignments_df: pd.DataFrame = None, constraints_df: pd.DataFrame = None, constraint_equations_df: pd.DataFrame = None, feature_mapping_dict: dict = None, solve_time_limit_seconds: float = None):
+    def get_assignments_online_with_new_inputs(self, deployment_token: str, deployment_id: str, assignments_df: pd.DataFrame = None, constraints_df: pd.DataFrame = None, constraint_equations_df: pd.DataFrame = None, feature_mapping_dict: dict = None, solve_time_limit_seconds: float = None, optimality_gap_limit: float = None):
         """
         Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -2974,6 +2983,7 @@ class ApiClient(ReadOnlyClient):
             constraint_equations_df (pd.DataFrame): A dataframe which tells us about the operator / constant / penalty etc of a constraint
                                                     This gives us some data which is needed to make sense of the constraints_df.
             solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
+            optimality_gap_limit (float): Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)
 
         Returns:
             OptimizationAssignment: The assignments for a given query.
@@ -3012,7 +3022,7 @@ class ApiClient(ReadOnlyClient):
                       'feature_mapping_dict': feature_mapping_dict}
 
         result = self.get_assignments_online_with_new_serialized_inputs(
-            deployment_token=deployment_token, deployment_id=deployment_id, query_data=query_data, solve_time_limit_seconds=solve_time_limit_seconds)
+            deployment_token=deployment_token, deployment_id=deployment_id, query_data=query_data, solve_time_limit_seconds=solve_time_limit_seconds, optimality_gap_limit=optimality_gap_limit)
         return result
 
     def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame, clean_column_names: bool = False) -> Dataset:
@@ -7570,17 +7580,18 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'addConstraints': add_constraints, 'solveTimeLimitSeconds': solve_time_limit_seconds, 'bestAlternateOnly': best_alternate_only}, server_override=prediction_url)
 
-    def get_assignments_online_with_new_serialized_inputs(self, deployment_token: str, deployment_id: str, query_data: dict = None, solve_time_limit_seconds: float = None) -> Dict:
+    def get_assignments_online_with_new_serialized_inputs(self, deployment_token: str, deployment_id: str, query_data: dict = None, solve_time_limit_seconds: float = None, optimality_gap_limit: float = None) -> Dict:
         """Get assignments for given query, with new inputs
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
             deployment_id (str): The unique identifier of a deployment created under the project.
             query_data (dict): a dictionary with assignment, constraint and constraint_equations_df
-            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query."""
+            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
+            optimality_gap_limit (float): Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getAssignmentsOnlineWithNewSerializedInputs', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'solveTimeLimitSeconds': solve_time_limit_seconds}, server_override=prediction_url)
+        return self._call_api('getAssignmentsOnlineWithNewSerializedInputs', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'solveTimeLimitSeconds': solve_time_limit_seconds, 'optimalityGapLimit': optimality_gap_limit}, server_override=prediction_url)
 
     def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Check for any constraints violated by the overrides.

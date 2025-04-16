@@ -178,6 +178,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app/index.html">abacusai.hosted_app</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app_container/index.html">abacusai.hosted_app_container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app_file_read/index.html">abacusai.hosted_app_file_read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_artifact/index.html">abacusai.hosted_artifact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_model_token/index.html">abacusai.hosted_model_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hume_voice/index.html">abacusai.hume_voice</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../image_gen_settings/index.html">abacusai.image_gen_settings</a></li>
@@ -1105,7 +1106,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.get_assignments_online_with_new_serialized_inputs">
-<span class="sig-name descname"><span class="pre">get_assignments_online_with_new_serialized_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve_time_limit_seconds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.get_assignments_online_with_new_serialized_inputs" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_assignments_online_with_new_serialized_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve_time_limit_seconds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimality_gap_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.get_assignments_online_with_new_serialized_inputs" title="Link to this definition"></a></dt>
 <dd><p>Get assignments for given query, with new inputs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1114,6 +1115,7 @@
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier of a deployment created under the project.</p></li>
 <li><p><strong>query_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – a dictionary with assignment, constraint and constraint_equations_df</p></li>
 <li><p><strong>solve_time_limit_seconds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum time in seconds to spend solving the query.</p></li>
+<li><p><strong>optimality_gap_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

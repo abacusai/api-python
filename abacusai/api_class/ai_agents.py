@@ -488,6 +488,18 @@ class WorkflowGraphNode(ApiClass):
 
     @classmethod
     def from_tool(cls, tool_name: str, name: str, configs: dict = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None):
+        """
+        Creates and returns a WorkflowGraphNode based on an available user created tool.
+        Note: DO NOT specify the output mapping for the tool; it will be inferred automatically. Doing so will raise an error.
+
+        Args:
+            tool_name: The name of the tool. There should already be a tool created in the platform with tool_name.
+            name: The name to assign to the WorkflowGraphNode instance.
+            configs (optional): The configuration state of the tool to use (if necessary). If not specified, will use the tool's default configuration.
+            input_mappings (optional): The WorkflowNodeInputMappings for this node.
+            input_schema (optional): The WorkflowNodeInputSchema for this node.
+            output_schema (optional): The WorkflowNodeOutputSchema for this node.
+        """
         node = cls.from_template(
             template_name=tool_name,
             name=name,
@@ -501,6 +513,18 @@ class WorkflowGraphNode(ApiClass):
 
     @classmethod
     def from_system_tool(cls, tool_name: str, name: str, configs: dict = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None):
+        """
+        Creates and returns a WorkflowGraphNode based on the name of an available system tool.
+        Note: DO NOT specify the output mapping for the tool; it will be inferred automatically. Doing so will raise an error.
+
+        Args:
+            tool_name: The name of the tool. There should already be a tool created in the platform with tool_name.
+            name: The name to assign to the WorkflowGraphNode instance.
+            configs (optional): The configuration state of the tool to use (if necessary). If not specified, will use the tool's default configuration.
+            input_mappings (optional): The WorkflowNodeInputMappings for this node.
+            input_schema (optional): The WorkflowNodeInputSchema for this node.
+            output_schema (optional): The WorkflowNodeOutputSchema for this node.
+        """
         node = cls.from_tool(tool_name, name, configs, input_mappings, input_schema, output_schema)
         node.template_metadata['is_system_tool'] = True
         return node

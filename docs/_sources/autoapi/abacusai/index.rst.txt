@@ -142,6 +142,7 @@ Submodules
    /autoapi/abacusai/hosted_app/index
    /autoapi/abacusai/hosted_app_container/index
    /autoapi/abacusai/hosted_app_file_read/index
+   /autoapi/abacusai/hosted_artifact/index
    /autoapi/abacusai/hosted_model_token/index
    /autoapi/abacusai/hume_voice/index
    /autoapi/abacusai/image_gen_settings/index
@@ -535,6 +536,7 @@ Classes
    abacusai.ApiClient
    abacusai.ClientOptions
    abacusai.ReadOnlyClient
+   abacusai.ToolResponse
    abacusai.CodeAgentResponse
    abacusai.CodeAutocompleteResponse
    abacusai.CodeBot
@@ -630,6 +632,7 @@ Classes
    abacusai.HostedApp
    abacusai.HostedAppContainer
    abacusai.HostedAppFileRead
+   abacusai.HostedArtifact
    abacusai.HostedModelToken
    abacusai.HumeVoice
    abacusai.ImageGenSettings
@@ -2392,9 +2395,39 @@ Package Contents
       :classmethod:
 
 
+      Creates and returns a WorkflowGraphNode based on an available user created tool.
+      Note: DO NOT specify the output mapping for the tool; it will be inferred automatically. Doing so will raise an error.
+
+      :param tool_name: The name of the tool. There should already be a tool created in the platform with tool_name.
+      :param name: The name to assign to the WorkflowGraphNode instance.
+      :param configs: The configuration state of the tool to use (if necessary). If not specified, will use the tool's default configuration.
+      :type configs: optional
+      :param input_mappings: The WorkflowNodeInputMappings for this node.
+      :type input_mappings: optional
+      :param input_schema: The WorkflowNodeInputSchema for this node.
+      :type input_schema: optional
+      :param output_schema: The WorkflowNodeOutputSchema for this node.
+      :type output_schema: optional
+
+
 
    .. py:method:: from_system_tool(tool_name, name, configs = None, input_mappings = None, input_schema = None, output_schema = None)
       :classmethod:
+
+
+      Creates and returns a WorkflowGraphNode based on the name of an available system tool.
+      Note: DO NOT specify the output mapping for the tool; it will be inferred automatically. Doing so will raise an error.
+
+      :param tool_name: The name of the tool. There should already be a tool created in the platform with tool_name.
+      :param name: The name to assign to the WorkflowGraphNode instance.
+      :param configs: The configuration state of the tool to use (if necessary). If not specified, will use the tool's default configuration.
+      :type configs: optional
+      :param input_mappings: The WorkflowNodeInputMappings for this node.
+      :type input_mappings: optional
+      :param input_schema: The WorkflowNodeInputSchema for this node.
+      :type input_schema: optional
+      :param output_schema: The WorkflowNodeOutputSchema for this node.
+      :type output_schema: optional
 
 
 
@@ -6612,6 +6645,16 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT4_1
+      :value: 'OPENAI_GPT4_1'
+
+
+
+   .. py:attribute:: OPENAI_GPT4_1_MINI
+      :value: 'OPENAI_GPT4_1_MINI'
+
+
+
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
@@ -6734,6 +6777,16 @@ Package Contents
 
    .. py:attribute:: XAI_GROK
       :value: 'XAI_GROK'
+
+
+
+   .. py:attribute:: XAI_GROK_3
+      :value: 'XAI_GROK_3'
+
+
+
+   .. py:attribute:: XAI_GROK_3_MINI
+      :value: 'XAI_GROK_3_MINI'
 
 
 
@@ -13669,7 +13722,7 @@ Package Contents
 
 
 
-   .. py:method:: get_assignments_online_with_new_inputs(deployment_token, deployment_id, assignments_df = None, constraints_df = None, constraint_equations_df = None, feature_mapping_dict = None, solve_time_limit_seconds = None)
+   .. py:method:: get_assignments_online_with_new_inputs(deployment_token, deployment_id, assignments_df = None, constraints_df = None, constraint_equations_df = None, feature_mapping_dict = None, solve_time_limit_seconds = None, optimality_gap_limit = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -13686,6 +13739,8 @@ Package Contents
       :type constraint_equations_df: pd.DataFrame
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param optimality_gap_limit: Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)
+      :type optimality_gap_limit: float
 
       :returns: The assignments for a given query.
       :rtype: OptimizationAssignment
@@ -18924,7 +18979,7 @@ Package Contents
 
 
 
-   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None)
+   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None, optimality_gap_limit = None)
 
       Get assignments for given query, with new inputs
 
@@ -18936,6 +18991,8 @@ Package Contents
       :type query_data: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param optimality_gap_limit: Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)
+      :type optimality_gap_limit: float
 
 
 
@@ -23478,6 +23535,14 @@ Package Contents
 
 
 
+.. py:class:: ToolResponse(*args, **kwargs)
+
+   Bases: :py:obj:`AgentResponse`
+
+
+   Response object for tool to support non-text response sections
+
+
 .. py:data:: _request_context
 
 .. py:class:: CodeAgentResponse(client, deploymentConversationId=None, messages=None, toolUseRequest=None)
@@ -26723,7 +26788,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26738,6 +26803,8 @@ Package Contents
    :type name: str
    :param deploymentId: The deployment id associated with the deployment conversation.
    :type deploymentId: str
+   :param ownerUserId: The user id of the owner of the deployment conversation.
+   :type ownerUserId: str
    :param createdAt: The timestamp at which the deployment conversation was created.
    :type createdAt: str
    :param lastEventCreatedAt: The timestamp at which the most recent corresponding deployment conversation event was created at.
@@ -26770,6 +26837,8 @@ Package Contents
    :type chatllmTaskId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
+   :param hostedArtifacts: Artifacts that have been deployed by this conversation.
+   :type hostedArtifacts: HostedArtifact
 
 
    .. py:attribute:: deployment_conversation_id
@@ -26783,6 +26852,11 @@ Package Contents
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: owner_user_id
       :value: None
 
 
@@ -26863,6 +26937,9 @@ Package Contents
 
 
    .. py:attribute:: history
+
+
+   .. py:attribute:: hosted_artifacts
 
 
    .. py:attribute:: deprecated_keys
@@ -34151,6 +34228,74 @@ Package Contents
 
 
 
+.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A hosted artifact being served by the platform.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param hostname: The url at which the application is being hosted.
+   :type hostname: str
+   :param artifactType: The type of artifact being hosted.
+   :type artifactType: str
+   :param llmArtifactId: The artifact id being hosted.
+   :type llmArtifactId: str
+   :param externalApplicationId: Agent that deployed this application.
+   :type externalApplicationId: str
+   :param deploymentConversationId: Conversation that created deployed this artifact, null if not applicable.
+   :type deploymentConversationId: str
+   :param conversationSequenceNumber: Conversation event associated with this artifact, null if not applicable.
+   :type conversationSequenceNumber: number(integer)
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: artifact_type
+      :value: None
+
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: conversation_sequence_number
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: HostedModelToken(client, createdAt=None, tag=None, trailingAuthToken=None, hostedModelTokenId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -41069,7 +41214,7 @@ Package Contents
 
 
 
-   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None)
+   .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None, optimality_gap_limit = None)
 
       Get assignments for given query, with new inputs
 
@@ -41081,6 +41226,8 @@ Package Contents
       :type query_data: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param optimality_gap_limit: Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)
+      :type optimality_gap_limit: float
 
 
 
@@ -46291,6 +46438,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.39'
+   :value: '1.4.40'
 
 
