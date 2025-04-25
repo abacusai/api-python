@@ -1,0 +1,71 @@
+abacusai.custom_domain
+======================
+
+.. py:module:: abacusai.custom_domain
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.custom_domain.CustomDomain
+
+
+Module Contents
+---------------
+
+.. py:class:: CustomDomain(client, status=None, message=None, expectedNameservers=None, currentNameservers=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Result of adding a custom domain to a hosted app
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param status: Whether the custom domain was added successfully
+   :type status: bool
+   :param message: The message from the custom domain
+   :type message: str
+   :param expectedNameservers: The expected nameservers for the custom domain
+   :type expectedNameservers: list
+   :param currentNameservers: The current nameservers for the custom domain
+   :type currentNameservers: list
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: message
+      :value: None
+
+
+
+   .. py:attribute:: expected_nameservers
+      :value: None
+
+
+
+   .. py:attribute:: current_nameservers
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

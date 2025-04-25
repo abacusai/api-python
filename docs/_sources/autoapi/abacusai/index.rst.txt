@@ -41,6 +41,7 @@ Submodules
    /autoapi/abacusai/chat_message/index
    /autoapi/abacusai/chat_session/index
    /autoapi/abacusai/chatllm_computer/index
+   /autoapi/abacusai/chatllm_computer_status/index
    /autoapi/abacusai/chatllm_project/index
    /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/chatllm_task/index
@@ -51,6 +52,7 @@ Submodules
    /autoapi/abacusai/code_edit/index
    /autoapi/abacusai/code_edit_response/index
    /autoapi/abacusai/code_edits/index
+   /autoapi/abacusai/code_embeddings/index
    /autoapi/abacusai/code_source/index
    /autoapi/abacusai/code_suggestion_validation_response/index
    /autoapi/abacusai/code_summary_response/index
@@ -60,6 +62,7 @@ Submodules
    /autoapi/abacusai/cpu_gpu_memory_specs/index
    /autoapi/abacusai/cryptography/index
    /autoapi/abacusai/custom_chat_instructions/index
+   /autoapi/abacusai/custom_domain/index
    /autoapi/abacusai/custom_loss_function/index
    /autoapi/abacusai/custom_metric/index
    /autoapi/abacusai/custom_metric_version/index
@@ -143,8 +146,12 @@ Submodules
    /autoapi/abacusai/hosted_app_container/index
    /autoapi/abacusai/hosted_app_file_read/index
    /autoapi/abacusai/hosted_artifact/index
+   /autoapi/abacusai/hosted_database/index
+   /autoapi/abacusai/hosted_database_snapshot/index
    /autoapi/abacusai/hosted_model_token/index
    /autoapi/abacusai/hume_voice/index
+   /autoapi/abacusai/image_gen_model/index
+   /autoapi/abacusai/image_gen_model_options/index
    /autoapi/abacusai/image_gen_settings/index
    /autoapi/abacusai/indexing_config/index
    /autoapi/abacusai/inferred_database_column_to_feature_mappings/index
@@ -152,6 +159,7 @@ Submodules
    /autoapi/abacusai/item_statistics/index
    /autoapi/abacusai/lip_sync_gen_settings/index
    /autoapi/abacusai/llm_app/index
+   /autoapi/abacusai/llm_artifact/index
    /autoapi/abacusai/llm_code_block/index
    /autoapi/abacusai/llm_execution_preview/index
    /autoapi/abacusai/llm_execution_result/index
@@ -243,6 +251,7 @@ Submodules
    /autoapi/abacusai/test_point_predictions/index
    /autoapi/abacusai/tone_details/index
    /autoapi/abacusai/training_config_options/index
+   /autoapi/abacusai/tts_gen_settings/index
    /autoapi/abacusai/twitter_search_result/index
    /autoapi/abacusai/upload/index
    /autoapi/abacusai/upload_part/index
@@ -309,6 +318,7 @@ Classes
    abacusai.WorkflowNodeOutputSchema
    abacusai.TriggerConfig
    abacusai.WorkflowGraphNode
+   abacusai.DecisionNode
    abacusai.WorkflowGraphEdge
    abacusai.WorkflowGraph
    abacusai.AgentConversationMessage
@@ -529,6 +539,7 @@ Classes
    abacusai.ChatMessage
    abacusai.ChatSession
    abacusai.ChatllmComputer
+   abacusai.ChatllmComputerStatus
    abacusai.ChatllmProject
    abacusai.ChatllmReferralInvite
    abacusai.ChatllmTask
@@ -543,6 +554,7 @@ Classes
    abacusai.CodeEdit
    abacusai.CodeEditResponse
    abacusai.CodeEdits
+   abacusai.CodeEmbeddings
    abacusai.CodeSource
    abacusai.CodeSuggestionValidationResponse
    abacusai.CodeSummaryResponse
@@ -551,6 +563,7 @@ Classes
    abacusai.ConstantsAutocompleteResponse
    abacusai.CpuGpuMemorySpecs
    abacusai.CustomChatInstructions
+   abacusai.CustomDomain
    abacusai.CustomLossFunction
    abacusai.CustomMetric
    abacusai.CustomMetricVersion
@@ -633,8 +646,12 @@ Classes
    abacusai.HostedAppContainer
    abacusai.HostedAppFileRead
    abacusai.HostedArtifact
+   abacusai.HostedDatabase
+   abacusai.HostedDatabaseSnapshot
    abacusai.HostedModelToken
    abacusai.HumeVoice
+   abacusai.ImageGenModel
+   abacusai.ImageGenModelOptions
    abacusai.ImageGenSettings
    abacusai.IndexingConfig
    abacusai.InferredDatabaseColumnToFeatureMappings
@@ -642,6 +659,7 @@ Classes
    abacusai.ItemStatistics
    abacusai.LipSyncGenSettings
    abacusai.LlmApp
+   abacusai.LlmArtifact
    abacusai.LlmCodeBlock
    abacusai.LlmExecutionPreview
    abacusai.LlmExecutionResult
@@ -731,6 +749,7 @@ Classes
    abacusai.TestPointPredictions
    abacusai.ToneDetails
    abacusai.TrainingConfigOptions
+   abacusai.TtsGenSettings
    abacusai.TwitterSearchResult
    abacusai.Upload
    abacusai.UploadPart
@@ -2257,6 +2276,17 @@ Package Contents
 
 
 
+   .. py:method:: from_tool_variable_mappings(tool_variable_mappings)
+      :classmethod:
+
+
+      Creates a WorkflowNodeInputSchema for the given tool variable mappings.
+
+      :param tool_variable_mappings: The tool variable mappings for the node.
+      :type tool_variable_mappings: List[dict]
+
+
+
 .. py:class:: WorkflowNodeOutputMapping
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -2381,6 +2411,11 @@ Package Contents
 
 
 
+   .. py:attribute:: node_type
+      :value: 'workflow_node'
+
+
+
    .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
       :classmethod:
 
@@ -2463,6 +2498,61 @@ Package Contents
    .. py:property:: outputs
 
 
+.. py:class:: DecisionNode(name, condition, input_mappings)
+
+   Bases: :py:obj:`WorkflowGraphNode`
+
+
+   Represents a decision node in an Agent workflow graph. It is connected between two workflow nodes and is used to determine if subsequent nodes should be executed.
+
+
+   .. py:attribute:: node_type
+      :value: 'decision_node'
+
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: source_code
+
+
+   .. py:attribute:: output_mappings
+
+
+   .. py:attribute:: template_metadata
+      :value: None
+
+
+
+   .. py:attribute:: trigger_config
+      :value: None
+
+
+
+   .. py:attribute:: input_schema
+      :value: None
+
+
+
+   .. py:attribute:: output_schema
+      :value: None
+
+
+
+   .. py:attribute:: function_name
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(node)
+      :classmethod:
+
+
+
 .. py:class:: WorkflowGraphEdge(source, target, details = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -2504,7 +2594,7 @@ Package Contents
    Represents an Agent workflow graph.
 
    :param nodes: A list of nodes in the workflow graph.
-   :type nodes: List[WorkflowGraphNode]
+   :type nodes: List[Union[WorkflowGraphNode, DecisionNode]]
    :param primary_start_node: The primary node to start the workflow from.
    :type primary_start_node: Union[str, WorkflowGraphNode]
    :param common_source_code: Common source code that can be used across all nodes.
@@ -2512,7 +2602,7 @@ Package Contents
 
 
    .. py:attribute:: nodes
-      :type:  List[WorkflowGraphNode]
+      :type:  List[Union[WorkflowGraphNode, DecisionNode]]
       :value: []
 
 
@@ -6305,6 +6395,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GOOGLECALENDAR
+      :value: 'GOOGLECALENDAR'
+
+
+
    .. py:attribute:: GIT
       :value: 'GIT'
 
@@ -6377,11 +6472,6 @@ Package Contents
 
    .. py:attribute:: GMAILUSER
       :value: 'GMAILUSER'
-
-
-
-   .. py:attribute:: GOOGLECALENDAR
-      :value: 'GOOGLECALENDAR'
 
 
 
@@ -6517,6 +6607,11 @@ Package Contents
 
    .. py:attribute:: ATTACHMENT
       :value: 'ATTACHMENT'
+
+
+
+   .. py:method:: to_json_type(type)
+      :staticmethod:
 
 
 
@@ -13422,6 +13517,60 @@ Package Contents
 
 
    .. py:attribute:: vnc_endpoint
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: ChatllmComputerStatus(client, computerId=None, vncEndpoint=None, computerStarted=None, restartRequired=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   ChatLLM Computer Status
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param computerId: The ID of the computer, it can be a deployment_conversation_id or a computer_id (TODO: add separate field for deployment_conversation_id)
+   :type computerId: str
+   :param vncEndpoint: The VNC endpoint of the computer
+   :type vncEndpoint: str
+   :param computerStarted: Whether the computer has started
+   :type computerStarted: bool
+   :param restartRequired: Whether the computer needs to be restarted
+   :type restartRequired: bool
+
+
+   .. py:attribute:: computer_id
+      :value: None
+
+
+
+   .. py:attribute:: vnc_endpoint
+      :value: None
+
+
+
+   .. py:attribute:: computer_started
+      :value: None
+
+
+
+   .. py:attribute:: restart_required
       :value: None
 
 
@@ -23869,6 +24018,39 @@ Package Contents
 
 
 
+.. py:class:: CodeEmbeddings(client, embeddings=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Code embeddings
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param embeddings: A dictionary mapping the file name to its embeddings.
+   :type embeddings: dict
+
+
+   .. py:attribute:: embeddings
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -24159,7 +24341,7 @@ Package Contents
 
 
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24212,6 +24394,14 @@ Package Contents
    :type minReindexingInterval: int
    :param minRefreshSummaryInterval: The minimum interval between refresh summary in ms.
    :type minRefreshSummaryInterval: int
+   :param summaryBatchSize: The batch size for code summary in autocomplete.
+   :type summaryBatchSize: int
+   :param jobReorderInterval: The interval in ms to reorder jobs in the job queue for summary.
+   :type jobReorderInterval: int
+   :param stopRapidChanges: Whether to stop rapid changes in autocomplete.
+   :type stopRapidChanges: bool
+   :param delaySummaryBatches: The delay in ms between summary batches.
+   :type delaySummaryBatches: int
 
 
    .. py:attribute:: max_pending_requests
@@ -24320,6 +24510,26 @@ Package Contents
 
 
    .. py:attribute:: min_refresh_summary_interval
+      :value: None
+
+
+
+   .. py:attribute:: summary_batch_size
+      :value: None
+
+
+
+   .. py:attribute:: job_reorder_interval
+      :value: None
+
+
+
+   .. py:attribute:: stop_rapid_changes
+      :value: None
+
+
+
+   .. py:attribute:: delay_summary_batches
       :value: None
 
 
@@ -24435,6 +24645,60 @@ Package Contents
 
 
    .. py:attribute:: experimental_features
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CustomDomain(client, status=None, message=None, expectedNameservers=None, currentNameservers=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Result of adding a custom domain to a hosted app
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param status: Whether the custom domain was added successfully
+   :type status: bool
+   :param message: The message from the custom domain
+   :type message: str
+   :param expectedNameservers: The expected nameservers for the custom domain
+   :type expectedNameservers: list
+   :param currentNameservers: The current nameservers for the custom domain
+   :type currentNameservers: list
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: message
+      :value: None
+
+
+
+   .. py:attribute:: expected_nameservers
+      :value: None
+
+
+
+   .. py:attribute:: current_nameservers
       :value: None
 
 
@@ -27053,7 +27317,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27126,6 +27390,8 @@ Package Contents
    :type toolUseRequest: dict
    :param verificationSummary: The summary of the verification process for the message.
    :type verificationSummary: str
+   :param attachedUserFileNames: The list of files attached by the user on the message.
+   :type attachedUserFileNames: list
 
 
    .. py:attribute:: role
@@ -27284,6 +27550,11 @@ Package Contents
 
 
    .. py:attribute:: verification_summary
+      :value: None
+
+
+
+   .. py:attribute:: attached_user_file_names
       :value: None
 
 
@@ -34043,12 +34314,12 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, needsDbSetup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   Hosted app container information.
+   Hosted app + Deep agent container information.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -34082,6 +34353,16 @@ Package Contents
    :type lifecycle: str
    :param status: Container status (RUNNING/STOPPED/DEPLOYING/FAILED)
    :type status: str
+   :param deployedStatus: Deployment status (PENDING/ACTIVE/STOPPED/NOT_DEPLOYED)
+   :type deployedStatus: str
+   :param hostname: Hostname of the deployed app
+   :type hostname: str
+   :param llmArtifactId: The ID of the LLM artifact
+   :type llmArtifactId: id
+   :param artifactType: The type of the artifact
+   :type artifactType: str
+   :param needsDbSetup: Whether the artifact needs database setup
+   :type needsDbSetup: bool
 
 
    .. py:attribute:: hosted_app_container_id
@@ -34155,6 +34436,31 @@ Package Contents
 
 
    .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: deployed_status
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: artifact_type
+      :value: None
+
+
+
+   .. py:attribute:: needs_db_setup
       :value: None
 
 
@@ -34296,6 +34602,128 @@ Package Contents
 
 
 
+.. py:class:: HostedDatabase(client, hostedDatabaseId=None, displayName=None, createdAt=None, updatedAt=None, lifecycle=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Hosted Database
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param hostedDatabaseId: The ID of the hosted database
+   :type hostedDatabaseId: id
+   :param displayName: The name of the hosted database
+   :type displayName: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+   :param lifecycle: The lifecycle of the hosted database
+   :type lifecycle: str
+
+
+   .. py:attribute:: hosted_database_id
+      :value: None
+
+
+
+   .. py:attribute:: display_name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: HostedDatabaseSnapshot(client, hostedDatabaseSnapshotId=None, srcHostedDatabaseId=None, createdAt=None, updatedAt=None, lifecycle=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Hosted Database Snapshot
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param hostedDatabaseSnapshotId: The ID of the hosted database snapshot
+   :type hostedDatabaseSnapshotId: id
+   :param srcHostedDatabaseId: The ID of the source hosted database
+   :type srcHostedDatabaseId: id
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+   :param lifecycle: The lifecycle of the hosted database snapshot
+   :type lifecycle: str
+
+
+   .. py:attribute:: hosted_database_snapshot_id
+      :value: None
+
+
+
+   .. py:attribute:: src_hosted_database_id
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: HostedModelToken(client, createdAt=None, tag=None, trailingAuthToken=None, hostedModelTokenId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34390,7 +34818,120 @@ Package Contents
 
 
 
-.. py:class:: ImageGenSettings(client, model=None, settings=None)
+.. py:class:: ImageGenModel(client, displayName=None, type=None, valueType=None, optional=None, default=None, helptext=None, options={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Image generation model
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param displayName:
+   :type displayName: str
+   :param type:
+   :type type: str
+   :param valueType:
+   :type valueType: str
+   :param optional:
+   :type optional: bool
+   :param default:
+   :type default: str
+   :param helptext:
+   :type helptext: str
+   :param options:
+   :type options: ImageGenModelOptions
+
+
+   .. py:attribute:: display_name
+      :value: None
+
+
+
+   .. py:attribute:: type
+      :value: None
+
+
+
+   .. py:attribute:: value_type
+      :value: None
+
+
+
+   .. py:attribute:: optional
+      :value: None
+
+
+
+   .. py:attribute:: default
+      :value: None
+
+
+
+   .. py:attribute:: helptext
+      :value: None
+
+
+
+   .. py:attribute:: options
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: ImageGenModelOptions(client, keys=None, values=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Image generation model options
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param keys:
+   :type keys: list
+   :param values:
+   :type values: list
+
+
+   .. py:attribute:: keys
+      :value: None
+
+
+
+   .. py:attribute:: values
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: ImageGenSettings(client, settings=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34399,20 +34940,18 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param model: Dropdown for models available for image generation.
-   :type model: dict
    :param settings: The settings for each model.
    :type settings: dict
-
-
-   .. py:attribute:: model
-      :value: None
-
+   :param model: Dropdown for models available for image generation.
+   :type model: ImageGenModel
 
 
    .. py:attribute:: settings
       :value: None
 
+
+
+   .. py:attribute:: model
 
 
    .. py:attribute:: deprecated_keys
@@ -34752,6 +35291,60 @@ Package Contents
 
 
    .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   LLM Artifact
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param llmArtifactId: The ID of the LLM artifact
+   :type llmArtifactId: id
+   :param info: The info of the LLM artifact
+   :type info: dict
+   :param description: The description of the LLM artifact
+   :type description: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: info
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: created_at
       :value: None
 
 
@@ -38636,7 +39229,7 @@ Package Contents
 
 
 
-.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None)
+.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38653,6 +39246,8 @@ Package Contents
    :type managedUserService: str
    :param passwordsDisabled: Whether or not passwords are disabled for this organization's domain.
    :type passwordsDisabled: bool
+   :param externalServiceForRoles: The external service that is managing the user roles.
+   :type externalServiceForRoles: str
 
 
    .. py:attribute:: logo
@@ -38671,6 +39266,11 @@ Package Contents
 
 
    .. py:attribute:: passwords_disabled
+      :value: None
+
+
+
+   .. py:attribute:: external_service_for_roles
       :value: None
 
 
@@ -45354,6 +45954,46 @@ Package Contents
 
 
 
+.. py:class:: TtsGenSettings(client, model=None, settings=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   TTS generation settings
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param model: The model settings.
+   :type model: dict
+   :param settings: The settings for each model.
+   :type settings: dict
+
+
+   .. py:attribute:: model
+      :value: None
+
+
+
+   .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: TwitterSearchResult(client, title=None, url=None, twitterName=None, twitterHandle=None, thumbnailUrl=None, thumbnailWidth=None, thumbnailHeight=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -46438,6 +47078,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.40'
+   :value: '1.4.41'
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -68,6 +68,14 @@ Module Contents
    :type minReindexingInterval: int
    :param minRefreshSummaryInterval: The minimum interval between refresh summary in ms.
    :type minRefreshSummaryInterval: int
+   :param summaryBatchSize: The batch size for code summary in autocomplete.
+   :type summaryBatchSize: int
+   :param jobReorderInterval: The interval in ms to reorder jobs in the job queue for summary.
+   :type jobReorderInterval: int
+   :param stopRapidChanges: Whether to stop rapid changes in autocomplete.
+   :type stopRapidChanges: bool
+   :param delaySummaryBatches: The delay in ms between summary batches.
+   :type delaySummaryBatches: int
 
 
    .. py:attribute:: max_pending_requests
@@ -176,6 +184,26 @@ Module Contents
 
 
    .. py:attribute:: min_refresh_summary_interval
+      :value: None
+
+
+
+   .. py:attribute:: summary_batch_size
+      :value: None
+
+
+
+   .. py:attribute:: job_reorder_interval
+      :value: None
+
+
+
+   .. py:attribute:: stop_rapid_changes
+      :value: None
+
+
+
+   .. py:attribute:: delay_summary_batches
       :value: None
 
 

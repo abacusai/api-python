@@ -15,12 +15,12 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, needsDbSetup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   Hosted app container information.
+   Hosted app + Deep agent container information.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -54,6 +54,16 @@ Module Contents
    :type lifecycle: str
    :param status: Container status (RUNNING/STOPPED/DEPLOYING/FAILED)
    :type status: str
+   :param deployedStatus: Deployment status (PENDING/ACTIVE/STOPPED/NOT_DEPLOYED)
+   :type deployedStatus: str
+   :param hostname: Hostname of the deployed app
+   :type hostname: str
+   :param llmArtifactId: The ID of the LLM artifact
+   :type llmArtifactId: id
+   :param artifactType: The type of the artifact
+   :type artifactType: str
+   :param needsDbSetup: Whether the artifact needs database setup
+   :type needsDbSetup: bool
 
 
    .. py:attribute:: hosted_app_container_id
@@ -127,6 +137,31 @@ Module Contents
 
 
    .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: deployed_status
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: artifact_type
+      :value: None
+
+
+
+   .. py:attribute:: needs_db_setup
       :value: None
 
 

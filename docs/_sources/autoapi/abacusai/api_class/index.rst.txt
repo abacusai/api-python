@@ -54,6 +54,7 @@ Classes
    abacusai.api_class.WorkflowNodeOutputSchema
    abacusai.api_class.TriggerConfig
    abacusai.api_class.WorkflowGraphNode
+   abacusai.api_class.DecisionNode
    abacusai.api_class.WorkflowGraphEdge
    abacusai.api_class.WorkflowGraph
    abacusai.api_class.AgentConversationMessage
@@ -570,6 +571,17 @@ Package Contents
 
 
 
+   .. py:method:: from_tool_variable_mappings(tool_variable_mappings)
+      :classmethod:
+
+
+      Creates a WorkflowNodeInputSchema for the given tool variable mappings.
+
+      :param tool_variable_mappings: The tool variable mappings for the node.
+      :type tool_variable_mappings: List[dict]
+
+
+
 .. py:class:: WorkflowNodeOutputMapping
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -694,6 +706,11 @@ Package Contents
 
 
 
+   .. py:attribute:: node_type
+      :value: 'workflow_node'
+
+
+
    .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
       :classmethod:
 
@@ -776,6 +793,61 @@ Package Contents
    .. py:property:: outputs
 
 
+.. py:class:: DecisionNode(name, condition, input_mappings)
+
+   Bases: :py:obj:`WorkflowGraphNode`
+
+
+   Represents a decision node in an Agent workflow graph. It is connected between two workflow nodes and is used to determine if subsequent nodes should be executed.
+
+
+   .. py:attribute:: node_type
+      :value: 'decision_node'
+
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: source_code
+
+
+   .. py:attribute:: output_mappings
+
+
+   .. py:attribute:: template_metadata
+      :value: None
+
+
+
+   .. py:attribute:: trigger_config
+      :value: None
+
+
+
+   .. py:attribute:: input_schema
+      :value: None
+
+
+
+   .. py:attribute:: output_schema
+      :value: None
+
+
+
+   .. py:attribute:: function_name
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(node)
+      :classmethod:
+
+
+
 .. py:class:: WorkflowGraphEdge(source, target, details = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -817,7 +889,7 @@ Package Contents
    Represents an Agent workflow graph.
 
    :param nodes: A list of nodes in the workflow graph.
-   :type nodes: List[WorkflowGraphNode]
+   :type nodes: List[Union[WorkflowGraphNode, DecisionNode]]
    :param primary_start_node: The primary node to start the workflow from.
    :type primary_start_node: Union[str, WorkflowGraphNode]
    :param common_source_code: Common source code that can be used across all nodes.
@@ -825,7 +897,7 @@ Package Contents
 
 
    .. py:attribute:: nodes
-      :type:  List[WorkflowGraphNode]
+      :type:  List[Union[WorkflowGraphNode, DecisionNode]]
       :value: []
 
 
@@ -5140,6 +5212,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GOOGLECALENDAR
+      :value: 'GOOGLECALENDAR'
+
+
+
    .. py:attribute:: GIT
       :value: 'GIT'
 
@@ -5212,11 +5289,6 @@ Package Contents
 
    .. py:attribute:: GMAILUSER
       :value: 'GMAILUSER'
-
-
-
-   .. py:attribute:: GOOGLECALENDAR
-      :value: 'GOOGLECALENDAR'
 
 
 
@@ -5352,6 +5424,11 @@ Package Contents
 
    .. py:attribute:: ATTACHMENT
       :value: 'ATTACHMENT'
+
+
+
+   .. py:method:: to_json_type(type)
+      :staticmethod:
 
 
 

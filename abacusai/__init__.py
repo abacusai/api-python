@@ -28,6 +28,7 @@ from .categorical_range_violation import CategoricalRangeViolation
 from .chat_message import ChatMessage
 from .chat_session import ChatSession
 from .chatllm_computer import ChatllmComputer
+from .chatllm_computer_status import ChatllmComputerStatus
 from .chatllm_project import ChatllmProject
 from .chatllm_referral_invite import ChatllmReferralInvite
 from .chatllm_task import ChatllmTask
@@ -38,6 +39,7 @@ from .code_bot import CodeBot
 from .code_edit import CodeEdit
 from .code_edit_response import CodeEditResponse
 from .code_edits import CodeEdits
+from .code_embeddings import CodeEmbeddings
 from .code_source import CodeSource
 from .code_suggestion_validation_response import CodeSuggestionValidationResponse
 from .code_summary_response import CodeSummaryResponse
@@ -46,6 +48,7 @@ from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
 from .cpu_gpu_memory_specs import CpuGpuMemorySpecs
 from .custom_chat_instructions import CustomChatInstructions
+from .custom_domain import CustomDomain
 from .custom_loss_function import CustomLossFunction
 from .custom_metric import CustomMetric
 from .custom_metric_version import CustomMetricVersion
@@ -128,8 +131,12 @@ from .hosted_app import HostedApp
 from .hosted_app_container import HostedAppContainer
 from .hosted_app_file_read import HostedAppFileRead
 from .hosted_artifact import HostedArtifact
+from .hosted_database import HostedDatabase
+from .hosted_database_snapshot import HostedDatabaseSnapshot
 from .hosted_model_token import HostedModelToken
 from .hume_voice import HumeVoice
+from .image_gen_model import ImageGenModel
+from .image_gen_model_options import ImageGenModelOptions
 from .image_gen_settings import ImageGenSettings
 from .indexing_config import IndexingConfig
 from .inferred_database_column_to_feature_mappings import InferredDatabaseColumnToFeatureMappings
@@ -137,6 +144,7 @@ from .inferred_feature_mappings import InferredFeatureMappings
 from .item_statistics import ItemStatistics
 from .lip_sync_gen_settings import LipSyncGenSettings
 from .llm_app import LlmApp
+from .llm_artifact import LlmArtifact
 from .llm_code_block import LlmCodeBlock
 from .llm_execution_preview import LlmExecutionPreview
 from .llm_execution_result import LlmExecutionResult
@@ -228,6 +236,7 @@ from .template_node_details import TemplateNodeDetails
 from .test_point_predictions import TestPointPredictions
 from .tone_details import ToneDetails
 from .training_config_options import TrainingConfigOptions
+from .tts_gen_settings import TtsGenSettings
 from .twitter_search_result import TwitterSearchResult
 from .upload import Upload
 from .upload_part import UploadPart
@@ -246,4 +255,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.40"
+__version__ = "1.4.41"

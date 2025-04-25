@@ -392,6 +392,7 @@ class ConnectorType(ApiEnum):
 class ApplicationConnectorType(ApiEnum):
     GOOGLEANALYTICS = 'GOOGLEANALYTICS'
     GOOGLEDRIVE = 'GOOGLEDRIVE'
+    GOOGLECALENDAR = 'GOOGLECALENDAR'
     GIT = 'GIT'
     CONFLUENCE = 'CONFLUENCE'
     JIRA = 'JIRA'
@@ -407,7 +408,6 @@ class ApplicationConnectorType(ApiEnum):
     GOOGLEDRIVEUSER = 'GOOGLEDRIVEUSER'
     GOOGLEWORKSPACEUSER = 'GOOGLEWORKSPACEUSER'
     GMAILUSER = 'GMAILUSER'
-    GOOGLECALENDAR = 'GOOGLECALENDAR'
     GOOGLESHEETS = 'GOOGLESHEETS'
     GOOGLEDOCS = 'GOOGLEDOCS'
     TEAMSSCRAPER = 'TEAMSSCRAPER'
@@ -437,6 +437,21 @@ class PythonFunctionArgumentType(ApiEnum):
     BATCH_PREDICTION_ID = 'BATCH_PREDICTION_ID'
     DEPLOYMENT_ID = 'DEPLOYMENT_ID'
     ATTACHMENT = 'ATTACHMENT'
+
+    @staticmethod
+    def to_json_type(type):
+        if type == PythonFunctionArgumentType.INTEGER or type == PythonFunctionArgumentType.FLOAT:
+            return 'number'
+        elif type == PythonFunctionArgumentType.STRING or type == PythonFunctionArgumentType.ATTACHMENT:
+            return 'string'
+        elif type == PythonFunctionArgumentType.BOOLEAN:
+            return 'boolean'
+        elif type == PythonFunctionArgumentType.LIST:
+            return 'array'
+        elif type == PythonFunctionArgumentType.JSON:
+            return 'object'
+        else:
+            raise ValueError(f'Invalid type: {type}. type not JSON compatible')
 
 
 class PythonFunctionOutputArgumentType(ApiEnum):

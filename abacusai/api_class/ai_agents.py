@@ -203,6 +203,27 @@ class WorkflowNodeInputSchema(ApiClass, JSONSchema):
         else:
             return cls(json_schema={})
 
+    @classmethod
+    def from_tool_variable_mappings(cls, tool_variable_mappings: dict):
+        """
+        Creates a WorkflowNodeInputSchema for the given tool variable mappings.
+
+        Args:
+            tool_variable_mappings (List[dict]): The tool variable mappings for the node.
+        """
+        json_schema = {'type': 'object', 'properties': {}}
+        for mapping in tool_variable_mappings:
+            if not mapping.get('is_required'):
+                continue
+            json_schema['properties'][mapping['name']] = {'title': mapping['name'], 'type': enums.PythonFunctionArgumentType.to_json_type(mapping['variable_type'])}
+            if mapping['variable_type'] == enums.PythonFunctionArgumentType.ATTACHMENT:
+                json_schema['properties'][mapping['name']]['format'] = 'data-url'
+            if mapping['variable_type'] == enums.PythonFunctionArgumentType.LIST:
+                json_schema['properties'][mapping['name']]['items'] = {'type': enums.PythonFunctionArgumentType.to_json_type(mapping['item_type'])}
+                if mapping['item_type'] == enums.PythonFunctionArgumentType.ATTACHMENT:
+                    json_schema['properties'][mapping['name']]['items']['format'] = 'data-url'
+        return cls(json_schema=json_schema)
+
 
 @validate_constructor_arg_types('output_mapping')
 @dataclasses.dataclass
@@ -316,6 +337,7 @@ class WorkflowGraphNode(ApiClass):
     def __init__(self, name: str, function: callable = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, template_metadata: dict = None, trigger_config: TriggerConfig = None):
         self.template_metadata = template_metadata
         self.trigger_config = trigger_config
+        self.node_type = 'workflow_node'
         if self.template_metadata and not self.template_metadata.get('initialized'):
             self.name = name
             self.function_name = None
@@ -539,7 +561,8 @@ class WorkflowGraphNode(ApiClass):
             'input_schema': self.input_schema.to_dict(),
             'output_schema': self.output_schema.to_dict(),
             'template_metadata': self.template_metadata,
-            'trigger_config': self.trigger_config.to_dict() if self.trigger_config else None
+            'trigger_config': self.trigger_config.to_dict() if self.trigger_config else None,
+            'node_type': self.node_type,
         }
 
     def is_template_node(self):
@@ -605,6 +628,57 @@ class WorkflowGraphNode(ApiClass):
         return self.Outputs(self)
 
 
+@validate_constructor_arg_types('decision_node')
+@dataclasses.dataclass
+class DecisionNode(WorkflowGraphNode):
+    """
+    Represents a decision node in an Agent workflow graph. It is connected between two workflow nodes and is used to determine if subsequent nodes should be executed.
+    """
+
+    def __init__(self, name: str, condition: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]]):
+        self.node_type = 'decision_node'
+        self.name = name
+        self.source_code = condition
+        if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
+            self.input_mappings = input_mappings
+        elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, (WorkflowNodeInputMapping, WorkflowGraphNode)) for key, value in input_mappings.items()):
+            self.input_mappings = []
+            for key, value in input_mappings.items():
+                variable_source = value.name if isinstance(value, WorkflowGraphNode) else value.variable_source
+                source_prop = key if isinstance(value, WorkflowGraphNode) else value.source_prop
+                self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=value.variable_type, variable_source=variable_source, source_prop=source_prop, is_required=value.is_required))
+        else:
+            raise ValueError('workflow_graph_decision_node', 'Invalid input mappings. Must be a list of WorkflowNodeInputMapping or a dictionary of input mappings in the form {arg_name: node_name.outputs.prop_name}.')
+        for mapping in self.input_mappings:
+            if mapping.variable_type != enums.WorkflowNodeInputType.WORKFLOW_VARIABLE:
+                raise ValueError('workflow_graph_decision_node', 'Invalid input mappings. Decision node input mappings must be of type WORKFLOW_VARIABLE.')
+            if not mapping.is_required:
+                raise ValueError('workflow_graph_decision_node', 'Invalid input mappings. Decision node input mappings must be required.')
+        self.output_mappings = [WorkflowNodeOutputMapping(name=input_mapping.name) for input_mapping in self.input_mappings]
+        self.template_metadata = None
+        self.trigger_config = None
+        self.input_schema = None
+        self.output_schema = None
+        self.function_name = None
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'source_code': self.source_code,
+            'input_mappings': [mapping.to_dict() for mapping in self.input_mappings],
+            'output_mappings': [mapping.to_dict() for mapping in self.output_mappings],
+            'node_type': self.node_type,
+        }
+
+    @classmethod
+    def from_dict(cls, node: dict):
+        return cls(
+            name=node['name'],
+            condition=node['source_code'],
+            input_mappings=[WorkflowNodeInputMapping.from_dict(mapping) for mapping in node.get('input_mappings', [])]
+        )
+
+
 @validate_constructor_arg_types('workflow_graph_edge')
 @dataclasses.dataclass
 class WorkflowGraphEdge(ApiClass):
@@ -639,17 +713,19 @@ class WorkflowGraph(ApiClass):
     Represents an Agent workflow graph.
 
     Args:
-        nodes (List[WorkflowGraphNode]): A list of nodes in the workflow graph.
+        nodes (List[Union[WorkflowGraphNode, DecisionNode]]): A list of nodes in the workflow graph.
         primary_start_node (Union[str, WorkflowGraphNode]): The primary node to start the workflow from.
         common_source_code (str): Common source code that can be used across all nodes.
     """
-    nodes: List[WorkflowGraphNode] = dataclasses.field(default_factory=list)
+    nodes: List[Union[WorkflowGraphNode, DecisionNode]] = dataclasses.field(default_factory=list)
     edges: List[Union[WorkflowGraphEdge, Tuple[WorkflowGraphNode, WorkflowGraphNode, dict], Tuple[str, str, dict]]] = dataclasses.field(default_factory=list, metadata={'deprecated': True})
     primary_start_node: Union[str, WorkflowGraphNode] = dataclasses.field(default=None)
     common_source_code: str = dataclasses.field(default=None)
     specification_type: str = dataclasses.field(default='data_flow')
 
     def __post_init__(self):
+        if self.specification_type == 'execution_flow' and any(isinstance(node, DecisionNode) for node in self.nodes):
+            raise ValueError('workflow_graph', 'Decision nodes are not supported in execution flow specification type.')
         if self.edges:
             if self.specification_type == 'execution_flow':
                 for index, edge in enumerate(self.edges):
@@ -676,7 +752,7 @@ class WorkflowGraph(ApiClass):
         if graph.get('__return_filter'):
             for node in graph.get('nodes', []):
                 node['__return_filter'] = True
-        nodes = [WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])]
+        nodes = [DecisionNode.from_dict(node) if node.get('node_type') == 'decision_node' else WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])]
         edges = [WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]
         primary_start_node = graph.get('primary_start_node')
         non_primary_nodes = set()

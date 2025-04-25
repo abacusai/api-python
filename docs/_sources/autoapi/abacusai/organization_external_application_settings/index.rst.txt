@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None)
+.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,8 @@ Module Contents
    :type managedUserService: str
    :param passwordsDisabled: Whether or not passwords are disabled for this organization's domain.
    :type passwordsDisabled: bool
+   :param externalServiceForRoles: The external service that is managing the user roles.
+   :type externalServiceForRoles: str
 
 
    .. py:attribute:: logo
@@ -50,6 +52,11 @@ Module Contents
 
 
    .. py:attribute:: passwords_disabled
+      :value: None
+
+
+
+   .. py:attribute:: external_service_for_roles
       :value: None
 
 
