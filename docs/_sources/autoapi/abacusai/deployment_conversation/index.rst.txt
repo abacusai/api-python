@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, totalEvents=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -62,6 +62,8 @@ Module Contents
    :type searchSuggestions: list
    :param chatllmTaskId: The chatllm task id associated with the deployment conversation.
    :type chatllmTaskId: str
+   :param totalEvents: The total number of events in the deployment conversation.
+   :type totalEvents: int
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -163,6 +165,11 @@ Module Contents
 
 
 
+   .. py:attribute:: total_events
+      :value: None
+
+
+
    .. py:attribute:: history
 
 
@@ -184,7 +191,7 @@ Module Contents
 
 
 
-   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
+   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None)
 
       Gets a deployment conversation.
 
@@ -196,6 +203,10 @@ Module Contents
       :type filter_intermediate_conversation_events: bool
       :param get_unused_document_uploads: If true, unused document uploads will be returned. Default is false.
       :type get_unused_document_uploads: bool
+      :param start: The start index of the conversation.
+      :type start: int
+      :param limit: The limit of the conversation.
+      :type limit: int
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation

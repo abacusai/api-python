@@ -8,13 +8,13 @@ class ImageGenModel(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            displayName (str): 
-            type (str): 
-            valueType (str): 
-            optional (bool): 
-            default (str): 
-            helptext (str): 
-            options (ImageGenModelOptions): 
+            displayName (str): The display name for the UI component.
+            type (str): The type of the UI component.
+            valueType (str): The data type of the values within the UI component.
+            optional (bool): Whether the selection of a value is optional.
+            default (str): The default value for the image generation model.
+            helptext (str): The helptext for the UI component.
+            options (ImageGenModelOptions): The options of models available for image generation.
     """
 
     def __init__(self, client, displayName=None, type=None, valueType=None, optional=None, default=None, helptext=None, options={}):

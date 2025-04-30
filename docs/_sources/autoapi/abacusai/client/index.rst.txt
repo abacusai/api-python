@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.41'
+      :value: '1.4.42'
 
 
 
@@ -1400,7 +1400,7 @@ Module Contents
 
 
 
-   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None)
+   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None, is_database_connector = None)
 
       Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
@@ -1410,6 +1410,8 @@ Module Contents
       :type application_connector_id: str
       :param scopes: The scopes to request for the connector.
       :type scopes: List
+      :param is_database_connector: Whether the connector is a database connector.
+      :type is_database_connector: bool
 
       :returns: The application connector with the authentication details.
       :rtype: ApplicationConnector
@@ -2823,7 +2825,7 @@ Module Contents
 
 
 
-   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
+   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None)
 
       Gets a deployment conversation.
 
@@ -2837,6 +2839,10 @@ Module Contents
       :type filter_intermediate_conversation_events: bool
       :param get_unused_document_uploads: If true, unused document uploads will be returned. Default is false.
       :type get_unused_document_uploads: bool
+      :param start: The start index of the conversation.
+      :type start: int
+      :param limit: The limit of the conversation.
+      :type limit: int
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -3412,7 +3418,7 @@ Module Contents
 
 
 
-   .. py:method:: create_python_function_from_function(name, function, function_variable_mappings = None, package_requirements = None, function_type = PythonFunctionType.FEATURE_GROUP.value)
+   .. py:method:: create_python_function_from_function(name, function, function_variable_mappings = None, package_requirements = None, function_type = PythonFunctionType.FEATURE_GROUP.value, description = None)
 
       Creates a custom Python function
 
@@ -3426,6 +3432,8 @@ Module Contents
       :type package_requirements: List
       :param function_type: Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
       :type function_type: PythonFunctionType
+      :param description: Description of the Python function.
+      :type description: str
 
 
 

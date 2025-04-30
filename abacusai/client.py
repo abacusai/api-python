@@ -661,7 +661,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.41'
+    client_version = '1.4.42'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -857,6 +857,13 @@ class BaseApiClient:
         if deployment_id:
             query_params = {**(query_params or {}),
                             'environmentDeploymentId': deployment_id}
+        caller = self._get_agent_caller()
+        request_id = self._get_agent_app_request_id()
+        if caller and request_id:
+            if get_object_from_context(self, _request_context, 'is_agent', bool):
+                query_params = {**(query_params or {}), 'isAgent': True}
+            if get_object_from_context(self, _request_context, 'is_agent_api', bool):
+                query_params = {**(query_params or {}), 'isAgentApi': True}
         endpoint = self.proxy_endpoint
         if endpoint is None:
             raise Exception(
@@ -1554,17 +1561,18 @@ class ReadOnlyClient(BaseApiClient):
             application_connector_id (str): Unique string identifier for the application connector."""
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
-    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None, application_connector_id: str = None, scopes: List = None) -> ApplicationConnector:
+    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None, application_connector_id: str = None, scopes: List = None, is_database_connector: bool = None) -> ApplicationConnector:
         """Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
         Args:
             service (ApplicationConnectorType): The service name.
             application_connector_id (str): The unique ID associated with the connector.
             scopes (List): The scopes to request for the connector.
+            is_database_connector (bool): Whether the connector is a database connector.
 
         Returns:
             ApplicationConnector: The application connector with the authentication details."""
-        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'applicationConnectorId': application_connector_id, 'scopes': scopes}, parse_type=ApplicationConnector)
+        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'applicationConnectorId': application_connector_id, 'scopes': scopes, 'isDatabaseConnector': is_database_connector}, parse_type=ApplicationConnector)
 
     def list_streaming_connectors(self) -> List[StreamingConnector]:
         """Retrieves a list of all streaming connectors along with their corresponding attributes.
@@ -2687,7 +2695,7 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat sessions with Data Science Co-pilot"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
-    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False) -> DeploymentConversation:
+    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False, start: int = None, limit: int = None) -> DeploymentConversation:
         """Gets a deployment conversation.
 
         Args:
@@ -2696,10 +2704,12 @@ class ReadOnlyClient(BaseApiClient):
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
             filter_intermediate_conversation_events (bool): If true, intermediate conversation events will be filtered out. Default is true.
             get_unused_document_uploads (bool): If true, unused document uploads will be returned. Default is false.
+            start (int): The start index of the conversation.
+            limit (int): The limit of the conversation.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads, 'start': start, 'limit': limit}, parse_type=DeploymentConversation, is_sync=True)
 
     def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False, limit: int = None, search: str = None) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
@@ -3344,7 +3354,8 @@ class ApiClient(ReadOnlyClient):
                                              function: callable,
                                              function_variable_mappings: list = None,
                                              package_requirements: list = None,
-                                             function_type: str = PythonFunctionType.FEATURE_GROUP.value):
+                                             function_type: str = PythonFunctionType.FEATURE_GROUP.value,
+                                             description: str = None):
         """
         Creates a custom Python function
 
@@ -3354,6 +3365,7 @@ class ApiClient(ReadOnlyClient):
             function_variable_mappings (List<PythonFunctionArguments>): List of Python function arguments.
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             function_type (PythonFunctionType): Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
+            description (str): Description of the Python function.
         """
         function_source = None
         python_function_name = None
@@ -3368,7 +3380,8 @@ class ApiClient(ReadOnlyClient):
                                            function_name=python_function_name,
                                            function_variable_mappings=function_variable_mappings,
                                            package_requirements=package_requirements,
-                                           function_type=function_type)
+                                           function_type=function_type,
+                                           description=description)
 
     def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, included_modules: list = None):
         """
@@ -4148,11 +4161,11 @@ class ApiClient(ReadOnlyClient):
         if caller and request_id:
             is_agent = get_object_from_context(
                 self, _request_context, 'is_agent', bool)
-            is_api = get_object_from_context(
+            is_agent_api = get_object_from_context(
                 self, _request_context, 'is_agent_api', bool)
 
-            result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens, temperature=temperature,
-                                           messages=messages, response_type=response_type, json_response_schema=json_response_schema, section_key=section_key, is_agent=is_agent, is_api=is_api)
+            result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens, temperature=temperature, messages=messages,
+                                           response_type=response_type, json_response_schema=json_response_schema, section_key=section_key, is_agent=is_agent, is_agent_api=is_agent_api)
         else:
             result = self.evaluate_prompt(prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens,
                                           temperature=temperature, messages=messages, response_type=response_type, json_response_schema=json_response_schema).content

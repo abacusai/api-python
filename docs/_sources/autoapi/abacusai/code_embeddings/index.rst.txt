@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CodeEmbeddings(client, embeddings=None)
+.. py:class:: CodeEmbeddings(client, embeddings=None, chunkingScheme=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,9 +26,16 @@ Module Contents
    :type client: ApiClient
    :param embeddings: A dictionary mapping the file name to its embeddings.
    :type embeddings: dict
+   :param chunkingScheme: The scheme used for chunking the embeddings.
+   :type chunkingScheme: str
 
 
    .. py:attribute:: embeddings
+      :value: None
+
+
+
+   .. py:attribute:: chunking_scheme
       :value: None
 
 

@@ -7,8 +7,8 @@ class ImageGenModelOptions(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            keys (list): 
-            values (list): 
+            keys (list): The keys of the image generation model options represented as the enum values.
+            values (list): The display names of the image generation model options.
     """
 
     def __init__(self, client, keys=None, values=None):

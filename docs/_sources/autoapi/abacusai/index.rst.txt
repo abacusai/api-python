@@ -56,6 +56,7 @@ Submodules
    /autoapi/abacusai/code_source/index
    /autoapi/abacusai/code_suggestion_validation_response/index
    /autoapi/abacusai/code_summary_response/index
+   /autoapi/abacusai/codellm_embedding_constants/index
    /autoapi/abacusai/compute_point_info/index
    /autoapi/abacusai/concatenation_config/index
    /autoapi/abacusai/constants_autocomplete_response/index
@@ -558,6 +559,7 @@ Classes
    abacusai.CodeSource
    abacusai.CodeSuggestionValidationResponse
    abacusai.CodeSummaryResponse
+   abacusai.CodellmEmbeddingConstants
    abacusai.ComputePointInfo
    abacusai.ConcatenationConfig
    abacusai.ConstantsAutocompleteResponse
@@ -6862,6 +6864,11 @@ Package Contents
 
    .. py:attribute:: QWQ_32B
       :value: 'QWQ_32B'
+
+
+
+   .. py:attribute:: QWEN3_235B_A22B
+      :value: 'QWEN3_235B_A22B'
 
 
 
@@ -14159,7 +14166,7 @@ Package Contents
 
 
 
-   .. py:method:: create_python_function_from_function(name, function, function_variable_mappings = None, package_requirements = None, function_type = PythonFunctionType.FEATURE_GROUP.value)
+   .. py:method:: create_python_function_from_function(name, function, function_variable_mappings = None, package_requirements = None, function_type = PythonFunctionType.FEATURE_GROUP.value, description = None)
 
       Creates a custom Python function
 
@@ -14173,6 +14180,8 @@ Package Contents
       :type package_requirements: List
       :param function_type: Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
       :type function_type: PythonFunctionType
+      :param description: Description of the Python function.
+      :type description: str
 
 
 
@@ -22000,7 +22009,7 @@ Package Contents
 
 
 
-   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None)
+   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None, is_database_connector = None)
 
       Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
@@ -22010,6 +22019,8 @@ Package Contents
       :type application_connector_id: str
       :param scopes: The scopes to request for the connector.
       :type scopes: List
+      :param is_database_connector: Whether the connector is a database connector.
+      :type is_database_connector: bool
 
       :returns: The application connector with the authentication details.
       :rtype: ApplicationConnector
@@ -23423,7 +23434,7 @@ Package Contents
 
 
 
-   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
+   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None)
 
       Gets a deployment conversation.
 
@@ -23437,6 +23448,10 @@ Package Contents
       :type filter_intermediate_conversation_events: bool
       :param get_unused_document_uploads: If true, unused document uploads will be returned. Default is false.
       :type get_unused_document_uploads: bool
+      :param start: The start index of the conversation.
+      :type start: int
+      :param limit: The limit of the conversation.
+      :type limit: int
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -24018,7 +24033,7 @@ Package Contents
 
 
 
-.. py:class:: CodeEmbeddings(client, embeddings=None)
+.. py:class:: CodeEmbeddings(client, embeddings=None, chunkingScheme=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24029,9 +24044,16 @@ Package Contents
    :type client: ApiClient
    :param embeddings: A dictionary mapping the file name to its embeddings.
    :type embeddings: dict
+   :param chunkingScheme: The scheme used for chunking the embeddings.
+   :type chunkingScheme: str
 
 
    .. py:attribute:: embeddings
+      :value: None
+
+
+
+   .. py:attribute:: chunking_scheme
       :value: None
 
 
@@ -24212,6 +24234,67 @@ Package Contents
 
 
 
+.. py:class:: CodellmEmbeddingConstants(client, maxSupportedWorkspaceFiles=None, maxSupportedWorkspaceChunks=None, maxConcurrentRequests=None, fileExtensionToChunkingScheme=None, idleTimeoutSeconds=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A dictionary of constants to be used in the autocomplete.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param maxSupportedWorkspaceFiles: Max supported workspace files
+   :type maxSupportedWorkspaceFiles: int
+   :param maxSupportedWorkspaceChunks: Max supported workspace chunks
+   :type maxSupportedWorkspaceChunks: int
+   :param maxConcurrentRequests: Max concurrent requests
+   :type maxConcurrentRequests: int
+   :param fileExtensionToChunkingScheme: Map between the file extensions and their chunking schema
+   :type fileExtensionToChunkingScheme: dict
+   :param idleTimeoutSeconds: The idle timeout without any activity before the workspace is refreshed.
+   :type idleTimeoutSeconds: int
+
+
+   .. py:attribute:: max_supported_workspace_files
+      :value: None
+
+
+
+   .. py:attribute:: max_supported_workspace_chunks
+      :value: None
+
+
+
+   .. py:attribute:: max_concurrent_requests
+      :value: None
+
+
+
+   .. py:attribute:: file_extension_to_chunking_scheme
+      :value: None
+
+
+
+   .. py:attribute:: idle_timeout_seconds
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -24341,7 +24424,7 @@ Package Contents
 
 
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None, maxSymbolsFuzzyMatch=None, fuzzySymbolMatchThreshold=None, symbolsCacheUpdateInterval=None, symbolsStorageUpdateInterval=None, embeddingConstants=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24402,6 +24485,16 @@ Package Contents
    :type stopRapidChanges: bool
    :param delaySummaryBatches: The delay in ms between summary batches.
    :type delaySummaryBatches: int
+   :param maxSymbolsFuzzyMatch: The max number of symbols to fuzzy match.
+   :type maxSymbolsFuzzyMatch: int
+   :param fuzzySymbolMatchThreshold: The threshold for fuzzy symbol match.
+   :type fuzzySymbolMatchThreshold: int
+   :param symbolsCacheUpdateInterval: The interval in ms to update the symbols cache.
+   :type symbolsCacheUpdateInterval: int
+   :param symbolsStorageUpdateInterval: The interval in ms to update the symbols storage.
+   :type symbolsStorageUpdateInterval: int
+   :param embeddingConstants: Embedding constants
+   :type embeddingConstants: codellmembeddingconstants
 
 
    .. py:attribute:: max_pending_requests
@@ -24530,6 +24623,31 @@ Package Contents
 
 
    .. py:attribute:: delay_summary_batches
+      :value: None
+
+
+
+   .. py:attribute:: max_symbols_fuzzy_match
+      :value: None
+
+
+
+   .. py:attribute:: fuzzy_symbol_match_threshold
+      :value: None
+
+
+
+   .. py:attribute:: symbols_cache_update_interval
+      :value: None
+
+
+
+   .. py:attribute:: symbols_storage_update_interval
+      :value: None
+
+
+
+   .. py:attribute:: embedding_constants
       :value: None
 
 
@@ -27052,7 +27170,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, totalEvents=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27099,6 +27217,8 @@ Package Contents
    :type searchSuggestions: list
    :param chatllmTaskId: The chatllm task id associated with the deployment conversation.
    :type chatllmTaskId: str
+   :param totalEvents: The total number of events in the deployment conversation.
+   :type totalEvents: int
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -27200,6 +27320,11 @@ Package Contents
 
 
 
+   .. py:attribute:: total_events
+      :value: None
+
+
+
    .. py:attribute:: history
 
 
@@ -27221,7 +27346,7 @@ Package Contents
 
 
 
-   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False)
+   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None)
 
       Gets a deployment conversation.
 
@@ -27233,6 +27358,10 @@ Package Contents
       :type filter_intermediate_conversation_events: bool
       :param get_unused_document_uploads: If true, unused document uploads will be returned. Default is false.
       :type get_unused_document_uploads: bool
+      :param start: The start index of the conversation.
+      :type start: int
+      :param limit: The limit of the conversation.
+      :type limit: int
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -34827,19 +34956,19 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param displayName:
+   :param displayName: The display name for the UI component.
    :type displayName: str
-   :param type:
+   :param type: The type of the UI component.
    :type type: str
-   :param valueType:
+   :param valueType: The data type of the values within the UI component.
    :type valueType: str
-   :param optional:
+   :param optional: Whether the selection of a value is optional.
    :type optional: bool
-   :param default:
+   :param default: The default value for the image generation model.
    :type default: str
-   :param helptext:
+   :param helptext: The helptext for the UI component.
    :type helptext: str
-   :param options:
+   :param options: The options of models available for image generation.
    :type options: ImageGenModelOptions
 
 
@@ -34900,9 +35029,9 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param keys:
+   :param keys: The keys of the image generation model options represented as the enum values.
    :type keys: list
-   :param values:
+   :param values: The display names of the image generation model options.
    :type values: list
 
 
@@ -47078,6 +47207,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.41'
+   :value: '1.4.42'
 
 

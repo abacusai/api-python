@@ -1,0 +1,78 @@
+abacusai.codellm_embedding_constants
+====================================
+
+.. py:module:: abacusai.codellm_embedding_constants
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.codellm_embedding_constants.CodellmEmbeddingConstants
+
+
+Module Contents
+---------------
+
+.. py:class:: CodellmEmbeddingConstants(client, maxSupportedWorkspaceFiles=None, maxSupportedWorkspaceChunks=None, maxConcurrentRequests=None, fileExtensionToChunkingScheme=None, idleTimeoutSeconds=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A dictionary of constants to be used in the autocomplete.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param maxSupportedWorkspaceFiles: Max supported workspace files
+   :type maxSupportedWorkspaceFiles: int
+   :param maxSupportedWorkspaceChunks: Max supported workspace chunks
+   :type maxSupportedWorkspaceChunks: int
+   :param maxConcurrentRequests: Max concurrent requests
+   :type maxConcurrentRequests: int
+   :param fileExtensionToChunkingScheme: Map between the file extensions and their chunking schema
+   :type fileExtensionToChunkingScheme: dict
+   :param idleTimeoutSeconds: The idle timeout without any activity before the workspace is refreshed.
+   :type idleTimeoutSeconds: int
+
+
+   .. py:attribute:: max_supported_workspace_files
+      :value: None
+
+
+
+   .. py:attribute:: max_supported_workspace_chunks
+      :value: None
+
+
+
+   .. py:attribute:: max_concurrent_requests
+      :value: None
+
+
+
+   .. py:attribute:: file_extension_to_chunking_scheme
+      :value: None
+
+
+
+   .. py:attribute:: idle_timeout_seconds
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

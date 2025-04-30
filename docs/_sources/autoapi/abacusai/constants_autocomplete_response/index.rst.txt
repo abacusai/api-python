@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None, maxSymbolsFuzzyMatch=None, fuzzySymbolMatchThreshold=None, symbolsCacheUpdateInterval=None, symbolsStorageUpdateInterval=None, embeddingConstants=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -76,6 +76,16 @@ Module Contents
    :type stopRapidChanges: bool
    :param delaySummaryBatches: The delay in ms between summary batches.
    :type delaySummaryBatches: int
+   :param maxSymbolsFuzzyMatch: The max number of symbols to fuzzy match.
+   :type maxSymbolsFuzzyMatch: int
+   :param fuzzySymbolMatchThreshold: The threshold for fuzzy symbol match.
+   :type fuzzySymbolMatchThreshold: int
+   :param symbolsCacheUpdateInterval: The interval in ms to update the symbols cache.
+   :type symbolsCacheUpdateInterval: int
+   :param symbolsStorageUpdateInterval: The interval in ms to update the symbols storage.
+   :type symbolsStorageUpdateInterval: int
+   :param embeddingConstants: Embedding constants
+   :type embeddingConstants: codellmembeddingconstants
 
 
    .. py:attribute:: max_pending_requests
@@ -204,6 +214,31 @@ Module Contents
 
 
    .. py:attribute:: delay_summary_batches
+      :value: None
+
+
+
+   .. py:attribute:: max_symbols_fuzzy_match
+      :value: None
+
+
+
+   .. py:attribute:: fuzzy_symbol_match_threshold
+      :value: None
+
+
+
+   .. py:attribute:: symbols_cache_update_interval
+      :value: None
+
+
+
+   .. py:attribute:: symbols_storage_update_interval
+      :value: None
+
+
+
+   .. py:attribute:: embedding_constants
       :value: None
 
 
