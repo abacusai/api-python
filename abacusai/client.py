@@ -213,7 +213,7 @@ async def sse_asynchronous_generator(endpoint: str, headers: dict, body: dict):
     except Exception:
         raise Exception('Please install aiohttp to use this functionality')
 
-    async with aiohttp.request('POST', endpoint, json=body, headers=headers) as response:
+    async with aiohttp.request('POST', endpoint, json=body, headers=headers, timeout=aiohttp.ClientTimeout(total=0)) as response:
         async for line in response.content:
             if line:
                 streamed_responses = line.decode('utf-8').split('\n\n')
@@ -661,7 +661,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.42'
+    client_version = '1.4.43'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2838,6 +2838,13 @@ class ReadOnlyClient(BaseApiClient):
             Agent: The newly generated agent."""
         return self._call_api('copyAgent', 'GET', query_params={'agentId': agent_id, 'projectId': project_id}, parse_type=Agent)
 
+    def sdk_link_hosted_app(self, app: str = None) -> io.BytesIO:
+        """Returns custom SDK JS for Widget JS
+
+        Args:
+            app (str): Application ID to be used as appId"""
+        return self._call_api('sdkLinkHostedApp', 'GET', query_params={'app': app}, streamable_response=True)
+
     def list_llm_apps(self) -> List[LlmApp]:
         """Lists all available LLM Apps, which are LLMs tailored to achieve a specific task like code generation for a specific service's API.
 
@@ -3033,6 +3040,47 @@ class ApiClient(ReadOnlyClient):
 
         result = self.get_assignments_online_with_new_serialized_inputs(
             deployment_token=deployment_token, deployment_id=deployment_id, query_data=query_data, solve_time_limit_seconds=solve_time_limit_seconds, optimality_gap_limit=optimality_gap_limit)
+        return result
+
+    def get_optimisation_input_dataframes_with_new_inputs(deployment_token: str, deployment_id: str, query_data: dict):
+        """
+        Get assignments for given query, with new inputs
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+            deployment_id (str): The unique identifier of a deployment created under the project.
+            query_data (dict): a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. values are dataframes and keys are their names. Names should be same as the ones used during training.
+
+        Returns:
+            OptimizationAssignment: The output dataframes for a given query.
+        """
+        def _serialize_df_with_dtypes(df):
+            # Get dtypes dictionary
+            dtypes_dict = df.dtypes.apply(lambda x: str(x)).to_dict()
+
+            # Handle special dtypes
+            for col, dtype in dtypes_dict.items():
+                if 'datetime' in dtype.lower():
+                    dtypes_dict[col] = 'datetime'
+                elif 'category' in dtype.lower():
+                    dtypes_dict[col] = 'category'
+
+            # Convert DataFrame to JSON
+            json_data = df.to_json(date_format='iso')
+
+            # Create final dictionary with both data and dtypes
+            serialized = {
+                'data': json_data,
+                'dtypes': dtypes_dict
+            }
+
+            return json.dumps(serialized)
+
+        query_data = {name: _serialize_df_with_dtypes(
+            df) for name, df in query_data.items()}
+
+        result = self.get_optimisation_input_dataframes_with_new_serialized_inputs(
+            deployment_token=deployment_token, deployment_id=deployment_id, query_data=query_data)
         return result
 
     def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame, clean_column_names: bool = False) -> Dataset:
@@ -7592,6 +7640,17 @@ Creates a new feature group defined as the union of other feature group versions
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'addConstraints': add_constraints, 'solveTimeLimitSeconds': solve_time_limit_seconds, 'bestAlternateOnly': best_alternate_only}, server_override=prediction_url)
+
+    def get_optimisation_inputs_from_serialized(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
+        """Get assignments for given query, with new inputs
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+            deployment_id (str): The unique identifier of a deployment created under the project.
+            query_data (dict): a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. (query data will be dict of names: serialized dataframes)"""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('getOptimisationInputsFromSerialized', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_assignments_online_with_new_serialized_inputs(self, deployment_token: str, deployment_id: str, query_data: dict = None, solve_time_limit_seconds: float = None, optimality_gap_limit: float = None) -> Dict:
         """Get assignments for given query, with new inputs

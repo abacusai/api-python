@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.42'
+      :value: '1.4.43'
 
 
 
@@ -3013,6 +3013,15 @@ Module Contents
 
 
 
+   .. py:method:: sdk_link_hosted_app(app = None)
+
+      Returns custom SDK JS for Widget JS
+
+      :param app: Application ID to be used as appId
+      :type app: str
+
+
+
    .. py:method:: list_llm_apps()
 
       Lists all available LLM Apps, which are LLMs tailored to achieve a specific task like code generation for a specific service's API.
@@ -3151,6 +3160,22 @@ Module Contents
       :type optimality_gap_limit: float
 
       :returns: The assignments for a given query.
+      :rtype: OptimizationAssignment
+
+
+
+   .. py:method:: get_optimisation_input_dataframes_with_new_inputs(deployment_id, query_data)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. values are dataframes and keys are their names. Names should be same as the ones used during training.
+      :type query_data: dict
+
+      :returns: The output dataframes for a given query.
       :rtype: OptimizationAssignment
 
 
@@ -8386,6 +8411,19 @@ Module Contents
       :type solve_time_limit_seconds: float
       :param best_alternate_only: When True only the best alternate will be returned, when False multiple alternates are returned
       :type best_alternate_only: bool
+
+
+
+   .. py:method:: get_optimisation_inputs_from_serialized(deployment_token, deployment_id, query_data = None)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. (query data will be dict of names: serialized dataframes)
+      :type query_data: dict
 
 
 

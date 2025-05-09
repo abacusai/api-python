@@ -34,12 +34,14 @@ from .chatllm_referral_invite import ChatllmReferralInvite
 from .chatllm_task import ChatllmTask
 from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, ToolResponse, _request_context
 from .code_agent_response import CodeAgentResponse
+from .code_autocomplete_edit_prediction_response import CodeAutocompleteEditPredictionResponse
 from .code_autocomplete_response import CodeAutocompleteResponse
 from .code_bot import CodeBot
 from .code_edit import CodeEdit
 from .code_edit_response import CodeEditResponse
 from .code_edits import CodeEdits
 from .code_embeddings import CodeEmbeddings
+from .code_llm_changed_files import CodeLlmChangedFiles
 from .code_source import CodeSource
 from .code_suggestion_validation_response import CodeSuggestionValidationResponse
 from .code_summary_response import CodeSummaryResponse
@@ -67,6 +69,7 @@ from .dataset import Dataset
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
 from .dataset_version_logs import DatasetVersionLogs
+from .default_llm import DefaultLlm
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .deployment_conversation import DeploymentConversation
@@ -153,6 +156,7 @@ from .llm_generated_code import LlmGeneratedCode
 from .llm_input import LlmInput
 from .llm_parameters import LlmParameters
 from .llm_response import LlmResponse
+from .mcp_config import McpConfig
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
 from .model import Model
@@ -248,6 +252,7 @@ from .user_exception import UserException
 from .video_gen_settings import VideoGenSettings
 from .video_search_result import VideoSearchResult
 from .voice_gen_details import VoiceGenDetails
+from .web_app_domain import WebAppDomain
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .web_search_result import WebSearchResult
@@ -256,4 +261,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.42"
+__version__ = "1.4.43"

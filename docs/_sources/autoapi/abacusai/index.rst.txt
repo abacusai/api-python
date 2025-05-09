@@ -47,12 +47,14 @@ Submodules
    /autoapi/abacusai/chatllm_task/index
    /autoapi/abacusai/client/index
    /autoapi/abacusai/code_agent_response/index
+   /autoapi/abacusai/code_autocomplete_edit_prediction_response/index
    /autoapi/abacusai/code_autocomplete_response/index
    /autoapi/abacusai/code_bot/index
    /autoapi/abacusai/code_edit/index
    /autoapi/abacusai/code_edit_response/index
    /autoapi/abacusai/code_edits/index
    /autoapi/abacusai/code_embeddings/index
+   /autoapi/abacusai/code_llm_changed_files/index
    /autoapi/abacusai/code_source/index
    /autoapi/abacusai/code_suggestion_validation_response/index
    /autoapi/abacusai/code_summary_response/index
@@ -81,6 +83,7 @@ Submodules
    /autoapi/abacusai/dataset_column/index
    /autoapi/abacusai/dataset_version/index
    /autoapi/abacusai/dataset_version_logs/index
+   /autoapi/abacusai/default_llm/index
    /autoapi/abacusai/deployment/index
    /autoapi/abacusai/deployment_auth_token/index
    /autoapi/abacusai/deployment_conversation/index
@@ -168,6 +171,7 @@ Submodules
    /autoapi/abacusai/llm_input/index
    /autoapi/abacusai/llm_parameters/index
    /autoapi/abacusai/llm_response/index
+   /autoapi/abacusai/mcp_config/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
    /autoapi/abacusai/model/index
@@ -263,6 +267,7 @@ Submodules
    /autoapi/abacusai/video_gen_settings/index
    /autoapi/abacusai/video_search_result/index
    /autoapi/abacusai/voice_gen_details/index
+   /autoapi/abacusai/web_app_domain/index
    /autoapi/abacusai/web_page_response/index
    /autoapi/abacusai/web_search_response/index
    /autoapi/abacusai/web_search_result/index
@@ -550,12 +555,14 @@ Classes
    abacusai.ReadOnlyClient
    abacusai.ToolResponse
    abacusai.CodeAgentResponse
+   abacusai.CodeAutocompleteEditPredictionResponse
    abacusai.CodeAutocompleteResponse
    abacusai.CodeBot
    abacusai.CodeEdit
    abacusai.CodeEditResponse
    abacusai.CodeEdits
    abacusai.CodeEmbeddings
+   abacusai.CodeLlmChangedFiles
    abacusai.CodeSource
    abacusai.CodeSuggestionValidationResponse
    abacusai.CodeSummaryResponse
@@ -583,6 +590,7 @@ Classes
    abacusai.DatasetColumn
    abacusai.DatasetVersion
    abacusai.DatasetVersionLogs
+   abacusai.DefaultLlm
    abacusai.Deployment
    abacusai.DeploymentAuthToken
    abacusai.DeploymentConversation
@@ -669,6 +677,7 @@ Classes
    abacusai.LlmInput
    abacusai.LlmParameters
    abacusai.LlmResponse
+   abacusai.McpConfig
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
    abacusai.Model
@@ -762,6 +771,7 @@ Classes
    abacusai.VideoGenSettings
    abacusai.VideoSearchResult
    abacusai.VoiceGenDetails
+   abacusai.WebAppDomain
    abacusai.WebPageResponse
    abacusai.WebSearchResponse
    abacusai.WebSearchResult
@@ -2199,6 +2209,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2247,6 +2262,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2323,6 +2343,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2345,6 +2370,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2370,6 +2400,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -2470,6 +2505,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: is_template_node()
 
@@ -2548,6 +2588,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -2638,6 +2683,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -2678,6 +2728,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -2721,6 +2776,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2760,6 +2820,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2796,6 +2861,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3322,6 +3392,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -3457,6 +3531,10 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4260,6 +4338,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -4647,6 +4729,10 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -10531,6 +10617,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11120,6 +11210,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11188,6 +11282,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11231,6 +11329,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: FeatureMappingConfig
@@ -11403,6 +11506,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11553,6 +11660,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -11616,10 +11728,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -11658,6 +11779,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:data:: Segment
@@ -11805,6 +11931,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: ListResponseSection(items, section_key = None)
@@ -13899,6 +14030,22 @@ Package Contents
       :type optimality_gap_limit: float
 
       :returns: The assignments for a given query.
+      :rtype: OptimizationAssignment
+
+
+
+   .. py:method:: get_optimisation_input_dataframes_with_new_inputs(deployment_id, query_data)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. values are dataframes and keys are their names. Names should be same as the ones used during training.
+      :type query_data: dict
+
+      :returns: The output dataframes for a given query.
       :rtype: OptimizationAssignment
 
 
@@ -19137,6 +19284,19 @@ Package Contents
 
 
 
+   .. py:method:: get_optimisation_inputs_from_serialized(deployment_token, deployment_id, query_data = None)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. (query data will be dict of names: serialized dataframes)
+      :type query_data: dict
+
+
+
    .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None, optimality_gap_limit = None)
 
       Get assignments for given query, with new inputs
@@ -23622,6 +23782,15 @@ Package Contents
 
 
 
+   .. py:method:: sdk_link_hosted_app(app = None)
+
+      Returns custom SDK JS for Widget JS
+
+      :param app: Application ID to be used as appId
+      :type app: str
+
+
+
    .. py:method:: list_llm_apps()
 
       Lists all available LLM Apps, which are LLMs tailored to achieve a specific task like code generation for a specific service's API.
@@ -23737,6 +23906,46 @@ Package Contents
 
 
    .. py:attribute:: tool_use_request
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CodeAutocompleteEditPredictionResponse(client, autocompleteResponse=None, showAutocomplete=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A autocomplete response from an LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param autocompleteResponse: autocomplete code
+   :type autocompleteResponse: str
+   :param showAutocomplete: Whether to show autocomplete in the client
+   :type showAutocomplete: bool
+
+
+   .. py:attribute:: autocomplete_response
+      :value: None
+
+
+
+   .. py:attribute:: show_autocomplete
       :value: None
 
 
@@ -24054,6 +24263,53 @@ Package Contents
 
 
    .. py:attribute:: chunking_scheme
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CodeLlmChangedFiles(client, addedFiles=None, updatedFiles=None, deletedFiles=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Code changed files
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param addedFiles: A list of added file paths.
+   :type addedFiles: list
+   :param updatedFiles: A list of updated file paths.
+   :type updatedFiles: list
+   :param deletedFiles: A list of deleted file paths.
+   :type deletedFiles: list
+
+
+   .. py:attribute:: added_files
+      :value: None
+
+
+
+   .. py:attribute:: updated_files
+      :value: None
+
+
+
+   .. py:attribute:: deleted_files
       :value: None
 
 
@@ -26336,6 +26592,46 @@ Package Contents
 
 
 
+.. py:class:: DefaultLlm(client, name=None, enum=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A default LLM.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the LLM.
+   :type name: str
+   :param enum: The enum of the LLM.
+   :type enum: str
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: enum
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, isSystemCreated=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -27170,7 +27466,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, totalEvents=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27217,8 +27513,14 @@ Package Contents
    :type searchSuggestions: list
    :param chatllmTaskId: The chatllm task id associated with the deployment conversation.
    :type chatllmTaskId: str
+   :param conversationStatus: The status of the deployment conversation (used for deep agent conversations).
+   :type conversationStatus: str
+   :param computerStatus: The status of the computer associated with the deployment conversation (used for deep agent conversations).
+   :type computerStatus: str
    :param totalEvents: The total number of events in the deployment conversation.
    :type totalEvents: int
+   :param contestNames: Names of contests that this deployment is a part of.
+   :type contestNames: list[str]
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -27320,7 +27622,22 @@ Package Contents
 
 
 
+   .. py:attribute:: conversation_status
+      :value: None
+
+
+
+   .. py:attribute:: computer_status
+      :value: None
+
+
+
    .. py:attribute:: total_events
+      :value: None
+
+
+
+   .. py:attribute:: contest_names
       :value: None
 
 
@@ -35439,7 +35756,7 @@ Package Contents
 
 
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35456,6 +35773,10 @@ Package Contents
    :type description: str
    :param createdAt: The creation timestamp
    :type createdAt: str
+   :param webAppDeploymentId: The ID of the associated web app deployment
+   :type webAppDeploymentId: id
+   :param deploymentStatus: The status of the associated web app deployment
+   :type deploymentStatus: str
 
 
    .. py:attribute:: llm_artifact_id
@@ -35474,6 +35795,16 @@ Package Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: web_app_deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_status
       :value: None
 
 
@@ -35806,6 +36137,39 @@ Package Contents
 
 
    .. py:attribute:: code_blocks
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: McpConfig(client, mcpConfig=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Model Context Protocol Config
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mcpConfig: The MCP configuration for the current user
+   :type mcpConfig: dict
+
+
+   .. py:attribute:: mcp_config
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -41943,6 +42307,19 @@ Package Contents
 
 
 
+   .. py:method:: get_optimisation_inputs_from_serialized(deployment_token, deployment_id, query_data = None)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. (query data will be dict of names: serialized dataframes)
+      :type query_data: dict
+
+
+
    .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None, optimality_gap_limit = None)
 
       Get assignments for given query, with new inputs
@@ -46814,6 +47191,67 @@ Package Contents
 
 
 
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Web App Domain
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppDomainId: The ID of the web app domain
+   :type webAppDomainId: id
+   :param hostname: The hostname of the web app domain
+   :type hostname: str
+   :param domainType: The type of the web app domain
+   :type domainType: str
+   :param lifecycle: The lifecycle of the web app domain
+   :type lifecycle: str
+   :param nameservers: The nameservers of the web app domain
+   :type nameservers: list
+
+
+   .. py:attribute:: web_app_domain_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: domain_type
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: nameservers
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebPageResponse(client, content=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -47207,6 +47645,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.42'
+   :value: '1.4.43'
 
 

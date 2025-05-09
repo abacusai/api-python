@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>abacusai.default_llm &mdash; AbacusAI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="abacusai.deployment" href="../deployment/index.html" />
+    <link rel="prev" title="abacusai.dataset_version_logs" href="../dataset_version_logs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            AbacusAI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">abacusai</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../abacus_api/index.html">abacusai.abacus_api</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../address/index.html">abacusai.address</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent/index.html">abacusai.agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_chat_message/index.html">abacusai.agent_chat_message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_conversation/index.html">abacusai.agent_conversation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_data_document_info/index.html">abacusai.agent_data_document_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_data_execution_result/index.html">abacusai.agent_data_execution_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_version/index.html">abacusai.agent_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ai_building_task/index.html">abacusai.ai_building_task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html">abacusai.algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation/index.html">abacusai.annotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation_config/index.html">abacusai.annotation_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation_document/index.html">abacusai.annotation_document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation_entry/index.html">abacusai.annotation_entry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotations_status/index.html">abacusai.annotations_status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_class/index.html">abacusai.api_class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html">abacusai.api_client_utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_endpoint/index.html">abacusai.api_endpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_key/index.html">abacusai.api_key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../app_user_group/index.html">abacusai.app_user_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../app_user_group_sign_in_token/index.html">abacusai.app_user_group_sign_in_token</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_gen_settings/index.html">abacusai.audio_gen_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html">abacusai.batch_prediction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_info/index.html">abacusai.bot_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../categorical_range_violation/index.html">abacusai.categorical_range_violation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chat_message/index.html">abacusai.chat_message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chat_session/index.html">abacusai.chat_session</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_computer/index.html">abacusai.chatllm_computer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_computer_status/index.html">abacusai.chatllm_computer_status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_project/index.html">abacusai.chatllm_project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_task/index.html">abacusai.chatllm_task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../client/index.html">abacusai.client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_agent_response/index.html">abacusai.code_agent_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_edit_prediction_response/index.html">abacusai.code_autocomplete_edit_prediction_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_response/index.html">abacusai.code_autocomplete_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_bot/index.html">abacusai.code_bot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_edit/index.html">abacusai.code_edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_edit_response/index.html">abacusai.code_edit_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_edits/index.html">abacusai.code_edits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_embeddings/index.html">abacusai.code_embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_llm_changed_files/index.html">abacusai.code_llm_changed_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_suggestion_validation_response/index.html">abacusai.code_suggestion_validation_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_summary_response/index.html">abacusai.code_summary_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../codellm_embedding_constants/index.html">abacusai.codellm_embedding_constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpu_gpu_memory_specs/index.html">abacusai.cpu_gpu_memory_specs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cryptography/index.html">abacusai.cryptography</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_chat_instructions/index.html">abacusai.custom_chat_instructions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_domain/index.html">abacusai.custom_domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_loss_function/index.html">abacusai.custom_loss_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_metric/index.html">abacusai.custom_metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_metric_version/index.html">abacusai.custom_metric_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html">abacusai.custom_train_function_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_consistency_duplication/index.html">abacusai.data_consistency_duplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_metrics/index.html">abacusai.data_metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html">abacusai.data_prep_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_quality_results/index.html">abacusai.data_quality_results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_upload_result/index.html">abacusai.data_upload_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../database_column_feature_mapping/index.html">abacusai.database_column_feature_mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../database_connector/index.html">abacusai.database_connector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../database_connector_column/index.html">abacusai.database_connector_column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../database_connector_schema/index.html">abacusai.database_connector_schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset/index.html">abacusai.dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset_column/index.html">abacusai.dataset_column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset_version/index.html">abacusai.dataset_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset_version_logs/index.html">abacusai.dataset_version_logs</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">abacusai.default_llm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../deployment/index.html">abacusai.deployment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deployment_auth_token/index.html">abacusai.deployment_auth_token</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deployment_conversation/index.html">abacusai.deployment_conversation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deployment_conversation_event/index.html">abacusai.deployment_conversation_event</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deployment_conversation_export/index.html">abacusai.deployment_conversation_export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deployment_statistics/index.html">abacusai.deployment_statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_data/index.html">abacusai.document_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_retriever/index.html">abacusai.document_retriever</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html">abacusai.drift_distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drift_distributions/index.html">abacusai.drift_distributions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda/index.html">abacusai.eda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_chart_description/index.html">abacusai.eda_chart_description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_collinearity/index.html">abacusai.eda_collinearity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_data_consistency/index.html">abacusai.eda_data_consistency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_feature_association/index.html">abacusai.eda_feature_association</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_feature_collinearity/index.html">abacusai.eda_feature_collinearity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_forecasting_analysis/index.html">abacusai.eda_forecasting_analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_version/index.html">abacusai.eda_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edit_image_models/index.html">abacusai.edit_image_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html">abacusai.embedding_feature_drift_distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html">abacusai.execute_feature_group_operation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../external_application/index.html">abacusai.external_application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../external_invite/index.html">abacusai.external_invite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../extracted_fields/index.html">abacusai.extracted_fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature/index.html">abacusai.feature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html">abacusai.feature_distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_drift_record/index.html">abacusai.feature_drift_record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html">abacusai.feature_drift_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html">abacusai.feature_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_document/index.html">abacusai.feature_group_document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html">abacusai.feature_group_export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_export_config/index.html">abacusai.feature_group_export_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_export_download_url/index.html">abacusai.feature_group_export_download_url</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html">abacusai.feature_group_lineage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_refresh_export_config/index.html">abacusai.feature_group_refresh_export_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_row/index.html">abacusai.feature_group_row</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process/index.html">abacusai.feature_group_row_process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process_logs/index.html">abacusai.feature_group_row_process_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process_summary/index.html">abacusai.feature_group_row_process_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html">abacusai.feature_group_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html">abacusai.feature_group_template_variable_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html">abacusai.feature_group_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_version_logs/index.html">abacusai.feature_group_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html">abacusai.feature_importance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_mapping/index.html">abacusai.feature_mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_performance_analysis/index.html">abacusai.feature_performance_analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../file_connector/index.html">abacusai.file_connector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html">abacusai.file_connector_instructions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../file_connector_verification/index.html">abacusai.file_connector_verification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../finetuned_pretrained_model/index.html">abacusai.finetuned_pretrained_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../forecasting_analysis_graph_data/index.html">abacusai.forecasting_analysis_graph_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../forecasting_monitor_item_analysis/index.html">abacusai.forecasting_monitor_item_analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../forecasting_monitor_summary/index.html">abacusai.forecasting_monitor_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fs_entry/index.html">abacusai.fs_entry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html">abacusai.function_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated_pit_feature_config_option/index.html">abacusai.generated_pit_feature_config_option</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../global_context/index.html">abacusai.global_context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../graph_dashboard/index.html">abacusai.graph_dashboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../holdout_analysis/index.html">abacusai.holdout_analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../holdout_analysis_version/index.html">abacusai.holdout_analysis_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_app/index.html">abacusai.hosted_app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_app_container/index.html">abacusai.hosted_app_container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_app_file_read/index.html">abacusai.hosted_app_file_read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_artifact/index.html">abacusai.hosted_artifact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_database/index.html">abacusai.hosted_database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_database_snapshot/index.html">abacusai.hosted_database_snapshot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_model_token/index.html">abacusai.hosted_model_token</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hume_voice/index.html">abacusai.hume_voice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../image_gen_model/index.html">abacusai.image_gen_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../image_gen_model_options/index.html">abacusai.image_gen_model_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../image_gen_settings/index.html">abacusai.image_gen_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../indexing_config/index.html">abacusai.indexing_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inferred_database_column_to_feature_mappings/index.html">abacusai.inferred_database_column_to_feature_mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inferred_feature_mappings/index.html">abacusai.inferred_feature_mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../item_statistics/index.html">abacusai.item_statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lip_sync_gen_settings/index.html">abacusai.lip_sync_gen_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_app/index.html">abacusai.llm_app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_artifact/index.html">abacusai.llm_artifact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html">abacusai.llm_code_block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_execution_preview/index.html">abacusai.llm_execution_preview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_execution_result/index.html">abacusai.llm_execution_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_generated_code/index.html">abacusai.llm_generated_code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_input/index.html">abacusai.llm_input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_parameters/index.html">abacusai.llm_parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html">abacusai.llm_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mcp_config/index.html">abacusai.mcp_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory_options/index.html">abacusai.memory_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model/index.html">abacusai.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_artifacts_export/index.html">abacusai.model_artifacts_export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_blueprint_export/index.html">abacusai.model_blueprint_export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_blueprint_stage/index.html">abacusai.model_blueprint_stage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_location/index.html">abacusai.model_location</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_metrics/index.html">abacusai.model_metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor/index.html">abacusai.model_monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_org_summary/index.html">abacusai.model_monitor_org_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_summary/index.html">abacusai.model_monitor_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_summary_from_org/index.html">abacusai.model_monitor_summary_from_org</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_version/index.html">abacusai.model_monitor_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_version_metric_data/index.html">abacusai.model_monitor_version_metric_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_training_type_for_deployment/index.html">abacusai.model_training_type_for_deployment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html">abacusai.model_upload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_version/index.html">abacusai.model_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_version_feature_group_schema/index.html">abacusai.model_version_feature_group_schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html">abacusai.modification_lock_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module/index.html">abacusai.module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html">abacusai.monitor_alert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html">abacusai.monitor_alert_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_drift_and_distributions/index.html">abacusai.monitor_drift_and_distributions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../natural_language_explanation/index.html">abacusai.natural_language_explanation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html">abacusai.nested_feature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nested_feature_schema/index.html">abacusai.nested_feature_schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../news_search_result/index.html">abacusai.news_search_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nlp_chat_response/index.html">abacusai.nlp_chat_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html">abacusai.null_violation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_external_application_settings/index.html">abacusai.organization_external_application_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html">abacusai.organization_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html">abacusai.organization_search_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html">abacusai.organization_secret</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../page_data/index.html">abacusai.page_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/index.html">abacusai.pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_reference/index.html">abacusai.pipeline_reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_step/index.html">abacusai.pipeline_step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_step_version/index.html">abacusai.pipeline_step_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_step_version_logs/index.html">abacusai.pipeline_step_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_step_version_reference/index.html">abacusai.pipeline_step_version_reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_version/index.html">abacusai.pipeline_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_version_logs/index.html">abacusai.pipeline_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../playground_text/index.html">abacusai.playground_text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_feature/index.html">abacusai.point_in_time_feature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_feature_info/index.html">abacusai.point_in_time_feature_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_group/index.html">abacusai.point_in_time_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_group_feature/index.html">abacusai.point_in_time_group_feature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_client/index.html">abacusai.prediction_client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_dataset/index.html">abacusai.prediction_dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_feature_group/index.html">abacusai.prediction_feature_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_input/index.html">abacusai.prediction_input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_log_record/index.html">abacusai.prediction_log_record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_operator/index.html">abacusai.prediction_operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_operator_version/index.html">abacusai.prediction_operator_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html">abacusai.problem_type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project/index.html">abacusai.project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_config/index.html">abacusai.project_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_feature_group/index.html">abacusai.project_feature_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_feature_group_schema/index.html">abacusai.project_feature_group_schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_feature_group_schema_version/index.html">abacusai.project_feature_group_schema_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html">abacusai.project_validation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_function/index.html">abacusai.python_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_function_validator/index.html">abacusai.python_function_validator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_plot_function/index.html">abacusai.python_plot_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../range_violation/index.html">abacusai.range_violation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../realtime_monitor/index.html">abacusai.realtime_monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html">abacusai.refresh_pipeline_run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../refresh_policy/index.html">abacusai.refresh_policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../refresh_schedule/index.html">abacusai.refresh_schedule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regenerate_llm_external_application/index.html">abacusai.regenerate_llm_external_application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resolved_feature_group_template/index.html">abacusai.resolved_feature_group_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../return_class/index.html">abacusai.return_class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../routing_action/index.html">abacusai.routing_action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../schema/index.html">abacusai.schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sftp_key/index.html">abacusai.sftp_key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html">abacusai.streaming_auth_token</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html">abacusai.streaming_client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../streaming_connector/index.html">abacusai.streaming_connector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../streaming_row_count/index.html">abacusai.streaming_row_count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../streaming_sample_code/index.html">abacusai.streaming_sample_code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../template_node_details/index.html">abacusai.template_node_details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tone_details/index.html">abacusai.tone_details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html">abacusai.training_config_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tts_gen_settings/index.html">abacusai.tts_gen_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../twitter_search_result/index.html">abacusai.twitter_search_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../upload/index.html">abacusai.upload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../upload_part/index.html">abacusai.upload_part</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../use_case/index.html">abacusai.use_case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video_search_result/index.html">abacusai.video_search_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../voice_gen_details/index.html">abacusai.voice_gen_details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../web_app_domain/index.html">abacusai.web_app_domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../web_page_response/index.html">abacusai.web_page_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../workflow_graph_node_details/index.html">abacusai.workflow_graph_node_details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AbacusAI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">abacusai</a></li>
+      <li class="breadcrumb-item active">abacusai.default_llm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/abacusai/default_llm/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-abacusai.default_llm">
+<span id="abacusai-default-llm"></span><h1>abacusai.default_llm<a class="headerlink" href="#module-abacusai.default_llm" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.default_llm.DefaultLlm" title="abacusai.default_llm.DefaultLlm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DefaultLlm</span></code></a></p></td>
+<td><p>A default LLM.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.default_llm.DefaultLlm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.default_llm.</span></span><span class="sig-name descname"><span class="pre">DefaultLlm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.default_llm.DefaultLlm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
+<p>A default LLM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the LLM.</p></li>
+<li><p><strong>enum</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The enum of the LLM.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.default_llm.DefaultLlm.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.default_llm.DefaultLlm.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.default_llm.DefaultLlm.enum">
+<span class="sig-name descname"><span class="pre">enum</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.default_llm.DefaultLlm.enum" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.default_llm.DefaultLlm.deprecated_keys">
+<span class="sig-name descname"><span class="pre">deprecated_keys</span></span><a class="headerlink" href="#abacusai.default_llm.DefaultLlm.deprecated_keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.default_llm.DefaultLlm.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.default_llm.DefaultLlm.__repr__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.default_llm.DefaultLlm.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.default_llm.DefaultLlm.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Get a dict representation of the parameters in this class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The dict value representation of the class parameters</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../dataset_version_logs/index.html" class="btn btn-neutral float-left" title="abacusai.dataset_version_logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../deployment/index.html" class="btn btn-neutral float-right" title="abacusai.deployment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Abacus.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -495,6 +495,12 @@ class WorkflowGraphNode(ApiClass):
         else:
             raise ValueError('workflow_graph_node', 'Invalid output schema. Must be a WorkflowNodeOutputSchema or a list of output section names.')
 
+        if sleep_time is not None:
+            if isinstance(sleep_time, str) and sleep_time.isdigit():
+                sleep_time = int(sleep_time)
+            if not isinstance(sleep_time, int) or sleep_time < 0:
+                raise ValueError('workflow_graph_node', 'Invalid sleep time. Must be a non-negative integer.')
+
         return cls(
             name=name,
             input_mappings=instance_input_mappings,

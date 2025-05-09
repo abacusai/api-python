@@ -83,12 +83,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_task/index.html">abacusai.chatllm_task</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../client/index.html">abacusai.client</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_agent_response/index.html">abacusai.code_agent_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_edit_prediction_response/index.html">abacusai.code_autocomplete_edit_prediction_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_response/index.html">abacusai.code_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_bot/index.html">abacusai.code_bot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_edit/index.html">abacusai.code_edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_edit_response/index.html">abacusai.code_edit_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_edits/index.html">abacusai.code_edits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_embeddings/index.html">abacusai.code_embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_llm_changed_files/index.html">abacusai.code_llm_changed_files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html">abacusai.code_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_suggestion_validation_response/index.html">abacusai.code_suggestion_validation_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_summary_response/index.html">abacusai.code_summary_response</a></li>
@@ -117,6 +119,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../dataset_column/index.html">abacusai.dataset_column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset_version/index.html">abacusai.dataset_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset_version_logs/index.html">abacusai.dataset_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../default_llm/index.html">abacusai.default_llm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment/index.html">abacusai.deployment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment_auth_token/index.html">abacusai.deployment_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment_conversation/index.html">abacusai.deployment_conversation</a></li>
@@ -204,6 +207,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../llm_input/index.html">abacusai.llm_input</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_parameters/index.html">abacusai.llm_parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html">abacusai.llm_response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mcp_config/index.html">abacusai.mcp_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html">abacusai.model</a></li>
@@ -303,6 +307,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_search_result/index.html">abacusai.video_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../voice_gen_details/index.html">abacusai.voice_gen_details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../web_app_domain/index.html">abacusai.web_app_domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_page_response/index.html">abacusai.web_page_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
@@ -1106,6 +1111,24 @@
 <li><p><strong>add_constraints</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignment variables involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator ‘=’ or ‘&lt;=’ or ‘&gt;=’. 3. constant (int): Constraint RHS constant value. 4. coefficient_column (str): Column in Assignment feature group to be used as coefficient for the assignment variables, optional and defaults to 1</p></li>
 <li><p><strong>solve_time_limit_seconds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum time in seconds to spend solving the query.</p></li>
 <li><p><strong>best_alternate_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – When True only the best alternate will be returned, when False multiple alternates are returned</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.get_optimisation_inputs_from_serialized">
+<span class="sig-name descname"><span class="pre">get_optimisation_inputs_from_serialized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.get_optimisation_inputs_from_serialized" title="Link to this definition"></a></dt>
+<dd><p>Get assignments for given query, with new inputs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier of a deployment created under the project.</p></li>
+<li><p><strong>query_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. (query data will be dict of names: serialized dataframes)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

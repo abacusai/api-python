@@ -698,6 +698,19 @@ Module Contents
 
 
 
+   .. py:method:: get_optimisation_inputs_from_serialized(deployment_token, deployment_id, query_data = None)
+
+      Get assignments for given query, with new inputs
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. (query data will be dict of names: serialized dataframes)
+      :type query_data: dict
+
+
+
    .. py:method:: get_assignments_online_with_new_serialized_inputs(deployment_token, deployment_id, query_data = None, solve_time_limit_seconds = None, optimality_gap_limit = None)
 
       Get assignments for given query, with new inputs

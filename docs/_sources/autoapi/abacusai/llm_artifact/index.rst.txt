@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,10 @@ Module Contents
    :type description: str
    :param createdAt: The creation timestamp
    :type createdAt: str
+   :param webAppDeploymentId: The ID of the associated web app deployment
+   :type webAppDeploymentId: id
+   :param deploymentStatus: The status of the associated web app deployment
+   :type deploymentStatus: str
 
 
    .. py:attribute:: llm_artifact_id
@@ -50,6 +54,16 @@ Module Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: web_app_deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_status
       :value: None
 
 
