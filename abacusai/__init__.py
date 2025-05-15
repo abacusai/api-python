@@ -237,6 +237,9 @@ from .streaming_client import StreamingClient
 from .streaming_connector import StreamingConnector
 from .streaming_row_count import StreamingRowCount
 from .streaming_sample_code import StreamingSampleCode
+from .stt_gen_model import SttGenModel
+from .stt_gen_model_options import SttGenModelOptions
+from .stt_gen_settings import SttGenSettings
 from .template_node_details import TemplateNodeDetails
 from .test_point_predictions import TestPointPredictions
 from .tone_details import ToneDetails
@@ -261,4 +264,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.43"
+__version__ = "1.4.44"

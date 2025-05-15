@@ -295,6 +295,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../streaming_connector/index.html">abacusai.streaming_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_row_count/index.html">abacusai.streaming_row_count</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_sample_code/index.html">abacusai.streaming_sample_code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../stt_gen_model/index.html">abacusai.stt_gen_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../stt_gen_model_options/index.html">abacusai.stt_gen_model_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../stt_gen_settings/index.html">abacusai.stt_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../template_node_details/index.html">abacusai.template_node_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../tone_details/index.html">abacusai.tone_details</a></li>
@@ -1075,7 +1078,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.43'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.44'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4470,20 +4473,6 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.sdk_link_hosted_app">
-<span class="sig-name descname"><span class="pre">sdk_link_hosted_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.sdk_link_hosted_app" title="Link to this definition"></a></dt>
-<dd><p>Returns custom SDK JS for Widget JS</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>app</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Application ID to be used as appId</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.13)">io.BytesIO</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_llm_apps">
 <span class="sig-name descname"><span class="pre">list_llm_apps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_llm_apps" title="Link to this definition"></a></dt>
 <dd><p>Lists all available LLM Apps, which are LLMs tailored to achieve a specific task like code generation for a specific service’s API.</p>
@@ -4684,8 +4673,8 @@ This gives us some data which is needed to make sense of the constraints_df.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_optimisation_input_dataframes_with_new_inputs">
-<span class="sig-name descname"><span class="pre">get_optimisation_input_dataframes_with_new_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_optimisation_input_dataframes_with_new_inputs" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_optimization_input_dataframes_with_new_inputs">
+<span class="sig-name descname"><span class="pre">get_optimization_input_dataframes_with_new_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_optimization_input_dataframes_with_new_inputs" title="Link to this definition"></a></dt>
 <dd><p>Get assignments for given query, with new inputs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -10658,8 +10647,8 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_optimisation_inputs_from_serialized">
-<span class="sig-name descname"><span class="pre">get_optimisation_inputs_from_serialized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_optimisation_inputs_from_serialized" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_optimization_inputs_from_serialized">
+<span class="sig-name descname"><span class="pre">get_optimization_inputs_from_serialized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_optimization_inputs_from_serialized" title="Link to this definition"></a></dt>
 <dd><p>Get assignments for given query, with new inputs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

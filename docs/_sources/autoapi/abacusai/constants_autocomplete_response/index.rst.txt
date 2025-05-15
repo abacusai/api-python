@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None, maxSymbolsFuzzyMatch=None, fuzzySymbolMatchThreshold=None, symbolsCacheUpdateInterval=None, symbolsStorageUpdateInterval=None, embeddingConstants=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None, maxSymbolsFuzzyMatch=None, fuzzySymbolMatchThreshold=None, symbolsCacheUpdateInterval=None, symbolsStorageUpdateInterval=None, editPredictionSimilarityThreshold=None, embeddingConstants=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -84,6 +84,8 @@ Module Contents
    :type symbolsCacheUpdateInterval: int
    :param symbolsStorageUpdateInterval: The interval in ms to update the symbols storage.
    :type symbolsStorageUpdateInterval: int
+   :param editPredictionSimilarityThreshold: The threshold for edit prediction similarity.
+   :type editPredictionSimilarityThreshold: int
    :param embeddingConstants: Embedding constants
    :type embeddingConstants: codellmembeddingconstants
 
@@ -234,6 +236,11 @@ Module Contents
 
 
    .. py:attribute:: symbols_storage_update_interval
+      :value: None
+
+
+
+   .. py:attribute:: edit_prediction_similarity_threshold
       :value: None
 
 
