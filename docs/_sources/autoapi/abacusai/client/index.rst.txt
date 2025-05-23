@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.44'
+      :value: '1.4.46'
 
 
 
@@ -1400,7 +1400,7 @@ Module Contents
 
 
 
-   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None, is_database_connector = None)
+   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None)
 
       Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
@@ -1410,8 +1410,6 @@ Module Contents
       :type application_connector_id: str
       :param scopes: The scopes to request for the connector.
       :type scopes: List
-      :param is_database_connector: Whether the connector is a database connector.
-      :type is_database_connector: bool
 
       :returns: The application connector with the authentication details.
       :rtype: ApplicationConnector
@@ -4675,6 +4673,23 @@ Module Contents
       :type project_id: str
       :param tags: The tags to remove from the project.
       :type tags: list
+
+
+
+   .. py:method:: get_raw_data_from_realtime_dataset(dataset_id, check_permissions = False, start_time = None, end_time = None, column_filter = None)
+
+      Returns raw data from a realtime dataset. Only Microsoft Teams datasets are supported currently due to data size constraints in realtime datasets.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param check_permissions: If True, checks user permissions using session email.
+      :type check_permissions: bool
+      :param start_time: Start time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+      :type start_time: str
+      :param end_time: End time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+      :type end_time: str
+      :param column_filter: Dictionary mapping column names to filter values. Only rows matching all column filters will be returned.
+      :type column_filter: dict
 
 
 

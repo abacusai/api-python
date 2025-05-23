@@ -15563,6 +15563,23 @@ Package Contents
 
 
 
+   .. py:method:: get_raw_data_from_realtime_dataset(dataset_id, check_permissions = False, start_time = None, end_time = None, column_filter = None)
+
+      Returns raw data from a realtime dataset. Only Microsoft Teams datasets are supported currently due to data size constraints in realtime datasets.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param check_permissions: If True, checks user permissions using session email.
+      :type check_permissions: bool
+      :param start_time: Start time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+      :type start_time: str
+      :param end_time: End time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+      :type end_time: str
+      :param column_filter: Dictionary mapping column names to filter values. Only rows matching all column filters will be returned.
+      :type column_filter: dict
+
+
+
    .. py:method:: add_feature_group_to_project(feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE')
 
       Adds a feature group to a project.
@@ -22175,7 +22192,7 @@ Package Contents
 
 
 
-   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None, is_database_connector = None)
+   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None)
 
       Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
@@ -22185,8 +22202,6 @@ Package Contents
       :type application_connector_id: str
       :param scopes: The scopes to request for the connector.
       :type scopes: List
-      :param is_database_connector: Whether the connector is a database connector.
-      :type is_database_connector: bool
 
       :returns: The application connector with the authentication details.
       :rtype: ApplicationConnector
@@ -24677,7 +24692,7 @@ Package Contents
 
 
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None, maxSymbolsFuzzyMatch=None, fuzzySymbolMatchThreshold=None, symbolsCacheUpdateInterval=None, symbolsStorageUpdateInterval=None, editPredictionSimilarityThreshold=None, embeddingConstants=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None, delaySummaryBatchesRateLimit=None, maxSymbolsFuzzyMatch=None, fuzzySymbolMatchThreshold=None, symbolsCacheUpdateInterval=None, symbolsStorageUpdateInterval=None, editPredictionSimilarityThreshold=None, minSearchWordLength=None, maxOccurrencesPerWord=None, maxWordsContentMatches=None, editPredictionEnabled=None, embeddingConstants=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24738,6 +24753,8 @@ Package Contents
    :type stopRapidChanges: bool
    :param delaySummaryBatches: The delay in ms between summary batches.
    :type delaySummaryBatches: int
+   :param delaySummaryBatchesRateLimit: The delay in ms in case of rate limit for delay summary batches.
+   :type delaySummaryBatchesRateLimit: int
    :param maxSymbolsFuzzyMatch: The max number of symbols to fuzzy match.
    :type maxSymbolsFuzzyMatch: int
    :param fuzzySymbolMatchThreshold: The threshold for fuzzy symbol match.
@@ -24748,6 +24765,14 @@ Package Contents
    :type symbolsStorageUpdateInterval: int
    :param editPredictionSimilarityThreshold: The threshold for edit prediction similarity.
    :type editPredictionSimilarityThreshold: int
+   :param minSearchWordLength: The minimum length of the word to be searched.
+   :type minSearchWordLength: int
+   :param maxOccurrencesPerWord: The maximum occurrences of a particular search word present in the file.
+   :type maxOccurrencesPerWord: int
+   :param maxWordsContentMatches: The maximum number of content matches from the client.
+   :type maxWordsContentMatches: int
+   :param editPredictionEnabled: Whether to enable edit prediction.
+   :type editPredictionEnabled: bool
    :param embeddingConstants: Embedding constants
    :type embeddingConstants: codellmembeddingconstants
 
@@ -24882,6 +24907,11 @@ Package Contents
 
 
 
+   .. py:attribute:: delay_summary_batches_rate_limit
+      :value: None
+
+
+
    .. py:attribute:: max_symbols_fuzzy_match
       :value: None
 
@@ -24903,6 +24933,26 @@ Package Contents
 
 
    .. py:attribute:: edit_prediction_similarity_threshold
+      :value: None
+
+
+
+   .. py:attribute:: min_search_word_length
+      :value: None
+
+
+
+   .. py:attribute:: max_occurrences_per_word
+      :value: None
+
+
+
+   .. py:attribute:: max_words_content_matches
+      :value: None
+
+
+
+   .. py:attribute:: edit_prediction_enabled
       :value: None
 
 
@@ -26005,6 +26055,21 @@ Package Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+
+   .. py:method:: get_raw_data_from_realtime(check_permissions = False, start_time = None, end_time = None, column_filter = None)
+
+      Returns raw data from a realtime dataset. Only Microsoft Teams datasets are supported currently due to data size constraints in realtime datasets.
+
+      :param check_permissions: If True, checks user permissions using session email.
+      :type check_permissions: bool
+      :param start_time: Start time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+      :type start_time: str
+      :param end_time: End time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+      :type end_time: str
+      :param column_filter: Dictionary mapping column names to filter values. Only rows matching all column filters will be returned.
+      :type column_filter: dict
 
 
 
@@ -29856,7 +29921,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, onlyImageGenEnabled=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, onlyImageGenEnabled=None, projectId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29903,6 +29968,8 @@ Package Contents
    :type hasThinkingOption: bool
    :param onlyImageGenEnabled: Whether to LLM only allows image generation.
    :type onlyImageGenEnabled: bool
+   :param projectId: The project id associated with the external application.
+   :type projectId: str
 
 
    .. py:attribute:: name
@@ -29996,6 +30063,11 @@ Package Contents
 
 
    .. py:attribute:: only_image_gen_enabled
+      :value: None
+
+
+
+   .. py:attribute:: project_id
       :value: None
 
 
@@ -47800,6 +47872,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.44'
+   :value: '1.4.46'
 
 

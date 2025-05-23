@@ -204,6 +204,21 @@ Module Contents
 
 
 
+   .. py:method:: get_raw_data_from_realtime(check_permissions = False, start_time = None, end_time = None, column_filter = None)
+
+      Returns raw data from a realtime dataset. Only Microsoft Teams datasets are supported currently due to data size constraints in realtime datasets.
+
+      :param check_permissions: If True, checks user permissions using session email.
+      :type check_permissions: bool
+      :param start_time: Start time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+      :type start_time: str
+      :param end_time: End time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+      :type end_time: str
+      :param column_filter: Dictionary mapping column names to filter values. Only rows matching all column filters will be returned.
+      :type column_filter: dict
+
+
+
    .. py:method:: create_version_from_file_connector(location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None, parsing_config = None, sql_query = None)
 
       Creates a new version of the specified dataset.

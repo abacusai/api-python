@@ -661,7 +661,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.44'
+    client_version = '1.4.46'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -864,6 +864,21 @@ class BaseApiClient:
                 query_params = {**(query_params or {}), 'isAgent': True}
             if get_object_from_context(self, _request_context, 'is_agent_api', bool):
                 query_params = {**(query_params or {}), 'isAgentApi': True}
+            if get_object_from_context(self, _request_context, 'is_agent', bool):
+                query_params = {**(query_params or {}), 'isAgent': True}
+            hashed_deployment_id = get_object_from_context(
+                self, _request_context, 'deployment_id', str)
+            if hashed_deployment_id:
+                query_params = {**(query_params or {}),
+                                'deploymentId': hashed_deployment_id}
+            user_info = get_object_from_context(
+                self, _request_context, 'user_info', dict)
+            if user_info:
+                user_id = user_info.get('user_id')
+                if user_id:
+                    query_params = {**(query_params or {}),
+                                    'userId': user_info.get('user_id')}
+
         endpoint = self.proxy_endpoint
         if endpoint is None:
             raise Exception(
@@ -1561,18 +1576,17 @@ class ReadOnlyClient(BaseApiClient):
             application_connector_id (str): Unique string identifier for the application connector."""
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
-    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None, application_connector_id: str = None, scopes: List = None, is_database_connector: bool = None) -> ApplicationConnector:
+    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None, application_connector_id: str = None, scopes: List = None) -> ApplicationConnector:
         """Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
         Args:
             service (ApplicationConnectorType): The service name.
             application_connector_id (str): The unique ID associated with the connector.
             scopes (List): The scopes to request for the connector.
-            is_database_connector (bool): Whether the connector is a database connector.
 
         Returns:
             ApplicationConnector: The application connector with the authentication details."""
-        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'applicationConnectorId': application_connector_id, 'scopes': scopes, 'isDatabaseConnector': is_database_connector}, parse_type=ApplicationConnector)
+        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'applicationConnectorId': application_connector_id, 'scopes': scopes}, parse_type=ApplicationConnector)
 
     def list_streaming_connectors(self) -> List[StreamingConnector]:
         """Retrieves a list of all streaming connectors along with their corresponding attributes.
@@ -4204,9 +4218,15 @@ class ApiClient(ReadOnlyClient):
                 self, _request_context, 'is_agent', bool)
             is_agent_api = get_object_from_context(
                 self, _request_context, 'is_agent_api', bool)
-
-            result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens, temperature=temperature, messages=messages,
-                                           response_type=response_type, json_response_schema=json_response_schema, section_key=section_key, is_agent=is_agent, is_agent_api=is_agent_api)
+            deployment_id = get_object_from_context(
+                self, _request_context, 'deployment_id', str)
+            user_id = None
+            user_info = get_object_from_context(
+                self, _request_context, 'user_info', dict)
+            if user_info:
+                user_id = user_info.get('user_id')
+            result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens, temperature=temperature, messages=messages, response_type=response_type,
+                                           json_response_schema=json_response_schema, section_key=section_key, is_agent=is_agent, is_agent_api=is_agent_api, deployment_id=deployment_id, user_id=user_id)
         else:
             result = self.evaluate_prompt(prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens,
                                           temperature=temperature, messages=messages, response_type=response_type, json_response_schema=json_response_schema).content
@@ -4966,6 +4986,17 @@ class ApiClient(ReadOnlyClient):
             project_id (str): The unique identifier for the project.
             tags (list): The tags to remove from the project."""
         return self._call_api('removeProjectTags', 'DELETE', query_params={'projectId': project_id, 'tags': tags})
+
+    def get_raw_data_from_realtime_dataset(self, dataset_id: str, check_permissions: bool = False, start_time: str = None, end_time: str = None, column_filter: dict = None) -> Dict:
+        """Returns raw data from a realtime dataset. Only Microsoft Teams datasets are supported currently due to data size constraints in realtime datasets.
+
+        Args:
+            dataset_id (str): The unique ID associated with the dataset.
+            check_permissions (bool): If True, checks user permissions using session email.
+            start_time (str): Start time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+            end_time (str): End time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+            column_filter (dict): Dictionary mapping column names to filter values. Only rows matching all column filters will be returned."""
+        return self._call_api('getRawDataFromRealtimeDataset', 'POST', query_params={'datasetId': dataset_id}, body={'checkPermissions': check_permissions, 'startTime': start_time, 'endTime': end_time, 'columnFilter': column_filter})
 
     def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         """Adds a feature group to a project.

@@ -96,6 +96,18 @@ class Dataset(AbstractApiClass):
                 'extract_bounding_boxes': self.extract_bounding_boxes, 'merge_file_schemas': self.merge_file_schemas, 'reference_only_documentset': self.reference_only_documentset, 'version_limit': self.version_limit, 'schema': self._get_attribute_as_dict(self.schema), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_dataset_version': self._get_attribute_as_dict(self.latest_dataset_version), 'parsing_config': self._get_attribute_as_dict(self.parsing_config), 'document_processing_config': self._get_attribute_as_dict(self.document_processing_config), 'attachment_parsing_config': self._get_attribute_as_dict(self.attachment_parsing_config)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
+    def get_raw_data_from_realtime(self, check_permissions: bool = False, start_time: str = None, end_time: str = None, column_filter: dict = None):
+        """
+        Returns raw data from a realtime dataset. Only Microsoft Teams datasets are supported currently due to data size constraints in realtime datasets.
+
+        Args:
+            check_permissions (bool): If True, checks user permissions using session email.
+            start_time (str): Start time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+            end_time (str): End time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).
+            column_filter (dict): Dictionary mapping column names to filter values. Only rows matching all column filters will be returned.
+        """
+        return self.client.get_raw_data_from_realtime_dataset(self.dataset_id, check_permissions, start_time, end_time, column_filter)
+
     def create_version_from_file_connector(self, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None, sql_query: str = None):
         """
         Creates a new version of the specified dataset.
