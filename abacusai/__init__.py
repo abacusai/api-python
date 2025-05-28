@@ -157,6 +157,7 @@ from .llm_input import LlmInput
 from .llm_parameters import LlmParameters
 from .llm_response import LlmResponse
 from .mcp_config import McpConfig
+from .mcp_server import McpServer
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
 from .model import Model
@@ -264,4 +265,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.46"
+__version__ = "1.4.47"

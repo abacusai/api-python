@@ -1,0 +1,99 @@
+abacusai.mcp_server
+===================
+
+.. py:module:: abacusai.mcp_server
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.mcp_server.McpServer
+
+
+Module Contents
+---------------
+
+.. py:class:: McpServer(client, name=None, description=None, envVars=None, config=None, envVarInstructions=None, url=None, isActive=None, metadata=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Model Context Protocol Server
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the MCP server.
+   :type name: str
+   :param description: description of what the MCP server does.
+   :type description: str
+   :param envVars: list of api_keys or credentials required by the MCP server.
+   :type envVars: list
+   :param config: a json string containing the command and arguments for the MCP server.
+   :type config: str
+   :param envVarInstructions: instructions for the user to get the environment variables.
+   :type envVarInstructions: str
+   :param url: The url of the MCP server github repository or webpage.
+   :type url: str
+   :param isActive: Whether the MCP server is active.
+   :type isActive: bool
+   :param metadata: additional information about the MCP server including github_stars, etc.
+   :type metadata: dict
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: env_vars
+      :value: None
+
+
+
+   .. py:attribute:: config
+      :value: None
+
+
+
+   .. py:attribute:: env_var_instructions
+      :value: None
+
+
+
+   .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: is_active
+      :value: None
+
+
+
+   .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

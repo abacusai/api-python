@@ -172,6 +172,7 @@ Submodules
    /autoapi/abacusai/llm_parameters/index
    /autoapi/abacusai/llm_response/index
    /autoapi/abacusai/mcp_config/index
+   /autoapi/abacusai/mcp_server/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
    /autoapi/abacusai/model/index
@@ -681,6 +682,7 @@ Classes
    abacusai.LlmParameters
    abacusai.LlmResponse
    abacusai.McpConfig
+   abacusai.McpServer
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
    abacusai.Model
@@ -2215,11 +2217,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2268,11 +2265,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2349,11 +2341,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2376,11 +2363,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2406,11 +2388,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(configs)
@@ -2511,11 +2488,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: is_template_node()
 
@@ -2594,11 +2566,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(node)
@@ -2689,11 +2656,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -2734,11 +2696,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -2782,11 +2739,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2826,11 +2778,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2867,11 +2814,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(mapping)
@@ -3398,10 +3340,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -3537,10 +3475,6 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4344,10 +4278,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -4735,10 +4665,6 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -10623,10 +10549,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11216,10 +11138,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11288,10 +11206,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11335,11 +11249,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: FeatureMappingConfig
@@ -11512,10 +11421,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11666,11 +11571,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -11734,19 +11634,10 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -11785,11 +11676,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:data:: Segment
@@ -11937,11 +11823,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ListResponseSection(items, section_key = None)
@@ -19067,7 +18948,7 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -19123,7 +19004,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -24692,7 +24573,7 @@ Package Contents
 
 
 
-.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None, delaySummaryBatchesRateLimit=None, maxSymbolsFuzzyMatch=None, fuzzySymbolMatchThreshold=None, symbolsCacheUpdateInterval=None, symbolsStorageUpdateInterval=None, editPredictionSimilarityThreshold=None, minSearchWordLength=None, maxOccurrencesPerWord=None, maxWordsContentMatches=None, editPredictionEnabled=None, embeddingConstants=None)
+.. py:class:: ConstantsAutocompleteResponse(client, maxPendingRequests=None, acceptanceDelay=None, debounceDelay=None, recordUserAction=None, validateSuggestion=None, validationLinesThreshold=None, maxTrackedRecentChanges=None, diffThreshold=None, derivativeThreshold=None, defaultSurroundingLines=None, maxTrackedVisitChanges=None, selectionCooldownMs=None, viewingCooldownMs=None, maxLines=None, editCooldownMs=None, scrollDebounceMs=None, lspDeadline=None, diagnosticsThreshold=None, diagnosticEachThreshold=None, numVsCodeSuggestions=None, minReindexingInterval=None, minRefreshSummaryInterval=None, summaryBatchSize=None, jobReorderInterval=None, stopRapidChanges=None, delaySummaryBatches=None, delaySummaryBatchesRateLimit=None, maxSymbolsFuzzyMatch=None, fuzzySymbolMatchThreshold=None, symbolsCacheUpdateInterval=None, symbolsStorageUpdateInterval=None, editPredictionSimilarityThreshold=None, minSearchWordLength=None, maxOccurrencesPerWord=None, maxWordsContentMatches=None, editPredictionEnabled=None, snapshotIntervalMs=None, linesForSnapshot=None, embeddingConstants=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24773,6 +24654,10 @@ Package Contents
    :type maxWordsContentMatches: int
    :param editPredictionEnabled: Whether to enable edit prediction.
    :type editPredictionEnabled: bool
+   :param snapshotIntervalMs: The interval in ms to snapshot the file for recent file changes.
+   :type snapshotIntervalMs: int
+   :param linesForSnapshot: Limit of max number of lines to snapshot for recent file changes.
+   :type linesForSnapshot: int
    :param embeddingConstants: Embedding constants
    :type embeddingConstants: codellmembeddingconstants
 
@@ -24953,6 +24838,16 @@ Package Contents
 
 
    .. py:attribute:: edit_prediction_enabled
+      :value: None
+
+
+
+   .. py:attribute:: snapshot_interval_ms
+      :value: None
+
+
+
+   .. py:attribute:: lines_for_snapshot
       :value: None
 
 
@@ -27200,7 +27095,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None)
+   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -36263,6 +36158,88 @@ Package Contents
 
 
 
+.. py:class:: McpServer(client, name=None, description=None, envVars=None, config=None, envVarInstructions=None, url=None, isActive=None, metadata=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Model Context Protocol Server
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the MCP server.
+   :type name: str
+   :param description: description of what the MCP server does.
+   :type description: str
+   :param envVars: list of api_keys or credentials required by the MCP server.
+   :type envVars: list
+   :param config: a json string containing the command and arguments for the MCP server.
+   :type config: str
+   :param envVarInstructions: instructions for the user to get the environment variables.
+   :type envVarInstructions: str
+   :param url: The url of the MCP server github repository or webpage.
+   :type url: str
+   :param isActive: Whether the MCP server is active.
+   :type isActive: bool
+   :param metadata: additional information about the MCP server including github_stars, etc.
+   :type metadata: dict
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: env_vars
+      :value: None
+
+
+
+   .. py:attribute:: config
+      :value: None
+
+
+
+   .. py:attribute:: env_var_instructions
+      :value: None
+
+
+
+   .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: is_active
+      :value: None
+
+
+
+   .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: MemoryOptions(client, cpu={}, gpu={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -36381,7 +36358,7 @@ Package Contents
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36402,10 +36379,6 @@ Package Contents
    :type createdAt: str
    :param projectId: The project this model belongs to.
    :type projectId: str
-   :param shared: If model is shared to the Abacus.AI model showcase.
-   :type shared: bool
-   :param sharedAt: The date and time at which the model was shared to the model showcase
-   :type sharedAt: str
    :param trainFunctionName: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
    :type trainFunctionName: str
    :param predictFunctionName: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
@@ -36488,16 +36461,6 @@ Package Contents
 
 
    .. py:attribute:: project_id
-      :value: None
-
-
-
-   .. py:attribute:: shared
-      :value: None
-
-
-
-   .. py:attribute:: shared_at
       :value: None
 
 
@@ -42143,7 +42106,7 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -42199,7 +42162,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -47872,6 +47835,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.46'
+   :value: '1.4.47'
 
 

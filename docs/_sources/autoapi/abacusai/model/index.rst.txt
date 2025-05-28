@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,10 +36,6 @@ Module Contents
    :type createdAt: str
    :param projectId: The project this model belongs to.
    :type projectId: str
-   :param shared: If model is shared to the Abacus.AI model showcase.
-   :type shared: bool
-   :param sharedAt: The date and time at which the model was shared to the model showcase
-   :type sharedAt: str
    :param trainFunctionName: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
    :type trainFunctionName: str
    :param predictFunctionName: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
@@ -122,16 +118,6 @@ Module Contents
 
 
    .. py:attribute:: project_id
-      :value: None
-
-
-
-   .. py:attribute:: shared
-      :value: None
-
-
-
-   .. py:attribute:: shared_at
       :value: None
 
 
