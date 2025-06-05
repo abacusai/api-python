@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,6 +26,10 @@ Module Contents
    :type client: ApiClient
    :param chatllmTaskId: The id of the chatllm task.
    :type chatllmTaskId: str
+   :param daemonTaskId: The id of the daemon task.
+   :type daemonTaskId: str
+   :param taskType: The type of task ('chatllm' or 'daemon').
+   :type taskType: str
    :param name: The name of the chatllm task.
    :type name: str
    :param instructions: The instructions of the chatllm task.
@@ -38,6 +42,8 @@ Module Contents
    :type externalApplicationId: str
    :param deploymentConversationId: The deployment conversation id associated with the chatllm task.
    :type deploymentConversationId: str
+   :param sourceDeploymentConversationId: The source deployment conversation id associated with the chatllm task.
+   :type sourceDeploymentConversationId: str
    :param enableEmailAlerts: Whether email alerts are enabled for the chatllm task.
    :type enableEmailAlerts: bool
    :param email: The email to send alerts to.
@@ -49,6 +55,16 @@ Module Contents
 
 
    .. py:attribute:: chatllm_task_id
+      :value: None
+
+
+
+   .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: task_type
       :value: None
 
 
@@ -79,6 +95,11 @@ Module Contents
 
 
    .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_id
       :value: None
 
 

@@ -12,20 +12,22 @@ class WebAppDomain(AbstractApiClass):
             domainType (str): The type of the web app domain
             lifecycle (str): The lifecycle of the web app domain
             nameservers (list): The nameservers of the web app domain
+            dnsRecords (list): The DNS records of the web app domain
     """
 
-    def __init__(self, client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None):
+    def __init__(self, client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None):
         super().__init__(client, webAppDomainId)
         self.web_app_domain_id = webAppDomainId
         self.hostname = hostname
         self.domain_type = domainType
         self.lifecycle = lifecycle
         self.nameservers = nameservers
+        self.dns_records = dnsRecords
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'web_app_domain_id': repr(self.web_app_domain_id), f'hostname': repr(self.hostname), f'domain_type': repr(
-            self.domain_type), f'lifecycle': repr(self.lifecycle), f'nameservers': repr(self.nameservers)}
+            self.domain_type), f'lifecycle': repr(self.lifecycle), f'nameservers': repr(self.nameservers), f'dns_records': repr(self.dns_records)}
         class_name = "WebAppDomain"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -38,6 +40,6 @@ class WebAppDomain(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'web_app_domain_id': self.web_app_domain_id, 'hostname': self.hostname,
-                'domain_type': self.domain_type, 'lifecycle': self.lifecycle, 'nameservers': self.nameservers}
+        resp = {'web_app_domain_id': self.web_app_domain_id, 'hostname': self.hostname, 'domain_type': self.domain_type,
+                'lifecycle': self.lifecycle, 'nameservers': self.nameservers, 'dns_records': self.dns_records}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

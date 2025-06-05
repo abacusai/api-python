@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="abacusai.video_search_result" href="../video_search_result/index.html" />
-    <link rel="prev" title="abacusai.user_exception" href="../user_exception/index.html" /> 
+    <link rel="prev" title="abacusai.video_gen_model_options" href="../video_gen_model_options/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -304,6 +304,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video_gen_model/index.html">abacusai.video_gen_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">abacusai.video_gen_settings</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
@@ -370,26 +372,26 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.video_gen_settings.</span></span><span class="sig-name descname"><span class="pre">VideoGenSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.video_gen_settings.</span></span><span class="sig-name descname"><span class="pre">VideoGenSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Video generation settings</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The model settings.</p></li>
 <li><p><strong>settings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The settings for each model.</p></li>
+<li><p><strong>model</strong> (<a class="reference internal" href="../index.html#abacusai.VideoGenModel" title="abacusai.VideoGenModel"><em>VideoGenModel</em></a>) – Dropdown for models available for video generation.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.model">
-<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.model" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.settings">
+<span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.settings" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.settings">
-<span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.settings" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.video_gen_settings.VideoGenSettings.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#abacusai.video_gen_settings.VideoGenSettings.model" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -425,7 +427,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../user_exception/index.html" class="btn btn-neutral float-left" title="abacusai.user_exception" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../video_gen_model_options/index.html" class="btn btn-neutral float-left" title="abacusai.video_gen_model_options" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../video_search_result/index.html" class="btn btn-neutral float-right" title="abacusai.video_search_result" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

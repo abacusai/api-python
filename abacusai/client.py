@@ -661,7 +661,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.47'
+    client_version = '1.4.48'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -855,8 +855,9 @@ class BaseApiClient:
         headers = {'APIKEY': self.api_key}
         deployment_id = os.getenv('ABACUS_EXEC_SERVICE_DEPLOYMENT_ID')
         if deployment_id:
-            query_params = {**(query_params or {}),
-                            'environmentDeploymentId': deployment_id}
+            if not (query_params or {}).get('deploymentId') or deployment_id == (query_params or {}).get('deploymentId'):
+                query_params = {**(query_params or {}),
+                                'environmentDeploymentId': deployment_id}
         caller = self._get_agent_caller()
         request_id = self._get_agent_app_request_id()
         if caller and request_id:
@@ -870,7 +871,7 @@ class BaseApiClient:
                 self, _request_context, 'deployment_id', str)
             if hashed_deployment_id:
                 query_params = {**(query_params or {}),
-                                'deploymentId': hashed_deployment_id}
+                                'billingDeploymentId': hashed_deployment_id}
             user_info = get_object_from_context(
                 self, _request_context, 'user_info', dict)
             if user_info:
@@ -7836,9 +7837,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier for the deployment created under the project.
             arguments (list): Positional arguments to the agent execute function.
             keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
+        return self._proxy_request('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, is_sync=True)
 
     def get_matrix_agent_schema(self, deployment_token: str, deployment_id: str, query: str, doc_infos: list = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
@@ -7867,9 +7866,7 @@ Creates a new feature group defined as the union of other feature group versions
             regenerate (bool): If True, will regenerate the response from the last query.
             doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
             agent_workflow_node_id (str): An optional agent workflow node id to trigger agent execution from an intermediate node."""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos, 'agentWorkflowNodeId': agent_workflow_node_id}, server_override=prediction_url)
+        return self._proxy_request('executeSyncConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos, 'agentWorkflowNodeId': agent_workflow_node_id}, is_sync=True)
 
     def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: dict = None, include_text_search: bool = False) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
@@ -7913,7 +7910,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getCompletion', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'prompt': prompt}, server_override=prediction_url)
 
-    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, blobs: None = None) -> Dict:
+    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, blobs: None = None) -> AgentDataExecutionResult:
         """Executes a deployed AI agent function with binary data as inputs.
 
         Args:
@@ -7927,9 +7924,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             AgentDataExecutionResult: The result of the agent execution"""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
+        return self._proxy_request('executeAgentWithBinaryData', 'POST', query_params={}, data={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': json.dumps(keyword_arguments.to_dict()) if hasattr(keyword_arguments, 'to_dict') else json.dumps(keyword_arguments), 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, files=blobs, parse_type=AgentDataExecutionResult, is_sync=True)
 
     def start_autonomous_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, save_conversations: bool = True) -> Dict:
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.

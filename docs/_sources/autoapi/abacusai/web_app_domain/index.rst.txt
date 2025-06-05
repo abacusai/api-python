@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type lifecycle: str
    :param nameservers: The nameservers of the web app domain
    :type nameservers: list
+   :param dnsRecords: The DNS records of the web app domain
+   :type dnsRecords: list
 
 
    .. py:attribute:: web_app_domain_id
@@ -57,6 +59,11 @@ Module Contents
 
 
    .. py:attribute:: nameservers
+      :value: None
+
+
+
+   .. py:attribute:: dns_records
       :value: None
 
 

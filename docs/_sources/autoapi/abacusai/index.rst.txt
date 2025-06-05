@@ -268,6 +268,8 @@ Submodules
    /autoapi/abacusai/use_case_requirements/index
    /autoapi/abacusai/user/index
    /autoapi/abacusai/user_exception/index
+   /autoapi/abacusai/video_gen_model/index
+   /autoapi/abacusai/video_gen_model_options/index
    /autoapi/abacusai/video_gen_settings/index
    /autoapi/abacusai/video_search_result/index
    /autoapi/abacusai/voice_gen_details/index
@@ -776,6 +778,8 @@ Classes
    abacusai.UseCaseRequirements
    abacusai.User
    abacusai.UserException
+   abacusai.VideoGenModel
+   abacusai.VideoGenModelOptions
    abacusai.VideoGenSettings
    abacusai.VideoSearchResult
    abacusai.VoiceGenDetails
@@ -2217,6 +2221,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2265,6 +2274,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2341,6 +2355,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2363,6 +2382,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2388,6 +2412,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -2488,6 +2517,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: is_template_node()
 
@@ -2566,6 +2600,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -2656,6 +2695,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -2696,6 +2740,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -2739,6 +2788,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2778,6 +2832,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2814,6 +2873,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3340,6 +3404,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -3475,6 +3543,10 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -3867,21 +3939,15 @@ Package Contents
    Dataset config for Confluence Application Connector
    :param location: The location of the pages to fetch
    :type location: str
-   :param space_key: The space key of the space from which we fetch pages
-   :type space_key: str
    :param pull_attachments: Whether to pull attachments for each page
    :type pull_attachments: bool
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
    :type extract_bounding_boxes: bool
+   :param location_type: The type of location to be fetched. Maps values in `location` to content type, example: 'spaceKey/folderTitle/*' -> 'folder'
+   :type location_type: str
 
 
    .. py:attribute:: location
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: space_key
       :type:  str
       :value: None
 
@@ -3896,6 +3962,12 @@ Package Contents
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
       :value: False
+
+
+
+   .. py:attribute:: location_type
+      :type:  str
+      :value: None
 
 
 
@@ -4026,11 +4098,35 @@ Package Contents
 
    :param jql: The JQL query for fetching issues
    :type jql: str
+   :param custom_fields: A list of custom fields to include in the dataset
+   :type custom_fields: list
+   :param include_comments: Fetch comments for each issue
+   :type include_comments: bool
+   :param include_watchers: Fetch watchers for each issue
+   :type include_watchers: bool
 
 
    .. py:attribute:: jql
       :type:  str
       :value: None
+
+
+
+   .. py:attribute:: custom_fields
+      :type:  list
+      :value: None
+
+
+
+   .. py:attribute:: include_comments
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: include_watchers
+      :type:  bool
+      :value: False
 
 
 
@@ -4276,6 +4372,10 @@ Package Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4665,6 +4765,10 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -6827,6 +6931,16 @@ Package Contents
 
    .. py:attribute:: CLAUDE_V3_7_SONNET
       :value: 'CLAUDE_V3_7_SONNET'
+
+
+
+   .. py:attribute:: CLAUDE_V4_SONNET
+      :value: 'CLAUDE_V4_SONNET'
+
+
+
+   .. py:attribute:: CLAUDE_V4_OPUS
+      :value: 'CLAUDE_V4_OPUS'
 
 
 
@@ -10549,6 +10663,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11138,6 +11256,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11206,6 +11328,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11249,6 +11375,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: FeatureMappingConfig
@@ -11421,6 +11552,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -11571,6 +11706,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -11634,10 +11774,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -11676,6 +11825,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:data:: Segment
@@ -11823,6 +11977,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: ListResponseSection(items, section_key = None)
@@ -13723,7 +13882,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -13734,6 +13893,10 @@ Package Contents
    :type client: ApiClient
    :param chatllmTaskId: The id of the chatllm task.
    :type chatllmTaskId: str
+   :param daemonTaskId: The id of the daemon task.
+   :type daemonTaskId: str
+   :param taskType: The type of task ('chatllm' or 'daemon').
+   :type taskType: str
    :param name: The name of the chatllm task.
    :type name: str
    :param instructions: The instructions of the chatllm task.
@@ -13746,6 +13909,8 @@ Package Contents
    :type externalApplicationId: str
    :param deploymentConversationId: The deployment conversation id associated with the chatllm task.
    :type deploymentConversationId: str
+   :param sourceDeploymentConversationId: The source deployment conversation id associated with the chatllm task.
+   :type sourceDeploymentConversationId: str
    :param enableEmailAlerts: Whether email alerts are enabled for the chatllm task.
    :type enableEmailAlerts: bool
    :param email: The email to send alerts to.
@@ -13757,6 +13922,16 @@ Package Contents
 
 
    .. py:attribute:: chatllm_task_id
+      :value: None
+
+
+
+   .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: task_type
       :value: None
 
 
@@ -13787,6 +13962,11 @@ Package Contents
 
 
    .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_id
       :value: None
 
 
@@ -27430,7 +27610,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27485,6 +27665,8 @@ Package Contents
    :type totalEvents: int
    :param contestNames: Names of contests that this deployment is a part of.
    :type contestNames: list[str]
+   :param daemonTaskId: The daemon task id associated with the deployment conversation.
+   :type daemonTaskId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -27602,6 +27784,11 @@ Package Contents
 
 
    .. py:attribute:: contest_names
+      :value: None
+
+
+
+   .. py:attribute:: daemon_task_id
       :value: None
 
 
@@ -29816,7 +30003,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, onlyImageGenEnabled=None, projectId=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29865,6 +30052,8 @@ Package Contents
    :type onlyImageGenEnabled: bool
    :param projectId: The project id associated with the external application.
    :type projectId: str
+   :param isCodellmChatmodeSupported: Whether the external application is codellm chatmode supported
+   :type isCodellmChatmodeSupported: bool
 
 
    .. py:attribute:: name
@@ -29963,6 +30152,11 @@ Package Contents
 
 
    .. py:attribute:: project_id
+      :value: None
+
+
+
+   .. py:attribute:: is_codellm_chatmode_supported
       :value: None
 
 
@@ -42546,21 +42740,6 @@ Package Contents
 
 
 
-   .. py:method:: execute_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None)
-
-      Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique string identifier for the deployment created under the project.
-      :type deployment_id: str
-      :param arguments: Positional arguments to the agent execute function.
-      :type arguments: list
-      :param keyword_arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type keyword_arguments: dict
-
-
-
    .. py:method:: get_matrix_agent_schema(deployment_token, deployment_id, query, doc_infos = None, deployment_conversation_id = None, external_session_id = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
@@ -42577,31 +42756,6 @@ Package Contents
       :type deployment_conversation_id: str
       :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
       :type external_session_id: str
-
-
-
-   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None, agent_workflow_node_id = None)
-
-      Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique string identifier for the deployment created under the project.
-      :type deployment_id: str
-      :param arguments: Positional arguments to the agent execute function.
-      :type arguments: list
-      :param keyword_arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type keyword_arguments: dict
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
-      :type deployment_conversation_id: str
-      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-      :type external_session_id: str
-      :param regenerate: If True, will regenerate the response from the last query.
-      :type regenerate: bool
-      :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
-      :type doc_infos: list
-      :param agent_workflow_node_id: An optional agent workflow node id to trigger agent execution from an intermediate node.
-      :type agent_workflow_node_id: str
 
 
 
@@ -42660,30 +42814,6 @@ Package Contents
       :type deployment_id: str
       :param prompt: The prompt given to the finetuned LLM to generate the completion.
       :type prompt: str
-
-
-
-   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
-
-      Executes a deployed AI agent function with binary data as inputs.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique string identifier for the deployment created under the project.
-      :type deployment_id: str
-      :param arguments: Positional arguments to the agent execute function.
-      :type arguments: list
-      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type keyword_arguments: dict
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
-      :type deployment_conversation_id: str
-      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-      :type external_session_id: str
-      :param blobs: A dictionary of binary data to use as inputs to the agent execute function.
-      :type blobs: None
-
-      :returns: The result of the agent execution
-      :rtype: AgentDataExecutionResult
 
 
 
@@ -47240,7 +47370,120 @@ Package Contents
 
 
 
-.. py:class:: VideoGenSettings(client, model=None, settings=None)
+.. py:class:: VideoGenModel(client, displayName=None, type=None, valueType=None, optional=None, default=None, helptext=None, options={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Video generation model
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param displayName: The display name for the UI component.
+   :type displayName: str
+   :param type: The type of the UI component.
+   :type type: str
+   :param valueType: The data type of the values within the UI component.
+   :type valueType: str
+   :param optional: Whether the selection of a value is optional.
+   :type optional: bool
+   :param default: The default value for the video generation model.
+   :type default: str
+   :param helptext: The helptext for the UI component.
+   :type helptext: str
+   :param options: The options of models available for video generation.
+   :type options: VideoGenModelOptions
+
+
+   .. py:attribute:: display_name
+      :value: None
+
+
+
+   .. py:attribute:: type
+      :value: None
+
+
+
+   .. py:attribute:: value_type
+      :value: None
+
+
+
+   .. py:attribute:: optional
+      :value: None
+
+
+
+   .. py:attribute:: default
+      :value: None
+
+
+
+   .. py:attribute:: helptext
+      :value: None
+
+
+
+   .. py:attribute:: options
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: VideoGenModelOptions(client, keys=None, values=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Video generation model options
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param keys: The keys of the video generation model options represented as the enum values.
+   :type keys: list
+   :param values: The display names of the video generation model options.
+   :type values: list
+
+
+   .. py:attribute:: keys
+      :value: None
+
+
+
+   .. py:attribute:: values
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: VideoGenSettings(client, settings=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -47249,20 +47492,18 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param model: The model settings.
-   :type model: dict
    :param settings: The settings for each model.
    :type settings: dict
-
-
-   .. py:attribute:: model
-      :value: None
-
+   :param model: Dropdown for models available for video generation.
+   :type model: VideoGenModel
 
 
    .. py:attribute:: settings
       :value: None
 
+
+
+   .. py:attribute:: model
 
 
    .. py:attribute:: deprecated_keys
@@ -47381,7 +47622,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -47400,6 +47641,8 @@ Package Contents
    :type lifecycle: str
    :param nameservers: The nameservers of the web app domain
    :type nameservers: list
+   :param dnsRecords: The DNS records of the web app domain
+   :type dnsRecords: list
 
 
    .. py:attribute:: web_app_domain_id
@@ -47423,6 +47666,11 @@ Package Contents
 
 
    .. py:attribute:: nameservers
+      :value: None
+
+
+
+   .. py:attribute:: dns_records
       :value: None
 
 
@@ -47835,6 +48083,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.47'
+   :value: '1.4.48'
 
 

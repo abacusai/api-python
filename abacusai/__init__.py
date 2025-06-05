@@ -253,6 +253,8 @@ from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
 from .user_exception import UserException
+from .video_gen_model import VideoGenModel
+from .video_gen_model_options import VideoGenModelOptions
 from .video_gen_settings import VideoGenSettings
 from .video_search_result import VideoSearchResult
 from .voice_gen_details import VoiceGenDetails
@@ -265,4 +267,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.47"
+__version__ = "1.4.48"

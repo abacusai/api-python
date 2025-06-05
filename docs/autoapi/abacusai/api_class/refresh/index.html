@@ -311,6 +311,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../video_gen_model/index.html">abacusai.video_gen_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_search_result/index.html">abacusai.video_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../voice_gen_details/index.html">abacusai.voice_gen_details</a></li>
@@ -374,7 +376,7 @@
 <td><p>Database connector export config for feature groups</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.refresh._FeatureGroupExportConfigFactory" title="abacusai.api_class.refresh._FeatureGroupExportConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_FeatureGroupExportConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
 </table>
@@ -429,7 +431,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.refresh.FileConnectorExportConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.refresh.FileConnectorExportConfig.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -488,7 +493,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.refresh.DatabaseConnectorExportConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.refresh.DatabaseConnectorExportConfig.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -496,6 +504,8 @@
 <dt class="sig sig-object py" id="abacusai.api_class.refresh._FeatureGroupExportConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.refresh.</span></span><span class="sig-name descname"><span class="pre">_FeatureGroupExportConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.refresh._FeatureGroupExportConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.refresh._FeatureGroupExportConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.refresh._FeatureGroupExportConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>

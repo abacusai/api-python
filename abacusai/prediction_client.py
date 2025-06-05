@@ -2,7 +2,6 @@ import io
 import json
 from typing import Dict, List
 
-from .agent_data_execution_result import AgentDataExecutionResult
 from .client import BaseApiClient, ClientOptions
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
 
@@ -682,18 +681,6 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, streamable_response=True, server_override=prediction_url)
 
-    def execute_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
-        """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
-
-        Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-            deployment_id (str): A unique string identifier for the deployment created under the project.
-            arguments (list): Positional arguments to the agent execute function.
-            keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
-
     def get_matrix_agent_schema(self, deployment_token: str, deployment_id: str, query: str, doc_infos: list = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -707,23 +694,6 @@ class PredictionClient(BaseApiClient):
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getMatrixAgentSchema', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'query': query, 'docInfos': doc_infos, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url, timeout=1500)
-
-    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None, agent_workflow_node_id: str = None) -> Dict:
-        """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
-
-        Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-            deployment_id (str): A unique string identifier for the deployment created under the project.
-            arguments (list): Positional arguments to the agent execute function.
-            keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
-            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-            regenerate (bool): If True, will regenerate the response from the last query.
-            doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
-            agent_workflow_node_id (str): An optional agent workflow node id to trigger agent execution from an intermediate node."""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos, 'agentWorkflowNodeId': agent_workflow_node_id}, server_override=prediction_url)
 
     def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: dict = None, include_text_search: bool = False) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
@@ -766,24 +736,6 @@ class PredictionClient(BaseApiClient):
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getCompletion', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'prompt': prompt}, server_override=prediction_url)
-
-    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, blobs: None = None) -> Dict:
-        """Executes a deployed AI agent function with binary data as inputs.
-
-        Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-            deployment_id (str): A unique string identifier for the deployment created under the project.
-            arguments (list): Positional arguments to the agent execute function.
-            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
-            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-            blobs (None): A dictionary of binary data to use as inputs to the agent execute function.
-
-        Returns:
-            AgentDataExecutionResult: The result of the agent execution"""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
 
     def start_autonomous_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, save_conversations: bool = True) -> Dict:
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.

@@ -74,21 +74,15 @@ Module Contents
    Dataset config for Confluence Application Connector
    :param location: The location of the pages to fetch
    :type location: str
-   :param space_key: The space key of the space from which we fetch pages
-   :type space_key: str
    :param pull_attachments: Whether to pull attachments for each page
    :type pull_attachments: bool
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
    :type extract_bounding_boxes: bool
+   :param location_type: The type of location to be fetched. Maps values in `location` to content type, example: 'spaceKey/folderTitle/*' -> 'folder'
+   :type location_type: str
 
 
    .. py:attribute:: location
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: space_key
       :type:  str
       :value: None
 
@@ -103,6 +97,12 @@ Module Contents
    .. py:attribute:: extract_bounding_boxes
       :type:  bool
       :value: False
+
+
+
+   .. py:attribute:: location_type
+      :type:  str
+      :value: None
 
 
 
@@ -233,11 +233,35 @@ Module Contents
 
    :param jql: The JQL query for fetching issues
    :type jql: str
+   :param custom_fields: A list of custom fields to include in the dataset
+   :type custom_fields: list
+   :param include_comments: Fetch comments for each issue
+   :type include_comments: bool
+   :param include_watchers: Fetch watchers for each issue
+   :type include_watchers: bool
 
 
    .. py:attribute:: jql
       :type:  str
       :value: None
+
+
+
+   .. py:attribute:: custom_fields
+      :type:  list
+      :value: None
+
+
+
+   .. py:attribute:: include_comments
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: include_watchers
+      :type:  bool
+      :value: False
 
 
 
@@ -483,6 +507,10 @@ Module Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class

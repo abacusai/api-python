@@ -311,6 +311,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../video_gen_model/index.html">abacusai.video_gen_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_search_result/index.html">abacusai.video_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../voice_gen_details/index.html">abacusai.voice_gen_details</a></li>
@@ -404,7 +406,7 @@
 <td><p>Dataset config for SFTP Application Connector</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
 </table>
@@ -454,20 +456,15 @@
 <p>Dataset config for Confluence Application Connector
 :param location: The location of the pages to fetch
 :type location: str
-:param space_key: The space key of the space from which we fetch pages
-:type space_key: str
 :param pull_attachments: Whether to pull attachments for each page
 :type pull_attachments: bool
 :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
-:type extract_bounding_boxes: bool</p>
+:type extract_bounding_boxes: bool
+:param location_type: The type of location to be fetched. Maps values in <cite>location</cite> to content type, example: ‘spaceKey/folderTitle/<a href="#id1"><span class="problematic" id="id2">*</span></a>’ -&gt; ‘folder’
+:type location_type: str</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.location">
 <span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.location" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.space_key">
-<span class="sig-name descname"><span class="pre">space_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.space_key" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -478,6 +475,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.extract_bounding_boxes">
 <span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.location_type">
+<span class="sig-name descname"><span class="pre">location_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig.location_type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -605,12 +607,32 @@
 <p>Dataset config for Jira Application Connector</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>jql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The JQL query for fetching issues</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The JQL query for fetching issues</p></li>
+<li><p><strong>custom_fields</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of custom fields to include in the dataset</p></li>
+<li><p><strong>include_comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Fetch comments for each issue</p></li>
+<li><p><strong>include_watchers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Fetch watchers for each issue</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.jql">
 <span class="sig-name descname"><span class="pre">jql</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.jql" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.custom_fields">
+<span class="sig-name descname"><span class="pre">custom_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.custom_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_comments">
+<span class="sig-name descname"><span class="pre">include_comments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_comments" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_watchers">
+<span class="sig-name descname"><span class="pre">include_watchers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_watchers" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -857,6 +879,8 @@ Needs to recalculate them if highlights are unavailable in summary_info</p></li>
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset_application_connector.</span></span><span class="sig-name descname"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: VideoGenSettings(client, model=None, settings=None)
+.. py:class:: VideoGenSettings(client, settings=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,20 +24,18 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param model: The model settings.
-   :type model: dict
    :param settings: The settings for each model.
    :type settings: dict
-
-
-   .. py:attribute:: model
-      :value: None
-
+   :param model: Dropdown for models available for video generation.
+   :type model: VideoGenModel
 
 
    .. py:attribute:: settings
       :value: None
 
+
+
+   .. py:attribute:: model
 
 
    .. py:attribute:: deprecated_keys

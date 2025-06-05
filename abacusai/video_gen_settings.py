@@ -1,4 +1,5 @@
 from .return_class import AbstractApiClass
+from .video_gen_model import VideoGenModel
 
 
 class VideoGenSettings(AbstractApiClass):
@@ -7,19 +8,19 @@ class VideoGenSettings(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            model (dict): The model settings.
             settings (dict): The settings for each model.
+            model (VideoGenModel): Dropdown for models available for video generation.
     """
 
-    def __init__(self, client, model=None, settings=None):
+    def __init__(self, client, settings=None, model={}):
         super().__init__(client, None)
-        self.model = model
         self.settings = settings
+        self.model = client._build_class(VideoGenModel, model)
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'model': repr(self.model),
-                     f'settings': repr(self.settings)}
+        repr_dict = {f'settings': repr(
+            self.settings), f'model': repr(self.model)}
         class_name = "VideoGenSettings"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -32,5 +33,6 @@ class VideoGenSettings(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'model': self.model, 'settings': self.settings}
+        resp = {'settings': self.settings,
+                'model': self._get_attribute_as_dict(self.model)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
