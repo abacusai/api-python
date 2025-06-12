@@ -1961,6 +1961,16 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <span class="sig-name descname"><span class="pre">to_nx_edge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.WorkflowGraphEdge.to_nx_edge" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.WorkflowGraphEdge.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.WorkflowGraphEdge.from_dict" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -3861,6 +3871,8 @@ inheritance.</p>
 <p>Dataset config for Confluence Application Connector
 :param location: The location of the pages to fetch
 :type location: str
+:param space_key: The space key of the space from which we fetch pages
+:type space_key: str
 :param pull_attachments: Whether to pull attachments for each page
 :type pull_attachments: bool
 :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
@@ -3870,6 +3882,11 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ConfluenceDatasetConfig.location">
 <span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ConfluenceDatasetConfig.location" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ConfluenceDatasetConfig.space_key">
+<span class="sig-name descname"><span class="pre">space_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ConfluenceDatasetConfig.space_key" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

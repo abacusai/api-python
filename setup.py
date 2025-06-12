@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-__version__ = '1.4.48'
+__version__ = '1.4.49'
 
 
 setup(name='abacusai',

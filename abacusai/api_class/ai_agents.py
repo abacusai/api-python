@@ -711,6 +711,11 @@ class WorkflowGraphEdge(ApiClass):
     def to_nx_edge(self):
         return [self.source, self.target, self.details]
 
+    @classmethod
+    def from_dict(cls, input_dict: dict):
+        validate_input_dict_param(input_dict, friendly_class_name='workflow_graph_edge', must_contain=['source', 'target', 'details'])
+        return super().from_dict(input_dict)
+
 
 @validate_constructor_arg_types('workflow_graph')
 @dataclasses.dataclass

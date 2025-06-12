@@ -30,11 +30,13 @@ class ConfluenceDatasetConfig(ApplicationConnectorDatasetConfig):
     Dataset config for Confluence Application Connector
     Args:
         location (str): The location of the pages to fetch
+        space_key (str): The space key of the space from which we fetch pages
         pull_attachments (bool): Whether to pull attachments for each page
         extract_bounding_boxes (bool): Whether to extract bounding boxes from the documents
         location_type (str): The type of location to be fetched. Maps values in `location` to content type, example: 'spaceKey/folderTitle/*' -> 'folder'
     """
     location: str = dataclasses.field(default=None)
+    space_key: str = dataclasses.field(default=None)
     pull_attachments: bool = dataclasses.field(default=False)
     extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
     location_type: str = dataclasses.field(default=None)

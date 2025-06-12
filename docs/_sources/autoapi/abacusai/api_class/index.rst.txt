@@ -916,6 +916,11 @@ Package Contents
    .. py:method:: to_nx_edge()
 
 
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
 .. py:class:: WorkflowGraph
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -2579,6 +2584,8 @@ Package Contents
    Dataset config for Confluence Application Connector
    :param location: The location of the pages to fetch
    :type location: str
+   :param space_key: The space key of the space from which we fetch pages
+   :type space_key: str
    :param pull_attachments: Whether to pull attachments for each page
    :type pull_attachments: bool
    :param extract_bounding_boxes: Whether to extract bounding boxes from the documents
@@ -2588,6 +2595,12 @@ Package Contents
 
 
    .. py:attribute:: location
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: space_key
       :type:  str
       :value: None
 
