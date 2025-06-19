@@ -661,7 +661,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.49'
+    client_version = '1.4.50'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1562,6 +1562,16 @@ class ReadOnlyClient(BaseApiClient):
             database_connector_id (str): A unique string identifier for the database connector.
             query (str): The query to be run in the database connector."""
         return self._call_api('queryDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query})
+
+    def get_database_connector_auth(self, database_connector_id: str) -> DatabaseConnector:
+        """Get the authentication details for a given database connector.
+
+        Args:
+            database_connector_id (str): The unique ID associated with the database connector.
+
+        Returns:
+            DatabaseConnector: The database connector with the authentication details."""
+        return self._call_api('getDatabaseConnectorAuth', 'GET', query_params={'databaseConnectorId': database_connector_id}, parse_type=DatabaseConnector)
 
     def list_application_connectors(self) -> List[ApplicationConnector]:
         """Retrieves a list of all application connectors along with their associated attributes.
@@ -3011,7 +3021,7 @@ class ApiClient(ReadOnlyClient):
             optimality_gap_limit (float): Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)
 
         Returns:
-            OptimizationAssignment: The assignments for a given query.
+            Dict: The assignments for a given query.
         """
 
         def _serialize_df_with_dtypes(df):
@@ -3060,7 +3070,7 @@ class ApiClient(ReadOnlyClient):
             query_data (dict): a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. values are dataframes and keys are their names. Names should be same as the ones used during training.
 
         Returns:
-            OptimizationAssignment: The output dataframes for a given query.
+            Dict: The output dataframes for a given query. These will be in serialized form. So, effectively we would have a dict of keys, and serialized dataframes.
         """
         def _serialize_df_with_dtypes(df):
             # Get dtypes dictionary
@@ -7683,7 +7693,7 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
             deployment_id (str): The unique identifier of a deployment created under the project.
-            query_data (dict): a dictionary with assignment, constraint and constraint_equations_df
+            query_data (dict): a dictionary with assignment, constraint and constraint_equations_df (under these specific keys)
             solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
             optimality_gap_limit (float): Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)"""
         prediction_url = self._get_prediction_endpoint(

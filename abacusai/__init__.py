@@ -29,6 +29,7 @@ from .chat_message import ChatMessage
 from .chat_session import ChatSession
 from .chatllm_computer import ChatllmComputer
 from .chatllm_computer_status import ChatllmComputerStatus
+from .chatllm_memory import ChatllmMemory
 from .chatllm_project import ChatllmProject
 from .chatllm_referral_invite import ChatllmReferralInvite
 from .chatllm_task import ChatllmTask
@@ -214,6 +215,7 @@ from .prediction_input import PredictionInput
 from .prediction_log_record import PredictionLogRecord
 from .prediction_operator import PredictionOperator
 from .prediction_operator_version import PredictionOperatorVersion
+from .presentation_export_result import PresentationExportResult
 from .problem_type import ProblemType
 from .project import Project
 from .project_config import ProjectConfig
@@ -247,6 +249,7 @@ from .tone_details import ToneDetails
 from .training_config_options import TrainingConfigOptions
 from .tts_gen_settings import TtsGenSettings
 from .twitter_search_result import TwitterSearchResult
+from .unified_connector import UnifiedConnector
 from .upload import Upload
 from .upload_part import UploadPart
 from .use_case import UseCase
@@ -267,4 +270,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.49"
+__version__ = "1.4.50"

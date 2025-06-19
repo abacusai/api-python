@@ -1,0 +1,92 @@
+abacusai.unified_connector
+==========================
+
+.. py:module:: abacusai.unified_connector
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.unified_connector.UnifiedConnector
+
+
+Module Contents
+---------------
+
+.. py:class:: UnifiedConnector(client, applicationConnectorId=None, databaseConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A unified connector that can handle both application and database connectors.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param applicationConnectorId: The unique ID for the connection.
+   :type applicationConnectorId: str
+   :param databaseConnectorId: The unique ID for the connection.
+   :type databaseConnectorId: str
+   :param service: The service this connection connects to
+   :type service: str
+   :param name: A user-friendly name for the service
+   :type name: str
+   :param createdAt: When the API key was created
+   :type createdAt: str
+   :param status: The status of the Application Connector
+   :type status: str
+   :param auth: Non-secret connection information for this connector
+   :type auth: dict
+
+
+   .. py:attribute:: application_connector_id
+      :value: None
+
+
+
+   .. py:attribute:: database_connector_id
+      :value: None
+
+
+
+   .. py:attribute:: service
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: auth
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -101,3 +101,15 @@ class DatabaseConnector(AbstractApiClass):
             query (str): The query to be run in the database connector.
         """
         return self.client.query_database_connector(self.database_connector_id, query)
+
+    def get_auth(self):
+        """
+        Get the authentication details for a given database connector.
+
+        Args:
+            database_connector_id (str): The unique ID associated with the database connector.
+
+        Returns:
+            DatabaseConnector: The database connector with the authentication details.
+        """
+        return self.client.get_database_connector_auth(self.database_connector_id)

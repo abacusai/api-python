@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -52,6 +52,8 @@ Module Contents
    :type numUnreadTaskInstances: int
    :param computePointsUsed: The compute points used for the chatllm task.
    :type computePointsUsed: int
+   :param displayMarkdown: The display markdown for the chatllm task.
+   :type displayMarkdown: str
 
 
    .. py:attribute:: chatllm_task_id
@@ -120,6 +122,11 @@ Module Contents
 
 
    .. py:attribute:: compute_points_used
+      :value: None
+
+
+
+   .. py:attribute:: display_markdown
       :value: None
 
 

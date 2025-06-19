@@ -78,6 +78,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../chat_session/index.html">abacusai.chat_session</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_computer/index.html">abacusai.chatllm_computer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_computer_status/index.html">abacusai.chatllm_computer_status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_memory/index.html">abacusai.chatllm_memory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_project/index.html">abacusai.chatllm_project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_task/index.html">abacusai.chatllm_task</a></li>
@@ -267,6 +268,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../prediction_log_record/index.html">abacusai.prediction_log_record</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_operator/index.html">abacusai.prediction_operator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_operator_version/index.html">abacusai.prediction_operator_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../presentation_export_result/index.html">abacusai.presentation_export_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html">abacusai.problem_type</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project/index.html">abacusai.project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_config/index.html">abacusai.project_config</a></li>
@@ -302,6 +304,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html">abacusai.training_config_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../tts_gen_settings/index.html">abacusai.tts_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../twitter_search_result/index.html">abacusai.twitter_search_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unified_connector/index.html">abacusai.unified_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload/index.html">abacusai.upload</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload_part/index.html">abacusai.upload_part</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../use_case/index.html">abacusai.use_case</a></li>
@@ -1154,7 +1157,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier of a deployment created under the project.</p></li>
-<li><p><strong>query_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – a dictionary with assignment, constraint and constraint_equations_df</p></li>
+<li><p><strong>query_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – a dictionary with assignment, constraint and constraint_equations_df (under these specific keys)</p></li>
 <li><p><strong>solve_time_limit_seconds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum time in seconds to spend solving the query.</p></li>
 <li><p><strong>optimality_gap_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)</p></li>
 </ul>

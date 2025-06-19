@@ -42,6 +42,7 @@ Submodules
    /autoapi/abacusai/chat_session/index
    /autoapi/abacusai/chatllm_computer/index
    /autoapi/abacusai/chatllm_computer_status/index
+   /autoapi/abacusai/chatllm_memory/index
    /autoapi/abacusai/chatllm_project/index
    /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/chatllm_task/index
@@ -227,6 +228,7 @@ Submodules
    /autoapi/abacusai/prediction_log_record/index
    /autoapi/abacusai/prediction_operator/index
    /autoapi/abacusai/prediction_operator_version/index
+   /autoapi/abacusai/presentation_export_result/index
    /autoapi/abacusai/problem_type/index
    /autoapi/abacusai/project/index
    /autoapi/abacusai/project_config/index
@@ -262,6 +264,7 @@ Submodules
    /autoapi/abacusai/training_config_options/index
    /autoapi/abacusai/tts_gen_settings/index
    /autoapi/abacusai/twitter_search_result/index
+   /autoapi/abacusai/unified_connector/index
    /autoapi/abacusai/upload/index
    /autoapi/abacusai/upload_part/index
    /autoapi/abacusai/use_case/index
@@ -552,6 +555,7 @@ Classes
    abacusai.ChatSession
    abacusai.ChatllmComputer
    abacusai.ChatllmComputerStatus
+   abacusai.ChatllmMemory
    abacusai.ChatllmProject
    abacusai.ChatllmReferralInvite
    abacusai.ChatllmTask
@@ -739,6 +743,7 @@ Classes
    abacusai.PredictionLogRecord
    abacusai.PredictionOperator
    abacusai.PredictionOperatorVersion
+   abacusai.PresentationExportResult
    abacusai.ProblemType
    abacusai.Project
    abacusai.ProjectConfig
@@ -772,6 +777,7 @@ Classes
    abacusai.TrainingConfigOptions
    abacusai.TtsGenSettings
    abacusai.TwitterSearchResult
+   abacusai.UnifiedConnector
    abacusai.Upload
    abacusai.UploadPart
    abacusai.UseCase
@@ -6897,6 +6903,16 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_O3
+      :value: 'OPENAI_O3'
+
+
+
+   .. py:attribute:: OPENAI_O4_MINI
+      :value: 'OPENAI_O4_MINI'
+
+
+
    .. py:attribute:: LLAMA3_1_405B
       :value: 'LLAMA3_1_405B'
 
@@ -6969,6 +6985,16 @@ Package Contents
 
    .. py:attribute:: GEMINI_2_FLASH
       :value: 'GEMINI_2_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_2_5_PRO
+      :value: 'GEMINI_2_5_PRO'
+
+
+
+   .. py:attribute:: GEMINI_2_5_FLASH
+      :value: 'GEMINI_2_5_FLASH'
 
 
 
@@ -13787,6 +13813,53 @@ Package Contents
 
 
 
+.. py:class:: ChatllmMemory(client, chatllmMemoryId=None, memory=None, sourceDeploymentConversationId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   An LLM created memory in ChatLLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param chatllmMemoryId: The ID of the chatllm memory.
+   :type chatllmMemoryId: str
+   :param memory: The text of the ChatLLM memory.
+   :type memory: str
+   :param sourceDeploymentConversationId: The deployment conversation where this memory was created.
+   :type sourceDeploymentConversationId: str
+
+
+   .. py:attribute:: chatllm_memory_id
+      :value: None
+
+
+
+   .. py:attribute:: memory
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -13895,7 +13968,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -13932,6 +14005,8 @@ Package Contents
    :type numUnreadTaskInstances: int
    :param computePointsUsed: The compute points used for the chatllm task.
    :type computePointsUsed: int
+   :param displayMarkdown: The display markdown for the chatllm task.
+   :type displayMarkdown: str
 
 
    .. py:attribute:: chatllm_task_id
@@ -14000,6 +14075,11 @@ Package Contents
 
 
    .. py:attribute:: compute_points_used
+      :value: None
+
+
+
+   .. py:attribute:: display_markdown
       :value: None
 
 
@@ -14110,7 +14190,7 @@ Package Contents
       :type optimality_gap_limit: float
 
       :returns: The assignments for a given query.
-      :rtype: OptimizationAssignment
+      :rtype: Dict
 
 
 
@@ -14125,8 +14205,8 @@ Package Contents
       :param query_data: a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. values are dataframes and keys are their names. Names should be same as the ones used during training.
       :type query_data: dict
 
-      :returns: The output dataframes for a given query.
-      :rtype: OptimizationAssignment
+      :returns: The output dataframes for a given query. These will be in serialized form. So, effectively we would have a dict of keys, and serialized dataframes.
+      :rtype: Dict
 
 
 
@@ -19402,7 +19482,7 @@ Package Contents
       :type deployment_token: str
       :param deployment_id: The unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param query_data: a dictionary with assignment, constraint and constraint_equations_df
+      :param query_data: a dictionary with assignment, constraint and constraint_equations_df (under these specific keys)
       :type query_data: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
@@ -22245,6 +22325,18 @@ Package Contents
       :type database_connector_id: str
       :param query: The query to be run in the database connector.
       :type query: str
+
+
+
+   .. py:method:: get_database_connector_auth(database_connector_id)
+
+      Get the authentication details for a given database connector.
+
+      :param database_connector_id: The unique ID associated with the database connector.
+      :type database_connector_id: str
+
+      :returns: The database connector with the authentication details.
+      :rtype: DatabaseConnector
 
 
 
@@ -25876,6 +25968,18 @@ Package Contents
 
       :param query: The query to be run in the database connector.
       :type query: str
+
+
+
+   .. py:method:: get_auth()
+
+      Get the authentication details for a given database connector.
+
+      :param database_connector_id: The unique ID associated with the database connector.
+      :type database_connector_id: str
+
+      :returns: The database connector with the authentication details.
+      :rtype: DatabaseConnector
 
 
 
@@ -42581,7 +42685,7 @@ Package Contents
       :type deployment_token: str
       :param deployment_id: The unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param query_data: a dictionary with assignment, constraint and constraint_equations_df
+      :param query_data: a dictionary with assignment, constraint and constraint_equations_df (under these specific keys)
       :type query_data: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
@@ -43440,6 +43544,39 @@ Package Contents
 
       :param prediction_operator_version: The unique ID of the prediction operator version.
       :type prediction_operator_version: str
+
+
+
+.. py:class:: PresentationExportResult(client, filePath=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Export Presentation
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param filePath: The path to the exported presentation
+   :type filePath: str
+
+
+   .. py:attribute:: file_path
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 
@@ -46915,6 +47052,81 @@ Package Contents
 
 
 
+.. py:class:: UnifiedConnector(client, applicationConnectorId=None, databaseConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A unified connector that can handle both application and database connectors.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param applicationConnectorId: The unique ID for the connection.
+   :type applicationConnectorId: str
+   :param databaseConnectorId: The unique ID for the connection.
+   :type databaseConnectorId: str
+   :param service: The service this connection connects to
+   :type service: str
+   :param name: A user-friendly name for the service
+   :type name: str
+   :param createdAt: When the API key was created
+   :type createdAt: str
+   :param status: The status of the Application Connector
+   :type status: str
+   :param auth: Non-secret connection information for this connector
+   :type auth: dict
+
+
+   .. py:attribute:: application_connector_id
+      :value: None
+
+
+
+   .. py:attribute:: database_connector_id
+      :value: None
+
+
+
+   .. py:attribute:: service
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: auth
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: Upload(client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelId=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -48103,6 +48315,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.49'
+   :value: '1.4.50'
 
 

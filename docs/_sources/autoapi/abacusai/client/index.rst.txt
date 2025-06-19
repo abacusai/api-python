@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.49'
+      :value: '1.4.50'
 
 
 
@@ -1379,6 +1379,18 @@ Module Contents
       :type database_connector_id: str
       :param query: The query to be run in the database connector.
       :type query: str
+
+
+
+   .. py:method:: get_database_connector_auth(database_connector_id)
+
+      Get the authentication details for a given database connector.
+
+      :param database_connector_id: The unique ID associated with the database connector.
+      :type database_connector_id: str
+
+      :returns: The database connector with the authentication details.
+      :rtype: DatabaseConnector
 
 
 
@@ -3149,7 +3161,7 @@ Module Contents
       :type optimality_gap_limit: float
 
       :returns: The assignments for a given query.
-      :rtype: OptimizationAssignment
+      :rtype: Dict
 
 
 
@@ -3164,8 +3176,8 @@ Module Contents
       :param query_data: a dictionary with various key: value pairs corresponding to various updated FGs in the FG tree, which we want to update to compute new top level FGs for online solve. values are dataframes and keys are their names. Names should be same as the ones used during training.
       :type query_data: dict
 
-      :returns: The output dataframes for a given query.
-      :rtype: OptimizationAssignment
+      :returns: The output dataframes for a given query. These will be in serialized form. So, effectively we would have a dict of keys, and serialized dataframes.
+      :rtype: Dict
 
 
 
@@ -8441,7 +8453,7 @@ Module Contents
       :type deployment_token: str
       :param deployment_id: The unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param query_data: a dictionary with assignment, constraint and constraint_equations_df
+      :param query_data: a dictionary with assignment, constraint and constraint_equations_df (under these specific keys)
       :type query_data: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float

@@ -535,7 +535,7 @@ class PredictionClient(BaseApiClient):
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
             deployment_id (str): The unique identifier of a deployment created under the project.
-            query_data (dict): a dictionary with assignment, constraint and constraint_equations_df
+            query_data (dict): a dictionary with assignment, constraint and constraint_equations_df (under these specific keys)
             solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
             optimality_gap_limit (float): Optimality gap we want to come within, after which we accept the solution as valid. (0 means we only want an optimal solution). it is abs(best_solution_found - best_bound) / abs(best_solution_found)"""
         prediction_url = self._get_prediction_endpoint(
