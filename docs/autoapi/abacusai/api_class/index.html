@@ -314,6 +314,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
@@ -1677,7 +1678,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <li><p><strong>input_mappings</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputMapping" title="abacusai.api_class.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em>) – List of input mappings for the node. Each arg/kwarg of the node function should have a corresponding input mapping.</p></li>
 <li><p><strong>output_mappings</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – List of outputs for the node. Each field in the returned dict/AgentResponse must have a corresponding output in the list.</p></li>
 <li><p><strong>function</strong> (<em>callable</em>) – The callable node function reference.</p></li>
-<li><p><strong>input_schema</strong> (<a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputSchema" title="abacusai.api_class.WorkflowNodeInputSchema"><em>WorkflowNodeInputSchema</em></a>) – The react json schema for the user input variables.</p></li>
+<li><p><strong>input_schema</strong> (<a class="reference internal" href="#abacusai.api_class.WorkflowNodeInputSchema" title="abacusai.api_class.WorkflowNodeInputSchema"><em>WorkflowNodeInputSchema</em></a>) – The react json schema for the user input variables. This should be empty for CHAT interface.</p></li>
 <li><p><strong>output_schema</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.</p></li>
 <li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
 <li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>

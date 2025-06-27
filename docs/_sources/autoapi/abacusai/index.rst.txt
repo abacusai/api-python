@@ -271,6 +271,7 @@ Submodules
    /autoapi/abacusai/use_case_requirements/index
    /autoapi/abacusai/user/index
    /autoapi/abacusai/user_exception/index
+   /autoapi/abacusai/video_gen_costs/index
    /autoapi/abacusai/video_gen_model/index
    /autoapi/abacusai/video_gen_model_options/index
    /autoapi/abacusai/video_gen_settings/index
@@ -784,6 +785,7 @@ Classes
    abacusai.UseCaseRequirements
    abacusai.User
    abacusai.UserException
+   abacusai.VideoGenCosts
    abacusai.VideoGenModel
    abacusai.VideoGenModelOptions
    abacusai.VideoGenSettings
@@ -2445,7 +2447,7 @@ Package Contents
    :type output_mappings: List[str]
    :param function: The callable node function reference.
    :type function: callable
-   :param input_schema: The react json schema for the user input variables.
+   :param input_schema: The react json schema for the user input variables. This should be empty for CHAT interface.
    :type input_schema: WorkflowNodeInputSchema
    :param output_schema: The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.
    :type output_schema: List[str]
@@ -22366,6 +22368,20 @@ Package Contents
       :type service: ApplicationConnectorType
       :param application_connector_id: The unique ID associated with the connector.
       :type application_connector_id: str
+      :param scopes: The scopes to request for the connector.
+      :type scopes: List
+
+      :returns: The application connector with the authentication details.
+      :rtype: ApplicationConnector
+
+
+
+   .. py:method:: get_user_connector_auth(service, scopes = None)
+
+      Get the authentication details for a given user level connector.
+
+      :param service: The service name.
+      :type service: ApplicationConnectorType
       :param scopes: The scopes to request for the connector.
       :type scopes: List
 
@@ -47602,6 +47618,46 @@ Package Contents
 
 
 
+.. py:class:: VideoGenCosts(client, modelCosts=None, expensiveModels=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The most expensive price for each video gen model in credits
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param modelCosts: The costs of the video gen models in credits
+   :type modelCosts: dict
+   :param expensiveModels: The list of video gen models that are expensive
+   :type expensiveModels: list
+
+
+   .. py:attribute:: model_costs
+      :value: None
+
+
+
+   .. py:attribute:: expensive_models
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: VideoGenModel(client, displayName=None, type=None, valueType=None, optional=None, default=None, helptext=None, options={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -48315,6 +48371,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.50'
+   :value: '1.4.51'
 
 

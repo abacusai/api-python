@@ -325,7 +325,7 @@ class WorkflowGraphNode(ApiClass):
         input_mappings (List[WorkflowNodeInputMapping]): List of input mappings for the node. Each arg/kwarg of the node function should have a corresponding input mapping.
         output_mappings (List[str]): List of outputs for the node. Each field in the returned dict/AgentResponse must have a corresponding output in the list.
         function (callable): The callable node function reference.
-        input_schema (WorkflowNodeInputSchema): The react json schema for the user input variables.
+        input_schema (WorkflowNodeInputSchema): The react json schema for the user input variables. This should be empty for CHAT interface.
         output_schema (List[str]): The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.
 
     Additional Attributes:

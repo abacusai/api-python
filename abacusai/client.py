@@ -661,7 +661,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.50'
+    client_version = '1.4.51'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1598,6 +1598,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ApplicationConnector: The application connector with the authentication details."""
         return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'applicationConnectorId': application_connector_id, 'scopes': scopes}, parse_type=ApplicationConnector)
+
+    def get_user_connector_auth(self, service: Union[ApplicationConnectorType, str], scopes: List = None) -> ApplicationConnector:
+        """Get the authentication details for a given user level connector.
+
+        Args:
+            service (ApplicationConnectorType): The service name.
+            scopes (List): The scopes to request for the connector.
+
+        Returns:
+            ApplicationConnector: The application connector with the authentication details."""
+        return self._call_api('getUserConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes}, parse_type=ApplicationConnector)
 
     def list_streaming_connectors(self) -> List[StreamingConnector]:
         """Retrieves a list of all streaming connectors along with their corresponding attributes.

@@ -314,6 +314,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
@@ -1084,7 +1085,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.50'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.51'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2290,6 +2291,26 @@ and avoids execution of the further workflow.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>service</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><em>ApplicationConnectorType</em></a>) – The service name.</p></li>
 <li><p><strong>application_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique ID associated with the connector.</p></li>
+<li><p><strong>scopes</strong> (<em>List</em>) – The scopes to request for the connector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The application connector with the authentication details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../application_connector/index.html#abacusai.application_connector.ApplicationConnector" title="abacusai.application_connector.ApplicationConnector">ApplicationConnector</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_user_connector_auth">
+<span class="sig-name descname"><span class="pre">get_user_connector_auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scopes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_user_connector_auth" title="Link to this definition"></a></dt>
+<dd><p>Get the authentication details for a given user level connector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><em>ApplicationConnectorType</em></a>) – The service name.</p></li>
 <li><p><strong>scopes</strong> (<em>List</em>) – The scopes to request for the connector.</p></li>
 </ul>
 </dd>

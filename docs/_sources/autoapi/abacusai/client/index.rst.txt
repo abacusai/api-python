@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.50'
+      :value: '1.4.51'
 
 
 
@@ -1420,6 +1420,20 @@ Module Contents
       :type service: ApplicationConnectorType
       :param application_connector_id: The unique ID associated with the connector.
       :type application_connector_id: str
+      :param scopes: The scopes to request for the connector.
+      :type scopes: List
+
+      :returns: The application connector with the authentication details.
+      :rtype: ApplicationConnector
+
+
+
+   .. py:method:: get_user_connector_auth(service, scopes = None)
+
+      Get the authentication details for a given user level connector.
+
+      :param service: The service name.
+      :type service: ApplicationConnectorType
       :param scopes: The scopes to request for the connector.
       :type scopes: List
 
