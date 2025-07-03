@@ -417,6 +417,17 @@ class ApplicationConnectorType(ApiEnum):
     SFTPAPPLICATION = 'SFTPAPPLICATION'
     OAUTH = 'OAUTH'
 
+    @classmethod
+    def user_connectors(cls):
+        return [
+            cls.GOOGLEDRIVEUSER,
+            cls.GOOGLECALENDAR,
+            cls.GMAILUSER,
+            cls.SLACK,
+            cls.JIRA,
+            cls.ONEDRIVE
+        ]
+
 
 class StreamingConnectorType(ApiEnum):
     KAFKA = 'KAFKA'
