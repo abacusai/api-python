@@ -240,6 +240,7 @@ from .streaming_client import StreamingClient
 from .streaming_connector import StreamingConnector
 from .streaming_row_count import StreamingRowCount
 from .streaming_sample_code import StreamingSampleCode
+from .sts_gen_settings import StsGenSettings
 from .stt_gen_model import SttGenModel
 from .stt_gen_model_options import SttGenModelOptions
 from .stt_gen_settings import SttGenSettings
@@ -271,4 +272,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.52"
+__version__ = "1.4.53"

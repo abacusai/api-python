@@ -220,6 +220,7 @@ Classes
    abacusai.api_class.ForecastingTrainingConfig
    abacusai.api_class.NamedEntityExtractionTrainingConfig
    abacusai.api_class.NaturalLanguageSearchTrainingConfig
+   abacusai.api_class.SystemConnectorTool
    abacusai.api_class.ChatLLMTrainingConfig
    abacusai.api_class.SentenceBoundaryDetectionTrainingConfig
    abacusai.api_class.SentimentDetectionTrainingConfig
@@ -5900,6 +5901,11 @@ Package Contents
 
 
 
+   .. py:attribute:: XAI_GROK_4
+      :value: 'XAI_GROK_4'
+
+
+
    .. py:attribute:: DEEPSEEK_V3
       :value: 'DEEPSEEK_V3'
 
@@ -9061,6 +9067,29 @@ Package Contents
    .. py:method:: __post_init__()
 
 
+.. py:class:: SystemConnectorTool
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   System connector tool
+
+   :param value: The name of the tool.
+   :type value: str
+   :param configs: Optional. A dictionary of key-value pairs that are used to configure the tool.
+   :type configs: dict
+
+
+   .. py:attribute:: value
+      :type:  str
+
+
+   .. py:attribute:: configs
+      :type:  dict
+      :value: None
+
+
+
 .. py:class:: ChatLLMTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
@@ -9123,7 +9152,7 @@ Package Contents
    :type enable_response_caching: bool
    :param unknown_answer_phrase: Fallback response when the LLM can't find an answer.
    :type unknown_answer_phrase: str
-   :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc.
+   :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
    :type enable_tool_bar: bool
    :param enable_inline_source_citations: Enable inline citations of the sources in the response.
    :type enable_inline_source_citations: bool
@@ -9134,6 +9163,8 @@ Package Contents
    :type json_response_schema: str
    :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM.
    :type mask_pii: bool
+   :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
+   :type builtin_tools: List[SystemConnectorTool]
 
 
    .. py:attribute:: document_retrievers
@@ -9348,6 +9379,12 @@ Package Contents
 
    .. py:attribute:: mask_pii
       :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: builtin_tools
+      :type:  List[SystemConnectorTool]
       :value: None
 
 

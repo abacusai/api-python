@@ -448,6 +448,19 @@ class NaturalLanguageSearchTrainingConfig(TrainingConfig):
 
 
 @dataclasses.dataclass
+class SystemConnectorTool(ApiClass):
+    """
+    System connector tool
+
+    Args:
+        value (str): The name of the tool.
+        configs (dict): Optional. A dictionary of key-value pairs that are used to configure the tool.
+    """
+    value: str = dataclasses.field()
+    configs: dict = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
 class ChatLLMTrainingConfig(TrainingConfig):
     """
     Training config for the CHAT_LLM problem type
@@ -481,12 +494,13 @@ class ChatLLMTrainingConfig(TrainingConfig):
         enable_code_execution (bool): Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
         enable_response_caching (bool): Enable caching of LLM responses to speed up response times and improve reproducibility.
         unknown_answer_phrase (str): Fallback response when the LLM can't find an answer.
-        enable_tool_bar (bool): Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc.
+        enable_tool_bar (bool): Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
         enable_inline_source_citations (bool): Enable inline citations of the sources in the response.
         response_format: (str): When set to 'JSON', the LLM will generate a JSON formatted string.
         json_response_instructions (str): Instructions to be followed while generating the json_response if `response_format` is set to "JSON". This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.
         json_response_schema (str): Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
         mask_pii (bool): Mask PII in the prompts and uploaded documents before sending it to the LLM.
+        builtin_tools (List[SystemConnectorTool]): List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -524,6 +538,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     json_response_instructions: str = dataclasses.field(default=None)
     json_response_schema: str = dataclasses.field(default=None)
     mask_pii: bool = dataclasses.field(default=None)
+    builtin_tools: List[SystemConnectorTool] = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

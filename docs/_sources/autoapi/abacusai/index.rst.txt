@@ -255,6 +255,7 @@ Submodules
    /autoapi/abacusai/streaming_connector/index
    /autoapi/abacusai/streaming_row_count/index
    /autoapi/abacusai/streaming_sample_code/index
+   /autoapi/abacusai/sts_gen_settings/index
    /autoapi/abacusai/stt_gen_model/index
    /autoapi/abacusai/stt_gen_model_options/index
    /autoapi/abacusai/stt_gen_settings/index
@@ -480,6 +481,7 @@ Classes
    abacusai.ForecastingTrainingConfig
    abacusai.NamedEntityExtractionTrainingConfig
    abacusai.NaturalLanguageSearchTrainingConfig
+   abacusai.SystemConnectorTool
    abacusai.ChatLLMTrainingConfig
    abacusai.SentenceBoundaryDetectionTrainingConfig
    abacusai.SentimentDetectionTrainingConfig
@@ -769,6 +771,7 @@ Classes
    abacusai.StreamingConnector
    abacusai.StreamingRowCount
    abacusai.StreamingSampleCode
+   abacusai.StsGenSettings
    abacusai.SttGenModel
    abacusai.SttGenModelOptions
    abacusai.SttGenSettings
@@ -7070,6 +7073,11 @@ Package Contents
 
 
 
+   .. py:attribute:: XAI_GROK_4
+      :value: 'XAI_GROK_4'
+
+
+
    .. py:attribute:: DEEPSEEK_V3
       :value: 'DEEPSEEK_V3'
 
@@ -9830,6 +9838,29 @@ Package Contents
    .. py:method:: __post_init__()
 
 
+.. py:class:: SystemConnectorTool
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   System connector tool
+
+   :param value: The name of the tool.
+   :type value: str
+   :param configs: Optional. A dictionary of key-value pairs that are used to configure the tool.
+   :type configs: dict
+
+
+   .. py:attribute:: value
+      :type:  str
+
+
+   .. py:attribute:: configs
+      :type:  dict
+      :value: None
+
+
+
 .. py:class:: ChatLLMTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
@@ -9892,7 +9923,7 @@ Package Contents
    :type enable_response_caching: bool
    :param unknown_answer_phrase: Fallback response when the LLM can't find an answer.
    :type unknown_answer_phrase: str
-   :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc.
+   :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
    :type enable_tool_bar: bool
    :param enable_inline_source_citations: Enable inline citations of the sources in the response.
    :type enable_inline_source_citations: bool
@@ -9903,6 +9934,8 @@ Package Contents
    :type json_response_schema: str
    :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM.
    :type mask_pii: bool
+   :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
+   :type builtin_tools: List[SystemConnectorTool]
 
 
    .. py:attribute:: document_retrievers
@@ -10117,6 +10150,12 @@ Package Contents
 
    .. py:attribute:: mask_pii
       :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: builtin_tools
+      :type:  List[SystemConnectorTool]
       :value: None
 
 
@@ -35304,7 +35343,7 @@ Package Contents
 
 
 
-.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None)
+.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, lifecycle=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35319,6 +35358,8 @@ Package Contents
    :type artifactType: str
    :param llmArtifactId: The artifact id being hosted.
    :type llmArtifactId: str
+   :param lifecycle: The lifecycle of the artifact.
+   :type lifecycle: str
    :param externalApplicationId: Agent that deployed this application.
    :type externalApplicationId: str
    :param deploymentConversationId: Conversation that created deployed this artifact, null if not applicable.
@@ -35338,6 +35379,11 @@ Package Contents
 
 
    .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
       :value: None
 
 
@@ -46537,6 +46583,46 @@ Package Contents
 
 
 
+.. py:class:: StsGenSettings(client, model=None, settings=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   STS generation settings
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param model: The model settings.
+   :type model: dict
+   :param settings: The settings for each model.
+   :type settings: dict
+
+
+   .. py:attribute:: model
+      :value: None
+
+
+
+   .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: SttGenModel(client, displayName=None, type=None, valueType=None, optional=None, default=None, helptext=None, options={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -47644,7 +47730,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenCosts(client, modelCosts=None, expensiveModels=None)
+.. py:class:: VideoGenCosts(client, modelCosts=None, expensiveModels=None, warningMessages=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -47657,6 +47743,8 @@ Package Contents
    :type modelCosts: dict
    :param expensiveModels: The list of video gen models that are expensive
    :type expensiveModels: list
+   :param warningMessages: The warning messages for certain video gen models
+   :type warningMessages: dict
 
 
    .. py:attribute:: model_costs
@@ -47665,6 +47753,11 @@ Package Contents
 
 
    .. py:attribute:: expensive_models
+      :value: None
+
+
+
+   .. py:attribute:: warning_messages
       :value: None
 
 
@@ -48397,6 +48490,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.52'
+   :value: '1.4.53'
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None)
+.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, lifecycle=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type artifactType: str
    :param llmArtifactId: The artifact id being hosted.
    :type llmArtifactId: str
+   :param lifecycle: The lifecycle of the artifact.
+   :type lifecycle: str
    :param externalApplicationId: Agent that deployed this application.
    :type externalApplicationId: str
    :param deploymentConversationId: Conversation that created deployed this artifact, null if not applicable.
@@ -49,6 +51,11 @@ Module Contents
 
 
    .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
       :value: None
 
 

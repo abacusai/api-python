@@ -624,10 +624,12 @@ class WorkflowGraphNode(ApiClass):
             self.node = node
 
         def __getattr__(self, name):
+            if self.node.is_template_node():
+                return WorkflowNodeInputMapping(name, enums.WorkflowNodeInputType.WORKFLOW_VARIABLE, variable_source=self.node.name, source_prop=name)
             for mapping in self.node.output_mappings:
                 if mapping.name == name:
                     return WorkflowNodeInputMapping(name, enums.WorkflowNodeInputType.WORKFLOW_VARIABLE, variable_source=self.node.name, source_prop=name)
-            raise AttributeError(f'Output mapping "{name}" not found in node "{self.name}".')
+            raise AttributeError(f'Output mapping "{name}" not found in node "{self.node.name}".')
 
     @property
     def outputs(self):

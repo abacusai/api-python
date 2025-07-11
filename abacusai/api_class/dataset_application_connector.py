@@ -211,7 +211,6 @@ class TeamsScraperDatasetConfig(ApplicationConnectorDatasetConfig):
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.TEAMSSCRAPER
-        self.is_documentset = True
 
 
 @dataclasses.dataclass
