@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.53'
+      :value: '1.4.54'
 
 
 
@@ -1424,7 +1424,7 @@ Module Contents
       :type scopes: List
 
       :returns: The application connector with the authentication details.
-      :rtype: ApplicationConnector
+      :rtype: UnifiedConnector
 
 
 
@@ -1438,7 +1438,7 @@ Module Contents
       :type scopes: List
 
       :returns: The application connector with the authentication details.
-      :rtype: ApplicationConnector
+      :rtype: UnifiedConnector
 
 
 
@@ -8262,7 +8262,7 @@ Module Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -8292,6 +8292,8 @@ Module Contents
       :type chat_config: dict
       :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
       :type doc_infos: list
+      :param execute_usercode_tool: If True, will return the tool output in the response.
+      :type execute_usercode_tool: bool
 
 
 

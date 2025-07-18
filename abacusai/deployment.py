@@ -345,7 +345,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_realtime_monitor(self.deployment_id, realtime_monitor_schedule, lookback_time)
 
-    def get_conversation_response(self, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None):
+    def get_conversation_response(self, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -362,8 +362,9 @@ class Deployment(AbstractApiClass):
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
             doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
+            execute_usercode_tool (bool): If True, will return the tool output in the response.
         """
-        return self.client.get_conversation_response(self.deployment_id, message, deployment_token, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, doc_infos, user_info)
+        return self.client.get_conversation_response(self.deployment_id, message, deployment_token, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, doc_infos, user_info, execute_usercode_tool)
 
     def get_conversation_response_with_binary_data(self, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, attachments: None = None):
         """

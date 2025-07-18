@@ -5446,7 +5446,22 @@ Package Contents
 
 
 
+   .. py:attribute:: SALESFORCE
+      :value: 'SALESFORCE'
+
+
+
+   .. py:attribute:: TWITTER
+      :value: 'TWITTER'
+
+
+
    .. py:method:: user_connectors()
+      :classmethod:
+
+
+
+   .. py:method:: database_connectors()
       :classmethod:
 
 
@@ -9072,7 +9087,7 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   System connector tool
+   System connector tool used to integrate chatbots with external services.
 
    :param value: The name of the tool.
    :type value: str
@@ -9165,6 +9180,8 @@ Package Contents
    :type mask_pii: bool
    :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
    :type builtin_tools: List[SystemConnectorTool]
+   :param mcp_server_configs: JSON string of MCP servers configs to use in the ChatLLM model. This should not be used with document_retrievers.
+   :type mcp_server_configs: str
 
 
    .. py:attribute:: document_retrievers
@@ -9385,6 +9402,12 @@ Package Contents
 
    .. py:attribute:: builtin_tools
       :type:  List[SystemConnectorTool]
+      :value: None
+
+
+
+   .. py:attribute:: mcp_server_configs
+      :type:  str
       :value: None
 
 

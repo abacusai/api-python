@@ -33,6 +33,7 @@ Submodules
    /autoapi/abacusai/app_user_group_sign_in_token/index
    /autoapi/abacusai/application_connector/index
    /autoapi/abacusai/audio_gen_settings/index
+   /autoapi/abacusai/audio_url_result/index
    /autoapi/abacusai/batch_prediction/index
    /autoapi/abacusai/batch_prediction_version/index
    /autoapi/abacusai/batch_prediction_version_logs/index
@@ -549,6 +550,7 @@ Classes
    abacusai.AppUserGroupSignInToken
    abacusai.ApplicationConnector
    abacusai.AudioGenSettings
+   abacusai.AudioUrlResult
    abacusai.BatchPrediction
    abacusai.BatchPredictionVersion
    abacusai.BatchPredictionVersionLogs
@@ -6663,7 +6665,22 @@ Package Contents
 
 
 
+   .. py:attribute:: SALESFORCE
+      :value: 'SALESFORCE'
+
+
+
+   .. py:attribute:: TWITTER
+      :value: 'TWITTER'
+
+
+
    .. py:method:: user_connectors()
+      :classmethod:
+
+
+
+   .. py:method:: database_connectors()
       :classmethod:
 
 
@@ -9843,7 +9860,7 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
 
-   System connector tool
+   System connector tool used to integrate chatbots with external services.
 
    :param value: The name of the tool.
    :type value: str
@@ -9936,6 +9953,8 @@ Package Contents
    :type mask_pii: bool
    :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
    :type builtin_tools: List[SystemConnectorTool]
+   :param mcp_server_configs: JSON string of MCP servers configs to use in the ChatLLM model. This should not be used with document_retrievers.
+   :type mcp_server_configs: str
 
 
    .. py:attribute:: document_retrievers
@@ -10156,6 +10175,12 @@ Package Contents
 
    .. py:attribute:: builtin_tools
       :type:  List[SystemConnectorTool]
+      :value: None
+
+
+
+   .. py:attribute:: mcp_server_configs
+      :type:  str
       :value: None
 
 
@@ -12530,6 +12555,46 @@ Package Contents
 
 
    .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioUrlResult(client, audioUrl=None, creditsUsed=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   TTS result
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param audioUrl: The audio url.
+   :type audioUrl: str
+   :param creditsUsed: The credits used.
+   :type creditsUsed: float
+
+
+   .. py:attribute:: audio_url
+      :value: None
+
+
+
+   .. py:attribute:: credits_used
       :value: None
 
 
@@ -19323,7 +19388,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -19353,6 +19418,8 @@ Package Contents
       :type chat_config: dict
       :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
       :type doc_infos: list
+      :param execute_usercode_tool: If True, will return the tool output in the response.
+      :type execute_usercode_tool: bool
 
 
 
@@ -22416,7 +22483,7 @@ Package Contents
       :type scopes: List
 
       :returns: The application connector with the authentication details.
-      :rtype: ApplicationConnector
+      :rtype: UnifiedConnector
 
 
 
@@ -22430,7 +22497,7 @@ Package Contents
       :type scopes: List
 
       :returns: The application connector with the authentication details.
-      :rtype: ApplicationConnector
+      :rtype: UnifiedConnector
 
 
 
@@ -27459,7 +27526,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None)
+   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -27487,6 +27554,8 @@ Package Contents
       :type chat_config: dict
       :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
       :type doc_infos: list
+      :param execute_usercode_tool: If True, will return the tool output in the response.
+      :type execute_usercode_tool: bool
 
 
 
@@ -42568,7 +42637,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -42598,6 +42667,8 @@ Package Contents
       :type chat_config: dict
       :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
       :type doc_infos: list
+      :param execute_usercode_tool: If True, will return the tool output in the response.
+      :type execute_usercode_tool: bool
 
 
 
@@ -48490,6 +48561,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.53'
+   :value: '1.4.54'
 
 

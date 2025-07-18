@@ -76,6 +76,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../app_user_group_sign_in_token/index.html">abacusai.app_user_group_sign_in_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_gen_settings/index.html">abacusai.audio_gen_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_url_result/index.html">abacusai.audio_url_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html">abacusai.batch_prediction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
@@ -935,7 +936,7 @@
 <td><p>Training config for the NATURAL_LANGUAGE_SEARCH problem type</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SystemConnectorTool" title="abacusai.api_class.SystemConnectorTool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SystemConnectorTool</span></code></a></p></td>
-<td><p>System connector tool</p></td>
+<td><p>System connector tool used to integrate chatbots with external services.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ChatLLMTrainingConfig" title="abacusai.api_class.ChatLLMTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CHAT_LLM problem type</p></td>
@@ -6743,9 +6744,24 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <span class="sig-name descname"><span class="pre">OAUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OAUTH'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.OAUTH" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.SALESFORCE">
+<span class="sig-name descname"><span class="pre">SALESFORCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SALESFORCE'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.SALESFORCE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.TWITTER">
+<span class="sig-name descname"><span class="pre">TWITTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TWITTER'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.TWITTER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.user_connectors">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_connectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.user_connectors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.database_connectors">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_connectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.database_connectors" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -10139,7 +10155,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dt class="sig sig-object py" id="abacusai.api_class.SystemConnectorTool">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">SystemConnectorTool</span></span><a class="headerlink" href="#abacusai.api_class.SystemConnectorTool" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>System connector tool</p>
+<p>System connector tool used to integrate chatbots with external services.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -10203,6 +10219,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Specifies the JSON schema that the model should adhere to if <cite>response_format</cite> is set to “JSON”. This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields ‘type’, ‘required’ and ‘description’. For example - ‘{“sample_field”: {“type”: “integer”, “required”: true, “description”: “Sample Field”}}’</p></li>
 <li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Mask PII in the prompts and uploaded documents before sending it to the LLM.</p></li>
 <li><p><strong>builtin_tools</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.SystemConnectorTool" title="abacusai.api_class.SystemConnectorTool"><em>SystemConnectorTool</em></a><em>]</em>) – List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).</p></li>
+<li><p><strong>mcp_server_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – JSON string of MCP servers configs to use in the ChatLLM model. This should not be used with document_retrievers.</p></li>
 </ul>
 </dd>
 </dl>
@@ -10389,6 +10406,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.builtin_tools">
 <span class="sig-name descname"><span class="pre">builtin_tools</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#abacusai.api_class.SystemConnectorTool" title="abacusai.api_class.SystemConnectorTool"><span class="pre">SystemConnectorTool</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.builtin_tools" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.mcp_server_configs">
+<span class="sig-name descname"><span class="pre">mcp_server_configs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.mcp_server_configs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

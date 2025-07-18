@@ -20,6 +20,7 @@ from .app_user_group import AppUserGroup
 from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
 from .audio_gen_settings import AudioGenSettings
+from .audio_url_result import AudioUrlResult
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
@@ -272,4 +273,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.53"
+__version__ = "1.4.54"

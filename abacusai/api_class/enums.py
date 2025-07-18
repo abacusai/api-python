@@ -416,6 +416,8 @@ class ApplicationConnectorType(ApiEnum):
     BOX = 'BOX'
     SFTPAPPLICATION = 'SFTPAPPLICATION'
     OAUTH = 'OAUTH'
+    SALESFORCE = 'SALESFORCE'
+    TWITTER = 'TWITTER'
 
     @classmethod
     def user_connectors(cls):
@@ -425,8 +427,14 @@ class ApplicationConnectorType(ApiEnum):
             cls.GMAILUSER,
             cls.SLACK,
             cls.JIRA,
-            cls.ONEDRIVE
+            cls.ONEDRIVE,
+            cls.SALESFORCE,
+            cls.TWITTER
         ]
+
+    @classmethod
+    def database_connectors(cls):
+        return [cls.SALESFORCE]
 
 
 class StreamingConnectorType(ApiEnum):
