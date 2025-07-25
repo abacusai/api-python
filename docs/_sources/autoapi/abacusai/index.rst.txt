@@ -293,6 +293,7 @@ Attributes
 
 .. autoapisummary::
 
+   abacusai.MIN_AGENT_SLEEP_TIME
    abacusai.DocumentRetrieverConfig
    abacusai.Segment
    abacusai._request_context
@@ -2115,6 +2116,10 @@ Package Contents
 .. py:function:: get_clean_function_source_code_for_agent(func)
 
 .. py:function:: validate_constructor_arg_types(friendly_class_name=None)
+
+.. py:data:: MIN_AGENT_SLEEP_TIME
+   :value: 3600
+
 
 .. py:function:: validate_input_dict_param(dict_object, friendly_class_name, must_contain=[])
 
@@ -7066,7 +7071,12 @@ Package Contents
 
 
    .. py:attribute:: QWEN3_235B_A22B
-      :value: 'QWEN3_235B_A22B'
+      :value: 'QWEN3_235B_A22B_2507'
+
+
+
+   .. py:attribute:: QWEN3_CODER
+      :value: 'QWEN3_CODER'
 
 
 
@@ -15599,6 +15609,30 @@ Package Contents
 
 
 
+   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
+
+      Executes a deployed AI agent function with binary data as inputs.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+      :param blobs: A dictionary of binary data to use as inputs to the agent execute function.
+      :type blobs: None
+
+      :returns: The result of the agent execution
+      :rtype: AgentDataExecutionResult
+
+
+
    .. py:method:: add_user_to_organization(email)
 
       Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -17272,7 +17306,7 @@ Package Contents
 
 
 
-   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, dataset_config = None, refresh_schedule = None, version_limit = 30)
+   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, dataset_config = None, refresh_schedule = None, version_limit = 30, incremental = False)
 
       Creates a dataset from an Application Connector.
 
@@ -17286,6 +17320,8 @@ Package Contents
       :type refresh_schedule: str
       :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
       :type version_limit: int
+      :param incremental: Signifies if the dataset is an incremental dataset.
+      :type incremental: bool
 
       :returns: The created dataset.
       :rtype: Dataset
@@ -19891,30 +19927,6 @@ Package Contents
 
 
 
-   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
-
-      Executes a deployed AI agent function with binary data as inputs.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique string identifier for the deployment created under the project.
-      :type deployment_id: str
-      :param arguments: Positional arguments to the agent execute function.
-      :type arguments: list
-      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type keyword_arguments: dict
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
-      :type deployment_conversation_id: str
-      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-      :type external_session_id: str
-      :param blobs: A dictionary of binary data to use as inputs to the agent execute function.
-      :type blobs: None
-
-      :returns: The result of the agent execution
-      :rtype: AgentDataExecutionResult
-
-
-
    .. py:method:: start_autonomous_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, save_conversations = True)
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
@@ -21279,7 +21291,7 @@ Package Contents
 
 
 
-   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, agent_mcp_config = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -21309,13 +21321,15 @@ Package Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
+      :param agent_mcp_config: The MCP config for the agent.
+      :type agent_mcp_config: dict
 
       :returns: The new agent.
       :rtype: Agent
 
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, agent_mcp_config = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -21341,6 +21355,8 @@ Package Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
+      :param agent_mcp_config: The MCP config for the agent.
+      :type agent_mcp_config: dict
 
       :returns: The updated agent.
       :rtype: Agent
@@ -34087,7 +34103,7 @@ Package Contents
 
 
 
-.. py:class:: FileConnector(client, bucket=None, verified=None, writePermission=None, authExpiresAt=None)
+.. py:class:: FileConnector(client, bucket=None, verified=None, writePermission=None, authExpiresAt=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34104,6 +34120,8 @@ Package Contents
    :type writePermission: bool
    :param authExpiresAt: The time when the file connector's auth expires, if applicable
    :type authExpiresAt: str
+   :param createdAt: The timestamp at which the file connector was created
+   :type createdAt: str
 
 
    .. py:attribute:: bucket
@@ -34122,6 +34140,11 @@ Package Contents
 
 
    .. py:attribute:: auth_expires_at
+      :value: None
+
+
+
+   .. py:attribute:: created_at
       :value: None
 
 
@@ -37358,7 +37381,7 @@ Package Contents
 
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, agent_mcp_config = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -37382,6 +37405,8 @@ Package Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
+      :param agent_mcp_config: The MCP config for the agent.
+      :type agent_mcp_config: dict
 
       :returns: The updated agent.
       :rtype: Agent
@@ -43100,6 +43125,30 @@ Package Contents
 
 
 
+   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
+
+      Executes a deployed AI agent function with binary data as inputs.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+      :param blobs: A dictionary of binary data to use as inputs to the agent execute function.
+      :type blobs: None
+
+      :returns: The result of the agent execution
+      :rtype: AgentDataExecutionResult
+
+
+
    .. py:method:: start_autonomous_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, save_conversations = True)
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
@@ -44511,7 +44560,7 @@ Package Contents
 
 
 
-   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, agent_mcp_config = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -44539,6 +44588,8 @@ Package Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
+      :param agent_mcp_config: The MCP config for the agent.
+      :type agent_mcp_config: dict
 
       :returns: The new agent.
       :rtype: Agent
@@ -48100,7 +48151,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48121,6 +48172,10 @@ Package Contents
    :type nameservers: list
    :param dnsRecords: The DNS records of the web app domain
    :type dnsRecords: list
+   :param metadata: The metadata of the web app domain
+   :type metadata: dict
+   :param isRootDomain: Whether the web app domain is a root domain
+   :type isRootDomain: bool
 
 
    .. py:attribute:: web_app_domain_id
@@ -48149,6 +48204,16 @@ Package Contents
 
 
    .. py:attribute:: dns_records
+      :value: None
+
+
+
+   .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: is_root_domain
       :value: None
 
 
@@ -48561,6 +48626,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.54'
+   :value: '1.4.55'
 
 

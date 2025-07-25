@@ -6,6 +6,9 @@ from . import enums
 from .abstract import ApiClass, get_clean_function_source_code_for_agent, validate_constructor_arg_types
 
 
+MIN_AGENT_SLEEP_TIME = 3600
+
+
 def validate_input_dict_param(dict_object, friendly_class_name, must_contain=[]):
     if not isinstance(dict_object, dict):
         raise ValueError(friendly_class_name, 'Invalid argument. Provided argument should be a dictionary.')
@@ -500,6 +503,8 @@ class WorkflowGraphNode(ApiClass):
                 sleep_time = int(sleep_time)
             if not isinstance(sleep_time, int) or sleep_time < 0:
                 raise ValueError('workflow_graph_node', 'Invalid sleep time. Must be a non-negative integer.')
+            if sleep_time < MIN_AGENT_SLEEP_TIME:
+                raise ValueError('workflow_graph_node', f'Sleep time for an autonomous agent cannot be less than {MIN_AGENT_SLEEP_TIME} seconds.')
 
         return cls(
             name=name,

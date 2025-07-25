@@ -429,7 +429,8 @@ class ApplicationConnectorType(ApiEnum):
             cls.JIRA,
             cls.ONEDRIVE,
             cls.SALESFORCE,
-            cls.TWITTER
+            cls.TWITTER,
+            cls.SHAREPOINT
         ]
 
     @classmethod
@@ -546,7 +547,8 @@ class LLMName(ApiEnum):
     QWEN_2_5_32B_BASE = 'QWEN_2_5_32B_BASE'
     QWEN_2_5_72B = 'QWEN_2_5_72B'
     QWQ_32B = 'QWQ_32B'
-    QWEN3_235B_A22B = 'QWEN3_235B_A22B'
+    QWEN3_235B_A22B = 'QWEN3_235B_A22B_2507'
+    QWEN3_CODER = 'QWEN3_CODER'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     XAI_GROK = 'XAI_GROK'
     XAI_GROK_3 = 'XAI_GROK_3'
