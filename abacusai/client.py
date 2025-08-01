@@ -126,6 +126,7 @@ from .llm_execution_result import LlmExecutionResult
 from .llm_generated_code import LlmGeneratedCode
 from .llm_input import LlmInput
 from .llm_response import LlmResponse
+from .mcp_server_query_result import McpServerQueryResult
 from .model import Model
 from .model_artifacts_export import ModelArtifactsExport
 from .model_metrics import ModelMetrics
@@ -662,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.55'
+    client_version = '1.4.56'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1610,6 +1611,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             UnifiedConnector: The application connector with the authentication details."""
         return self._call_api('getUserConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes}, parse_type=UnifiedConnector)
+
+    def get_user_mcp_connector_auth(self, mcp_server_name: str = None) -> ApplicationConnector:
+        """Get the auth for a MCP connector
+
+        Args:
+            mcp_server_name (str): The name of the MCP server
+
+        Returns:
+            ApplicationConnector: The MCP connector"""
+        return self._call_api('getUserMcpConnectorAuth', 'GET', query_params={'mcpServerName': mcp_server_name}, parse_type=ApplicationConnector)
 
     def list_streaming_connectors(self) -> List[StreamingConnector]:
         """Retrieves a list of all streaming connectors along with their corresponding attributes.
@@ -8970,7 +8981,7 @@ Creates a new feature group defined as the union of other feature group versions
             external_application_id (str): The ID of the External Application."""
         return self._call_api('deleteExternalApplication', 'DELETE', query_params={'externalApplicationId': external_application_id})
 
-    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None, agent_mcp_config: dict = None) -> Agent:
+    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
         """Creates a new AI agent using the given agent workflow graph definition.
 
         Args:
@@ -8987,13 +8998,12 @@ Creates a new feature group defined as the union of other feature group versions
             user_level_connectors (Dict): A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
             initialize_function_name (str): The name of the function to be used for initialization.
             initialize_function_code (str): The function code to be used for initialization.
-            agent_mcp_config (dict): The MCP config for the agent.
 
         Returns:
             Agent: The new agent."""
-        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'orgLevelConnectors': org_level_connectors, 'userLevelConnectors': user_level_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code, 'agentMcpConfig': agent_mcp_config}, parse_type=Agent)
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'orgLevelConnectors': org_level_connectors, 'userLevelConnectors': user_level_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code}, parse_type=Agent)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None, agent_mcp_config: dict = None) -> Agent:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
         """Updates an existing AI Agent. A new version of the agent will be created and published.
 
         Args:
@@ -9008,11 +9018,10 @@ Creates a new feature group defined as the union of other feature group versions
             user_level_connectors (Dict): A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
             initialize_function_name (str): The name of the function to be used for initialization.
             initialize_function_code (str): The function code to be used for initialization.
-            agent_mcp_config (dict): The MCP config for the agent.
 
         Returns:
             Agent: The updated agent."""
-        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'orgLevelConnectors': org_level_connectors, 'userLevelConnectors': user_level_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code, 'agentMcpConfig': agent_mcp_config}, parse_type=Agent)
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'orgLevelConnectors': org_level_connectors, 'userLevelConnectors': user_level_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code}, parse_type=Agent)
 
     def generate_agent_code(self, project_id: str, prompt: str, fast_mode: bool = None) -> list:
         """Generates the code for defining an AI Agent
@@ -9257,3 +9266,17 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
         return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, data={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config.to_dict()) if hasattr(document_retriever_config, 'to_dict') else json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text, 'documentProcessingConfig': json.dumps(document_processing_config.to_dict()) if hasattr(document_processing_config, 'to_dict') else json.dumps(document_processing_config)}, files=blobs, parse_type=DocumentRetrieverLookupResult)
+
+    def query_mcp_server(self, task: str, server_name: str) -> McpServerQueryResult:
+        """Query a Remote MCP server. For a given task, it runs the required tools of the MCP
+
+        server with appropriate arguments and returns the output.
+
+
+        Args:
+            task (str): a comprehensive description of the task to perform using the MCP server tools.
+            server_name (str): The name of the MCP server.
+
+        Returns:
+            McpServerQueryResult: The execution logs as well as the final output of the task execution."""
+        return self._proxy_request('QueryMcpServer', 'POST', query_params={}, body={'task': task, 'serverName': server_name}, parse_type=McpServerQueryResult)

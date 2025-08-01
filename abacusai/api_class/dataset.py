@@ -64,7 +64,7 @@ class DocumentProcessingConfig(ApiClass):
         if self.document_type is not None:
             if DocumentType.is_ocr_forced(self.document_type):
                 self.highlight_relevant_text = True
-            else:
+            elif self.highlight_relevant_text is None:
                 self.highlight_relevant_text = False
         if self.highlight_relevant_text is not None:
             self.extract_bounding_boxes = self.highlight_relevant_text  # Highlight_relevant text acts as a wrapper over extract_bounding_boxes

@@ -140,6 +140,7 @@ from .hosted_artifact import HostedArtifact
 from .hosted_database import HostedDatabase
 from .hosted_database_snapshot import HostedDatabaseSnapshot
 from .hosted_model_token import HostedModelToken
+from .hostname_info import HostnameInfo
 from .hume_voice import HumeVoice
 from .image_gen_model import ImageGenModel
 from .image_gen_model_options import ImageGenModelOptions
@@ -151,6 +152,7 @@ from .item_statistics import ItemStatistics
 from .lip_sync_gen_settings import LipSyncGenSettings
 from .llm_app import LlmApp
 from .llm_artifact import LlmArtifact
+from .llm_artifact_conversation import LlmArtifactConversation
 from .llm_code_block import LlmCodeBlock
 from .llm_execution_preview import LlmExecutionPreview
 from .llm_execution_result import LlmExecutionResult
@@ -160,6 +162,8 @@ from .llm_parameters import LlmParameters
 from .llm_response import LlmResponse
 from .mcp_config import McpConfig
 from .mcp_server import McpServer
+from .mcp_server_connection import McpServerConnection
+from .mcp_server_query_result import McpServerQueryResult
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
 from .model import Model
@@ -273,4 +277,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.55"
+__version__ = "1.4.56"

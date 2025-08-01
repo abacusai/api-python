@@ -418,6 +418,7 @@ class ApplicationConnectorType(ApiEnum):
     OAUTH = 'OAUTH'
     SALESFORCE = 'SALESFORCE'
     TWITTER = 'TWITTER'
+    MCP = 'MCP'
 
     @classmethod
     def user_connectors(cls):
@@ -430,7 +431,8 @@ class ApplicationConnectorType(ApiEnum):
             cls.ONEDRIVE,
             cls.SALESFORCE,
             cls.TWITTER,
-            cls.SHAREPOINT
+            cls.SHAREPOINT,
+            cls.CONFLUENCE
         ]
 
     @classmethod

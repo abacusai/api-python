@@ -198,6 +198,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../hosted_database/index.html">abacusai.hosted_database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_database_snapshot/index.html">abacusai.hosted_database_snapshot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_model_token/index.html">abacusai.hosted_model_token</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hostname_info/index.html">abacusai.hostname_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hume_voice/index.html">abacusai.hume_voice</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../image_gen_model/index.html">abacusai.image_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../image_gen_model_options/index.html">abacusai.image_gen_model_options</a></li>
@@ -209,6 +210,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../lip_sync_gen_settings/index.html">abacusai.lip_sync_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_app/index.html">abacusai.llm_app</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_artifact/index.html">abacusai.llm_artifact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_artifact_conversation/index.html">abacusai.llm_artifact_conversation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html">abacusai.llm_code_block</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_preview/index.html">abacusai.llm_execution_preview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_result/index.html">abacusai.llm_execution_result</a></li>
@@ -218,6 +220,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html">abacusai.llm_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mcp_config/index.html">abacusai.mcp_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mcp_server/index.html">abacusai.mcp_server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mcp_server_connection/index.html">abacusai.mcp_server_connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mcp_server_query_result/index.html">abacusai.mcp_server_query_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html">abacusai.model</a></li>
@@ -6762,6 +6766,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <span class="sig-name descname"><span class="pre">TWITTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TWITTER'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.TWITTER" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.MCP">
+<span class="sig-name descname"><span class="pre">MCP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MCP'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.MCP" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.user_connectors">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_connectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.user_connectors" title="Link to this definition"></a></dt>
@@ -10232,7 +10241,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Specifies the JSON schema that the model should adhere to if <cite>response_format</cite> is set to “JSON”. This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields ‘type’, ‘required’ and ‘description’. For example - ‘{“sample_field”: {“type”: “integer”, “required”: true, “description”: “Sample Field”}}’</p></li>
 <li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Mask PII in the prompts and uploaded documents before sending it to the LLM.</p></li>
 <li><p><strong>builtin_tools</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.SystemConnectorTool" title="abacusai.api_class.SystemConnectorTool"><em>SystemConnectorTool</em></a><em>]</em>) – List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).</p></li>
-<li><p><strong>mcp_server_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – JSON string of MCP servers configs to use in the ChatLLM model. This should not be used with document_retrievers.</p></li>
+<li><p><strong>mcp_servers</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.</p></li>
 </ul>
 </dd>
 </dl>
@@ -10422,8 +10431,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.mcp_server_configs">
-<span class="sig-name descname"><span class="pre">mcp_server_configs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.mcp_server_configs" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.mcp_servers">
+<span class="sig-name descname"><span class="pre">mcp_servers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.mcp_servers" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

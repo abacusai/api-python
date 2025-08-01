@@ -155,6 +155,7 @@ Submodules
    /autoapi/abacusai/hosted_database/index
    /autoapi/abacusai/hosted_database_snapshot/index
    /autoapi/abacusai/hosted_model_token/index
+   /autoapi/abacusai/hostname_info/index
    /autoapi/abacusai/hume_voice/index
    /autoapi/abacusai/image_gen_model/index
    /autoapi/abacusai/image_gen_model_options/index
@@ -166,6 +167,7 @@ Submodules
    /autoapi/abacusai/lip_sync_gen_settings/index
    /autoapi/abacusai/llm_app/index
    /autoapi/abacusai/llm_artifact/index
+   /autoapi/abacusai/llm_artifact_conversation/index
    /autoapi/abacusai/llm_code_block/index
    /autoapi/abacusai/llm_execution_preview/index
    /autoapi/abacusai/llm_execution_result/index
@@ -175,6 +177,8 @@ Submodules
    /autoapi/abacusai/llm_response/index
    /autoapi/abacusai/mcp_config/index
    /autoapi/abacusai/mcp_server/index
+   /autoapi/abacusai/mcp_server_connection/index
+   /autoapi/abacusai/mcp_server_query_result/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
    /autoapi/abacusai/model/index
@@ -675,6 +679,7 @@ Classes
    abacusai.HostedDatabase
    abacusai.HostedDatabaseSnapshot
    abacusai.HostedModelToken
+   abacusai.HostnameInfo
    abacusai.HumeVoice
    abacusai.ImageGenModel
    abacusai.ImageGenModelOptions
@@ -686,6 +691,7 @@ Classes
    abacusai.LipSyncGenSettings
    abacusai.LlmApp
    abacusai.LlmArtifact
+   abacusai.LlmArtifactConversation
    abacusai.LlmCodeBlock
    abacusai.LlmExecutionPreview
    abacusai.LlmExecutionResult
@@ -695,6 +701,8 @@ Classes
    abacusai.LlmResponse
    abacusai.McpConfig
    abacusai.McpServer
+   abacusai.McpServerConnection
+   abacusai.McpServerQueryResult
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
    abacusai.Model
@@ -6680,6 +6688,11 @@ Package Contents
 
 
 
+   .. py:attribute:: MCP
+      :value: 'MCP'
+
+
+
    .. py:method:: user_connectors()
       :classmethod:
 
@@ -9963,8 +9976,8 @@ Package Contents
    :type mask_pii: bool
    :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
    :type builtin_tools: List[SystemConnectorTool]
-   :param mcp_server_configs: JSON string of MCP servers configs to use in the ChatLLM model. This should not be used with document_retrievers.
-   :type mcp_server_configs: str
+   :param mcp_servers: List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
+   :type mcp_servers: List[str]
 
 
    .. py:attribute:: document_retrievers
@@ -10189,8 +10202,8 @@ Package Contents
 
 
 
-   .. py:attribute:: mcp_server_configs
-      :type:  str
+   .. py:attribute:: mcp_servers
+      :type:  List[str]
       :value: None
 
 
@@ -21291,7 +21304,7 @@ Package Contents
 
 
 
-   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, agent_mcp_config = None)
+   .. py:method:: create_agent(project_id, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -21321,15 +21334,13 @@ Package Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
-      :param agent_mcp_config: The MCP config for the agent.
-      :type agent_mcp_config: dict
 
       :returns: The new agent.
       :rtype: Agent
 
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, agent_mcp_config = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -21355,8 +21366,6 @@ Package Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
-      :param agent_mcp_config: The MCP config for the agent.
-      :type agent_mcp_config: dict
 
       :returns: The updated agent.
       :rtype: Agent
@@ -21698,6 +21707,23 @@ Package Contents
 
       :returns: The snippets found from the documents.
       :rtype: list[DocumentRetrieverLookupResult]
+
+
+
+   .. py:method:: query_mcp_server(task, server_name)
+
+      Query a Remote MCP server. For a given task, it runs the required tools of the MCP
+
+      server with appropriate arguments and returns the output.
+
+
+      :param task: a comprehensive description of the task to perform using the MCP server tools.
+      :type task: str
+      :param server_name: The name of the MCP server.
+      :type server_name: str
+
+      :returns: The execution logs as well as the final output of the task execution.
+      :rtype: McpServerQueryResult
 
 
 
@@ -22514,6 +22540,18 @@ Package Contents
 
       :returns: The application connector with the authentication details.
       :rtype: UnifiedConnector
+
+
+
+   .. py:method:: get_user_mcp_connector_auth(mcp_server_name = None)
+
+      Get the auth for a MCP connector
+
+      :param mcp_server_name: The name of the MCP server
+      :type mcp_server_name: str
+
+      :returns: The MCP connector
+      :rtype: ApplicationConnector
 
 
 
@@ -27879,7 +27917,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27936,6 +27974,10 @@ Package Contents
    :type contestNames: list[str]
    :param daemonTaskId: The daemon task id associated with the deployment conversation.
    :type daemonTaskId: str
+   :param parentDeploymentConversationId: The parent deployment conversation id associated with the deployment conversation.
+   :type parentDeploymentConversationId: str
+   :param introMessage: The intro message for the deployment conversation.
+   :type introMessage: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -28062,6 +28104,16 @@ Package Contents
 
 
 
+   .. py:attribute:: parent_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: intro_message
+      :value: None
+
+
+
    .. py:attribute:: history
 
 
@@ -28183,7 +28235,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, forkedDeploymentConversationIds=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28258,6 +28310,8 @@ Package Contents
    :type verificationSummary: str
    :param attachedUserFileNames: The list of files attached by the user on the message.
    :type attachedUserFileNames: list
+   :param forkedDeploymentConversationIds: The list of deployment conversation ids that were forked from this conversation.
+   :type forkedDeploymentConversationIds: list
 
 
    .. py:attribute:: role
@@ -28421,6 +28475,11 @@ Package Contents
 
 
    .. py:attribute:: attached_user_file_names
+      :value: None
+
+
+
+   .. py:attribute:: forked_deployment_conversation_ids
       :value: None
 
 
@@ -35208,7 +35267,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, webAppProjectId=None, parentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35259,6 +35318,10 @@ Package Contents
    :type deployedLlmArtifactId: id
    :param hasDatabase: Whether the app has a database associated to it
    :type hasDatabase: bool
+   :param webAppProjectId: The ID of the web app project
+   :type webAppProjectId: id
+   :param parentConversationId: The ID of the parent conversation
+   :type parentConversationId: id
 
 
    .. py:attribute:: hosted_app_container_id
@@ -35362,6 +35425,16 @@ Package Contents
 
 
    .. py:attribute:: has_database
+      :value: None
+
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: parent_conversation_id
       :value: None
 
 
@@ -35667,6 +35740,39 @@ Package Contents
 
 
    .. py:attribute:: hosted_model_token_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: HostnameInfo(client, isRootDomain=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Hostname Info
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param isRootDomain: Whether the hostname is a root domain
+   :type isRootDomain: bool
+
+
+   .. py:attribute:: is_root_domain
       :value: None
 
 
@@ -36218,7 +36324,7 @@ Package Contents
 
 
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36241,6 +36347,10 @@ Package Contents
    :type deploymentStatus: str
    :param isLatest: Whether it is the most recent version of the artifact
    :type isLatest: bool
+   :param deploymentConversationId: The ID of the deployment conversation
+   :type deploymentConversationId: id
+   :param webAppProjectId: The ID of the web app project
+   :type webAppProjectId: id
 
 
    .. py:attribute:: llm_artifact_id
@@ -36274,6 +36384,77 @@ Package Contents
 
 
    .. py:attribute:: is_latest
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: LlmArtifactConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   LLM Artifact Conversation
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The ID of the deployment conversation
+   :type deploymentConversationId: id
+   :param llmArtifactId: The ID of the LLM artifact
+   :type llmArtifactId: id
+   :param deploymentConversationName: The name of the conversation
+   :type deploymentConversationName: str
+   :param externalApplicationId: The external application ID
+   :type externalApplicationId: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_name
+      :value: None
+
+
+
+   .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: created_at
       :value: None
 
 
@@ -36719,6 +36900,156 @@ Package Contents
 
 
    .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: McpServerConnection(client, mcpServerConnectionId=None, createdAt=None, updatedAt=None, name=None, config=None, description=None, transport=None, authType=None, externalConnectionId=None, inactive=None, tools=None, errorMsg=None, metadata=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Model Context Protocol Server Connection
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mcpServerConnectionId: the id of the MCP server connection.
+   :type mcpServerConnectionId: id
+   :param createdAt: the date and time the MCP server connection was created.
+   :type createdAt: str
+   :param updatedAt: the date and time the MCP server connection was updated.
+   :type updatedAt: str
+   :param name: The name of the MCP server.
+   :type name: str
+   :param config: a dictionary containing the config for the MCP server.
+   :type config: dict
+   :param description: description of what the MCP server does.
+   :type description: str
+   :param transport: the transport type for the MCP server.
+   :type transport: str
+   :param authType: the auth type for the MCP server.
+   :type authType: str
+   :param externalConnectionId: the external connection id for the MCP server.
+   :type externalConnectionId: id
+   :param inactive: whether the MCP server is inactive.
+   :type inactive: bool
+   :param tools: the tools for the MCP server.
+   :type tools: list
+   :param errorMsg: the error message for the MCP server.
+   :type errorMsg: str
+   :param metadata: the metadata for the MCP server.
+   :type metadata: dict
+
+
+   .. py:attribute:: mcp_server_connection_id
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: config
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: transport
+      :value: None
+
+
+
+   .. py:attribute:: auth_type
+      :value: None
+
+
+
+   .. py:attribute:: external_connection_id
+      :value: None
+
+
+
+   .. py:attribute:: inactive
+      :value: None
+
+
+
+   .. py:attribute:: tools
+      :value: None
+
+
+
+   .. py:attribute:: error_msg
+      :value: None
+
+
+
+   .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: McpServerQueryResult(client, output=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Result of a MCP server query
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param output: The execution logs as well as the final output of the MCP server query
+   :type output: dict
+
+
+   .. py:attribute:: output
       :value: None
 
 
@@ -37381,7 +37712,7 @@ Package Contents
 
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, agent_mcp_config = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -37405,8 +37736,6 @@ Package Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
-      :param agent_mcp_config: The MCP config for the agent.
-      :type agent_mcp_config: dict
 
       :returns: The updated agent.
       :rtype: Agent
@@ -44560,7 +44889,7 @@ Package Contents
 
 
 
-   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, agent_mcp_config = None)
+   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = [], description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = AgentInterface.DEFAULT, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
 
       Creates a new AI agent using the given agent workflow graph definition.
 
@@ -44588,8 +44917,6 @@ Package Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
-      :param agent_mcp_config: The MCP config for the agent.
-      :type agent_mcp_config: dict
 
       :returns: The new agent.
       :rtype: Agent
@@ -48626,6 +48953,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.55'
+   :value: '1.4.56'
 
 

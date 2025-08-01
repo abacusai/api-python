@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, forkedDeploymentConversationIds=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -90,6 +90,8 @@ Module Contents
    :type verificationSummary: str
    :param attachedUserFileNames: The list of files attached by the user on the message.
    :type attachedUserFileNames: list
+   :param forkedDeploymentConversationIds: The list of deployment conversation ids that were forked from this conversation.
+   :type forkedDeploymentConversationIds: list
 
 
    .. py:attribute:: role
@@ -253,6 +255,11 @@ Module Contents
 
 
    .. py:attribute:: attached_user_file_names
+      :value: None
+
+
+
+   .. py:attribute:: forked_deployment_conversation_ids
       :value: None
 
 

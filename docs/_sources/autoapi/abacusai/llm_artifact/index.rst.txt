@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,10 @@ Module Contents
    :type deploymentStatus: str
    :param isLatest: Whether it is the most recent version of the artifact
    :type isLatest: bool
+   :param deploymentConversationId: The ID of the deployment conversation
+   :type deploymentConversationId: id
+   :param webAppProjectId: The ID of the web app project
+   :type webAppProjectId: id
 
 
    .. py:attribute:: llm_artifact_id
@@ -71,6 +75,16 @@ Module Contents
 
 
    .. py:attribute:: is_latest
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: web_app_project_id
       :value: None
 
 

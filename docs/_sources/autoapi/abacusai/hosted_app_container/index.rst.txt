@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, webAppProjectId=None, parentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -66,6 +66,10 @@ Module Contents
    :type deployedLlmArtifactId: id
    :param hasDatabase: Whether the app has a database associated to it
    :type hasDatabase: bool
+   :param webAppProjectId: The ID of the web app project
+   :type webAppProjectId: id
+   :param parentConversationId: The ID of the parent conversation
+   :type parentConversationId: id
 
 
    .. py:attribute:: hosted_app_container_id
@@ -169,6 +173,16 @@ Module Contents
 
 
    .. py:attribute:: has_database
+      :value: None
+
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: parent_conversation_id
       :value: None
 
 

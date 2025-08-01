@@ -1523,8 +1523,8 @@ Module Contents
    :type mask_pii: bool
    :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
    :type builtin_tools: List[SystemConnectorTool]
-   :param mcp_server_configs: JSON string of MCP servers configs to use in the ChatLLM model. This should not be used with document_retrievers.
-   :type mcp_server_configs: str
+   :param mcp_servers: List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
+   :type mcp_servers: List[str]
 
 
    .. py:attribute:: document_retrievers
@@ -1749,8 +1749,8 @@ Module Contents
 
 
 
-   .. py:attribute:: mcp_server_configs
-      :type:  str
+   .. py:attribute:: mcp_servers
+      :type:  List[str]
       :value: None
 
 

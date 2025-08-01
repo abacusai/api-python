@@ -501,7 +501,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         json_response_schema (str): Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
         mask_pii (bool): Mask PII in the prompts and uploaded documents before sending it to the LLM.
         builtin_tools (List[SystemConnectorTool]): List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
-        mcp_server_configs (str): JSON string of MCP servers configs to use in the ChatLLM model. This should not be used with document_retrievers.
+        mcp_servers (List[str]): List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -540,7 +540,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     json_response_schema: str = dataclasses.field(default=None)
     mask_pii: bool = dataclasses.field(default=None)
     builtin_tools: List[SystemConnectorTool] = dataclasses.field(default=None)
-    mcp_server_configs: str = dataclasses.field(default=None)
+    mcp_servers: List[str] = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

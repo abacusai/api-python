@@ -20,7 +20,7 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="abacusai.llm_code_block" href="../llm_code_block/index.html" />
+    <link rel="next" title="abacusai.llm_artifact_conversation" href="../llm_artifact_conversation/index.html" />
     <link rel="prev" title="abacusai.llm_app" href="../llm_app/index.html" /> 
 </head>
 
@@ -191,6 +191,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../hosted_database/index.html">abacusai.hosted_database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_database_snapshot/index.html">abacusai.hosted_database_snapshot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_model_token/index.html">abacusai.hosted_model_token</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hostname_info/index.html">abacusai.hostname_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hume_voice/index.html">abacusai.hume_voice</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../image_gen_model/index.html">abacusai.image_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../image_gen_model_options/index.html">abacusai.image_gen_model_options</a></li>
@@ -206,6 +207,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_artifact_conversation/index.html">abacusai.llm_artifact_conversation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html">abacusai.llm_code_block</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_preview/index.html">abacusai.llm_execution_preview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_result/index.html">abacusai.llm_execution_result</a></li>
@@ -215,6 +217,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html">abacusai.llm_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mcp_config/index.html">abacusai.mcp_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mcp_server/index.html">abacusai.mcp_server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mcp_server_connection/index.html">abacusai.mcp_server_connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mcp_server_query_result/index.html">abacusai.mcp_server_query_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html">abacusai.model</a></li>
@@ -378,7 +382,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.llm_artifact.LlmArtifact">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.llm_artifact.</span></span><span class="sig-name descname"><span class="pre">LlmArtifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmArtifactId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webAppDeploymentId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentStatus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isLatest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.llm_artifact.LlmArtifact" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.llm_artifact.</span></span><span class="sig-name descname"><span class="pre">LlmArtifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmArtifactId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webAppDeploymentId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentStatus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isLatest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentConversationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webAppProjectId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.llm_artifact.LlmArtifact" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>LLM Artifact</p>
 <dl class="field-list simple">
@@ -392,6 +396,8 @@
 <li><p><strong>webAppDeploymentId</strong> (<em>id</em>) – The ID of the associated web app deployment</p></li>
 <li><p><strong>deploymentStatus</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The status of the associated web app deployment</p></li>
 <li><p><strong>isLatest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether it is the most recent version of the artifact</p></li>
+<li><p><strong>deploymentConversationId</strong> (<em>id</em>) – The ID of the deployment conversation</p></li>
+<li><p><strong>webAppProjectId</strong> (<em>id</em>) – The ID of the web app project</p></li>
 </ul>
 </dd>
 </dl>
@@ -431,6 +437,16 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.llm_artifact.LlmArtifact.deployment_conversation_id">
+<span class="sig-name descname"><span class="pre">deployment_conversation_id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.llm_artifact.LlmArtifact.deployment_conversation_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.llm_artifact.LlmArtifact.web_app_project_id">
+<span class="sig-name descname"><span class="pre">web_app_project_id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.llm_artifact.LlmArtifact.web_app_project_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.llm_artifact.LlmArtifact.deprecated_keys">
 <span class="sig-name descname"><span class="pre">deprecated_keys</span></span><a class="headerlink" href="#abacusai.llm_artifact.LlmArtifact.deprecated_keys" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -464,7 +480,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../llm_app/index.html" class="btn btn-neutral float-left" title="abacusai.llm_app" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../llm_code_block/index.html" class="btn btn-neutral float-right" title="abacusai.llm_code_block" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../llm_artifact_conversation/index.html" class="btn btn-neutral float-right" title="abacusai.llm_artifact_conversation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
