@@ -432,6 +432,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.SALESFORCE,
             cls.TWITTER,
             cls.SHAREPOINT,
+            cls.TEAMS,
             cls.CONFLUENCE
         ]
 
@@ -508,7 +509,7 @@ class VectorStoreTextEncoder(ApiEnum):
                   'OPENAI_O1_MINI',
                   'GEMINI_1_5_PRO', 'GEMINI_2_PRO', 'GEMINI_2_FLASH_THINKING',
                   'XAI_GROK',
-                  'CLAUDE_V3_OPUS', 'CLAUDE_V3_SONNET', 'CLAUDE_V3_HAIKU',
+                  'CLAUDE_V3_OPUS', 'CLAUDE_V3_HAIKU',
                   'LLAMA3_LARGE_CHAT', 'QWEN_2_5_32B_BASE')
 class LLMName(ApiEnum):
     OPENAI_GPT4 = 'OPENAI_GPT4'
@@ -530,7 +531,6 @@ class LLMName(ApiEnum):
     LLAMA3_3_70B = 'LLAMA3_3_70B'
     LLAMA3_LARGE_CHAT = 'LLAMA3_LARGE_CHAT'
     CLAUDE_V3_OPUS = 'CLAUDE_V3_OPUS'
-    CLAUDE_V3_SONNET = 'CLAUDE_V3_SONNET'
     CLAUDE_V3_HAIKU = 'CLAUDE_V3_HAIKU'
     CLAUDE_V3_5_SONNET = 'CLAUDE_V3_5_SONNET'
     CLAUDE_V3_7_SONNET = 'CLAUDE_V3_7_SONNET'
@@ -550,6 +550,7 @@ class LLMName(ApiEnum):
     QWEN_2_5_72B = 'QWEN_2_5_72B'
     QWQ_32B = 'QWQ_32B'
     QWEN3_235B_A22B = 'QWEN3_235B_A22B_2507'
+    QWEN3_235B_A22B_THINKING = 'QWEN3_235B_A22B_THINKING_2507'
     QWEN3_CODER = 'QWEN3_CODER'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     XAI_GROK = 'XAI_GROK'

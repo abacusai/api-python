@@ -1,9 +1,9 @@
 from .return_class import AbstractApiClass
 
 
-class LlmArtifactConversation(AbstractApiClass):
+class WebAppConversation(AbstractApiClass):
     """
-        LLM Artifact Conversation
+        Web App Conversation
 
         Args:
             client (ApiClient): An authenticated API Client instance
@@ -26,7 +26,7 @@ class LlmArtifactConversation(AbstractApiClass):
     def __repr__(self):
         repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'llm_artifact_id': repr(self.llm_artifact_id), f'deployment_conversation_name': repr(
             self.deployment_conversation_name), f'external_application_id': repr(self.external_application_id), f'created_at': repr(self.created_at)}
-        class_name = "LlmArtifactConversation"
+        class_name = "WebAppConversation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"

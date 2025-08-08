@@ -210,7 +210,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../lip_sync_gen_settings/index.html">abacusai.lip_sync_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_app/index.html">abacusai.llm_app</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_artifact/index.html">abacusai.llm_artifact</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../llm_artifact_conversation/index.html">abacusai.llm_artifact_conversation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html">abacusai.llm_code_block</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_preview/index.html">abacusai.llm_execution_preview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_result/index.html">abacusai.llm_execution_result</a></li>
@@ -326,6 +325,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_search_result/index.html">abacusai.video_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../voice_gen_details/index.html">abacusai.voice_gen_details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../web_app_conversation/index.html">abacusai.web_app_conversation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_app_domain/index.html">abacusai.web_app_domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_page_response/index.html">abacusai.web_page_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
@@ -7102,11 +7102,6 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.LLMName.CLAUDE_V3_SONNET">
-<span class="sig-name descname"><span class="pre">CLAUDE_V3_SONNET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAUDE_V3_SONNET'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.CLAUDE_V3_SONNET" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.CLAUDE_V3_HAIKU">
 <span class="sig-name descname"><span class="pre">CLAUDE_V3_HAIKU</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAUDE_V3_HAIKU'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.CLAUDE_V3_HAIKU" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -7199,6 +7194,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.QWEN3_235B_A22B">
 <span class="sig-name descname"><span class="pre">QWEN3_235B_A22B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QWEN3_235B_A22B_2507'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.QWEN3_235B_A22B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.QWEN3_235B_A22B_THINKING">
+<span class="sig-name descname"><span class="pre">QWEN3_235B_A22B_THINKING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QWEN3_235B_A22B_THINKING_2507'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.QWEN3_235B_A22B_THINKING" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -10239,7 +10239,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>response_format</strong> – (str): When set to ‘JSON’, the LLM will generate a JSON formatted string.</p></li>
 <li><p><strong>json_response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Instructions to be followed while generating the json_response if <cite>response_format</cite> is set to “JSON”. This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.</p></li>
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Specifies the JSON schema that the model should adhere to if <cite>response_format</cite> is set to “JSON”. This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields ‘type’, ‘required’ and ‘description’. For example - ‘{“sample_field”: {“type”: “integer”, “required”: true, “description”: “Sample Field”}}’</p></li>
-<li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Mask PII in the prompts and uploaded documents before sending it to the LLM.</p></li>
+<li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Mask PII in the prompts and uploaded documents before sending it to the LLM. Only available for Enterprise users and will cause validation errors if set to True for ChatLLM Teams users.</p></li>
 <li><p><strong>builtin_tools</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.SystemConnectorTool" title="abacusai.api_class.SystemConnectorTool"><em>SystemConnectorTool</em></a><em>]</em>) – List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).</p></li>
 <li><p><strong>mcp_servers</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.</p></li>
 </ul>

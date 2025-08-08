@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.56'
+      :value: '1.4.57'
 
 
 
@@ -10573,7 +10573,7 @@ Module Contents
 
 
 
-   .. py:method:: query_mcp_server(task, server_name)
+   .. py:method:: query_mcp_server(task, server_name = None, mcp_server_connection_id = None)
 
       Query a Remote MCP server. For a given task, it runs the required tools of the MCP
 
@@ -10584,6 +10584,8 @@ Module Contents
       :type task: str
       :param server_name: The name of the MCP server.
       :type server_name: str
+      :param mcp_server_connection_id: connection id of the MCP server to query.
+      :type mcp_server_connection_id: str
 
       :returns: The execution logs as well as the final output of the task execution.
       :rtype: McpServerQueryResult

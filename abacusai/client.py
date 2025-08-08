@@ -663,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.56'
+    client_version = '1.4.57'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -9267,7 +9267,7 @@ Creates a new feature group defined as the union of other feature group versions
             list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
         return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, data={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config.to_dict()) if hasattr(document_retriever_config, 'to_dict') else json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'text': text, 'documentProcessingConfig': json.dumps(document_processing_config.to_dict()) if hasattr(document_processing_config, 'to_dict') else json.dumps(document_processing_config)}, files=blobs, parse_type=DocumentRetrieverLookupResult)
 
-    def query_mcp_server(self, task: str, server_name: str) -> McpServerQueryResult:
+    def query_mcp_server(self, task: str, server_name: str = None, mcp_server_connection_id: str = None) -> McpServerQueryResult:
         """Query a Remote MCP server. For a given task, it runs the required tools of the MCP
 
         server with appropriate arguments and returns the output.
@@ -9276,7 +9276,8 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             task (str): a comprehensive description of the task to perform using the MCP server tools.
             server_name (str): The name of the MCP server.
+            mcp_server_connection_id (str): connection id of the MCP server to query.
 
         Returns:
             McpServerQueryResult: The execution logs as well as the final output of the task execution."""
-        return self._proxy_request('QueryMcpServer', 'POST', query_params={}, body={'task': task, 'serverName': server_name}, parse_type=McpServerQueryResult)
+        return self._proxy_request('QueryMcpServer', 'POST', query_params={}, body={'task': task, 'serverName': server_name, 'mcpServerConnectionId': mcp_server_connection_id}, parse_type=McpServerQueryResult)
