@@ -40,10 +40,10 @@ from .api_class import (
     DeploymentConversationType, DocumentProcessingConfig, EvalArtifactType,
     FeatureGroupExportConfig, ForecastingMonitorConfig,
     IncrementalDatabaseConnectorConfig, LLMName, MemorySize, MergeConfig,
-    OperatorConfig, ParsingConfig, PredictionArguments, ProblemType,
-    ProjectFeatureGroupConfig, PythonFunctionType, ResponseSection,
-    SamplingConfig, Segment, StreamingConnectorDatasetConfig, TrainingConfig,
-    VectorStoreConfig, WorkflowGraph, WorkflowGraphNode,
+    OperatorConfig, OrganizationSecretType, ParsingConfig, PredictionArguments,
+    ProblemType, ProjectFeatureGroupConfig, PythonFunctionType,
+    ResponseSection, SamplingConfig, Segment, StreamingConnectorDatasetConfig,
+    TrainingConfig, VectorStoreConfig, WorkflowGraph, WorkflowGraphNode,
     WorkflowNodeTemplateConfig, get_clean_function_source_code_for_agent
 )
 from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
@@ -663,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.57'
+    client_version = '1.4.58'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2668,12 +2668,16 @@ class ReadOnlyClient(BaseApiClient):
             OrganizationSecret: The secret."""
         return self._call_api('getOrganizationSecret', 'GET', query_params={'secretKey': secret_key}, parse_type=OrganizationSecret)
 
-    def list_organization_secrets(self) -> List[OrganizationSecret]:
+    def list_organization_secrets(self, decrypt_value: bool = False, secret_type: Union[OrganizationSecretType, str] = OrganizationSecretType.ORG_SECRET) -> List[OrganizationSecret]:
         """Lists all secrets for an organization.
 
+        Args:
+            decrypt_value (bool): Whether to decrypt the secret values.
+            secret_type (OrganizationSecretType): Filter secrets by type. Use OrganizationSecretType enum values.
+
         Returns:
-            list[OrganizationSecret]: list of secrets belonging to the organization."""
-        return self._call_api('listOrganizationSecrets', 'GET', query_params={}, parse_type=OrganizationSecret)
+            list[OrganizationSecret]: List of secrets."""
+        return self._call_api('listOrganizationSecrets', 'GET', query_params={'decryptValue': decrypt_value, 'secretType': secret_type}, parse_type=OrganizationSecret)
 
     def get_app_user_group_sign_in_token(self, user_group_id: str, email: str, name: str) -> AppUserGroupSignInToken:
         """Get a token for a user group user to sign in.
@@ -8728,16 +8732,18 @@ Creates a new feature group defined as the union of other feature group versions
             Module: The updated module."""
         return self._call_api('updateModule', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code}, parse_type=Module)
 
-    def create_organization_secret(self, secret_key: str, value: str) -> OrganizationSecret:
+    def create_organization_secret(self, secret_key: str, value: str, secret_type: Union[OrganizationSecretType, str] = OrganizationSecretType.ORG_SECRET, metadata: dict = None) -> OrganizationSecret:
         """Creates a secret which can be accessed in functions and notebooks.
 
         Args:
             secret_key (str): The secret key.
             value (str): The secret value.
+            secret_type (OrganizationSecretType): The type of secret. Use OrganizationSecretType enum values.
+            metadata (dict): Additional metadata for the secret.
 
         Returns:
             OrganizationSecret: The created secret."""
-        return self._call_api('createOrganizationSecret', 'POST', query_params={}, body={'secretKey': secret_key, 'value': value}, parse_type=OrganizationSecret)
+        return self._call_api('createOrganizationSecret', 'POST', query_params={}, body={'secretKey': secret_key, 'value': value, 'secretType': secret_type, 'metadata': metadata}, parse_type=OrganizationSecret)
 
     def delete_organization_secret(self, secret_key: str):
         """Deletes a secret.

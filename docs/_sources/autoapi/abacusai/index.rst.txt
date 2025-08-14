@@ -465,6 +465,7 @@ Classes
    abacusai.CodeLanguage
    abacusai.DeploymentConversationType
    abacusai.AgentClientType
+   abacusai.OrganizationSecretType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
    abacusai.PercentSamplingConfig
@@ -7890,6 +7891,29 @@ Package Contents
 
    .. py:attribute:: API
       :value: 'API'
+
+
+
+.. py:class:: OrganizationSecretType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Enum for organization secret types
+
+
+   .. py:attribute:: ORG_SECRET
+      :value: 'ORG_SECRET'
+
+
+
+   .. py:attribute:: ORG_API_CREDENTIALS
+      :value: 'ORG_API_CREDENTIALS'
+
+
+
+   .. py:attribute:: USER_API_CREDENTIALS
+      :value: 'USER_API_CREDENTIALS'
 
 
 
@@ -20958,7 +20982,7 @@ Package Contents
 
 
 
-   .. py:method:: create_organization_secret(secret_key, value)
+   .. py:method:: create_organization_secret(secret_key, value, secret_type = OrganizationSecretType.ORG_SECRET, metadata = None)
 
       Creates a secret which can be accessed in functions and notebooks.
 
@@ -20966,6 +20990,10 @@ Package Contents
       :type secret_key: str
       :param value: The secret value.
       :type value: str
+      :param secret_type: The type of secret. Use OrganizationSecretType enum values.
+      :type secret_type: OrganizationSecretType
+      :param metadata: Additional metadata for the secret.
+      :type metadata: dict
 
       :returns: The created secret.
       :rtype: OrganizationSecret
@@ -23867,11 +23895,16 @@ Package Contents
 
 
 
-   .. py:method:: list_organization_secrets()
+   .. py:method:: list_organization_secrets(decrypt_value = False, secret_type = OrganizationSecretType.ORG_SECRET)
 
       Lists all secrets for an organization.
 
-      :returns: list of secrets belonging to the organization.
+      :param decrypt_value: Whether to decrypt the secret values.
+      :type decrypt_value: bool
+      :param secret_type: Filter secrets by type. Use OrganizationSecretType enum values.
+      :type secret_type: OrganizationSecretType
+
+      :returns: List of secrets.
       :rtype: list[OrganizationSecret]
 
 
@@ -27919,7 +27952,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27936,6 +27969,8 @@ Package Contents
    :type deploymentId: str
    :param ownerUserId: The user id of the owner of the deployment conversation.
    :type ownerUserId: str
+   :param ownerOrgId: The organization id of the owner of the deployment conversation.
+   :type ownerOrgId: str
    :param createdAt: The timestamp at which the deployment conversation was created.
    :type createdAt: str
    :param lastEventCreatedAt: The timestamp at which the most recent corresponding deployment conversation event was created at.
@@ -28004,6 +28039,11 @@ Package Contents
 
 
    .. py:attribute:: owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: owner_org_id
       :value: None
 
 
@@ -35768,7 +35808,7 @@ Package Contents
 
 
 
-.. py:class:: HostnameInfo(client, isRootDomain=None)
+.. py:class:: HostnameInfo(client, isRootDomain=None, registrar=None, suggestedFlow=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35779,9 +35819,23 @@ Package Contents
    :type client: ApiClient
    :param isRootDomain: Whether the hostname is a root domain
    :type isRootDomain: bool
+   :param registrar: The registrar of the domain
+   :type registrar: str
+   :param suggestedFlow: Suggested flow for the domain
+   :type suggestedFlow: str
 
 
    .. py:attribute:: is_root_domain
+      :value: None
+
+
+
+   .. py:attribute:: registrar
+      :value: None
+
+
+
+   .. py:attribute:: suggested_flow
       :value: None
 
 
@@ -48962,6 +49016,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.57'
+   :value: '1.4.58'
 
 

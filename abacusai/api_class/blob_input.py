@@ -30,7 +30,7 @@ class Blob(ApiClass):
                     mime_type = mimetypes.guess_type(filename)[0]
                 else:
                     import magic
-                    mime_type = magic.Magic(mime=True).from_buffer(contents)
+                    mime_type = magic.from_buffer(contents, mime=True)
             except Exception:
                 pass
         else:

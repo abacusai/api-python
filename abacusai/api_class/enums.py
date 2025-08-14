@@ -433,7 +433,8 @@ class ApplicationConnectorType(ApiEnum):
             cls.TWITTER,
             cls.SHAREPOINT,
             cls.TEAMS,
-            cls.CONFLUENCE
+            cls.CONFLUENCE,
+            cls.BOX
         ]
 
     @classmethod
@@ -805,3 +806,10 @@ class AgentClientType(ApiEnum):
     CHAT_UI = 'CHAT_UI'
     MESSAGING_APP = 'MESSAGING_APP'
     API = 'API'
+
+
+class OrganizationSecretType(ApiEnum):
+    """Enum for organization secret types"""
+    ORG_SECRET = 'ORG_SECRET'
+    ORG_API_CREDENTIALS = 'ORG_API_CREDENTIALS'
+    USER_API_CREDENTIALS = 'USER_API_CREDENTIALS'

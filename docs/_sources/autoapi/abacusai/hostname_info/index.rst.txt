@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostnameInfo(client, isRootDomain=None)
+.. py:class:: HostnameInfo(client, isRootDomain=None, registrar=None, suggestedFlow=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,9 +26,23 @@ Module Contents
    :type client: ApiClient
    :param isRootDomain: Whether the hostname is a root domain
    :type isRootDomain: bool
+   :param registrar: The registrar of the domain
+   :type registrar: str
+   :param suggestedFlow: Suggested flow for the domain
+   :type suggestedFlow: str
 
 
    .. py:attribute:: is_root_domain
+      :value: None
+
+
+
+   .. py:attribute:: registrar
+      :value: None
+
+
+
+   .. py:attribute:: suggested_flow
       :value: None
 
 

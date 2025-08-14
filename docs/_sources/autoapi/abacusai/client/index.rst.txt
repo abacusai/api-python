@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.57'
+      :value: '1.4.58'
 
 
 
@@ -2764,11 +2764,16 @@ Module Contents
 
 
 
-   .. py:method:: list_organization_secrets()
+   .. py:method:: list_organization_secrets(decrypt_value = False, secret_type = OrganizationSecretType.ORG_SECRET)
 
       Lists all secrets for an organization.
 
-      :returns: list of secrets belonging to the organization.
+      :param decrypt_value: Whether to decrypt the secret values.
+      :type decrypt_value: bool
+      :param secret_type: Filter secrets by type. Use OrganizationSecretType enum values.
+      :type secret_type: OrganizationSecretType
+
+      :returns: List of secrets.
       :rtype: list[OrganizationSecret]
 
 
@@ -9821,7 +9826,7 @@ Module Contents
 
 
 
-   .. py:method:: create_organization_secret(secret_key, value)
+   .. py:method:: create_organization_secret(secret_key, value, secret_type = OrganizationSecretType.ORG_SECRET, metadata = None)
 
       Creates a secret which can be accessed in functions and notebooks.
 
@@ -9829,6 +9834,10 @@ Module Contents
       :type secret_key: str
       :param value: The secret value.
       :type value: str
+      :param secret_type: The type of secret. Use OrganizationSecretType enum values.
+      :type secret_type: OrganizationSecretType
+      :param metadata: Additional metadata for the secret.
+      :type metadata: dict
 
       :returns: The created secret.
       :rtype: OrganizationSecret
