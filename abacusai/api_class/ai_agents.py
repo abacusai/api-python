@@ -6,7 +6,7 @@ from . import enums
 from .abstract import ApiClass, get_clean_function_source_code_for_agent, validate_constructor_arg_types
 
 
-MIN_AGENT_SLEEP_TIME = 3600
+MIN_AGENT_SLEEP_TIME = 300
 
 
 def validate_input_dict_param(dict_object, friendly_class_name, must_contain=[]):

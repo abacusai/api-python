@@ -378,7 +378,7 @@ Package Contents
 .. py:function:: validate_constructor_arg_types(friendly_class_name=None)
 
 .. py:data:: MIN_AGENT_SLEEP_TIME
-   :value: 3600
+   :value: 300
 
 
 .. py:function:: validate_input_dict_param(dict_object, friendly_class_name, must_contain=[])
@@ -5712,6 +5712,16 @@ Package Contents
    Derive from this class to define new enumerations.
 
 
+   .. py:attribute:: OPENAI_GPT3_5
+      :value: 'OPENAI_GPT3_5'
+
+
+
+   .. py:attribute:: OPENAI_GPT3_5_TEXT
+      :value: 'OPENAI_GPT3_5_TEXT'
+
+
+
    .. py:attribute:: OPENAI_GPT4
       :value: 'OPENAI_GPT4'
 
@@ -5747,6 +5757,26 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_O3
+      :value: 'OPENAI_O3'
+
+
+
+   .. py:attribute:: OPENAI_O3_HIGH
+      :value: 'OPENAI_O3_HIGH'
+
+
+
+   .. py:attribute:: OPENAI_O4_MINI
+      :value: 'OPENAI_O4_MINI'
+
+
+
+   .. py:attribute:: OPENAI_O4_MINI_HIGH
+      :value: 'OPENAI_O4_MINI_HIGH'
+
+
+
    .. py:attribute:: OPENAI_GPT4_1
       :value: 'OPENAI_GPT4_1'
 
@@ -5757,23 +5787,133 @@ Package Contents
 
 
 
-   .. py:attribute:: OPENAI_GPT3_5
-      :value: 'OPENAI_GPT3_5'
+   .. py:attribute:: OPENAI_GPT4_1_NANO
+      :value: 'OPENAI_GPT4_1_NANO'
 
 
 
-   .. py:attribute:: OPENAI_GPT3_5_TEXT
-      :value: 'OPENAI_GPT3_5_TEXT'
+   .. py:attribute:: OPENAI_GPT5
+      :value: 'OPENAI_GPT5'
 
 
 
-   .. py:attribute:: OPENAI_O3
-      :value: 'OPENAI_O3'
+   .. py:attribute:: OPENAI_GPT5_MINI
+      :value: 'OPENAI_GPT5_MINI'
 
 
 
-   .. py:attribute:: OPENAI_O4_MINI
-      :value: 'OPENAI_O4_MINI'
+   .. py:attribute:: OPENAI_GPT5_MINI_HIGH
+      :value: 'OPENAI_GPT5_MINI_HIGH'
+
+
+
+   .. py:attribute:: OPENAI_GPT5_MINI_LOW
+      :value: 'OPENAI_GPT5_MINI_LOW'
+
+
+
+   .. py:attribute:: OPENAI_GPT5_NANO
+      :value: 'OPENAI_GPT5_NANO'
+
+
+
+   .. py:attribute:: OPENAI_GPT5_NANO_HIGH
+      :value: 'OPENAI_GPT5_NANO_HIGH'
+
+
+
+   .. py:attribute:: CLAUDE_V3_HAIKU
+      :value: 'CLAUDE_V3_HAIKU'
+
+
+
+   .. py:attribute:: CLAUDE_V3_OPUS
+      :value: 'CLAUDE_V3_OPUS'
+
+
+
+   .. py:attribute:: CLAUDE_V3_5_HAIKU
+      :value: 'CLAUDE_V3_5_HAIKU'
+
+
+
+   .. py:attribute:: CLAUDE_V3_5_SONNET
+      :value: 'CLAUDE_V3_5_SONNET'
+
+
+
+   .. py:attribute:: CLAUDE_V3_7_SONNET
+      :value: 'CLAUDE_V3_7_SONNET'
+
+
+
+   .. py:attribute:: CLAUDE_V4_SONNET
+      :value: 'CLAUDE_V4_SONNET'
+
+
+
+   .. py:attribute:: CLAUDE_V4_OPUS
+      :value: 'CLAUDE_V4_OPUS'
+
+
+
+   .. py:attribute:: GEMINI_1_5_PRO
+      :value: 'GEMINI_1_5_PRO'
+
+
+
+   .. py:attribute:: GEMINI_1_5_FLASH
+      :value: 'GEMINI_1_5_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_2_PRO
+      :value: 'GEMINI_2_PRO'
+
+
+
+   .. py:attribute:: GEMINI_2_FLASH
+      :value: 'GEMINI_2_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_2_5_PRO
+      :value: 'GEMINI_2_5_PRO'
+
+
+
+   .. py:attribute:: GEMINI_2_5_FLASH
+      :value: 'GEMINI_2_5_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_2_FLASH_THINKING
+      :value: 'GEMINI_2_FLASH_THINKING'
+
+
+
+   .. py:attribute:: XAI_GROK
+      :value: 'XAI_GROK'
+
+
+
+   .. py:attribute:: XAI_GROK_3
+      :value: 'XAI_GROK_3'
+
+
+
+   .. py:attribute:: XAI_GROK_3_MINI
+      :value: 'XAI_GROK_3_MINI'
+
+
+
+   .. py:attribute:: XAI_GROK_4
+      :value: 'XAI_GROK_4'
+
+
+
+   .. py:attribute:: LLAMA4_MAVERICK
+      :value: 'LLAMA4_MAVERICK'
 
 
 
@@ -5799,71 +5939,6 @@ Package Contents
 
    .. py:attribute:: LLAMA3_LARGE_CHAT
       :value: 'LLAMA3_LARGE_CHAT'
-
-
-
-   .. py:attribute:: CLAUDE_V3_OPUS
-      :value: 'CLAUDE_V3_OPUS'
-
-
-
-   .. py:attribute:: CLAUDE_V3_HAIKU
-      :value: 'CLAUDE_V3_HAIKU'
-
-
-
-   .. py:attribute:: CLAUDE_V3_5_SONNET
-      :value: 'CLAUDE_V3_5_SONNET'
-
-
-
-   .. py:attribute:: CLAUDE_V3_7_SONNET
-      :value: 'CLAUDE_V3_7_SONNET'
-
-
-
-   .. py:attribute:: CLAUDE_V4_SONNET
-      :value: 'CLAUDE_V4_SONNET'
-
-
-
-   .. py:attribute:: CLAUDE_V4_OPUS
-      :value: 'CLAUDE_V4_OPUS'
-
-
-
-   .. py:attribute:: CLAUDE_V3_5_HAIKU
-      :value: 'CLAUDE_V3_5_HAIKU'
-
-
-
-   .. py:attribute:: GEMINI_1_5_PRO
-      :value: 'GEMINI_1_5_PRO'
-
-
-
-   .. py:attribute:: GEMINI_2_FLASH
-      :value: 'GEMINI_2_FLASH'
-
-
-
-   .. py:attribute:: GEMINI_2_5_PRO
-      :value: 'GEMINI_2_5_PRO'
-
-
-
-   .. py:attribute:: GEMINI_2_5_FLASH
-      :value: 'GEMINI_2_5_FLASH'
-
-
-
-   .. py:attribute:: GEMINI_2_FLASH_THINKING
-      :value: 'GEMINI_2_FLASH_THINKING'
-
-
-
-   .. py:attribute:: GEMINI_2_PRO
-      :value: 'GEMINI_2_PRO'
 
 
 
@@ -5897,6 +5972,11 @@ Package Contents
 
 
 
+   .. py:attribute:: QWEN3_32B
+      :value: 'QWEN3_32B'
+
+
+
    .. py:attribute:: QWEN3_235B_A22B
       :value: 'QWEN3_235B_A22B_2507'
 
@@ -5909,31 +5989,6 @@ Package Contents
 
    .. py:attribute:: QWEN3_CODER
       :value: 'QWEN3_CODER'
-
-
-
-   .. py:attribute:: GEMINI_1_5_FLASH
-      :value: 'GEMINI_1_5_FLASH'
-
-
-
-   .. py:attribute:: XAI_GROK
-      :value: 'XAI_GROK'
-
-
-
-   .. py:attribute:: XAI_GROK_3
-      :value: 'XAI_GROK_3'
-
-
-
-   .. py:attribute:: XAI_GROK_3_MINI
-      :value: 'XAI_GROK_3_MINI'
-
-
-
-   .. py:attribute:: XAI_GROK_4
-      :value: 'XAI_GROK_4'
 
 
 
@@ -6804,6 +6859,11 @@ Package Contents
 
    .. py:attribute:: SUPER_AGENT
       :value: 'SUPER_AGENT'
+
+
+
+   .. py:attribute:: CODE_LLM_NON_INTERACTIVE
+      :value: 'CODE_LLM_NON_INTERACTIVE'
 
 
 

@@ -102,6 +102,18 @@ class DatabaseConnector(AbstractApiClass):
         """
         return self.client.query_database_connector(self.database_connector_id, query)
 
+    def query_datallm(self, query: str):
+        """
+        Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
+
+        and enforces read-only access with user-specific access control.
+
+
+        Args:
+            query (str): The query to be run in the database connector (must be read-only).
+        """
+        return self.client.query_database_connector_datallm(self.database_connector_id, query)
+
     def get_auth(self):
         """
         Get the authentication details for a given database connector.

@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.58'
+      :value: '1.4.59'
 
 
 
@@ -1378,6 +1378,20 @@ Module Contents
       :param database_connector_id: A unique string identifier for the database connector.
       :type database_connector_id: str
       :param query: The query to be run in the database connector.
+      :type query: str
+
+
+
+   .. py:method:: query_database_connector_datallm(database_connector_id, query)
+
+      Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
+
+      and enforces read-only access with user-specific access control.
+
+
+      :param database_connector_id: A unique string identifier for the database connector.
+      :type database_connector_id: str
+      :param query: The query to be run in the database connector (must be read-only).
       :type query: str
 
 
@@ -3128,6 +3142,14 @@ Module Contents
 
       :returns: The document retriever version object.
       :rtype: DocumentRetrieverVersion
+
+
+
+   .. py:method:: list_route_llm_models()
+
+      This function is used to list all the models and their rates, for routellm api.
+
+      :returns: list of dicts, each dict contains the model name, description, id, and api price info.
 
 
 

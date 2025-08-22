@@ -663,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.58'
+    client_version = '1.4.59'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1564,6 +1564,17 @@ class ReadOnlyClient(BaseApiClient):
             database_connector_id (str): A unique string identifier for the database connector.
             query (str): The query to be run in the database connector."""
         return self._call_api('queryDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query})
+
+    def query_database_connector_datallm(self, database_connector_id: str, query: str) -> list:
+        """Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
+
+        and enforces read-only access with user-specific access control.
+
+
+        Args:
+            database_connector_id (str): A unique string identifier for the database connector.
+            query (str): The query to be run in the database connector (must be read-only)."""
+        return self._call_api('queryDatabaseConnectorDatallm', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query})
 
     def get_database_connector_auth(self, database_connector_id: str) -> DatabaseConnector:
         """Get the authentication details for a given database connector.
@@ -2950,6 +2961,14 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DocumentRetrieverVersion: The document retriever version object."""
         return self._call_api('describeDocumentRetrieverVersion', 'GET', query_params={'documentRetrieverVersion': document_retriever_version}, parse_type=DocumentRetrieverVersion)
+
+    def list_route_llm_models(self):
+        """This function is used to list all the models and their rates, for routellm api.
+
+        Return:
+            list of dicts, each dict contains the model name, description, id, and api price info.
+        """
+        return self._call_api('listRouteLLMModels', 'GET', query_params={})
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
