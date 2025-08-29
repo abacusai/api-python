@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -92,6 +92,14 @@ Module Contents
    :type attachedUserFileNames: list
    :param oldFileContent: The content of the file associated with an edit tool request before the file was edited
    :type oldFileContent: str
+   :param allVersions: All versions of the last bot message for version switching functionality.
+   :type allVersions: list
+   :param selectedVersionIndex: The index of the currently selected version of the last bot message.
+   :type selectedVersionIndex: int
+   :param totalVersions: The total number of versions available for the last bot message.
+   :type totalVersions: int
+   :param isLastMessage: Whether this message is the last message in the conversation.
+   :type isLastMessage: bool
 
 
    .. py:attribute:: role
@@ -260,6 +268,26 @@ Module Contents
 
 
    .. py:attribute:: old_file_content
+      :value: None
+
+
+
+   .. py:attribute:: all_versions
+      :value: None
+
+
+
+   .. py:attribute:: selected_version_index
+      :value: None
+
+
+
+   .. py:attribute:: total_versions
+      :value: None
+
+
+
+   .. py:attribute:: is_last_message
       :value: None
 
 

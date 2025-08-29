@@ -96,7 +96,7 @@ class DeploymentConversation(AbstractApiClass):
                 'metadata': self.metadata, 'llm_display_name': self.llm_display_name, 'llm_bot_icon': self.llm_bot_icon, 'search_suggestions': self.search_suggestions, 'chatllm_task_id': self.chatllm_task_id, 'conversation_status': self.conversation_status, 'computer_status': self.computer_status, 'total_events': self.total_events, 'contest_names': self.contest_names, 'daemon_task_id': self.daemon_task_id, 'parent_deployment_conversation_id': self.parent_deployment_conversation_id, 'intro_message': self.intro_message, 'preview_info': self.preview_info, 'history': self._get_attribute_as_dict(self.history), 'hosted_artifacts': self._get_attribute_as_dict(self.hosted_artifacts)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
-    def get(self, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False, start: int = None, limit: int = None):
+    def get(self, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False, start: int = None, limit: int = None, include_all_versions: bool = False):
         """
         Gets a deployment conversation.
 
@@ -107,11 +107,12 @@ class DeploymentConversation(AbstractApiClass):
             get_unused_document_uploads (bool): If true, unused document uploads will be returned. Default is false.
             start (int): The start index of the conversation.
             limit (int): The limit of the conversation.
+            include_all_versions (bool): If True, includes all versions of the last bot message for version switching functionality.
 
         Returns:
             DeploymentConversation: The deployment conversation.
         """
-        return self.client.get_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, filter_intermediate_conversation_events, get_unused_document_uploads, start, limit)
+        return self.client.get_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, filter_intermediate_conversation_events, get_unused_document_uploads, start, limit, include_all_versions)
 
     def delete(self, deployment_id: str = None):
         """

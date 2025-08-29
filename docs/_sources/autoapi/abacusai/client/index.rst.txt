@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.59'
+      :value: '1.4.60'
 
 
 
@@ -2880,7 +2880,7 @@ Module Contents
 
 
 
-   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None)
+   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None, include_all_versions = False)
 
       Gets a deployment conversation.
 
@@ -2898,6 +2898,8 @@ Module Contents
       :type start: int
       :param limit: The limit of the conversation.
       :type limit: int
+      :param include_all_versions: If True, includes all versions of the last bot message for version switching functionality.
+      :type include_all_versions: bool
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -5066,16 +5068,17 @@ Module Contents
 
       Creates a new feature group defined as the union of other feature group versions.
 
-              Args:
-                  source_feature_group_id (str): Unique string identifier corresponding to the dataset feature group that will have its versions merged into this feature group.
-                  table_name (str): Unique string identifier to be given to this merge feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
-                  merge_config (MergeConfig): JSON object defining the merging method and its parameters.
-                  description (str): Human-readable description of this feature group.
+      :param source_feature_group_id: Unique string identifier corresponding to the dataset feature group that will have its versions merged into this feature group.
+      :type source_feature_group_id: str
+      :param table_name: Unique string identifier to be given to this merge feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
+      :type table_name: str
+      :param merge_config: JSON object defining the merging method and its parameters.
+      :type merge_config: MergeConfig
+      :param description: Human-readable description of this feature group.
+      :type description: str
 
-              Returns:
-                  FeatureGroup: The created feature group.
-      Description:
-      Creates a new feature group defined as the union of other feature group versions.
+      :returns: The created feature group.
+      :rtype: FeatureGroup
 
 
 

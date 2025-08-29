@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: RegenerateLlmExternalApplication(client, name=None, externalApplicationId=None)
+.. py:class:: RegenerateLlmExternalApplication(client, name=None, llmBotIcon=None, llmName=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,10 +24,12 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param name: The external name of the LLM.
+   :param name: The display name of the LLM (ie GPT-5)
    :type name: str
-   :param externalApplicationId: The unique identifier of the external application.
-   :type externalApplicationId: str
+   :param llmBotIcon: The bot icon of the LLM.
+   :type llmBotIcon: str
+   :param llmName: The external name of the LLM (ie OPENAI_GPT5)
+   :type llmName: str
 
 
    .. py:attribute:: name
@@ -35,7 +37,12 @@ Module Contents
 
 
 
-   .. py:attribute:: external_application_id
+   .. py:attribute:: llm_bot_icon
+      :value: None
+
+
+
+   .. py:attribute:: llm_name
       :value: None
 
 

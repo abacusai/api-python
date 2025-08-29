@@ -45,6 +45,7 @@ Submodules
    /autoapi/abacusai/chatllm_computer_status/index
    /autoapi/abacusai/chatllm_memory/index
    /autoapi/abacusai/chatllm_project/index
+   /autoapi/abacusai/chatllm_project_permissions/index
    /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/chatllm_task/index
    /autoapi/abacusai/client/index
@@ -568,6 +569,7 @@ Classes
    abacusai.ChatllmComputerStatus
    abacusai.ChatllmMemory
    abacusai.ChatllmProject
+   abacusai.ChatllmProjectPermissions
    abacusai.ChatllmReferralInvite
    abacusai.ChatllmTask
    abacusai.AgentResponse
@@ -6694,6 +6696,16 @@ Package Contents
 
 
 
+   .. py:attribute:: ODBC
+      :value: 'ODBC'
+
+
+
+   .. py:attribute:: DBC
+      :value: 'DBC'
+
+
+
    .. py:method:: user_connectors()
       :classmethod:
 
@@ -7174,8 +7186,8 @@ Package Contents
 
 
 
-   .. py:attribute:: DEEPSEEK_V3
-      :value: 'DEEPSEEK_V3'
+   .. py:attribute:: DEEPSEEK_V3_1
+      :value: 'DEEPSEEK_V3_1'
 
 
 
@@ -14146,6 +14158,60 @@ Package Contents
 
 
 
+.. py:class:: ChatllmProjectPermissions(client, chatllmProjectId=None, accessLevel=None, userPermissions=None, userGroupPermissions=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   ChatLLM Project Permissions
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param chatllmProjectId: The ID of the chatllm project.
+   :type chatllmProjectId: id
+   :param accessLevel: The access level of the chatllm project.
+   :type accessLevel: str
+   :param userPermissions: List of tuples containing (user_id, permission).
+   :type userPermissions: list
+   :param userGroupPermissions: List of tuples containing (user_group_id, permission).
+   :type userGroupPermissions: list
+
+
+   .. py:attribute:: chatllm_project_id
+      :value: None
+
+
+
+   .. py:attribute:: access_level
+      :value: None
+
+
+
+   .. py:attribute:: user_permissions
+      :value: None
+
+
+
+   .. py:attribute:: user_group_permissions
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ChatllmReferralInvite(client, userAlreadyExists=None, successfulInvites=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -16260,16 +16326,17 @@ Package Contents
 
       Creates a new feature group defined as the union of other feature group versions.
 
-              Args:
-                  source_feature_group_id (str): Unique string identifier corresponding to the dataset feature group that will have its versions merged into this feature group.
-                  table_name (str): Unique string identifier to be given to this merge feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
-                  merge_config (MergeConfig): JSON object defining the merging method and its parameters.
-                  description (str): Human-readable description of this feature group.
+      :param source_feature_group_id: Unique string identifier corresponding to the dataset feature group that will have its versions merged into this feature group.
+      :type source_feature_group_id: str
+      :param table_name: Unique string identifier to be given to this merge feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
+      :type table_name: str
+      :param merge_config: JSON object defining the merging method and its parameters.
+      :type merge_config: MergeConfig
+      :param description: Human-readable description of this feature group.
+      :type description: str
 
-              Returns:
-                  FeatureGroup: The created feature group.
-      Description:
-      Creates a new feature group defined as the union of other feature group versions.
+      :returns: The created feature group.
+      :rtype: FeatureGroup
 
 
 
@@ -24071,7 +24138,7 @@ Package Contents
 
 
 
-   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None)
+   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None, include_all_versions = False)
 
       Gets a deployment conversation.
 
@@ -24089,6 +24156,8 @@ Package Contents
       :type start: int
       :param limit: The limit of the conversation.
       :type limit: int
+      :param include_all_versions: If True, includes all versions of the last bot message for version switching functionality.
+      :type include_all_versions: bool
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -28278,7 +28347,7 @@ Package Contents
 
 
 
-   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None)
+   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None, include_all_versions = False)
 
       Gets a deployment conversation.
 
@@ -28294,6 +28363,8 @@ Package Contents
       :type start: int
       :param limit: The limit of the conversation.
       :type limit: int
+      :param include_all_versions: If True, includes all versions of the last bot message for version switching functionality.
+      :type include_all_versions: bool
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -28378,7 +28449,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28455,6 +28526,14 @@ Package Contents
    :type attachedUserFileNames: list
    :param oldFileContent: The content of the file associated with an edit tool request before the file was edited
    :type oldFileContent: str
+   :param allVersions: All versions of the last bot message for version switching functionality.
+   :type allVersions: list
+   :param selectedVersionIndex: The index of the currently selected version of the last bot message.
+   :type selectedVersionIndex: int
+   :param totalVersions: The total number of versions available for the last bot message.
+   :type totalVersions: int
+   :param isLastMessage: Whether this message is the last message in the conversation.
+   :type isLastMessage: bool
 
 
    .. py:attribute:: role
@@ -28623,6 +28702,26 @@ Package Contents
 
 
    .. py:attribute:: old_file_content
+      :value: None
+
+
+
+   .. py:attribute:: all_versions
+      :value: None
+
+
+
+   .. py:attribute:: selected_version_index
+      :value: None
+
+
+
+   .. py:attribute:: total_versions
+      :value: None
+
+
+
+   .. py:attribute:: is_last_message
       :value: None
 
 
@@ -46507,7 +46606,7 @@ Package Contents
 
 
 
-.. py:class:: RegenerateLlmExternalApplication(client, name=None, externalApplicationId=None)
+.. py:class:: RegenerateLlmExternalApplication(client, name=None, llmBotIcon=None, llmName=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46516,10 +46615,12 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param name: The external name of the LLM.
+   :param name: The display name of the LLM (ie GPT-5)
    :type name: str
-   :param externalApplicationId: The unique identifier of the external application.
-   :type externalApplicationId: str
+   :param llmBotIcon: The bot icon of the LLM.
+   :type llmBotIcon: str
+   :param llmName: The external name of the LLM (ie OPENAI_GPT5)
+   :type llmName: str
 
 
    .. py:attribute:: name
@@ -46527,7 +46628,12 @@ Package Contents
 
 
 
-   .. py:attribute:: external_application_id
+   .. py:attribute:: llm_bot_icon
+      :value: None
+
+
+
+   .. py:attribute:: llm_name
       :value: None
 
 
@@ -49110,6 +49216,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.59'
+   :value: '1.4.60'
 
 

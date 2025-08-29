@@ -32,6 +32,7 @@ from .chatllm_computer import ChatllmComputer
 from .chatllm_computer_status import ChatllmComputerStatus
 from .chatllm_memory import ChatllmMemory
 from .chatllm_project import ChatllmProject
+from .chatllm_project_permissions import ChatllmProjectPermissions
 from .chatllm_referral_invite import ChatllmReferralInvite
 from .chatllm_task import ChatllmTask
 from .client import AgentResponse, ApiClient, ApiException, ClientOptions, ReadOnlyClient, ToolResponse, _request_context
@@ -277,4 +278,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.59"
+__version__ = "1.4.60"

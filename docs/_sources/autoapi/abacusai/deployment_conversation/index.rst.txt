@@ -247,7 +247,7 @@ Module Contents
 
 
 
-   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None)
+   .. py:method:: get(external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None, include_all_versions = False)
 
       Gets a deployment conversation.
 
@@ -263,6 +263,8 @@ Module Contents
       :type start: int
       :param limit: The limit of the conversation.
       :type limit: int
+      :param include_all_versions: If True, includes all versions of the last bot message for version switching functionality.
+      :type include_all_versions: bool
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation

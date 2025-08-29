@@ -419,6 +419,8 @@ class ApplicationConnectorType(ApiEnum):
     SALESFORCE = 'SALESFORCE'
     TWITTER = 'TWITTER'
     MCP = 'MCP'
+    ODBC = 'ODBC'
+    DBC = 'DBC'
 
     @classmethod
     def user_connectors(cls):
@@ -436,11 +438,13 @@ class ApplicationConnectorType(ApiEnum):
             cls.CONFLUENCE,
             cls.BOX,
             cls.GITHUBUSER,
+            cls.ODBC,
+            cls.DBC
         ]
 
     @classmethod
     def database_connectors(cls):
-        return [cls.SALESFORCE]
+        return [cls.SALESFORCE, cls.ODBC, cls.DBC]
 
 
 class StreamingConnectorType(ApiEnum):
@@ -570,7 +574,7 @@ class LLMName(ApiEnum):
     QWEN3_235B_A22B = 'QWEN3_235B_A22B_2507'
     QWEN3_235B_A22B_THINKING = 'QWEN3_235B_A22B_THINKING_2507'
     QWEN3_CODER = 'QWEN3_CODER'
-    DEEPSEEK_V3 = 'DEEPSEEK_V3'
+    DEEPSEEK_V3_1 = 'DEEPSEEK_V3_1'
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
 
 

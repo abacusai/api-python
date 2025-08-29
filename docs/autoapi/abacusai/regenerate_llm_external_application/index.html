@@ -81,6 +81,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_computer_status/index.html">abacusai.chatllm_computer_status</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_memory/index.html">abacusai.chatllm_memory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_project/index.html">abacusai.chatllm_project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chatllm_project_permissions/index.html">abacusai.chatllm_project_permissions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_task/index.html">abacusai.chatllm_task</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../client/index.html">abacusai.client</a></li>
@@ -382,15 +383,16 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.regenerate_llm_external_application.</span></span><span class="sig-name descname"><span class="pre">RegenerateLlmExternalApplication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalApplicationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.regenerate_llm_external_application.</span></span><span class="sig-name descname"><span class="pre">RegenerateLlmExternalApplication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmBotIcon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>An external application that specifies an LLM user can regenerate with in RouteLLM.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The external name of the LLM.</p></li>
-<li><p><strong>externalApplicationId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier of the external application.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The display name of the LLM (ie GPT-5)</p></li>
+<li><p><strong>llmBotIcon</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The bot icon of the LLM.</p></li>
+<li><p><strong>llmName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The external name of the LLM (ie OPENAI_GPT5)</p></li>
 </ul>
 </dd>
 </dl>
@@ -400,8 +402,13 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication.external_application_id">
-<span class="sig-name descname"><span class="pre">external_application_id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication.external_application_id" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication.llm_bot_icon">
+<span class="sig-name descname"><span class="pre">llm_bot_icon</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication.llm_bot_icon" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication.llm_name">
+<span class="sig-name descname"><span class="pre">llm_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.regenerate_llm_external_application.RegenerateLlmExternalApplication.llm_name" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

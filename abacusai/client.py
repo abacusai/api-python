@@ -663,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.59'
+    client_version = '1.4.60'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2758,7 +2758,7 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat sessions with Data Science Co-pilot"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
-    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False, start: int = None, limit: int = None) -> DeploymentConversation:
+    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False, start: int = None, limit: int = None, include_all_versions: bool = False) -> DeploymentConversation:
         """Gets a deployment conversation.
 
         Args:
@@ -2769,10 +2769,11 @@ class ReadOnlyClient(BaseApiClient):
             get_unused_document_uploads (bool): If true, unused document uploads will be returned. Default is false.
             start (int): The start index of the conversation.
             limit (int): The limit of the conversation.
+            include_all_versions (bool): If True, includes all versions of the last bot message for version switching functionality.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads, 'start': start, 'limit': limit}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads, 'start': start, 'limit': limit, 'includeAllVersions': include_all_versions}, parse_type=DeploymentConversation, is_sync=True)
 
     def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False, limit: int = None, search: str = None) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
@@ -5276,9 +5277,7 @@ class ApiClient(ReadOnlyClient):
             description (str): Human-readable description of this feature group.
 
         Returns:
-            FeatureGroup: The created feature group.
-Description:
-Creates a new feature group defined as the union of other feature group versions."""
+            FeatureGroup: The created feature group."""
         return self._call_api('createMergeFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'mergeConfig': merge_config, 'description': description}, parse_type=FeatureGroup)
 
     def create_operator_feature_group(self, source_feature_group_id: str, table_name: str, operator_config: Union[dict, OperatorConfig], description: str = None) -> FeatureGroup:
