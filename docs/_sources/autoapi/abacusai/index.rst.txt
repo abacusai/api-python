@@ -12429,7 +12429,7 @@ Package Contents
 
 
 
-.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, hasExternalApplicationReporting=None, isExternalServiceGroup=None, externalServiceGroupId=None, users={})
+.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, hasExternalApplicationReporting=None, isExternalServiceGroup=None, externalServiceGroupId=None, creationSource=None, users={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -12454,6 +12454,8 @@ Package Contents
    :type isExternalServiceGroup: bool
    :param externalServiceGroupId: The identifier that corresponds to the app user group's external service group representation
    :type externalServiceGroupId: str
+   :param creationSource: The source of the app user group
+   :type creationSource: str
    :param users: The users in the user group.
    :type users: User
 
@@ -12494,6 +12496,11 @@ Package Contents
 
 
    .. py:attribute:: external_service_group_id
+      :value: None
+
+
+
+   .. py:attribute:: creation_source
       :value: None
 
 
@@ -15915,6 +15922,17 @@ Package Contents
       :type is_html: bool
       :param attachments: A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes).
       :type attachments: None
+
+
+
+   .. py:method:: set_user_role_to_platform(workspace, email)
+
+      Set the user's role to have the Abacus.AI platform access.
+
+      :param workspace: The workspace for the user that's getting platform access.
+      :type workspace: str
+      :param email: The email for the user that's getting platform access.
+      :type email: str
 
 
 
@@ -28115,7 +28133,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28168,6 +28186,8 @@ Package Contents
    :type conversationStatus: str
    :param computerStatus: The status of the computer associated with the deployment conversation (used for deep agent conversations).
    :type computerStatus: str
+   :param filesystemStatus: The status of the filesystem associated with the deployment conversation (used for deep agent conversations).
+   :type filesystemStatus: str
    :param totalEvents: The total number of events in the deployment conversation.
    :type totalEvents: int
    :param contestNames: Names of contests that this deployment is a part of.
@@ -28292,6 +28312,11 @@ Package Contents
 
 
    .. py:attribute:: computer_status
+      :value: None
+
+
+
+   .. py:attribute:: filesystem_status
       :value: None
 
 
@@ -48275,15 +48300,17 @@ Package Contents
 
 
 
-.. py:class:: User(client, name=None, email=None, createdAt=None, status=None, organizationGroups={})
+.. py:class:: User(client, userId=None, name=None, email=None, createdAt=None, status=None, organizationGroups={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   An Abacus.AI User
+   An Abacus.AI User with a unique user_id.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param userId: The unique identifier of the user.
+   :type userId: id
    :param name: The User's name.
    :type name: str
    :param email: The User's primary email address.
@@ -48294,6 +48321,11 @@ Package Contents
    :type status: str
    :param organizationGroups: List of Organization Groups this user belongs to.
    :type organizationGroups: OrganizationGroup
+
+
+   .. py:attribute:: user_id
+      :value: None
+
 
 
    .. py:attribute:: name
@@ -49216,6 +49248,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.60'
+   :value: '1.4.61'
 
 

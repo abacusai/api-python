@@ -15,15 +15,17 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: User(client, name=None, email=None, createdAt=None, status=None, organizationGroups={})
+.. py:class:: User(client, userId=None, name=None, email=None, createdAt=None, status=None, organizationGroups={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   An Abacus.AI User
+   An Abacus.AI User with a unique user_id.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param userId: The unique identifier of the user.
+   :type userId: id
    :param name: The User's name.
    :type name: str
    :param email: The User's primary email address.
@@ -34,6 +36,11 @@ Module Contents
    :type status: str
    :param organizationGroups: List of Organization Groups this user belongs to.
    :type organizationGroups: OrganizationGroup
+
+
+   .. py:attribute:: user_id
+      :value: None
+
 
 
    .. py:attribute:: name

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, hasExternalApplicationReporting=None, isExternalServiceGroup=None, externalServiceGroupId=None, users={})
+.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, hasExternalApplicationReporting=None, isExternalServiceGroup=None, externalServiceGroupId=None, creationSource=None, users={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type isExternalServiceGroup: bool
    :param externalServiceGroupId: The identifier that corresponds to the app user group's external service group representation
    :type externalServiceGroupId: str
+   :param creationSource: The source of the app user group
+   :type creationSource: str
    :param users: The users in the user group.
    :type users: User
 
@@ -80,6 +82,11 @@ Module Contents
 
 
    .. py:attribute:: external_service_group_id
+      :value: None
+
+
+
+   .. py:attribute:: creation_source
       :value: None
 
 

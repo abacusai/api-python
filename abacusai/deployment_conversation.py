@@ -31,6 +31,7 @@ class DeploymentConversation(AbstractApiClass):
             chatllmTaskId (str): The chatllm task id associated with the deployment conversation.
             conversationStatus (str): The status of the deployment conversation (used for deep agent conversations).
             computerStatus (str): The status of the computer associated with the deployment conversation (used for deep agent conversations).
+            filesystemStatus (str): The status of the filesystem associated with the deployment conversation (used for deep agent conversations).
             totalEvents (int): The total number of events in the deployment conversation.
             contestNames (list[str]): Names of contests that this deployment is a part of.
             daemonTaskId (str): The daemon task id associated with the deployment conversation.
@@ -41,7 +42,7 @@ class DeploymentConversation(AbstractApiClass):
             hostedArtifacts (HostedArtifact): Artifacts that have been deployed by this conversation.
     """
 
-    def __init__(self, client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, history={}, hostedArtifacts={}):
+    def __init__(self, client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, history={}, hostedArtifacts={}):
         super().__init__(client, deploymentConversationId)
         self.deployment_conversation_id = deploymentConversationId
         self.name = name
@@ -65,6 +66,7 @@ class DeploymentConversation(AbstractApiClass):
         self.chatllm_task_id = chatllmTaskId
         self.conversation_status = conversationStatus
         self.computer_status = computerStatus
+        self.filesystem_status = filesystemStatus
         self.total_events = totalEvents
         self.contest_names = contestNames
         self.daemon_task_id = daemonTaskId
@@ -79,7 +81,7 @@ class DeploymentConversation(AbstractApiClass):
 
     def __repr__(self):
         repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'owner_user_id': repr(self.owner_user_id), f'owner_org_id': repr(self.owner_org_id), f'created_at': repr(self.created_at), f'last_event_created_at': repr(self.last_event_created_at), f'has_history': repr(self.has_history), f'external_session_id': repr(self.external_session_id), f'regenerate_attempt': repr(self.regenerate_attempt), f'external_application_id': repr(self.external_application_id), f'unused_document_upload_ids': repr(self.unused_document_upload_ids), f'humanize_instructions': repr(self.humanize_instructions), f'conversation_warning': repr(self.conversation_warning), f'conversation_type': repr(
-            self.conversation_type), f'metadata': repr(self.metadata), f'llm_display_name': repr(self.llm_display_name), f'llm_bot_icon': repr(self.llm_bot_icon), f'search_suggestions': repr(self.search_suggestions), f'chatllm_task_id': repr(self.chatllm_task_id), f'conversation_status': repr(self.conversation_status), f'computer_status': repr(self.computer_status), f'total_events': repr(self.total_events), f'contest_names': repr(self.contest_names), f'daemon_task_id': repr(self.daemon_task_id), f'parent_deployment_conversation_id': repr(self.parent_deployment_conversation_id), f'intro_message': repr(self.intro_message), f'preview_info': repr(self.preview_info), f'history': repr(self.history), f'hosted_artifacts': repr(self.hosted_artifacts)}
+            self.conversation_type), f'metadata': repr(self.metadata), f'llm_display_name': repr(self.llm_display_name), f'llm_bot_icon': repr(self.llm_bot_icon), f'search_suggestions': repr(self.search_suggestions), f'chatllm_task_id': repr(self.chatllm_task_id), f'conversation_status': repr(self.conversation_status), f'computer_status': repr(self.computer_status), f'filesystem_status': repr(self.filesystem_status), f'total_events': repr(self.total_events), f'contest_names': repr(self.contest_names), f'daemon_task_id': repr(self.daemon_task_id), f'parent_deployment_conversation_id': repr(self.parent_deployment_conversation_id), f'intro_message': repr(self.intro_message), f'preview_info': repr(self.preview_info), f'history': repr(self.history), f'hosted_artifacts': repr(self.hosted_artifacts)}
         class_name = "DeploymentConversation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -92,8 +94,8 @@ class DeploymentConversation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'owner_user_id': self.owner_user_id, 'owner_org_id': self.owner_org_id, 'created_at': self.created_at, 'last_event_created_at': self.last_event_created_at, 'has_history': self.has_history, 'external_session_id': self.external_session_id, 'regenerate_attempt': self.regenerate_attempt, 'external_application_id': self.external_application_id, 'unused_document_upload_ids': self.unused_document_upload_ids, 'humanize_instructions': self.humanize_instructions, 'conversation_warning': self.conversation_warning, 'conversation_type': self.conversation_type,
-                'metadata': self.metadata, 'llm_display_name': self.llm_display_name, 'llm_bot_icon': self.llm_bot_icon, 'search_suggestions': self.search_suggestions, 'chatllm_task_id': self.chatllm_task_id, 'conversation_status': self.conversation_status, 'computer_status': self.computer_status, 'total_events': self.total_events, 'contest_names': self.contest_names, 'daemon_task_id': self.daemon_task_id, 'parent_deployment_conversation_id': self.parent_deployment_conversation_id, 'intro_message': self.intro_message, 'preview_info': self.preview_info, 'history': self._get_attribute_as_dict(self.history), 'hosted_artifacts': self._get_attribute_as_dict(self.hosted_artifacts)}
+        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'owner_user_id': self.owner_user_id, 'owner_org_id': self.owner_org_id, 'created_at': self.created_at, 'last_event_created_at': self.last_event_created_at, 'has_history': self.has_history, 'external_session_id': self.external_session_id, 'regenerate_attempt': self.regenerate_attempt, 'external_application_id': self.external_application_id, 'unused_document_upload_ids': self.unused_document_upload_ids, 'humanize_instructions': self.humanize_instructions, 'conversation_warning': self.conversation_warning, 'conversation_type': self.conversation_type, 'metadata': self.metadata,
+                'llm_display_name': self.llm_display_name, 'llm_bot_icon': self.llm_bot_icon, 'search_suggestions': self.search_suggestions, 'chatllm_task_id': self.chatllm_task_id, 'conversation_status': self.conversation_status, 'computer_status': self.computer_status, 'filesystem_status': self.filesystem_status, 'total_events': self.total_events, 'contest_names': self.contest_names, 'daemon_task_id': self.daemon_task_id, 'parent_deployment_conversation_id': self.parent_deployment_conversation_id, 'intro_message': self.intro_message, 'preview_info': self.preview_info, 'history': self._get_attribute_as_dict(self.history), 'hosted_artifacts': self._get_attribute_as_dict(self.hosted_artifacts)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def get(self, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False, start: int = None, limit: int = None, include_all_versions: bool = False):

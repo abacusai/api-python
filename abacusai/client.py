@@ -663,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.60'
+    client_version = '1.4.61'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -4981,6 +4981,14 @@ class ApiClient(ReadOnlyClient):
             is_html (bool): Whether the body is html or not.
             attachments (None): A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes)."""
         return self._call_api('sendEmail', 'POST', query_params={}, data={'email': json.dumps(email) if (email is not None and not isinstance(email, str)) else email, 'subject': json.dumps(subject) if (subject is not None and not isinstance(subject, str)) else subject, 'body': json.dumps(body) if (body is not None and not isinstance(body, str)) else body, 'isHtml': json.dumps(is_html) if (is_html is not None and not isinstance(is_html, str)) else is_html}, files=attachments)
+
+    def set_user_role_to_platform(self, workspace: str, email: str):
+        """Set the user's role to have the Abacus.AI platform access.
+
+        Args:
+            workspace (str): The workspace for the user that's getting platform access.
+            email (str): The email for the user that's getting platform access."""
+        return self._call_api('setUserRoleToPlatform', 'PATCH', query_params={}, body={'workspace': workspace, 'email': email})
 
     def create_deployment_webhook(self, deployment_id: str, endpoint: str, webhook_event_type: str, payload_template: dict = None) -> Webhook:
         """Create a webhook attached to a given deployment ID.
