@@ -502,6 +502,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         mask_pii (bool): Mask PII in the prompts and uploaded documents before sending it to the LLM. Only available for Enterprise users and will cause validation errors if set to True for ChatLLM Teams users.
         builtin_tools (List[SystemConnectorTool]): List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
         mcp_servers (List[str]): List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
+        agentic_loop_mode (bool): Force use of agentic loop that uses a series of tool calls when needed to respond.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -541,6 +542,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     mask_pii: bool = dataclasses.field(default=None)
     builtin_tools: List[SystemConnectorTool] = dataclasses.field(default=None)
     mcp_servers: List[str] = dataclasses.field(default=None)
+    agentic_loop_mode: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

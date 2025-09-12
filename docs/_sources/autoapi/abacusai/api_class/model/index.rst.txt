@@ -1525,6 +1525,8 @@ Module Contents
    :type builtin_tools: List[SystemConnectorTool]
    :param mcp_servers: List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
    :type mcp_servers: List[str]
+   :param agentic_loop_mode: Force use of agentic loop that uses a series of tool calls when needed to respond.
+   :type agentic_loop_mode: bool
 
 
    .. py:attribute:: document_retrievers
@@ -1751,6 +1753,12 @@ Module Contents
 
    .. py:attribute:: mcp_servers
       :type:  List[str]
+      :value: None
+
+
+
+   .. py:attribute:: agentic_loop_mode
+      :type:  bool
       :value: None
 
 

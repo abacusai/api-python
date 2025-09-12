@@ -1620,6 +1620,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Mask PII in the prompts and uploaded documents before sending it to the LLM. Only available for Enterprise users and will cause validation errors if set to True for ChatLLM Teams users.</p></li>
 <li><p><strong>builtin_tools</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.model.SystemConnectorTool" title="abacusai.api_class.model.SystemConnectorTool"><em>SystemConnectorTool</em></a><em>]</em>) – List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).</p></li>
 <li><p><strong>mcp_servers</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.</p></li>
+<li><p><strong>agentic_loop_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Force use of agentic loop that uses a series of tool calls when needed to respond.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1811,6 +1812,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.mcp_servers">
 <span class="sig-name descname"><span class="pre">mcp_servers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.mcp_servers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.agentic_loop_mode">
+<span class="sig-name descname"><span class="pre">agentic_loop_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.agentic_loop_mode" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
