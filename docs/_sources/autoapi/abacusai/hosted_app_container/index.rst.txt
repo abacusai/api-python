@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, webAppProjectId=None, parentConversationId=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -66,6 +66,8 @@ Module Contents
    :type deployedLlmArtifactId: id
    :param hasDatabase: Whether the app has a database associated to it
    :type hasDatabase: bool
+   :param hasStorage: Whether the app has a cloud storage associated to it
+   :type hasStorage: bool
    :param webAppProjectId: The ID of the web app project
    :type webAppProjectId: id
    :param parentConversationId: The ID of the parent conversation
@@ -173,6 +175,11 @@ Module Contents
 
 
    .. py:attribute:: has_database
+      :value: None
+
+
+
+   .. py:attribute:: has_storage
       :value: None
 
 

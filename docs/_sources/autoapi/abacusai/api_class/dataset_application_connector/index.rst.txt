@@ -20,6 +20,7 @@ Classes
    abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig
    abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig
    abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig
+   abacusai.api_class.dataset_application_connector.OutlookDatasetConfig
    abacusai.api_class.dataset_application_connector.FreshserviceDatasetConfig
    abacusai.api_class.dataset_application_connector.SftpDatasetConfig
    abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory
@@ -203,6 +204,8 @@ Module Contents
    :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
+   :param location_type: The type of path to fetch. 'shared' for shared files. if not provided, it will fetch from the root folder.
+   :type location_type: str
 
 
    .. py:attribute:: location
@@ -226,6 +229,12 @@ Module Contents
    .. py:attribute:: merge_file_schemas
       :type:  bool
       :value: False
+
+
+
+   .. py:attribute:: location_type
+      :type:  str
+      :value: None
 
 
 
@@ -457,6 +466,17 @@ Module Contents
    .. py:method:: __post_init__()
 
 
+.. py:class:: OutlookDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Outlook Application Connector
+
+
+   .. py:method:: __post_init__()
+
+
 .. py:class:: FreshserviceDatasetConfig
 
    Bases: :py:obj:`ApplicationConnectorDatasetConfig`
@@ -515,10 +535,6 @@ Module Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class

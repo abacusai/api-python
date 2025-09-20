@@ -95,6 +95,7 @@ from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
 from .edit_image_models import EditImageModels
 from .embedding_feature_drift_distribution import EmbeddingFeatureDriftDistribution
+from .entri_auth_token import EntriAuthToken
 from .execute_feature_group_operation import ExecuteFeatureGroupOperation
 from .external_application import ExternalApplication
 from .external_invite import ExternalInvite
@@ -278,4 +279,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.62"
+__version__ = "1.4.63"

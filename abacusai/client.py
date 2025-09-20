@@ -663,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.62'
+    client_version = '1.4.63'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1600,28 +1600,30 @@ class ReadOnlyClient(BaseApiClient):
             application_connector_id (str): Unique string identifier for the application connector."""
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
-    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None, application_connector_id: str = None, scopes: List = None) -> UnifiedConnector:
+    def get_connector_auth(self, service: Union[ApplicationConnectorType, str] = None, application_connector_id: str = None, scopes: List = None, generic_oauth_service: str = None) -> UnifiedConnector:
         """Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
         Args:
             service (ApplicationConnectorType): The service name.
             application_connector_id (str): The unique ID associated with the connector.
             scopes (List): The scopes to request for the connector.
+            generic_oauth_service (str): For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
 
         Returns:
             UnifiedConnector: The application connector with the authentication details."""
-        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'applicationConnectorId': application_connector_id, 'scopes': scopes}, parse_type=UnifiedConnector)
+        return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'applicationConnectorId': application_connector_id, 'scopes': scopes, 'genericOauthService': generic_oauth_service}, parse_type=UnifiedConnector)
 
-    def get_user_connector_auth(self, service: Union[ApplicationConnectorType, str], scopes: List = None) -> UnifiedConnector:
+    def get_user_connector_auth(self, service: Union[ApplicationConnectorType, str], scopes: List = None, generic_oauth_service: str = None) -> UnifiedConnector:
         """Get the authentication details for a given user level connector.
 
         Args:
             service (ApplicationConnectorType): The service name.
             scopes (List): The scopes to request for the connector.
+            generic_oauth_service (str): For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
 
         Returns:
             UnifiedConnector: The application connector with the authentication details."""
-        return self._call_api('getUserConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes}, parse_type=UnifiedConnector)
+        return self._call_api('getUserConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes, 'genericOauthService': generic_oauth_service}, parse_type=UnifiedConnector)
 
     def get_user_mcp_connector_auth(self, mcp_server_name: str = None) -> ApplicationConnector:
         """Get the auth for a MCP connector

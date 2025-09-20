@@ -421,6 +421,8 @@ class ApplicationConnectorType(ApiEnum):
     MCP = 'MCP'
     ODBC = 'ODBC'
     DBC = 'DBC'
+    GENERIC_OAUTH = 'GENERIC_OAUTH'
+    OUTLOOK = 'OUTLOOK'
 
     @classmethod
     def user_connectors(cls):
@@ -439,7 +441,9 @@ class ApplicationConnectorType(ApiEnum):
             cls.BOX,
             cls.GITHUBUSER,
             cls.ODBC,
-            cls.DBC
+            cls.DBC,
+            cls.GENERIC_OAUTH,
+            cls.OUTLOOK
         ]
 
     @classmethod

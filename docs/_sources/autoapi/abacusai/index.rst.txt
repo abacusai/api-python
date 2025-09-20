@@ -109,6 +109,7 @@ Submodules
    /autoapi/abacusai/eda_version/index
    /autoapi/abacusai/edit_image_models/index
    /autoapi/abacusai/embedding_feature_drift_distribution/index
+   /autoapi/abacusai/entri_auth_token/index
    /autoapi/abacusai/execute_feature_group_operation/index
    /autoapi/abacusai/external_application/index
    /autoapi/abacusai/external_invite/index
@@ -387,6 +388,7 @@ Classes
    abacusai.ZendeskDatasetConfig
    abacusai.AbacusUsageMetricsDatasetConfig
    abacusai.TeamsScraperDatasetConfig
+   abacusai.OutlookDatasetConfig
    abacusai.FreshserviceDatasetConfig
    abacusai.SftpDatasetConfig
    abacusai._ApplicationConnectorDatasetConfigFactory
@@ -636,6 +638,7 @@ Classes
    abacusai.EdaVersion
    abacusai.EditImageModels
    abacusai.EmbeddingFeatureDriftDistribution
+   abacusai.EntriAuthToken
    abacusai.ExecuteFeatureGroupOperation
    abacusai.ExternalApplication
    abacusai.ExternalInvite
@@ -2250,11 +2253,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2303,11 +2301,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2384,11 +2377,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2411,11 +2399,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2441,11 +2424,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(configs)
@@ -2546,11 +2524,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: is_template_node()
 
@@ -2629,11 +2602,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(node)
@@ -2729,11 +2697,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -2774,11 +2737,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -2822,11 +2780,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2866,11 +2819,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2907,11 +2855,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(mapping)
@@ -3438,10 +3381,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -3577,10 +3516,6 @@ Package Contents
 .. py:class:: _StreamingConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4102,6 +4037,8 @@ Package Contents
    :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
+   :param location_type: The type of path to fetch. 'shared' for shared files. if not provided, it will fetch from the root folder.
+   :type location_type: str
 
 
    .. py:attribute:: location
@@ -4125,6 +4062,12 @@ Package Contents
    .. py:attribute:: merge_file_schemas
       :type:  bool
       :value: False
+
+
+
+   .. py:attribute:: location_type
+      :type:  str
+      :value: None
 
 
 
@@ -4356,6 +4299,17 @@ Package Contents
    .. py:method:: __post_init__()
 
 
+.. py:class:: OutlookDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Outlook Application Connector
+
+
+   .. py:method:: __post_init__()
+
+
 .. py:class:: FreshserviceDatasetConfig
 
    Bases: :py:obj:`ApplicationConnectorDatasetConfig`
@@ -4414,10 +4368,6 @@ Package Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4807,10 +4757,6 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -6703,6 +6649,16 @@ Package Contents
 
    .. py:attribute:: DBC
       :value: 'DBC'
+
+
+
+   .. py:attribute:: GENERIC_OAUTH
+      :value: 'GENERIC_OAUTH'
+
+
+
+   .. py:attribute:: OUTLOOK
+      :value: 'OUTLOOK'
 
 
 
@@ -10900,10 +10856,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11493,10 +11445,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11565,10 +11513,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11612,11 +11556,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: FeatureMappingConfig
@@ -11789,10 +11728,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -11943,11 +11878,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -12011,19 +11941,10 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -12062,11 +11983,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:data:: Segment
@@ -12214,11 +12130,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ListResponseSection(items, section_key = None)
@@ -22710,7 +22621,7 @@ Package Contents
 
 
 
-   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None)
+   .. py:method:: get_connector_auth(service = None, application_connector_id = None, scopes = None, generic_oauth_service = None)
 
       Get the authentication details for a given connector. For user level connectors, the service is required. For org level connectors, the application_connector_id is required.
 
@@ -22720,13 +22631,15 @@ Package Contents
       :type application_connector_id: str
       :param scopes: The scopes to request for the connector.
       :type scopes: List
+      :param generic_oauth_service: For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
+      :type generic_oauth_service: str
 
       :returns: The application connector with the authentication details.
       :rtype: UnifiedConnector
 
 
 
-   .. py:method:: get_user_connector_auth(service, scopes = None)
+   .. py:method:: get_user_connector_auth(service, scopes = None, generic_oauth_service = None)
 
       Get the authentication details for a given user level connector.
 
@@ -22734,6 +22647,8 @@ Package Contents
       :type service: ApplicationConnectorType
       :param scopes: The scopes to request for the connector.
       :type scopes: List
+      :param generic_oauth_service: For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
+      :type generic_oauth_service: str
 
       :returns: The application connector with the authentication details.
       :rtype: UnifiedConnector
@@ -30495,6 +30410,53 @@ Package Contents
 
 
 
+.. py:class:: EntriAuthToken(client, token=None, applicationId=None, ttl=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Entri Auth Token
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param token: The authentication token for Entri
+   :type token: str
+   :param applicationId: application Id from Entri dashboard
+   :type applicationId: str
+   :param ttl: The duration in milliseconds for which the token is valid
+   :type ttl: int
+
+
+   .. py:attribute:: token
+      :value: None
+
+
+
+   .. py:attribute:: application_id
+      :value: None
+
+
+
+   .. py:attribute:: ttl
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ExecuteFeatureGroupOperation(client, featureGroupOperationRunId=None, status=None, error=None, query=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -35542,7 +35504,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, webAppProjectId=None, parentConversationId=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35593,6 +35555,8 @@ Package Contents
    :type deployedLlmArtifactId: id
    :param hasDatabase: Whether the app has a database associated to it
    :type hasDatabase: bool
+   :param hasStorage: Whether the app has a cloud storage associated to it
+   :type hasStorage: bool
    :param webAppProjectId: The ID of the web app project
    :type webAppProjectId: id
    :param parentConversationId: The ID of the parent conversation
@@ -35700,6 +35664,11 @@ Package Contents
 
 
    .. py:attribute:: has_database
+      :value: None
+
+
+
+   .. py:attribute:: has_storage
       :value: None
 
 
@@ -36034,7 +36003,7 @@ Package Contents
 
 
 
-.. py:class:: HostnameInfo(client, isRootDomain=None, registrar=None, suggestedFlow=None)
+.. py:class:: HostnameInfo(client, isRootDomain=None, registrar=None, suggestedFlow=None, isAutomaticFlowAvailable=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36049,6 +36018,8 @@ Package Contents
    :type registrar: str
    :param suggestedFlow: Suggested flow for the domain
    :type suggestedFlow: str
+   :param isAutomaticFlowAvailable: Whether entri is supported for the domain
+   :type isAutomaticFlowAvailable: bool
 
 
    .. py:attribute:: is_root_domain
@@ -36062,6 +36033,11 @@ Package Contents
 
 
    .. py:attribute:: suggested_flow
+      :value: None
+
+
+
+   .. py:attribute:: is_automatic_flow_available
       :value: None
 
 
@@ -36613,7 +36589,7 @@ Package Contents
 
 
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36640,6 +36616,10 @@ Package Contents
    :type deploymentConversationId: id
    :param webAppProjectId: The ID of the web app project
    :type webAppProjectId: id
+   :param hasDatabase: Whether the app associated with the artifact has a database
+   :type hasDatabase: bool
+   :param hasStorage: Whether the app associated with the artifact has a storage
+   :type hasStorage: bool
 
 
    .. py:attribute:: llm_artifact_id
@@ -36683,6 +36663,16 @@ Package Contents
 
 
    .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: has_database
+      :value: None
+
+
+
+   .. py:attribute:: has_storage
       :value: None
 
 
@@ -49256,6 +49246,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.62'
+   :value: '1.4.63'
 
 

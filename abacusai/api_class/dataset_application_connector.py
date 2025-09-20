@@ -90,11 +90,13 @@ class GoogleDriveDatasetConfig(ApplicationConnectorDatasetConfig):
         csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
         extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
         merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+        location_type (str): The type of path to fetch. 'shared' for shared files. if not provided, it will fetch from the root folder.
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
     extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
     merge_file_schemas: bool = dataclasses.field(default=False)
+    location_type: str = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.GOOGLEDRIVE
@@ -214,6 +216,16 @@ class TeamsScraperDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class OutlookDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for Outlook Application Connector
+    """
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.OUTLOOK
+
+
+@dataclasses.dataclass
 class FreshserviceDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Freshservice Application Connector
@@ -260,4 +272,5 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.TEAMSSCRAPER: TeamsScraperDatasetConfig,
         enums.ApplicationConnectorType.BOX: BoxDatasetConfig,
         enums.ApplicationConnectorType.SFTPAPPLICATION: SftpDatasetConfig,
+        enums.ApplicationConnectorType.OUTLOOK: OutlookDatasetConfig,
     }
