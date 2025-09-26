@@ -490,6 +490,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
         include_bm25_retrieval (bool): Combine BM25 search score with vector search using reciprocal rank fusion.
         database_connector_id (str): Database connector ID to use for connecting external database that gives access to structured data to the LLM.
+        database_connector_ids (List[str]): List of database connector IDs to use for connecting external databases that give access to structured data to the LLM.
         database_connector_tables (List[str]): List of tables to use from the database connector for the ChatLLM.
         enable_code_execution (bool): Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
         enable_response_caching (bool): Enable caching of LLM responses to speed up response times and improve reproducibility.
@@ -527,7 +528,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
     data_columns_to_ignore: List[str] = dataclasses.field(default=None)
     search_score_cutoff: float = dataclasses.field(default=None)
     include_bm25_retrieval: bool = dataclasses.field(default=None)
-    database_connector_id: str = dataclasses.field(default=None)
+    database_connector_id: str = dataclasses.field(default=None)  # deprecated
+    database_connector_ids: List[str] = dataclasses.field(default=None)
     database_connector_tables: List[str] = dataclasses.field(default=None)
     enable_code_execution: bool = dataclasses.field(default=None)
     metadata_columns: list = dataclasses.field(default=None, metadata={'deprecated': True})

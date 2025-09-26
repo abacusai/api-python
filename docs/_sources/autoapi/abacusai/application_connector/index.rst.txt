@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,8 @@ Module Contents
    :type applicationConnectorId: str
    :param service: The service this connection connects to
    :type service: str
+   :param serviceName: For OAuth services, the specific provider name (e.g., 'spotify')
+   :type serviceName: str
    :param name: A user-friendly name for the service
    :type name: str
    :param createdAt: When the API key was created
@@ -44,6 +46,11 @@ Module Contents
 
 
    .. py:attribute:: service
+      :value: None
+
+
+
+   .. py:attribute:: service_name
       :value: None
 
 

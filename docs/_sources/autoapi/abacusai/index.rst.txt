@@ -10007,6 +10007,8 @@ Package Contents
    :type include_bm25_retrieval: bool
    :param database_connector_id: Database connector ID to use for connecting external database that gives access to structured data to the LLM.
    :type database_connector_id: str
+   :param database_connector_ids: List of database connector IDs to use for connecting external databases that give access to structured data to the LLM.
+   :type database_connector_ids: List[str]
    :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
    :type database_connector_tables: List[str]
    :param enable_code_execution: Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
@@ -10174,6 +10176,12 @@ Package Contents
 
    .. py:attribute:: database_connector_id
       :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: database_connector_ids
+      :type:  List[str]
       :value: None
 
 
@@ -12475,7 +12483,7 @@ Package Contents
 
 
 
-.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -12488,6 +12496,8 @@ Package Contents
    :type applicationConnectorId: str
    :param service: The service this connection connects to
    :type service: str
+   :param serviceName: For OAuth services, the specific provider name (e.g., 'spotify')
+   :type serviceName: str
    :param name: A user-friendly name for the service
    :type name: str
    :param createdAt: When the API key was created
@@ -12504,6 +12514,11 @@ Package Contents
 
 
    .. py:attribute:: service
+      :value: None
+
+
+
+   .. py:attribute:: service_name
       :value: None
 
 
@@ -15527,7 +15542,7 @@ Package Contents
 
 
 
-   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False)
+   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, user_info = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -15555,10 +15570,12 @@ Package Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param user_info: The information of the user to act on behalf of for user restricted data sources.
+      :type user_info: dict
 
 
 
-   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False)
+   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, user_info = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -15590,6 +15607,8 @@ Package Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param user_info: The information of the user to act on behalf of for user restricted data sources.
+      :type user_info: dict
 
 
 
@@ -19895,19 +19914,6 @@ Package Contents
       :type source_image: io.TextIOBase
       :param style_image: The image that has the style as a reference.
       :type style_image: io.TextIOBase
-
-
-
-   .. py:method:: generate_image(deployment_token, deployment_id, query_data)
-
-      Generate an image from text prompt.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique identifier to a deployment created under the project.
-      :type deployment_id: str
-      :param query_data: Specifies the text prompt. For example, {'prompt': 'a cat'}
-      :type query_data: dict
 
 
 
@@ -43582,19 +43588,6 @@ Package Contents
 
 
 
-   .. py:method:: generate_image(deployment_token, deployment_id, query_data)
-
-      Generate an image from text prompt.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique identifier to a deployment created under the project.
-      :type deployment_id: str
-      :param query_data: Specifies the text prompt. For example, {'prompt': 'a cat'}
-      :type query_data: dict
-
-
-
    .. py:method:: get_matrix_agent_schema(deployment_token, deployment_id, query, doc_infos = None, deployment_conversation_id = None, external_session_id = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
@@ -44302,7 +44295,7 @@ Package Contents
 
 
 
-.. py:class:: PresentationExportResult(client, filePath=None)
+.. py:class:: PresentationExportResult(client, filePath=None, webViewLink=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44313,9 +44306,16 @@ Package Contents
    :type client: ApiClient
    :param filePath: The path to the exported presentation
    :type filePath: str
+   :param webViewLink: The web view link to the exported presentation (if applicable)
+   :type webViewLink: str
 
 
    .. py:attribute:: file_path
+      :value: None
+
+
+
+   .. py:attribute:: web_view_link
       :value: None
 
 
@@ -48771,7 +48771,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48796,6 +48796,8 @@ Package Contents
    :type metadata: dict
    :param isRootDomain: Whether the web app domain is a root domain
    :type isRootDomain: bool
+   :param isDeployed: Whether the web app domain is deployed
+   :type isDeployed: bool
 
 
    .. py:attribute:: web_app_domain_id
@@ -48834,6 +48836,11 @@ Package Contents
 
 
    .. py:attribute:: is_root_domain
+      :value: None
+
+
+
+   .. py:attribute:: is_deployed
       :value: None
 
 
@@ -49246,6 +49253,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.63'
+   :value: '1.4.64'
 
 

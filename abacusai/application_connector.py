@@ -9,16 +9,18 @@ class ApplicationConnector(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             applicationConnectorId (str): The unique ID for the connection.
             service (str): The service this connection connects to
+            serviceName (str): For OAuth services, the specific provider name (e.g., 'spotify')
             name (str): A user-friendly name for the service
             createdAt (str): When the API key was created
             status (str): The status of the Application Connector
             auth (dict): Non-secret connection information for this connector
     """
 
-    def __init__(self, client, applicationConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None):
+    def __init__(self, client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None):
         super().__init__(client, applicationConnectorId)
         self.application_connector_id = applicationConnectorId
         self.service = service
+        self.service_name = serviceName
         self.name = name
         self.created_at = createdAt
         self.status = status
@@ -26,8 +28,8 @@ class ApplicationConnector(AbstractApiClass):
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'application_connector_id': repr(self.application_connector_id), f'service': repr(self.service), f'name': repr(
-            self.name), f'created_at': repr(self.created_at), f'status': repr(self.status), f'auth': repr(self.auth)}
+        repr_dict = {f'application_connector_id': repr(self.application_connector_id), f'service': repr(self.service), f'service_name': repr(
+            self.service_name), f'name': repr(self.name), f'created_at': repr(self.created_at), f'status': repr(self.status), f'auth': repr(self.auth)}
         class_name = "ApplicationConnector"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -40,7 +42,7 @@ class ApplicationConnector(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'application_connector_id': self.application_connector_id, 'service': self.service,
+        resp = {'application_connector_id': self.application_connector_id, 'service': self.service, 'service_name': self.service_name,
                 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 

@@ -663,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.63'
+    client_version = '1.4.64'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -4652,7 +4652,7 @@ class ApiClient(ReadOnlyClient):
             ModelUpload: Collection of upload IDs to upload the model artifacts."""
         return self._call_api('createModelVersionFromLocalFiles', 'POST', query_params={}, body={'modelId': model_id, 'optionalArtifacts': optional_artifacts}, parse_type=ModelUpload)
 
-    def get_streaming_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False):
+    def get_streaming_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, user_info: dict = None):
         """Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
         Args:
@@ -4667,7 +4667,8 @@ class ApiClient(ReadOnlyClient):
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
-            include_search_results (bool): If True, will also return search results, if relevant. """
+            include_search_results (bool): If True, will also return search results, if relevant.
+            user_info (dict): The information of the user to act on behalf of for user restricted data sources. """
         headers = {'APIKEY': self.api_key}
         body = {
             'deploymentToken': deployment_token,
@@ -4681,7 +4682,8 @@ class ApiClient(ReadOnlyClient):
             'searchScoreCutoff': search_score_cutoff,
             'chatConfig': chat_config,
             'ignoreDocuments': ignore_documents,
-            'includeSearchResults': include_search_results
+            'includeSearchResults': include_search_results,
+            'userInfo': user_info
         }
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
@@ -4689,7 +4691,7 @@ class ApiClient(ReadOnlyClient):
                 'API not supported, Please contact Abacus.ai support')
         return sse_asynchronous_generator(f'{endpoint}/api/getStreamingChatResponse', headers, body)
 
-    def get_streaming_conversation_response(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False):
+    def get_streaming_conversation_response(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, user_info: dict = None):
         """Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
         Args:
@@ -4706,7 +4708,8 @@ class ApiClient(ReadOnlyClient):
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
-            include_search_results (bool): If True, will also return search results, if relevant. """
+            include_search_results (bool): If True, will also return search results, if relevant.
+            user_info (dict): The information of the user to act on behalf of for user restricted data sources. """
         headers = {'APIKEY': self.api_key}
         body = {
             'deploymentToken': deployment_token,
@@ -4722,7 +4725,8 @@ class ApiClient(ReadOnlyClient):
             'searchScoreCutoff': search_score_cutoff,
             'chatConfig': chat_config,
             'ignoreDocuments': ignore_documents,
-            'includeSearchResults': include_search_results
+            'includeSearchResults': include_search_results,
+            'userInfo': user_info
         }
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
@@ -7901,17 +7905,6 @@ class ApiClient(ReadOnlyClient):
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={}, files={'sourceImage': source_image, 'styleImage': style_image}, streamable_response=True, server_override=prediction_url)
-
-    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> io.BytesIO:
-        """Generate an image from text prompt.
-
-        Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
-            deployment_id (str): A unique identifier to a deployment created under the project.
-            query_data (dict): Specifies the text prompt. For example, {'prompt': 'a cat'}"""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, streamable_response=True, server_override=prediction_url)
 
     def execute_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.

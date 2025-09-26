@@ -672,17 +672,6 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={}, files={'sourceImage': source_image, 'styleImage': style_image}, streamable_response=True, server_override=prediction_url)
 
-    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> io.BytesIO:
-        """Generate an image from text prompt.
-
-        Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
-            deployment_id (str): A unique identifier to a deployment created under the project.
-            query_data (dict): Specifies the text prompt. For example, {'prompt': 'a cat'}"""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, streamable_response=True, server_override=prediction_url)
-
     def get_matrix_agent_schema(self, deployment_token: str, deployment_id: str, query: str, doc_infos: list = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 

@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.63'
+      :value: '1.4.64'
 
 
 
@@ -4347,7 +4347,7 @@ Module Contents
 
 
 
-   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False)
+   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, user_info = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -4375,10 +4375,12 @@ Module Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param user_info: The information of the user to act on behalf of for user restricted data sources.
+      :type user_info: dict
 
 
 
-   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False)
+   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, user_info = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -4410,6 +4412,8 @@ Module Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param user_info: The information of the user to act on behalf of for user restricted data sources.
+      :type user_info: dict
 
 
 
@@ -8715,19 +8719,6 @@ Module Contents
       :type source_image: io.TextIOBase
       :param style_image: The image that has the style as a reference.
       :type style_image: io.TextIOBase
-
-
-
-   .. py:method:: generate_image(deployment_token, deployment_id, query_data)
-
-      Generate an image from text prompt.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique identifier to a deployment created under the project.
-      :type deployment_id: str
-      :param query_data: Specifies the text prompt. For example, {'prompt': 'a cat'}
-      :type query_data: dict
 
 
 

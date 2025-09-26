@@ -9222,6 +9222,8 @@ Package Contents
    :type include_bm25_retrieval: bool
    :param database_connector_id: Database connector ID to use for connecting external database that gives access to structured data to the LLM.
    :type database_connector_id: str
+   :param database_connector_ids: List of database connector IDs to use for connecting external databases that give access to structured data to the LLM.
+   :type database_connector_ids: List[str]
    :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
    :type database_connector_tables: List[str]
    :param enable_code_execution: Enable python code execution in the ChatLLM. This equips the LLM with a python kernel in which all its code is executed.
@@ -9389,6 +9391,12 @@ Package Contents
 
    .. py:attribute:: database_connector_id
       :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: database_connector_ids
+      :type:  List[str]
       :value: None
 
 

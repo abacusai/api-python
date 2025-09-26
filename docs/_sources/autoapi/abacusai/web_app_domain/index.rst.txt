@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type metadata: dict
    :param isRootDomain: Whether the web app domain is a root domain
    :type isRootDomain: bool
+   :param isDeployed: Whether the web app domain is deployed
+   :type isDeployed: bool
 
 
    .. py:attribute:: web_app_domain_id
@@ -78,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: is_root_domain
+      :value: None
+
+
+
+   .. py:attribute:: is_deployed
       :value: None
 
 

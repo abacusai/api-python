@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: PresentationExportResult(client, filePath=None)
+.. py:class:: PresentationExportResult(client, filePath=None, webViewLink=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,9 +26,16 @@ Module Contents
    :type client: ApiClient
    :param filePath: The path to the exported presentation
    :type filePath: str
+   :param webViewLink: The web view link to the exported presentation (if applicable)
+   :type webViewLink: str
 
 
    .. py:attribute:: file_path
+      :value: None
+
+
+
+   .. py:attribute:: web_view_link
       :value: None
 
 
