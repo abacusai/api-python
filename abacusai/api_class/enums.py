@@ -423,6 +423,7 @@ class ApplicationConnectorType(ApiEnum):
     DBC = 'DBC'
     GENERIC_OAUTH = 'GENERIC_OAUTH'
     OUTLOOK = 'OUTLOOK'
+    BIGQUERY = 'BIGQUERY'
 
     @classmethod
     def user_connectors(cls):
@@ -443,12 +444,13 @@ class ApplicationConnectorType(ApiEnum):
             cls.ODBC,
             cls.DBC,
             cls.GENERIC_OAUTH,
-            cls.OUTLOOK
+            cls.OUTLOOK,
+            cls.BIGQUERY
         ]
 
     @classmethod
     def database_connectors(cls):
-        return [cls.SALESFORCE, cls.ODBC, cls.DBC]
+        return [cls.SALESFORCE, cls.ODBC, cls.DBC, cls.BIGQUERY]
 
 
 class StreamingConnectorType(ApiEnum):
@@ -551,6 +553,7 @@ class LLMName(ApiEnum):
     CLAUDE_V3_7_SONNET = 'CLAUDE_V3_7_SONNET'
     CLAUDE_V4_SONNET = 'CLAUDE_V4_SONNET'
     CLAUDE_V4_OPUS = 'CLAUDE_V4_OPUS'
+    CLAUDE_V4_5_SONNET = 'CLAUDE_V4_5_SONNET'
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     GEMINI_2_PRO = 'GEMINI_2_PRO'

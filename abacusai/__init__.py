@@ -240,6 +240,9 @@ from .regenerate_llm_external_application import RegenerateLlmExternalApplicatio
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
 from .routing_action import RoutingAction
 from .schema import Schema
+from .session_summary import SessionSummary
+from .session_transcript import SessionTranscript
+from .session_transcripts import SessionTranscripts
 from .sftp_key import SftpKey
 from .streaming_auth_token import StreamingAuthToken
 from .streaming_client import StreamingClient
@@ -279,4 +282,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.64"
+__version__ = "1.4.65"

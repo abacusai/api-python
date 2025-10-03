@@ -255,6 +255,9 @@ Submodules
    /autoapi/abacusai/return_class/index
    /autoapi/abacusai/routing_action/index
    /autoapi/abacusai/schema/index
+   /autoapi/abacusai/session_summary/index
+   /autoapi/abacusai/session_transcript/index
+   /autoapi/abacusai/session_transcripts/index
    /autoapi/abacusai/sftp_key/index
    /autoapi/abacusai/streaming_auth_token/index
    /autoapi/abacusai/streaming_client/index
@@ -781,6 +784,9 @@ Classes
    abacusai.ResolvedFeatureGroupTemplate
    abacusai.RoutingAction
    abacusai.Schema
+   abacusai.SessionSummary
+   abacusai.SessionTranscript
+   abacusai.SessionTranscripts
    abacusai.SftpKey
    abacusai.StreamingAuthToken
    abacusai.StreamingClient
@@ -6662,6 +6668,11 @@ Package Contents
 
 
 
+   .. py:attribute:: BIGQUERY
+      :value: 'BIGQUERY'
+
+
+
    .. py:method:: user_connectors()
       :classmethod:
 
@@ -7004,6 +7015,11 @@ Package Contents
 
    .. py:attribute:: CLAUDE_V4_OPUS
       :value: 'CLAUDE_V4_OPUS'
+
+
+
+   .. py:attribute:: CLAUDE_V4_5_SONNET
+      :value: 'CLAUDE_V4_5_SONNET'
 
 
 
@@ -46911,6 +46927,112 @@ Package Contents
 
 
 
+.. py:class:: SessionSummary(client, summary=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A session summary
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param summary: The summary of the session.
+   :type summary: str
+
+
+   .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: SessionTranscript(client, role=None, content=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A session transcript
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param role: The role of the transcript.
+   :type role: str
+   :param content: The content of the transcript.
+   :type content: str
+
+
+   .. py:attribute:: role
+      :value: None
+
+
+
+   .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: SessionTranscripts(client, transcripts=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A list of session transcripts
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param transcripts: A list of session transcripts.
+   :type transcripts: list[sessiontranscript]
+
+
+   .. py:attribute:: transcripts
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: SftpKey(client, keyName=None, publicKey=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -49253,6 +49375,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.64'
+   :value: '1.4.65'
 
 
