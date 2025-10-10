@@ -154,6 +154,16 @@ class Project(AbstractApiClass):
         """
         return self.client.infer_feature_mappings(self.project_id, feature_group_id)
 
+    def add_scope_for_user(self, email: str, scope: list):
+        """
+        Add a user to a project.
+
+        Args:
+            email (str): The user's email.
+            scope (list): The list of project scopes.
+        """
+        return self.client.add_project_scope_for_user(self.project_id, email, scope)
+
     def describe_feature_group(self, feature_group_id: str):
         """
         Describe a feature group associated with a project

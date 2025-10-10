@@ -663,7 +663,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.65'
+    client_version = '1.4.66'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2812,6 +2812,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             AppUserGroup: The App User Group."""
         return self._call_api('getAppUserGroup', 'GET', query_params={'userGroupId': user_group_id}, parse_type=AppUserGroup)
+
+    def get_app_user_group_from_name(self, name: str = None) -> AppUserGroup:
+        """Gets an App User Group by name.
+
+        Args:
+            name (str): The name of the app user group to retrieve.
+
+        Returns:
+            AppUserGroup: The app user group with the specified name."""
+        return self._call_api('getAppUserGroupFromName', 'GET', query_params={'name': name}, parse_type=AppUserGroup)
 
     def describe_external_application(self, external_application_id: str) -> ExternalApplication:
         """Describes an External Application.
@@ -5037,6 +5047,19 @@ class ApiClient(ReadOnlyClient):
             Project: This object represents the newly created project."""
         return self._call_api('createProject', 'POST', query_params={}, body={'name': name, 'useCase': use_case}, parse_type=Project)
 
+    def list_projects_dashboard(self, updated_filter: int = None, limit: int = 50, since_project_id: str = None, search: str = None, starred: bool = None, tag: str = None, tags: list = None) -> dict:
+        """Retrieves a list of projects for dashboard display with filtering and pagination support.
+
+        Args:
+            updated_filter (int): Unix timestamp to filter projects updated after this time.
+            limit (int): The maximum number of projects to return (default: 50).
+            since_project_id (str): The ID of the project after which the list starts for pagination.
+            search (str): Search term to filter projects by name, creator email, or use case.
+            starred (bool): Filter by starred status (True for starred, False for non-starred).
+            tag (str): Filter by a single tag (deprecated, use tags instead).
+            tags (list): List of tags to filter projects by."""
+        return self._call_api('listProjectsDashboard', 'POST', query_params={}, body={'updatedFilter': updated_filter, 'limit': limit, 'sinceProjectId': since_project_id, 'search': search, 'starred': starred, 'tag': tag, 'tags': tags})
+
     def rename_project(self, project_id: str, name: str):
         """This method renames a project after it is created.
 
@@ -5135,6 +5158,15 @@ class ApiClient(ReadOnlyClient):
         Returns:
             list[Feature]: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set."""
         return self._call_api('setFeatureMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureMapping': feature_mapping, 'nestedColumnName': nested_column_name}, parse_type=Feature)
+
+    def add_project_scope_for_user(self, project_id: str, email: str, scope: list):
+        """Add a user to a project.
+
+        Args:
+            project_id (str): The project's id.
+            email (str): The user's email.
+            scope (list): The list of project scopes."""
+        return self._call_api('addProjectScopeForUser', 'POST', query_params={}, body={'projectId': project_id, 'email': email, 'scope': scope})
 
     def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', status: str = None, comments: dict = None, project_id: str = None, save_metadata: bool = False, pages: list = None) -> AnnotationEntry:
         """Add an annotation entry to the database.
@@ -8894,6 +8926,35 @@ class ApiClient(ReadOnlyClient):
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in."""
         return self._proxy_request('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'name': name}, is_sync=True)
 
+    def add_user_group_object_permission(self, object_id: str, user_group_id: str, object_type: str, permission: str = 'ALL'):
+        """Add user group object permission for any object type.
+
+        Args:
+            object_id (str): The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+            user_group_id (str): The ID of the user group
+            object_type (str): The type of object ('dataset', 'project', 'external_connection', 'feature_group')
+            permission (str): The permission to grant (default: 'ALL')"""
+        return self._call_api('addUserGroupObjectPermission', 'POST', query_params={}, body={'objectId': object_id, 'userGroupId': user_group_id, 'objectType': object_type, 'permission': permission})
+
+    def update_user_group_object_permission(self, object_id: str, user_group_id: str, object_type: str, permission: str = 'ALL'):
+        """Update user group object permission for any object type.
+
+        Args:
+            object_id (str): The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+            user_group_id (str): The ID of the user group
+            object_type (str): The type of object ('dataset', 'project', 'external_connection', 'feature_group')
+            permission (str): The permission to grant (default: 'ALL')"""
+        return self._call_api('updateUserGroupObjectPermission', 'POST', query_params={}, body={'objectId': object_id, 'userGroupId': user_group_id, 'objectType': object_type, 'permission': permission})
+
+    def remove_user_group_object_permission(self, object_id: str, user_group_id: str, object_type: str):
+        """Remove user group object permission for any object type.
+
+        Args:
+            object_id (str): The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+            user_group_id (str): The ID of the user group
+            object_type (str): The type of object ('dataset', 'project', 'external_connection', 'feature_group')"""
+        return self._call_api('removeUserGroupObjectPermission', 'POST', query_params={}, body={'objectId': object_id, 'userGroupId': user_group_id, 'objectType': object_type})
+
     def create_app_user_group(self, name: str) -> AppUserGroup:
         """Creates a new App User Group. This User Group is used to have permissions to access the external chatbots.
 
@@ -9076,7 +9137,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
-        return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'responseType': response_type, 'jsonResponseSchema': json_response_schema, 'stopSequences': stop_sequences, 'topP': top_p}, parse_type=LlmResponse)
+        return self._proxy_request('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'responseType': response_type, 'jsonResponseSchema': json_response_schema, 'stopSequences': stop_sequences, 'topP': top_p}, parse_type=LlmResponse, is_sync=True)
 
     def render_feature_groups_for_llm(self, feature_group_ids: List, token_budget: int = None, include_definition: bool = True) -> List[LlmInput]:
         """Encode feature groups as language model inputs.

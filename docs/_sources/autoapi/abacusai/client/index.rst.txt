@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.65'
+      :value: '1.4.66'
 
 
 
@@ -2958,6 +2958,18 @@ Module Contents
 
 
 
+   .. py:method:: get_app_user_group_from_name(name = None)
+
+      Gets an App User Group by name.
+
+      :param name: The name of the app user group to retrieve.
+      :type name: str
+
+      :returns: The app user group with the specified name.
+      :rtype: AppUserGroup
+
+
+
    .. py:method:: describe_external_application(external_application_id)
 
       Describes an External Application.
@@ -4735,6 +4747,27 @@ Module Contents
 
 
 
+   .. py:method:: list_projects_dashboard(updated_filter = None, limit = 50, since_project_id = None, search = None, starred = None, tag = None, tags = None)
+
+      Retrieves a list of projects for dashboard display with filtering and pagination support.
+
+      :param updated_filter: Unix timestamp to filter projects updated after this time.
+      :type updated_filter: int
+      :param limit: The maximum number of projects to return (default: 50).
+      :type limit: int
+      :param since_project_id: The ID of the project after which the list starts for pagination.
+      :type since_project_id: str
+      :param search: Search term to filter projects by name, creator email, or use case.
+      :type search: str
+      :param starred: Filter by starred status (True for starred, False for non-starred).
+      :type starred: bool
+      :param tag: Filter by a single tag (deprecated, use tags instead).
+      :type tag: str
+      :param tags: List of tags to filter projects by.
+      :type tags: list
+
+
+
    .. py:method:: rename_project(project_id, name)
 
       This method renames a project after it is created.
@@ -4870,6 +4903,19 @@ Module Contents
 
       :returns: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
       :rtype: list[Feature]
+
+
+
+   .. py:method:: add_project_scope_for_user(project_id, email, scope)
+
+      Add a user to a project.
+
+      :param project_id: The project's id.
+      :type project_id: str
+      :param email: The user's email.
+      :type email: str
+      :param scope: The list of project scopes.
+      :type scope: list
 
 
 
@@ -10051,6 +10097,49 @@ Module Contents
       :type name: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
+
+
+
+   .. py:method:: add_user_group_object_permission(object_id, user_group_id, object_type, permission = 'ALL')
+
+      Add user group object permission for any object type.
+
+      :param object_id: The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+      :type object_id: str
+      :param user_group_id: The ID of the user group
+      :type user_group_id: str
+      :param object_type: The type of object ('dataset', 'project', 'external_connection', 'feature_group')
+      :type object_type: str
+      :param permission: The permission to grant (default: 'ALL')
+      :type permission: str
+
+
+
+   .. py:method:: update_user_group_object_permission(object_id, user_group_id, object_type, permission = 'ALL')
+
+      Update user group object permission for any object type.
+
+      :param object_id: The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+      :type object_id: str
+      :param user_group_id: The ID of the user group
+      :type user_group_id: str
+      :param object_type: The type of object ('dataset', 'project', 'external_connection', 'feature_group')
+      :type object_type: str
+      :param permission: The permission to grant (default: 'ALL')
+      :type permission: str
+
+
+
+   .. py:method:: remove_user_group_object_permission(object_id, user_group_id, object_type)
+
+      Remove user group object permission for any object type.
+
+      :param object_id: The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+      :type object_id: str
+      :param user_group_id: The ID of the user group
+      :type user_group_id: str
+      :param object_type: The type of object ('dataset', 'project', 'external_connection', 'feature_group')
+      :type object_type: str
 
 
 

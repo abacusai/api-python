@@ -394,25 +394,25 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>datasetId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique identifier of the dataset.</p></li>
-<li><p><strong>sourceType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The source of the Dataset. EXTERNAL_SERVICE, UPLOAD, or STREAMING.</p></li>
-<li><p><strong>dataSource</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Location of data. It may be a URI such as an s3 bucket or the database table.</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The timestamp at which this dataset was created.</p></li>
-<li><p><strong>ignoreBefore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The timestamp at which all previous events are ignored when training.</p></li>
-<li><p><strong>ephemeral</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – The dataset is ephemeral and not used for training.</p></li>
-<li><p><strong>lookbackDays</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Specific to streaming datasets, this specifies how many days worth of data to include when generating a snapshot. Value of 0 indicates leaves this selection to the system.</p></li>
-<li><p><strong>databaseConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The Database Connector used.</p></li>
-<li><p><strong>databaseConnectorConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The database connector query used to retrieve data.</p></li>
-<li><p><strong>connectorType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The type of connector used to get this dataset FILE or DATABASE.</p></li>
-<li><p><strong>featureGroupTableName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The table name of the dataset’s feature group</p></li>
-<li><p><strong>applicationConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The Application Connector used.</p></li>
-<li><p><strong>applicationConnectorConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The application connector query used to retrieve data.</p></li>
-<li><p><strong>incremental</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If dataset is an incremental dataset.</p></li>
-<li><p><strong>isDocumentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If dataset is a documentset.</p></li>
-<li><p><strong>extractBoundingBoxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.</p></li>
-<li><p><strong>mergeFileSchemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If the merge file schemas policy is enabled.</p></li>
-<li><p><strong>referenceOnlyDocumentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies whether to save the data reference only. Only valid if is_documentset if True.</p></li>
-<li><p><strong>versionLimit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Version limit for the dataset.</p></li>
+<li><p><strong>datasetId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The unique identifier of the dataset.</p></li>
+<li><p><strong>sourceType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The source of the Dataset. EXTERNAL_SERVICE, UPLOAD, or STREAMING.</p></li>
+<li><p><strong>dataSource</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Location of data. It may be a URI such as an s3 bucket or the database table.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The timestamp at which this dataset was created.</p></li>
+<li><p><strong>ignoreBefore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The timestamp at which all previous events are ignored when training.</p></li>
+<li><p><strong>ephemeral</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – The dataset is ephemeral and not used for training.</p></li>
+<li><p><strong>lookbackDays</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Specific to streaming datasets, this specifies how many days worth of data to include when generating a snapshot. Value of 0 indicates leaves this selection to the system.</p></li>
+<li><p><strong>databaseConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The Database Connector used.</p></li>
+<li><p><strong>databaseConnectorConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – The database connector query used to retrieve data.</p></li>
+<li><p><strong>connectorType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of connector used to get this dataset FILE or DATABASE.</p></li>
+<li><p><strong>featureGroupTableName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The table name of the dataset’s feature group</p></li>
+<li><p><strong>applicationConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The Application Connector used.</p></li>
+<li><p><strong>applicationConnectorConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – The application connector query used to retrieve data.</p></li>
+<li><p><strong>incremental</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If dataset is an incremental dataset.</p></li>
+<li><p><strong>isDocumentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If dataset is a documentset.</p></li>
+<li><p><strong>extractBoundingBoxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.</p></li>
+<li><p><strong>mergeFileSchemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If the merge file schemas policy is enabled.</p></li>
+<li><p><strong>referenceOnlyDocumentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies whether to save the data reference only. Only valid if is_documentset if True.</p></li>
+<li><p><strong>versionLimit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Version limit for the dataset.</p></li>
 <li><p><strong>latestDatasetVersion</strong> (<a class="reference internal" href="../dataset_version/index.html#abacusai.dataset_version.DatasetVersion" title="abacusai.dataset_version.DatasetVersion"><em>DatasetVersion</em></a>) – The latest version of this dataset.</p></li>
 <li><p><strong>schema</strong> (<a class="reference internal" href="../dataset_column/index.html#abacusai.dataset_column.DatasetColumn" title="abacusai.dataset_column.DatasetColumn"><em>DatasetColumn</em></a>) – List of resolved columns.</p></li>
 <li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../index.html#abacusai.RefreshSchedule" title="abacusai.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of schedules that determines when the next version of the dataset will be created.</p></li>
@@ -566,7 +566,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -578,10 +578,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>check_permissions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, checks user permissions using session email.</p></li>
-<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Start time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).</p></li>
-<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – End time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).</p></li>
-<li><p><strong>column_filter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary mapping column names to filter values. Only rows matching all column filters will be returned.</p></li>
+<li><p><strong>check_permissions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, checks user permissions using session email.</p></li>
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Start time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).</p></li>
+<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – End time filter (inclusive) for created_date_time_t in ISO 8601 format (e.g. 2025-05-13T08:25:11Z or 2025-05-13T08:25:11+00:00).</p></li>
+<li><p><strong>column_filter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Dictionary mapping column names to filter values. Only rows matching all column filters will be returned.</p></li>
 </ul>
 </dd>
 </dl>
@@ -594,12 +594,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – External URI to import the dataset from. If not specified, the last location will be used.</p></li>
-<li><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – File format to be used. If not specified, the service will try to detect the file format.</p></li>
-<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If the file format is CSV, use a specific CSV delimiter.</p></li>
-<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled.</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – External URI to import the dataset from. If not specified, the last location will be used.</p></li>
+<li><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – File format to be used. If not specified, the service will try to detect the file format.</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – If the file format is CSV, use a specific CSV delimiter.</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled.</p></li>
 <li><p><strong>parsing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.ParsingConfig" title="abacusai.api_class.dataset.ParsingConfig"><em>ParsingConfig</em></a>) – Custom config for dataset parsing.</p></li>
-<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The SQL query to use when fetching data from the specified location. Use <cite>__TABLE__</cite> as a placeholder for the table name. For example: “SELECT * FROM __TABLE__ WHERE event_date &gt; ‘2021-01-01’”. If not provided, the entire dataset from the specified location will be imported.</p></li>
+<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SQL query to use when fetching data from the specified location. Use <cite>__TABLE__</cite> as a placeholder for the table name. For example: “SELECT * FROM __TABLE__ WHERE event_date &gt; ‘2021-01-01’”. If not provided, the entire dataset from the specified location will be imported.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -618,10 +618,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name/ID of the object in the service to query. If not specified, the last name will be used.</p></li>
-<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The columns to query from the external service object. If not specified, the last columns will be used.</p></li>
-<li><p><strong>query_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Additional query arguments to filter the data. If not specified, the last arguments will be used.</p></li>
-<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override object_name, columns, and query_arguments.</p></li>
+<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name/ID of the object in the service to query. If not specified, the last name will be used.</p></li>
+<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The columns to query from the external service object. If not specified, the last columns will be used.</p></li>
+<li><p><strong>query_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Additional query arguments to filter the data. If not specified, the last arguments will be used.</p></li>
+<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override object_name, columns, and query_arguments.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -656,7 +656,7 @@
 <dd><p>Creates a new version of the specified dataset using a local file upload.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – File format to be used. If not specified, the service will attempt to detect the file format.</p>
+<dd class="field-odd"><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – File format to be used. If not specified, the service will attempt to detect the file format.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Token to be used when uploading file parts.</p>
@@ -690,7 +690,7 @@
 <dd><p>Snapshots the current data in the streaming dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique ID associated with the dataset.</p>
+<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The unique ID associated with the dataset.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The new Dataset Version created by taking a snapshot of the current data in the streaming dataset.</p>
@@ -708,7 +708,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the column.</p></li>
+<li><p><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the column.</p></li>
 <li><p><strong>data_type</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.DataType" title="abacusai.api_class.enums.DataType"><em>DataType</em></a>) – The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.</p></li>
 </ul>
 </dd>
@@ -728,9 +728,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>retention_hours</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of hours to retain streamed data in memory.</p></li>
-<li><p><strong>retention_row_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of rows to retain streamed data in memory.</p></li>
-<li><p><strong>ignore_records_before_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The Unix timestamp (in seconds) to use as a cutoff to ignore all entries sent before it</p></li>
+<li><p><strong>retention_hours</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of hours to retain streamed data in memory.</p></li>
+<li><p><strong>retention_row_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of rows to retain streamed data in memory.</p></li>
+<li><p><strong>ignore_records_before_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The Unix timestamp (in seconds) to use as a cutoff to ignore all entries sent before it</p></li>
 </ul>
 </dd>
 </dl>
@@ -742,13 +742,13 @@
 <dd><p>Retrieves the column schema of a dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier of the dataset schema to look up.</p>
+<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Unique string identifier of the dataset schema to look up.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of column schema definitions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../dataset_column/index.html#abacusai.dataset_column.DatasetColumn" title="abacusai.dataset_column.DatasetColumn">DatasetColumn</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference internal" href="../dataset_column/index.html#abacusai.dataset_column.DatasetColumn" title="abacusai.dataset_column.DatasetColumn">DatasetColumn</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -760,11 +760,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique String Identifier of the Database Connector to import the dataset from.</p></li>
-<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – If applicable, the name/ID of the object in the service to query.</p></li>
-<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The columns to query from the external service object.</p></li>
-<li><p><strong>query_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Additional query arguments to filter the data.</p></li>
-<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override <cite>object_name</cite>, <cite>columns</cite> and <cite>query_arguments</cite>.</p></li>
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Unique String Identifier of the Database Connector to import the dataset from.</p></li>
+<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – If applicable, the name/ID of the object in the service to query.</p></li>
+<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The columns to query from the external service object.</p></li>
+<li><p><strong>query_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Additional query arguments to filter the data.</p></li>
+<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override <cite>object_name</cite>, <cite>columns</cite> and <cite>query_arguments</cite>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -776,7 +776,7 @@
 <dd><p>Updates the version limit for the specified dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>version_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.</p>
+<dd class="field-odd"><p><strong>version_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The maximum number of versions permitted for the feature group. Once this limit is exceeded, the oldest versions will be purged in a First-In-First-Out (FIFO) order.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The updated dataset.</p>
@@ -807,7 +807,7 @@
 <dd><p>Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The unique ID associated with the dataset.</p>
+<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The unique ID associated with the dataset.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The dataset.</p>
@@ -825,15 +825,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The maximum length of the list of all dataset versions.</p></li>
-<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The ID of the version after which the list starts.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The maximum length of the list of all dataset versions.</p></li>
+<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The ID of the version after which the list starts.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of dataset versions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../dataset_version/index.html#abacusai.dataset_version.DatasetVersion" title="abacusai.dataset_version.DatasetVersion">DatasetVersion</a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference internal" href="../dataset_version/index.html#abacusai.dataset_version.DatasetVersion" title="abacusai.dataset_version.DatasetVersion">DatasetVersion</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -844,7 +844,7 @@
 <dd><p>Deletes the specified dataset from the organization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Unique string identifier of the dataset to delete.</p>
+<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Unique string identifier of the dataset to delete.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -855,7 +855,7 @@
 <dd><p>A waiting call until dataset is imported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -866,7 +866,7 @@
 <dd><p>A waiting call until dataset is completely inspected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -880,7 +880,7 @@
 <dd class="field-odd"><p>A string describing the status of a dataset (importing, inspecting, complete, etc.).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -905,7 +905,7 @@
 <dd><p>To create a refresh policy for a dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – A cron style string to set the refresh time.</p>
+<dd class="field-odd"><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A cron style string to set the refresh time.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The refresh policy object.</p>

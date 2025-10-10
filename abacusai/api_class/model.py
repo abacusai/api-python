@@ -503,7 +503,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         mask_pii (bool): Mask PII in the prompts and uploaded documents before sending it to the LLM. Only available for Enterprise users and will cause validation errors if set to True for ChatLLM Teams users.
         builtin_tools (List[SystemConnectorTool]): List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
         mcp_servers (List[str]): List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
-        agentic_loop_mode (bool): Force use of agentic loop that uses a series of tool calls when needed to respond.
+        agentic_loop_mode (bool): Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)

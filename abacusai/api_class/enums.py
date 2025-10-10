@@ -224,6 +224,8 @@ class FileFormat(ApiEnum):
     WEBM = 'webm'
     WMV = 'wmv'
     MSG = 'msg'
+    TS = 'TS'
+    TSX = 'TSX'
 
 
 class ExperimentationMode(ApiEnum):

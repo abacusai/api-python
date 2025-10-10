@@ -5813,6 +5813,16 @@ Package Contents
 
 
 
+   .. py:attribute:: TS
+      :value: 'TS'
+
+
+
+   .. py:attribute:: TSX
+      :value: 'TSX'
+
+
+
 .. py:class:: ExperimentationMode
 
    Bases: :py:obj:`ApiEnum`
@@ -10048,7 +10058,7 @@ Package Contents
    :type builtin_tools: List[SystemConnectorTool]
    :param mcp_servers: List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
    :type mcp_servers: List[str]
-   :param agentic_loop_mode: Force use of agentic loop that uses a series of tool calls when needed to respond.
+   :param agentic_loop_mode: Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
    :type agentic_loop_mode: bool
 
 
@@ -15946,6 +15956,27 @@ Package Contents
 
 
 
+   .. py:method:: list_projects_dashboard(updated_filter = None, limit = 50, since_project_id = None, search = None, starred = None, tag = None, tags = None)
+
+      Retrieves a list of projects for dashboard display with filtering and pagination support.
+
+      :param updated_filter: Unix timestamp to filter projects updated after this time.
+      :type updated_filter: int
+      :param limit: The maximum number of projects to return (default: 50).
+      :type limit: int
+      :param since_project_id: The ID of the project after which the list starts for pagination.
+      :type since_project_id: str
+      :param search: Search term to filter projects by name, creator email, or use case.
+      :type search: str
+      :param starred: Filter by starred status (True for starred, False for non-starred).
+      :type starred: bool
+      :param tag: Filter by a single tag (deprecated, use tags instead).
+      :type tag: str
+      :param tags: List of tags to filter projects by.
+      :type tags: list
+
+
+
    .. py:method:: rename_project(project_id, name)
 
       This method renames a project after it is created.
@@ -16081,6 +16112,19 @@ Package Contents
 
       :returns: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
       :rtype: list[Feature]
+
+
+
+   .. py:method:: add_project_scope_for_user(project_id, email, scope)
+
+      Add a user to a project.
+
+      :param project_id: The project's id.
+      :type project_id: str
+      :param email: The user's email.
+      :type email: str
+      :param scope: The list of project scopes.
+      :type scope: list
 
 
 
@@ -21265,6 +21309,49 @@ Package Contents
 
 
 
+   .. py:method:: add_user_group_object_permission(object_id, user_group_id, object_type, permission = 'ALL')
+
+      Add user group object permission for any object type.
+
+      :param object_id: The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+      :type object_id: str
+      :param user_group_id: The ID of the user group
+      :type user_group_id: str
+      :param object_type: The type of object ('dataset', 'project', 'external_connection', 'feature_group')
+      :type object_type: str
+      :param permission: The permission to grant (default: 'ALL')
+      :type permission: str
+
+
+
+   .. py:method:: update_user_group_object_permission(object_id, user_group_id, object_type, permission = 'ALL')
+
+      Update user group object permission for any object type.
+
+      :param object_id: The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+      :type object_id: str
+      :param user_group_id: The ID of the user group
+      :type user_group_id: str
+      :param object_type: The type of object ('dataset', 'project', 'external_connection', 'feature_group')
+      :type object_type: str
+      :param permission: The permission to grant (default: 'ALL')
+      :type permission: str
+
+
+
+   .. py:method:: remove_user_group_object_permission(object_id, user_group_id, object_type)
+
+      Remove user group object permission for any object type.
+
+      :param object_id: The ID of the object (dataset_id, project_id, external_connection_id, feature_group_id, etc.)
+      :type object_id: str
+      :param user_group_id: The ID of the user group
+      :type user_group_id: str
+      :param object_type: The type of object ('dataset', 'project', 'external_connection', 'feature_group')
+      :type object_type: str
+
+
+
    .. py:method:: create_app_user_group(name)
 
       Creates a new App User Group. This User Group is used to have permissions to access the external chatbots.
@@ -24171,6 +24258,18 @@ Package Contents
       :type user_group_id: str
 
       :returns: The App User Group.
+      :rtype: AppUserGroup
+
+
+
+   .. py:method:: get_app_user_group_from_name(name = None)
+
+      Gets an App User Group by name.
+
+      :param name: The name of the app user group to retrieve.
+      :type name: str
+
+      :returns: The app user group with the specified name.
       :rtype: AppUserGroup
 
 
@@ -28078,7 +28177,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28143,8 +28242,10 @@ Package Contents
    :type parentDeploymentConversationId: str
    :param introMessage: The intro message for the deployment conversation.
    :type introMessage: str
-   :param previewInfo: App preview info
+   :param previewInfo: App preview info.
    :type previewInfo: dict
+   :param latestContext: dict containing a list of important segments for pagination in deepagent.
+   :type latestContext: dict
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -28292,6 +28393,11 @@ Package Contents
 
 
    .. py:attribute:: preview_info
+      :value: None
+
+
+
+   .. py:attribute:: latest_context
       :value: None
 
 
@@ -36025,7 +36131,7 @@ Package Contents
 
 
 
-.. py:class:: HostnameInfo(client, isRootDomain=None, registrar=None, suggestedFlow=None, isAutomaticFlowAvailable=None)
+.. py:class:: HostnameInfo(client, isRootDomain=None, registrar=None, suggestedFlow=None, isCnameSupported=None, isAutomaticFlowAvailable=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36040,6 +36146,8 @@ Package Contents
    :type registrar: str
    :param suggestedFlow: Suggested flow for the domain
    :type suggestedFlow: str
+   :param isCnameSupported: Whether CNAME is supported for the domain
+   :type isCnameSupported: bool
    :param isAutomaticFlowAvailable: Whether entri is supported for the domain
    :type isAutomaticFlowAvailable: bool
 
@@ -36055,6 +36163,11 @@ Package Contents
 
 
    .. py:attribute:: suggested_flow
+      :value: None
+
+
+
+   .. py:attribute:: is_cname_supported
       :value: None
 
 
@@ -36232,7 +36345,7 @@ Package Contents
 
 
 
-.. py:class:: ImageGenSettings(client, settings=None, model={})
+.. py:class:: ImageGenSettings(client, settings=None, warnings=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36243,11 +36356,18 @@ Package Contents
    :type client: ApiClient
    :param settings: The settings for each model.
    :type settings: dict
+   :param warnings: The warnings for each model.
+   :type warnings: dict
    :param model: Dropdown for models available for image generation.
    :type model: ImageGenModel
 
 
    .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: warnings
       :value: None
 
 
@@ -44579,6 +44699,17 @@ Package Contents
 
 
 
+   .. py:method:: add_scope_for_user(email, scope)
+
+      Add a user to a project.
+
+      :param email: The user's email.
+      :type email: str
+      :param scope: The list of project scopes.
+      :type scope: list
+
+
+
    .. py:method:: describe_feature_group(feature_group_id)
 
       Describe a feature group associated with a project
@@ -48533,7 +48664,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenCosts(client, modelCosts=None, expensiveModels=None, warningMessages=None)
+.. py:class:: VideoGenCosts(client, modelCosts=None, expensiveModels=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48546,8 +48677,6 @@ Package Contents
    :type modelCosts: dict
    :param expensiveModels: The list of video gen models that are expensive
    :type expensiveModels: list
-   :param warningMessages: The warning messages for certain video gen models
-   :type warningMessages: dict
 
 
    .. py:attribute:: model_costs
@@ -48556,11 +48685,6 @@ Package Contents
 
 
    .. py:attribute:: expensive_models
-      :value: None
-
-
-
-   .. py:attribute:: warning_messages
       :value: None
 
 
@@ -48693,7 +48817,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenSettings(client, settings=None, model={})
+.. py:class:: VideoGenSettings(client, settings=None, warnings=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48704,11 +48828,18 @@ Package Contents
    :type client: ApiClient
    :param settings: The settings for each model.
    :type settings: dict
+   :param warnings: The warnings for each model.
+   :type warnings: dict
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
 
 
    .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: warnings
       :value: None
 
 
@@ -49375,6 +49506,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.65'
+   :value: '1.4.66'
 
 
