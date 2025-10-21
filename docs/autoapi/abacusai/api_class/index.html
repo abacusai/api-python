@@ -77,6 +77,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_gen_settings/index.html">abacusai.audio_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_url_result/index.html">abacusai.audio_url_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audit_log/index.html">abacusai.audit_log</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html">abacusai.batch_prediction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
@@ -140,6 +141,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever/index.html">abacusai.document_retriever</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_retriever_version_logs/index.html">abacusai.document_retriever_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html">abacusai.drift_distribution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distributions/index.html">abacusai.drift_distributions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda/index.html">abacusai.eda</a></li>
@@ -324,6 +326,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
@@ -1330,7 +1333,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 
 <dl class="py function">
 <dt class="sig sig-object py" id="abacusai.api_class.validate_input_dict_param">
-<span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">validate_input_dict_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friendly_class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">must_contain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.validate_input_dict_param" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">validate_input_dict_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friendly_class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">must_contain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.validate_input_dict_param" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
@@ -10333,6 +10336,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>data_prompt_column_context</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Dict of ‘table_name.column_name’ and ‘column_context’ pairs to provide column context for some selected columns in the selected structured data table. This replaces the default auto-generated information about the column data.</p></li>
 <li><p><strong>hide_sql_and_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – When running data queries, this will hide the generated SQL and Code in the response.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
+<li><p><strong>disable_data_fetch_for_training</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Train using only table and column schema metadata without fetching sample data. This speeds up training but may result in less context for the model.</p></li>
 <li><p><strong>data_columns_to_ignore</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format “&lt;table_name&gt;.&lt;column_name&gt;”</p></li>
 <li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Minimum search score to consider a document as a valid search result.</p></li>
 <li><p><strong>include_bm25_retrieval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Combine BM25 search score with vector search using reciprocal rank fusion.</p></li>
@@ -10452,6 +10456,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.disable_data_summarization">
 <span class="sig-name descname"><span class="pre">disable_data_summarization</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.disable_data_summarization" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.disable_data_fetch_for_training">
+<span class="sig-name descname"><span class="pre">disable_data_fetch_for_training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.disable_data_fetch_for_training" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

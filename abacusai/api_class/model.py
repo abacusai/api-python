@@ -486,6 +486,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         data_prompt_column_context (Dict[str, str]): Dict of 'table_name.column_name' and 'column_context' pairs to provide column context for some selected columns in the selected structured data table. This replaces the default auto-generated information about the column data.
         hide_sql_and_code (bool): When running data queries, this will hide the generated SQL and Code in the response.
         disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
+        disable_data_fetch_for_training (bool): Train using only table and column schema metadata without fetching sample data. This speeds up training but may result in less context for the model.
         data_columns_to_ignore (List[str]): Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format "<table_name>.<column_name>"
         search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
         include_bm25_retrieval (bool): Combine BM25 search score with vector search using reciprocal rank fusion.
@@ -525,6 +526,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     data_prompt_column_context: Dict[str, str] = dataclasses.field(default=None)
     hide_sql_and_code: bool = dataclasses.field(default=None)
     disable_data_summarization: bool = dataclasses.field(default=None)
+    disable_data_fetch_for_training: bool = dataclasses.field(default=None)
     data_columns_to_ignore: List[str] = dataclasses.field(default=None)
     search_score_cutoff: float = dataclasses.field(default=None)
     include_bm25_retrieval: bool = dataclasses.field(default=None)

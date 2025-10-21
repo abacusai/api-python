@@ -180,6 +180,7 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
+from .user_group_object_permission import UserGroupObjectPermission
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .webhook import Webhook
@@ -218,17 +219,20 @@ async def sse_asynchronous_generator(endpoint: str, headers: dict, body: dict):
     async with aiohttp.request('POST', endpoint, json=body, headers=headers, timeout=aiohttp.ClientTimeout(total=0)) as response:
         async for line in response.content:
             if line:
-                streamed_responses = line.decode('utf-8').split('\n\n')
+                streamed_responses = line.decode('utf-8').split('\n')
                 for resp in streamed_responses:
                     if resp:
                         resp = resp.strip()
                         if resp:
-                            resp = json.loads(resp)
-                            resp = {snake_case(
-                                key): value for key, value in resp.items()}
-                            if 'ping' in resp:
-                                continue
-                            yield resp
+                            try:
+                                resp = json.loads(resp)
+                                resp = {snake_case(
+                                    key): value for key, value in resp.items()}
+                                if 'ping' in resp:
+                                    continue
+                                yield resp
+                            except Exception:
+                                pass
 
 
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 503, 504), session=None, retry_500: bool = False):
@@ -663,7 +667,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.66'
+    client_version = '1.4.67'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2777,6 +2781,14 @@ class ReadOnlyClient(BaseApiClient):
             DeploymentConversation: The deployment conversation."""
         return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads, 'start': start, 'limit': limit, 'includeAllVersions': include_all_versions}, parse_type=DeploymentConversation, is_sync=True)
 
+    def get_deployment_conversation_file(self, deployment_conversation_id: str, file_path: str) -> io.BytesIO:
+        """Gets a deployment conversation file.
+
+        Args:
+            deployment_conversation_id (str): Unique ID of the conversation.
+            file_path (str): The path of the file to get."""
+        return self._proxy_request('getDeploymentConversationFile', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'filePath': file_path}, is_sync=True, streamable_response=True)
+
     def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False, limit: int = None, search: str = None) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
 
@@ -2802,6 +2814,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DeploymentConversationExport: The deployment conversation html export."""
         return self._proxy_request('exportDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, parse_type=DeploymentConversationExport, is_sync=True)
+
+    def list_user_group_object_permissions(self) -> List[UserGroupObjectPermission]:
+        """List all user groups permissions associated with the objects in the organization.
+
+        If no associated user groups, the object is public among developers and admins.
+
+
+        Returns:
+            list[UserGroupObjectPermission]: List of user group object permissions in the organization."""
+        return self._call_api('listUserGroupObjectPermissions', 'GET', query_params={}, parse_type=UserGroupObjectPermission)
 
     def get_app_user_group(self, user_group_id: str) -> AppUserGroup:
         """Gets an App User Group.
@@ -7690,6 +7712,14 @@ class ApiClient(ReadOnlyClient):
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config}, files=attachments, server_override=prediction_url)
+
+    def get_deep_agent_response(self, message: str, deployment_conversation_id: str = None) -> Dict:
+        """Return a DeepAgent response with generated files if any, based on the input message.
+
+        Args:
+            message (str): The user's message/task for DeepAgent to complete
+            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created."""
+        return self._proxy_request('getDeepAgentResponse', 'POST', query_params={}, body={'message': message, 'deploymentConversationId': deployment_conversation_id}, is_sync=True)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.

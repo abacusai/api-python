@@ -118,6 +118,15 @@ class DeploymentConversation(AbstractApiClass):
         """
         return self.client.get_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, filter_intermediate_conversation_events, get_unused_document_uploads, start, limit, include_all_versions)
 
+    def get_file(self, file_path: str):
+        """
+        Gets a deployment conversation file.
+
+        Args:
+            file_path (str): The path of the file to get.
+        """
+        return self.client.get_deployment_conversation_file(self.deployment_conversation_id, file_path)
+
     def delete(self, deployment_id: str = None):
         """
         Delete a Deployment Conversation.

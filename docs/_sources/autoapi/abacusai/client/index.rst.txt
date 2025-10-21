@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.66'
+      :value: '1.4.67'
 
 
 
@@ -2910,6 +2910,17 @@ Module Contents
 
 
 
+   .. py:method:: get_deployment_conversation_file(deployment_conversation_id, file_path)
+
+      Gets a deployment conversation file.
+
+      :param deployment_conversation_id: Unique ID of the conversation.
+      :type deployment_conversation_id: str
+      :param file_path: The path of the file to get.
+      :type file_path: str
+
+
+
    .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None)
 
       Lists all conversations for the given deployment and current user.
@@ -2943,6 +2954,18 @@ Module Contents
 
       :returns: The deployment conversation html export.
       :rtype: DeploymentConversationExport
+
+
+
+   .. py:method:: list_user_group_object_permissions()
+
+      List all user groups permissions associated with the objects in the organization.
+
+      If no associated user groups, the object is public among developers and admins.
+
+
+      :returns: List of user group object permissions in the organization.
+      :rtype: list[UserGroupObjectPermission]
 
 
 
@@ -8460,6 +8483,17 @@ Module Contents
       :type chat_config: dict
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
+
+
+
+   .. py:method:: get_deep_agent_response(message, deployment_conversation_id = None)
+
+      Return a DeepAgent response with generated files if any, based on the input message.
+
+      :param message: The user's message/task for DeepAgent to complete
+      :type message: str
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+      :type deployment_conversation_id: str
 
 
 

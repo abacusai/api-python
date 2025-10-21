@@ -1,0 +1,92 @@
+abacusai.audit_log
+==================
+
+.. py:module:: abacusai.audit_log
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audit_log.AuditLog
+
+
+Module Contents
+---------------
+
+.. py:class:: AuditLog(client, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   An audit log entry
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param createdAt: The timestamp when the audit log entry was created
+   :type createdAt: str
+   :param userId: The hashed ID of the user who performed the action
+   :type userId: str
+   :param objectId: The hashed ID of the object that was affected by the action
+   :type objectId: str
+   :param action: The action performed (create, modify, start, stop, delete, share, hide, credential_change, login)
+   :type action: str
+   :param source: The source of the action (api, ui, pipeline, cli, system)
+   :type source: str
+   :param refreshPolicyId: The hashed ID of the refresh policy if applicable
+   :type refreshPolicyId: str
+   :param pipelineId: The hashed ID of the pipeline if applicable
+   :type pipelineId: str
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: user_id
+      :value: None
+
+
+
+   .. py:attribute:: object_id
+      :value: None
+
+
+
+   .. py:attribute:: action
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :value: None
+
+
+
+   .. py:attribute:: refresh_policy_id
+      :value: None
+
+
+
+   .. py:attribute:: pipeline_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

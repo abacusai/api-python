@@ -21,6 +21,7 @@ from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
 from .audio_gen_settings import AudioGenSettings
 from .audio_url_result import AudioUrlResult
+from .audit_log import AuditLog
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
@@ -83,6 +84,7 @@ from .document_data import DocumentData
 from .document_retriever import DocumentRetriever
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
 from .document_retriever_version import DocumentRetrieverVersion
+from .document_retriever_version_logs import DocumentRetrieverVersionLogs
 from .drift_distribution import DriftDistribution
 from .drift_distributions import DriftDistributions
 from .eda import Eda
@@ -266,6 +268,7 @@ from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
 from .user_exception import UserException
+from .user_group_object_permission import UserGroupObjectPermission
 from .video_gen_costs import VideoGenCosts
 from .video_gen_model import VideoGenModel
 from .video_gen_model_options import VideoGenModelOptions
@@ -282,4 +285,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.66"
+__version__ = "1.4.67"

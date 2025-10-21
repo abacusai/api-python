@@ -9,11 +9,15 @@ from .abstract import ApiClass, get_clean_function_source_code_for_agent, valida
 MIN_AGENT_SLEEP_TIME = 300
 
 
-def validate_input_dict_param(dict_object, friendly_class_name, must_contain=[]):
+def validate_input_dict_param(dict_object, friendly_class_name, must_contain=[], schema={}):
     if not isinstance(dict_object, dict):
         raise ValueError(friendly_class_name, 'Invalid argument. Provided argument should be a dictionary.')
     if any(field not in dict_object for field in must_contain):
         raise ValueError(friendly_class_name, f'One or more keys are missing in the argument provided. Must contain keys - {must_contain}.')
+    for key, value_type in schema.items():
+        value = dict_object.get(key)
+        if value and not isinstance(value, value_type):
+            raise ValueError(friendly_class_name, f'Invalid parameter "{key}". It should be of type {value_type.__name__}.')
 
 
 @dataclasses.dataclass
@@ -766,7 +770,7 @@ class WorkflowGraph(ApiClass):
 
     @classmethod
     def from_dict(cls, graph: dict):
-        validate_input_dict_param(graph, friendly_class_name='workflow_graph')
+        validate_input_dict_param(graph, friendly_class_name='workflow_graph', schema={'nodes': list, 'edges': list, 'primary_start_node': str, 'common_source_code': str, 'specification_type': str})
         if graph.get('__return_filter'):
             for node in graph.get('nodes', []):
                 node['__return_filter'] = True

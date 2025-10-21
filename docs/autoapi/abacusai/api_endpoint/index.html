@@ -74,6 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_gen_settings/index.html">abacusai.audio_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_url_result/index.html">abacusai.audio_url_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audit_log/index.html">abacusai.audit_log</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html">abacusai.batch_prediction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
@@ -137,6 +138,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever/index.html">abacusai.document_retriever</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_retriever_version_logs/index.html">abacusai.document_retriever_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html">abacusai.drift_distribution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distributions/index.html">abacusai.drift_distributions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda/index.html">abacusai.eda</a></li>
@@ -321,6 +323,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html">abacusai.use_case_requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
@@ -387,7 +390,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_endpoint.ApiEndpoint">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_endpoint.</span></span><span class="sig-name descname"><span class="pre">ApiEndpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apiEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalChatEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dashboardEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostingDomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_endpoint.ApiEndpoint" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_endpoint.</span></span><span class="sig-name descname"><span class="pre">ApiEndpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apiEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalChatEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dashboardEndpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostingDomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicHostingDomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_endpoint.ApiEndpoint" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>An collection of endpoints which can be used to make requests to, such as api calls or predict calls</p>
 <dl class="field-list simple">
@@ -401,6 +404,7 @@
 <li><p><strong>externalChatEndpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The URI that can be used to access the external chat</p></li>
 <li><p><strong>dashboardEndpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The URI that the external chat will use to go back to the dashboard</p></li>
 <li><p><strong>hostingDomain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The domain for hosted app deployments</p></li>
+<li><p><strong>publicHostingDomain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The domain for publicly hosted app deployments</p></li>
 </ul>
 </dd>
 </dl>
@@ -437,6 +441,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_endpoint.ApiEndpoint.hosting_domain">
 <span class="sig-name descname"><span class="pre">hosting_domain</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_endpoint.ApiEndpoint.hosting_domain" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_endpoint.ApiEndpoint.public_hosting_domain">
+<span class="sig-name descname"><span class="pre">public_hosting_domain</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_endpoint.ApiEndpoint.public_hosting_domain" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

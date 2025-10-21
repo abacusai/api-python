@@ -582,6 +582,17 @@ Module Contents
 
 
 
+   .. py:method:: get_deep_agent_response(message, deployment_conversation_id = None)
+
+      Return a DeepAgent response with generated files if any, based on the input message.
+
+      :param message: The user's message/task for DeepAgent to complete
+      :type message: str
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+      :type deployment_conversation_id: str
+
+
+
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
 
       Return the most relevant search results to the search query from the uploaded documents.

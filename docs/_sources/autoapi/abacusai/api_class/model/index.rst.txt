@@ -1494,6 +1494,8 @@ Module Contents
    :type hide_sql_and_code: bool
    :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
    :type disable_data_summarization: bool
+   :param disable_data_fetch_for_training: Train using only table and column schema metadata without fetching sample data. This speeds up training but may result in less context for the model.
+   :type disable_data_fetch_for_training: bool
    :param data_columns_to_ignore: Columns to ignore while encoding information about structured data tables in context for the LLM. A list of strings of format "<table_name>.<column_name>"
    :type data_columns_to_ignore: List[str]
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
@@ -1646,6 +1648,12 @@ Module Contents
 
 
    .. py:attribute:: disable_data_summarization
+      :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: disable_data_fetch_for_training
       :type:  bool
       :value: None
 

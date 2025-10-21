@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -56,6 +56,8 @@ Module Contents
    :type status: str
    :param deployedStatus: Deployment status (PENDING/ACTIVE/STOPPED/NOT_DEPLOYED)
    :type deployedStatus: str
+   :param accessLevel: Access Level (PUBLIC/PRIVATE/DEDICATED)
+   :type accessLevel: str
    :param hostname: Hostname of the deployed app
    :type hostname: str
    :param llmArtifactId: The ID of the LLM artifact
@@ -150,6 +152,11 @@ Module Contents
 
 
    .. py:attribute:: deployed_status
+      :value: None
+
+
+
+   .. py:attribute:: access_level
       :value: None
 
 

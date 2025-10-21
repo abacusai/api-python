@@ -425,6 +425,14 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config}, files=attachments, server_override=prediction_url)
 
+    def get_deep_agent_response(self, message: str, deployment_conversation_id: str = None) -> Dict:
+        """Return a DeepAgent response with generated files if any, based on the input message.
+
+        Args:
+            message (str): The user's message/task for DeepAgent to complete
+            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created."""
+        return self._proxy_request('getDeepAgentResponse', 'POST', query_params={}, body={'message': message, 'deploymentConversationId': deployment_conversation_id}, is_sync=True)
+
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
 
