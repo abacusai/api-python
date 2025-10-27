@@ -667,7 +667,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.67'
+    client_version = '1.4.68'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -9061,6 +9061,20 @@ class ApiClient(ReadOnlyClient):
             user_group_id (str): The ID of the App User Group.
             external_application_id (str): The ID of the External Application."""
         return self._call_api('removeAppUserGroupFromExternalApplication', 'POST', query_params={}, body={'userGroupId': user_group_id, 'externalApplicationId': external_application_id})
+
+    def add_developers_to_external_application(self, external_application_id: str):
+        """Adds a permission for the platform App User Group to access an External Application.
+
+        Args:
+            external_application_id (str): The ID of the External Application."""
+        return self._call_api('addDevelopersToExternalApplication', 'POST', query_params={}, body={'externalApplicationId': external_application_id})
+
+    def remove_developers_from_external_application(self, external_application_id: str):
+        """Removes a permission for the platform App User Group to access an External Application.
+
+        Args:
+            external_application_id (str): The ID of the External Application."""
+        return self._call_api('removeDevelopersFromExternalApplication', 'POST', query_params={}, body={'externalApplicationId': external_application_id})
 
     def create_external_application(self, deployment_id: str, name: str = None, description: str = None, logo: str = None, theme: dict = None) -> ExternalApplication:
         """Creates a new External Application from an existing ChatLLM Deployment.

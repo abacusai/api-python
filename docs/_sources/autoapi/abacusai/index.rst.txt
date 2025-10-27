@@ -4288,6 +4288,8 @@ Package Contents
    :type pull_channel_posts: bool
    :param pull_transcripts: Whether to pull transcripts for calendar meetings
    :type pull_transcripts: bool
+   :param max_days_to_lookback: The maximum number of days to look back for data
+   :type max_days_to_lookback: int
 
 
    .. py:attribute:: pull_chat_messages
@@ -4305,6 +4307,12 @@ Package Contents
    .. py:attribute:: pull_transcripts
       :type:  bool
       :value: False
+
+
+
+   .. py:attribute:: max_days_to_lookback
+      :type:  int
+      :value: 365
 
 
 
@@ -21559,6 +21567,24 @@ Package Contents
 
 
 
+   .. py:method:: add_developers_to_external_application(external_application_id)
+
+      Adds a permission for the platform App User Group to access an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+
+
+   .. py:method:: remove_developers_from_external_application(external_application_id)
+
+      Removes a permission for the platform App User Group to access an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+
+
    .. py:method:: create_external_application(deployment_id, name = None, description = None, logo = None, theme = None)
 
       Creates a new External Application from an existing ChatLLM Deployment.
@@ -31045,6 +31071,24 @@ Package Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+
+   .. py:method:: add_developers_to()
+
+      Adds a permission for the platform App User Group to access an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+
+
+   .. py:method:: remove_developers_from()
+
+      Removes a permission for the platform App User Group to access an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
 
 
 
@@ -49750,6 +49794,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.67'
+   :value: '1.4.68'
 
 

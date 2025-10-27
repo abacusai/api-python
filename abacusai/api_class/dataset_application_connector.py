@@ -206,10 +206,12 @@ class TeamsScraperDatasetConfig(ApplicationConnectorDatasetConfig):
         pull_chat_messages (bool): Whether to pull teams chat messages
         pull_channel_posts (bool): Whether to pull posts for each channel
         pull_transcripts (bool): Whether to pull transcripts for calendar meetings
+        max_days_to_lookback (int): The maximum number of days to look back for data
     """
     pull_chat_messages: bool = dataclasses.field(default=False)
     pull_channel_posts: bool = dataclasses.field(default=False)
     pull_transcripts: bool = dataclasses.field(default=False)
+    max_days_to_lookback: int = dataclasses.field(default=365)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.TEAMSSCRAPER

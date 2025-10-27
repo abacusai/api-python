@@ -74,6 +74,24 @@ class ExternalApplication(AbstractApiClass):
                 'prediction_overrides': self.prediction_overrides, 'is_system_created': self.is_system_created, 'is_customizable': self.is_customizable, 'is_deprecated': self.is_deprecated, 'is_visible': self.is_visible, 'has_thinking_option': self.has_thinking_option, 'only_image_gen_enabled': self.only_image_gen_enabled, 'project_id': self.project_id, 'is_codellm_chatmode_supported': self.is_codellm_chatmode_supported}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
+    def add_developers_to(self):
+        """
+        Adds a permission for the platform App User Group to access an External Application.
+
+        Args:
+            external_application_id (str): The ID of the External Application.
+        """
+        return self.client.add_developers_to_external_application(self.external_application_id)
+
+    def remove_developers_from(self):
+        """
+        Removes a permission for the platform App User Group to access an External Application.
+
+        Args:
+            external_application_id (str): The ID of the External Application.
+        """
+        return self.client.remove_developers_from_external_application(self.external_application_id)
+
     def update(self, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False):
         """
         Updates an External Application.
