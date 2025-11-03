@@ -280,6 +280,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../prediction_operator/index.html">abacusai.prediction_operator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../prediction_operator_version/index.html">abacusai.prediction_operator_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../presentation_export_result/index.html">abacusai.presentation_export_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../private_web_app_deployment/index.html">abacusai.private_web_app_deployment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../problem_type/index.html">abacusai.problem_type</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../project/index.html">abacusai.project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../project_config/index.html">abacusai.project_config</a></li>
@@ -334,6 +335,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../video_search_result/index.html">abacusai.video_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../voice_gen_details/index.html">abacusai.voice_gen_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_app_conversation/index.html">abacusai.web_app_conversation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../web_app_deployment_permission_dict/index.html">abacusai.web_app_deployment_permission_dict</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_app_domain/index.html">abacusai.web_app_domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_page_response/index.html">abacusai.web_page_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_search_response/index.html">abacusai.web_search_response</a></li>
@@ -1628,6 +1630,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Specifies the JSON schema that the model should adhere to if <cite>response_format</cite> is set to “JSON”. This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields ‘type’, ‘required’ and ‘description’. For example - ‘{“sample_field”: {“type”: “integer”, “required”: true, “description”: “Sample Field”}}’</p></li>
 <li><p><strong>mask_pii</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Mask PII in the prompts and uploaded documents before sending it to the LLM. Only available for Enterprise users and will cause validation errors if set to True for ChatLLM Teams users.</p></li>
 <li><p><strong>builtin_tools</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.model.SystemConnectorTool" title="abacusai.api_class.model.SystemConnectorTool"><em>SystemConnectorTool</em></a><em>]</em>) – List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).</p></li>
+<li><p><strong>config_connectors</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of names of config connectors to use in the ChatLLM. This should not be used with document_retrievers.</p></li>
 <li><p><strong>mcp_servers</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.</p></li>
 <li><p><strong>agentic_loop_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.</p></li>
 </ul>
@@ -1826,6 +1829,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.builtin_tools">
 <span class="sig-name descname"><span class="pre">builtin_tools</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#abacusai.api_class.model.SystemConnectorTool" title="abacusai.api_class.model.SystemConnectorTool"><span class="pre">SystemConnectorTool</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.builtin_tools" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.config_connectors">
+<span class="sig-name descname"><span class="pre">config_connectors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.config_connectors" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

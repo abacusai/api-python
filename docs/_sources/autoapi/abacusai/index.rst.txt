@@ -237,6 +237,7 @@ Submodules
    /autoapi/abacusai/prediction_operator/index
    /autoapi/abacusai/prediction_operator_version/index
    /autoapi/abacusai/presentation_export_result/index
+   /autoapi/abacusai/private_web_app_deployment/index
    /autoapi/abacusai/problem_type/index
    /autoapi/abacusai/project/index
    /autoapi/abacusai/project_config/index
@@ -291,6 +292,7 @@ Submodules
    /autoapi/abacusai/video_search_result/index
    /autoapi/abacusai/voice_gen_details/index
    /autoapi/abacusai/web_app_conversation/index
+   /autoapi/abacusai/web_app_deployment_permission_dict/index
    /autoapi/abacusai/web_app_domain/index
    /autoapi/abacusai/web_page_response/index
    /autoapi/abacusai/web_search_response/index
@@ -771,6 +773,7 @@ Classes
    abacusai.PredictionOperator
    abacusai.PredictionOperatorVersion
    abacusai.PresentationExportResult
+   abacusai.PrivateWebAppDeployment
    abacusai.ProblemType
    abacusai.Project
    abacusai.ProjectConfig
@@ -823,6 +826,7 @@ Classes
    abacusai.VideoSearchResult
    abacusai.VoiceGenDetails
    abacusai.WebAppConversation
+   abacusai.WebAppDeploymentPermissionDict
    abacusai.WebAppDomain
    abacusai.WebPageResponse
    abacusai.WebSearchResponse
@@ -10072,6 +10076,8 @@ Package Contents
    :type mask_pii: bool
    :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
    :type builtin_tools: List[SystemConnectorTool]
+   :param config_connectors: List of names of config connectors to use in the ChatLLM. This should not be used with document_retrievers.
+   :type config_connectors: List[str]
    :param mcp_servers: List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
    :type mcp_servers: List[str]
    :param agentic_loop_mode: Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
@@ -10308,6 +10314,12 @@ Package Contents
 
    .. py:attribute:: builtin_tools
       :type:  List[SystemConnectorTool]
+      :value: None
+
+
+
+   .. py:attribute:: config_connectors
+      :type:  List[str]
       :value: None
 
 
@@ -35848,7 +35860,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35867,6 +35879,10 @@ Package Contents
    :type hostedAppVersion: id
    :param name: The name of the hosted app
    :type name: str
+   :param userId: The ID of the creation user
+   :type userId: id
+   :param email: The email of the creation user
+   :type email: str
    :param createdAt: Creation timestamp
    :type createdAt: str
    :param updatedAt: Last update timestamp
@@ -35930,6 +35946,16 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: user_id
+      :value: None
+
+
+
+   .. py:attribute:: email
       :value: None
 
 
@@ -44705,6 +44731,116 @@ Package Contents
 
 
 
+.. py:class:: PrivateWebAppDeployment(client, hostname=None, llmArtifactId=None, hostedAppVersion=None, applicationType=None, lifecycle=None, deploymentConversationId=None, conversationName=None, userId=None, email=None, conversationType=None, source=None, conversationCreatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Private web app deployment list.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param hostname: The hostname of the web app deployment.
+   :type hostname: str
+   :param llmArtifactId: The ID of the LLM artifact.
+   :type llmArtifactId: id
+   :param hostedAppVersion: The version of the hosted app.
+   :type hostedAppVersion: id
+   :param applicationType: The type of application.
+   :type applicationType: str
+   :param lifecycle: The lifecycle of the web app deployment.
+   :type lifecycle: str
+   :param deploymentConversationId: The ID of the deployment conversation.
+   :type deploymentConversationId: id
+   :param conversationName: The name of the conversation.
+   :type conversationName: str
+   :param userId: The ID of the user who created the deployment.
+   :type userId: id
+   :param email: The email of the user who created the deployment.
+   :type email: str
+   :param conversationType: The type of conversation.
+   :type conversationType: str
+   :param source: The source of the conversation.
+   :type source: str
+   :param conversationCreatedAt: The timestamp when the conversation was created.
+   :type conversationCreatedAt: str
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: hosted_app_version
+      :value: None
+
+
+
+   .. py:attribute:: application_type
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: conversation_name
+      :value: None
+
+
+
+   .. py:attribute:: user_id
+      :value: None
+
+
+
+   .. py:attribute:: email
+      :value: None
+
+
+
+   .. py:attribute:: conversation_type
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :value: None
+
+
+
+   .. py:attribute:: conversation_created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ProblemType(client, problemType=None, requiredFeatureGroupType=None, optionalFeatureGroupTypes=None, useCasesSupportCustomAlgorithm=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -49312,6 +49448,39 @@ Package Contents
 
 
 
+.. py:class:: WebAppDeploymentPermissionDict(client, deploymentPermissions=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Web app deployment permission dict.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentPermissions: Dictionary containing deployment ID as key and list of tuples containing (user_group_id, permission) as value.
+   :type deploymentPermissions: dict
+
+
+   .. py:attribute:: deployment_permissions
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -49794,6 +49963,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.68'
+   :value: '1.4.69'
 
 

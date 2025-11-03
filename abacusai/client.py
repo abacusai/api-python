@@ -667,7 +667,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.68'
+    client_version = '1.4.69'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -857,7 +857,7 @@ class BaseApiClient:
                 error_message, response.status_code, error_type, request_id)
         return result
 
-    def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, data: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
+    def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, data: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False, timeout=None):
         headers = {'APIKEY': self.api_key}
         deployment_id = os.getenv('ABACUS_EXEC_SERVICE_DEPLOYMENT_ID')
         if deployment_id:
@@ -908,7 +908,7 @@ class BaseApiClient:
             if is_sync:
                 sync_api_endpoint = f'{endpoint}/api/{name}'
                 response = self._request(url=sync_api_endpoint, method=method, query_params=query_params,
-                                         headers=headers, body=body, data=data, files=files, stream=streamable_response)
+                                         headers=headers, body=body, data=data, files=files, stream=streamable_response, timeout=timeout)
                 status_code = response.status_code
                 if streamable_response and status_code == 200:
                     return response.raw
@@ -7719,7 +7719,7 @@ class ApiClient(ReadOnlyClient):
         Args:
             message (str): The user's message/task for DeepAgent to complete
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created."""
-        return self._proxy_request('getDeepAgentResponse', 'POST', query_params={}, body={'message': message, 'deploymentConversationId': deployment_conversation_id}, is_sync=True)
+        return self._proxy_request('getDeepAgentResponse', 'POST', query_params={}, body={'message': message, 'deploymentConversationId': deployment_conversation_id}, is_sync=True, timeout=3600)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.

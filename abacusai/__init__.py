@@ -224,6 +224,7 @@ from .prediction_log_record import PredictionLogRecord
 from .prediction_operator import PredictionOperator
 from .prediction_operator_version import PredictionOperatorVersion
 from .presentation_export_result import PresentationExportResult
+from .private_web_app_deployment import PrivateWebAppDeployment
 from .problem_type import ProblemType
 from .project import Project
 from .project_config import ProjectConfig
@@ -276,6 +277,7 @@ from .video_gen_settings import VideoGenSettings
 from .video_search_result import VideoSearchResult
 from .voice_gen_details import VoiceGenDetails
 from .web_app_conversation import WebAppConversation
+from .web_app_deployment_permission_dict import WebAppDeploymentPermissionDict
 from .web_app_domain import WebAppDomain
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
@@ -285,4 +287,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.68"
+__version__ = "1.4.69"

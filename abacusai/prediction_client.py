@@ -431,7 +431,7 @@ class PredictionClient(BaseApiClient):
         Args:
             message (str): The user's message/task for DeepAgent to complete
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created."""
-        return self._proxy_request('getDeepAgentResponse', 'POST', query_params={}, body={'message': message, 'deploymentConversationId': deployment_conversation_id}, is_sync=True)
+        return self._proxy_request('getDeepAgentResponse', 'POST', query_params={}, body={'message': message, 'deploymentConversationId': deployment_conversation_id}, is_sync=True, timeout=3600)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.

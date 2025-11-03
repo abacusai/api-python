@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,10 @@ Module Contents
    :type hostedAppVersion: id
    :param name: The name of the hosted app
    :type name: str
+   :param userId: The ID of the creation user
+   :type userId: id
+   :param email: The email of the creation user
+   :type email: str
    :param createdAt: Creation timestamp
    :type createdAt: str
    :param updatedAt: Last update timestamp
@@ -97,6 +101,16 @@ Module Contents
 
 
    .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: user_id
+      :value: None
+
+
+
+   .. py:attribute:: email
       :value: None
 
 

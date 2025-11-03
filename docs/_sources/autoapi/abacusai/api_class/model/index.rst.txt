@@ -1527,6 +1527,8 @@ Module Contents
    :type mask_pii: bool
    :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
    :type builtin_tools: List[SystemConnectorTool]
+   :param config_connectors: List of names of config connectors to use in the ChatLLM. This should not be used with document_retrievers.
+   :type config_connectors: List[str]
    :param mcp_servers: List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
    :type mcp_servers: List[str]
    :param agentic_loop_mode: Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
@@ -1763,6 +1765,12 @@ Module Contents
 
    .. py:attribute:: builtin_tools
       :type:  List[SystemConnectorTool]
+      :value: None
+
+
+
+   .. py:attribute:: config_connectors
+      :type:  List[str]
       :value: None
 
 

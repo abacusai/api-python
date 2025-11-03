@@ -503,6 +503,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         json_response_schema (str): Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
         mask_pii (bool): Mask PII in the prompts and uploaded documents before sending it to the LLM. Only available for Enterprise users and will cause validation errors if set to True for ChatLLM Teams users.
         builtin_tools (List[SystemConnectorTool]): List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
+        config_connectors (List[str]): List of names of config connectors to use in the ChatLLM. This should not be used with document_retrievers.
         mcp_servers (List[str]): List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
         agentic_loop_mode (bool): Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
     """
@@ -545,6 +546,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     json_response_schema: str = dataclasses.field(default=None)
     mask_pii: bool = dataclasses.field(default=None)
     builtin_tools: List[SystemConnectorTool] = dataclasses.field(default=None)
+    config_connectors: List[str] = dataclasses.field(default=None)
     mcp_servers: List[str] = dataclasses.field(default=None)
     agentic_loop_mode: bool = dataclasses.field(default=None)
 
