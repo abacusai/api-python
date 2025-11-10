@@ -667,7 +667,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.69'
+    client_version = '1.4.70'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -691,14 +691,23 @@ class BaseApiClient:
         self.service_discovery_url = None
         # Connection and version check
         if self.api_key is not None:
-            try:
-                endpoint_info = self._call_api('getApiEndpoint', 'GET')
-                self.prediction_endpoint = endpoint_info['predictEndpoint']
-                self.proxy_endpoint = endpoint_info.get('proxyEndpoint')
-                if not self.server:
-                    self.server = endpoint_info['apiEndpoint']
-            except Exception:
-                logging.error('Invalid API Key')
+            max_retries = 5
+            retry_delay = 1
+            for attempt in range(max_retries):
+                try:
+                    endpoint_info = self._call_api('getApiEndpoint', 'GET')
+                    self.prediction_endpoint = endpoint_info['predictEndpoint']
+                    self.proxy_endpoint = endpoint_info.get('proxyEndpoint')
+                    if not self.server:
+                        self.server = endpoint_info['apiEndpoint']
+                    break
+                except Exception as e:
+                    logging.warning(f'Error while calling API: {e}')
+                    if attempt < max_retries - 1:
+                        time.sleep(retry_delay)
+                        retry_delay *= 2
+                    else:
+                        logging.error('Failed to get endpoints')
         skip_version_check = skip_version_check or self.client_version.startswith(
             'g')
         if not skip_version_check:

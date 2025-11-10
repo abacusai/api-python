@@ -7081,11 +7081,6 @@ Package Contents
 
 
 
-   .. py:attribute:: GEMINI_2_FLASH_THINKING
-      :value: 'GEMINI_2_FLASH_THINKING'
-
-
-
    .. py:attribute:: XAI_GROK
       :value: 'XAI_GROK'
 
@@ -7172,12 +7167,7 @@ Package Contents
 
 
    .. py:attribute:: QWEN3_235B_A22B
-      :value: 'QWEN3_235B_A22B_2507'
-
-
-
-   .. py:attribute:: QWEN3_235B_A22B_THINKING
-      :value: 'QWEN3_235B_A22B_THINKING_2507'
+      :value: 'QWEN3_235B_A22B'
 
 
 
@@ -35860,7 +35850,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35923,6 +35913,8 @@ Package Contents
    :type webAppProjectId: id
    :param parentConversationId: The ID of the parent conversation
    :type parentConversationId: id
+   :param projectMetadata: The metadata of the web app project
+   :type projectMetadata: dict
 
 
    .. py:attribute:: hosted_app_container_id
@@ -36056,6 +36048,11 @@ Package Contents
 
 
    .. py:attribute:: parent_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: project_metadata
       :value: None
 
 
@@ -36980,7 +36977,7 @@ Package Contents
 
 
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37011,6 +37008,8 @@ Package Contents
    :type hasDatabase: bool
    :param hasStorage: Whether the app associated with the artifact has a storage
    :type hasStorage: bool
+   :param projectMetadata: The metadata of the web app project
+   :type projectMetadata: dict
 
 
    .. py:attribute:: llm_artifact_id
@@ -37064,6 +37063,11 @@ Package Contents
 
 
    .. py:attribute:: has_storage
+      :value: None
+
+
+
+   .. py:attribute:: project_metadata
       :value: None
 
 
@@ -49963,6 +49967,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.69'
+   :value: '1.4.70'
 
 
