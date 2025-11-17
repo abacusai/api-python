@@ -142,6 +142,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever_version_logs/index.html">abacusai.document_retriever_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../domain_purchase_result/index.html">abacusai.domain_purchase_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../domain_search_result/index.html">abacusai.domain_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../drift_distribution/index.html">abacusai.drift_distribution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../drift_distributions/index.html">abacusai.drift_distributions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../eda/index.html">abacusai.eda</a></li>
@@ -297,6 +299,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../refresh_policy/index.html">abacusai.refresh_policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../refresh_schedule/index.html">abacusai.refresh_schedule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../regenerate_llm_external_application/index.html">abacusai.regenerate_llm_external_application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../regenerate_llm_option/index.html">abacusai.regenerate_llm_option</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../resolved_feature_group_template/index.html">abacusai.resolved_feature_group_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../return_class/index.html">abacusai.return_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../routing_action/index.html">abacusai.routing_action</a></li>
@@ -422,13 +425,16 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.OutlookDatasetConfig" title="abacusai.api_class.dataset_application_connector.OutlookDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OutlookDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Outlook Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.FreshserviceDatasetConfig" title="abacusai.api_class.dataset_application_connector.FreshserviceDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FreshserviceDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig" title="abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AzureStorageDatasetConfig</span></code></a></p></td>
+<td><p>Dataset config for Azure Storage Application Connector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.FreshserviceDatasetConfig" title="abacusai.api_class.dataset_application_connector.FreshserviceDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FreshserviceDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Freshservice Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.SftpDatasetConfig" title="abacusai.api_class.dataset_application_connector.SftpDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SftpDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.SftpDatasetConfig" title="abacusai.api_class.dataset_application_connector.SftpDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SftpDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for SFTP Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -732,6 +738,7 @@
 <li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
 <li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
 <li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+<li><p><strong>add_file_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies if the file metadata should be added to the dataset</p></li>
 </ul>
 </dd>
 </dl>
@@ -753,6 +760,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.merge_file_schemas">
 <span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.add_file_metadata">
+<span class="sig-name descname"><span class="pre">add_file_metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.add_file_metadata" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -871,6 +883,36 @@ Needs to recalculate them if highlights are unavailable in summary_info</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OutlookDatasetConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OutlookDatasetConfig.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset_application_connector.</span></span><span class="sig-name descname"><span class="pre">AzureStorageDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig" title="abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig</span></code></a></p>
+<p>Dataset config for Azure Storage Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The location of the files to fetch</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig.location">
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig.location" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig.merge_file_schemas">
+<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig.__post_init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

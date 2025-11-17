@@ -153,11 +153,13 @@ class SharepointDatasetConfig(ApplicationConnectorDatasetConfig):
         csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
         extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
         merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+        add_file_metadata (bool): Signifies if the file metadata should be added to the dataset
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
     extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
     merge_file_schemas: bool = dataclasses.field(default=False)
+    add_file_metadata: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.SHAREPOINT
@@ -228,6 +230,23 @@ class OutlookDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class AzureStorageDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for Azure Storage Application Connector
+
+    Args:
+        location (str): The location of the files to fetch
+        merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+    """
+
+    location: str = dataclasses.field(default=None)
+    merge_file_schemas: bool = dataclasses.field(default=False)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.AZURESTORAGE
+
+
+@dataclasses.dataclass
 class FreshserviceDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for Freshservice Application Connector
@@ -275,4 +294,5 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.BOX: BoxDatasetConfig,
         enums.ApplicationConnectorType.SFTPAPPLICATION: SftpDatasetConfig,
         enums.ApplicationConnectorType.OUTLOOK: OutlookDatasetConfig,
+        enums.ApplicationConnectorType.AZURESTORAGE: AzureStorageDatasetConfig,
     }

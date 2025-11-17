@@ -667,7 +667,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.70'
+    client_version = '1.4.71'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1051,12 +1051,15 @@ class ReadOnlyClient(BaseApiClient):
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
 
-    def list_api_keys(self) -> List[ApiKey]:
+    def list_api_keys(self, type: str = 'default') -> List[ApiKey]:
         """Lists all of the user's API keys
+
+        Args:
+            type (str): The type of API keys to list.
 
         Returns:
             list[ApiKey]: List of API Keys for the current user's organization."""
-        return self._call_api('listApiKeys', 'GET', query_params={}, parse_type=ApiKey)
+        return self._call_api('listApiKeys', 'GET', query_params={'type': type}, parse_type=ApiKey)
 
     def list_organization_users(self) -> List[User]:
         """Retrieves a list of all platform users in the organization, including pending users who have been invited.

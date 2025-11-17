@@ -17,6 +17,7 @@ class PythonFunctionArgument(ApiClass):
         value (Any): The value of the argument
         pipeline_variable (str): The name of the pipeline variable to use as the value
         description (str): The description of the argument
+        long_description (str): The detailed description of the argument
         item_type (str): Type of items when variable_type is LIST
     """
     variable_type: enums.PythonFunctionArgumentType = dataclasses.field(default=None)
@@ -25,6 +26,7 @@ class PythonFunctionArgument(ApiClass):
     value: Any = dataclasses.field(default=None)
     pipeline_variable: str = dataclasses.field(default=None)
     description: str = dataclasses.field(default=None)
+    long_description: str = dataclasses.field(default=None)
     item_type: str = dataclasses.field(default=None)
 
 
@@ -36,6 +38,10 @@ class OutputVariableMapping(ApiClass):
     Args:
         variable_type (PythonFunctionOutputArgumentType): The type of the python function output argument
         name (str): The name of the python function variable
+        description (str): The description of the output
+        long_description (str): The detailed description of the output
     """
     variable_type: enums.PythonFunctionOutputArgumentType = dataclasses.field(default=None)
     name: str = dataclasses.field(default=None)
+    description: str = dataclasses.field(default=None)
+    long_description: str = dataclasses.field(default=None)

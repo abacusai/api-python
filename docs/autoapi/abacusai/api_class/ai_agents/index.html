@@ -142,6 +142,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../document_retriever_version_logs/index.html">abacusai.document_retriever_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../domain_purchase_result/index.html">abacusai.domain_purchase_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../domain_search_result/index.html">abacusai.domain_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../drift_distribution/index.html">abacusai.drift_distribution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../drift_distributions/index.html">abacusai.drift_distributions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../eda/index.html">abacusai.eda</a></li>
@@ -297,6 +299,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../refresh_policy/index.html">abacusai.refresh_policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../refresh_schedule/index.html">abacusai.refresh_schedule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../regenerate_llm_external_application/index.html">abacusai.regenerate_llm_external_application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../regenerate_llm_option/index.html">abacusai.regenerate_llm_option</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../resolved_feature_group_template/index.html">abacusai.resolved_feature_group_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../return_class/index.html">abacusai.return_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../routing_action/index.html">abacusai.routing_action</a></li>
@@ -544,6 +547,7 @@ If the type is <cite>USER_INPUT</cite>, the value given by the source node will 
 Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable doesn’t need a pre-filled initial value.</p></li>
 <li><p><strong>is_required</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Indicates whether the input is required. Defaults to True.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The description of this input.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The detailed description of this input.</p></li>
 <li><p><strong>constant_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The constant value of this input if variable type is CONSTANT. Only applicable for template nodes.</p></li>
 </ul>
 </dd>
@@ -576,6 +580,11 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping.description">
 <span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping.long_description">
+<span class="sig-name descname"><span class="pre">long_description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping.long_description" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -708,6 +717,7 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the output.</p></li>
 <li><p><strong>variable_type</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.WorkflowNodeOutputType" title="abacusai.api_class.enums.WorkflowNodeOutputType"><em>WorkflowNodeOutputType</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The type of the output in the form of an enum or a string.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The description of this output.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The detailed description of this output.</p></li>
 </ul>
 </dd>
 </dl>
@@ -724,6 +734,11 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping.description">
 <span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping.long_description">
+<span class="sig-name descname"><span class="pre">long_description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping.long_description" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1277,6 +1292,7 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A unique name of the input.</p></li>
 <li><p><strong>is_required</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Indicates whether the input is required. Defaults to False.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The description of this input.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The detailed description of this input.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1293,6 +1309,11 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateInput.description">
 <span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateInput.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateInput.long_description">
+<span class="sig-name descname"><span class="pre">long_description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateInput.long_description" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1323,6 +1344,7 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the output.</p></li>
 <li><p><strong>variable_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.WorkflowNodeOutputType" title="abacusai.api_class.enums.WorkflowNodeOutputType"><em>WorkflowNodeOutputType</em></a>) – The type of the output.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The description of this output.</p></li>
+<li><p><strong>long_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The detailed description of this output.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1339,6 +1361,11 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput.description">
 <span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput.long_description">
+<span class="sig-name descname"><span class="pre">long_description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput.long_description" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

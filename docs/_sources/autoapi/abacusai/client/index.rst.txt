@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.70'
+      :value: '1.4.71'
 
 
 
@@ -702,9 +702,12 @@ Module Contents
    :type skip_version_check: bool
 
 
-   .. py:method:: list_api_keys()
+   .. py:method:: list_api_keys(type = 'default')
 
       Lists all of the user's API keys
+
+      :param type: The type of API keys to list.
+      :type type: str
 
       :returns: List of API Keys for the current user's organization.
       :rtype: list[ApiKey]

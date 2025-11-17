@@ -71,6 +71,7 @@ class WorkflowNodeInputMapping(ApiClass):
                                Set to `None` if the type is `USER_INPUT` and the variable doesn't need a pre-filled initial value.
         is_required (bool): Indicates whether the input is required. Defaults to True.
         description (str): The description of this input.
+        long_description (str): The detailed description of this input.
         constant_value (str): The constant value of this input if variable type is CONSTANT. Only applicable for template nodes.
     """
     name: str
@@ -79,6 +80,7 @@ class WorkflowNodeInputMapping(ApiClass):
     source_prop: str = dataclasses.field(default=None)
     is_required: bool = dataclasses.field(default=True)
     description: str = dataclasses.field(default=None)
+    long_description: str = dataclasses.field(default=None)
     constant_value: str = dataclasses.field(default=None)
 
     def __post_init__(self):
@@ -105,6 +107,7 @@ class WorkflowNodeInputMapping(ApiClass):
             'source_prop': self.source_prop or self.name,
             'is_required': self.is_required,
             'description': self.description,
+            'long_description': self.long_description,
             'constant_value': self.constant_value
         }
 
@@ -122,6 +125,7 @@ class WorkflowNodeInputMapping(ApiClass):
             source_prop=mapping.get('source_prop') or mapping['name'] if mapping.get('variable_source') else None,
             is_required=mapping.get('is_required', True),
             description=mapping.get('description'),
+            long_description=mapping.get('long_description'),
             constant_value=mapping.get('constant_value')
         )
 
@@ -204,7 +208,7 @@ class WorkflowNodeInputSchema(ApiClass, JSONSchema):
             json_schema = {
                 'type': 'object',
                 'required': [input_mapping.name for input_mapping in user_input_mappings if input_mapping.is_required],
-                'properties': {input_mapping.name: {'title': input_mapping.name, 'type': 'string'} for input_mapping in user_input_mappings}
+                'properties': {input_mapping.name: {'title': input_mapping.name, 'type': 'string', **({'description': input_mapping.description} if input_mapping.description else {})} for input_mapping in user_input_mappings}
             }
             return cls(json_schema=json_schema)
         else:
@@ -223,6 +227,8 @@ class WorkflowNodeInputSchema(ApiClass, JSONSchema):
             if not mapping.get('is_required'):
                 continue
             json_schema['properties'][mapping['name']] = {'title': mapping['name'], 'type': enums.PythonFunctionArgumentType.to_json_type(mapping['variable_type'])}
+            if mapping.get('description'):
+                json_schema['properties'][mapping['name']]['description'] = mapping['description']
             if mapping['variable_type'] == enums.PythonFunctionArgumentType.ATTACHMENT:
                 json_schema['properties'][mapping['name']]['format'] = 'data-url'
             if mapping['variable_type'] == enums.PythonFunctionArgumentType.LIST:
@@ -242,10 +248,12 @@ class WorkflowNodeOutputMapping(ApiClass):
         name (str): The name of the output.
         variable_type (Union[WorkflowNodeOutputType, str]): The type of the output in the form of an enum or a string.
         description (str): The description of this output.
+        long_description (str): The detailed description of this output.
     """
     name: str
     variable_type: Union[enums.WorkflowNodeOutputType, str] = dataclasses.field(default=enums.WorkflowNodeOutputType.ANY)
     description: str = dataclasses.field(default=None)
+    long_description: str = dataclasses.field(default=None)
 
     def __post_init__(self):
         if isinstance(self.variable_type, str):
@@ -255,7 +263,8 @@ class WorkflowNodeOutputMapping(ApiClass):
         return {
             'name': self.name,
             'variable_type': self.variable_type.value,
-            'description': self.description
+            'description': self.description,
+            'long_description': self.long_description
         }
 
     @classmethod
@@ -269,7 +278,8 @@ class WorkflowNodeOutputMapping(ApiClass):
         return cls(
             name=mapping['name'],
             variable_type=enums.WorkflowNodeOutputType(variable_type),
-            description=mapping.get('description')
+            description=mapping.get('description'),
+            long_description=mapping.get('long_description')
         )
 
 
@@ -476,7 +486,7 @@ class WorkflowGraphNode(ApiClass):
         if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
             instance_input_mappings = input_mappings
         elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, WorkflowNodeInputMapping) for key, value in input_mappings.items()):
-            instance_input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=mapping.variable_type, variable_source=mapping.variable_source, source_prop=mapping.source_prop, is_required=mapping.is_required, description=mapping.description) for arg, mapping in input_mappings]
+            instance_input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=mapping.variable_type, variable_source=mapping.variable_source, source_prop=mapping.source_prop, is_required=mapping.is_required, description=mapping.description, long_description=mapping.long_description) for arg, mapping in input_mappings]
         elif input_mappings is None:
             instance_input_mappings = []
         else:
@@ -882,16 +892,19 @@ class WorkflowNodeTemplateInput(ApiClass):
         name (str): A unique name of the input.
         is_required (bool): Indicates whether the input is required. Defaults to False.
         description (str): The description of this input.
+        long_description (str): The detailed description of this input.
     """
     name: str
     is_required: bool = dataclasses.field(default=False)
     description: str = dataclasses.field(default='')
+    long_description: str = dataclasses.field(default='')
 
     def to_dict(self):
         return {
             'name': self.name,
             'is_required': self.is_required,
-            'description': self.description
+            'description': self.description,
+            'long_description': self.long_description
         }
 
     @classmethod
@@ -899,7 +912,8 @@ class WorkflowNodeTemplateInput(ApiClass):
         return cls(
             name=mapping['name'],
             is_required=mapping.get('is_required', False),
-            description=mapping.get('description', '')
+            description=mapping.get('description', ''),
+            long_description=mapping.get('long_description', '')
         )
 
 
@@ -912,16 +926,19 @@ class WorkflowNodeTemplateOutput(ApiClass):
         name (str): The name of the output.
         variable_type (WorkflowNodeOutputType): The type of the output.
         description (str): The description of this output.
+        long_description (str): The detailed description of this output.
     """
     name: str
     variable_type: enums.WorkflowNodeOutputType = dataclasses.field(default=enums.WorkflowNodeOutputType.ANY)
     description: str = dataclasses.field(default='')
+    long_description: str = dataclasses.field(default='')
 
     def to_dict(self):
         return {
             'name': self.name,
             'variable_type': self.variable_type.value,
-            'description': self.description
+            'description': self.description,
+            'long_description': self.long_description
         }
 
     @classmethod
@@ -929,5 +946,6 @@ class WorkflowNodeTemplateOutput(ApiClass):
         return cls(
             name=mapping['name'],
             variable_type=enums.WorkflowNodeOutputType(mapping.get('variable_type', 'ANY')),
-            description=mapping.get('description', '')
+            description=mapping.get('description', ''),
+            long_description=mapping.get('long_description', '')
         )

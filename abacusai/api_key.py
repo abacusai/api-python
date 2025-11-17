@@ -11,7 +11,7 @@ class ApiKey(AbstractApiClass):
             apiKey (str): The unique API key scoped to a specific organization. Value will be partially obscured.
             apiKeySuffix (str): The last 4 characters of the API key.
             tag (str): A user-friendly tag for the API key.
-            type (str): The type of the API key, either 'default', 'code-llm', or 'computer-use'.
+            type (str): The type of the API key, either 'default', 'code-llm', 'terminal', or 'computer-use'.
             createdAt (str): The timestamp when the API key was created.
             expiresAt (str): The timestamp when the API key will expire.
             isExpired (bool): Whether the API key has expired.

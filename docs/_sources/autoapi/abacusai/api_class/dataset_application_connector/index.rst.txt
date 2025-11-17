@@ -21,6 +21,7 @@ Classes
    abacusai.api_class.dataset_application_connector.AbacusUsageMetricsDatasetConfig
    abacusai.api_class.dataset_application_connector.TeamsScraperDatasetConfig
    abacusai.api_class.dataset_application_connector.OutlookDatasetConfig
+   abacusai.api_class.dataset_application_connector.AzureStorageDatasetConfig
    abacusai.api_class.dataset_application_connector.FreshserviceDatasetConfig
    abacusai.api_class.dataset_application_connector.SftpDatasetConfig
    abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory
@@ -344,6 +345,8 @@ Module Contents
    :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
+   :param add_file_metadata: Signifies if the file metadata should be added to the dataset
+   :type add_file_metadata: bool
 
 
    .. py:attribute:: location
@@ -365,6 +368,12 @@ Module Contents
 
 
    .. py:attribute:: merge_file_schemas
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: add_file_metadata
       :type:  bool
       :value: False
 
@@ -480,6 +489,34 @@ Module Contents
 
 
    Dataset config for Outlook Application Connector
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: AzureStorageDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Azure Storage Application Connector
+
+   :param location: The location of the files to fetch
+   :type location: str
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+   :type merge_file_schemas: bool
+
+
+   .. py:attribute:: location
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: merge_file_schemas
+      :type:  bool
+      :value: False
+
 
 
    .. py:method:: __post_init__()

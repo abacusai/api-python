@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48,6 +48,8 @@ Module Contents
    :type hasStorage: bool
    :param projectMetadata: The metadata of the web app project
    :type projectMetadata: dict
+   :param hasDatabaseSnapshot: Whether the artifact database has a snapshot
+   :type hasDatabaseSnapshot: bool
 
 
    .. py:attribute:: llm_artifact_id
@@ -106,6 +108,11 @@ Module Contents
 
 
    .. py:attribute:: project_metadata
+      :value: None
+
+
+
+   .. py:attribute:: has_database_snapshot
       :value: None
 
 

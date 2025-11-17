@@ -85,6 +85,8 @@ from .document_retriever import DocumentRetriever
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
 from .document_retriever_version import DocumentRetrieverVersion
 from .document_retriever_version_logs import DocumentRetrieverVersionLogs
+from .domain_purchase_result import DomainPurchaseResult
+from .domain_search_result import DomainSearchResult
 from .drift_distribution import DriftDistribution
 from .drift_distributions import DriftDistributions
 from .eda import Eda
@@ -240,6 +242,7 @@ from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
 from .refresh_schedule import RefreshSchedule
 from .regenerate_llm_external_application import RegenerateLlmExternalApplication
+from .regenerate_llm_option import RegenerateLlmOption
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
 from .routing_action import RoutingAction
 from .schema import Schema
@@ -287,4 +290,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.70"
+__version__ = "1.4.71"
