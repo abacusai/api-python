@@ -7,7 +7,7 @@ class FeatureMapping(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            featureMapping (str): The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
+            featureMapping (str): The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/developer-platform/useCases] for more details.
             featureName (str): The unique name of the feature.
     """
 

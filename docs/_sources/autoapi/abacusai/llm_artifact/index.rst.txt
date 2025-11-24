@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,6 +50,8 @@ Module Contents
    :type projectMetadata: dict
    :param hasDatabaseSnapshot: Whether the artifact database has a snapshot
    :type hasDatabaseSnapshot: bool
+   :param supportsPreviewRestore: Whether the artifact supports preview restore
+   :type supportsPreviewRestore: bool
 
 
    .. py:attribute:: llm_artifact_id
@@ -113,6 +115,11 @@ Module Contents
 
 
    .. py:attribute:: has_database_snapshot
+      :value: None
+
+
+
+   .. py:attribute:: supports_preview_restore
       :value: None
 
 

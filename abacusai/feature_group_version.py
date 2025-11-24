@@ -122,7 +122,7 @@ class FeatureGroupVersion(AbstractApiClass):
         Args:
             database_connector_id (str): Unique string identifier for the Database Connector to export to.
             object_name (str): Name of the database object to write to.
-            write_mode (str): Enum string indicating whether to use INSERT or UPSERT.
+            write_mode (str): Enum string indicating whether to use INSERT or UPSERT or REPLACE.
             database_feature_mapping (dict): Key/value pair JSON object of "database connector column" -> "feature name" pairs.
             id_column (str): Required if write_mode is UPSERT. Indicates which database column should be used as the lookup key.
             additional_id_columns (list): For database connectors which support it, additional ID columns to use as a complex key for upserting.

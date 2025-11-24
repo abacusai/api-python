@@ -10,7 +10,7 @@ class Schema(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             name (str): The unique name of the feature.
-            featureMapping (str): The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
+            featureMapping (str): The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/developer-platform/useCases] for more details.
             detectedFeatureMapping (str): Detected feature mapping for this feature
             featureType (str): The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  ENTITY_LABEL_LIST,  PAGE_LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL,  PAGE_INFOS,  PAGES_DOCUMENT,  TOKENS_DOCUMENT,  MESSAGE_LIST.
             detectedFeatureType (str): The detected feature type for this feature

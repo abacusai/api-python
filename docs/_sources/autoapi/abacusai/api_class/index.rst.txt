@@ -56,6 +56,7 @@ Classes
    abacusai.api_class.TriggerConfig
    abacusai.api_class.WorkflowGraphNode
    abacusai.api_class.DecisionNode
+   abacusai.api_class.LLMAgentNode
    abacusai.api_class.WorkflowGraphEdge
    abacusai.api_class.WorkflowGraph
    abacusai.api_class.AgentConversationMessage
@@ -695,7 +696,7 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNode(name, function = None, input_mappings = None, output_mappings = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
+.. py:class:: WorkflowGraphNode(name, function = None, input_mappings = None, output_mappings = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None, description = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -714,6 +715,8 @@ Package Contents
    :type input_schema: WorkflowNodeInputSchema
    :param output_schema: The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.
    :type output_schema: List[str]
+   :param description: A description of the workflow node.
+   :type description: str
 
    Additional Attributes:
        function_name (str): The name of the function.
@@ -736,7 +739,12 @@ Package Contents
 
 
 
-   .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None, description = None)
       :classmethod:
 
 
@@ -818,7 +826,7 @@ Package Contents
    .. py:property:: outputs
 
 
-.. py:class:: DecisionNode(name, condition, input_mappings)
+.. py:class:: DecisionNode(name, condition, input_mappings, description = None)
 
    Bases: :py:obj:`WorkflowGraphNode`
 
@@ -835,6 +843,11 @@ Package Contents
 
 
    .. py:attribute:: source_code
+
+
+   .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: output_mappings
@@ -863,6 +876,67 @@ Package Contents
    .. py:attribute:: function_name
       :value: None
 
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(node)
+      :classmethod:
+
+
+
+.. py:class:: LLMAgentNode(name, chatbot_deployment_id = None, chatbot_parameters = None, input_schema = None, output_schema = None)
+
+   Bases: :py:obj:`WorkflowGraphNode`
+
+
+   Represents an LLM agent node in an Agent workflow graph. The LLM Agent Node can be initialized using either chatbot_deployment_id or creation_parameters.
+
+   :param name: A unique name for the LLM agent node.
+   :type name: str
+   :param chatbot_deployment_id: The deployment ID of the chatbot to use for this node. If not provided, a new chatbot will be created.
+   :type chatbot_deployment_id: str
+   :param chatbot_parameters: Parameters for configuring the chatbot, such as data_feature_group_ids and document_retrievers.
+   :type chatbot_parameters: dict
+   :param uid: A unique identifier for the LLM agent node. If not provided, a unique ID will be auto-generated.
+   :type uid: str
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: chatbot_deployment_id
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: chatbot_parameters
+      :type:  dict
+
+
+   .. py:attribute:: uid
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: node_type
+      :value: 'llm_agent_node'
+
+
+
+   .. py:attribute:: source_code
+      :value: None
+
+
+
+   .. py:method:: get_source_code()
+
+
+   .. py:method:: get_function_name()
 
 
    .. py:method:: to_dict()
@@ -919,15 +993,15 @@ Package Contents
    Represents an Agent workflow graph.
 
    :param nodes: A list of nodes in the workflow graph.
-   :type nodes: List[Union[WorkflowGraphNode, DecisionNode]]
+   :type nodes: List[Union[WorkflowGraphNode, DecisionNode, LLMAgentNode]]
    :param primary_start_node: The primary node to start the workflow from.
-   :type primary_start_node: Union[str, WorkflowGraphNode]
+   :type primary_start_node: Union[str, WorkflowGraphNode, LLMAgentNode]
    :param common_source_code: Common source code that can be used across all nodes.
    :type common_source_code: str
 
 
    .. py:attribute:: nodes
-      :type:  List[Union[WorkflowGraphNode, DecisionNode]]
+      :type:  List[Union[WorkflowGraphNode, DecisionNode, LLMAgentNode]]
       :value: []
 
 
@@ -939,7 +1013,7 @@ Package Contents
 
 
    .. py:attribute:: primary_start_node
-      :type:  Union[str, WorkflowGraphNode]
+      :type:  Union[str, WorkflowGraphNode, LLMAgentNode]
       :value: None
 
 
@@ -5950,6 +6024,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_2_5_PRO
       :value: 'GEMINI_2_5_PRO'
+
+
+
+   .. py:attribute:: GEMINI_3_PRO
+      :value: 'GEMINI_3_PRO'
 
 
 

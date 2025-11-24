@@ -1,5 +1,6 @@
 import ast
 import dataclasses
+import uuid
 from typing import Dict, List, Tuple, Union
 
 from . import enums
@@ -344,6 +345,7 @@ class WorkflowGraphNode(ApiClass):
         function (callable): The callable node function reference.
         input_schema (WorkflowNodeInputSchema): The react json schema for the user input variables. This should be empty for CHAT interface.
         output_schema (List[str]): The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.
+        description (str): A description of the workflow node.
 
     Additional Attributes:
         function_name (str): The name of the function.
@@ -351,10 +353,11 @@ class WorkflowGraphNode(ApiClass):
         trigger_config (TriggerConfig): The configuration for a trigger workflow node.
     """
 
-    def __init__(self, name: str, function: callable = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, template_metadata: dict = None, trigger_config: TriggerConfig = None):
+    def __init__(self, name: str, function: callable = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, template_metadata: dict = None, trigger_config: TriggerConfig = None, description: str = None):
         self.template_metadata = template_metadata
         self.trigger_config = trigger_config
         self.node_type = 'workflow_node'
+        self.description = description
         if self.template_metadata and not self.template_metadata.get('initialized'):
             self.name = name
             self.function_name = None
@@ -456,7 +459,7 @@ class WorkflowGraphNode(ApiClass):
                 raise ValueError('workflow_graph_node', 'Invalid output schema. Must be a WorkflowNodeOutputSchema or a list of output section names.')
 
     @classmethod
-    def _raw_init(cls, name: str, input_mappings: List[WorkflowNodeInputMapping] = None, output_mappings: List[WorkflowNodeOutputMapping] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, template_metadata: dict = None, trigger_config: TriggerConfig = None):
+    def _raw_init(cls, name: str, input_mappings: List[WorkflowNodeInputMapping] = None, output_mappings: List[WorkflowNodeOutputMapping] = None, function: callable = None, function_name: str = None, source_code: str = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, template_metadata: dict = None, trigger_config: TriggerConfig = None, description: str = None):
         workflow_node = cls.__new__(cls, name, input_mappings, output_mappings, input_schema, output_schema, template_metadata, trigger_config)
         workflow_node.name = name
         if function:
@@ -477,6 +480,7 @@ class WorkflowGraphNode(ApiClass):
         workflow_node.output_schema = output_schema
         workflow_node.template_metadata = template_metadata
         workflow_node.trigger_config = trigger_config
+        workflow_node.description = description
         return workflow_node
 
     @classmethod
@@ -588,6 +592,7 @@ class WorkflowGraphNode(ApiClass):
             'template_metadata': self.template_metadata,
             'trigger_config': self.trigger_config.to_dict() if self.trigger_config else None,
             'node_type': self.node_type,
+            'description': self.description,
         }
 
     def is_template_node(self):
@@ -616,7 +621,8 @@ class WorkflowGraphNode(ApiClass):
             input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
             output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
             template_metadata=node.get('template_metadata'),
-            trigger_config=TriggerConfig.from_dict(node.get('trigger_config')) if node.get('trigger_config') else None
+            trigger_config=TriggerConfig.from_dict(node.get('trigger_config')) if node.get('trigger_config') else None,
+            description=node.get('description')
         )
         return instance
 
@@ -662,10 +668,11 @@ class DecisionNode(WorkflowGraphNode):
     Represents a decision node in an Agent workflow graph. It is connected between two workflow nodes and is used to determine if subsequent nodes should be executed.
     """
 
-    def __init__(self, name: str, condition: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]]):
+    def __init__(self, name: str, condition: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]], description: str = None):
         self.node_type = 'decision_node'
         self.name = name
         self.source_code = condition
+        self.description = description
         if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
             self.input_mappings = input_mappings
         elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, (WorkflowNodeInputMapping, WorkflowGraphNode)) for key, value in input_mappings.items()):
@@ -695,6 +702,7 @@ class DecisionNode(WorkflowGraphNode):
             'input_mappings': [mapping.to_dict() for mapping in self.input_mappings],
             'output_mappings': [mapping.to_dict() for mapping in self.output_mappings],
             'node_type': self.node_type,
+            'description': self.description,
         }
 
     @classmethod
@@ -702,8 +710,95 @@ class DecisionNode(WorkflowGraphNode):
         return cls(
             name=node['name'],
             condition=node['source_code'],
-            input_mappings=[WorkflowNodeInputMapping.from_dict(mapping) for mapping in node.get('input_mappings', [])]
+            input_mappings=[WorkflowNodeInputMapping.from_dict(mapping) for mapping in node.get('input_mappings', [])],
+            description=node.get('description')
         )
+
+
+@validate_constructor_arg_types('llm_agent_node')
+@dataclasses.dataclass
+class LLMAgentNode(WorkflowGraphNode):
+    """
+    Represents an LLM agent node in an Agent workflow graph. The LLM Agent Node can be initialized using either chatbot_deployment_id or creation_parameters.
+
+    Args:
+        name (str): A unique name for the LLM agent node.
+        chatbot_deployment_id (str): The deployment ID of the chatbot to use for this node. If not provided, a new chatbot will be created.
+        chatbot_parameters (dict): Parameters for configuring the chatbot, such as data_feature_group_ids and document_retrievers.
+        uid (str): A unique identifier for the LLM agent node. If not provided, a unique ID will be auto-generated.
+    """
+    name: str
+    chatbot_deployment_id: str = dataclasses.field(default=None)
+    chatbot_parameters: dict = dataclasses.field(default_factory=dict)
+    uid: str = dataclasses.field(default=None)
+
+    def __init__(self, name: str, chatbot_deployment_id: str = None, chatbot_parameters: dict = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None):
+        # Set LLM-specific properties - uid is auto-generated internally
+        self.uid = str(uuid.uuid4())[:6]
+        self.chatbot_deployment_id = chatbot_deployment_id
+        self.chatbot_parameters = chatbot_parameters or {}
+
+        # Prepare input and output mappings
+        input_mappings = [WorkflowNodeInputMapping(name='user_input', variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=True)]
+        output_mappings = [WorkflowNodeOutputMapping(name='chat_output', variable_type=enums.WorkflowNodeOutputType.DICT, description='The output of the chatbot')]
+
+        # Determine function_name and create minimal source_code for parent validation
+        function_name = None
+        if chatbot_deployment_id:
+            function_name = self.get_function_name()
+        minimal_source_code = f"def {function_name or 'llm_agent_node'}(user_input):\n    pass"
+
+        # Initialize parent class with minimal source code to satisfy validation
+        super().__init__(name=name, function_name=function_name or 'llm_agent_node', source_code=minimal_source_code, input_mappings=input_mappings, output_mappings=output_mappings, input_schema=input_schema or WorkflowNodeInputSchema.from_input_mappings(input_mappings), output_schema=output_schema or WorkflowNodeOutputSchema.from_fields_list(['chat_output']))
+        self.node_type = 'llm_agent_node'
+        self.source_code = None
+
+    def get_source_code(self):
+        return None
+
+    def get_function_name(self):
+        return f'llm_agent_node_{self.uid}'
+
+    def to_dict(self):
+        # Reuse parent's to_dict and add LLM-specific fields
+        result = super().to_dict()
+        result.update({
+            'chatbot_deployment_id': self.chatbot_deployment_id,
+            'chatbot_parameters': self.chatbot_parameters,
+            'uid': self.uid,
+        })
+        return result
+
+    @classmethod
+    def from_dict(cls, node: dict):
+        instance = cls(
+            name=node['name'],
+            chatbot_deployment_id=node['chatbot_deployment_id'],
+            chatbot_parameters=node['chatbot_parameters'],
+            input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
+            output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
+        )
+        # Preserve uid from dict if it exists (for round-trip serialization of existing workflows)
+        if 'uid' in node and node.get('uid'):
+            instance.uid = node['uid']
+        # Preserve input_mappings and output_mappings from the dict if they exist
+        if 'input_mappings' in node:
+            instance.input_mappings = [WorkflowNodeInputMapping.from_dict(mapping) for mapping in node['input_mappings']]
+        if 'output_mappings' in node:
+            instance.output_mappings = [WorkflowNodeOutputMapping.from_dict(mapping) for mapping in node['output_mappings']]
+        # Preserve function_name and source_code from the dict if they exist
+        if 'function_name' in node:
+            instance.function_name = node['function_name']
+        if 'source_code' in node:
+            instance.source_code = node['source_code']
+        # Preserve template_metadata and trigger_config from the dict if they exist
+        if 'template_metadata' in node:
+            instance.template_metadata = node['template_metadata']
+        if 'trigger_config' in node:
+            instance.trigger_config = TriggerConfig.from_dict(node['trigger_config']) if node['trigger_config'] else None
+        # Note: execution_context is intentionally not preserved on SDK objects - it's an internal runtime detail
+        # that should only exist in dict representations
+        return instance
 
 
 @validate_constructor_arg_types('workflow_graph_edge')
@@ -745,19 +840,22 @@ class WorkflowGraph(ApiClass):
     Represents an Agent workflow graph.
 
     Args:
-        nodes (List[Union[WorkflowGraphNode, DecisionNode]]): A list of nodes in the workflow graph.
-        primary_start_node (Union[str, WorkflowGraphNode]): The primary node to start the workflow from.
+        nodes (List[Union[WorkflowGraphNode, DecisionNode, LLMAgentNode]]): A list of nodes in the workflow graph.
+        primary_start_node (Union[str, WorkflowGraphNode, LLMAgentNode]): The primary node to start the workflow from.
         common_source_code (str): Common source code that can be used across all nodes.
     """
-    nodes: List[Union[WorkflowGraphNode, DecisionNode]] = dataclasses.field(default_factory=list)
+    nodes: List[Union[WorkflowGraphNode, DecisionNode, LLMAgentNode]] = dataclasses.field(default_factory=list)
     edges: List[Union[WorkflowGraphEdge, Tuple[WorkflowGraphNode, WorkflowGraphNode, dict], Tuple[str, str, dict]]] = dataclasses.field(default_factory=list, metadata={'deprecated': True})
-    primary_start_node: Union[str, WorkflowGraphNode] = dataclasses.field(default=None)
+    primary_start_node: Union[str, WorkflowGraphNode, LLMAgentNode] = dataclasses.field(default=None)
     common_source_code: str = dataclasses.field(default=None)
     specification_type: str = dataclasses.field(default='data_flow')
 
     def __post_init__(self):
-        if self.specification_type == 'execution_flow' and any(isinstance(node, DecisionNode) for node in self.nodes):
-            raise ValueError('workflow_graph', 'Decision nodes are not supported in execution flow specification type.')
+        if self.specification_type == 'execution_flow':
+            if any(isinstance(node, DecisionNode) for node in self.nodes):
+                raise ValueError('workflow_graph', 'Decision nodes are not supported in execution flow specification type.')
+            if any(isinstance(node, LLMAgentNode) for node in self.nodes):
+                raise ValueError('workflow_graph', 'LLM Agent nodes are not supported in execution flow specification type.')
         if self.edges:
             if self.specification_type == 'execution_flow':
                 for index, edge in enumerate(self.edges):
@@ -784,7 +882,12 @@ class WorkflowGraph(ApiClass):
         if graph.get('__return_filter'):
             for node in graph.get('nodes', []):
                 node['__return_filter'] = True
-        nodes = [DecisionNode.from_dict(node) if node.get('node_type') == 'decision_node' else WorkflowGraphNode.from_dict(node) for node in graph.get('nodes', [])]
+        node_generator = {
+            'decision_node': DecisionNode.from_dict,
+            'workflow_node': WorkflowGraphNode.from_dict,
+            'llm_agent_node': LLMAgentNode.from_dict
+        }
+        nodes = [node_generator[node.get('node_type') or 'workflow_node'](node) for node in graph.get('nodes', [])]
         edges = [WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]
         primary_start_node = graph.get('primary_start_node')
         non_primary_nodes = set()

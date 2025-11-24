@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None)
+.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type value: str
    :param createdAt: The date and time when the secret was created, in ISO-8601 format.
    :type createdAt: str
+   :param metadata: Additional metadata for the secret (e.g., web_app_project_ids).
+   :type metadata: dict
 
 
    .. py:attribute:: secret_key
@@ -43,6 +45,11 @@ Module Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: metadata
       :value: None
 
 

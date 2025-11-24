@@ -355,6 +355,7 @@ Classes
    abacusai.TriggerConfig
    abacusai.WorkflowGraphNode
    abacusai.DecisionNode
+   abacusai.LLMAgentNode
    abacusai.WorkflowGraphEdge
    abacusai.WorkflowGraph
    abacusai.AgentConversationMessage
@@ -2470,7 +2471,7 @@ Package Contents
 
 
 
-.. py:class:: WorkflowGraphNode(name, function = None, input_mappings = None, output_mappings = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
+.. py:class:: WorkflowGraphNode(name, function = None, input_mappings = None, output_mappings = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None, description = None)
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -2489,6 +2490,8 @@ Package Contents
    :type input_schema: WorkflowNodeInputSchema
    :param output_schema: The list of outputs to be shown on UI. Each output corresponds to a field in the output mappings of the node.
    :type output_schema: List[str]
+   :param description: A description of the workflow node.
+   :type description: str
 
    Additional Attributes:
        function_name (str): The name of the function.
@@ -2511,7 +2514,12 @@ Package Contents
 
 
 
-   .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None)
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:method:: _raw_init(name, input_mappings = None, output_mappings = None, function = None, function_name = None, source_code = None, input_schema = None, output_schema = None, template_metadata = None, trigger_config = None, description = None)
       :classmethod:
 
 
@@ -2593,7 +2601,7 @@ Package Contents
    .. py:property:: outputs
 
 
-.. py:class:: DecisionNode(name, condition, input_mappings)
+.. py:class:: DecisionNode(name, condition, input_mappings, description = None)
 
    Bases: :py:obj:`WorkflowGraphNode`
 
@@ -2610,6 +2618,11 @@ Package Contents
 
 
    .. py:attribute:: source_code
+
+
+   .. py:attribute:: description
+      :value: None
+
 
 
    .. py:attribute:: output_mappings
@@ -2638,6 +2651,67 @@ Package Contents
    .. py:attribute:: function_name
       :value: None
 
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(node)
+      :classmethod:
+
+
+
+.. py:class:: LLMAgentNode(name, chatbot_deployment_id = None, chatbot_parameters = None, input_schema = None, output_schema = None)
+
+   Bases: :py:obj:`WorkflowGraphNode`
+
+
+   Represents an LLM agent node in an Agent workflow graph. The LLM Agent Node can be initialized using either chatbot_deployment_id or creation_parameters.
+
+   :param name: A unique name for the LLM agent node.
+   :type name: str
+   :param chatbot_deployment_id: The deployment ID of the chatbot to use for this node. If not provided, a new chatbot will be created.
+   :type chatbot_deployment_id: str
+   :param chatbot_parameters: Parameters for configuring the chatbot, such as data_feature_group_ids and document_retrievers.
+   :type chatbot_parameters: dict
+   :param uid: A unique identifier for the LLM agent node. If not provided, a unique ID will be auto-generated.
+   :type uid: str
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: chatbot_deployment_id
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: chatbot_parameters
+      :type:  dict
+
+
+   .. py:attribute:: uid
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: node_type
+      :value: 'llm_agent_node'
+
+
+
+   .. py:attribute:: source_code
+      :value: None
+
+
+
+   .. py:method:: get_source_code()
+
+
+   .. py:method:: get_function_name()
 
 
    .. py:method:: to_dict()
@@ -2694,15 +2768,15 @@ Package Contents
    Represents an Agent workflow graph.
 
    :param nodes: A list of nodes in the workflow graph.
-   :type nodes: List[Union[WorkflowGraphNode, DecisionNode]]
+   :type nodes: List[Union[WorkflowGraphNode, DecisionNode, LLMAgentNode]]
    :param primary_start_node: The primary node to start the workflow from.
-   :type primary_start_node: Union[str, WorkflowGraphNode]
+   :type primary_start_node: Union[str, WorkflowGraphNode, LLMAgentNode]
    :param common_source_code: Common source code that can be used across all nodes.
    :type common_source_code: str
 
 
    .. py:attribute:: nodes
-      :type:  List[Union[WorkflowGraphNode, DecisionNode]]
+      :type:  List[Union[WorkflowGraphNode, DecisionNode, LLMAgentNode]]
       :value: []
 
 
@@ -2714,7 +2788,7 @@ Package Contents
 
 
    .. py:attribute:: primary_start_node
-      :type:  Union[str, WorkflowGraphNode]
+      :type:  Union[str, WorkflowGraphNode, LLMAgentNode]
       :value: None
 
 
@@ -7158,6 +7232,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_2_5_PRO
       :value: 'GEMINI_2_5_PRO'
+
+
+
+   .. py:attribute:: GEMINI_3_PRO
+      :value: 'GEMINI_3_PRO'
 
 
 
@@ -16163,7 +16242,7 @@ Package Contents
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -17334,7 +17413,7 @@ Package Contents
       :type database_connector_id: str
       :param object_name: Name of the database object to write to.
       :type object_name: str
-      :param write_mode: Enum string indicating whether to use INSERT or UPSERT.
+      :param write_mode: Enum string indicating whether to use INSERT or UPSERT or REPLACE.
       :type write_mode: str
       :param database_feature_mapping: Key/value pair JSON object of "database connector column" -> "feature name" pairs.
       :type database_feature_mapping: dict
@@ -34600,7 +34679,7 @@ Package Contents
       :type database_connector_id: str
       :param object_name: Name of the database object to write to.
       :type object_name: str
-      :param write_mode: Enum string indicating whether to use INSERT or UPSERT.
+      :param write_mode: Enum string indicating whether to use INSERT or UPSERT or REPLACE.
       :type write_mode: str
       :param database_feature_mapping: Key/value pair JSON object of "database connector column" -> "feature name" pairs.
       :type database_feature_mapping: dict
@@ -34866,7 +34945,7 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param featureMapping: The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
+   :param featureMapping: The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/developer-platform/useCases] for more details.
    :type featureMapping: str
    :param featureName: The unique name of the feature.
    :type featureName: str
@@ -37176,7 +37255,7 @@ Package Contents
 
 
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37211,6 +37290,8 @@ Package Contents
    :type projectMetadata: dict
    :param hasDatabaseSnapshot: Whether the artifact database has a snapshot
    :type hasDatabaseSnapshot: bool
+   :param supportsPreviewRestore: Whether the artifact supports preview restore
+   :type supportsPreviewRestore: bool
 
 
    .. py:attribute:: llm_artifact_id
@@ -37274,6 +37355,11 @@ Package Contents
 
 
    .. py:attribute:: has_database_snapshot
+      :value: None
+
+
+
+   .. py:attribute:: supports_preview_restore
       :value: None
 
 
@@ -41663,7 +41749,7 @@ Package Contents
 
 
 
-.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None)
+.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41678,6 +41764,8 @@ Package Contents
    :type value: str
    :param createdAt: The date and time when the secret was created, in ISO-8601 format.
    :type createdAt: str
+   :param metadata: Additional metadata for the secret (e.g., web_app_project_ids).
+   :type metadata: dict
 
 
    .. py:attribute:: secret_key
@@ -41691,6 +41779,11 @@ Package Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: metadata
       :value: None
 
 
@@ -47611,7 +47704,7 @@ Package Contents
    :type client: ApiClient
    :param name: The unique name of the feature.
    :type name: str
-   :param featureMapping: The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
+   :param featureMapping: The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/developer-platform/useCases] for more details.
    :type featureMapping: str
    :param detectedFeatureMapping: Detected feature mapping for this feature
    :type detectedFeatureMapping: str
@@ -50220,6 +50313,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.71'
+   :value: '1.4.72'
 
 
