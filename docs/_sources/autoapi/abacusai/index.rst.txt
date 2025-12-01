@@ -28883,7 +28883,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28942,6 +28942,8 @@ Package Contents
    :type highlights: dict
    :param llmDisplayName: The display name of the LLM model used to generate the response. Only used for system-created bots.
    :type llmDisplayName: str
+   :param deepagentMode: The Deep Agent run mode (e.g. normal or high) associated with the message.
+   :type deepagentMode: str
    :param llmBotIcon: The icon location of the LLM model used to generate the response. Only used for system-created bots.
    :type llmBotIcon: str
    :param formResponse: Contains form data response from the user when a Form Segment is given out by the bot.
@@ -29091,6 +29093,11 @@ Package Contents
 
 
    .. py:attribute:: llm_display_name
+      :value: None
+
+
+
+   .. py:attribute:: deepagent_mode
       :value: None
 
 
@@ -31181,7 +31188,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31226,6 +31233,8 @@ Package Contents
    :type isVisible: bool
    :param hasThinkingOption: Whether to show the thinking option in the toolbar.
    :type hasThinkingOption: bool
+   :param hasFastMode: Whether the external application has fast mode.
+   :type hasFastMode: bool
    :param onlyImageGenEnabled: Whether to LLM only allows image generation.
    :type onlyImageGenEnabled: bool
    :param projectId: The project id associated with the external application.
@@ -31320,6 +31329,11 @@ Package Contents
 
 
    .. py:attribute:: has_thinking_option
+      :value: None
+
+
+
+   .. py:attribute:: has_fast_mode
       :value: None
 
 
@@ -50313,6 +50327,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.72'
+   :value: '1.4.73'
 
 

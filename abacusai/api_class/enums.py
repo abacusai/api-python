@@ -16,7 +16,7 @@ class ApiEnum(Enum):
         return self.value in self.__deprecated_values__
 
     def __eq__(self, other):
-        if isinstance(other, str):
+        if isinstance(other, str) and isinstance(self.value, str):
             return self.value.upper() == other.upper()
         elif isinstance(other, int):
             return self.value == other
