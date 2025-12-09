@@ -74,6 +74,7 @@ Submodules
    /autoapi/abacusai/custom_metric/index
    /autoapi/abacusai/custom_metric_version/index
    /autoapi/abacusai/custom_train_function_info/index
+   /autoapi/abacusai/daemon_task_conversation/index
    /autoapi/abacusai/data_consistency_duplication/index
    /autoapi/abacusai/data_metrics/index
    /autoapi/abacusai/data_prep_logs/index
@@ -616,6 +617,7 @@ Classes
    abacusai.CustomMetric
    abacusai.CustomMetricVersion
    abacusai.CustomTrainFunctionInfo
+   abacusai.DaemonTaskConversation
    abacusai.DataConsistencyDuplication
    abacusai.DataMetrics
    abacusai.DataPrepLogs
@@ -8095,6 +8097,11 @@ Package Contents
 
 
 
+   .. py:attribute:: BROWSER_EXTENSION
+      :value: 'BROWSER_EXTENSION'
+
+
+
 .. py:class:: AgentClientType
 
    Bases: :py:obj:`ApiEnum`
@@ -12281,7 +12288,7 @@ Package Contents
       :type:  int
 
 
-.. py:class:: TextResponseSection(text, section_key = None)
+.. py:class:: TextResponseSection(segment = None, section_key = None, text = None)
 
    Bases: :py:obj:`ResponseSection`
 
@@ -14513,7 +14520,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -14552,6 +14559,8 @@ Package Contents
    :type computePointsUsed: int
    :param displayMarkdown: The display markdown for the chatllm task.
    :type displayMarkdown: str
+   :param requiresNewConversation: Whether a new conversation is required for the chatllm task.
+   :type requiresNewConversation: bool
 
 
    .. py:attribute:: chatllm_task_id
@@ -14625,6 +14634,11 @@ Package Contents
 
 
    .. py:attribute:: display_markdown
+      :value: None
+
+
+
+   .. py:attribute:: requires_new_conversation
       :value: None
 
 
@@ -26377,6 +26391,67 @@ Package Contents
 
 
 
+.. py:class:: DaemonTaskConversation(client, deploymentConversationId=None, createdAt=None, updatedAt=None, deploymentConversationName=None, externalApplicationId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Daemon Task Conversation
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The ID of the deployment conversation
+   :type deploymentConversationId: id
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+   :param deploymentConversationName: The name of the conversation
+   :type deploymentConversationName: str
+   :param externalApplicationId: The external application ID
+   :type externalApplicationId: str
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_name
+      :value: None
+
+
+
+   .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: DataConsistencyDuplication(client, totalCount=None, numDuplicates=None, sample={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -28883,7 +28958,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28956,6 +29031,8 @@ Package Contents
    :type computerFiles: list
    :param toolUseRequest: The tool use request for the message.
    :type toolUseRequest: dict
+   :param toolUseResult: The tool use response for the message.
+   :type toolUseResult: dict
    :param verificationSummary: The summary of the verification process for the message.
    :type verificationSummary: str
    :param attachedUserFileNames: The list of files attached by the user on the message.
@@ -29128,6 +29205,11 @@ Package Contents
 
 
    .. py:attribute:: tool_use_request
+      :value: None
+
+
+
+   .. py:attribute:: tool_use_result
       :value: None
 
 
@@ -29973,7 +30055,7 @@ Package Contents
 
 
 
-.. py:class:: DomainSearchResult(client, domain=None, registerCredits=None, renewalCredits=None)
+.. py:class:: DomainSearchResult(client, domain=None, registerCredits=None, registerYears=None, renewalCredits=None, renewalYears=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29986,8 +30068,12 @@ Package Contents
    :type domain: str
    :param registerCredits: number of credits required for registration
    :type registerCredits: int
+   :param registerYears: number of years the domain will get registered for
+   :type registerYears: int
    :param renewalCredits: number of credits required for renewal
    :type renewalCredits: int
+   :param renewalYears: number of years the domain will be renewed for
+   :type renewalYears: int
 
 
    .. py:attribute:: domain
@@ -30000,7 +30086,17 @@ Package Contents
 
 
 
+   .. py:attribute:: register_years
+      :value: None
+
+
+
    .. py:attribute:: renewal_credits
+      :value: None
+
+
+
+   .. py:attribute:: renewal_years
       :value: None
 
 
@@ -36669,7 +36765,7 @@ Package Contents
 
 
 
-.. py:class:: HostnameInfo(client, isRootDomain=None, registrar=None, suggestedFlow=None, isCnameSupported=None, isAutomaticFlowAvailable=None)
+.. py:class:: HostnameInfo(client, isRootDomain=None, hasRootNameserversConfigured=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36680,14 +36776,8 @@ Package Contents
    :type client: ApiClient
    :param isRootDomain: Whether the hostname is a root domain
    :type isRootDomain: bool
-   :param registrar: The registrar of the domain
-   :type registrar: str
-   :param suggestedFlow: Suggested flow for the domain
-   :type suggestedFlow: str
-   :param isCnameSupported: Whether CNAME is supported for the domain
-   :type isCnameSupported: bool
-   :param isAutomaticFlowAvailable: Whether entri is supported for the domain
-   :type isAutomaticFlowAvailable: bool
+   :param hasRootNameserversConfigured: Whether the root domain has Abacus nameservers configured.
+   :type hasRootNameserversConfigured: bool
 
 
    .. py:attribute:: is_root_domain
@@ -36695,22 +36785,7 @@ Package Contents
 
 
 
-   .. py:attribute:: registrar
-      :value: None
-
-
-
-   .. py:attribute:: suggested_flow
-      :value: None
-
-
-
-   .. py:attribute:: is_cname_supported
-      :value: None
-
-
-
-   .. py:attribute:: is_automatic_flow_available
+   .. py:attribute:: has_root_nameservers_configured
       :value: None
 
 
@@ -50327,6 +50402,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.73'
+   :value: '1.4.74'
 
 

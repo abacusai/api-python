@@ -60,6 +60,7 @@ from .custom_loss_function import CustomLossFunction
 from .custom_metric import CustomMetric
 from .custom_metric_version import CustomMetricVersion
 from .custom_train_function_info import CustomTrainFunctionInfo
+from .daemon_task_conversation import DaemonTaskConversation
 from .data_consistency_duplication import DataConsistencyDuplication
 from .data_metrics import DataMetrics
 from .data_prep_logs import DataPrepLogs
@@ -290,4 +291,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.73"
+__version__ = "1.4.74"

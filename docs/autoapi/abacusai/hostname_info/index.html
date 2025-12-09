@@ -110,6 +110,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../custom_metric/index.html">abacusai.custom_metric</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_metric_version/index.html">abacusai.custom_metric_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html">abacusai.custom_train_function_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../daemon_task_conversation/index.html">abacusai.daemon_task_conversation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_consistency_duplication/index.html">abacusai.data_consistency_duplication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_metrics/index.html">abacusai.data_metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html">abacusai.data_prep_logs</a></li>
@@ -395,7 +396,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.hostname_info.HostnameInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.hostname_info.</span></span><span class="sig-name descname"><span class="pre">HostnameInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isRootDomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registrar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suggestedFlow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isCnameSupported</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isAutomaticFlowAvailable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.hostname_info.HostnameInfo" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.hostname_info.</span></span><span class="sig-name descname"><span class="pre">HostnameInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isRootDomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hasRootNameserversConfigured</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.hostname_info.HostnameInfo" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Hostname Info</p>
 <dl class="field-list simple">
@@ -403,10 +404,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
 <li><p><strong>isRootDomain</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the hostname is a root domain</p></li>
-<li><p><strong>registrar</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The registrar of the domain</p></li>
-<li><p><strong>suggestedFlow</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Suggested flow for the domain</p></li>
-<li><p><strong>isCnameSupported</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether CNAME is supported for the domain</p></li>
-<li><p><strong>isAutomaticFlowAvailable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether entri is supported for the domain</p></li>
+<li><p><strong>hasRootNameserversConfigured</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the root domain has Abacus nameservers configured.</p></li>
 </ul>
 </dd>
 </dl>
@@ -416,23 +414,8 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.hostname_info.HostnameInfo.registrar">
-<span class="sig-name descname"><span class="pre">registrar</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.hostname_info.HostnameInfo.registrar" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.hostname_info.HostnameInfo.suggested_flow">
-<span class="sig-name descname"><span class="pre">suggested_flow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.hostname_info.HostnameInfo.suggested_flow" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.hostname_info.HostnameInfo.is_cname_supported">
-<span class="sig-name descname"><span class="pre">is_cname_supported</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.hostname_info.HostnameInfo.is_cname_supported" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.hostname_info.HostnameInfo.is_automatic_flow_available">
-<span class="sig-name descname"><span class="pre">is_automatic_flow_available</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.hostname_info.HostnameInfo.is_automatic_flow_available" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.hostname_info.HostnameInfo.has_root_nameservers_configured">
+<span class="sig-name descname"><span class="pre">has_root_nameservers_configured</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.hostname_info.HostnameInfo.has_root_nameservers_configured" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

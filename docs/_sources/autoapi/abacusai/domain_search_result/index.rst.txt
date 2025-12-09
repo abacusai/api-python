@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DomainSearchResult(client, domain=None, registerCredits=None, renewalCredits=None)
+.. py:class:: DomainSearchResult(client, domain=None, registerCredits=None, registerYears=None, renewalCredits=None, renewalYears=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,8 +28,12 @@ Module Contents
    :type domain: str
    :param registerCredits: number of credits required for registration
    :type registerCredits: int
+   :param registerYears: number of years the domain will get registered for
+   :type registerYears: int
    :param renewalCredits: number of credits required for renewal
    :type renewalCredits: int
+   :param renewalYears: number of years the domain will be renewed for
+   :type renewalYears: int
 
 
    .. py:attribute:: domain
@@ -42,7 +46,17 @@ Module Contents
 
 
 
+   .. py:attribute:: register_years
+      :value: None
+
+
+
    .. py:attribute:: renewal_credits
+      :value: None
+
+
+
+   .. py:attribute:: renewal_years
       :value: None
 
 

@@ -827,6 +827,7 @@ class DeploymentConversationType(ApiEnum):
     TEST_AGENT = 'TEST_AGENT'
     SUPER_AGENT = 'SUPER_AGENT'
     CODE_LLM_NON_INTERACTIVE = 'CODE_LLM_NON_INTERACTIVE'
+    BROWSER_EXTENSION = 'BROWSER_EXTENSION'
 
 
 class AgentClientType(ApiEnum):

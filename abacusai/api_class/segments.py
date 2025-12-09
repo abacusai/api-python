@@ -1,5 +1,6 @@
 import dataclasses
 import uuid
+import warnings
 from typing import Any, List
 
 from . import enums
@@ -81,9 +82,21 @@ class TextResponseSection(ResponseSection):
 
     segment: str
 
-    def __init__(self, text: str, section_key: str = None):
+    def __init__(self, segment: str = None, section_key: str = None, text: str = None):  # text is added for backward compatibility
+        if segment is not None and text is not None:
+            raise ValueError("Cannot specify both 'segment' and 'text' parameters. The 'text' parameter is deprecated, please use 'segment' only.")
+        if segment is None and text is None:
+            raise TypeError("'Segment' parameter is required.")
+
+        if text is not None:
+            warnings.warn(
+                "The 'text' parameter is deprecated and will be removed in future. Please use 'segment' instead.",
+                DeprecationWarning,
+                stacklevel=2
+            )
+
         super().__init__(type=enums.ResponseSectionType.TEXT, id=section_key)
-        self.segment = text
+        self.segment = segment if segment is not None else text
 
 
 @dataclasses.dataclass

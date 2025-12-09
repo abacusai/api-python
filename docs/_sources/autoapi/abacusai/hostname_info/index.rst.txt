@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostnameInfo(client, isRootDomain=None, registrar=None, suggestedFlow=None, isCnameSupported=None, isAutomaticFlowAvailable=None)
+.. py:class:: HostnameInfo(client, isRootDomain=None, hasRootNameserversConfigured=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,14 +26,8 @@ Module Contents
    :type client: ApiClient
    :param isRootDomain: Whether the hostname is a root domain
    :type isRootDomain: bool
-   :param registrar: The registrar of the domain
-   :type registrar: str
-   :param suggestedFlow: Suggested flow for the domain
-   :type suggestedFlow: str
-   :param isCnameSupported: Whether CNAME is supported for the domain
-   :type isCnameSupported: bool
-   :param isAutomaticFlowAvailable: Whether entri is supported for the domain
-   :type isAutomaticFlowAvailable: bool
+   :param hasRootNameserversConfigured: Whether the root domain has Abacus nameservers configured.
+   :type hasRootNameserversConfigured: bool
 
 
    .. py:attribute:: is_root_domain
@@ -41,22 +35,7 @@ Module Contents
 
 
 
-   .. py:attribute:: registrar
-      :value: None
-
-
-
-   .. py:attribute:: suggested_flow
-      :value: None
-
-
-
-   .. py:attribute:: is_cname_supported
-      :value: None
-
-
-
-   .. py:attribute:: is_automatic_flow_available
+   .. py:attribute:: has_root_nameservers_configured
       :value: None
 
 

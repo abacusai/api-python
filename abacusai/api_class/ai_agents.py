@@ -743,13 +743,12 @@ class LLMAgentNode(WorkflowGraphNode):
         output_mappings = [WorkflowNodeOutputMapping(name='chat_output', variable_type=enums.WorkflowNodeOutputType.DICT, description='The output of the chatbot')]
 
         # Determine function_name and create minimal source_code for parent validation
-        function_name = None
-        if chatbot_deployment_id:
-            function_name = self.get_function_name()
-        minimal_source_code = f"def {function_name or 'llm_agent_node'}(user_input):\n    pass"
+        # Always use get_function_name() which includes uid to ensure uniqueness
+        function_name = self.get_function_name()
+        minimal_source_code = f'def {function_name}(user_input):\n    pass'
 
         # Initialize parent class with minimal source code to satisfy validation
-        super().__init__(name=name, function_name=function_name or 'llm_agent_node', source_code=minimal_source_code, input_mappings=input_mappings, output_mappings=output_mappings, input_schema=input_schema or WorkflowNodeInputSchema.from_input_mappings(input_mappings), output_schema=output_schema or WorkflowNodeOutputSchema.from_fields_list(['chat_output']))
+        super().__init__(name=name, function_name=function_name, source_code=minimal_source_code, input_mappings=input_mappings, output_mappings=output_mappings, input_schema=input_schema or WorkflowNodeInputSchema.from_input_mappings(input_mappings), output_schema=output_schema or WorkflowNodeOutputSchema.from_fields_list(['chat_output']))
         self.node_type = 'llm_agent_node'
         self.source_code = None
 
