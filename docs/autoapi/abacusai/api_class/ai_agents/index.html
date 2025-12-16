@@ -430,22 +430,25 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.LLMAgentNode" title="abacusai.api_class.ai_agents.LLMAgentNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LLMAgentNode</span></code></a></p></td>
 <td><p>Represents an LLM agent node in an Agent workflow graph. The LLM Agent Node can be initialized using either chatbot_deployment_id or creation_parameters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="abacusai.api_class.ai_agents.WorkflowGraphEdge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphEdge</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.InputNode" title="abacusai.api_class.ai_agents.InputNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InputNode</span></code></a></p></td>
+<td><p>Represents an input node in an agent workflow graph.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="abacusai.api_class.ai_agents.WorkflowGraphEdge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphEdge</span></code></a></p></td>
 <td><p>Represents an edge in an Agent workflow graph.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraph" title="abacusai.api_class.ai_agents.WorkflowGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraph</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraph" title="abacusai.api_class.ai_agents.WorkflowGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraph</span></code></a></p></td>
 <td><p>Represents an Agent workflow graph.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.AgentConversationMessage" title="abacusai.api_class.ai_agents.AgentConversationMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentConversationMessage</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.AgentConversationMessage" title="abacusai.api_class.ai_agents.AgentConversationMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentConversationMessage</span></code></a></p></td>
 <td><p>Message format for agent conversation</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateConfig" title="abacusai.api_class.ai_agents.WorkflowNodeTemplateConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeTemplateConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateConfig" title="abacusai.api_class.ai_agents.WorkflowNodeTemplateConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeTemplateConfig</span></code></a></p></td>
 <td><p>Represents a WorkflowNode template config.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateInput" title="abacusai.api_class.ai_agents.WorkflowNodeTemplateInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeTemplateInput</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateInput" title="abacusai.api_class.ai_agents.WorkflowNodeTemplateInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeTemplateInput</span></code></a></p></td>
 <td><p>Represents an input to the workflow node generated using template.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput" title="abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeTemplateOutput</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput" title="abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowNodeTemplateOutput</span></code></a></p></td>
 <td><p>Represents an output returned by the workflow node generated using template.</p></td>
 </tr>
 </tbody>
@@ -859,6 +862,19 @@ source_code (str): The source code of the function.
 trigger_config (TriggerConfig): The configuration for a trigger workflow node.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.is_special_node_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_special_node_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.is_special_node_type" title="Link to this definition"></a></dt>
+<dd><p>Returns True if this node type skips source code validation.</p>
+<p>Special node types (like InputNode and LLMAgentNode) are executed
+directly without source code validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.template_metadata">
 <span class="sig-name descname"><span class="pre">template_metadata</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.template_metadata" title="Link to this definition"></a></dt>
@@ -1138,6 +1154,17 @@ Note: DO NOT specify the output mapping for the tool; it will be inferred automa
 <span class="sig-name descname"><span class="pre">uid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.LLMAgentNode.uid" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.LLMAgentNode.is_special_node_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_special_node_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.LLMAgentNode.is_special_node_type" title="Link to this definition"></a></dt>
+<dd><p>LLM agent nodes skip source code validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.LLMAgentNode.node_type">
 <span class="sig-name descname"><span class="pre">node_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'llm_agent_node'</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.LLMAgentNode.node_type" title="Link to this definition"></a></dt>
@@ -1172,6 +1199,145 @@ Note: DO NOT specify the output mapping for the tool; it will be inferred automa
 </dd>
 </dl>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">InputNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphNode" title="abacusai.api_class.ai_agents.WorkflowGraphNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphNode</span></code></a></p>
+<p>Represents an input node in an agent workflow graph.</p>
+<p>Accepts multiple user inputs (text and file) and processes them into a single combined text output.
+File inputs are processed using OCR/document extraction when applicable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the input node.</p></li>
+<li><p><strong>input_mappings</strong> (<em>Union</em><em>[</em><em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em><em>, </em><em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeInputMapping"><em>WorkflowNodeInputMapping</em></a><em>]</em><em>]</em>) – The input mappings for the input node. If not provided, defaults to a text_input and file_input.</p></li>
+<li><p><strong>output_mappings</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>, </em><em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>, </em><em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping"><em>WorkflowNodeOutputMapping</em></a><em>]</em><em>]</em>) – The output mappings for the input node. If not provided, defaults to a single ‘answer’ output.</p></li>
+<li><p><strong>input_schema</strong> (<a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeInputSchema"><em>WorkflowNodeInputSchema</em></a>) – The input schema for the input node. If not provided, will be generated from input_mappings.</p></li>
+<li><p><strong>output_schema</strong> (<a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeOutputSchema"><em>WorkflowNodeOutputSchema</em></a>) – The output schema for the input node. If not provided, will be generated from output_mappings.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The description of the input node.</p></li>
+<li><p><strong>uid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A unique identifier for the input node. Auto-generated if not provided.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.input_mappings">
+<span class="sig-name descname"><span class="pre">input_mappings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeInputMapping"><span class="pre">WorkflowNodeInputMapping</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeInputMapping"><span class="pre">WorkflowNodeInputMapping</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.input_mappings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.output_mappings">
+<span class="sig-name descname"><span class="pre">output_mappings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping" title="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping"><span class="pre">WorkflowNodeOutputMapping</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.output_mappings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.input_schema">
+<span class="sig-name descname"><span class="pre">input_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeInputSchema"><span class="pre">WorkflowNodeInputSchema</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.input_schema" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.output_schema">
+<span class="sig-name descname"><span class="pre">output_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeOutputSchema"><span class="pre">WorkflowNodeOutputSchema</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.output_schema" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.uid">
+<span class="sig-name descname"><span class="pre">uid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.uid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.is_special_node_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_special_node_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.is_special_node_type" title="Link to this definition"></a></dt>
+<dd><p>Input nodes skip source code validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode._mark_file_inputs_in_schema">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_mark_file_inputs_in_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_schema</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode._mark_file_inputs_in_schema" title="Link to this definition"></a></dt>
+<dd><p>Mark file inputs in the schema based on format and ui:widget indicators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_schema</strong> (<a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowNodeInputSchema" title="abacusai.api_class.ai_agents.WorkflowNodeInputSchema"><em>WorkflowNodeInputSchema</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.node_type">
+<span class="sig-name descname"><span class="pre">node_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'input_node'</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.node_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.source_code">
+<span class="sig-name descname"><span class="pre">source_code</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.source_code" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.template_metadata">
+<span class="sig-name descname"><span class="pre">template_metadata</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.template_metadata" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.trigger_config">
+<span class="sig-name descname"><span class="pre">trigger_config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.trigger_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Return snake_case keys to match return filter expectations.
+(The base ApiClass.to_dict() camelCases keys, which causes the
+WorkflowGraphNodeDetails return filter to miss fields.)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.from_dict" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.get_function_name">
+<span class="sig-name descname"><span class="pre">get_function_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.get_function_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.get_source_code">
+<span class="sig-name descname"><span class="pre">get_source_code</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.get_source_code" title="Link to this definition"></a></dt>
+<dd><p>Return None for input node source code.</p>
+<p>Input nodes are executed directly without source code validation,
+similar to LLM agent nodes. The minimal source code is only used during
+initialization to satisfy parent class validation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.get_input_schema">
+<span class="sig-name descname"><span class="pre">get_input_schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.get_input_schema" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 

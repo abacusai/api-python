@@ -15,12 +15,12 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: UnifiedConnector(client, applicationConnectorId=None, databaseConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+.. py:class:: UnifiedConnector(client, applicationConnectorId=None, databaseConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None, isUserLevel=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   A unified connector that can handle both application and database connectors.
+   Lightweight unified connector filter that skips expensive auth transformations.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -38,6 +38,8 @@ Module Contents
    :type status: str
    :param auth: Non-secret connection information for this connector
    :type auth: dict
+   :param isUserLevel: Whether this is a user-level connector
+   :type isUserLevel: bool
 
 
    .. py:attribute:: application_connector_id
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: auth
+      :value: None
+
+
+
+   .. py:attribute:: is_user_level
       :value: None
 
 

@@ -27,6 +27,7 @@ Classes
    abacusai.api_class.ai_agents.WorkflowGraphNode
    abacusai.api_class.ai_agents.DecisionNode
    abacusai.api_class.ai_agents.LLMAgentNode
+   abacusai.api_class.ai_agents.InputNode
    abacusai.api_class.ai_agents.WorkflowGraphEdge
    abacusai.api_class.ai_agents.WorkflowGraph
    abacusai.api_class.ai_agents.AgentConversationMessage
@@ -390,6 +391,17 @@ Module Contents
        trigger_config (TriggerConfig): The configuration for a trigger workflow node.
 
 
+   .. py:method:: is_special_node_type()
+      :classmethod:
+
+
+      Returns True if this node type skips source code validation.
+
+      Special node types (like InputNode and LLMAgentNode) are executed
+      directly without source code validation.
+
+
+
    .. py:attribute:: template_metadata
       :value: None
 
@@ -589,6 +601,14 @@ Module Contents
 
 
 
+   .. py:method:: is_special_node_type()
+      :classmethod:
+
+
+      LLM agent nodes skip source code validation.
+
+
+
    .. py:attribute:: node_type
       :value: 'llm_agent_node'
 
@@ -611,6 +631,137 @@ Module Contents
    .. py:method:: from_dict(node)
       :classmethod:
 
+
+
+.. py:class:: InputNode(name, input_mappings = None, output_mappings = None, input_schema = None, output_schema = None, description = None)
+
+   Bases: :py:obj:`WorkflowGraphNode`
+
+
+   Represents an input node in an agent workflow graph.
+
+   Accepts multiple user inputs (text and file) and processes them into a single combined text output.
+   File inputs are processed using OCR/document extraction when applicable.
+
+   :param name: The name of the input node.
+   :type name: str
+   :param input_mappings: The input mappings for the input node. If not provided, defaults to a text_input and file_input.
+   :type input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]]
+   :param output_mappings: The output mappings for the input node. If not provided, defaults to a single 'answer' output.
+   :type output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]]
+   :param input_schema: The input schema for the input node. If not provided, will be generated from input_mappings.
+   :type input_schema: WorkflowNodeInputSchema
+   :param output_schema: The output schema for the input node. If not provided, will be generated from output_mappings.
+   :type output_schema: WorkflowNodeOutputSchema
+   :param description: The description of the input node.
+   :type description: str
+   :param uid: A unique identifier for the input node. Auto-generated if not provided.
+   :type uid: str
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: input_mappings
+      :type:  Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]]
+      :value: None
+
+
+
+   .. py:attribute:: output_mappings
+      :type:  Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]]
+      :value: None
+
+
+
+   .. py:attribute:: input_schema
+      :type:  WorkflowNodeInputSchema
+      :value: None
+
+
+
+   .. py:attribute:: output_schema
+      :type:  WorkflowNodeOutputSchema
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: uid
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: is_special_node_type()
+      :classmethod:
+
+
+      Input nodes skip source code validation.
+
+
+
+   .. py:method:: _mark_file_inputs_in_schema(input_schema)
+      :staticmethod:
+
+
+      Mark file inputs in the schema based on format and ui:widget indicators.
+
+
+
+   .. py:attribute:: node_type
+      :value: 'input_node'
+
+
+
+   .. py:attribute:: source_code
+      :value: None
+
+
+
+   .. py:attribute:: template_metadata
+      :value: None
+
+
+
+   .. py:attribute:: trigger_config
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+      Return snake_case keys to match return filter expectations.
+      (The base ApiClass.to_dict() camelCases keys, which causes the
+      WorkflowGraphNodeDetails return filter to miss fields.)
+
+
+
+   .. py:method:: from_dict(node)
+      :classmethod:
+
+
+
+   .. py:method:: get_function_name()
+
+
+   .. py:method:: get_source_code()
+
+      Return None for input node source code.
+
+      Input nodes are executed directly without source code validation,
+      similar to LLM agent nodes. The minimal source code is only used during
+      initialization to satisfy parent class validation.
+
+
+
+   .. py:method:: get_input_schema()
 
 
 .. py:class:: WorkflowGraphEdge(source, target, details = None)

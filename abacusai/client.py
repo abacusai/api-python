@@ -667,7 +667,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.74'
+    client_version = '1.4.75'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1579,7 +1579,7 @@ class ReadOnlyClient(BaseApiClient):
         Args:
             database_connector_id (str): A unique string identifier for the database connector.
             query (str): The query to be run in the database connector."""
-        return self._call_api('queryDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query})
+        return self._proxy_request('queryDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query}, is_sync=True)
 
     def query_database_connector_datallm(self, database_connector_id: str, query: str) -> list:
         """Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
@@ -1590,7 +1590,7 @@ class ReadOnlyClient(BaseApiClient):
         Args:
             database_connector_id (str): A unique string identifier for the database connector.
             query (str): The query to be run in the database connector (must be read-only)."""
-        return self._call_api('queryDatabaseConnectorDatallm', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query})
+        return self._proxy_request('queryDatabaseConnectorDatallm', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query}, is_sync=True)
 
     def get_database_connector_auth(self, database_connector_id: str) -> DatabaseConnector:
         """Get the authentication details for a given database connector.
@@ -1629,17 +1629,18 @@ class ReadOnlyClient(BaseApiClient):
             UnifiedConnector: The application connector with the authentication details."""
         return self._call_api('getConnectorAuth', 'GET', query_params={'service': service, 'applicationConnectorId': application_connector_id, 'scopes': scopes, 'genericOauthService': generic_oauth_service}, parse_type=UnifiedConnector)
 
-    def get_user_connector_auth(self, service: Union[ApplicationConnectorType, str], scopes: List = None, generic_oauth_service: str = None) -> UnifiedConnector:
+    def get_user_connector_auth(self, service: Union[ApplicationConnectorType, str], scopes: List = None, generic_oauth_service: str = None, config_connector: str = None) -> UnifiedConnector:
         """Get the authentication details for a given user level connector.
 
         Args:
             service (ApplicationConnectorType): The service name.
             scopes (List): The scopes to request for the connector.
             generic_oauth_service (str): For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
+            config_connector (str): The config connector id.
 
         Returns:
             UnifiedConnector: The application connector with the authentication details."""
-        return self._call_api('getUserConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes, 'genericOauthService': generic_oauth_service}, parse_type=UnifiedConnector)
+        return self._call_api('getUserConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes, 'genericOauthService': generic_oauth_service, 'configConnector': config_connector}, parse_type=UnifiedConnector)
 
     def get_user_mcp_connector_auth(self, mcp_server_name: str = None) -> ApplicationConnector:
         """Get the auth for a MCP connector
@@ -8957,7 +8958,7 @@ class ApiClient(ReadOnlyClient):
             feedback (str): Optional feedback on why the message is useful or not useful
             feedback_type (str): Optional feedback type
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in."""
-        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback, 'feedbackType': feedback_type})
+        return self._proxy_request('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback, 'feedbackType': feedback_type}, is_sync=True)
 
     def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None):
         """Rename a Deployment Conversation.

@@ -225,8 +225,6 @@ class WorkflowNodeInputSchema(ApiClass, JSONSchema):
         """
         json_schema = {'type': 'object', 'properties': {}}
         for mapping in tool_variable_mappings:
-            if not mapping.get('is_required'):
-                continue
             json_schema['properties'][mapping['name']] = {'title': mapping['name'], 'type': enums.PythonFunctionArgumentType.to_json_type(mapping['variable_type'])}
             if mapping.get('description'):
                 json_schema['properties'][mapping['name']]['description'] = mapping['description']
@@ -353,6 +351,15 @@ class WorkflowGraphNode(ApiClass):
         trigger_config (TriggerConfig): The configuration for a trigger workflow node.
     """
 
+    @classmethod
+    def is_special_node_type(cls) -> bool:
+        """Returns True if this node type skips source code validation.
+
+        Special node types (like InputNode and LLMAgentNode) are executed
+        directly without source code validation.
+        """
+        return False
+
     def __init__(self, name: str, function: callable = None, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, function_name: str = None, source_code: str = None, input_schema: Union[List[str], WorkflowNodeInputSchema] = None, output_schema: Union[List[str], WorkflowNodeOutputSchema] = None, template_metadata: dict = None, trigger_config: TriggerConfig = None, description: str = None):
         self.template_metadata = template_metadata
         self.trigger_config = trigger_config
@@ -367,49 +374,53 @@ class WorkflowGraphNode(ApiClass):
             self.input_schema = input_schema
             self.output_schema = output_schema
         else:
+            is_agentic_loop_tool = self.template_metadata and self.template_metadata.get('is_agentic_loop_tool', False)
+            is_special_node_type = self.is_special_node_type()
             if function:
                 self.function = function
                 self.function_name = function.__name__
                 self.source_code = get_clean_function_source_code_for_agent(function)
-            elif function_name and source_code:
+            elif function_name and (is_agentic_loop_tool or is_special_node_type or source_code):
                 self.function_name = function_name
-                self.source_code = source_code
+                self.source_code = source_code if not (is_agentic_loop_tool or is_special_node_type) else None
             else:
                 raise ValueError('workflow_graph_node', 'Either function or function_name and source_code must be provided.')
 
             self.name = name
-            try:
-                tree = ast.parse(self.source_code)
-            except SyntaxError as e:
-                raise ValueError(f'"{name}" source code', f'SyntaxError: "{e}"')
-            arg_defaults = {}
-            function_found = False
-            for node in ast.iter_child_nodes(tree):
-                if isinstance(node, ast.FunctionDef) and node.name == self.function_name:
-                    function_found = True
-                    input_arguments = [arg.arg for arg in node.args.args]
-                    defaults = [None] * (len(input_arguments) - len(node.args.defaults)) + node.args.defaults
-                    arg_defaults = dict(zip(input_arguments, defaults))
-            if not function_found:
-                raise ValueError(f'"{name}" source code', f'Function "{self.function_name}" not found in the provided source code.')
+            if not (is_agentic_loop_tool or is_special_node_type):
+                try:
+                    tree = ast.parse(self.source_code)
+                except SyntaxError as e:
+                    raise ValueError(f'"{name}" source code', f'SyntaxError: "{e}"')
+                arg_defaults = {}
+                function_found = False
+                for node in ast.iter_child_nodes(tree):
+                    if isinstance(node, ast.FunctionDef) and node.name == self.function_name:
+                        function_found = True
+                        input_arguments = [arg.arg for arg in node.args.args]
+                        defaults = [None] * (len(input_arguments) - len(node.args.defaults)) + node.args.defaults
+                        arg_defaults = dict(zip(input_arguments, defaults))
+                if not function_found:
+                    raise ValueError(f'"{name}" source code', f'Function "{self.function_name}" not found in the provided source code.')
 
             is_shortform_input_mappings = False
             if input_mappings is None:
                 input_mappings = {}
             if isinstance(input_mappings, List) and all(isinstance(input, WorkflowNodeInputMapping) for input in input_mappings):
                 self.input_mappings = input_mappings
-                input_mapping_args = [input.name for input in input_mappings]
-                for input_name in input_mapping_args:
-                    if input_name not in arg_defaults:
-                        raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{input_name}" not found in function "{self.function_name}".')
-                for arg, default in arg_defaults.items():
-                    if arg not in input_mapping_args:
-                        self.input_mappings.append(WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None))
+                if not (is_agentic_loop_tool or is_special_node_type):
+                    input_mapping_args = [input.name for input in input_mappings]
+                    for input_name in input_mapping_args:
+                        if input_name not in arg_defaults:
+                            raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{input_name}" not found in function "{self.function_name}".')
+                    for arg, default in arg_defaults.items():
+                        if arg not in input_mapping_args:
+                            self.input_mappings.append(WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None))
             elif isinstance(input_mappings, Dict) and all(isinstance(key, str) and isinstance(value, (WorkflowNodeInputMapping, WorkflowGraphNode)) for key, value in input_mappings.items()):
                 is_shortform_input_mappings = True
                 self.input_mappings = [WorkflowNodeInputMapping(name=arg, variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=default is None) for arg, default in arg_defaults.items() if arg not in input_mappings]
                 for key, value in input_mappings.items():
-                    if key not in arg_defaults:
+                    if not (is_agentic_loop_tool or is_special_node_type) and key not in arg_defaults:
                         raise ValueError('workflow_graph_node', f'Invalid input mapping. Argument "{key}" not found in function "{self.function_name}".')
                     if isinstance(value, WorkflowGraphNode):
                         self.input_mappings.append(WorkflowNodeInputMapping(name=key, variable_type=enums.WorkflowNodeInputType.WORKFLOW_VARIABLE, variable_source=value.name, source_prop=key, is_required=arg_defaults.get(key) is None))
@@ -732,6 +743,11 @@ class LLMAgentNode(WorkflowGraphNode):
     chatbot_parameters: dict = dataclasses.field(default_factory=dict)
     uid: str = dataclasses.field(default=None)
 
+    @classmethod
+    def is_special_node_type(cls) -> bool:
+        """LLM agent nodes skip source code validation."""
+        return True
+
     def __init__(self, name: str, chatbot_deployment_id: str = None, chatbot_parameters: dict = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None):
         # Set LLM-specific properties - uid is auto-generated internally
         self.uid = str(uuid.uuid4())[:6]
@@ -739,16 +755,33 @@ class LLMAgentNode(WorkflowGraphNode):
         self.chatbot_parameters = chatbot_parameters or {}
 
         # Prepare input and output mappings
-        input_mappings = [WorkflowNodeInputMapping(name='user_input', variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=True)]
+        input_mappings = [
+            WorkflowNodeInputMapping(name='user_input', variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=True),
+            WorkflowNodeInputMapping(name='attachment_input', variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=False, description='Optional file attachment to include with the message')
+        ]
         output_mappings = [WorkflowNodeOutputMapping(name='chat_output', variable_type=enums.WorkflowNodeOutputType.DICT, description='The output of the chatbot')]
 
         # Determine function_name and create minimal source_code for parent validation
         # Always use get_function_name() which includes uid to ensure uniqueness
         function_name = self.get_function_name()
-        minimal_source_code = f'def {function_name}(user_input):\n    pass'
+        minimal_source_code = f'def {function_name}(user_input, attachment_input=None):\n    pass'
+
+        # Customize input schema to mark attachment_input as a file type
+        if input_schema is None:
+            base_schema = WorkflowNodeInputSchema.from_input_mappings(input_mappings)
+            # Override attachment_input to be a file format in json_schema
+            if base_schema.json_schema.get('properties', {}).get('attachment_input'):
+                base_schema.json_schema['properties']['attachment_input']['type'] = 'string'
+                base_schema.json_schema['properties']['attachment_input']['format'] = 'data-url'
+                base_schema.json_schema['properties']['attachment_input']['description'] = 'Optional file attachment to include with the message'
+            # Set ui_schema to use file widget for attachment_input
+            if not base_schema.ui_schema:
+                base_schema.ui_schema = {}
+            base_schema.ui_schema['attachment_input'] = {'ui:widget': 'file'}
+            input_schema = base_schema
 
         # Initialize parent class with minimal source code to satisfy validation
-        super().__init__(name=name, function_name=function_name, source_code=minimal_source_code, input_mappings=input_mappings, output_mappings=output_mappings, input_schema=input_schema or WorkflowNodeInputSchema.from_input_mappings(input_mappings), output_schema=output_schema or WorkflowNodeOutputSchema.from_fields_list(['chat_output']))
+        super().__init__(name=name, function_name=function_name, source_code=minimal_source_code, input_mappings=input_mappings, output_mappings=output_mappings, input_schema=input_schema, output_schema=output_schema or WorkflowNodeOutputSchema.from_fields_list(['chat_output']))
         self.node_type = 'llm_agent_node'
         self.source_code = None
 
@@ -798,6 +831,178 @@ class LLMAgentNode(WorkflowGraphNode):
         # Note: execution_context is intentionally not preserved on SDK objects - it's an internal runtime detail
         # that should only exist in dict representations
         return instance
+
+
+@validate_constructor_arg_types('input_node')
+@dataclasses.dataclass
+class InputNode(WorkflowGraphNode):
+    """Represents an input node in an agent workflow graph.
+
+    Accepts multiple user inputs (text and file) and processes them into a single combined text output.
+    File inputs are processed using OCR/document extraction when applicable.
+
+    Args:
+        name (str): The name of the input node.
+        input_mappings (Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]]): The input mappings for the input node. If not provided, defaults to a text_input and file_input.
+        output_mappings (Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]]): The output mappings for the input node. If not provided, defaults to a single 'answer' output.
+        input_schema (WorkflowNodeInputSchema): The input schema for the input node. If not provided, will be generated from input_mappings.
+        output_schema (WorkflowNodeOutputSchema): The output schema for the input node. If not provided, will be generated from output_mappings.
+        description (str): The description of the input node.
+        uid (str): A unique identifier for the input node. Auto-generated if not provided.
+    """
+    name: str
+    input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = dataclasses.field(default=None)
+    output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = dataclasses.field(default=None)
+    input_schema: WorkflowNodeInputSchema = dataclasses.field(default=None)
+    output_schema: WorkflowNodeOutputSchema = dataclasses.field(default=None)
+    description: str = dataclasses.field(default=None)
+    uid: str = dataclasses.field(default=None, init=False)
+
+    @classmethod
+    def is_special_node_type(cls) -> bool:
+        """Input nodes skip source code validation."""
+        return True
+
+    @staticmethod
+    def _mark_file_inputs_in_schema(input_schema: WorkflowNodeInputSchema) -> None:
+        """Mark file inputs in the schema based on format and ui:widget indicators."""
+        json_schema_props = input_schema.json_schema.get('properties', {})
+        if not input_schema.ui_schema:
+            input_schema.ui_schema = {}
+
+        for prop_name, prop_schema in json_schema_props.items():
+            ui_widget = input_schema.ui_schema.get(prop_name)
+            is_file_input = (
+                prop_schema.get('format') == 'data-url' or
+                (isinstance(ui_widget, dict) and ui_widget.get('ui:widget') == 'file') or
+                ui_widget == 'file'
+            )
+            if is_file_input:
+                prop_schema['type'] = 'string'
+                prop_schema['format'] = 'data-url'
+                input_schema.ui_schema[prop_name] = {'ui:widget': 'file'}
+
+    def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, description: str = None):
+        self.uid = str(uuid.uuid4())[:6]
+
+        if input_mappings is None:
+            input_mappings = [
+                WorkflowNodeInputMapping(
+                    name='text_input',
+                    variable_type=enums.WorkflowNodeInputType.USER_INPUT,
+                    is_required=True
+                ),
+                WorkflowNodeInputMapping(
+                    name='file_input',
+                    variable_type=enums.WorkflowNodeInputType.USER_INPUT,
+                    is_required=False,
+                    description='Optional file attachment to process'
+                )
+            ]
+
+        if output_mappings is None:
+            output_mappings = [
+                WorkflowNodeOutputMapping(
+                    name='answer',
+                    variable_type=enums.WorkflowNodeOutputType.STRING,
+                    description='The combined output text'
+                )
+            ]
+
+        function_name = self.get_function_name()
+
+        if input_schema is None:
+            input_schema = WorkflowNodeInputSchema.from_input_mappings(input_mappings)
+            # Mark file inputs based on input_mappings - check descriptions for file/attachment keywords
+            json_schema_props = input_schema.json_schema.get('properties', {})
+            if not input_schema.ui_schema:
+                input_schema.ui_schema = {}
+            for mapping in input_mappings:
+                mapping_name = None
+                if isinstance(mapping, WorkflowNodeInputMapping):
+                    mapping_name, desc = mapping.name, (mapping.description or '').lower()
+                elif isinstance(mapping, dict):
+                    mapping_name, desc = mapping.get('name'), (mapping.get('description') or '').lower()
+                else:
+                    continue
+                if mapping_name and mapping_name in json_schema_props and ('file' in desc or 'attachment' in desc):
+                    json_schema_props[mapping_name]['format'] = 'data-url'
+                    input_schema.ui_schema[mapping_name] = {'ui:widget': 'file'}
+
+        self._mark_file_inputs_in_schema(input_schema)
+
+        if output_schema is None:
+            output_schema = WorkflowNodeOutputSchema.from_fields_list(['answer'])
+
+        super().__init__(
+            name=name,
+            function_name=function_name,
+            source_code=None,
+            input_mappings=input_mappings,
+            output_mappings=output_mappings,
+            input_schema=input_schema,
+            output_schema=output_schema,
+            description=description
+        )
+        self.node_type = 'input_node'
+        self.source_code = None
+        self.template_metadata = None
+        self.trigger_config = None
+
+    def to_dict(self):
+        """
+        Return snake_case keys to match return filter expectations.
+        (The base ApiClass.to_dict() camelCases keys, which causes the
+        WorkflowGraphNodeDetails return filter to miss fields.)
+        """
+        return {
+            'name': self.name,
+            'function_name': self.function_name,
+            'source_code': self.source_code,
+            'input_mappings': [mapping.to_dict() for mapping in self.input_mappings],
+            'output_mappings': [mapping.to_dict() for mapping in self.output_mappings],
+            'input_schema': self.input_schema.to_dict() if self.input_schema else None,
+            'output_schema': self.output_schema.to_dict() if self.output_schema else None,
+            'template_metadata': self.template_metadata,
+            'trigger_config': self.trigger_config.to_dict() if self.trigger_config else None,
+            'node_type': self.node_type,
+            'description': self.description,
+            'uid': self.uid,
+        }
+
+    @classmethod
+    def from_dict(cls, node: dict):
+        instance = cls(
+            name=node['name'],
+            input_mappings=[WorkflowNodeInputMapping.from_dict(mapping) for mapping in node.get('input_mappings', [])],
+            output_mappings=[WorkflowNodeOutputMapping.from_dict(mapping) for mapping in node.get('output_mappings', [])],
+            input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
+            output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
+            description=node.get('description'),
+        )
+        # Preserve uid from dict if it exists (for round-trip serialization of existing workflows)
+        if 'uid' in node and node.get('uid'):
+            instance.uid = node['uid']
+            # Regenerate function_name with preserved uid
+            instance.function_name = f'input_node_{instance.uid}'
+            # Regenerate source_code so it matches the preserved uid/function_name
+            instance.source_code = instance.get_source_code()
+        return instance
+
+    def get_function_name(self):
+        return f'input_node_{self.uid}'
+
+    def get_source_code(self):
+        """Return None for input node source code.
+
+        Input nodes are executed directly without source code validation,
+        similar to LLM agent nodes. The minimal source code is only used during
+        initialization to satisfy parent class validation.
+        """
+        return None
+
+    def get_input_schema(self):
+        return self.input_schema
 
 
 @validate_constructor_arg_types('workflow_graph_edge')
@@ -884,7 +1089,8 @@ class WorkflowGraph(ApiClass):
         node_generator = {
             'decision_node': DecisionNode.from_dict,
             'workflow_node': WorkflowGraphNode.from_dict,
-            'llm_agent_node': LLMAgentNode.from_dict
+            'llm_agent_node': LLMAgentNode.from_dict,
+            'input_node': InputNode.from_dict,
         }
         nodes = [node_generator[node.get('node_type') or 'workflow_node'](node) for node in graph.get('nodes', [])]
         edges = [WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]

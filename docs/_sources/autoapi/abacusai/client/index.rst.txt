@@ -593,7 +593,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.74'
+      :value: '1.4.75'
 
 
 
@@ -1447,7 +1447,7 @@ Module Contents
 
 
 
-   .. py:method:: get_user_connector_auth(service, scopes = None, generic_oauth_service = None)
+   .. py:method:: get_user_connector_auth(service, scopes = None, generic_oauth_service = None, config_connector = None)
 
       Get the authentication details for a given user level connector.
 
@@ -1457,6 +1457,8 @@ Module Contents
       :type scopes: List
       :param generic_oauth_service: For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
       :type generic_oauth_service: str
+      :param config_connector: The config connector id.
+      :type config_connector: str
 
       :returns: The application connector with the authentication details.
       :rtype: UnifiedConnector

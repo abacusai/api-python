@@ -357,6 +357,7 @@ Classes
    abacusai.WorkflowGraphNode
    abacusai.DecisionNode
    abacusai.LLMAgentNode
+   abacusai.InputNode
    abacusai.WorkflowGraphEdge
    abacusai.WorkflowGraph
    abacusai.AgentConversationMessage
@@ -2501,6 +2502,17 @@ Package Contents
        trigger_config (TriggerConfig): The configuration for a trigger workflow node.
 
 
+   .. py:method:: is_special_node_type()
+      :classmethod:
+
+
+      Returns True if this node type skips source code validation.
+
+      Special node types (like InputNode and LLMAgentNode) are executed
+      directly without source code validation.
+
+
+
    .. py:attribute:: template_metadata
       :value: None
 
@@ -2700,6 +2712,14 @@ Package Contents
 
 
 
+   .. py:method:: is_special_node_type()
+      :classmethod:
+
+
+      LLM agent nodes skip source code validation.
+
+
+
    .. py:attribute:: node_type
       :value: 'llm_agent_node'
 
@@ -2722,6 +2742,137 @@ Package Contents
    .. py:method:: from_dict(node)
       :classmethod:
 
+
+
+.. py:class:: InputNode(name, input_mappings = None, output_mappings = None, input_schema = None, output_schema = None, description = None)
+
+   Bases: :py:obj:`WorkflowGraphNode`
+
+
+   Represents an input node in an agent workflow graph.
+
+   Accepts multiple user inputs (text and file) and processes them into a single combined text output.
+   File inputs are processed using OCR/document extraction when applicable.
+
+   :param name: The name of the input node.
+   :type name: str
+   :param input_mappings: The input mappings for the input node. If not provided, defaults to a text_input and file_input.
+   :type input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]]
+   :param output_mappings: The output mappings for the input node. If not provided, defaults to a single 'answer' output.
+   :type output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]]
+   :param input_schema: The input schema for the input node. If not provided, will be generated from input_mappings.
+   :type input_schema: WorkflowNodeInputSchema
+   :param output_schema: The output schema for the input node. If not provided, will be generated from output_mappings.
+   :type output_schema: WorkflowNodeOutputSchema
+   :param description: The description of the input node.
+   :type description: str
+   :param uid: A unique identifier for the input node. Auto-generated if not provided.
+   :type uid: str
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: input_mappings
+      :type:  Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]]
+      :value: None
+
+
+
+   .. py:attribute:: output_mappings
+      :type:  Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]]
+      :value: None
+
+
+
+   .. py:attribute:: input_schema
+      :type:  WorkflowNodeInputSchema
+      :value: None
+
+
+
+   .. py:attribute:: output_schema
+      :type:  WorkflowNodeOutputSchema
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: uid
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: is_special_node_type()
+      :classmethod:
+
+
+      Input nodes skip source code validation.
+
+
+
+   .. py:method:: _mark_file_inputs_in_schema(input_schema)
+      :staticmethod:
+
+
+      Mark file inputs in the schema based on format and ui:widget indicators.
+
+
+
+   .. py:attribute:: node_type
+      :value: 'input_node'
+
+
+
+   .. py:attribute:: source_code
+      :value: None
+
+
+
+   .. py:attribute:: template_metadata
+      :value: None
+
+
+
+   .. py:attribute:: trigger_config
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+      Return snake_case keys to match return filter expectations.
+      (The base ApiClass.to_dict() camelCases keys, which causes the
+      WorkflowGraphNodeDetails return filter to miss fields.)
+
+
+
+   .. py:method:: from_dict(node)
+      :classmethod:
+
+
+
+   .. py:method:: get_function_name()
+
+
+   .. py:method:: get_source_code()
+
+      Return None for input node source code.
+
+      Input nodes are executed directly without source code validation,
+      similar to LLM agent nodes. The minimal source code is only used during
+      initialization to satisfy parent class validation.
+
+
+
+   .. py:method:: get_input_schema()
 
 
 .. py:class:: WorkflowGraphEdge(source, target, details = None)
@@ -7169,6 +7320,11 @@ Package Contents
 
    .. py:attribute:: OPENAI_GPT5_1
       :value: 'OPENAI_GPT5_1'
+
+
+
+   .. py:attribute:: OPENAI_GPT5_2
+      :value: 'OPENAI_GPT5_2'
 
 
 
@@ -23088,7 +23244,7 @@ Package Contents
 
 
 
-   .. py:method:: get_user_connector_auth(service, scopes = None, generic_oauth_service = None)
+   .. py:method:: get_user_connector_auth(service, scopes = None, generic_oauth_service = None, config_connector = None)
 
       Get the authentication details for a given user level connector.
 
@@ -23098,6 +23254,8 @@ Package Contents
       :type scopes: List
       :param generic_oauth_service: For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
       :type generic_oauth_service: str
+      :param config_connector: The config connector id.
+      :type config_connector: str
 
       :returns: The application connector with the authentication details.
       :rtype: UnifiedConnector
@@ -28601,7 +28759,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, history={}, hostedArtifacts={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28670,6 +28828,8 @@ Package Contents
    :type previewInfo: dict
    :param latestContext: dict containing a list of important segments for pagination in deepagent.
    :type latestContext: dict
+   :param shareType: The sharing status of the deployment conversation (PUBLIC or PRIVATE).
+   :type shareType: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -28822,6 +28982,11 @@ Package Contents
 
 
    .. py:attribute:: latest_context
+      :value: None
+
+
+
+   .. py:attribute:: share_type
       :value: None
 
 
@@ -48916,12 +49081,12 @@ Package Contents
 
 
 
-.. py:class:: UnifiedConnector(client, applicationConnectorId=None, databaseConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+.. py:class:: UnifiedConnector(client, applicationConnectorId=None, databaseConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None, isUserLevel=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   A unified connector that can handle both application and database connectors.
+   Lightweight unified connector filter that skips expensive auth transformations.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -48939,6 +49104,8 @@ Package Contents
    :type status: str
    :param auth: Non-secret connection information for this connector
    :type auth: dict
+   :param isUserLevel: Whether this is a user-level connector
+   :type isUserLevel: bool
 
 
    .. py:attribute:: application_connector_id
@@ -48972,6 +49139,11 @@ Package Contents
 
 
    .. py:attribute:: auth
+      :value: None
+
+
+
+   .. py:attribute:: is_user_level
       :value: None
 
 
@@ -50402,6 +50574,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.74'
+   :value: '1.4.75'
 
 
