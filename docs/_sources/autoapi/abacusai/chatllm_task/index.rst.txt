@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type name: str
    :param instructions: The instructions of the chatllm task.
    :type instructions: str
+   :param description: The description of the chatllm task.
+   :type description: str
    :param lifecycle: The lifecycle of the chatllm task.
    :type lifecycle: str
    :param scheduleInfo: The schedule info of the chatllm task.
@@ -56,6 +58,10 @@ Module Contents
    :type displayMarkdown: str
    :param requiresNewConversation: Whether a new conversation is required for the chatllm task.
    :type requiresNewConversation: bool
+   :param executionMode: The execution mode of the chatllm task.
+   :type executionMode: str
+   :param taskDefinition: The task definition (for web_service_trigger tasks).
+   :type taskDefinition: dict
 
 
    .. py:attribute:: chatllm_task_id
@@ -79,6 +85,11 @@ Module Contents
 
 
    .. py:attribute:: instructions
+      :value: None
+
+
+
+   .. py:attribute:: description
       :value: None
 
 
@@ -134,6 +145,16 @@ Module Contents
 
 
    .. py:attribute:: requires_new_conversation
+      :value: None
+
+
+
+   .. py:attribute:: execution_mode
+      :value: None
+
+
+
+   .. py:attribute:: task_definition
       :value: None
 
 

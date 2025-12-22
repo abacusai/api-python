@@ -176,7 +176,7 @@ Module Contents
 
 
 
-   .. py:method:: upload_file(file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600)
+   .. py:method:: upload_file(file, threads=10, chunksize=None, wait_timeout=600)
 
       Uploads the file in the specified chunk size using the specified number of workers.
 
@@ -184,7 +184,7 @@ Module Contents
       :type file: IOBase
       :param threads: The max number of workers to use while uploading the file
       :type threads: int
-      :param chunksize: The number of bytes to use for each chunk while uploading the file. Defaults to 10 MB
+      :param chunksize: The number of bytes to use for each chunk while uploading the file. If None, dynamically calculated based on file size (defaults to 20 MB.)
       :type chunksize: int
       :param wait_timeout: The max number of seconds to wait for the file parts to be joined on Abacus.AI. Defaults to 600.
       :type wait_timeout: int
@@ -192,6 +192,9 @@ Module Contents
       :returns: The upload file object.
       :rtype: Upload
 
+
+
+   .. py:method:: _calculate_chunk_size(file_size)
 
 
    .. py:method:: _yield_upload_part(file, chunksize)

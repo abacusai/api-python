@@ -223,18 +223,25 @@ class WorkflowNodeInputSchema(ApiClass, JSONSchema):
         Args:
             tool_variable_mappings (List[dict]): The tool variable mappings for the node.
         """
-        json_schema = {'type': 'object', 'properties': {}}
+        json_schema = {'type': 'object', 'properties': {}, 'required': []}
+        ui_schema = {}
         for mapping in tool_variable_mappings:
             json_schema['properties'][mapping['name']] = {'title': mapping['name'], 'type': enums.PythonFunctionArgumentType.to_json_type(mapping['variable_type'])}
             if mapping.get('description'):
                 json_schema['properties'][mapping['name']]['description'] = mapping['description']
             if mapping['variable_type'] == enums.PythonFunctionArgumentType.ATTACHMENT:
                 json_schema['properties'][mapping['name']]['format'] = 'data-url'
+                ui_schema[mapping['name']] = {'ui:widget': 'file'}
             if mapping['variable_type'] == enums.PythonFunctionArgumentType.LIST:
-                json_schema['properties'][mapping['name']]['items'] = {'type': enums.PythonFunctionArgumentType.to_json_type(mapping['item_type'])}
                 if mapping['item_type'] == enums.PythonFunctionArgumentType.ATTACHMENT:
-                    json_schema['properties'][mapping['name']]['items']['format'] = 'data-url'
-        return cls(json_schema=json_schema)
+                    json_schema['properties'][mapping['name']]['type'] = 'string'
+                    json_schema['properties'][mapping['name']]['format'] = 'data-url'
+                    ui_schema[mapping['name']] = {'ui:widget': 'file', 'ui:options': {'multiple': True}}
+                else:
+                    json_schema['properties'][mapping['name']]['items'] = {'type': enums.PythonFunctionArgumentType.to_json_type(mapping['item_type'])}
+            if mapping['is_required']:
+                json_schema['required'].append(mapping['name'])
+        return cls(json_schema=json_schema, ui_schema=ui_schema)
 
 
 @validate_constructor_arg_types('output_mapping')
@@ -756,29 +763,18 @@ class LLMAgentNode(WorkflowGraphNode):
 
         # Prepare input and output mappings
         input_mappings = [
-            WorkflowNodeInputMapping(name='user_input', variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=True),
-            WorkflowNodeInputMapping(name='attachment_input', variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=False, description='Optional file attachment to include with the message')
+            WorkflowNodeInputMapping(name='user_input', variable_type=enums.WorkflowNodeInputType.USER_INPUT, is_required=True)
         ]
         output_mappings = [WorkflowNodeOutputMapping(name='chat_output', variable_type=enums.WorkflowNodeOutputType.DICT, description='The output of the chatbot')]
 
         # Determine function_name and create minimal source_code for parent validation
         # Always use get_function_name() which includes uid to ensure uniqueness
         function_name = self.get_function_name()
-        minimal_source_code = f'def {function_name}(user_input, attachment_input=None):\n    pass'
+        minimal_source_code = f'def {function_name}(user_input):\n    pass'
 
-        # Customize input schema to mark attachment_input as a file type
+        # Generate input schema from input mappings if not provided
         if input_schema is None:
-            base_schema = WorkflowNodeInputSchema.from_input_mappings(input_mappings)
-            # Override attachment_input to be a file format in json_schema
-            if base_schema.json_schema.get('properties', {}).get('attachment_input'):
-                base_schema.json_schema['properties']['attachment_input']['type'] = 'string'
-                base_schema.json_schema['properties']['attachment_input']['format'] = 'data-url'
-                base_schema.json_schema['properties']['attachment_input']['description'] = 'Optional file attachment to include with the message'
-            # Set ui_schema to use file widget for attachment_input
-            if not base_schema.ui_schema:
-                base_schema.ui_schema = {}
-            base_schema.ui_schema['attachment_input'] = {'ui:widget': 'file'}
-            input_schema = base_schema
+            input_schema = WorkflowNodeInputSchema.from_input_mappings(input_mappings)
 
         # Initialize parent class with minimal source code to satisfy validation
         super().__init__(name=name, function_name=function_name, source_code=minimal_source_code, input_mappings=input_mappings, output_mappings=output_mappings, input_schema=input_schema, output_schema=output_schema or WorkflowNodeOutputSchema.from_fields_list(['chat_output']))
@@ -882,8 +878,8 @@ class InputNode(WorkflowGraphNode):
                 prop_schema['format'] = 'data-url'
                 input_schema.ui_schema[prop_name] = {'ui:widget': 'file'}
 
-    def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, description: str = None):
-        self.uid = str(uuid.uuid4())[:6]
+    def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, description: str = None, function_name: str = None, source_code: str = None, uid: str = None):
+        self.uid = uid or str(uuid.uuid4())[:6]
 
         if input_mappings is None:
             input_mappings = [
@@ -909,7 +905,7 @@ class InputNode(WorkflowGraphNode):
                 )
             ]
 
-        function_name = self.get_function_name()
+        function_name = function_name or self.get_function_name()
 
         if input_schema is None:
             input_schema = WorkflowNodeInputSchema.from_input_mappings(input_mappings)
@@ -937,7 +933,7 @@ class InputNode(WorkflowGraphNode):
         super().__init__(
             name=name,
             function_name=function_name,
-            source_code=None,
+            source_code=source_code,
             input_mappings=input_mappings,
             output_mappings=output_mappings,
             input_schema=input_schema,
@@ -945,7 +941,7 @@ class InputNode(WorkflowGraphNode):
             description=description
         )
         self.node_type = 'input_node'
-        self.source_code = None
+        self.source_code = source_code
         self.template_metadata = None
         self.trigger_config = None
 
@@ -972,34 +968,29 @@ class InputNode(WorkflowGraphNode):
 
     @classmethod
     def from_dict(cls, node: dict):
+        uid = node.get('uid')
+        function_name = node.get('function_name')
+        source_code = node.get('source_code')
+
         instance = cls(
             name=node['name'],
+            uid=uid,
+            function_name=function_name,
+            source_code=source_code,
             input_mappings=[WorkflowNodeInputMapping.from_dict(mapping) for mapping in node.get('input_mappings', [])],
             output_mappings=[WorkflowNodeOutputMapping.from_dict(mapping) for mapping in node.get('output_mappings', [])],
             input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
             output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
             description=node.get('description'),
         )
-        # Preserve uid from dict if it exists (for round-trip serialization of existing workflows)
-        if 'uid' in node and node.get('uid'):
-            instance.uid = node['uid']
-            # Regenerate function_name with preserved uid
-            instance.function_name = f'input_node_{instance.uid}'
-            # Regenerate source_code so it matches the preserved uid/function_name
-            instance.source_code = instance.get_source_code()
         return instance
 
     def get_function_name(self):
         return f'input_node_{self.uid}'
 
     def get_source_code(self):
-        """Return None for input node source code.
-
-        Input nodes are executed directly without source code validation,
-        similar to LLM agent nodes. The minimal source code is only used during
-        initialization to satisfy parent class validation.
-        """
-        return None
+        """Return the stored source code, if any."""
+        return self.source_code
 
     def get_input_schema(self):
         return self.input_schema

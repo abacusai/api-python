@@ -967,7 +967,7 @@ Package Contents
 
 
 
-.. py:class:: InputNode(name, input_mappings = None, output_mappings = None, input_schema = None, output_schema = None, description = None)
+.. py:class:: InputNode(name, input_mappings = None, output_mappings = None, input_schema = None, output_schema = None, description = None, function_name = None, source_code = None, uid = None)
 
    Bases: :py:obj:`WorkflowGraphNode`
 
@@ -1087,11 +1087,7 @@ Package Contents
 
    .. py:method:: get_source_code()
 
-      Return None for input node source code.
-
-      Input nodes are executed directly without source code validation,
-      similar to LLM agent nodes. The minimal source code is only used during
-      initialization to satisfy parent class validation.
+      Return the stored source code, if any.
 
 
 
@@ -6190,6 +6186,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_2_5_FLASH
       :value: 'GEMINI_2_5_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_3_FLASH
+      :value: 'GEMINI_3_FLASH'
 
 
 

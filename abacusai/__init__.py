@@ -286,9 +286,10 @@ from .web_app_domain import WebAppDomain
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .web_search_result import WebSearchResult
+from .web_service_trigger_run import WebServiceTriggerRun
 from .webhook import Webhook
 from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.75"
+__version__ = "1.4.76"

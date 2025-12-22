@@ -301,6 +301,7 @@ Submodules
    /autoapi/abacusai/web_page_response/index
    /autoapi/abacusai/web_search_response/index
    /autoapi/abacusai/web_search_result/index
+   /autoapi/abacusai/web_service_trigger_run/index
    /autoapi/abacusai/webhook/index
    /autoapi/abacusai/workflow_graph_node_details/index
    /autoapi/abacusai/workflow_node_template/index
@@ -842,6 +843,7 @@ Classes
    abacusai.WebPageResponse
    abacusai.WebSearchResponse
    abacusai.WebSearchResult
+   abacusai.WebServiceTriggerRun
    abacusai.Webhook
    abacusai.WorkflowGraphNodeDetails
    abacusai.WorkflowNodeTemplate
@@ -2744,7 +2746,7 @@ Package Contents
 
 
 
-.. py:class:: InputNode(name, input_mappings = None, output_mappings = None, input_schema = None, output_schema = None, description = None)
+.. py:class:: InputNode(name, input_mappings = None, output_mappings = None, input_schema = None, output_schema = None, description = None, function_name = None, source_code = None, uid = None)
 
    Bases: :py:obj:`WorkflowGraphNode`
 
@@ -2864,11 +2866,7 @@ Package Contents
 
    .. py:method:: get_source_code()
 
-      Return None for input node source code.
-
-      Input nodes are executed directly without source code validation,
-      similar to LLM agent nodes. The minimal source code is only used during
-      initialization to satisfy parent class validation.
+      Return the stored source code, if any.
 
 
 
@@ -7400,6 +7398,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_2_5_FLASH
       :value: 'GEMINI_2_5_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_3_FLASH
+      :value: 'GEMINI_3_FLASH'
 
 
 
@@ -14676,7 +14679,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -14695,6 +14698,8 @@ Package Contents
    :type name: str
    :param instructions: The instructions of the chatllm task.
    :type instructions: str
+   :param description: The description of the chatllm task.
+   :type description: str
    :param lifecycle: The lifecycle of the chatllm task.
    :type lifecycle: str
    :param scheduleInfo: The schedule info of the chatllm task.
@@ -14717,6 +14722,10 @@ Package Contents
    :type displayMarkdown: str
    :param requiresNewConversation: Whether a new conversation is required for the chatllm task.
    :type requiresNewConversation: bool
+   :param executionMode: The execution mode of the chatllm task.
+   :type executionMode: str
+   :param taskDefinition: The task definition (for web_service_trigger tasks).
+   :type taskDefinition: dict
 
 
    .. py:attribute:: chatllm_task_id
@@ -14740,6 +14749,11 @@ Package Contents
 
 
    .. py:attribute:: instructions
+      :value: None
+
+
+
+   .. py:attribute:: description
       :value: None
 
 
@@ -14795,6 +14809,16 @@ Package Contents
 
 
    .. py:attribute:: requires_new_conversation
+      :value: None
+
+
+
+   .. py:attribute:: execution_mode
+      :value: None
+
+
+
+   .. py:attribute:: task_definition
       :value: None
 
 
@@ -29123,7 +29147,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29212,6 +29236,8 @@ Package Contents
    :type totalVersions: int
    :param isLastMessage: Whether this message is the last message in the conversation.
    :type isLastMessage: bool
+   :param allowTaskAutomation: Whether to show the automate task button. Only set for the last message in the conversation.
+   :type allowTaskAutomation: bool
 
 
    .. py:attribute:: role
@@ -29410,6 +29436,11 @@ Package Contents
 
 
    .. py:attribute:: is_last_message
+      :value: None
+
+
+
+   .. py:attribute:: allow_task_automation
       :value: None
 
 
@@ -49324,7 +49355,7 @@ Package Contents
 
 
 
-   .. py:method:: upload_file(file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600)
+   .. py:method:: upload_file(file, threads=10, chunksize=None, wait_timeout=600)
 
       Uploads the file in the specified chunk size using the specified number of workers.
 
@@ -49332,7 +49363,7 @@ Package Contents
       :type file: IOBase
       :param threads: The max number of workers to use while uploading the file
       :type threads: int
-      :param chunksize: The number of bytes to use for each chunk while uploading the file. Defaults to 10 MB
+      :param chunksize: The number of bytes to use for each chunk while uploading the file. If None, dynamically calculated based on file size (defaults to 20 MB.)
       :type chunksize: int
       :param wait_timeout: The max number of seconds to wait for the file parts to be joined on Abacus.AI. Defaults to 600.
       :type wait_timeout: int
@@ -49340,6 +49371,9 @@ Package Contents
       :returns: The upload file object.
       :rtype: Upload
 
+
+
+   .. py:method:: _calculate_chunk_size(file_size)
 
 
    .. py:method:: _yield_upload_part(file, chunksize)
@@ -50320,6 +50354,95 @@ Package Contents
 
 
 
+.. py:class:: WebServiceTriggerRun(client, endpoint=None, createdAt=None, payload=None, headers=None, method=None, responseStatus=None, responseBody=None, error=None, lifecycle=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A web service trigger run
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param endpoint: The endpoint of the web service trigger run.
+   :type endpoint: str
+   :param createdAt: The creation time of the web service trigger run.
+   :type createdAt: str
+   :param payload: The payload of the web service trigger run.
+   :type payload: dict
+   :param headers: The headers of the web service trigger run.
+   :type headers: dict
+   :param method: The method of the web service trigger run.
+   :type method: str
+   :param responseStatus: The HTTP response status code.
+   :type responseStatus: int
+   :param responseBody: The HTTP response body.
+   :type responseBody: str
+   :param error: Error message if the request failed.
+   :type error: str
+   :param lifecycle: The lifecycle status of the run.
+   :type lifecycle: str
+
+
+   .. py:attribute:: endpoint
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: payload
+      :value: None
+
+
+
+   .. py:attribute:: headers
+      :value: None
+
+
+
+   .. py:attribute:: method
+      :value: None
+
+
+
+   .. py:attribute:: response_status
+      :value: None
+
+
+
+   .. py:attribute:: response_body
+      :value: None
+
+
+
+   .. py:attribute:: error
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: Webhook(client, webhookId=None, deploymentId=None, endpoint=None, webhookEventType=None, payloadTemplate=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -50574,6 +50697,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.75'
+   :value: '1.4.76'
 
 

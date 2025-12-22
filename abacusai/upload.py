@@ -121,19 +121,25 @@ class Upload(AbstractApiClass):
         (part_number, part_data) = upload_args
         return self.part(part_number, part_data)
 
-    def upload_file(self, file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600):
+    def upload_file(self, file, threads=10, chunksize=None, wait_timeout=600):
         """
         Uploads the file in the specified chunk size using the specified number of workers.
 
         Args:
             file (IOBase): A bytesIO or StringIO object to upload to Abacus.AI
             threads (int): The max number of workers to use while uploading the file
-            chunksize (int): The number of bytes to use for each chunk while uploading the file. Defaults to 10 MB
+            chunksize (int): The number of bytes to use for each chunk while uploading the file. If None, dynamically calculated based on file size (defaults to 20 MB.)
             wait_timeout (int): The max number of seconds to wait for the file parts to be joined on Abacus.AI. Defaults to 600.
 
         Returns:
             Upload: The upload file object.
         """
+        if chunksize is None:
+            file.seek(0, 2)
+            file_size = file.tell()
+            file.seek(0)
+            chunksize = self._calculate_chunk_size(file_size)
+
         with ThreadPoolExecutor(max_workers=threads) as pool:
             pool.map(self.upload_part, self._yield_upload_part(file, chunksize))
         upload_object = self.mark_complete()
@@ -145,6 +151,13 @@ class Upload(AbstractApiClass):
         elif upload_object.model_id:
             return self.client.describe_model(upload_object.model_id)
         return upload_object
+
+    def _calculate_chunk_size(self, file_size):
+        MIN_CHUNK_SIZE = 20 * 1024 * 1024
+        MAX_CHUNK_SIZE = 100 * 1024 * 1024
+        MAX_PARTS = 10000
+        calculated_chunk_size = (file_size + MAX_PARTS - 1) // MAX_PARTS
+        return min(max(MIN_CHUNK_SIZE, calculated_chunk_size), MAX_CHUNK_SIZE)
 
     def _yield_upload_part(self, file, chunksize):
         part_number = 0
