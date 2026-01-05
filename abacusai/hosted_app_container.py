@@ -25,7 +25,7 @@ class HostedAppContainer(AbstractApiClass):
             lifecycle (str): Container lifecycle status (PENDING/DEPLOYING/ACTIVE/FAILED/STOPPED/DELETING)
             status (str): Container status (RUNNING/STOPPED/DEPLOYING/FAILED)
             deployedStatus (str): Deployment status (PENDING/ACTIVE/STOPPED/NOT_DEPLOYED)
-            accessLevel (str): Access Level (PUBLIC/PRIVATE/DEDICATED)
+            accessLevel (str): Access Level (PUBLIC/PRIVATE/DEDICATED/OWNER_ONLY)
             hostname (str): Hostname of the deployed app
             llmArtifactId (id): The ID of the LLM artifact
             artifactType (str): The type of the artifact
