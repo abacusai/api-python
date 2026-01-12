@@ -233,12 +233,12 @@ class WorkflowNodeInputSchema(ApiClass, JSONSchema):
                 json_schema['properties'][mapping['name']]['format'] = 'data-url'
                 ui_schema[mapping['name']] = {'ui:widget': 'file'}
             if mapping['variable_type'] == enums.PythonFunctionArgumentType.LIST:
-                if mapping['item_type'] == enums.PythonFunctionArgumentType.ATTACHMENT:
+                if mapping.get('item_type') == enums.PythonFunctionArgumentType.ATTACHMENT:
                     json_schema['properties'][mapping['name']]['type'] = 'string'
                     json_schema['properties'][mapping['name']]['format'] = 'data-url'
                     ui_schema[mapping['name']] = {'ui:widget': 'file', 'ui:options': {'multiple': True}}
                 else:
-                    json_schema['properties'][mapping['name']]['items'] = {'type': enums.PythonFunctionArgumentType.to_json_type(mapping['item_type'])}
+                    json_schema['properties'][mapping['name']]['items'] = {'type': enums.PythonFunctionArgumentType.to_json_type(mapping.get('item_type', 'STRING'))}
             if mapping['is_required']:
                 json_schema['required'].append(mapping['name'])
         return cls(json_schema=json_schema, ui_schema=ui_schema)
@@ -738,6 +738,9 @@ class DecisionNode(WorkflowGraphNode):
 class LLMAgentNode(WorkflowGraphNode):
     """
     Represents an LLM agent node in an Agent workflow graph. The LLM Agent Node can be initialized using either chatbot_deployment_id or creation_parameters.
+    The presence of chatbot_deployment_id indicates that the LLM agent node has already been trained and deployed. During creation of an LLM Node using AI Engineer or deepagent.
+    The chatbot_deployment_id is always passed as None pre-training.
+    chatbot_paramters may contain training_config such as builtin tools, document_retrievers, behaviour instructions etc.
 
     Args:
         name (str): A unique name for the LLM agent node.

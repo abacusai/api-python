@@ -427,6 +427,7 @@ class ApplicationConnectorType(ApiEnum):
     OUTLOOK = 'OUTLOOK'
     BIGQUERY = 'BIGQUERY'
     AZURESTORAGE = 'AZURESTORAGE'
+    SHOPIFY = 'SHOPIFY'
 
     @classmethod
     def user_connectors(cls):
@@ -448,7 +449,8 @@ class ApplicationConnectorType(ApiEnum):
             cls.DBC,
             cls.GENERIC_OAUTH,
             cls.OUTLOOK,
-            cls.BIGQUERY
+            cls.BIGQUERY,
+            cls.SHOPIFY
         ]
 
     @classmethod

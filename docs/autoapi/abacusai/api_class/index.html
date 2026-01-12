@@ -1997,7 +1997,10 @@ Note: DO NOT specify the output mapping for the tool; it will be inferred automa
 <dt class="sig sig-object py" id="abacusai.api_class.LLMAgentNode">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">LLMAgentNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chatbot_deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chatbot_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.LLMAgentNode" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.WorkflowGraphNode" title="abacusai.api_class.WorkflowGraphNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphNode</span></code></a></p>
-<p>Represents an LLM agent node in an Agent workflow graph. The LLM Agent Node can be initialized using either chatbot_deployment_id or creation_parameters.</p>
+<p>Represents an LLM agent node in an Agent workflow graph. The LLM Agent Node can be initialized using either chatbot_deployment_id or creation_parameters.
+The presence of chatbot_deployment_id indicates that the LLM agent node has already been trained and deployed. During creation of an LLM Node using AI Engineer or deepagent.
+The chatbot_deployment_id is always passed as None pre-training.
+chatbot_paramters may contain training_config such as builtin tools, document_retrievers, behaviour instructions etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -7128,6 +7131,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.AZURESTORAGE">
 <span class="sig-name descname"><span class="pre">AZURESTORAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AZURESTORAGE'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.AZURESTORAGE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.SHOPIFY">
+<span class="sig-name descname"><span class="pre">SHOPIFY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SHOPIFY'</span></em><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.SHOPIFY" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

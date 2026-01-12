@@ -904,6 +904,9 @@ Package Contents
 
 
    Represents an LLM agent node in an Agent workflow graph. The LLM Agent Node can be initialized using either chatbot_deployment_id or creation_parameters.
+   The presence of chatbot_deployment_id indicates that the LLM agent node has already been trained and deployed. During creation of an LLM Node using AI Engineer or deepagent.
+   The chatbot_deployment_id is always passed as None pre-training.
+   chatbot_paramters may contain training_config such as builtin tools, document_retrievers, behaviour instructions etc.
 
    :param name: A unique name for the LLM agent node.
    :type name: str
@@ -5746,6 +5749,11 @@ Package Contents
 
    .. py:attribute:: AZURESTORAGE
       :value: 'AZURESTORAGE'
+
+
+
+   .. py:attribute:: SHOPIFY
+      :value: 'SHOPIFY'
 
 
 
