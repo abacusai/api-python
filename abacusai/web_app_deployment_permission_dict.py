@@ -7,7 +7,7 @@ class WebAppDeploymentPermissionDict(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            deploymentPermissions (dict): Dictionary containing deployment ID as key and list of tuples containing (user_group_id, permission) as value.
+            deploymentPermissions (dict): Dictionary containing hostname as key and list of tuples containing (user_id, user_group_id, permission) as value.
     """
 
     def __init__(self, client, deploymentPermissions=None):

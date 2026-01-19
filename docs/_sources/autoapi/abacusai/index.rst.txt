@@ -187,6 +187,7 @@ Submodules
    /autoapi/abacusai/mcp_server_query_result/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
+   /autoapi/abacusai/mobile_app_build_status/index
    /autoapi/abacusai/model/index
    /autoapi/abacusai/model_artifacts_export/index
    /autoapi/abacusai/model_blueprint_export/index
@@ -252,6 +253,8 @@ Submodules
    /autoapi/abacusai/python_function_validator/index
    /autoapi/abacusai/python_plot_function/index
    /autoapi/abacusai/range_violation/index
+   /autoapi/abacusai/razorpay_payment_requirements/index
+   /autoapi/abacusai/razorpay_payment_status/index
    /autoapi/abacusai/realtime_monitor/index
    /autoapi/abacusai/refresh_pipeline_run/index
    /autoapi/abacusai/refresh_policy/index
@@ -296,6 +299,7 @@ Submodules
    /autoapi/abacusai/video_search_result/index
    /autoapi/abacusai/voice_gen_details/index
    /autoapi/abacusai/web_app_conversation/index
+   /autoapi/abacusai/web_app_deployment/index
    /autoapi/abacusai/web_app_deployment_permission_dict/index
    /autoapi/abacusai/web_app_domain/index
    /autoapi/abacusai/web_page_response/index
@@ -731,6 +735,7 @@ Classes
    abacusai.McpServerQueryResult
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
+   abacusai.MobileAppBuildStatus
    abacusai.Model
    abacusai.ModelArtifactsExport
    abacusai.ModelBlueprintExport
@@ -795,6 +800,8 @@ Classes
    abacusai.PythonFunction
    abacusai.PythonPlotFunction
    abacusai.RangeViolation
+   abacusai.RazorpayPaymentRequirements
+   abacusai.RazorpayPaymentStatus
    abacusai.RealtimeMonitor
    abacusai.RefreshPipelineRun
    abacusai.RefreshPolicy
@@ -838,6 +845,7 @@ Classes
    abacusai.VideoSearchResult
    abacusai.VoiceGenDetails
    abacusai.WebAppConversation
+   abacusai.WebAppDeployment
    abacusai.WebAppDeploymentPermissionDict
    abacusai.WebAppDomain
    abacusai.WebPageResponse
@@ -36449,7 +36457,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36514,6 +36522,8 @@ Package Contents
    :type parentConversationId: id
    :param projectMetadata: The metadata of the web app project
    :type projectMetadata: dict
+   :param memoryGb: The memory in GB of the web app deployment
+   :type memoryGb: float
 
 
    .. py:attribute:: hosted_app_container_id
@@ -36652,6 +36662,11 @@ Package Contents
 
 
    .. py:attribute:: project_metadata
+      :value: None
+
+
+
+   .. py:attribute:: memory_gb
       :value: None
 
 
@@ -38373,6 +38388,60 @@ Package Contents
 
 
    .. py:attribute:: enabled_external_links
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Status and details of a mobile app build.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param status: Current build status ('PENDING', 'SUCCESS', 'FAILED', 'CANCELLED')
+   :type status: str
+   :param buildUrl: URL to download the built artifact when SUCCESS
+   :type buildUrl: str
+   :param mobileAppBuildId: build identifier
+   :type mobileAppBuildId: str
+   :param hostname: The hostname associated with the build
+   :type hostname: str
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: build_url
+      :value: None
+
+
+
+   .. py:attribute:: mobile_app_build_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
       :value: None
 
 
@@ -47187,6 +47256,86 @@ Package Contents
 
 
 
+.. py:class:: RazorpayPaymentRequirements(client, customerId=None, orderId=None, invoiceId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A Razorpay customer and order
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param customerId: The unique identifier of the customer.
+   :type customerId: str
+   :param orderId: The unique identifier of the order.
+   :type orderId: str
+   :param invoiceId: The unique identifier of the invoice.
+   :type invoiceId: str
+
+
+   .. py:attribute:: customer_id
+      :value: None
+
+
+
+   .. py:attribute:: order_id
+      :value: None
+
+
+
+   .. py:attribute:: invoice_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: RazorpayPaymentStatus(client, status=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The status of a Razorpay payment
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param status: The status of the payment.
+   :type status: str
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: RealtimeMonitor(client, realtimeMonitorId=None, name=None, createdAt=None, deploymentId=None, lookbackTime=None, realtimeMonitorSchedule=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -50115,6 +50264,81 @@ Package Contents
 
 
 
+.. py:class:: WebAppDeployment(client, webAppDeploymentId=None, hostname=None, accessLevel=None, llmArtifactId=None, artifactsPath=None, applicationType=None, memoryGb=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Web app deployment.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppDeploymentId: The ID of the web app deployment.
+   :type webAppDeploymentId: id
+   :param hostname: The hostname of the web app deployment.
+   :type hostname: str
+   :param accessLevel: The access level of the web app deployment.
+   :type accessLevel: str
+   :param llmArtifactId: The ID of the LLM artifact.
+   :type llmArtifactId: id
+   :param artifactsPath: The path to the artifacts of the web app deployment.
+   :type artifactsPath: str
+   :param applicationType: The type of application.
+   :type applicationType: str
+   :param memoryGb: The memory in GB of the web app deployment.
+   :type memoryGb: float
+
+
+   .. py:attribute:: web_app_deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: access_level
+      :value: None
+
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: artifacts_path
+      :value: None
+
+
+
+   .. py:attribute:: application_type
+      :value: None
+
+
+
+   .. py:attribute:: memory_gb
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebAppDeploymentPermissionDict(client, deploymentPermissions=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -50124,7 +50348,7 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param deploymentPermissions: Dictionary containing deployment ID as key and list of tuples containing (user_group_id, permission) as value.
+   :param deploymentPermissions: Dictionary containing hostname as key and list of tuples containing (user_id, user_group_id, permission) as value.
    :type deploymentPermissions: dict
 
 
@@ -50719,6 +50943,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.78'
+   :value: '1.4.79'
 
 

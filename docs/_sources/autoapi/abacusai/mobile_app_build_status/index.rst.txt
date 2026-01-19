@@ -1,0 +1,71 @@
+abacusai.mobile_app_build_status
+================================
+
+.. py:module:: abacusai.mobile_app_build_status
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.mobile_app_build_status.MobileAppBuildStatus
+
+
+Module Contents
+---------------
+
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Status and details of a mobile app build.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param status: Current build status ('PENDING', 'SUCCESS', 'FAILED', 'CANCELLED')
+   :type status: str
+   :param buildUrl: URL to download the built artifact when SUCCESS
+   :type buildUrl: str
+   :param mobileAppBuildId: build identifier
+   :type mobileAppBuildId: str
+   :param hostname: The hostname associated with the build
+   :type hostname: str
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: build_url
+      :value: None
+
+
+
+   .. py:attribute:: mobile_app_build_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

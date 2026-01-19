@@ -172,6 +172,7 @@ from .mcp_server_connection import McpServerConnection
 from .mcp_server_query_result import McpServerQueryResult
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
+from .mobile_app_build_status import MobileAppBuildStatus
 from .model import Model
 from .model_artifacts_export import ModelArtifactsExport
 from .model_blueprint_export import ModelBlueprintExport
@@ -238,6 +239,8 @@ from .project_validation import ProjectValidation
 from .python_function import PythonFunction
 from .python_plot_function import PythonPlotFunction
 from .range_violation import RangeViolation
+from .razorpay_payment_requirements import RazorpayPaymentRequirements
+from .razorpay_payment_status import RazorpayPaymentStatus
 from .realtime_monitor import RealtimeMonitor
 from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
@@ -281,6 +284,7 @@ from .video_gen_settings import VideoGenSettings
 from .video_search_result import VideoSearchResult
 from .voice_gen_details import VoiceGenDetails
 from .web_app_conversation import WebAppConversation
+from .web_app_deployment import WebAppDeployment
 from .web_app_deployment_permission_dict import WebAppDeploymentPermissionDict
 from .web_app_domain import WebAppDomain
 from .web_page_response import WebPageResponse
@@ -292,4 +296,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.78"
+__version__ = "1.4.79"

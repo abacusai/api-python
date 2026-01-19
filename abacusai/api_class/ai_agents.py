@@ -763,6 +763,7 @@ class LLMAgentNode(WorkflowGraphNode):
         self.uid = str(uuid.uuid4())[:6]
         self.chatbot_deployment_id = chatbot_deployment_id
         self.chatbot_parameters = chatbot_parameters or {}
+        self.chatbot_parameters['_is_llm_agent_node'] = True
 
         # Prepare input and output mappings
         input_mappings = [
