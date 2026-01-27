@@ -173,6 +173,7 @@ from .mcp_server_query_result import McpServerQueryResult
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
 from .mobile_app_build_status import MobileAppBuildStatus
+from .mobile_build_info import MobileBuildInfo
 from .model import Model
 from .model_artifacts_export import ModelArtifactsExport
 from .model_blueprint_export import ModelBlueprintExport
@@ -296,4 +297,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.79"
+__version__ = "1.4.80"

@@ -758,7 +758,7 @@ class PredictionClient(BaseApiClient):
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+            deployment_token (str): The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
             deployment_id (str): A unique string identifier for the deployment created under the project.
             arguments (list): Positional arguments to the agent execute function.
             keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
@@ -767,13 +767,13 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'saveConversations': save_conversations}, server_override=prediction_url, timeout=1500)
 
-    def pause_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
+    def pause_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str = None) -> Dict:
         """Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.
 
         Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+            deployment_token (str): The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
             deployment_id (str): A unique string identifier for the deployment created under the project.
-            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation."""
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation. Required for legacy autonomous agents, optional for daemon-based workflows."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('pauseAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id}, server_override=prediction_url, timeout=1500)

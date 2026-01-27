@@ -188,6 +188,7 @@ Submodules
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
    /autoapi/abacusai/mobile_app_build_status/index
+   /autoapi/abacusai/mobile_build_info/index
    /autoapi/abacusai/model/index
    /autoapi/abacusai/model_artifacts_export/index
    /autoapi/abacusai/model_blueprint_export/index
@@ -736,6 +737,7 @@ Classes
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
    abacusai.MobileAppBuildStatus
+   abacusai.MobileBuildInfo
    abacusai.Model
    abacusai.ModelArtifactsExport
    abacusai.ModelBlueprintExport
@@ -12910,7 +12912,7 @@ Package Contents
 
 
 
-.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None)
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -12933,6 +12935,8 @@ Package Contents
    :type status: str
    :param auth: Non-secret connection information for this connector
    :type auth: dict
+   :param baseConnector: The hashed ID of the config connector this user connector is based on (for config connector flows)
+   :type baseConnector: str
 
 
    .. py:attribute:: application_connector_id
@@ -12966,6 +12970,11 @@ Package Contents
 
 
    .. py:attribute:: auth
+      :value: None
+
+
+
+   .. py:attribute:: base_connector
       :value: None
 
 
@@ -14695,7 +14704,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None, hostedDatabaseId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -14742,6 +14751,8 @@ Package Contents
    :type executionMode: str
    :param taskDefinition: The task definition (for web_service_trigger tasks).
    :type taskDefinition: dict
+   :param hostedDatabaseId: The ID of the hosted database for the daemon task.
+   :type hostedDatabaseId: int
 
 
    .. py:attribute:: chatllm_task_id
@@ -14835,6 +14846,11 @@ Package Contents
 
 
    .. py:attribute:: task_definition
+      :value: None
+
+
+
+   .. py:attribute:: hosted_database_id
       :value: None
 
 
@@ -16139,6 +16155,76 @@ Package Contents
       :type include_search_results: bool
       :param user_info: The information of the user to act on behalf of for user restricted data sources.
       :type user_info: dict
+
+
+
+   .. py:method:: get_streaming_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, attachments = None)
+
+      Return an asynchronous generator which continues the conversation based on the input messages, search results, and uploaded binary data.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
+      :type messages: list
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifying the query chat config override.
+      :type chat_config: dict
+      :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
+      :type ignore_documents: bool
+      :param include_search_results: If True, will also return search results, if relevant.
+      :type include_search_results: bool
+      :param attachments: A dictionary of binary data to use as input. The key is the filename, and the value is the binary data.
+      :type attachments: dict
+
+
+
+   .. py:method:: get_streaming_conversation_response_with_binary_data(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, attachments = None)
+
+      Return an asynchronous generator which continues the conversation based on the input message, search results, and uploaded binary data.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param message: A message from the user
+      :type message: str
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+      :type deployment_conversation_id: str
+      :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+      :type external_session_id: str
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifying the query chat config override.
+      :type chat_config: dict
+      :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
+      :type ignore_documents: bool
+      :param include_search_results: If True, will also return search results, if relevant.
+      :type include_search_results: bool
+      :param attachments: A dictionary of binary data to use as input. The key is the filename, and the value is the binary data.
+      :type attachments: dict
 
 
 
@@ -20613,7 +20699,7 @@ Package Contents
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
@@ -20626,15 +20712,15 @@ Package Contents
 
 
 
-   .. py:method:: pause_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id)
+   .. py:method:: pause_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id = None)
 
       Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_conversation_id: str
 
 
@@ -28806,7 +28892,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, history={}, hostedArtifacts={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28881,6 +28967,8 @@ Package Contents
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
    :type hostedArtifacts: HostedArtifact
+   :param mobileBuildInfo: List of mobile app builds with type, build URL, status, and IDs.
+   :type mobileBuildInfo: MobileBuildInfo
 
 
    .. py:attribute:: deployment_conversation_id
@@ -29042,6 +29130,9 @@ Package Contents
 
 
    .. py:attribute:: hosted_artifacts
+
+
+   .. py:attribute:: mobile_build_info
 
 
    .. py:attribute:: deprecated_keys
@@ -38461,6 +38552,67 @@ Package Contents
 
 
 
+.. py:class:: MobileBuildInfo(client, type=None, buildUrl=None, status=None, llmArtifactId=None, mobileAppBuildId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Mobile app build information for a specific build type.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param type: The type of mobile app build (APK, AAB, IOS).
+   :type type: str
+   :param buildUrl: The URL to download the mobile app build.
+   :type buildUrl: str
+   :param status: The status of the mobile app build.
+   :type status: str
+   :param llmArtifactId: The artifact id associated with the build.
+   :type llmArtifactId: str
+   :param mobileAppBuildId: The mobile app build id.
+   :type mobileAppBuildId: str
+
+
+   .. py:attribute:: type
+      :value: None
+
+
+
+   .. py:attribute:: build_url
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: llm_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: mobile_app_build_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44761,7 +44913,7 @@ Package Contents
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
@@ -44774,15 +44926,15 @@ Package Contents
 
 
 
-   .. py:method:: pause_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id)
+   .. py:method:: pause_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id = None)
 
       Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_conversation_id: str
 
 
@@ -50943,6 +51095,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.79'
+   :value: '1.4.80'
 
 

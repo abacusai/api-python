@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None)
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type status: str
    :param auth: Non-secret connection information for this connector
    :type auth: dict
+   :param baseConnector: The hashed ID of the config connector this user connector is based on (for config connector flows)
+   :type baseConnector: str
 
 
    .. py:attribute:: application_connector_id
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: auth
+      :value: None
+
+
+
+   .. py:attribute:: base_connector
       :value: None
 
 

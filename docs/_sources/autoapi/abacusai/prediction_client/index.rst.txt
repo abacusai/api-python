@@ -1003,7 +1003,7 @@ Module Contents
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
@@ -1016,15 +1016,15 @@ Module Contents
 
 
 
-   .. py:method:: pause_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id)
+   .. py:method:: pause_autonomous_agent(deployment_token, deployment_id, deployment_conversation_id = None)
 
       Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation. Required for legacy autonomous agents, optional for daemon-based workflows.
       :type deployment_conversation_id: str
 
 

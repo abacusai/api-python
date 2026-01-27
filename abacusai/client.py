@@ -235,6 +235,53 @@ async def sse_asynchronous_generator(endpoint: str, headers: dict, body: dict):
                                 pass
 
 
+async def sse_asynchronous_generator_with_files(endpoint: str, headers: dict, body: dict, attachments: dict = None):
+    try:
+        import aiohttp
+    except Exception:
+        raise Exception('Please install aiohttp to use this functionality')
+
+    form_data = aiohttp.FormData()
+
+    # Add regular form fields
+    for key, value in body.items():
+        if value is not None:
+            if isinstance(value, (dict, list)):
+                form_data.add_field(key, json.dumps(
+                    value), content_type='application/json')
+            else:
+                form_data.add_field(key, str(value))
+
+    # Add file attachments
+    if attachments:
+        for field_name, file_data in attachments.items():
+            if hasattr(file_data, 'read'):
+                fname = getattr(file_data, 'name', field_name)
+                form_data.add_field(
+                    field_name, file_data, filename=fname, content_type='application/octet-stream')
+            else:
+                form_data.add_field(
+                    field_name, file_data, filename=field_name, content_type='application/octet-stream')
+
+    async with aiohttp.request('POST', endpoint, data=form_data, headers=headers, timeout=aiohttp.ClientTimeout(total=0)) as response:
+        async for line in response.content:
+            if line:
+                streamed_responses = line.decode('utf-8').split('\n')
+                for resp in streamed_responses:
+                    if resp:
+                        resp = resp.strip()
+                        if resp:
+                            try:
+                                resp = json.loads(resp)
+                                resp = {snake_case(
+                                    key): value for key, value in resp.items()}
+                                if 'ping' in resp:
+                                    continue
+                                yield resp
+                            except Exception:
+                                pass
+
+
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 503, 504), session=None, retry_500: bool = False):
     session = session or requests.Session()
     if retry_500:
@@ -667,7 +714,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.79'
+    client_version = '1.4.80'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -4779,6 +4826,86 @@ class ApiClient(ReadOnlyClient):
                 'API not supported, Please contact Abacus.ai support')
         return sse_asynchronous_generator(f'{endpoint}/api/getStreamingConversationResponse', headers, body)
 
+    def get_streaming_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, attachments: dict = None):
+        """Return an asynchronous generator which continues the conversation based on the input messages, search results, and uploaded binary data.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
+            llm_name (str): Name of the specific LLM backend to use to power the chat experience
+            num_completion_tokens (int): Default for maximum number of tokens for chat answers
+            system_message (str): The generative LLM system message
+            temperature (float): The generative LLM temperature
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
+            chat_config (dict): A dictionary specifying the query chat config override.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
+            include_search_results (bool): If True, will also return search results, if relevant.
+            attachments (dict): A dictionary of binary data to use as input. The key is the filename, and the value is the binary data. """
+        headers = {'APIKEY': self.api_key}
+        body = {
+            'deploymentToken': deployment_token,
+            'deploymentId': deployment_id,
+            'messages': messages,
+            'llmName': llm_name,
+            'numCompletionTokens': num_completion_tokens,
+            'systemMessage': system_message,
+            'temperature': temperature,
+            'filterKeyValues': filter_key_values,
+            'searchScoreCutoff': search_score_cutoff,
+            'chatConfig': chat_config,
+            'ignoreDocuments': ignore_documents,
+            'includeSearchResults': include_search_results
+        }
+        endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
+        if endpoint is None:
+            raise Exception(
+                'API not supported, Please contact Abacus.ai support')
+        return sse_asynchronous_generator_with_files(f'{endpoint}/api/getStreamingChatResponseWithBinaryData', headers, body, attachments)
+
+    def get_streaming_conversation_response_with_binary_data(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, attachments: dict = None):
+        """Return an asynchronous generator which continues the conversation based on the input message, search results, and uploaded binary data.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            message (str): A message from the user
+            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+            external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+            llm_name (str): Name of the specific LLM backend to use to power the chat experience
+            num_completion_tokens (int): Default for maximum number of tokens for chat answers
+            system_message (str): The generative LLM system message
+            temperature (float): The generative LLM temperature
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
+            chat_config (dict): A dictionary specifying the query chat config override.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
+            include_search_results (bool): If True, will also return search results, if relevant.
+            attachments (dict): A dictionary of binary data to use as input. The key is the filename, and the value is the binary data. """
+        headers = {'APIKEY': self.api_key}
+        body = {
+            'deploymentToken': deployment_token,
+            'deploymentId': deployment_id,
+            'message': message,
+            'deploymentConversationId': deployment_conversation_id,
+            'externalSessionId': external_session_id,
+            'llmName': llm_name,
+            'numCompletionTokens': num_completion_tokens,
+            'systemMessage': system_message,
+            'temperature': temperature,
+            'filterKeyValues': filter_key_values,
+            'searchScoreCutoff': search_score_cutoff,
+            'chatConfig': chat_config,
+            'ignoreDocuments': ignore_documents,
+            'includeSearchResults': include_search_results
+        }
+        endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
+        if endpoint is None:
+            raise Exception(
+                'API not supported, Please contact Abacus.ai support')
+        return sse_asynchronous_generator_with_files(f'{endpoint}/api/getStreamingConversationResponseWithBinaryData', headers, body, attachments)
+
     def execute_conversation_agent_streaming(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None,
                                              regenerate: bool = False, doc_infos: list = None, agent_workflow_node_id: str = None):
         """Return an asynchronous generator which gives out the agent response stream.
@@ -8084,7 +8211,7 @@ class ApiClient(ReadOnlyClient):
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+            deployment_token (str): The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
             deployment_id (str): A unique string identifier for the deployment created under the project.
             arguments (list): Positional arguments to the agent execute function.
             keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
@@ -8093,13 +8220,13 @@ class ApiClient(ReadOnlyClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('startAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'saveConversations': save_conversations}, server_override=prediction_url, timeout=1500)
 
-    def pause_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str) -> Dict:
+    def pause_autonomous_agent(self, deployment_token: str, deployment_id: str, deployment_conversation_id: str = None) -> Dict:
         """Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.
 
         Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.
+            deployment_token (str): The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
             deployment_id (str): A unique string identifier for the deployment created under the project.
-            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation."""
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation. Required for legacy autonomous agents, optional for daemon-based workflows."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('pauseAutonomousAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id}, server_override=prediction_url, timeout=1500)

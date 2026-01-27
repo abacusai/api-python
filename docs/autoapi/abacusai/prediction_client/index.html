@@ -224,6 +224,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mobile_app_build_status/index.html">abacusai.mobile_app_build_status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_build_info/index.html">abacusai.mobile_build_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html">abacusai.model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_artifacts_export/index.html">abacusai.model_artifacts_export</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_blueprint_export/index.html">abacusai.model_blueprint_export</a></li>
@@ -1524,7 +1525,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.</p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
 <li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Positional arguments to the agent execute function.</p></li>
 <li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the parameter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
@@ -1539,14 +1540,14 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.pause_autonomous_agent">
-<span class="sig-name descname"><span class="pre">pause_autonomous_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.pause_autonomous_agent" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pause_autonomous_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.pause_autonomous_agent" title="Link to this definition"></a></dt>
 <dd><p>Pauses a deployed Autonomous agent associated with the given deployment_conversation_id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, making it safe to embed this model in an application or website.</p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
-<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A unique string identifier for the deployment conversation used for the conversation.</p></li>
+<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A unique string identifier for the deployment conversation. Required for legacy autonomous agents, optional for daemon-based workflows.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
