@@ -764,6 +764,12 @@ class AgentInterface(ApiEnum):
     AUTONOMOUS = 'AUTONOMOUS'
 
 
+class AutonomousTriggerType(ApiEnum):
+    """Type of trigger for autonomous agents."""
+    SCHEDULE = 'SCHEDULE'
+    WEBHOOK = 'WEBHOOK'
+
+
 class WorkflowNodeTemplateType(ApiEnum):
     TRIGGER = 'trigger'
     DEFAULT = 'default'
@@ -845,3 +851,10 @@ class OrganizationSecretType(ApiEnum):
     ORG_SECRET = 'ORG_SECRET'
     ORG_API_CREDENTIALS = 'ORG_API_CREDENTIALS'
     USER_API_CREDENTIALS = 'USER_API_CREDENTIALS'
+
+
+class DaemonTaskLifecycleUpdateAction(ApiEnum):
+    """Action to perform on daemon task lifecycle"""
+    DELETE = 'DELETE'
+    PAUSE = 'PAUSE'
+    RESUME = 'RESUME'

@@ -53,6 +53,7 @@ from .codellm_embedding_constants import CodellmEmbeddingConstants
 from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
+from .conversation_and_project_search_results import ConversationAndProjectSearchResults
 from .cpu_gpu_memory_specs import CpuGpuMemorySpecs
 from .custom_chat_instructions import CustomChatInstructions
 from .custom_domain import CustomDomain
@@ -297,4 +298,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.80"
+__version__ = "1.4.81"

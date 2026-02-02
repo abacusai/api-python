@@ -66,6 +66,7 @@ Submodules
    /autoapi/abacusai/compute_point_info/index
    /autoapi/abacusai/concatenation_config/index
    /autoapi/abacusai/constants_autocomplete_response/index
+   /autoapi/abacusai/conversation_and_project_search_results/index
    /autoapi/abacusai/cpu_gpu_memory_specs/index
    /autoapi/abacusai/cryptography/index
    /autoapi/abacusai/custom_chat_instructions/index
@@ -481,6 +482,7 @@ Classes
    abacusai.StdDevThresholdType
    abacusai.DataType
    abacusai.AgentInterface
+   abacusai.AutonomousTriggerType
    abacusai.WorkflowNodeTemplateType
    abacusai.ProjectConfigType
    abacusai.CPUSize
@@ -490,6 +492,7 @@ Classes
    abacusai.DeploymentConversationType
    abacusai.AgentClientType
    abacusai.OrganizationSecretType
+   abacusai.DaemonTaskLifecycleUpdateAction
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
    abacusai.PercentSamplingConfig
@@ -617,6 +620,7 @@ Classes
    abacusai.ComputePointInfo
    abacusai.ConcatenationConfig
    abacusai.ConstantsAutocompleteResponse
+   abacusai.ConversationAndProjectSearchResults
    abacusai.CpuGpuMemorySpecs
    abacusai.CustomChatInstructions
    abacusai.CustomDomain
@@ -7999,6 +8003,24 @@ Package Contents
 
 
 
+.. py:class:: AutonomousTriggerType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Type of trigger for autonomous agents.
+
+
+   .. py:attribute:: SCHEDULE
+      :value: 'SCHEDULE'
+
+
+
+   .. py:attribute:: WEBHOOK
+      :value: 'WEBHOOK'
+
+
+
 .. py:class:: WorkflowNodeTemplateType
 
    Bases: :py:obj:`ApiEnum`
@@ -8324,6 +8346,29 @@ Package Contents
 
    .. py:attribute:: USER_API_CREDENTIALS
       :value: 'USER_API_CREDENTIALS'
+
+
+
+.. py:class:: DaemonTaskLifecycleUpdateAction
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Action to perform on daemon task lifecycle
+
+
+   .. py:attribute:: DELETE
+      :value: 'DELETE'
+
+
+
+   .. py:attribute:: PAUSE
+      :value: 'PAUSE'
+
+
+
+   .. py:attribute:: RESUME
+      :value: 'RESUME'
 
 
 
@@ -26214,6 +26259,95 @@ Package Contents
 
 
    .. py:attribute:: embedding_constants
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: ConversationAndProjectSearchResults(client, deploymentConversationId=None, name=None, chatllmProjectId=None, chatllmProjectName=None, createdAt=None, lastEventCreatedAt=None, conversationType=None, deploymentId=None, externalApplicationId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A conversation and project search results.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The unique identifier of the deployment conversation.
+   :type deploymentConversationId: str
+   :param name: The name of the deployment conversation.
+   :type name: str
+   :param chatllmProjectId: The chatllm project id associated with the deployment conversation.
+   :type chatllmProjectId: str
+   :param chatllmProjectName: The name of the chatllm project associated with the deployment conversation.
+   :type chatllmProjectName: str
+   :param createdAt: The timestamp at which the deployment conversation was created.
+   :type createdAt: str
+   :param lastEventCreatedAt: The timestamp at which the most recent corresponding deployment conversation event was created at.
+   :type lastEventCreatedAt: str
+   :param conversationType: The type of the conversation, which depicts the application it caters to.
+   :type conversationType: str
+   :param deploymentId: The deployment id associated with the deployment conversation.
+   :type deploymentId: str
+   :param externalApplicationId: The external application id associated with the deployment conversation.
+   :type externalApplicationId: str
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_id
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: last_event_created_at
+      :value: None
+
+
+
+   .. py:attribute:: conversation_type
+      :value: None
+
+
+
+   .. py:attribute:: deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: external_application_id
       :value: None
 
 
@@ -51095,6 +51229,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.80'
+   :value: '1.4.81'
 
 

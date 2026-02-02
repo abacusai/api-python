@@ -84,7 +84,7 @@ class BatchPrediction(AbstractApiClass):
             BatchPredictionArgs, globalPredictionArgs)
         self.batch_prediction_args = client._build_class(getattr(
             api_class, batchPredictionArgsType, BatchPredictionArgs) if batchPredictionArgsType else BatchPredictionArgs, batchPredictionArgs)
-        self.deprecated_keys = {'global_prediction_args', 'explanations'}
+        self.deprecated_keys = {'explanations', 'global_prediction_args'}
 
     def __repr__(self):
         repr_dict = {f'batch_prediction_id': repr(self.batch_prediction_id), f'created_at': repr(self.created_at), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'file_connector_output_location': repr(self.file_connector_output_location), f'database_connector_id': repr(self.database_connector_id), f'database_output_configuration': repr(self.database_output_configuration), f'file_output_format': repr(self.file_output_format), f'connector_type': repr(self.connector_type), f'legacy_input_location': repr(self.legacy_input_location), f'output_feature_group_id': repr(self.output_feature_group_id), f'feature_group_table_name': repr(self.feature_group_table_name), f'output_feature_group_table_name': repr(self.output_feature_group_table_name), f'summary_feature_group_table_name': repr(self.summary_feature_group_table_name), f'csv_input_prefix': repr(

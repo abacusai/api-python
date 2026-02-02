@@ -68,6 +68,7 @@ Classes
    abacusai.api_class.enums.StdDevThresholdType
    abacusai.api_class.enums.DataType
    abacusai.api_class.enums.AgentInterface
+   abacusai.api_class.enums.AutonomousTriggerType
    abacusai.api_class.enums.WorkflowNodeTemplateType
    abacusai.api_class.enums.ProjectConfigType
    abacusai.api_class.enums.CPUSize
@@ -77,6 +78,7 @@ Classes
    abacusai.api_class.enums.DeploymentConversationType
    abacusai.api_class.enums.AgentClientType
    abacusai.api_class.enums.OrganizationSecretType
+   abacusai.api_class.enums.DaemonTaskLifecycleUpdateAction
 
 
 Functions
@@ -3011,6 +3013,24 @@ Module Contents
 
 
 
+.. py:class:: AutonomousTriggerType
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Type of trigger for autonomous agents.
+
+
+   .. py:attribute:: SCHEDULE
+      :value: 'SCHEDULE'
+
+
+
+   .. py:attribute:: WEBHOOK
+      :value: 'WEBHOOK'
+
+
+
 .. py:class:: WorkflowNodeTemplateType
 
    Bases: :py:obj:`ApiEnum`
@@ -3336,6 +3356,29 @@ Module Contents
 
    .. py:attribute:: USER_API_CREDENTIALS
       :value: 'USER_API_CREDENTIALS'
+
+
+
+.. py:class:: DaemonTaskLifecycleUpdateAction
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Action to perform on daemon task lifecycle
+
+
+   .. py:attribute:: DELETE
+      :value: 'DELETE'
+
+
+
+   .. py:attribute:: PAUSE
+      :value: 'PAUSE'
+
+
+
+   .. py:attribute:: RESUME
+      :value: 'RESUME'
 
 
 
