@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None, accessLevel=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -52,6 +52,8 @@ Module Contents
    :type hasDatabaseSnapshot: bool
    :param supportsPreviewRestore: Whether the artifact supports preview restore
    :type supportsPreviewRestore: bool
+   :param accessLevel: The access level of the artifact
+   :type accessLevel: str
 
 
    .. py:attribute:: llm_artifact_id
@@ -120,6 +122,11 @@ Module Contents
 
 
    .. py:attribute:: supports_preview_restore
+      :value: None
+
+
+
+   .. py:attribute:: access_level
       :value: None
 
 

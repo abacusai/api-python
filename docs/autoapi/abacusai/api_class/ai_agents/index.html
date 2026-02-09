@@ -119,6 +119,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../custom_metric_version/index.html">abacusai.custom_metric_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../custom_train_function_info/index.html">abacusai.custom_train_function_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../daemon_task_conversation/index.html">abacusai.daemon_task_conversation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../daemon_task_instance/index.html">abacusai.daemon_task_instance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../data_consistency_duplication/index.html">abacusai.data_consistency_duplication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../data_metrics/index.html">abacusai.data_metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../data_prep_logs/index.html">abacusai.data_prep_logs</a></li>
@@ -157,6 +158,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../eda_forecasting_analysis/index.html">abacusai.eda_forecasting_analysis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../eda_version/index.html">abacusai.eda_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../edit_image_models/index.html">abacusai.edit_image_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../email_domain/index.html">abacusai.email_domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../embedding_feature_drift_distribution/index.html">abacusai.embedding_feature_drift_distribution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../entri_auth_token/index.html">abacusai.entri_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../execute_feature_group_operation/index.html">abacusai.execute_feature_group_operation</a></li>
@@ -347,6 +349,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../web_app_deployment/index.html">abacusai.web_app_deployment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_app_deployment_permission_dict/index.html">abacusai.web_app_deployment_permission_dict</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_app_domain/index.html">abacusai.web_app_domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../web_app_project/index.html">abacusai.web_app_project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_page_response/index.html">abacusai.web_page_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../web_search_result/index.html">abacusai.web_search_result</a></li>
@@ -439,6 +442,12 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.InputNode" title="abacusai.api_class.ai_agents.InputNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InputNode</span></code></a></p></td>
 <td><p>Represents an input node in an agent workflow graph.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.Signal" title="abacusai.api_class.ai_agents.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Signal</span></code></a></p></td>
+<td><p>Represents a control flow signal from trigger nodes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig" title="abacusai.api_class.ai_agents.WebhookTriggerConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WebhookTriggerConfig</span></code></a></p></td>
+<td><p>Configuration for a webhook trigger node.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.ai_agents.WorkflowGraphEdge" title="abacusai.api_class.ai_agents.WorkflowGraphEdge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WorkflowGraphEdge</span></code></a></p></td>
 <td><p>Represents an edge in an Agent workflow graph.</p></td>
@@ -816,12 +825,32 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <p>Represents the configuration for a trigger workflow node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sleep_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The time in seconds to wait before the node gets executed again.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sleep_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The time in seconds to wait before the node gets executed again (interval mode).</p></li>
+<li><p><strong>cron_expression</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A cron expression for scheduling (e.g., ‘0 9 * * <a href="#id1"><span class="problematic" id="id2">*</span></a>’ for daily at 9am).</p></li>
+<li><p><strong>timezone</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Timezone for scheduling (e.g., ‘UTC’, ‘America/New_York’). Defaults to ‘UTC’.</p></li>
+</ul>
 </dd>
 </dl>
+<p>Note: Use either sleep_time (interval) OR cron_expression, not both.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.TriggerConfig.sleep_time">
 <span class="sig-name descname"><span class="pre">sleep_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.TriggerConfig.sleep_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.TriggerConfig.cron_expression">
+<span class="sig-name descname"><span class="pre">cron_expression</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.TriggerConfig.cron_expression" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.TriggerConfig.timezone">
+<span class="sig-name descname"><span class="pre">timezone</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'UTC'</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.TriggerConfig.timezone" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.TriggerConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.TriggerConfig.__post_init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1347,6 +1376,94 @@ WorkflowGraphNodeDetails return filter to miss fields.)</p>
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.InputNode.get_input_schema">
 <span class="sig-name descname"><span class="pre">get_input_schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.InputNode.get_input_schema" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.Signal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">Signal</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.Signal" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Represents a control flow signal from trigger nodes.</p>
+<p>Signals trigger downstream execution without passing data to LLM nodes.
+Regular Python nodes receive the Signal object and can inspect its metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>triggered</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the signal was triggered. Always True for valid signals.</p></li>
+<li><p><strong>trigger_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – How the signal was triggered (‘daemon’ or ‘webhook’).</p></li>
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Optional metadata for the signal.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.Signal.triggered">
+<span class="sig-name descname"><span class="pre">triggered</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.Signal.triggered" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.Signal.trigger_type">
+<span class="sig-name descname"><span class="pre">trigger_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.Signal.trigger_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.Signal.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.Signal.metadata" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.Signal.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.Signal.to_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.Signal.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.Signal.from_dict" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.ai_agents.</span></span><span class="sig-name descname"><span class="pre">WebhookTriggerConfig</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.ai_agents.TriggerConfig" title="abacusai.api_class.ai_agents.TriggerConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TriggerConfig</span></code></a></p>
+<p>Configuration for a webhook trigger node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The webhook URL for testing. Populated by the API.</p></li>
+<li><p><strong>production_webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The webhook URL for production. Populated by the API.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig.test_webhook_url">
+<span class="sig-name descname"><span class="pre">test_webhook_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig.test_webhook_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig.production_webhook_url">
+<span class="sig-name descname"><span class="pre">production_webhook_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig.production_webhook_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig.to_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig.from_dict" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

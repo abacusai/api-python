@@ -1,0 +1,85 @@
+abacusai.daemon_task_instance
+=============================
+
+.. py:module:: abacusai.daemon_task_instance
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.daemon_task_instance.DaemonTaskInstance
+
+
+Module Contents
+---------------
+
+.. py:class:: DaemonTaskInstance(client, daemonTaskVersion=None, daemonTaskId=None, deploymentConversationId=None, lifecycle=None, createdAt=None, lifecycleInfo=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A daemon task instance representing a single run of a daemon task.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param daemonTaskVersion: The unique identifier for this task instance.
+   :type daemonTaskVersion: str
+   :param daemonTaskId: The id of the parent daemon task.
+   :type daemonTaskId: str
+   :param deploymentConversationId: The deployment conversation id for this instance.
+   :type deploymentConversationId: str
+   :param lifecycle: The lifecycle status (PENDING, EXECUTING, COMPLETED, FAILED).
+   :type lifecycle: str
+   :param createdAt: When this instance was created.
+   :type createdAt: str
+   :param lifecycleInfo: Additional lifecycle information (e.g., error details).
+   :type lifecycleInfo: dict
+
+
+   .. py:attribute:: daemon_task_version
+      :value: None
+
+
+
+   .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle_info
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

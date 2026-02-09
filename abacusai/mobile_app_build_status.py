@@ -11,19 +11,23 @@ class MobileAppBuildStatus(AbstractApiClass):
             buildUrl (str): URL to download the built artifact when SUCCESS
             mobileAppBuildId (str): build identifier
             hostname (str): The hostname associated with the build
+            requiredInput (str): The required input for the build
+            error (str): The error message for the build
     """
 
-    def __init__(self, client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None):
+    def __init__(self, client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, error=None):
         super().__init__(client, None)
         self.status = status
         self.build_url = buildUrl
         self.mobile_app_build_id = mobileAppBuildId
         self.hostname = hostname
+        self.required_input = requiredInput
+        self.error = error
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'status': repr(self.status), f'build_url': repr(
-            self.build_url), f'mobile_app_build_id': repr(self.mobile_app_build_id), f'hostname': repr(self.hostname)}
+        repr_dict = {f'status': repr(self.status), f'build_url': repr(self.build_url), f'mobile_app_build_id': repr(
+            self.mobile_app_build_id), f'hostname': repr(self.hostname), f'required_input': repr(self.required_input), f'error': repr(self.error)}
         class_name = "MobileAppBuildStatus"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -36,6 +40,6 @@ class MobileAppBuildStatus(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'status': self.status, 'build_url': self.build_url,
-                'mobile_app_build_id': self.mobile_app_build_id, 'hostname': self.hostname}
+        resp = {'status': self.status, 'build_url': self.build_url, 'mobile_app_build_id': self.mobile_app_build_id,
+                'hostname': self.hostname, 'required_input': self.required_input, 'error': self.error}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

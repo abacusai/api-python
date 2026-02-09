@@ -320,20 +320,34 @@ class TriggerConfig(ApiClass):
     Represents the configuration for a trigger workflow node.
 
     Args:
-        sleep_time (int): The time in seconds to wait before the node gets executed again.
+        sleep_time (int): The time in seconds to wait before the node gets executed again (interval mode).
+        cron_expression (str): A cron expression for scheduling (e.g., '0 9 * * *' for daily at 9am).
+        timezone (str): Timezone for scheduling (e.g., 'UTC', 'America/New_York'). Defaults to 'UTC'.
+
+    Note: Use either sleep_time (interval) OR cron_expression, not both.
     """
     sleep_time: int = dataclasses.field(default=None)
+    cron_expression: str = dataclasses.field(default=None)
+    timezone: str = dataclasses.field(default='UTC')
+
+    def __post_init__(self):
+        if self.sleep_time is not None and self.cron_expression is not None:
+            raise ValueError('trigger_config', 'Cannot specify both sleep_time and cron_expression. Use one or the other.')
 
     def to_dict(self):
         return {
-            'sleep_time': self.sleep_time
+            'sleep_time': self.sleep_time,
+            'cron_expression': self.cron_expression,
+            'timezone': self.timezone
         }
 
     @classmethod
     def from_dict(cls, configs: dict):
         validate_input_dict_param(configs, friendly_class_name='trigger_config')
         return cls(
-            sleep_time=configs.get('sleep_time', None)
+            sleep_time=configs.get('sleep_time', None),
+            cron_expression=configs.get('cron_expression', None),
+            timezone=configs.get('timezone', 'UTC')
         )
 
 
@@ -630,6 +644,13 @@ class WorkflowGraphNode(ApiClass):
         if node.get('template_metadata') and node.get('template_metadata').get('template_type') == 'trigger':
             if not node.get('trigger_config'):
                 node['trigger_config'] = {'sleep_time': node.get('template_metadata').get('sleep_time')}
+        trigger_config_dict = node.get('trigger_config')
+        trigger_config = None
+        if trigger_config_dict:
+            if node.get('node_type') == 'webhook_node':
+                trigger_config = WebhookTriggerConfig.from_dict(trigger_config_dict)
+            else:
+                trigger_config = TriggerConfig.from_dict(trigger_config_dict)
         instance = _cls(
             name=node['name'],
             function_name=node['function_name'],
@@ -639,9 +660,10 @@ class WorkflowGraphNode(ApiClass):
             input_schema=WorkflowNodeInputSchema.from_dict(node.get('input_schema', {})),
             output_schema=WorkflowNodeOutputSchema.from_dict(node.get('output_schema', {})),
             template_metadata=node.get('template_metadata'),
-            trigger_config=TriggerConfig.from_dict(node.get('trigger_config')) if node.get('trigger_config') else None,
+            trigger_config=trigger_config,
             description=node.get('description')
         )
+        instance.node_type = node.get('node_type', 'workflow_node')
         return instance
 
     def __setattr__(self, name, value):
@@ -1000,6 +1022,52 @@ class InputNode(WorkflowGraphNode):
         return self.input_schema
 
 
+@dataclasses.dataclass
+class Signal(ApiClass):
+    """
+    Represents a control flow signal from trigger nodes.
+
+    Signals trigger downstream execution without passing data to LLM nodes.
+    Regular Python nodes receive the Signal object and can inspect its metadata.
+
+    Args:
+        triggered (bool): Whether the signal was triggered. Always True for valid signals.
+        trigger_type (str): How the signal was triggered ('daemon' or 'webhook').
+        metadata (dict): Optional metadata for the signal.
+    """
+    triggered: bool = dataclasses.field(default=True)
+    trigger_type: str = dataclasses.field(default=None)
+    metadata: dict = dataclasses.field(default=None)
+
+    def to_dict(self):
+        return {'triggered': self.triggered, 'trigger_type': self.trigger_type, 'metadata': self.metadata, '_type': 'Signal'}
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(triggered=data.get('triggered', True), trigger_type=data.get('trigger_type'), metadata=data.get('metadata'))
+
+
+@dataclasses.dataclass
+class WebhookTriggerConfig(TriggerConfig):
+    """
+    Configuration for a webhook trigger node.
+
+    Args:
+        test_webhook_url (str): The webhook URL for testing. Populated by the API.
+        production_webhook_url (str): The webhook URL for production. Populated by the API.
+    """
+    test_webhook_url: str = dataclasses.field(default=None)
+    production_webhook_url: str = dataclasses.field(default=None)
+
+    def to_dict(self):
+        return {'sleep_time': None, 'test_webhook_url': self.test_webhook_url, 'production_webhook_url': self.production_webhook_url}
+
+    @classmethod
+    def from_dict(cls, configs: dict):
+        validate_input_dict_param(configs, friendly_class_name='webhook_trigger_config')
+        return cls(test_webhook_url=configs.get('test_webhook_url'), production_webhook_url=configs.get('production_webhook_url'))
+
+
 @validate_constructor_arg_types('workflow_graph_edge')
 @dataclasses.dataclass
 class WorkflowGraphEdge(ApiClass):
@@ -1086,6 +1154,8 @@ class WorkflowGraph(ApiClass):
             'workflow_node': WorkflowGraphNode.from_dict,
             'llm_agent_node': LLMAgentNode.from_dict,
             'input_node': InputNode.from_dict,
+            'schedule_node': WorkflowGraphNode.from_dict,
+            'webhook_node': WorkflowGraphNode.from_dict,
         }
         nodes = [node_generator[node.get('node_type') or 'workflow_node'](node) for node in graph.get('nodes', [])]
         edges = [WorkflowGraphEdge.from_dict(edge) for edge in graph.get('edges', [])]

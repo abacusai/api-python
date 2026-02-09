@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.81'
+      :value: '1.4.82'
 
 
 
@@ -2964,6 +2964,19 @@ Module Contents
 
       :returns: The deployment conversation html export.
       :rtype: DeploymentConversationExport
+
+
+
+   .. py:method:: download_deployment_conversation_artifacts(deployment_conversation_id)
+
+      Download all artifacts (files/code) for a Deep Agent conversation as a single archive.
+
+      When the conversation's filesystem is archived, returns a .tar; when available, returns a .zip.
+      Use with the conversation ID of a Deep Agent conversation to download all generated files locally.
+
+
+      :param deployment_conversation_id: Unique ID of the Deep Agent conversation whose artifacts to download.
+      :type deployment_conversation_id: str
 
 
 

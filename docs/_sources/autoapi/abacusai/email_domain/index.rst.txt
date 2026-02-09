@@ -1,0 +1,78 @@
+abacusai.email_domain
+=====================
+
+.. py:module:: abacusai.email_domain
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.email_domain.EmailDomain
+
+
+Module Contents
+---------------
+
+.. py:class:: EmailDomain(client, emailDomainId=None, hostname=None, verificationStatus=None, dnsRecords=None, isAbacusManaged=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Email domain (setup result, _getEmailDomainStatus, or list item in WebAppProject.email_domains).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param emailDomainId: The email domain ID (null when NOT_CONFIGURED)
+   :type emailDomainId: id
+   :param hostname: The hostname
+   :type hostname: str
+   :param verificationStatus: NOT_CONFIGURED | PENDING | VERIFIED | FAILED
+   :type verificationStatus: str
+   :param dnsRecords: DNS records (empty for list view)
+   :type dnsRecords: list
+   :param isAbacusManaged: Whether DNS is Abacus-managed
+   :type isAbacusManaged: bool
+
+
+   .. py:attribute:: email_domain_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: verification_status
+      :value: None
+
+
+
+   .. py:attribute:: dns_records
+      :value: None
+
+
+
+   .. py:attribute:: is_abacus_managed
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

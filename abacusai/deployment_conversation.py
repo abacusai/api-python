@@ -189,6 +189,19 @@ class DeploymentConversation(AbstractApiClass):
         """
         return self.client.export_deployment_conversation(self.deployment_conversation_id, external_session_id)
 
+    def download_artifacts(self):
+        """
+        Download all artifacts (files/code) for a Deep Agent conversation as a single archive.
+
+        When the conversation's filesystem is archived, returns a .tar; when available, returns a .zip.
+        Use with the conversation ID of a Deep Agent conversation to download all generated files locally.
+
+
+        Args:
+            deployment_conversation_id (str): Unique ID of the Deep Agent conversation whose artifacts to download.
+        """
+        return self.client.download_deployment_conversation_artifacts(self.deployment_conversation_id)
+
     def construct_agent_conversation_messages_for_llm(self, external_session_id: str = None, include_document_contents: bool = True):
         """
         Returns conversation history in a format for LLM calls.

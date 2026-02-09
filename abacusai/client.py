@@ -714,7 +714,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.81'
+    client_version = '1.4.82'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2874,6 +2874,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DeploymentConversationExport: The deployment conversation html export."""
         return self._proxy_request('exportDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, parse_type=DeploymentConversationExport, is_sync=True)
+
+    def download_deployment_conversation_artifacts(self, deployment_conversation_id: str) -> io.BytesIO:
+        """Download all artifacts (files/code) for a Deep Agent conversation as a single archive.
+
+        When the conversation's filesystem is archived, returns a .tar; when available, returns a .zip.
+        Use with the conversation ID of a Deep Agent conversation to download all generated files locally.
+
+
+        Args:
+            deployment_conversation_id (str): Unique ID of the Deep Agent conversation whose artifacts to download."""
+        return self._proxy_request('downloadDeploymentConversationArtifacts', 'GET', query_params={'deploymentConversationId': deployment_conversation_id}, is_sync=True, streamable_response=True)
 
     def list_user_group_object_permissions(self) -> List[UserGroupObjectPermission]:
         """List all user groups permissions associated with the objects in the organization.

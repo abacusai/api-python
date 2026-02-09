@@ -76,6 +76,7 @@ Submodules
    /autoapi/abacusai/custom_metric_version/index
    /autoapi/abacusai/custom_train_function_info/index
    /autoapi/abacusai/daemon_task_conversation/index
+   /autoapi/abacusai/daemon_task_instance/index
    /autoapi/abacusai/data_consistency_duplication/index
    /autoapi/abacusai/data_metrics/index
    /autoapi/abacusai/data_prep_logs/index
@@ -114,6 +115,7 @@ Submodules
    /autoapi/abacusai/eda_forecasting_analysis/index
    /autoapi/abacusai/eda_version/index
    /autoapi/abacusai/edit_image_models/index
+   /autoapi/abacusai/email_domain/index
    /autoapi/abacusai/embedding_feature_drift_distribution/index
    /autoapi/abacusai/entri_auth_token/index
    /autoapi/abacusai/execute_feature_group_operation/index
@@ -304,6 +306,7 @@ Submodules
    /autoapi/abacusai/web_app_deployment/index
    /autoapi/abacusai/web_app_deployment_permission_dict/index
    /autoapi/abacusai/web_app_domain/index
+   /autoapi/abacusai/web_app_project/index
    /autoapi/abacusai/web_page_response/index
    /autoapi/abacusai/web_search_response/index
    /autoapi/abacusai/web_search_result/index
@@ -365,6 +368,8 @@ Classes
    abacusai.DecisionNode
    abacusai.LLMAgentNode
    abacusai.InputNode
+   abacusai.Signal
+   abacusai.WebhookTriggerConfig
    abacusai.WorkflowGraphEdge
    abacusai.WorkflowGraph
    abacusai.AgentConversationMessage
@@ -629,6 +634,7 @@ Classes
    abacusai.CustomMetricVersion
    abacusai.CustomTrainFunctionInfo
    abacusai.DaemonTaskConversation
+   abacusai.DaemonTaskInstance
    abacusai.DataConsistencyDuplication
    abacusai.DataMetrics
    abacusai.DataPrepLogs
@@ -667,6 +673,7 @@ Classes
    abacusai.EdaForecastingAnalysis
    abacusai.EdaVersion
    abacusai.EditImageModels
+   abacusai.EmailDomain
    abacusai.EmbeddingFeatureDriftDistribution
    abacusai.EntriAuthToken
    abacusai.ExecuteFeatureGroupOperation
@@ -854,6 +861,7 @@ Classes
    abacusai.WebAppDeployment
    abacusai.WebAppDeploymentPermissionDict
    abacusai.WebAppDomain
+   abacusai.WebAppProject
    abacusai.WebPageResponse
    abacusai.WebSearchResponse
    abacusai.WebSearchResult
@@ -2472,14 +2480,35 @@ Package Contents
 
    Represents the configuration for a trigger workflow node.
 
-   :param sleep_time: The time in seconds to wait before the node gets executed again.
+   :param sleep_time: The time in seconds to wait before the node gets executed again (interval mode).
    :type sleep_time: int
+   :param cron_expression: A cron expression for scheduling (e.g., '0 9 * * *' for daily at 9am).
+   :type cron_expression: str
+   :param timezone: Timezone for scheduling (e.g., 'UTC', 'America/New_York'). Defaults to 'UTC'.
+   :type timezone: str
+
+   Note: Use either sleep_time (interval) OR cron_expression, not both.
 
 
    .. py:attribute:: sleep_time
       :type:  int
       :value: None
 
+
+
+   .. py:attribute:: cron_expression
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: timezone
+      :type:  str
+      :value: 'UTC'
+
+
+
+   .. py:method:: __post_init__()
 
 
    .. py:method:: to_dict()
@@ -2888,6 +2917,83 @@ Package Contents
 
 
    .. py:method:: get_input_schema()
+
+
+.. py:class:: Signal
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Represents a control flow signal from trigger nodes.
+
+   Signals trigger downstream execution without passing data to LLM nodes.
+   Regular Python nodes receive the Signal object and can inspect its metadata.
+
+   :param triggered: Whether the signal was triggered. Always True for valid signals.
+   :type triggered: bool
+   :param trigger_type: How the signal was triggered ('daemon' or 'webhook').
+   :type trigger_type: str
+   :param metadata: Optional metadata for the signal.
+   :type metadata: dict
+
+
+   .. py:attribute:: triggered
+      :type:  bool
+      :value: True
+
+
+
+   .. py:attribute:: trigger_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: metadata
+      :type:  dict
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(data)
+      :classmethod:
+
+
+
+.. py:class:: WebhookTriggerConfig
+
+   Bases: :py:obj:`TriggerConfig`
+
+
+   Configuration for a webhook trigger node.
+
+   :param test_webhook_url: The webhook URL for testing. Populated by the API.
+   :type test_webhook_url: str
+   :param production_webhook_url: The webhook URL for production. Populated by the API.
+   :type production_webhook_url: str
+
+
+   .. py:attribute:: test_webhook_url
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: production_webhook_url
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(configs)
+      :classmethod:
+
 
 
 .. py:class:: WorkflowGraphEdge(source, target, details = None)
@@ -3941,7 +4047,7 @@ Package Contents
 
 
 
-   .. py:method:: aws_ocr_modes()
+   .. py:method:: advanced_ocr_modes()
       :classmethod:
 
 
@@ -7880,6 +7986,11 @@ Package Contents
 
    .. py:attribute:: ANY
       :value: 'ANY'
+
+
+
+   .. py:attribute:: SIGNAL
+      :value: 'SIGNAL'
 
 
 
@@ -14749,7 +14860,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None, hostedDatabaseId=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None, webAppHostname=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -14796,8 +14907,12 @@ Package Contents
    :type executionMode: str
    :param taskDefinition: The task definition (for web_service_trigger tasks).
    :type taskDefinition: dict
-   :param hostedDatabaseId: The ID of the hosted database for the daemon task.
-   :type hostedDatabaseId: int
+   :param webAppHostname: The hostname of the web app associated with the daemon task.
+   :type webAppHostname: str
+   :param hostedDatabase: The hosted database for the daemon task.
+   :type hostedDatabase: HostedDatabase
+   :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
+   :type latestDaemonTaskInstance: DaemonTaskInstance
 
 
    .. py:attribute:: chatllm_task_id
@@ -14895,9 +15010,15 @@ Package Contents
 
 
 
-   .. py:attribute:: hosted_database_id
+   .. py:attribute:: web_app_hostname
       :value: None
 
+
+
+   .. py:attribute:: hosted_database
+
+
+   .. py:attribute:: latest_daemon_task_instance
 
 
    .. py:attribute:: deprecated_keys
@@ -24930,6 +25051,19 @@ Package Contents
 
 
 
+   .. py:method:: download_deployment_conversation_artifacts(deployment_conversation_id)
+
+      Download all artifacts (files/code) for a Deep Agent conversation as a single archive.
+
+      When the conversation's filesystem is archived, returns a .tar; when available, returns a .zip.
+      Use with the conversation ID of a Deep Agent conversation to download all generated files locally.
+
+
+      :param deployment_conversation_id: Unique ID of the Deep Agent conversation whose artifacts to download.
+      :type deployment_conversation_id: str
+
+
+
    .. py:method:: list_user_group_object_permissions()
 
       List all user groups permissions associated with the objects in the organization.
@@ -26851,6 +26985,74 @@ Package Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: DaemonTaskInstance(client, daemonTaskVersion=None, daemonTaskId=None, deploymentConversationId=None, lifecycle=None, createdAt=None, lifecycleInfo=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A daemon task instance representing a single run of a daemon task.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param daemonTaskVersion: The unique identifier for this task instance.
+   :type daemonTaskVersion: str
+   :param daemonTaskId: The id of the parent daemon task.
+   :type daemonTaskId: str
+   :param deploymentConversationId: The deployment conversation id for this instance.
+   :type deploymentConversationId: str
+   :param lifecycle: The lifecycle status (PENDING, EXECUTING, COMPLETED, FAILED).
+   :type lifecycle: str
+   :param createdAt: When this instance was created.
+   :type createdAt: str
+   :param lifecycleInfo: Additional lifecycle information (e.g., error details).
+   :type lifecycleInfo: dict
+
+
+   .. py:attribute:: daemon_task_version
+      :value: None
+
+
+
+   .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle_info
       :value: None
 
 
@@ -29381,6 +29583,19 @@ Package Contents
 
 
 
+   .. py:method:: download_artifacts()
+
+      Download all artifacts (files/code) for a Deep Agent conversation as a single archive.
+
+      When the conversation's filesystem is archived, returns a .tar; when available, returns a .zip.
+      Use with the conversation ID of a Deep Agent conversation to download all generated files locally.
+
+
+      :param deployment_conversation_id: Unique ID of the Deep Agent conversation whose artifacts to download.
+      :type deployment_conversation_id: str
+
+
+
    .. py:method:: construct_agent_conversation_messages_for_llm(external_session_id = None, include_document_contents = True)
 
       Returns conversation history in a format for LLM calls.
@@ -31464,6 +31679,67 @@ Package Contents
 
 
    .. py:attribute:: default
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: EmailDomain(client, emailDomainId=None, hostname=None, verificationStatus=None, dnsRecords=None, isAbacusManaged=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Email domain (setup result, _getEmailDomainStatus, or list item in WebAppProject.email_domains).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param emailDomainId: The email domain ID (null when NOT_CONFIGURED)
+   :type emailDomainId: id
+   :param hostname: The hostname
+   :type hostname: str
+   :param verificationStatus: NOT_CONFIGURED | PENDING | VERIFIED | FAILED
+   :type verificationStatus: str
+   :param dnsRecords: DNS records (empty for list view)
+   :type dnsRecords: list
+   :param isAbacusManaged: Whether DNS is Abacus-managed
+   :type isAbacusManaged: bool
+
+
+   .. py:attribute:: email_domain_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: verification_status
+      :value: None
+
+
+
+   .. py:attribute:: dns_records
+      :value: None
+
+
+
+   .. py:attribute:: is_abacus_managed
       :value: None
 
 
@@ -36682,7 +36958,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36749,6 +37025,8 @@ Package Contents
    :type projectMetadata: dict
    :param memoryGb: The memory in GB of the web app deployment
    :type memoryGb: float
+   :param domainAliases: The domain aliases of the deployed app
+   :type domainAliases: list
 
 
    .. py:attribute:: hosted_app_container_id
@@ -36896,6 +37174,11 @@ Package Contents
 
 
 
+   .. py:attribute:: domain_aliases
+      :value: None
+
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -36965,7 +37248,7 @@ Package Contents
 
 
 
-.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, lifecycle=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None)
+.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, lifecycle=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None, accessLevel=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36988,6 +37271,8 @@ Package Contents
    :type deploymentConversationId: str
    :param conversationSequenceNumber: Conversation event associated with this artifact, null if not applicable.
    :type conversationSequenceNumber: number(integer)
+   :param accessLevel: The access level of the hosted artifact (PUBLIC, PRIVATE, OWNER_ONLY, DEDICATED).
+   :type accessLevel: str
 
 
    .. py:attribute:: hostname
@@ -37021,6 +37306,11 @@ Package Contents
 
 
    .. py:attribute:: conversation_sequence_number
+      :value: None
+
+
+
+   .. py:attribute:: access_level
       :value: None
 
 
@@ -37795,7 +38085,7 @@ Package Contents
 
 
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None, accessLevel=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37832,6 +38122,8 @@ Package Contents
    :type hasDatabaseSnapshot: bool
    :param supportsPreviewRestore: Whether the artifact supports preview restore
    :type supportsPreviewRestore: bool
+   :param accessLevel: The access level of the artifact
+   :type accessLevel: str
 
 
    .. py:attribute:: llm_artifact_id
@@ -37900,6 +38192,11 @@ Package Contents
 
 
    .. py:attribute:: supports_preview_restore
+      :value: None
+
+
+
+   .. py:attribute:: access_level
       :value: None
 
 
@@ -38632,7 +38929,7 @@ Package Contents
 
 
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, error=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38649,6 +38946,10 @@ Package Contents
    :type mobileAppBuildId: str
    :param hostname: The hostname associated with the build
    :type hostname: str
+   :param requiredInput: The required input for the build
+   :type requiredInput: str
+   :param error: The error message for the build
+   :type error: str
 
 
    .. py:attribute:: status
@@ -38667,6 +38968,16 @@ Package Contents
 
 
    .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: required_input
+      :value: None
+
+
+
+   .. py:attribute:: error
       :value: None
 
 
@@ -50747,6 +51058,51 @@ Package Contents
 
 
 
+.. py:class:: WebAppProject(client, webAppProjectId=None, projectType=None, emailDomains={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Web app project (_describeWebAppProject).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID
+   :type webAppProjectId: id
+   :param projectType: web_app | web_service | mobile_app
+   :type projectType: str
+   :param emailDomains: List of EmailDomain (custom domains and email status for this project)
+   :type emailDomains: EmailDomain
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: project_type
+      :value: None
+
+
+
+   .. py:attribute:: email_domains
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebPageResponse(client, content=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -51229,6 +51585,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.81'
+   :value: '1.4.82'
 
 

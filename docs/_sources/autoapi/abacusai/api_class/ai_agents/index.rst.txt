@@ -28,6 +28,8 @@ Classes
    abacusai.api_class.ai_agents.DecisionNode
    abacusai.api_class.ai_agents.LLMAgentNode
    abacusai.api_class.ai_agents.InputNode
+   abacusai.api_class.ai_agents.Signal
+   abacusai.api_class.ai_agents.WebhookTriggerConfig
    abacusai.api_class.ai_agents.WorkflowGraphEdge
    abacusai.api_class.ai_agents.WorkflowGraph
    abacusai.api_class.ai_agents.AgentConversationMessage
@@ -345,14 +347,35 @@ Module Contents
 
    Represents the configuration for a trigger workflow node.
 
-   :param sleep_time: The time in seconds to wait before the node gets executed again.
+   :param sleep_time: The time in seconds to wait before the node gets executed again (interval mode).
    :type sleep_time: int
+   :param cron_expression: A cron expression for scheduling (e.g., '0 9 * * *' for daily at 9am).
+   :type cron_expression: str
+   :param timezone: Timezone for scheduling (e.g., 'UTC', 'America/New_York'). Defaults to 'UTC'.
+   :type timezone: str
+
+   Note: Use either sleep_time (interval) OR cron_expression, not both.
 
 
    .. py:attribute:: sleep_time
       :type:  int
       :value: None
 
+
+
+   .. py:attribute:: cron_expression
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: timezone
+      :type:  str
+      :value: 'UTC'
+
+
+
+   .. py:method:: __post_init__()
 
 
    .. py:method:: to_dict()
@@ -761,6 +784,83 @@ Module Contents
 
 
    .. py:method:: get_input_schema()
+
+
+.. py:class:: Signal
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Represents a control flow signal from trigger nodes.
+
+   Signals trigger downstream execution without passing data to LLM nodes.
+   Regular Python nodes receive the Signal object and can inspect its metadata.
+
+   :param triggered: Whether the signal was triggered. Always True for valid signals.
+   :type triggered: bool
+   :param trigger_type: How the signal was triggered ('daemon' or 'webhook').
+   :type trigger_type: str
+   :param metadata: Optional metadata for the signal.
+   :type metadata: dict
+
+
+   .. py:attribute:: triggered
+      :type:  bool
+      :value: True
+
+
+
+   .. py:attribute:: trigger_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: metadata
+      :type:  dict
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(data)
+      :classmethod:
+
+
+
+.. py:class:: WebhookTriggerConfig
+
+   Bases: :py:obj:`TriggerConfig`
+
+
+   Configuration for a webhook trigger node.
+
+   :param test_webhook_url: The webhook URL for testing. Populated by the API.
+   :type test_webhook_url: str
+   :param production_webhook_url: The webhook URL for production. Populated by the API.
+   :type production_webhook_url: str
+
+
+   .. py:attribute:: test_webhook_url
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: production_webhook_url
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:method:: from_dict(configs)
+      :classmethod:
+
 
 
 .. py:class:: WorkflowGraphEdge(source, target, details = None)

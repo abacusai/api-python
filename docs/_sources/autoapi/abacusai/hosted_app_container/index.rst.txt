@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -82,6 +82,8 @@ Module Contents
    :type projectMetadata: dict
    :param memoryGb: The memory in GB of the web app deployment
    :type memoryGb: float
+   :param domainAliases: The domain aliases of the deployed app
+   :type domainAliases: list
 
 
    .. py:attribute:: hosted_app_container_id
@@ -225,6 +227,11 @@ Module Contents
 
 
    .. py:attribute:: memory_gb
+      :value: None
+
+
+
+   .. py:attribute:: domain_aliases
       :value: None
 
 

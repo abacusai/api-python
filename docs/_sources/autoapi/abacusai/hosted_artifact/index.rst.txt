@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, lifecycle=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None)
+.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, lifecycle=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None, accessLevel=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type deploymentConversationId: str
    :param conversationSequenceNumber: Conversation event associated with this artifact, null if not applicable.
    :type conversationSequenceNumber: number(integer)
+   :param accessLevel: The access level of the hosted artifact (PUBLIC, PRIVATE, OWNER_ONLY, DEDICATED).
+   :type accessLevel: str
 
 
    .. py:attribute:: hostname
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: conversation_sequence_number
+      :value: None
+
+
+
+   .. py:attribute:: access_level
       :value: None
 
 

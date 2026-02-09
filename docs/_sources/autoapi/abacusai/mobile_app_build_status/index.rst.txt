@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, error=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,10 @@ Module Contents
    :type mobileAppBuildId: str
    :param hostname: The hostname associated with the build
    :type hostname: str
+   :param requiredInput: The required input for the build
+   :type requiredInput: str
+   :param error: The error message for the build
+   :type error: str
 
 
    .. py:attribute:: status
@@ -50,6 +54,16 @@ Module Contents
 
 
    .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: required_input
+      :value: None
+
+
+
+   .. py:attribute:: error
       :value: None
 
 

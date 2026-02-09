@@ -671,6 +671,7 @@ class WorkflowNodeOutputType(ApiEnum):
     STRING = 'STRING'
     RUNTIME_SCHEMA = 'RUNTIME_SCHEMA'
     ANY = 'ANY'
+    SIGNAL = 'SIGNAL'  # Control flow only - triggers downstream execution without passing data
 
     @classmethod
     def normalize_type(cls, python_type: Union[str, type, None, 'WorkflowNodeOutputType', 'PythonFunctionOutputArgumentType']) -> 'WorkflowNodeOutputType':
@@ -720,7 +721,7 @@ class OcrMode(ApiEnum):
     AUGMENTED_LLM = 'AUGMENTED_LLM'
 
     @classmethod
-    def aws_ocr_modes(cls):
+    def advanced_ocr_modes(cls):
         return [cls.COMPREHENSIVE_V2, cls.COMPREHENSIVE_TABLE_MD, cls.COMPREHENSIVE_FORM_MD, cls.COMPREHENSIVE_FORM_AND_TABLE_MD]
 
 

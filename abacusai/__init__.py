@@ -62,6 +62,7 @@ from .custom_metric import CustomMetric
 from .custom_metric_version import CustomMetricVersion
 from .custom_train_function_info import CustomTrainFunctionInfo
 from .daemon_task_conversation import DaemonTaskConversation
+from .daemon_task_instance import DaemonTaskInstance
 from .data_consistency_duplication import DataConsistencyDuplication
 from .data_metrics import DataMetrics
 from .data_prep_logs import DataPrepLogs
@@ -100,6 +101,7 @@ from .eda_feature_collinearity import EdaFeatureCollinearity
 from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
 from .edit_image_models import EditImageModels
+from .email_domain import EmailDomain
 from .embedding_feature_drift_distribution import EmbeddingFeatureDriftDistribution
 from .entri_auth_token import EntriAuthToken
 from .execute_feature_group_operation import ExecuteFeatureGroupOperation
@@ -289,6 +291,7 @@ from .web_app_conversation import WebAppConversation
 from .web_app_deployment import WebAppDeployment
 from .web_app_deployment_permission_dict import WebAppDeploymentPermissionDict
 from .web_app_domain import WebAppDomain
+from .web_app_project import WebAppProject
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .web_search_result import WebSearchResult
@@ -298,4 +301,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.81"
+__version__ = "1.4.82"

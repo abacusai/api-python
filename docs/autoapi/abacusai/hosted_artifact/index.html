@@ -112,6 +112,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../custom_metric_version/index.html">abacusai.custom_metric_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html">abacusai.custom_train_function_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../daemon_task_conversation/index.html">abacusai.daemon_task_conversation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../daemon_task_instance/index.html">abacusai.daemon_task_instance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_consistency_duplication/index.html">abacusai.data_consistency_duplication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_metrics/index.html">abacusai.data_metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html">abacusai.data_prep_logs</a></li>
@@ -150,6 +151,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../eda_forecasting_analysis/index.html">abacusai.eda_forecasting_analysis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_version/index.html">abacusai.eda_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../edit_image_models/index.html">abacusai.edit_image_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../email_domain/index.html">abacusai.email_domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html">abacusai.embedding_feature_drift_distribution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../entri_auth_token/index.html">abacusai.entri_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html">abacusai.execute_feature_group_operation</a></li>
@@ -344,6 +346,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../web_app_deployment/index.html">abacusai.web_app_deployment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_app_deployment_permission_dict/index.html">abacusai.web_app_deployment_permission_dict</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_app_domain/index.html">abacusai.web_app_domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../web_app_project/index.html">abacusai.web_app_project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_page_response/index.html">abacusai.web_page_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_response/index.html">abacusai.web_search_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
@@ -403,7 +406,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.hosted_artifact.HostedArtifact">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.hosted_artifact.</span></span><span class="sig-name descname"><span class="pre">HostedArtifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifactType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmArtifactId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lifecycle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalApplicationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentConversationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversationSequenceNumber</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.hosted_artifact.HostedArtifact" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.hosted_artifact.</span></span><span class="sig-name descname"><span class="pre">HostedArtifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifactType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmArtifactId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lifecycle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalApplicationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentConversationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversationSequenceNumber</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessLevel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.hosted_artifact.HostedArtifact" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>A hosted artifact being served by the platform.</p>
 <dl class="field-list simple">
@@ -417,6 +420,7 @@
 <li><p><strong>externalApplicationId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Agent that deployed this application.</p></li>
 <li><p><strong>deploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Conversation that created deployed this artifact, null if not applicable.</p></li>
 <li><p><strong>conversationSequenceNumber</strong> (<em>number</em><em>(</em><em>integer</em><em>)</em>) – Conversation event associated with this artifact, null if not applicable.</p></li>
+<li><p><strong>accessLevel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The access level of the hosted artifact (PUBLIC, PRIVATE, OWNER_ONLY, DEDICATED).</p></li>
 </ul>
 </dd>
 </dl>
@@ -453,6 +457,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.hosted_artifact.HostedArtifact.conversation_sequence_number">
 <span class="sig-name descname"><span class="pre">conversation_sequence_number</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.hosted_artifact.HostedArtifact.conversation_sequence_number" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.hosted_artifact.HostedArtifact.access_level">
+<span class="sig-name descname"><span class="pre">access_level</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.hosted_artifact.HostedArtifact.access_level" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

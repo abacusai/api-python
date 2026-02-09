@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None, hostedDatabaseId=None)
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None, webAppHostname=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -62,8 +62,12 @@ Module Contents
    :type executionMode: str
    :param taskDefinition: The task definition (for web_service_trigger tasks).
    :type taskDefinition: dict
-   :param hostedDatabaseId: The ID of the hosted database for the daemon task.
-   :type hostedDatabaseId: int
+   :param webAppHostname: The hostname of the web app associated with the daemon task.
+   :type webAppHostname: str
+   :param hostedDatabase: The hosted database for the daemon task.
+   :type hostedDatabase: HostedDatabase
+   :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
+   :type latestDaemonTaskInstance: DaemonTaskInstance
 
 
    .. py:attribute:: chatllm_task_id
@@ -161,9 +165,15 @@ Module Contents
 
 
 
-   .. py:attribute:: hosted_database_id
+   .. py:attribute:: web_app_hostname
       :value: None
 
+
+
+   .. py:attribute:: hosted_database
+
+
+   .. py:attribute:: latest_daemon_task_instance
 
 
    .. py:attribute:: deprecated_keys
