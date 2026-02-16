@@ -526,7 +526,8 @@ class VectorStoreTextEncoder(ApiEnum):
                   'OPENAI_O1_MINI',
                   'GEMINI_1_5_PRO', 'GEMINI_1_5_FLASH', 'GEMINI_2_PRO', 'GEMINI_2_FLASH_THINKING',
                   'XAI_GROK',
-                  'CLAUDE_V3_OPUS', 'CLAUDE_V3_HAIKU',
+                  'CLAUDE_V3_HAIKU', 'CLAUDE_V3_OPUS', 'CLAUDE_V3_5_HAIKU', 'CLAUDE_V3_5_SONNET', 'CLAUDE_V3_7_SONNET',
+                  'CLAUDE_V4_SONNET', 'CLAUDE_V4_OPUS',
                   'LLAMA3_LARGE_CHAT', 'QWEN_2_5_32B_BASE')
 class LLMName(ApiEnum):
     OPENAI_GPT3_5 = 'OPENAI_GPT3_5'
@@ -561,6 +562,8 @@ class LLMName(ApiEnum):
     CLAUDE_V4_SONNET = 'CLAUDE_V4_SONNET'
     CLAUDE_V4_OPUS = 'CLAUDE_V4_OPUS'
     CLAUDE_V4_5_SONNET = 'CLAUDE_V4_5_SONNET'
+    CLAUDE_V4_5_OPUS = 'CLAUDE_V4_5_OPUS'
+    CLAUDE_V4_6_OPUS = 'CLAUDE_V4_6_OPUS'
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     GEMINI_2_PRO = 'GEMINI_2_PRO'

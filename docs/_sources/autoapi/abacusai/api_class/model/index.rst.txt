@@ -1533,6 +1533,8 @@ Module Contents
    :type mcp_servers: List[str]
    :param agentic_loop_mode: Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
    :type agentic_loop_mode: bool
+   :param max_page_images: Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.
+   :type max_page_images: int
 
 
    .. py:attribute:: document_retrievers
@@ -1616,6 +1618,12 @@ Module Contents
    .. py:attribute:: max_search_results
       :type:  int
       :value: None
+
+
+
+   .. py:attribute:: max_page_images
+      :type:  int
+      :value: 5
 
 
 
@@ -2205,6 +2213,8 @@ Module Contents
    :param agent_interface: The interface that the agent will be deployed with.
    :type agent_interface: AgentInterface
    :param agent_connectors: (List[enums.ApplicationConnectorType]): The connectors needed for the agent to function.
+   :param autonomous_trigger_type: The type of trigger for autonomous agents. SCHEDULE for periodic execution, WEBHOOK for event-driven execution. Only applicable when agent_interface is AUTONOMOUS.
+   :type autonomous_trigger_type: AutonomousTriggerType
 
 
    .. py:attribute:: description
@@ -2221,6 +2231,12 @@ Module Contents
 
    .. py:attribute:: agent_connectors
       :type:  List[abacusai.api_class.enums.ApplicationConnectorType]
+      :value: None
+
+
+
+   .. py:attribute:: autonomous_trigger_type
+      :type:  abacusai.api_class.enums.AutonomousTriggerType
       :value: None
 
 
@@ -2373,6 +2389,10 @@ Module Contents
 .. py:class:: _TrainingConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class

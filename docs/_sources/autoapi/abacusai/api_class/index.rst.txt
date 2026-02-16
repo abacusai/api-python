@@ -1177,6 +1177,13 @@ Package Contents
    :type test_webhook_url: str
    :param production_webhook_url: The webhook URL for production. Populated by the API.
    :type production_webhook_url: str
+   :param response_config: Optional configuration for the webhook HTTP response. Supports:
+                           - status_code (int): HTTP status code to return. Defaults to 200.
+                           - headers (dict): Custom response headers (key-value pairs).
+                           - body (dict|str): Custom response body. Can be a dict (returned as JSON) or a string.
+                           - auto_verify (bool): Automatically handle service-specific verification protocols
+                             (e.g., Slack challenge, GitHub ping). Defaults to True.
+   :type response_config: dict
 
 
    .. py:attribute:: test_webhook_url
@@ -1187,6 +1194,12 @@ Package Contents
 
    .. py:attribute:: production_webhook_url
       :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: response_config
+      :type:  dict
       :value: None
 
 
@@ -2340,6 +2353,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -3389,6 +3406,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -4014,6 +4035,8 @@ Package Contents
    :type summary_instructions: str
    :param standalone_deployment: If True, the document retriever will be deployed as a standalone deployment.
    :type standalone_deployment: bool
+   :param page_level: If True, stores each page separately for paginated documents instead of chunking across pages. Default is False.
+   :type page_level: bool
 
 
    .. py:attribute:: chunk_size
@@ -4071,6 +4094,12 @@ Package Contents
 
 
    .. py:attribute:: standalone_deployment
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: page_level
       :type:  bool
       :value: False
 
@@ -6261,6 +6290,16 @@ Package Contents
 
    .. py:attribute:: CLAUDE_V4_5_SONNET
       :value: 'CLAUDE_V4_5_SONNET'
+
+
+
+   .. py:attribute:: CLAUDE_V4_5_OPUS
+      :value: 'CLAUDE_V4_5_OPUS'
+
+
+
+   .. py:attribute:: CLAUDE_V4_6_OPUS
+      :value: 'CLAUDE_V4_6_OPUS'
 
 
 
@@ -9747,6 +9786,8 @@ Package Contents
    :type mcp_servers: List[str]
    :param agentic_loop_mode: Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
    :type agentic_loop_mode: bool
+   :param max_page_images: Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.
+   :type max_page_images: int
 
 
    .. py:attribute:: document_retrievers
@@ -9830,6 +9871,12 @@ Package Contents
    .. py:attribute:: max_search_results
       :type:  int
       :value: None
+
+
+
+   .. py:attribute:: max_page_images
+      :type:  int
+      :value: 5
 
 
 
@@ -10419,6 +10466,8 @@ Package Contents
    :param agent_interface: The interface that the agent will be deployed with.
    :type agent_interface: AgentInterface
    :param agent_connectors: (List[enums.ApplicationConnectorType]): The connectors needed for the agent to function.
+   :param autonomous_trigger_type: The type of trigger for autonomous agents. SCHEDULE for periodic execution, WEBHOOK for event-driven execution. Only applicable when agent_interface is AUTONOMOUS.
+   :type autonomous_trigger_type: AutonomousTriggerType
 
 
    .. py:attribute:: description
@@ -10435,6 +10484,12 @@ Package Contents
 
    .. py:attribute:: agent_connectors
       :type:  List[abacusai.api_class.enums.ApplicationConnectorType]
+      :value: None
+
+
+
+   .. py:attribute:: autonomous_trigger_type
+      :type:  abacusai.api_class.enums.AutonomousTriggerType
       :value: None
 
 
@@ -10587,6 +10642,10 @@ Package Contents
 .. py:class:: _TrainingConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -10756,11 +10815,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: ForecastingMonitorConfig
 
@@ -10821,11 +10875,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: StdDevThreshold
 
@@ -10854,11 +10903,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: ItemAttributesStdDevThreshold
 
@@ -10886,11 +10930,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: RestrictFeatureMappings
@@ -10952,11 +10991,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: MonitorFilteringConfig
 
@@ -11016,11 +11050,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: ApiClass
@@ -11729,6 +11758,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -12225,6 +12258,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:data:: Segment
 
@@ -12371,6 +12409,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: ListResponseSection(items, section_key = None)

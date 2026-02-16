@@ -1,7 +1,7 @@
 from typing import Dict, List, Union
 
 from . import api_class
-from .api_class import AgentInterface, TrainingConfig, WorkflowGraph
+from .api_class import AgentInterface, AutonomousTriggerType, TrainingConfig, WorkflowGraph
 from .code_source import CodeSource
 from .database_connector import DatabaseConnector
 from .feature_group import FeatureGroup
@@ -351,7 +351,7 @@ class Model(AbstractApiClass):
         """
         return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
 
-    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = None, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None):
+    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = None, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None, autonomous_trigger_type: Union[dict, AutonomousTriggerType] = None):
         """
         Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -366,11 +366,12 @@ class Model(AbstractApiClass):
             user_level_connectors (Dict): A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
             initialize_function_name (str): The name of the function to be used for initialization.
             initialize_function_code (str): The function code to be used for initialization.
+            autonomous_trigger_type (AutonomousTriggerType): The type of trigger for autonomous agents. 'SCHEDULE' for periodic execution, 'WEBHOOK' for event-driven execution. Only applicable when agent_interface is AUTONOMOUS.
 
         Returns:
             Agent: The updated agent.
         """
-        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input, agent_input_schema, agent_output_schema, workflow_graph, agent_interface, included_modules, org_level_connectors, user_level_connectors, initialize_function_name, initialize_function_code)
+        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input, agent_input_schema, agent_output_schema, workflow_graph, agent_interface, included_modules, org_level_connectors, user_level_connectors, initialize_function_name, initialize_function_code, autonomous_trigger_type)
 
     def wait_for_training(self, timeout=None):
         """

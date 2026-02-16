@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None)
+.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type externalApplicationId: str
    :param createdAt: The creation timestamp
    :type createdAt: str
+   :param conversationType: The type of the conversation
+   :type conversationType: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -57,6 +59,11 @@ Module Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: conversation_type
       :value: None
 
 

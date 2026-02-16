@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class.ai_agents &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
 
   
@@ -339,6 +339,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_exception/index.html">abacusai.user_exception</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../vertical/index.html">abacusai.vertical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../vertical_files_result/index.html">abacusai.vertical_files_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
@@ -1437,6 +1439,15 @@ Regular Python nodes receive the Signal object and can inspect its metadata.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>test_webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The webhook URL for testing. Populated by the API.</p></li>
 <li><p><strong>production_webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The webhook URL for production. Populated by the API.</p></li>
+<li><p><strong>response_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – <p>Optional configuration for the webhook HTTP response. Supports:
+- status_code (int): HTTP status code to return. Defaults to 200.
+- headers (dict): Custom response headers (key-value pairs).
+- body (dict|str): Custom response body. Can be a dict (returned as JSON) or a string.
+- auto_verify (bool): Automatically handle service-specific verification protocols</p>
+<blockquote>
+<div><p>(e.g., Slack challenge, GitHub ping). Defaults to True.</p>
+</div></blockquote>
+</p></li>
 </ul>
 </dd>
 </dl>
@@ -1448,6 +1459,11 @@ Regular Python nodes receive the Signal object and can inspect its metadata.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig.production_webhook_url">
 <span class="sig-name descname"><span class="pre">production_webhook_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig.production_webhook_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig.response_config">
+<span class="sig-name descname"><span class="pre">response_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig.response_config" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

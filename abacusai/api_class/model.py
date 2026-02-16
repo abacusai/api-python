@@ -506,6 +506,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         config_connectors (List[str]): List of names of config connectors to use in the ChatLLM. This should not be used with document_retrievers.
         mcp_servers (List[str]): List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
         agentic_loop_mode (bool): Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
+        max_page_images (int): Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -521,6 +522,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     keyword_requirement_instructions: str = dataclasses.field(default=None)
     query_rewrite_instructions: str = dataclasses.field(default=None)
     max_search_results: int = dataclasses.field(default=None)
+    max_page_images: int = dataclasses.field(default=5)
     data_feature_group_ids: List[str] = dataclasses.field(default=None)
     data_prompt_context: str = dataclasses.field(default=None)
     data_prompt_table_context: Dict[str, str] = dataclasses.field(default=None)
@@ -769,10 +771,12 @@ class AIAgentTrainingConfig(TrainingConfig):
         description (str): Description of the agent function.
         agent_interface (AgentInterface): The interface that the agent will be deployed with.
         agent_connectors: (List[enums.ApplicationConnectorType]): The connectors needed for the agent to function.
+        autonomous_trigger_type (AutonomousTriggerType): The type of trigger for autonomous agents. SCHEDULE for periodic execution, WEBHOOK for event-driven execution. Only applicable when agent_interface is AUTONOMOUS.
     """
     description: str = dataclasses.field(default=None)
     agent_interface: enums.AgentInterface = dataclasses.field(default=None)
     agent_connectors: List[enums.ApplicationConnectorType] = dataclasses.field(default=None)
+    autonomous_trigger_type: enums.AutonomousTriggerType = dataclasses.field(default=None)
     enable_binary_input: bool = dataclasses.field(default=None, metadata={'deprecated': True})
     agent_input_schema: dict = dataclasses.field(default=None, metadata={'deprecated': True})
     agent_output_schema: dict = dataclasses.field(default=None, metadata={'deprecated': True})

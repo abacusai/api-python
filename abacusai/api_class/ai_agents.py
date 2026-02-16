@@ -1055,17 +1055,24 @@ class WebhookTriggerConfig(TriggerConfig):
     Args:
         test_webhook_url (str): The webhook URL for testing. Populated by the API.
         production_webhook_url (str): The webhook URL for production. Populated by the API.
+        response_config (dict): Optional configuration for the webhook HTTP response. Supports:
+            - status_code (int): HTTP status code to return. Defaults to 200.
+            - headers (dict): Custom response headers (key-value pairs).
+            - body (dict|str): Custom response body. Can be a dict (returned as JSON) or a string.
+            - auto_verify (bool): Automatically handle service-specific verification protocols
+              (e.g., Slack challenge, GitHub ping). Defaults to True.
     """
     test_webhook_url: str = dataclasses.field(default=None)
     production_webhook_url: str = dataclasses.field(default=None)
+    response_config: dict = dataclasses.field(default=None)
 
     def to_dict(self):
-        return {'sleep_time': None, 'test_webhook_url': self.test_webhook_url, 'production_webhook_url': self.production_webhook_url}
+        return {'sleep_time': None, 'test_webhook_url': self.test_webhook_url, 'production_webhook_url': self.production_webhook_url, 'response_config': self.response_config}
 
     @classmethod
     def from_dict(cls, configs: dict):
         validate_input_dict_param(configs, friendly_class_name='webhook_trigger_config')
-        return cls(test_webhook_url=configs.get('test_webhook_url'), production_webhook_url=configs.get('production_webhook_url'))
+        return cls(test_webhook_url=configs.get('test_webhook_url'), production_webhook_url=configs.get('production_webhook_url'), response_config=configs.get('response_config'))
 
 
 @validate_constructor_arg_types('workflow_graph_edge')

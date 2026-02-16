@@ -356,7 +356,6 @@ class Deployment(AbstractApiClass):
             external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
             llm_name (str): Name of the specific LLM backend to use to power the chat experience
             num_completion_tokens (int): Default for maximum number of tokens for chat answers
-            system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
@@ -377,7 +376,6 @@ class Deployment(AbstractApiClass):
             external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
             llm_name (str): Name of the specific LLM backend to use to power the chat experience
             num_completion_tokens (int): Default for maximum number of tokens for chat answers
-            system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.

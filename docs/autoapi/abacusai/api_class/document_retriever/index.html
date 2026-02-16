@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class.document_retriever &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
 
   
@@ -339,6 +339,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_exception/index.html">abacusai.user_exception</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../vertical/index.html">abacusai.vertical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../vertical_files_result/index.html">abacusai.vertical_files_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
@@ -436,6 +438,7 @@
 <li><p><strong>use_document_summary</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, uses the summary of the document in addition to chunks of the document for indexing and querying.</p></li>
 <li><p><strong>summary_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Instructions for the LLM to generate the document summary.</p></li>
 <li><p><strong>standalone_deployment</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, the document retriever will be deployed as a standalone deployment.</p></li>
+<li><p><strong>page_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, stores each page separately for paginated documents instead of chunking across pages. Default is False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -487,6 +490,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.document_retriever.VectorStoreConfig.standalone_deployment">
 <span class="sig-name descname"><span class="pre">standalone_deployment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.document_retriever.VectorStoreConfig.standalone_deployment" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.document_retriever.VectorStoreConfig.page_level">
+<span class="sig-name descname"><span class="pre">page_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.document_retriever.VectorStoreConfig.page_level" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

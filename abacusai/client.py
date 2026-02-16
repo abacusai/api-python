@@ -35,16 +35,17 @@ from .annotations_status import AnnotationsStatus
 from .api_class import (
     AgentClientType, AgentInterface, AlertActionConfig, AlertConditionConfig,
     ApiClass, ApiEnum, ApplicationConnectorDatasetConfig,
-    ApplicationConnectorType, AttachmentParsingConfig, BatchPredictionArgs,
-    Blob, BlobInput, CPUSize, DatasetDocumentProcessingConfig, DataType,
-    DeploymentConversationType, DocumentProcessingConfig, EvalArtifactType,
-    FeatureGroupExportConfig, ForecastingMonitorConfig,
-    IncrementalDatabaseConnectorConfig, LLMName, MemorySize, MergeConfig,
-    OperatorConfig, OrganizationSecretType, ParsingConfig, PredictionArguments,
-    ProblemType, ProjectFeatureGroupConfig, PythonFunctionType,
-    ResponseSection, SamplingConfig, Segment, StreamingConnectorDatasetConfig,
-    TrainingConfig, VectorStoreConfig, WorkflowGraph, WorkflowGraphNode,
-    WorkflowNodeTemplateConfig, get_clean_function_source_code_for_agent
+    ApplicationConnectorType, AttachmentParsingConfig, AutonomousTriggerType,
+    BatchPredictionArgs, Blob, BlobInput, CPUSize,
+    DatasetDocumentProcessingConfig, DataType, DeploymentConversationType,
+    DocumentProcessingConfig, EvalArtifactType, FeatureGroupExportConfig,
+    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
+    MemorySize, MergeConfig, OperatorConfig, OrganizationSecretType,
+    ParsingConfig, PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
+    PythonFunctionType, ResponseSection, SamplingConfig, Segment,
+    StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
+    WorkflowGraph, WorkflowGraphNode, WorkflowNodeTemplateConfig,
+    get_clean_function_source_code_for_agent
 )
 from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
 from .api_class.ai_agents import WorkflowGraph, WorkflowNodeTemplateConfig
@@ -181,6 +182,7 @@ from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
 from .user_group_object_permission import UserGroupObjectPermission
+from .vertical import Vertical
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .webhook import Webhook
@@ -714,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.82'
+    client_version = '1.4.83'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2768,6 +2770,10 @@ class ReadOnlyClient(BaseApiClient):
             AppUserGroupSignInToken: The token to sign in the user"""
         return self._call_api('getAppUserGroupSignInToken', 'GET', query_params={'userGroupId': user_group_id, 'email': email, 'name': name}, parse_type=AppUserGroupSignInToken)
 
+    def get_active_promotion(self) -> Dict:
+        """Get the active promotion configuration and validate user's promotion."""
+        return self._call_api('getActivePromotion', 'GET', query_params={})
+
     def query_feature_group_code_generator(self, query: str, language: str, project_id: str = None) -> LlmResponse:
         """Send a query to the feature group code generator tool to generate code for the query.
 
@@ -2932,6 +2938,13 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[ExternalApplication]: List of External Applications."""
         return self._call_api('listExternalApplications', 'GET', query_params={}, parse_type=ExternalApplication)
+
+    def list_verticals(self) -> Vertical:
+        """List available verticals (e.g., Health) for the organization.
+
+        Returns:
+            Vertical: List of available verticals."""
+        return self._call_api('listVerticals', 'GET', query_params={}, parse_type=Vertical)
 
     def download_agent_attachment(self, deployment_id: str, attachment_id: str) -> io.BytesIO:
         """Return an agent attachment.
@@ -4773,13 +4786,15 @@ class ApiClient(ReadOnlyClient):
             include_search_results (bool): If True, will also return search results, if relevant.
             user_info (dict): The information of the user to act on behalf of for user restricted data sources. """
         headers = {'APIKEY': self.api_key}
+        if (system_message is not None) and ('behavior_instructions' not in (chat_config or {})):
+            chat_config = {**(chat_config or {}),
+                           'behavior_instructions': system_message}
         body = {
             'deploymentToken': deployment_token,
             'deploymentId': deployment_id,
             'messages': messages,
             'llmName': llm_name,
             'numCompletionTokens': num_completion_tokens,
-            'systemMessage': system_message,
             'temperature': temperature,
             'filterKeyValues': filter_key_values,
             'searchScoreCutoff': search_score_cutoff,
@@ -4814,6 +4829,9 @@ class ApiClient(ReadOnlyClient):
             include_search_results (bool): If True, will also return search results, if relevant.
             user_info (dict): The information of the user to act on behalf of for user restricted data sources. """
         headers = {'APIKEY': self.api_key}
+        if (system_message is not None) and ('behavior_instructions' not in (chat_config or {})):
+            chat_config = {**(chat_config or {}),
+                           'behavior_instructions': system_message}
         body = {
             'deploymentToken': deployment_token,
             'deploymentId': deployment_id,
@@ -4822,7 +4840,6 @@ class ApiClient(ReadOnlyClient):
             'externalSessionId': external_session_id,
             'llmName': llm_name,
             'numCompletionTokens': num_completion_tokens,
-            'systemMessage': system_message,
             'temperature': temperature,
             'filterKeyValues': filter_key_values,
             'searchScoreCutoff': search_score_cutoff,
@@ -4855,13 +4872,15 @@ class ApiClient(ReadOnlyClient):
             include_search_results (bool): If True, will also return search results, if relevant.
             attachments (dict): A dictionary of binary data to use as input. The key is the filename, and the value is the binary data. """
         headers = {'APIKEY': self.api_key}
+        if (system_message is not None) and ('behavior_instructions' not in (chat_config or {})):
+            chat_config = {**(chat_config or {}),
+                           'behavior_instructions': system_message}
         body = {
             'deploymentToken': deployment_token,
             'deploymentId': deployment_id,
             'messages': messages,
             'llmName': llm_name,
             'numCompletionTokens': num_completion_tokens,
-            'systemMessage': system_message,
             'temperature': temperature,
             'filterKeyValues': filter_key_values,
             'searchScoreCutoff': search_score_cutoff,
@@ -4895,6 +4914,9 @@ class ApiClient(ReadOnlyClient):
             include_search_results (bool): If True, will also return search results, if relevant.
             attachments (dict): A dictionary of binary data to use as input. The key is the filename, and the value is the binary data. """
         headers = {'APIKEY': self.api_key}
+        if (system_message is not None) and ('behavior_instructions' not in (chat_config or {})):
+            chat_config = {**(chat_config or {}),
+                           'behavior_instructions': system_message}
         body = {
             'deploymentToken': deployment_token,
             'deploymentId': deployment_id,
@@ -4903,7 +4925,6 @@ class ApiClient(ReadOnlyClient):
             'externalSessionId': external_session_id,
             'llmName': llm_name,
             'numCompletionTokens': num_completion_tokens,
-            'systemMessage': system_message,
             'temperature': temperature,
             'filterKeyValues': filter_key_values,
             'searchScoreCutoff': search_score_cutoff,
@@ -7793,7 +7814,6 @@ class ApiClient(ReadOnlyClient):
             messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
             llm_name (str): Name of the specific LLM backend to use to power the chat experience
             num_completion_tokens (int): Default for maximum number of tokens for chat answers
-            system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
@@ -7811,7 +7831,6 @@ class ApiClient(ReadOnlyClient):
             messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
             llm_name (str): Name of the specific LLM backend to use to power the chat experience
             num_completion_tokens (int): Default for maximum number of tokens for chat answers
-            system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
@@ -7832,7 +7851,6 @@ class ApiClient(ReadOnlyClient):
             external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
             llm_name (str): Name of the specific LLM backend to use to power the chat experience
             num_completion_tokens (int): Default for maximum number of tokens for chat answers
-            system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
@@ -7854,7 +7872,6 @@ class ApiClient(ReadOnlyClient):
             external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
             llm_name (str): Name of the specific LLM backend to use to power the chat experience
             num_completion_tokens (int): Default for maximum number of tokens for chat answers
-            system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
@@ -9264,7 +9281,7 @@ class ApiClient(ReadOnlyClient):
             external_application_id (str): The ID of the External Application."""
         return self._call_api('deleteExternalApplication', 'DELETE', query_params={'externalApplicationId': external_application_id})
 
-    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
+    def create_agent(self, project_id: str, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = AgentInterface.DEFAULT, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None, autonomous_trigger_type: Union[AutonomousTriggerType, str] = None) -> Agent:
         """Creates a new AI agent using the given agent workflow graph definition.
 
         Args:
@@ -9281,12 +9298,13 @@ class ApiClient(ReadOnlyClient):
             user_level_connectors (Dict): A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
             initialize_function_name (str): The name of the function to be used for initialization.
             initialize_function_code (str): The function code to be used for initialization.
+            autonomous_trigger_type (AutonomousTriggerType): The type of trigger for autonomous agents. 'SCHEDULE' for periodic execution, 'WEBHOOK' for event-driven execution. Only applicable when agent_interface is AUTONOMOUS.
 
         Returns:
             Agent: The new agent."""
-        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'orgLevelConnectors': org_level_connectors, 'userLevelConnectors': user_level_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code}, parse_type=Agent)
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'evaluationFeatureGroupId': evaluation_feature_group_id, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'orgLevelConnectors': org_level_connectors, 'userLevelConnectors': user_level_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code, 'autonomousTriggerType': autonomous_trigger_type}, parse_type=Agent)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None) -> Agent:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[AgentInterface, str] = None, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None, autonomous_trigger_type: Union[AutonomousTriggerType, str] = None) -> Agent:
         """Updates an existing AI Agent. A new version of the agent will be created and published.
 
         Args:
@@ -9301,10 +9319,11 @@ class ApiClient(ReadOnlyClient):
             user_level_connectors (Dict): A dictionary mapping ApplicationConnectorType keys to lists of OAuth scopes. Each key represents a specific user level application connector, while the value is a list of scopes that define the permissions granted to the application.
             initialize_function_name (str): The name of the function to be used for initialization.
             initialize_function_code (str): The function code to be used for initialization.
+            autonomous_trigger_type (AutonomousTriggerType): The type of trigger for autonomous agents. 'SCHEDULE' for periodic execution, 'WEBHOOK' for event-driven execution. Only applicable when agent_interface is AUTONOMOUS.
 
         Returns:
             Agent: The updated agent."""
-        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'orgLevelConnectors': org_level_connectors, 'userLevelConnectors': user_level_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code}, parse_type=Agent)
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input, 'agentInputSchema': agent_input_schema, 'agentOutputSchema': agent_output_schema, 'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'includedModules': included_modules, 'orgLevelConnectors': org_level_connectors, 'userLevelConnectors': user_level_connectors, 'initializeFunctionName': initialize_function_name, 'initializeFunctionCode': initialize_function_code, 'autonomousTriggerType': autonomous_trigger_type}, parse_type=Agent)
 
     def generate_agent_code(self, project_id: str, prompt: str, fast_mode: bool = None) -> list:
         """Generates the code for defining an AI Agent

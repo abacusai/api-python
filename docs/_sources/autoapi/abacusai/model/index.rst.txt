@@ -540,7 +540,7 @@ Module Contents
 
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = None, agent_input_schema = None, agent_output_schema = None, workflow_graph = None, agent_interface = None, included_modules = None, org_level_connectors = None, user_level_connectors = None, initialize_function_name = None, initialize_function_code = None, autonomous_trigger_type = None)
 
       Updates an existing AI Agent. A new version of the agent will be created and published.
 
@@ -564,6 +564,8 @@ Module Contents
       :type initialize_function_name: str
       :param initialize_function_code: The function code to be used for initialization.
       :type initialize_function_code: str
+      :param autonomous_trigger_type: The type of trigger for autonomous agents. 'SCHEDULE' for periodic execution, 'WEBHOOK' for event-driven execution. Only applicable when agent_interface is AUTONOMOUS.
+      :type autonomous_trigger_type: AutonomousTriggerType
 
       :returns: The updated agent.
       :rtype: Agent

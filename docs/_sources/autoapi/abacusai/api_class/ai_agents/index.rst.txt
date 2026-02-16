@@ -841,6 +841,13 @@ Module Contents
    :type test_webhook_url: str
    :param production_webhook_url: The webhook URL for production. Populated by the API.
    :type production_webhook_url: str
+   :param response_config: Optional configuration for the webhook HTTP response. Supports:
+                           - status_code (int): HTTP status code to return. Defaults to 200.
+                           - headers (dict): Custom response headers (key-value pairs).
+                           - body (dict|str): Custom response body. Can be a dict (returned as JSON) or a string.
+                           - auto_verify (bool): Automatically handle service-specific verification protocols
+                             (e.g., Slack challenge, GitHub ping). Defaults to True.
+   :type response_config: dict
 
 
    .. py:attribute:: test_webhook_url
@@ -851,6 +858,12 @@ Module Contents
 
    .. py:attribute:: production_webhook_url
       :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: response_config
+      :type:  dict
       :value: None
 
 

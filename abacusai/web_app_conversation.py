@@ -12,20 +12,22 @@ class WebAppConversation(AbstractApiClass):
             deploymentConversationName (str): The name of the conversation
             externalApplicationId (str): The external application ID
             createdAt (str): The creation timestamp
+            conversationType (str): The type of the conversation
     """
 
-    def __init__(self, client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None):
+    def __init__(self, client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None):
         super().__init__(client, None)
         self.deployment_conversation_id = deploymentConversationId
         self.llm_artifact_id = llmArtifactId
         self.deployment_conversation_name = deploymentConversationName
         self.external_application_id = externalApplicationId
         self.created_at = createdAt
+        self.conversation_type = conversationType
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'llm_artifact_id': repr(self.llm_artifact_id), f'deployment_conversation_name': repr(
-            self.deployment_conversation_name), f'external_application_id': repr(self.external_application_id), f'created_at': repr(self.created_at)}
+            self.deployment_conversation_name), f'external_application_id': repr(self.external_application_id), f'created_at': repr(self.created_at), f'conversation_type': repr(self.conversation_type)}
         class_name = "WebAppConversation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -38,6 +40,6 @@ class WebAppConversation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'llm_artifact_id': self.llm_artifact_id,
-                'deployment_conversation_name': self.deployment_conversation_name, 'external_application_id': self.external_application_id, 'created_at': self.created_at}
+        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'llm_artifact_id': self.llm_artifact_id, 'deployment_conversation_name': self.deployment_conversation_name,
+                'external_application_id': self.external_application_id, 'created_at': self.created_at, 'conversation_type': self.conversation_type}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

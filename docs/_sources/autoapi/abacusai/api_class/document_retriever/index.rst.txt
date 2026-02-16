@@ -50,6 +50,8 @@ Module Contents
    :type summary_instructions: str
    :param standalone_deployment: If True, the document retriever will be deployed as a standalone deployment.
    :type standalone_deployment: bool
+   :param page_level: If True, stores each page separately for paginated documents instead of chunking across pages. Default is False.
+   :type page_level: bool
 
 
    .. py:attribute:: chunk_size
@@ -107,6 +109,12 @@ Module Contents
 
 
    .. py:attribute:: standalone_deployment
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: page_level
       :type:  bool
       :value: False
 

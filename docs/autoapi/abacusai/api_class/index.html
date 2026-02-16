@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
   
@@ -339,6 +339,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vertical/index.html">abacusai.vertical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vertical_files_result/index.html">abacusai.vertical_files_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
@@ -571,7 +573,7 @@
 <td><p>Dataset config for Kafka Streaming Connector</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._StreamingConnectorDatasetConfigFactory" title="abacusai.api_class._StreamingConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_StreamingConnectorDatasetConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#id280" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
@@ -655,7 +657,7 @@
 <td><p>Dataset config for SFTP Application Connector</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#id280" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
@@ -1045,7 +1047,7 @@
 <td><p>Training config for the OPTIMIZATION problem type</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class._TrainingConfigFactory" title="abacusai.api_class._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DeployableAlgorithm" title="abacusai.api_class.DeployableAlgorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></p></td>
 <td><p>Algorithm that can be deployed to a model.</p></td>
@@ -1144,7 +1146,7 @@
 <td><p>Review mode project feature group configuration.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._ProjectFeatureGroupConfigFactory" title="abacusai.api_class._ProjectFeatureGroupConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ProjectFeatureGroupConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#id280" title="abacusai.api_class.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
@@ -2318,6 +2320,15 @@ Regular Python nodes receive the Signal object and can inspect its metadata.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>test_webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The webhook URL for testing. Populated by the API.</p></li>
 <li><p><strong>production_webhook_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The webhook URL for production. Populated by the API.</p></li>
+<li><p><strong>response_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – <p>Optional configuration for the webhook HTTP response. Supports:
+- status_code (int): HTTP status code to return. Defaults to 200.
+- headers (dict): Custom response headers (key-value pairs).
+- body (dict|str): Custom response body. Can be a dict (returned as JSON) or a string.
+- auto_verify (bool): Automatically handle service-specific verification protocols</p>
+<blockquote>
+<div><p>(e.g., Slack challenge, GitHub ping). Defaults to True.</p>
+</div></blockquote>
+</p></li>
 </ul>
 </dd>
 </dl>
@@ -2329,6 +2340,11 @@ Regular Python nodes receive the Signal object and can inspect its metadata.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.WebhookTriggerConfig.production_webhook_url">
 <span class="sig-name descname"><span class="pre">production_webhook_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.WebhookTriggerConfig.production_webhook_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.WebhookTriggerConfig.response_config">
+<span class="sig-name descname"><span class="pre">response_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.WebhookTriggerConfig.response_config" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3698,6 +3714,8 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class._StreamingConnectorDatasetConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">_StreamingConnectorDatasetConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class._StreamingConnectorDatasetConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class._StreamingConnectorDatasetConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class._StreamingConnectorDatasetConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>
@@ -4777,6 +4795,8 @@ Needs to recalculate them if highlights are unavailable in summary_info</p></li>
 <dt class="sig sig-object py" id="abacusai.api_class._ApplicationConnectorDatasetConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class._ApplicationConnectorDatasetConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class._ApplicationConnectorDatasetConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class._ApplicationConnectorDatasetConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>
@@ -5497,6 +5517,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <li><p><strong>use_document_summary</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, uses the summary of the document in addition to chunks of the document for indexing and querying.</p></li>
 <li><p><strong>summary_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Instructions for the LLM to generate the document summary.</p></li>
 <li><p><strong>standalone_deployment</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, the document retriever will be deployed as a standalone deployment.</p></li>
+<li><p><strong>page_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, stores each page separately for paginated documents instead of chunking across pages. Default is False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -5548,6 +5569,11 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.VectorStoreConfig.standalone_deployment">
 <span class="sig-name descname"><span class="pre">standalone_deployment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.VectorStoreConfig.standalone_deployment" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.VectorStoreConfig.page_level">
+<span class="sig-name descname"><span class="pre">page_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#abacusai.api_class.VectorStoreConfig.page_level" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -7660,6 +7686,16 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.CLAUDE_V4_5_SONNET">
 <span class="sig-name descname"><span class="pre">CLAUDE_V4_5_SONNET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAUDE_V4_5_SONNET'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.CLAUDE_V4_5_SONNET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.CLAUDE_V4_5_OPUS">
+<span class="sig-name descname"><span class="pre">CLAUDE_V4_5_OPUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAUDE_V4_5_OPUS'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.CLAUDE_V4_5_OPUS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.CLAUDE_V4_6_OPUS">
+<span class="sig-name descname"><span class="pre">CLAUDE_V4_6_OPUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CLAUDE_V4_6_OPUS'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.CLAUDE_V4_6_OPUS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -10888,6 +10924,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>config_connectors</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of names of config connectors to use in the ChatLLM. This should not be used with document_retrievers.</p></li>
 <li><p><strong>mcp_servers</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.</p></li>
 <li><p><strong>agentic_loop_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.</p></li>
+<li><p><strong>max_page_images</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.</p></li>
 </ul>
 </dd>
 </dl>
@@ -10959,6 +10996,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.max_search_results">
 <span class="sig-name descname"><span class="pre">max_search_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.max_search_results" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.max_page_images">
+<span class="sig-name descname"><span class="pre">max_page_images</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.max_page_images" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -11511,6 +11553,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Description of the agent function.</p></li>
 <li><p><strong>agent_interface</strong> (<a class="reference internal" href="#abacusai.api_class.AgentInterface" title="abacusai.api_class.AgentInterface"><em>AgentInterface</em></a>) – The interface that the agent will be deployed with.</p></li>
 <li><p><strong>agent_connectors</strong> – (List[enums.ApplicationConnectorType]): The connectors needed for the agent to function.</p></li>
+<li><p><strong>autonomous_trigger_type</strong> (<a class="reference internal" href="#abacusai.api_class.AutonomousTriggerType" title="abacusai.api_class.AutonomousTriggerType"><em>AutonomousTriggerType</em></a>) – The type of trigger for autonomous agents. SCHEDULE for periodic execution, WEBHOOK for event-driven execution. Only applicable when agent_interface is AUTONOMOUS.</p></li>
 </ul>
 </dd>
 </dl>
@@ -11527,6 +11570,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.AIAgentTrainingConfig.agent_connectors">
 <span class="sig-name descname"><span class="pre">agent_connectors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><span class="pre">abacusai.api_class.enums.ApplicationConnectorType</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.AIAgentTrainingConfig.agent_connectors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.AIAgentTrainingConfig.autonomous_trigger_type">
+<span class="sig-name descname"><span class="pre">autonomous_trigger_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="enums/index.html#abacusai.api_class.enums.AutonomousTriggerType" title="abacusai.api_class.enums.AutonomousTriggerType"><span class="pre">abacusai.api_class.enums.AutonomousTriggerType</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#abacusai.api_class.AIAgentTrainingConfig.autonomous_trigger_type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -11673,6 +11721,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dt class="sig sig-object py" id="abacusai.api_class._TrainingConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">_TrainingConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class._TrainingConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class._TrainingConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class._TrainingConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>
@@ -11891,10 +11941,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.TimeWindowConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.TimeWindowConfig.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -11948,10 +11995,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ForecastingMonitorConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ForecastingMonitorConfig.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -11981,10 +12025,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.StdDevThreshold.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.StdDevThreshold.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -12014,10 +12055,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ItemAttributesStdDevThreshold.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ItemAttributesStdDevThreshold.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -12071,10 +12109,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.RestrictFeatureMappings.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.RestrictFeatureMappings.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -12128,10 +12163,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.MonitorFilteringConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.MonitorFilteringConfig.to_dict" title="Link to this definition"></a></dt>
-<dd><p>Standardizes converting an ApiClass to dictionary.
-Keys of response dictionary are converted to camel case.
-This also validates the fields ( type, value, etc ) received in the dictionary.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -12986,6 +13018,8 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class._ProjectFeatureGroupConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">_ProjectFeatureGroupConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class._ProjectFeatureGroupConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class._ProjectFeatureGroupConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class._ProjectFeatureGroupConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>
@@ -13645,7 +13679,10 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ResponseSection.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ResponseSection.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -13833,7 +13870,10 @@ This is primarily used to generate dynamic forms at runtime. If a node returns a
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.CollapseResponseSection.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.CollapseResponseSection.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 
