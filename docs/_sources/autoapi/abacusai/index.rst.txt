@@ -7527,6 +7527,11 @@ Package Contents
 
 
 
+   .. py:attribute:: CLAUDE_V4_6_SONNET
+      :value: 'CLAUDE_V4_6_SONNET'
+
+
+
    .. py:attribute:: CLAUDE_V4_5_OPUS
       :value: 'CLAUDE_V4_5_OPUS'
 
@@ -7564,6 +7569,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_3_PRO
       :value: 'GEMINI_3_PRO'
+
+
+
+   .. py:attribute:: GEMINI_3_1_PRO
+      :value: 'GEMINI_3_1_PRO'
 
 
 
@@ -10709,7 +10719,7 @@ Package Contents
 
    .. py:attribute:: max_page_images
       :type:  int
-      :value: 5
+      :value: None
 
 
 
@@ -14921,7 +14931,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None, webAppHostname=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -14970,6 +14980,10 @@ Package Contents
    :type taskDefinition: dict
    :param webAppHostname: The hostname of the web app associated with the daemon task.
    :type webAppHostname: str
+   :param triggerType: The trigger type of the daemon task (scheduled or event_based).
+   :type triggerType: str
+   :param webhookUrl: The webhook URL for event-based daemon tasks.
+   :type webhookUrl: str
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -15072,6 +15086,16 @@ Package Contents
 
 
    .. py:attribute:: web_app_hostname
+      :value: None
+
+
+
+   .. py:attribute:: trigger_type
+      :value: None
+
+
+
+   .. py:attribute:: webhook_url
       :value: None
 
 
@@ -38160,7 +38184,7 @@ Package Contents
 
 
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None, accessLevel=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasSeparateProdDatabase=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None, accessLevel=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38193,6 +38217,8 @@ Package Contents
    :type hasStorage: bool
    :param projectMetadata: The metadata of the web app project
    :type projectMetadata: dict
+   :param hasSeparateProdDatabase: Whether the artifact has a separate prod database
+   :type hasSeparateProdDatabase: bool
    :param hasDatabaseSnapshot: Whether the artifact database has a snapshot
    :type hasDatabaseSnapshot: bool
    :param supportsPreviewRestore: Whether the artifact supports preview restore
@@ -38257,6 +38283,11 @@ Package Contents
 
 
    .. py:attribute:: project_metadata
+      :value: None
+
+
+
+   .. py:attribute:: has_separate_prod_database
       :value: None
 
 
@@ -50565,7 +50596,7 @@ Package Contents
 
 
 
-.. py:class:: Vertical(client, externalApplicationId=None, name=None, description=None, verticalType=None)
+.. py:class:: Vertical(client, externalApplicationId=None, deploymentId=None, name=None, description=None, verticalType=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50576,6 +50607,8 @@ Package Contents
    :type client: ApiClient
    :param externalApplicationId: The ID of the vertical's external application.
    :type externalApplicationId: str
+   :param deploymentId: The ID of the vertical's deployment.
+   :type deploymentId: str
    :param name: The name of the vertical.
    :type name: str
    :param description: The description of the vertical.
@@ -50585,6 +50618,11 @@ Package Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_id
       :value: None
 
 
@@ -51230,7 +51268,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppProject(client, webAppProjectId=None, projectType=None, emailDomains={})
+.. py:class:: WebAppProject(client, webAppProjectId=None, projectType=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -51243,6 +51281,10 @@ Package Contents
    :type webAppProjectId: id
    :param projectType: web_app | web_service | mobile_app
    :type projectType: str
+   :param hostedDatabaseId: The ID of the hosted database
+   :type hostedDatabaseId: id
+   :param hostedDevDatabaseId: The ID of the hosted dev database
+   :type hostedDevDatabaseId: id
    :param emailDomains: List of EmailDomain (custom domains and email status for this project)
    :type emailDomains: EmailDomain
 
@@ -51253,6 +51295,16 @@ Package Contents
 
 
    .. py:attribute:: project_type
+      :value: None
+
+
+
+   .. py:attribute:: hosted_database_id
+      :value: None
+
+
+
+   .. py:attribute:: hosted_dev_database_id
       :value: None
 
 
@@ -51757,6 +51809,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.83'
+   :value: '1.4.84'
 
 

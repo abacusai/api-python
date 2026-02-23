@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Vertical(client, externalApplicationId=None, name=None, description=None, verticalType=None)
+.. py:class:: Vertical(client, externalApplicationId=None, deploymentId=None, name=None, description=None, verticalType=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,6 +26,8 @@ Module Contents
    :type client: ApiClient
    :param externalApplicationId: The ID of the vertical's external application.
    :type externalApplicationId: str
+   :param deploymentId: The ID of the vertical's deployment.
+   :type deploymentId: str
    :param name: The name of the vertical.
    :type name: str
    :param description: The description of the vertical.
@@ -35,6 +37,11 @@ Module Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: deployment_id
       :value: None
 
 

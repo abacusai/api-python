@@ -33,7 +33,7 @@ def avro_to_pandas_dtype(avro_type):
         'bytes': 'object',
         'null': 'object',
         'date': 'object',
-        'datetime': 'datetime',
+        'datetime': None,
     }
 
     if isinstance(avro_type, dict):
@@ -177,14 +177,14 @@ def load_as_pandas_from_avro_fd(fd: IO):
         [r for r in reader], columns=col_dtypes.keys())
 
     for col in df_part.columns:
-        if col_dtypes[col] == 'datetime':
+        if col_dtypes[col] is None:
             df_part[col] = pd.to_datetime(
                 df_part[col], errors='coerce')
 
-        if pd.core.dtypes.common.is_datetime64_ns_dtype(df_part[col]):
+        if pd.api.types.is_datetime64_any_dtype(df_part[col]):
             df_part[col] = df_part[col].dt.tz_localize(
                 None)
-        elif str(df_part[col].dtype).lower() != str(col_dtypes[col]).lower():
+        elif col_dtypes[col] is not None and str(df_part[col].dtype).lower() != str(col_dtypes[col]).lower():
             df_part[col] = df_part[col].astype(
                 col_dtypes[col])
     return df_part

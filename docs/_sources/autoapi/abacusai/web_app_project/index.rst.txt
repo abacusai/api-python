@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppProject(client, webAppProjectId=None, projectType=None, emailDomains={})
+.. py:class:: WebAppProject(client, webAppProjectId=None, projectType=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,10 @@ Module Contents
    :type webAppProjectId: id
    :param projectType: web_app | web_service | mobile_app
    :type projectType: str
+   :param hostedDatabaseId: The ID of the hosted database
+   :type hostedDatabaseId: id
+   :param hostedDevDatabaseId: The ID of the hosted dev database
+   :type hostedDevDatabaseId: id
    :param emailDomains: List of EmailDomain (custom domains and email status for this project)
    :type emailDomains: EmailDomain
 
@@ -38,6 +42,16 @@ Module Contents
 
 
    .. py:attribute:: project_type
+      :value: None
+
+
+
+   .. py:attribute:: hosted_database_id
+      :value: None
+
+
+
+   .. py:attribute:: hosted_dev_database_id
       :value: None
 
 

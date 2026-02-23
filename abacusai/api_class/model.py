@@ -522,7 +522,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     keyword_requirement_instructions: str = dataclasses.field(default=None)
     query_rewrite_instructions: str = dataclasses.field(default=None)
     max_search_results: int = dataclasses.field(default=None)
-    max_page_images: int = dataclasses.field(default=5)
+    max_page_images: int = dataclasses.field(default=None)
     data_feature_group_ids: List[str] = dataclasses.field(default=None)
     data_prompt_context: str = dataclasses.field(default=None)
     data_prompt_table_context: Dict[str, str] = dataclasses.field(default=None)
