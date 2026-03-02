@@ -15,8 +15,8 @@
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -414,7 +414,7 @@
 <td><p>str(object='') -&gt; str</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.StreamType" title="abacusai.api_client_utils.StreamType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamType</span></code></a></p></td>
-<td><p>Generic enumeration.</p></td>
+<td><p>Create a collection of name/value pairs.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.DocstoreUtils" title="abacusai.api_client_utils.DocstoreUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocstoreUtils</span></code></a></p></td>
 <td><p>Utility class for loading docstore data.</p></td>
@@ -472,7 +472,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS">
-<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">INVALID_PANDAS_COLUMN_NAME_CHARACTERS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'[^A-Za-z0-9_]'</span></em><a class="headerlink" href="#abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">INVALID_PANDAS_COLUMN_NAME_CHARACTERS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'[^A-Za-z0-9_]'</span></span><a class="headerlink" href="#abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -497,7 +497,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.StreamingHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">StreamingHandler</span></span><a class="headerlink" href="#abacusai.api_client_utils.StreamingHandler" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">StreamingHandler</span></span><a class="headerlink" href="#abacusai.api_client_utils.StreamingHandler" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
 <p>str(object=’’) -&gt; str
 str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
@@ -510,7 +510,7 @@ encoding defaults to sys.getdefaultencoding().
 errors defaults to ‘strict’.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.StreamingHandler.process_streaming_data">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process_streaming_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_transient</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.StreamingHandler.process_streaming_data" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">process_streaming_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_transient</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.StreamingHandler.process_streaming_data" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -593,160 +593,198 @@ errors defaults to ‘strict’.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.StreamType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">StreamType</span></span><a class="headerlink" href="#abacusai.api_client_utils.StreamType" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">StreamType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.StreamType" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
-<p>Generic enumeration.</p>
-<p>Derive from this class to define new enumerations.</p>
+<p>Create a collection of name/value pairs.</p>
+<p>Example enumeration:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">... </span>    <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>Access them by:</p>
+<ul>
+<li><p>attribute access:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="go">&lt;Color.RED: 1&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>value lookup:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;Color.RED: 1&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>name lookup:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<span class="go">&lt;Color.RED: 1&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Enumerations can be iterated over, and know how many members they have:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">Color</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">Color</span><span class="p">)</span>
+<span class="go">[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]</span>
+</pre></div>
+</div>
+<p>Methods can be added to enumerations, and members can have their own
+attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.StreamType.MESSAGE">
-<span class="sig-name descname"><span class="pre">MESSAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'message'</span></em><a class="headerlink" href="#abacusai.api_client_utils.StreamType.MESSAGE" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">MESSAGE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'message'</span></span><a class="headerlink" href="#abacusai.api_client_utils.StreamType.MESSAGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.StreamType.SECTION_OUTPUT">
-<span class="sig-name descname"><span class="pre">SECTION_OUTPUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'section_output'</span></em><a class="headerlink" href="#abacusai.api_client_utils.StreamType.SECTION_OUTPUT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SECTION_OUTPUT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'section_output'</span></span><a class="headerlink" href="#abacusai.api_client_utils.StreamType.SECTION_OUTPUT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.StreamType.SEGMENT">
-<span class="sig-name descname"><span class="pre">SEGMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'segment'</span></em><a class="headerlink" href="#abacusai.api_client_utils.StreamType.SEGMENT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SEGMENT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'segment'</span></span><a class="headerlink" href="#abacusai.api_client_utils.StreamType.SEGMENT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">DocstoreUtils</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">DocstoreUtils</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils" title="Link to this definition"></a></dt>
 <dd><p>Utility class for loading docstore data.
 Needs to be updated if docstore formats change.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.DOC_ID">
-<span class="sig-name descname"><span class="pre">DOC_ID</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'doc_id'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.DOC_ID" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">DOC_ID</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'doc_id'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.DOC_ID" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PREDICTION_PREFIX">
-<span class="sig-name descname"><span class="pre">PREDICTION_PREFIX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'prediction'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PREDICTION_PREFIX" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PREDICTION_PREFIX</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'prediction'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PREDICTION_PREFIX" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.FIRST_PAGE">
-<span class="sig-name descname"><span class="pre">FIRST_PAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'first_page'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.FIRST_PAGE" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">FIRST_PAGE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'first_page'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.FIRST_PAGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.LAST_PAGE">
-<span class="sig-name descname"><span class="pre">LAST_PAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'last_page'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.LAST_PAGE" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">LAST_PAGE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'last_page'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.LAST_PAGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PAGE_TEXT">
-<span class="sig-name descname"><span class="pre">PAGE_TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_text'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_TEXT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PAGE_TEXT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_text'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_TEXT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PAGES">
-<span class="sig-name descname"><span class="pre">PAGES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pages'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGES" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PAGES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pages'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGES" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.CONTENT">
-<span class="sig-name descname"><span class="pre">CONTENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'content'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.CONTENT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">CONTENT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'content'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.CONTENT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.TOKENS">
-<span class="sig-name descname"><span class="pre">TOKENS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tokens'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.TOKENS" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">TOKENS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tokens'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.TOKENS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PAGES_ZIP_METADATA">
-<span class="sig-name descname"><span class="pre">PAGES_ZIP_METADATA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pages_zip_metadata'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGES_ZIP_METADATA" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PAGES_ZIP_METADATA</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pages_zip_metadata'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGES_ZIP_METADATA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PAGE_DATA">
-<span class="sig-name descname"><span class="pre">PAGE_DATA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_data'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_DATA" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PAGE_DATA</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_data'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_DATA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.HEIGHT">
-<span class="sig-name descname"><span class="pre">HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'height'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.HEIGHT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">HEIGHT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'height'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.HEIGHT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.WIDTH">
-<span class="sig-name descname"><span class="pre">WIDTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'width'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.WIDTH" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">WIDTH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'width'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.WIDTH" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.METADATA">
-<span class="sig-name descname"><span class="pre">METADATA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'metadata'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.METADATA" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">METADATA</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'metadata'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.METADATA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PAGE">
-<span class="sig-name descname"><span class="pre">PAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PAGE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.BLOCK">
-<span class="sig-name descname"><span class="pre">BLOCK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'block'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.BLOCK" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">BLOCK</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'block'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.BLOCK" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.LINE">
-<span class="sig-name descname"><span class="pre">LINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'line'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.LINE" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">LINE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'line'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.LINE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.EXTRACTED_TEXT">
-<span class="sig-name descname"><span class="pre">EXTRACTED_TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'extracted_text'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.EXTRACTED_TEXT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">EXTRACTED_TEXT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'extracted_text'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.EXTRACTED_TEXT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.EMBEDDED_TEXT">
-<span class="sig-name descname"><span class="pre">EMBEDDED_TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'embedded_text'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.EMBEDDED_TEXT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">EMBEDDED_TEXT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'embedded_text'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.EMBEDDED_TEXT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PAGE_MARKDOWN">
-<span class="sig-name descname"><span class="pre">PAGE_MARKDOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_markdown'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_MARKDOWN" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PAGE_MARKDOWN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_markdown'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_MARKDOWN" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PAGE_LLM_OCR">
-<span class="sig-name descname"><span class="pre">PAGE_LLM_OCR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_llm_ocr'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_LLM_OCR" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PAGE_LLM_OCR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_llm_ocr'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_LLM_OCR" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.PAGE_TABLE_TEXT">
-<span class="sig-name descname"><span class="pre">PAGE_TABLE_TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_table_text'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_TABLE_TEXT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PAGE_TABLE_TEXT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_table_text'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.PAGE_TABLE_TEXT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.MARKDOWN_FEATURES">
-<span class="sig-name descname"><span class="pre">MARKDOWN_FEATURES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'markdown_features'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.MARKDOWN_FEATURES" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">MARKDOWN_FEATURES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'markdown_features'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.MARKDOWN_FEATURES" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.MULTI_MODE_OCR_TEXT">
-<span class="sig-name descname"><span class="pre">MULTI_MODE_OCR_TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'multi_mode_ocr_text'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.MULTI_MODE_OCR_TEXT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">MULTI_MODE_OCR_TEXT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'multi_mode_ocr_text'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.MULTI_MODE_OCR_TEXT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_CONFIG">
-<span class="sig-name descname"><span class="pre">DOCUMENT_PROCESSING_CONFIG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'document_processing_config'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_CONFIG" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">DOCUMENT_PROCESSING_CONFIG</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'document_processing_config'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_CONFIG" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_VERSION">
-<span class="sig-name descname"><span class="pre">DOCUMENT_PROCESSING_VERSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'document_processing_version'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_VERSION" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">DOCUMENT_PROCESSING_VERSION</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'document_processing_version'</span></span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_VERSION" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_archive_id">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_archive_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_archive_id" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_archive_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_archive_id" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>doc_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
@@ -756,7 +794,7 @@ Needs to be updated if docstore formats change.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_page_id">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_page_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_page_id" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_page_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_page_id" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -769,7 +807,7 @@ Needs to be updated if docstore formats change.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_content_hash">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_content_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_content_hash" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_content_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_content_hash" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>doc_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
@@ -779,7 +817,7 @@ Needs to be updated if docstore formats change.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_pandas_pages_df">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_pandas_pages_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_docstore_resource_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_document_processing_result_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_pandas_pages_df" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_pandas_pages_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_docstore_resource_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_document_processing_result_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_pandas_pages_df" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -796,7 +834,7 @@ Needs to be updated if docstore formats change.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_pandas_documents_df">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_pandas_documents_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_docstore_resource_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_document_processing_result_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_pandas_documents_df" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_pandas_documents_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_docstore_resource_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_document_processing_result_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_pandas_documents_df" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
