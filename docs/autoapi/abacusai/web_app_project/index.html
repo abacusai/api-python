@@ -408,7 +408,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.web_app_project.WebAppProject">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.web_app_project.</span></span><span class="sig-name descname"><span class="pre">WebAppProject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webAppProjectId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostedDatabaseId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostedDevDatabaseId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emailDomains</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.web_app_project.WebAppProject" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.web_app_project.</span></span><span class="sig-name descname"><span class="pre">WebAppProject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webAppProjectId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourceDeploymentConversationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployedStatus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostnames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectMetadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostedDatabaseId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostedDevDatabaseId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emailDomains</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.web_app_project.WebAppProject" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Web app project (_describeWebAppProject).</p>
 <dl class="field-list simple">
@@ -416,6 +416,10 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
 <li><p><strong>webAppProjectId</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.ResponseSection.id" title="abacusai.api_class.ResponseSection.id"><em>id</em></a>) – The project ID</p></li>
+<li><p><strong>sourceDeploymentConversationId</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.ResponseSection.id" title="abacusai.api_class.ResponseSection.id"><em>id</em></a>) – Source deployment conversation ID</p></li>
+<li><p><strong>deployedStatus</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – ACTIVE | NOT_DEPLOYED</p></li>
+<li><p><strong>hostnames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – List of hostnames to which the app is deployed</p></li>
+<li><p><strong>projectMetadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Project metadata</p></li>
 <li><p><strong>projectType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – web_app | web_service | mobile_app</p></li>
 <li><p><strong>hostedDatabaseId</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.ResponseSection.id" title="abacusai.api_class.ResponseSection.id"><em>id</em></a>) – The ID of the hosted database</p></li>
 <li><p><strong>hostedDevDatabaseId</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.ResponseSection.id" title="abacusai.api_class.ResponseSection.id"><em>id</em></a>) – The ID of the hosted dev database</p></li>
@@ -426,6 +430,26 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.web_app_project.WebAppProject.web_app_project_id">
 <span class="sig-name descname"><span class="pre">web_app_project_id</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.web_app_project.WebAppProject.web_app_project_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.web_app_project.WebAppProject.source_deployment_conversation_id">
+<span class="sig-name descname"><span class="pre">source_deployment_conversation_id</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.web_app_project.WebAppProject.source_deployment_conversation_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.web_app_project.WebAppProject.deployed_status">
+<span class="sig-name descname"><span class="pre">deployed_status</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.web_app_project.WebAppProject.deployed_status" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.web_app_project.WebAppProject.hostnames">
+<span class="sig-name descname"><span class="pre">hostnames</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.web_app_project.WebAppProject.hostnames" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.web_app_project.WebAppProject.project_metadata">
+<span class="sig-name descname"><span class="pre">project_metadata</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.web_app_project.WebAppProject.project_metadata" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostname=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -62,8 +62,8 @@ Module Contents
    :type deployedStatus: str
    :param accessLevel: Access Level (PUBLIC/PRIVATE/DEDICATED/OWNER_ONLY)
    :type accessLevel: str
-   :param hostname: Hostname of the deployed app
-   :type hostname: str
+   :param hostnames: Hostnames of the deployed app
+   :type hostnames: list
    :param llmArtifactId: The ID of the LLM artifact
    :type llmArtifactId: id
    :param artifactType: The type of the artifact
@@ -84,6 +84,8 @@ Module Contents
    :type memoryGb: float
    :param domainAliases: The domain aliases of the deployed app
    :type domainAliases: list
+   :param isThrottled: Whether the app was stopped due to excessive resource usage
+   :type isThrottled: bool
 
 
    .. py:attribute:: hosted_app_container_id
@@ -181,7 +183,7 @@ Module Contents
 
 
 
-   .. py:attribute:: hostname
+   .. py:attribute:: hostnames
       :value: None
 
 
@@ -232,6 +234,11 @@ Module Contents
 
 
    .. py:attribute:: domain_aliases
+      :value: None
+
+
+
+   .. py:attribute:: is_throttled
       :value: None
 
 

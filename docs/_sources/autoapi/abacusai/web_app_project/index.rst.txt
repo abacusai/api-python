@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppProject(client, webAppProjectId=None, projectType=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
+.. py:class:: WebAppProject(client, webAppProjectId=None, sourceDeploymentConversationId=None, deployedStatus=None, hostnames=None, projectMetadata=None, projectType=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,6 +26,14 @@ Module Contents
    :type client: ApiClient
    :param webAppProjectId: The project ID
    :type webAppProjectId: id
+   :param sourceDeploymentConversationId: Source deployment conversation ID
+   :type sourceDeploymentConversationId: id
+   :param deployedStatus: ACTIVE | NOT_DEPLOYED
+   :type deployedStatus: str
+   :param hostnames: List of hostnames to which the app is deployed
+   :type hostnames: list
+   :param projectMetadata: Project metadata
+   :type projectMetadata: dict
    :param projectType: web_app | web_service | mobile_app
    :type projectType: str
    :param hostedDatabaseId: The ID of the hosted database
@@ -37,6 +45,26 @@ Module Contents
 
 
    .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: deployed_status
+      :value: None
+
+
+
+   .. py:attribute:: hostnames
+      :value: None
+
+
+
+   .. py:attribute:: project_metadata
       :value: None
 
 

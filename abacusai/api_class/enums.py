@@ -554,6 +554,7 @@ class LLMName(ApiEnum):
     OPENAI_GPT5_NANO_HIGH = 'OPENAI_GPT5_NANO_HIGH'
     OPENAI_GPT5_1 = 'OPENAI_GPT5_1'
     OPENAI_GPT5_2 = 'OPENAI_GPT5_2'
+    OPENAI_GPT5_4 = 'OPENAI_GPT5_4'
     CLAUDE_V3_HAIKU = 'CLAUDE_V3_HAIKU'
     CLAUDE_V3_OPUS = 'CLAUDE_V3_OPUS'
     CLAUDE_V3_5_HAIKU = 'CLAUDE_V3_5_HAIKU'
@@ -574,6 +575,7 @@ class LLMName(ApiEnum):
     GEMINI_3_1_PRO = 'GEMINI_3_1_PRO'
     GEMINI_2_5_FLASH = 'GEMINI_2_5_FLASH'
     GEMINI_3_FLASH = 'GEMINI_3_FLASH'
+    GEMINI_3_1_FLASH_LITE = 'GEMINI_3_1_FLASH_LITE'
     XAI_GROK = 'XAI_GROK'
     XAI_GROK_3 = 'XAI_GROK_3'
     XAI_GROK_3_MINI = 'XAI_GROK_3_MINI'
@@ -864,3 +866,8 @@ class DaemonTaskLifecycleUpdateAction(ApiEnum):
     DELETE = 'DELETE'
     PAUSE = 'PAUSE'
     RESUME = 'RESUME'
+
+
+class VerticalType(ApiEnum):
+    """Vertical types for specialized external applications."""
+    HEALTH = 'HEALTH'

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -62,6 +62,8 @@ Module Contents
    :type hasThinkingOption: bool
    :param hasFastMode: Whether the external application has fast mode.
    :type hasFastMode: bool
+   :param hasEffortOption: Whether the external application has an effort option.
+   :type hasEffortOption: bool
    :param onlyImageGenEnabled: Whether to LLM only allows image generation.
    :type onlyImageGenEnabled: bool
    :param projectId: The project id associated with the external application.
@@ -161,6 +163,11 @@ Module Contents
 
 
    .. py:attribute:: has_fast_mode
+      :value: None
+
+
+
+   .. py:attribute:: has_effort_option
       :value: None
 
 

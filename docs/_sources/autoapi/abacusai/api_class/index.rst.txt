@@ -203,6 +203,7 @@ Classes
    abacusai.api_class.AgentClientType
    abacusai.api_class.OrganizationSecretType
    abacusai.api_class.DaemonTaskLifecycleUpdateAction
+   abacusai.api_class.VerticalType
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.DocumentProcessingConfig
@@ -3470,6 +3471,10 @@ Package Contents
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -7800,6 +7805,11 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT5_4
+      :value: 'OPENAI_GPT5_4'
+
+
+
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
@@ -7897,6 +7907,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_3_FLASH
       :value: 'GEMINI_3_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_3_1_FLASH_LITE
+      :value: 'GEMINI_3_1_FLASH_LITE'
 
 
 
@@ -9725,6 +9740,19 @@ Package Contents
 
    .. py:attribute:: RESUME
       :value: 'RESUME'
+
+
+
+.. py:class:: VerticalType(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Vertical types for specialized external applications.
+
+
+   .. py:attribute:: HEALTH
+      :value: 'HEALTH'
 
 
 
@@ -12960,6 +12988,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -14103,6 +14135,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -14599,6 +14635,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:data:: Segment
 
@@ -14745,6 +14786,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: ListResponseSection(items, section_key = None)

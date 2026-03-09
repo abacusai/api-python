@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedArtifact(client, hostname=None, artifactType=None, llmArtifactId=None, lifecycle=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None, accessLevel=None)
+.. py:class:: HostedArtifact(client, hostnames=None, artifactType=None, llmArtifactId=None, lifecycle=None, externalApplicationId=None, deploymentConversationId=None, conversationSequenceNumber=None, accessLevel=None, isThrottled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,8 +24,8 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param hostname: The url at which the application is being hosted.
-   :type hostname: str
+   :param hostnames: The urls at which the application is being hosted.
+   :type hostnames: list
    :param artifactType: The type of artifact being hosted.
    :type artifactType: str
    :param llmArtifactId: The artifact id being hosted.
@@ -40,9 +40,11 @@ Module Contents
    :type conversationSequenceNumber: number(integer)
    :param accessLevel: The access level of the hosted artifact (PUBLIC, PRIVATE, OWNER_ONLY, DEDICATED).
    :type accessLevel: str
+   :param isThrottled: Whether the artifact has been temporarily suspended due to high resource usage.
+   :type isThrottled: bool
 
 
-   .. py:attribute:: hostname
+   .. py:attribute:: hostnames
       :value: None
 
 
@@ -78,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: access_level
+      :value: None
+
+
+
+   .. py:attribute:: is_throttled
       :value: None
 
 
