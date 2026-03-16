@@ -5,6 +5,7 @@ from .agent_chat_message import AgentChatMessage
 from .agent_conversation import AgentConversation
 from .agent_data_document_info import AgentDataDocumentInfo
 from .agent_data_execution_result import AgentDataExecutionResult
+from .agent_skill import AgentSkill
 from .agent_version import AgentVersion
 from .ai_building_task import AiBuildingTask
 from .algorithm import Algorithm
@@ -258,6 +259,7 @@ from .session_summary import SessionSummary
 from .session_transcript import SessionTranscript
 from .session_transcripts import SessionTranscripts
 from .sftp_key import SftpKey
+from .speech_gen_settings import SpeechGenSettings
 from .streaming_auth_token import StreamingAuthToken
 from .streaming_client import StreamingClient
 from .streaming_connector import StreamingConnector
@@ -303,4 +305,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.86"
+__version__ = "1.4.87"

@@ -17,6 +17,7 @@ Submodules
    /autoapi/abacusai/agent_conversation/index
    /autoapi/abacusai/agent_data_document_info/index
    /autoapi/abacusai/agent_data_execution_result/index
+   /autoapi/abacusai/agent_skill/index
    /autoapi/abacusai/agent_version/index
    /autoapi/abacusai/ai_building_task/index
    /autoapi/abacusai/algorithm/index
@@ -273,6 +274,7 @@ Submodules
    /autoapi/abacusai/session_transcript/index
    /autoapi/abacusai/session_transcripts/index
    /autoapi/abacusai/sftp_key/index
+   /autoapi/abacusai/speech_gen_settings/index
    /autoapi/abacusai/streaming_auth_token/index
    /autoapi/abacusai/streaming_client/index
    /autoapi/abacusai/streaming_connector/index
@@ -350,6 +352,7 @@ Classes
    abacusai.AgentConversation
    abacusai.AgentDataDocumentInfo
    abacusai.AgentDataExecutionResult
+   abacusai.AgentSkill
    abacusai.AgentVersion
    abacusai.AiBuildingTask
    abacusai.Algorithm
@@ -831,6 +834,7 @@ Classes
    abacusai.SessionTranscript
    abacusai.SessionTranscripts
    abacusai.SftpKey
+   abacusai.SpeechGenSettings
    abacusai.StreamingAuthToken
    abacusai.StreamingClient
    abacusai.StreamingConnector
@@ -1439,6 +1443,95 @@ Package Contents
 
 
    .. py:attribute:: doc_infos
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A skill that can be attached to an agent.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param agentSkillId: The unique identifier of the skill.
+   :type agentSkillId: str
+   :param skillName: The name of the skill.
+   :type skillName: str
+   :param description: A description of what the skill does.
+   :type description: str
+   :param skillDirectoryName: The directory name where skill files are stored.
+   :type skillDirectoryName: str
+   :param chatllmProjectId: The project ID this skill is associated with.
+   :type chatllmProjectId: str
+   :param systemCreated: Whether this skill was created by the system.
+   :type systemCreated: bool
+   :param enabled: Whether the skill is currently enabled.
+   :type enabled: bool
+   :param createdAt: The timestamp when the skill was created.
+   :type createdAt: str
+   :param updatedAt: The timestamp when the skill was last updated.
+   :type updatedAt: str
+
+
+   .. py:attribute:: agent_skill_id
+      :value: None
+
+
+
+   .. py:attribute:: skill_name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: skill_directory_name
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_id
+      :value: None
+
+
+
+   .. py:attribute:: system_created
+      :value: None
+
+
+
+   .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -16528,7 +16621,7 @@ Package Contents
 
 
 
-.. py:class:: BotInfo(client, externalApplicationId=None)
+.. py:class:: BotInfo(client, externalApplicationId=None, deploymentId=None, externalApplication={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -16539,11 +16632,23 @@ Package Contents
    :type client: ApiClient
    :param externalApplicationId: The external application ID.
    :type externalApplicationId: str
+   :param deploymentId: The deployment ID.
+   :type deploymentId: str
+   :param externalApplication: The described external application details.
+   :type externalApplication: ExternalApplication
 
 
    .. py:attribute:: external_application_id
       :value: None
 
+
+
+   .. py:attribute:: deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: external_application
 
 
    .. py:attribute:: deprecated_keys
@@ -34391,7 +34496,7 @@ Package Contents
    :type isSystemCreated: bool
    :param isCustomizable: Whether the external application is customizable.
    :type isCustomizable: bool
-   :param isDeprecated: Whether the external application is deprecated. Only applicable for system created bots. Deprecated external applications will not show in the UI.
+   :param isDeprecated: Whether the external application is deprecated.
    :type isDeprecated: bool
    :param isVisible: Whether the external application should be shown in the dropdown.
    :type isVisible: bool
@@ -51342,6 +51447,53 @@ Package Contents
 
 
 
+.. py:class:: SpeechGenSettings(client, speechType=None, modelsByType=None, settingsByType=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Unified speech generation settings combining STT, TTS, and STS.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param speechType: Dropdown for type of speech (speech_to_text, text_to_speech, speech_to_speech).
+   :type speechType: dict
+   :param modelsByType: Maps each speech type to the list of applicable model keys.
+   :type modelsByType: dict
+   :param settingsByType: Maps each speech type to its model settings dict.
+   :type settingsByType: dict
+
+
+   .. py:attribute:: speech_type
+      :value: None
+
+
+
+   .. py:attribute:: models_by_type
+      :value: None
+
+
+
+   .. py:attribute:: settings_by_type
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: StreamingAuthToken(client, streamingToken=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -53120,7 +53272,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenSettings(client, settings=None, warnings=None, descriptions=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, settings=None, warnings=None, descriptions=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -53129,6 +53281,12 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param videoType: Dropdown for type of video (text_to_video, image_to_video, lip_sync).
+   :type videoType: dict
+   :param modelsByType: Maps each video type to the list of applicable model keys.
+   :type modelsByType: dict
+   :param imageFieldsByModel: Maps each model to the list of image input field names.
+   :type imageFieldsByModel: dict
    :param settings: The settings for each model.
    :type settings: dict
    :param warnings: The warnings for each model.
@@ -53137,6 +53295,21 @@ Package Contents
    :type descriptions: dict
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
+
+
+   .. py:attribute:: video_type
+      :value: None
+
+
+
+   .. py:attribute:: models_by_type
+      :value: None
+
+
+
+   .. py:attribute:: image_fields_by_model
+      :value: None
+
 
 
    .. py:attribute:: settings
@@ -54107,6 +54280,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.86'
+   :value: '1.4.87'
 
 

@@ -1,0 +1,64 @@
+abacusai.speech_gen_settings
+============================
+
+.. py:module:: abacusai.speech_gen_settings
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.speech_gen_settings.SpeechGenSettings
+
+
+Module Contents
+---------------
+
+.. py:class:: SpeechGenSettings(client, speechType=None, modelsByType=None, settingsByType=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Unified speech generation settings combining STT, TTS, and STS.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param speechType: Dropdown for type of speech (speech_to_text, text_to_speech, speech_to_speech).
+   :type speechType: dict
+   :param modelsByType: Maps each speech type to the list of applicable model keys.
+   :type modelsByType: dict
+   :param settingsByType: Maps each speech type to its model settings dict.
+   :type settingsByType: dict
+
+
+   .. py:attribute:: speech_type
+      :value: None
+
+
+
+   .. py:attribute:: models_by_type
+      :value: None
+
+
+
+   .. py:attribute:: settings_by_type
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

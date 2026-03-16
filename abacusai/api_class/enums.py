@@ -524,7 +524,7 @@ class VectorStoreTextEncoder(ApiEnum):
 @deprecated_enums('OPENAI_GPT4_32K', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT',
                   'OPENAI_GPT4', 'OPENAI_GPT4_128K', 'OPENAI_GPT4_128K_LATEST',
                   'OPENAI_O1_MINI',
-                  'GEMINI_1_5_PRO', 'GEMINI_1_5_FLASH', 'GEMINI_2_PRO', 'GEMINI_2_FLASH_THINKING',
+                  'GEMINI_1_5_PRO', 'GEMINI_1_5_FLASH', 'GEMINI_2_PRO', 'GEMINI_2_FLASH', 'GEMINI_2_FLASH_THINKING',
                   'XAI_GROK',
                   'CLAUDE_V3_HAIKU', 'CLAUDE_V3_OPUS', 'CLAUDE_V3_5_HAIKU', 'CLAUDE_V3_5_SONNET', 'CLAUDE_V3_7_SONNET',
                   'CLAUDE_V4_SONNET', 'CLAUDE_V4_OPUS',

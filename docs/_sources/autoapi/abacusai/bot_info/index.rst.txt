@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: BotInfo(client, externalApplicationId=None)
+.. py:class:: BotInfo(client, externalApplicationId=None, deploymentId=None, externalApplication={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,11 +26,23 @@ Module Contents
    :type client: ApiClient
    :param externalApplicationId: The external application ID.
    :type externalApplicationId: str
+   :param deploymentId: The deployment ID.
+   :type deploymentId: str
+   :param externalApplication: The described external application details.
+   :type externalApplication: ExternalApplication
 
 
    .. py:attribute:: external_application_id
       :value: None
 
+
+
+   .. py:attribute:: deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: external_application
 
 
    .. py:attribute:: deprecated_keys

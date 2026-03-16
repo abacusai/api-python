@@ -22,7 +22,7 @@ class ExternalApplication(AbstractApiClass):
             predictionOverrides (dict): The prediction overrides for the external application.
             isSystemCreated (bool): Whether the external application is system created.
             isCustomizable (bool): Whether the external application is customizable.
-            isDeprecated (bool): Whether the external application is deprecated. Only applicable for system created bots. Deprecated external applications will not show in the UI.
+            isDeprecated (bool): Whether the external application is deprecated.
             isVisible (bool): Whether the external application should be shown in the dropdown.
             hasThinkingOption (bool): Whether to show the thinking option in the toolbar.
             hasFastMode (bool): Whether the external application has fast mode.

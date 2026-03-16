@@ -716,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.86'
+    client_version = '1.4.87'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -947,7 +947,7 @@ class BaseApiClient:
         endpoint = self.proxy_endpoint
         if endpoint is None:
             raise Exception(
-                'API not supported, Please contact Abacus.ai support')
+                'Failed to initialize API client. Please verify that a valid API key is being used.')
         result = None
         error_json = {}
         status_code = 200
@@ -4806,7 +4806,7 @@ class ApiClient(ReadOnlyClient):
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
             raise Exception(
-                'API not supported, Please contact Abacus.ai support')
+                'Failed to resolve proxy endpoint. Please verify that the deployment ID and deployment token are valid.')
         return sse_asynchronous_generator(f'{endpoint}/api/getStreamingChatResponse', headers, body)
 
     def get_streaming_conversation_response(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, user_info: dict = None):
@@ -4851,7 +4851,7 @@ class ApiClient(ReadOnlyClient):
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
             raise Exception(
-                'API not supported, Please contact Abacus.ai support')
+                'Failed to resolve proxy endpoint. Please verify that the deployment ID and deployment token are valid.')
         return sse_asynchronous_generator(f'{endpoint}/api/getStreamingConversationResponse', headers, body)
 
     def get_streaming_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, attachments: dict = None):
@@ -4891,7 +4891,7 @@ class ApiClient(ReadOnlyClient):
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
             raise Exception(
-                'API not supported, Please contact Abacus.ai support')
+                'Failed to resolve proxy endpoint. Please verify that the deployment ID and deployment token are valid.')
         return sse_asynchronous_generator_with_files(f'{endpoint}/api/getStreamingChatResponseWithBinaryData', headers, body, attachments)
 
     def get_streaming_conversation_response_with_binary_data(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, attachments: dict = None):
@@ -4935,7 +4935,7 @@ class ApiClient(ReadOnlyClient):
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
             raise Exception(
-                'API not supported, Please contact Abacus.ai support')
+                'Failed to resolve proxy endpoint. Please verify that the deployment ID and deployment token are valid.')
         return sse_asynchronous_generator_with_files(f'{endpoint}/api/getStreamingConversationResponseWithBinaryData', headers, body, attachments)
 
     def execute_conversation_agent_streaming(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None,
@@ -4968,7 +4968,7 @@ class ApiClient(ReadOnlyClient):
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
             raise Exception(
-                'API not supported, Please contact Abacus.ai support')
+                'Failed to resolve proxy endpoint. Please verify that the deployment ID and deployment token are valid.')
         return sse_asynchronous_generator(f'{endpoint}/api/executeConversationAgentStreaming', headers, body)
 
     def set_cache_scope(self, scope: str):

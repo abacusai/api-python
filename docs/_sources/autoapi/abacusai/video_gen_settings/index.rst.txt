@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: VideoGenSettings(client, settings=None, warnings=None, descriptions=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, settings=None, warnings=None, descriptions=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,6 +24,12 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param videoType: Dropdown for type of video (text_to_video, image_to_video, lip_sync).
+   :type videoType: dict
+   :param modelsByType: Maps each video type to the list of applicable model keys.
+   :type modelsByType: dict
+   :param imageFieldsByModel: Maps each model to the list of image input field names.
+   :type imageFieldsByModel: dict
    :param settings: The settings for each model.
    :type settings: dict
    :param warnings: The warnings for each model.
@@ -32,6 +38,21 @@ Module Contents
    :type descriptions: dict
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
+
+
+   .. py:attribute:: video_type
+      :value: None
+
+
+
+   .. py:attribute:: models_by_type
+      :value: None
+
+
+
+   .. py:attribute:: image_fields_by_model
+      :value: None
+
 
 
    .. py:attribute:: settings
