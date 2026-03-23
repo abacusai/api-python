@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None)
+.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None, createdByEmail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,8 @@ Module Contents
    :type createdAt: str
    :param metadata: Additional metadata for the secret (e.g., web_app_project_ids).
    :type metadata: dict
+   :param createdByEmail: The email of the user who created the secret.
+   :type createdByEmail: str
 
 
    .. py:attribute:: secret_key
@@ -50,6 +52,11 @@ Module Contents
 
 
    .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: created_by_email
       :value: None
 
 

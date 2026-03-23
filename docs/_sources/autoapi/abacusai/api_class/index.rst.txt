@@ -200,6 +200,8 @@ Classes
    abacusai.api_class.ResponseSectionType
    abacusai.api_class.CodeLanguage
    abacusai.api_class.DeploymentConversationType
+   abacusai.api_class.DeploymentConversationAgentType
+   abacusai.api_class.AgentLifecycle
    abacusai.api_class.AgentClientType
    abacusai.api_class.OrganizationSecretType
    abacusai.api_class.DaemonTaskLifecycleUpdateAction
@@ -7810,6 +7812,16 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT5_4_NANO
+      :value: 'OPENAI_GPT5_4_NANO'
+
+
+
+   .. py:attribute:: OPENAI_GPT5_4_MINI
+      :value: 'OPENAI_GPT5_4_MINI'
+
+
+
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
@@ -7935,6 +7947,11 @@ Package Contents
 
 
 
+   .. py:attribute:: XAI_GROK_4_2
+      :value: 'XAI_GROK_4_2'
+
+
+
    .. py:attribute:: LLAMA4_MAVERICK
       :value: 'LLAMA4_MAVERICK'
 
@@ -8017,6 +8034,11 @@ Package Contents
 
    .. py:attribute:: DEEPSEEK_R1
       :value: 'DEEPSEEK_R1'
+
+
+
+   .. py:attribute:: MINIMAX_M2_7
+      :value: 'MINIMAX_M2_7'
 
 
 
@@ -9599,6 +9621,11 @@ Package Contents
 
 
 
+   .. py:attribute:: CODE_LLM_COWORK
+      :value: 'CODE_LLM_COWORK'
+
+
+
    .. py:attribute:: CHAT_LLM_TASK
       :value: 'CHAT_LLM_TASK'
 
@@ -9636,6 +9663,117 @@ Package Contents
 
    .. py:attribute:: BROWSER_EXTENSION
       :value: 'BROWSER_EXTENSION'
+
+
+
+   .. py:attribute:: OFFICE
+      :value: 'OFFICE'
+
+
+
+.. py:class:: DeploymentConversationAgentType(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Create a collection of name/value pairs.
+
+   Example enumeration:
+
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     BLUE = 2
+   ...     GREEN = 3
+
+   Access them by:
+
+   - attribute access:
+
+     >>> Color.RED
+     <Color.RED: 1>
+
+   - value lookup:
+
+     >>> Color(1)
+     <Color.RED: 1>
+
+   - name lookup:
+
+     >>> Color['RED']
+     <Color.RED: 1>
+
+   Enumerations can be iterated over, and know how many members they have:
+
+   >>> len(Color)
+   3
+
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+   Methods can be added to enumerations, and members can have their own
+   attributes -- see the documentation for details.
+
+
+   .. py:attribute:: META_AGENT
+      :value: 'META_AGENT'
+
+
+
+.. py:class:: AgentLifecycle(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Create a collection of name/value pairs.
+
+   Example enumeration:
+
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     BLUE = 2
+   ...     GREEN = 3
+
+   Access them by:
+
+   - attribute access:
+
+     >>> Color.RED
+     <Color.RED: 1>
+
+   - value lookup:
+
+     >>> Color(1)
+     <Color.RED: 1>
+
+   - name lookup:
+
+     >>> Color['RED']
+     <Color.RED: 1>
+
+   Enumerations can be iterated over, and know how many members they have:
+
+   >>> len(Color)
+   3
+
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+   Methods can be added to enumerations, and members can have their own
+   attributes -- see the documentation for details.
+
+
+   .. py:attribute:: PENDING
+      :value: 'PENDING'
+
+
+
+   .. py:attribute:: STOPPED
+      :value: 'STOPPED'
+
+
+
+   .. py:attribute:: COMPLETED
+      :value: 'COMPLETED'
 
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None, provider=None, isUserApiKeyAllowed=None, isRateLimited=None, apiKeyUrl=None)
+.. py:class:: CodeBot(client, llmName=None, name=None, coworkName=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None, provider=None, isUserApiKeyAllowed=None, isRateLimited=None, apiKeyUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,8 @@ Module Contents
    :type llmName: str
    :param name: The name of the bot.
    :type name: str
+   :param coworkName: The display name of the bot in CoWork. Only available for select bots.
+   :type coworkName: str
    :param imageUploadSupported: Whether the LLM supports image upload.
    :type imageUploadSupported: bool
    :param codeAgentSupported: Whether the LLM supports code agent.
@@ -54,6 +56,11 @@ Module Contents
 
 
    .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: cowork_name
       :value: None
 
 

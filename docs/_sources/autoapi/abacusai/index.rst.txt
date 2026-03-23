@@ -500,6 +500,8 @@ Classes
    abacusai.ResponseSectionType
    abacusai.CodeLanguage
    abacusai.DeploymentConversationType
+   abacusai.DeploymentConversationAgentType
+   abacusai.AgentLifecycle
    abacusai.AgentClientType
    abacusai.OrganizationSecretType
    abacusai.DaemonTaskLifecycleUpdateAction
@@ -9104,6 +9106,16 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT5_4_NANO
+      :value: 'OPENAI_GPT5_4_NANO'
+
+
+
+   .. py:attribute:: OPENAI_GPT5_4_MINI
+      :value: 'OPENAI_GPT5_4_MINI'
+
+
+
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
@@ -9229,6 +9241,11 @@ Package Contents
 
 
 
+   .. py:attribute:: XAI_GROK_4_2
+      :value: 'XAI_GROK_4_2'
+
+
+
    .. py:attribute:: LLAMA4_MAVERICK
       :value: 'LLAMA4_MAVERICK'
 
@@ -9311,6 +9328,11 @@ Package Contents
 
    .. py:attribute:: DEEPSEEK_R1
       :value: 'DEEPSEEK_R1'
+
+
+
+   .. py:attribute:: MINIMAX_M2_7
+      :value: 'MINIMAX_M2_7'
 
 
 
@@ -10707,6 +10729,11 @@ Package Contents
 
 
 
+   .. py:attribute:: CODE_LLM_COWORK
+      :value: 'CODE_LLM_COWORK'
+
+
+
    .. py:attribute:: CHAT_LLM_TASK
       :value: 'CHAT_LLM_TASK'
 
@@ -10744,6 +10771,117 @@ Package Contents
 
    .. py:attribute:: BROWSER_EXTENSION
       :value: 'BROWSER_EXTENSION'
+
+
+
+   .. py:attribute:: OFFICE
+      :value: 'OFFICE'
+
+
+
+.. py:class:: DeploymentConversationAgentType(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Create a collection of name/value pairs.
+
+   Example enumeration:
+
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     BLUE = 2
+   ...     GREEN = 3
+
+   Access them by:
+
+   - attribute access:
+
+     >>> Color.RED
+     <Color.RED: 1>
+
+   - value lookup:
+
+     >>> Color(1)
+     <Color.RED: 1>
+
+   - name lookup:
+
+     >>> Color['RED']
+     <Color.RED: 1>
+
+   Enumerations can be iterated over, and know how many members they have:
+
+   >>> len(Color)
+   3
+
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+   Methods can be added to enumerations, and members can have their own
+   attributes -- see the documentation for details.
+
+
+   .. py:attribute:: META_AGENT
+      :value: 'META_AGENT'
+
+
+
+.. py:class:: AgentLifecycle(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Create a collection of name/value pairs.
+
+   Example enumeration:
+
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     BLUE = 2
+   ...     GREEN = 3
+
+   Access them by:
+
+   - attribute access:
+
+     >>> Color.RED
+     <Color.RED: 1>
+
+   - value lookup:
+
+     >>> Color(1)
+     <Color.RED: 1>
+
+   - name lookup:
+
+     >>> Color['RED']
+     <Color.RED: 1>
+
+   Enumerations can be iterated over, and know how many members they have:
+
+   >>> len(Color)
+   3
+
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+   Methods can be added to enumerations, and members can have their own
+   attributes -- see the documentation for details.
+
+
+   .. py:attribute:: PENDING
+      :value: 'PENDING'
+
+
+
+   .. py:attribute:: STOPPED
+      :value: 'STOPPED'
+
+
+
+   .. py:attribute:: COMPLETED
+      :value: 'COMPLETED'
 
 
 
@@ -27888,7 +28026,7 @@ Package Contents
 
 
 
-.. py:class:: CodeBot(client, llmName=None, name=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None, provider=None, isUserApiKeyAllowed=None, isRateLimited=None, apiKeyUrl=None)
+.. py:class:: CodeBot(client, llmName=None, name=None, coworkName=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None, provider=None, isUserApiKeyAllowed=None, isRateLimited=None, apiKeyUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27901,6 +28039,8 @@ Package Contents
    :type llmName: str
    :param name: The name of the bot.
    :type name: str
+   :param coworkName: The display name of the bot in CoWork. Only available for select bots.
+   :type coworkName: str
    :param imageUploadSupported: Whether the LLM supports image upload.
    :type imageUploadSupported: bool
    :param codeAgentSupported: Whether the LLM supports code agent.
@@ -27927,6 +28067,11 @@ Package Contents
 
 
    .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: cowork_name
       :value: None
 
 
@@ -31667,7 +31812,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31740,6 +31885,10 @@ Package Contents
    :type shareType: str
    :param pushNotificationsEnabled: Whether push notifications are enabled for the deployment conversation.
    :type pushNotificationsEnabled: bool
+   :param platform: The platform the conversation was created from (WEB, IOS, ANDROID).
+   :type platform: str
+   :param agentType: The type of agent for the deployment conversation (e.g., META_AGENT).
+   :type agentType: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -31904,6 +32053,16 @@ Package Contents
 
 
    .. py:attribute:: push_notifications_enabled
+      :value: None
+
+
+
+   .. py:attribute:: platform
+      :value: None
+
+
+
+   .. py:attribute:: agent_type
       :value: None
 
 
@@ -45198,7 +45357,7 @@ Package Contents
 
 
 
-.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None)
+.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None, createdByEmail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45215,6 +45374,8 @@ Package Contents
    :type createdAt: str
    :param metadata: Additional metadata for the secret (e.g., web_app_project_ids).
    :type metadata: dict
+   :param createdByEmail: The email of the user who created the secret.
+   :type createdByEmail: str
 
 
    .. py:attribute:: secret_key
@@ -45233,6 +45394,11 @@ Package Contents
 
 
    .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: created_by_email
       :value: None
 
 
@@ -54280,6 +54446,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.87'
+   :value: '1.4.88'
 
 
