@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -92,6 +92,10 @@ Module Contents
    :type platform: str
    :param agentType: The type of agent for the deployment conversation (e.g., META_AGENT).
    :type agentType: str
+   :param agentLifecycle: The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).
+   :type agentLifecycle: str
+   :param orchestratorDeploymentConversationId: The deployment conversation id of the orchestrating meta agent, if this conversation is a worker in an agent swarm.
+   :type orchestratorDeploymentConversationId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -266,6 +270,16 @@ Module Contents
 
 
    .. py:attribute:: agent_type
+      :value: None
+
+
+
+   .. py:attribute:: agent_lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: orchestrator_deployment_conversation_id
       :value: None
 
 

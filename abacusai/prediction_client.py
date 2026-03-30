@@ -45,7 +45,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
 
-    def predict(self, deployment_token: str, deployment_id: str, query_data: dict, **kwargs) -> Dict:
+    def predict(self, deployment_token: str, deployment_id: str, query_data: dict = None, **kwargs) -> Dict:
         """Returns a prediction for Predictive Modeling
 
         Args:

@@ -13,9 +13,10 @@ class StreamingConnector(AbstractApiClass):
             createdAt (str): When the API key was created
             status (str): The status of the Database Connector
             auth (dict): Non-secret connection information for this connector
+            createdBy (str): The email of the user who created this connector.
     """
 
-    def __init__(self, client, streamingConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None):
+    def __init__(self, client, streamingConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None, createdBy=None):
         super().__init__(client, streamingConnectorId)
         self.streaming_connector_id = streamingConnectorId
         self.service = service
@@ -23,11 +24,12 @@ class StreamingConnector(AbstractApiClass):
         self.created_at = createdAt
         self.status = status
         self.auth = auth
+        self.created_by = createdBy
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'streaming_connector_id': repr(self.streaming_connector_id), f'service': repr(self.service), f'name': repr(
-            self.name), f'created_at': repr(self.created_at), f'status': repr(self.status), f'auth': repr(self.auth)}
+            self.name), f'created_at': repr(self.created_at), f'status': repr(self.status), f'auth': repr(self.auth), f'created_by': repr(self.created_by)}
         class_name = "StreamingConnector"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -40,8 +42,8 @@ class StreamingConnector(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'streaming_connector_id': self.streaming_connector_id, 'service': self.service,
-                'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
+        resp = {'streaming_connector_id': self.streaming_connector_id, 'service': self.service, 'name': self.name,
+                'created_at': self.created_at, 'status': self.status, 'auth': self.auth, 'created_by': self.created_by}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def verify(self):

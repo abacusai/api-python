@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, createdAt=None, updatedAt=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type systemCreated: bool
    :param enabled: Whether the skill is currently enabled.
    :type enabled: bool
+   :param default: Whether this skill is a default skill.
+   :type default: bool
    :param createdAt: The timestamp when the skill was created.
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
@@ -75,6 +77,11 @@ Module Contents
 
 
    .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: default
       :value: None
 
 

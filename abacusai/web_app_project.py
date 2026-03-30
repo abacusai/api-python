@@ -11,7 +11,7 @@ class WebAppProject(AbstractApiClass):
             webAppProjectId (id): The project ID
             sourceDeploymentConversationId (id): Source deployment conversation ID
             deployedStatus (str): ACTIVE | NOT_DEPLOYED
-            hostnames (list): List of hostnames to which the app is deployed
+            hostnames (list[dict]): List of hostnames and tags to which the app is deployed
             projectMetadata (dict): Project metadata
             projectType (str): web_app | web_service | mobile_app
             hostedDatabaseId (id): The ID of the hosted database

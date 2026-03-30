@@ -716,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.88'
+    client_version = '1.4.89'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -7505,7 +7505,7 @@ class ApiClient(ReadOnlyClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
 
-    def predict(self, deployment_token: str, deployment_id: str, query_data: dict, **kwargs) -> Dict:
+    def predict(self, deployment_token: str, deployment_id: str, query_data: dict = None, **kwargs) -> Dict:
         """Returns a prediction for Predictive Modeling
 
         Args:

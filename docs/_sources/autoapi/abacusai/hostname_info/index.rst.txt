@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostnameInfo(client, isRootDomain=None, hasRootNameserversConfigured=None)
+.. py:class:: HostnameInfo(client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,10 +24,17 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param hostname: IDN formatted hostname
+   :type hostname: str
    :param isRootDomain: Whether the hostname is a root domain
    :type isRootDomain: bool
    :param hasRootNameserversConfigured: Whether the root domain has Abacus nameservers configured.
    :type hasRootNameserversConfigured: bool
+
+
+   .. py:attribute:: hostname
+      :value: None
+
 
 
    .. py:attribute:: is_root_domain

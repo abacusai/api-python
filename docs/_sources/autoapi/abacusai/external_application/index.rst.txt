@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -70,6 +70,8 @@ Module Contents
    :type projectId: str
    :param isCodellmChatmodeSupported: Whether the external application is codellm chatmode supported
    :type isCodellmChatmodeSupported: bool
+   :param urlPath: A short URL-friendly path for the external application. Only set for system created bots.
+   :type urlPath: str
 
 
    .. py:attribute:: name
@@ -183,6 +185,11 @@ Module Contents
 
 
    .. py:attribute:: is_codellm_chatmode_supported
+      :value: None
+
+
+
+   .. py:attribute:: url_path
       :value: None
 
 

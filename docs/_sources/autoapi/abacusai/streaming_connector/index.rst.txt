@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: StreamingConnector(client, streamingConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+.. py:class:: StreamingConnector(client, streamingConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None, createdBy=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type status: str
    :param auth: Non-secret connection information for this connector
    :type auth: dict
+   :param createdBy: The email of the user who created this connector.
+   :type createdBy: str
 
 
    .. py:attribute:: streaming_connector_id
@@ -64,6 +66,11 @@ Module Contents
 
 
    .. py:attribute:: auth
+      :value: None
+
+
+
+   .. py:attribute:: created_by
       :value: None
 
 

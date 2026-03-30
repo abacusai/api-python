@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None)
+.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type auth: dict
    :param createdAt: The ISO-8601 string indicating when the API key was created.
    :type createdAt: str
+   :param createdBy: The email of the user who created this connector.
+   :type createdBy: str
 
 
    .. py:attribute:: database_connector_id
@@ -64,6 +66,11 @@ Module Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: created_by
       :value: None
 
 

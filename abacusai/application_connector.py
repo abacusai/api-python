@@ -15,9 +15,10 @@ class ApplicationConnector(AbstractApiClass):
             status (str): The status of the Application Connector
             auth (dict): Non-secret connection information for this connector
             baseConnector (str): The hashed ID of the config connector this user connector is based on (for config connector flows)
+            createdBy (str): The email of the user who created this connector.
     """
 
-    def __init__(self, client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None):
+    def __init__(self, client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None, createdBy=None):
         super().__init__(client, applicationConnectorId)
         self.application_connector_id = applicationConnectorId
         self.service = service
@@ -27,11 +28,12 @@ class ApplicationConnector(AbstractApiClass):
         self.status = status
         self.auth = auth
         self.base_connector = baseConnector
+        self.created_by = createdBy
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'application_connector_id': repr(self.application_connector_id), f'service': repr(self.service), f'service_name': repr(self.service_name), f'name': repr(
-            self.name), f'created_at': repr(self.created_at), f'status': repr(self.status), f'auth': repr(self.auth), f'base_connector': repr(self.base_connector)}
+            self.name), f'created_at': repr(self.created_at), f'status': repr(self.status), f'auth': repr(self.auth), f'base_connector': repr(self.base_connector), f'created_by': repr(self.created_by)}
         class_name = "ApplicationConnector"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -44,8 +46,8 @@ class ApplicationConnector(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'application_connector_id': self.application_connector_id, 'service': self.service, 'service_name': self.service_name,
-                'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth, 'base_connector': self.base_connector}
+        resp = {'application_connector_id': self.application_connector_id, 'service': self.service, 'service_name': self.service_name, 'name': self.name,
+                'created_at': self.created_at, 'status': self.status, 'auth': self.auth, 'base_connector': self.base_connector, 'created_by': self.created_by}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def rename(self, name: str):

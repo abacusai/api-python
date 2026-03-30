@@ -15,9 +15,10 @@ class ChatllmProject(AbstractApiClass):
             updatedAt (str): The update time of the chatllm project.
             verticalType (str): The vertical type (HEALTH or null for regular projects).
             preferences (dict): The preferences JSON for vertical projects.
+            orchestratorDeploymentConversationId (id): The ID of the orchestrator deployment conversation.
     """
 
-    def __init__(self, client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, verticalType=None, preferences=None):
+    def __init__(self, client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None):
         super().__init__(client, chatllmProjectId)
         self.chatllm_project_id = chatllmProjectId
         self.name = name
@@ -27,11 +28,12 @@ class ChatllmProject(AbstractApiClass):
         self.updated_at = updatedAt
         self.vertical_type = verticalType
         self.preferences = preferences
+        self.orchestrator_deployment_conversation_id = orchestratorDeploymentConversationId
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'chatllm_project_id': repr(self.chatllm_project_id), f'name': repr(self.name), f'description': repr(self.description), f'custom_instructions': repr(
-            self.custom_instructions), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'vertical_type': repr(self.vertical_type), f'preferences': repr(self.preferences)}
+        repr_dict = {f'chatllm_project_id': repr(self.chatllm_project_id), f'name': repr(self.name), f'description': repr(self.description), f'custom_instructions': repr(self.custom_instructions), f'created_at': repr(
+            self.created_at), f'updated_at': repr(self.updated_at), f'vertical_type': repr(self.vertical_type), f'preferences': repr(self.preferences), f'orchestrator_deployment_conversation_id': repr(self.orchestrator_deployment_conversation_id)}
         class_name = "ChatllmProject"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -44,6 +46,6 @@ class ChatllmProject(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'chatllm_project_id': self.chatllm_project_id, 'name': self.name, 'description': self.description, 'custom_instructions': self.custom_instructions,
-                'created_at': self.created_at, 'updated_at': self.updated_at, 'vertical_type': self.vertical_type, 'preferences': self.preferences}
+        resp = {'chatllm_project_id': self.chatllm_project_id, 'name': self.name, 'description': self.description, 'custom_instructions': self.custom_instructions, 'created_at': self.created_at,
+                'updated_at': self.updated_at, 'vertical_type': self.vertical_type, 'preferences': self.preferences, 'orchestrator_deployment_conversation_id': self.orchestrator_deployment_conversation_id}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

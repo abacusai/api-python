@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None)
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None, createdBy=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type auth: dict
    :param baseConnector: The hashed ID of the config connector this user connector is based on (for config connector flows)
    :type baseConnector: str
+   :param createdBy: The email of the user who created this connector.
+   :type createdBy: str
 
 
    .. py:attribute:: application_connector_id
@@ -78,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: base_connector
+      :value: None
+
+
+
+   .. py:attribute:: created_by
       :value: None
 
 

@@ -1462,7 +1462,7 @@ Package Contents
 
 
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, createdAt=None, updatedAt=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1485,6 +1485,8 @@ Package Contents
    :type systemCreated: bool
    :param enabled: Whether the skill is currently enabled.
    :type enabled: bool
+   :param default: Whether this skill is a default skill.
+   :type default: bool
    :param createdAt: The timestamp when the skill was created.
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
@@ -1522,6 +1524,11 @@ Package Contents
 
 
    .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: default
       :value: None
 
 
@@ -15591,7 +15598,7 @@ Package Contents
 
 
 
-.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None)
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None, createdBy=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -15616,6 +15623,8 @@ Package Contents
    :type auth: dict
    :param baseConnector: The hashed ID of the config connector this user connector is based on (for config connector flows)
    :type baseConnector: str
+   :param createdBy: The email of the user who created this connector.
+   :type createdBy: str
 
 
    .. py:attribute:: application_connector_id
@@ -15654,6 +15663,11 @@ Package Contents
 
 
    .. py:attribute:: base_connector
+      :value: None
+
+
+
+   .. py:attribute:: created_by
       :value: None
 
 
@@ -17233,7 +17247,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, verticalType=None, preferences=None)
+.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -17258,6 +17272,8 @@ Package Contents
    :type verticalType: str
    :param preferences: The preferences JSON for vertical projects.
    :type preferences: dict
+   :param orchestratorDeploymentConversationId: The ID of the orchestrator deployment conversation.
+   :type orchestratorDeploymentConversationId: id
 
 
    .. py:attribute:: chatllm_project_id
@@ -17296,6 +17312,11 @@ Package Contents
 
 
    .. py:attribute:: preferences
+      :value: None
+
+
+
+   .. py:attribute:: orchestrator_deployment_conversation_id
       :value: None
 
 
@@ -22472,7 +22493,7 @@ Package Contents
 
 
 
-   .. py:method:: predict(deployment_token, deployment_id, query_data, **kwargs)
+   .. py:method:: predict(deployment_token, deployment_id, query_data = None, **kwargs)
 
       Returns a prediction for Predictive Modeling
 
@@ -29912,7 +29933,7 @@ Package Contents
 
 
 
-.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None)
+.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29933,6 +29954,8 @@ Package Contents
    :type auth: dict
    :param createdAt: The ISO-8601 string indicating when the API key was created.
    :type createdAt: str
+   :param createdBy: The email of the user who created this connector.
+   :type createdBy: str
 
 
    .. py:attribute:: database_connector_id
@@ -29961,6 +29984,11 @@ Package Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: created_by
       :value: None
 
 
@@ -31812,7 +31840,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31889,6 +31917,10 @@ Package Contents
    :type platform: str
    :param agentType: The type of agent for the deployment conversation (e.g., META_AGENT).
    :type agentType: str
+   :param agentLifecycle: The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).
+   :type agentLifecycle: str
+   :param orchestratorDeploymentConversationId: The deployment conversation id of the orchestrating meta agent, if this conversation is a worker in an agent swarm.
+   :type orchestratorDeploymentConversationId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -32063,6 +32095,16 @@ Package Contents
 
 
    .. py:attribute:: agent_type
+      :value: None
+
+
+
+   .. py:attribute:: agent_lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: orchestrator_deployment_conversation_id
       :value: None
 
 
@@ -34616,7 +34658,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34671,6 +34713,8 @@ Package Contents
    :type projectId: str
    :param isCodellmChatmodeSupported: Whether the external application is codellm chatmode supported
    :type isCodellmChatmodeSupported: bool
+   :param urlPath: A short URL-friendly path for the external application. Only set for system created bots.
+   :type urlPath: str
 
 
    .. py:attribute:: name
@@ -34784,6 +34828,11 @@ Package Contents
 
 
    .. py:attribute:: is_codellm_chatmode_supported
+      :value: None
+
+
+
+   .. py:attribute:: url_path
       :value: None
 
 
@@ -39624,8 +39673,8 @@ Package Contents
    :type deployedStatus: str
    :param accessLevel: Access Level (PUBLIC/PRIVATE/DEDICATED/OWNER_ONLY)
    :type accessLevel: str
-   :param hostnames: Hostnames of the deployed app
-   :type hostnames: list
+   :param hostnames: Hostnames and tags of the deployed app
+   :type hostnames: list[dict]
    :param llmArtifactId: The ID of the LLM artifact
    :type llmArtifactId: id
    :param artifactType: The type of the artifact
@@ -40139,7 +40188,7 @@ Package Contents
 
 
 
-.. py:class:: HostnameInfo(client, isRootDomain=None, hasRootNameserversConfigured=None)
+.. py:class:: HostnameInfo(client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40148,10 +40197,17 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param hostname: IDN formatted hostname
+   :type hostname: str
    :param isRootDomain: Whether the hostname is a root domain
    :type isRootDomain: bool
    :param hasRootNameserversConfigured: Whether the root domain has Abacus nameservers configured.
    :type hasRootNameserversConfigured: bool
+
+
+   .. py:attribute:: hostname
+      :value: None
+
 
 
    .. py:attribute:: is_root_domain
@@ -47060,7 +47116,7 @@ Package Contents
 
 
 
-   .. py:method:: predict(deployment_token, deployment_id, query_data, **kwargs)
+   .. py:method:: predict(deployment_token, deployment_id, query_data = None, **kwargs)
 
       Returns a prediction for Predictive Modeling
 
@@ -51784,7 +51840,7 @@ Package Contents
 
 
 
-.. py:class:: StreamingConnector(client, streamingConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+.. py:class:: StreamingConnector(client, streamingConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None, createdBy=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -51805,6 +51861,8 @@ Package Contents
    :type status: str
    :param auth: Non-secret connection information for this connector
    :type auth: dict
+   :param createdBy: The email of the user who created this connector.
+   :type createdBy: str
 
 
    .. py:attribute:: streaming_connector_id
@@ -51833,6 +51891,11 @@ Package Contents
 
 
    .. py:attribute:: auth
+      :value: None
+
+
+
+   .. py:attribute:: created_by
       :value: None
 
 
@@ -53892,8 +53955,8 @@ Package Contents
    :type sourceDeploymentConversationId: id
    :param deployedStatus: ACTIVE | NOT_DEPLOYED
    :type deployedStatus: str
-   :param hostnames: List of hostnames to which the app is deployed
-   :type hostnames: list
+   :param hostnames: List of hostnames and tags to which the app is deployed
+   :type hostnames: list[dict]
    :param projectMetadata: Project metadata
    :type projectMetadata: dict
    :param projectType: web_app | web_service | mobile_app
@@ -54446,6 +54509,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.88'
+   :value: '1.4.89'
 
 
