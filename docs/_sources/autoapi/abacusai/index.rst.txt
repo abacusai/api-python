@@ -17430,7 +17430,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -17475,6 +17475,8 @@ Package Contents
    :type requiresNewConversation: bool
    :param executionMode: The execution mode of the chatllm task.
    :type executionMode: str
+   :param offerModelSwitch: Whether to offer switching to a cheaper model.
+   :type offerModelSwitch: bool
    :param taskDefinition: The task definition (for web_service_trigger tasks).
    :type taskDefinition: dict
    :param webAppHostname: The hostname of the web app associated with the daemon task.
@@ -17577,6 +17579,11 @@ Package Contents
 
 
    .. py:attribute:: execution_mode
+      :value: None
+
+
+
+   .. py:attribute:: offer_model_switch
       :value: None
 
 
@@ -23825,7 +23832,7 @@ Package Contents
 
 
 
-   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None)
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None, timeout = None)
 
       Creates a custom Python function that is reusable.
 
@@ -23851,13 +23858,15 @@ Package Contents
       :type org_level_connectors: List
       :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
       :type output_variable_mappings: List
+      :param timeout: Timeout in seconds for the function execution. Only allowed for USERCODE_TOOL type.
+      :type timeout: int
 
       :returns: The Python function that can be used (e.g. for feature group transform).
       :rtype: PythonFunction
 
 
 
-   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None)
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None, timeout = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -23881,6 +23890,8 @@ Package Contents
       :type org_level_connectors: List
       :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
       :type output_variable_mappings: List
+      :param timeout: Timeout in seconds for the function execution. Only allowed for USERCODE_TOOL type.
+      :type timeout: int
 
       :returns: The Python function object.
       :rtype: PythonFunction
@@ -31919,7 +31930,7 @@ Package Contents
    :type agentType: str
    :param agentLifecycle: The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).
    :type agentLifecycle: str
-   :param orchestratorDeploymentConversationId: The deployment conversation id of the orchestrating meta agent, if this conversation is a worker in an agent swarm.
+   :param orchestratorDeploymentConversationId: The deployment conversation id of the orchestrating planning agent, if this conversation is a worker in an agent swarm.
    :type orchestratorDeploymentConversationId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
@@ -54509,6 +54520,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.89'
+   :value: '1.4.90'
 
 

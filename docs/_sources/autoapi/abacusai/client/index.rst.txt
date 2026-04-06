@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.89'
+      :value: '1.4.90'
 
 
 
@@ -9400,7 +9400,7 @@ Module Contents
 
 
 
-   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None)
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP', description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None, timeout = None)
 
       Creates a custom Python function that is reusable.
 
@@ -9426,13 +9426,15 @@ Module Contents
       :type org_level_connectors: List
       :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
       :type output_variable_mappings: List
+      :param timeout: Timeout in seconds for the function execution. Only allowed for USERCODE_TOOL type.
+      :type timeout: int
 
       :returns: The Python function that can be used (e.g. for feature group transform).
       :rtype: PythonFunction
 
 
 
-   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None)
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, description = None, examples = None, user_level_connectors = None, org_level_connectors = None, output_variable_mappings = None, timeout = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -9456,6 +9458,8 @@ Module Contents
       :type org_level_connectors: List
       :param output_variable_mappings: List of output variable mappings that defines the elements of the function's return value.
       :type output_variable_mappings: List
+      :param timeout: Timeout in seconds for the function execution. Only allowed for USERCODE_TOOL type.
+      :type timeout: int
 
       :returns: The Python function object.
       :rtype: PythonFunction

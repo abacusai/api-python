@@ -45,7 +45,7 @@ class DeploymentConversation(AbstractApiClass):
             platform (str): The platform the conversation was created from (WEB, IOS, ANDROID).
             agentType (str): The type of agent for the deployment conversation (e.g., META_AGENT).
             agentLifecycle (str): The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).
-            orchestratorDeploymentConversationId (str): The deployment conversation id of the orchestrating meta agent, if this conversation is a worker in an agent swarm.
+            orchestratorDeploymentConversationId (str): The deployment conversation id of the orchestrating planning agent, if this conversation is a worker in an agent swarm.
             history (DeploymentConversationEvent): The history of the deployment conversation.
             hostedArtifacts (HostedArtifact): Artifacts that have been deployed by this conversation.
             mobileBuildInfo (MobileBuildInfo): List of mobile app builds with type, build URL, status, and IDs.
