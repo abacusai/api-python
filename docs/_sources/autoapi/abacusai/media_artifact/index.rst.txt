@@ -1,0 +1,120 @@
+abacusai.media_artifact
+=======================
+
+.. py:module:: abacusai.media_artifact
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.media_artifact.MediaArtifact
+
+
+Module Contents
+---------------
+
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Artifact
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaArtifactId: The ID of the media artifact
+   :type mediaArtifactId: id
+   :param mediaType: The type of media (IMAGE, VIDEO, AUDIO)
+   :type mediaType: str
+   :param info: Metadata (width, height, mime_type, file_size_bytes, generation_model, generation_prompt, generation_params, duration_seconds)
+   :type info: dict
+   :param sourceDeploymentConversationId: The source conversation ID
+   :type sourceDeploymentConversationId: id
+   :param isFavorited: Whether the artifact is favorited
+   :type isFavorited: bool
+   :param isShared: Whether the artifact is shared publicly
+   :type isShared: bool
+   :param publicUrl: The permanent public URL (set after sharing)
+   :type publicUrl: str
+   :param thumbnailUrl: Signed thumbnail URL (generated at read time)
+   :type thumbnailUrl: str
+   :param mediaUrl: Signed full media URL (generated at read time)
+   :type mediaUrl: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+
+
+   .. py:attribute:: media_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: media_type
+      :value: None
+
+
+
+   .. py:attribute:: info
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: is_favorited
+      :value: None
+
+
+
+   .. py:attribute:: is_shared
+      :value: None
+
+
+
+   .. py:attribute:: public_url
+      :value: None
+
+
+
+   .. py:attribute:: thumbnail_url
+      :value: None
+
+
+
+   .. py:attribute:: media_url
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

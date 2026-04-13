@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -72,6 +72,10 @@ Module Contents
    :type isCodellmChatmodeSupported: bool
    :param urlPath: A short URL-friendly path for the external application. Only set for system created bots.
    :type urlPath: str
+   :param deepagentEffortModes: List of available effort modes for the Deep Agent. Only applicable for super agent applications.
+   :type deepagentEffortModes: list
+   :param defaultDeepagentEffortMode: The default effort mode for the Deep Agent. Only applicable for super agent applications.
+   :type defaultDeepagentEffortMode: str
 
 
    .. py:attribute:: name
@@ -190,6 +194,16 @@ Module Contents
 
 
    .. py:attribute:: url_path
+      :value: None
+
+
+
+   .. py:attribute:: deepagent_effort_modes
+      :value: None
+
+
+
+   .. py:attribute:: default_deepagent_effort_mode
       :value: None
 
 

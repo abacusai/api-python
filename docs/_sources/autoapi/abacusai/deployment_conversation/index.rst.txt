@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -72,6 +72,8 @@ Module Contents
    :type filesystemStatus: str
    :param totalEvents: The total number of events in the deployment conversation.
    :type totalEvents: int
+   :param firstVisibleEventIndex: The conversation_sequence_number of the first visible event, for FE pagination boundary.
+   :type firstVisibleEventIndex: int
    :param contestNames: Names of contests that this deployment is a part of.
    :type contestNames: list[str]
    :param daemonTaskId: The daemon task id associated with the deployment conversation.
@@ -94,8 +96,10 @@ Module Contents
    :type agentType: str
    :param agentLifecycle: The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).
    :type agentLifecycle: str
-   :param orchestratorDeploymentConversationId: The deployment conversation id of the orchestrating planning agent, if this conversation is a worker in an agent swarm.
+   :param orchestratorDeploymentConversationId: The deployment conversation id of the orchestrating master agent, if this conversation is a worker in an agent swarm.
    :type orchestratorDeploymentConversationId: str
+   :param projectCreditsUsed: The total credits used by all the conversations in the project.
+   :type projectCreditsUsed: int
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -224,6 +228,11 @@ Module Contents
 
 
 
+   .. py:attribute:: first_visible_event_index
+      :value: None
+
+
+
    .. py:attribute:: contest_names
       :value: None
 
@@ -280,6 +289,11 @@ Module Contents
 
 
    .. py:attribute:: orchestrator_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: project_credits_used
       :value: None
 
 

@@ -428,6 +428,7 @@ class ApplicationConnectorType(ApiEnum):
     BIGQUERY = 'BIGQUERY'
     AZURESTORAGE = 'AZURESTORAGE'
     SHOPIFY = 'SHOPIFY'
+    SNOWFLAKEUSER = 'SNOWFLAKEUSER'
 
     @classmethod
     def user_connectors(cls):
@@ -450,12 +451,13 @@ class ApplicationConnectorType(ApiEnum):
             cls.GENERIC_OAUTH,
             cls.OUTLOOK,
             cls.BIGQUERY,
-            cls.SHOPIFY
+            cls.SHOPIFY,
+            cls.SNOWFLAKEUSER,
         ]
 
     @classmethod
     def database_connectors(cls):
-        return [cls.SALESFORCE, cls.ODBC, cls.DBC, cls.BIGQUERY]
+        return [cls.SALESFORCE, cls.ODBC, cls.DBC, cls.BIGQUERY, cls.SNOWFLAKEUSER]
 
 
 class StreamingConnectorType(ApiEnum):
@@ -598,9 +600,14 @@ class LLMName(ApiEnum):
     QWEN3_32B = 'QWEN3_32B'
     QWEN3_235B_A22B = 'QWEN3_235B_A22B'
     QWEN3_CODER = 'QWEN3_CODER'
+    QWEN3_6 = 'QWEN3_6'
+    QWEN3_6_THINKING = 'QWEN3_6_THINKING'
     DEEPSEEK_V3_1 = 'DEEPSEEK_V3_1'
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
     MINIMAX_M2_7 = 'MINIMAX_M2_7'
+    XIAOMI_MIMO_V2_PRO = 'XIAOMI_MIMO_V2_PRO'
+    GEMMA_4_31B = 'GEMMA_4_31B'
+    ZAI_GLM_5_1 = 'ZAI_GLM_5_1'
 
 
 class MonitorAlertType(ApiEnum):
@@ -882,6 +889,13 @@ class DaemonTaskLifecycleUpdateAction(ApiEnum):
     DELETE = 'DELETE'
     PAUSE = 'PAUSE'
     RESUME = 'RESUME'
+
+
+class MediaArtifactType(ApiEnum):
+    """Type of media artifact"""
+    IMAGE = 'IMAGE'
+    VIDEO = 'VIDEO'
+    AUDIO = 'AUDIO'
 
 
 class VerticalType(ApiEnum):

@@ -160,6 +160,7 @@ from .indexing_config import IndexingConfig
 from .inferred_database_column_to_feature_mappings import InferredDatabaseColumnToFeatureMappings
 from .inferred_feature_mappings import InferredFeatureMappings
 from .item_statistics import ItemStatistics
+from .last_selected_bot import LastSelectedBot
 from .lip_sync_gen_settings import LipSyncGenSettings
 from .llm_app import LlmApp
 from .llm_artifact import LlmArtifact
@@ -174,6 +175,7 @@ from .mcp_config import McpConfig
 from .mcp_server import McpServer
 from .mcp_server_connection import McpServerConnection
 from .mcp_server_query_result import McpServerQueryResult
+from .media_artifact import MediaArtifact
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
 from .mobile_app_build_status import MobileAppBuildStatus
@@ -305,4 +307,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.90"
+__version__ = "1.4.91"

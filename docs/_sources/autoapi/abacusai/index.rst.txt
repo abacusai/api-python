@@ -175,6 +175,7 @@ Submodules
    /autoapi/abacusai/inferred_database_column_to_feature_mappings/index
    /autoapi/abacusai/inferred_feature_mappings/index
    /autoapi/abacusai/item_statistics/index
+   /autoapi/abacusai/last_selected_bot/index
    /autoapi/abacusai/lip_sync_gen_settings/index
    /autoapi/abacusai/llm_app/index
    /autoapi/abacusai/llm_artifact/index
@@ -189,6 +190,7 @@ Submodules
    /autoapi/abacusai/mcp_server/index
    /autoapi/abacusai/mcp_server_connection/index
    /autoapi/abacusai/mcp_server_query_result/index
+   /autoapi/abacusai/media_artifact/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
    /autoapi/abacusai/mobile_app_build_status/index
@@ -505,6 +507,7 @@ Classes
    abacusai.AgentClientType
    abacusai.OrganizationSecretType
    abacusai.DaemonTaskLifecycleUpdateAction
+   abacusai.MediaArtifactType
    abacusai.VerticalType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
@@ -739,6 +742,7 @@ Classes
    abacusai.InferredDatabaseColumnToFeatureMappings
    abacusai.InferredFeatureMappings
    abacusai.ItemStatistics
+   abacusai.LastSelectedBot
    abacusai.LipSyncGenSettings
    abacusai.LlmApp
    abacusai.LlmArtifact
@@ -753,6 +757,7 @@ Classes
    abacusai.McpServer
    abacusai.McpServerConnection
    abacusai.McpServerQueryResult
+   abacusai.MediaArtifact
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
    abacusai.MobileAppBuildStatus
@@ -1462,7 +1467,7 @@ Package Contents
 
 
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, createdAt=None, updatedAt=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1487,6 +1492,8 @@ Package Contents
    :type enabled: bool
    :param default: Whether this skill is a default skill.
    :type default: bool
+   :param display: Whether this skill should be displayed prominently in the dropdown.
+   :type display: bool
    :param createdAt: The timestamp when the skill was created.
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
@@ -1529,6 +1536,11 @@ Package Contents
 
 
    .. py:attribute:: default
+      :value: None
+
+
+
+   .. py:attribute:: display
       :value: None
 
 
@@ -8656,6 +8668,11 @@ Package Contents
 
 
 
+   .. py:attribute:: SNOWFLAKEUSER
+      :value: 'SNOWFLAKEUSER'
+
+
+
    .. py:method:: user_connectors()
       :classmethod:
 
@@ -9328,6 +9345,16 @@ Package Contents
 
 
 
+   .. py:attribute:: QWEN3_6
+      :value: 'QWEN3_6'
+
+
+
+   .. py:attribute:: QWEN3_6_THINKING
+      :value: 'QWEN3_6_THINKING'
+
+
+
    .. py:attribute:: DEEPSEEK_V3_1
       :value: 'DEEPSEEK_V3_1'
 
@@ -9340,6 +9367,21 @@ Package Contents
 
    .. py:attribute:: MINIMAX_M2_7
       :value: 'MINIMAX_M2_7'
+
+
+
+   .. py:attribute:: XIAOMI_MIMO_V2_PRO
+      :value: 'XIAOMI_MIMO_V2_PRO'
+
+
+
+   .. py:attribute:: GEMMA_4_31B
+      :value: 'GEMMA_4_31B'
+
+
+
+   .. py:attribute:: ZAI_GLM_5_1
+      :value: 'ZAI_GLM_5_1'
 
 
 
@@ -10993,6 +11035,29 @@ Package Contents
 
    .. py:attribute:: RESUME
       :value: 'RESUME'
+
+
+
+.. py:class:: MediaArtifactType(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   Type of media artifact
+
+
+   .. py:attribute:: IMAGE
+      :value: 'IMAGE'
+
+
+
+   .. py:attribute:: VIDEO
+      :value: 'VIDEO'
+
+
+
+   .. py:attribute:: AUDIO
+      :value: 'AUDIO'
 
 
 
@@ -19302,7 +19367,7 @@ Package Contents
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -31851,7 +31916,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31908,6 +31973,8 @@ Package Contents
    :type filesystemStatus: str
    :param totalEvents: The total number of events in the deployment conversation.
    :type totalEvents: int
+   :param firstVisibleEventIndex: The conversation_sequence_number of the first visible event, for FE pagination boundary.
+   :type firstVisibleEventIndex: int
    :param contestNames: Names of contests that this deployment is a part of.
    :type contestNames: list[str]
    :param daemonTaskId: The daemon task id associated with the deployment conversation.
@@ -31930,8 +31997,10 @@ Package Contents
    :type agentType: str
    :param agentLifecycle: The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).
    :type agentLifecycle: str
-   :param orchestratorDeploymentConversationId: The deployment conversation id of the orchestrating planning agent, if this conversation is a worker in an agent swarm.
+   :param orchestratorDeploymentConversationId: The deployment conversation id of the orchestrating master agent, if this conversation is a worker in an agent swarm.
    :type orchestratorDeploymentConversationId: str
+   :param projectCreditsUsed: The total credits used by all the conversations in the project.
+   :type projectCreditsUsed: int
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -32060,6 +32129,11 @@ Package Contents
 
 
 
+   .. py:attribute:: first_visible_event_index
+      :value: None
+
+
+
    .. py:attribute:: contest_names
       :value: None
 
@@ -32116,6 +32190,11 @@ Package Contents
 
 
    .. py:attribute:: orchestrator_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: project_credits_used
       :value: None
 
 
@@ -34669,7 +34748,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34726,6 +34805,10 @@ Package Contents
    :type isCodellmChatmodeSupported: bool
    :param urlPath: A short URL-friendly path for the external application. Only set for system created bots.
    :type urlPath: str
+   :param deepagentEffortModes: List of available effort modes for the Deep Agent. Only applicable for super agent applications.
+   :type deepagentEffortModes: list
+   :param defaultDeepagentEffortMode: The default effort mode for the Deep Agent. Only applicable for super agent applications.
+   :type defaultDeepagentEffortMode: str
 
 
    .. py:attribute:: name
@@ -34844,6 +34927,16 @@ Package Contents
 
 
    .. py:attribute:: url_path
+      :value: None
+
+
+
+   .. py:attribute:: deepagent_effort_modes
+      :value: None
+
+
+
+   .. py:attribute:: default_deepagent_effort_mode
       :value: None
 
 
@@ -40663,6 +40756,39 @@ Package Contents
 
 
 
+.. py:class:: LastSelectedBot(client, externalApplicationId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The last selected bot for the user in the organization.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param externalApplicationId: The ID of the last selected bot (External Application).
+   :type externalApplicationId: str
+
+
+   .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: LipSyncGenSettings(client, model=None, settings=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -41499,6 +41625,109 @@ Package Contents
 
 
    .. py:attribute:: output
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Artifact
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaArtifactId: The ID of the media artifact
+   :type mediaArtifactId: id
+   :param mediaType: The type of media (IMAGE, VIDEO, AUDIO)
+   :type mediaType: str
+   :param info: Metadata (width, height, mime_type, file_size_bytes, generation_model, generation_prompt, generation_params, duration_seconds)
+   :type info: dict
+   :param sourceDeploymentConversationId: The source conversation ID
+   :type sourceDeploymentConversationId: id
+   :param isFavorited: Whether the artifact is favorited
+   :type isFavorited: bool
+   :param isShared: Whether the artifact is shared publicly
+   :type isShared: bool
+   :param publicUrl: The permanent public URL (set after sharing)
+   :type publicUrl: str
+   :param thumbnailUrl: Signed thumbnail URL (generated at read time)
+   :type thumbnailUrl: str
+   :param mediaUrl: Signed full media URL (generated at read time)
+   :type mediaUrl: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+
+
+   .. py:attribute:: media_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: media_type
+      :value: None
+
+
+
+   .. py:attribute:: info
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: is_favorited
+      :value: None
+
+
+
+   .. py:attribute:: is_shared
+      :value: None
+
+
+
+   .. py:attribute:: public_url
+      :value: None
+
+
+
+   .. py:attribute:: thumbnail_url
+      :value: None
+
+
+
+   .. py:attribute:: media_url
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
       :value: None
 
 
@@ -54520,6 +54749,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.90'
+   :value: '1.4.91'
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, createdAt=None, updatedAt=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type enabled: bool
    :param default: Whether this skill is a default skill.
    :type default: bool
+   :param display: Whether this skill should be displayed prominently in the dropdown.
+   :type display: bool
    :param createdAt: The timestamp when the skill was created.
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
@@ -82,6 +84,11 @@ Module Contents
 
 
    .. py:attribute:: default
+      :value: None
+
+
+
+   .. py:attribute:: display
       :value: None
 
 

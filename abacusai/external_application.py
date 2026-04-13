@@ -31,9 +31,11 @@ class ExternalApplication(AbstractApiClass):
             projectId (str): The project id associated with the external application.
             isCodellmChatmodeSupported (bool): Whether the external application is codellm chatmode supported
             urlPath (str): A short URL-friendly path for the external application. Only set for system created bots.
+            deepagentEffortModes (list): List of available effort modes for the Deep Agent. Only applicable for super agent applications.
+            defaultDeepagentEffortMode (str): The default effort mode for the Deep Agent. Only applicable for super agent applications.
     """
 
-    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None):
+    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None):
         super().__init__(client, externalApplicationId)
         self.name = name
         self.external_application_id = externalApplicationId
@@ -59,11 +61,13 @@ class ExternalApplication(AbstractApiClass):
         self.project_id = projectId
         self.is_codellm_chatmode_supported = isCodellmChatmodeSupported
         self.url_path = urlPath
+        self.deepagent_effort_modes = deepagentEffortModes
+        self.default_deepagent_effort_mode = defaultDeepagentEffortMode
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'description': repr(self.description), f'logo': repr(self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case), f'is_agent': repr(self.is_agent), f'status': repr(self.status), f'deployment_conversation_retention_hours': repr(self.deployment_conversation_retention_hours), f'managed_user_service': repr(self.managed_user_service), f'prediction_overrides': repr(
-            self.prediction_overrides), f'is_system_created': repr(self.is_system_created), f'is_customizable': repr(self.is_customizable), f'is_deprecated': repr(self.is_deprecated), f'is_visible': repr(self.is_visible), f'has_thinking_option': repr(self.has_thinking_option), f'has_fast_mode': repr(self.has_fast_mode), f'has_effort_option': repr(self.has_effort_option), f'only_image_gen_enabled': repr(self.only_image_gen_enabled), f'project_id': repr(self.project_id), f'is_codellm_chatmode_supported': repr(self.is_codellm_chatmode_supported), f'url_path': repr(self.url_path)}
+        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'description': repr(self.description), f'logo': repr(self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case), f'is_agent': repr(self.is_agent), f'status': repr(self.status), f'deployment_conversation_retention_hours': repr(self.deployment_conversation_retention_hours), f'managed_user_service': repr(self.managed_user_service), f'prediction_overrides': repr(self.prediction_overrides), f'is_system_created': repr(
+            self.is_system_created), f'is_customizable': repr(self.is_customizable), f'is_deprecated': repr(self.is_deprecated), f'is_visible': repr(self.is_visible), f'has_thinking_option': repr(self.has_thinking_option), f'has_fast_mode': repr(self.has_fast_mode), f'has_effort_option': repr(self.has_effort_option), f'only_image_gen_enabled': repr(self.only_image_gen_enabled), f'project_id': repr(self.project_id), f'is_codellm_chatmode_supported': repr(self.is_codellm_chatmode_supported), f'url_path': repr(self.url_path), f'deepagent_effort_modes': repr(self.deepagent_effort_modes), f'default_deepagent_effort_mode': repr(self.default_deepagent_effort_mode)}
         class_name = "ExternalApplication"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -76,8 +80,8 @@ class ExternalApplication(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id, 'description': self.description, 'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids, 'use_case': self.use_case, 'is_agent': self.is_agent, 'status': self.status, 'deployment_conversation_retention_hours': self.deployment_conversation_retention_hours, 'managed_user_service': self.managed_user_service, 'prediction_overrides': self.prediction_overrides,
-                'is_system_created': self.is_system_created, 'is_customizable': self.is_customizable, 'is_deprecated': self.is_deprecated, 'is_visible': self.is_visible, 'has_thinking_option': self.has_thinking_option, 'has_fast_mode': self.has_fast_mode, 'has_effort_option': self.has_effort_option, 'only_image_gen_enabled': self.only_image_gen_enabled, 'project_id': self.project_id, 'is_codellm_chatmode_supported': self.is_codellm_chatmode_supported, 'url_path': self.url_path}
+        resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id, 'description': self.description, 'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids, 'use_case': self.use_case, 'is_agent': self.is_agent, 'status': self.status, 'deployment_conversation_retention_hours': self.deployment_conversation_retention_hours, 'managed_user_service': self.managed_user_service, 'prediction_overrides': self.prediction_overrides, 'is_system_created': self.is_system_created,
+                'is_customizable': self.is_customizable, 'is_deprecated': self.is_deprecated, 'is_visible': self.is_visible, 'has_thinking_option': self.has_thinking_option, 'has_fast_mode': self.has_fast_mode, 'has_effort_option': self.has_effort_option, 'only_image_gen_enabled': self.only_image_gen_enabled, 'project_id': self.project_id, 'is_codellm_chatmode_supported': self.is_codellm_chatmode_supported, 'url_path': self.url_path, 'deepagent_effort_modes': self.deepagent_effort_modes, 'default_deepagent_effort_mode': self.default_deepagent_effort_mode}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def add_developers_to(self):

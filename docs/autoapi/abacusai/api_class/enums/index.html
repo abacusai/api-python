@@ -218,6 +218,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../inferred_database_column_to_feature_mappings/index.html">abacusai.inferred_database_column_to_feature_mappings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../inferred_feature_mappings/index.html">abacusai.inferred_feature_mappings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../item_statistics/index.html">abacusai.item_statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../last_selected_bot/index.html">abacusai.last_selected_bot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../lip_sync_gen_settings/index.html">abacusai.lip_sync_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../llm_app/index.html">abacusai.llm_app</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../llm_artifact/index.html">abacusai.llm_artifact</a></li>
@@ -232,6 +233,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mcp_server/index.html">abacusai.mcp_server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mcp_server_connection/index.html">abacusai.mcp_server_connection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mcp_server_query_result/index.html">abacusai.mcp_server_query_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../media_artifact/index.html">abacusai.media_artifact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mobile_app_build_status/index.html">abacusai.mobile_app_build_status</a></li>
@@ -620,7 +622,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.DaemonTaskLifecycleUpdateAction" title="abacusai.api_class.enums.DaemonTaskLifecycleUpdateAction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DaemonTaskLifecycleUpdateAction</span></code></a></p></td>
 <td><p>Action to perform on daemon task lifecycle</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.VerticalType" title="abacusai.api_class.enums.VerticalType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VerticalType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.MediaArtifactType" title="abacusai.api_class.enums.MediaArtifactType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MediaArtifactType</span></code></a></p></td>
+<td><p>Type of media artifact</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.VerticalType" title="abacusai.api_class.enums.VerticalType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VerticalType</span></code></a></p></td>
 <td><p>Vertical types for specialized external applications.</p></td>
 </tr>
 </tbody>
@@ -3830,6 +3835,11 @@ attributes – see the documentation for details.</p>
 <span class="sig-name descname"><span class="pre">SHOPIFY</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SHOPIFY'</span></span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.SHOPIFY" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ApplicationConnectorType.SNOWFLAKEUSER">
+<span class="sig-name descname"><span class="pre">SNOWFLAKEUSER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SNOWFLAKEUSER'</span></span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.SNOWFLAKEUSER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.ApplicationConnectorType.user_connectors">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">user_connectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.user_connectors" title="Link to this definition"></a></dt>
@@ -4596,6 +4606,16 @@ attributes – see the documentation for details.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.QWEN3_6">
+<span class="sig-name descname"><span class="pre">QWEN3_6</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QWEN3_6'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.QWEN3_6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.QWEN3_6_THINKING">
+<span class="sig-name descname"><span class="pre">QWEN3_6_THINKING</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QWEN3_6_THINKING'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.QWEN3_6_THINKING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.DEEPSEEK_V3_1">
 <span class="sig-name descname"><span class="pre">DEEPSEEK_V3_1</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DEEPSEEK_V3_1'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.DEEPSEEK_V3_1" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -4608,6 +4628,21 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.MINIMAX_M2_7">
 <span class="sig-name descname"><span class="pre">MINIMAX_M2_7</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MINIMAX_M2_7'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.MINIMAX_M2_7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.XIAOMI_MIMO_V2_PRO">
+<span class="sig-name descname"><span class="pre">XIAOMI_MIMO_V2_PRO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XIAOMI_MIMO_V2_PRO'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.XIAOMI_MIMO_V2_PRO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.GEMMA_4_31B">
+<span class="sig-name descname"><span class="pre">GEMMA_4_31B</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMMA_4_31B'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.GEMMA_4_31B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.ZAI_GLM_5_1">
+<span class="sig-name descname"><span class="pre">ZAI_GLM_5_1</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ZAI_GLM_5_1'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.ZAI_GLM_5_1" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -6532,6 +6567,28 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.DaemonTaskLifecycleUpdateAction.RESUME">
 <span class="sig-name descname"><span class="pre">RESUME</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RESUME'</span></span><a class="headerlink" href="#abacusai.api_class.enums.DaemonTaskLifecycleUpdateAction.RESUME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">MediaArtifactType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.enums.ApiEnum" title="abacusai.api_class.enums.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
+<p>Type of media artifact</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactType.IMAGE">
+<span class="sig-name descname"><span class="pre">IMAGE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'IMAGE'</span></span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactType.IMAGE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactType.VIDEO">
+<span class="sig-name descname"><span class="pre">VIDEO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'VIDEO'</span></span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactType.VIDEO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactType.AUDIO">
+<span class="sig-name descname"><span class="pre">AUDIO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AUDIO'</span></span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactType.AUDIO" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
