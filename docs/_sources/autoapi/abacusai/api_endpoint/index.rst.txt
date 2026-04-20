@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type hostingDomain: str
    :param publicHostingDomain: The domain for publicly hosted app deployments
    :type publicHostingDomain: str
+   :param expLi: The active logged-in experiment arm for the current org, if any.
+   :type expLi: str
 
 
    .. py:attribute:: api_endpoint
@@ -78,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: public_hosting_domain
+      :value: None
+
+
+
+   .. py:attribute:: exp_li
       :value: None
 
 

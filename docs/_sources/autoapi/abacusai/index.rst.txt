@@ -9195,6 +9195,11 @@ Package Contents
 
 
 
+   .. py:attribute:: CLAUDE_V4_7_OPUS
+      :value: 'CLAUDE_V4_7_OPUS'
+
+
+
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
 
@@ -10871,7 +10876,7 @@ Package Contents
    attributes -- see the documentation for details.
 
 
-   .. py:attribute:: META_AGENT
+   .. py:attribute:: MASTER_AGENT
       :value: 'META_AGENT'
 
 
@@ -15363,7 +15368,7 @@ Package Contents
       :type:  str
 
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -15388,6 +15393,8 @@ Package Contents
    :type hostingDomain: str
    :param publicHostingDomain: The domain for publicly hosted app deployments
    :type publicHostingDomain: str
+   :param expLi: The active logged-in experiment arm for the current org, if any.
+   :type expLi: str
 
 
    .. py:attribute:: api_endpoint
@@ -15426,6 +15433,11 @@ Package Contents
 
 
    .. py:attribute:: public_hosting_domain
+      :value: None
+
+
+
+   .. py:attribute:: exp_li
       :value: None
 
 
@@ -17312,7 +17324,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None)
+.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -17333,6 +17345,10 @@ Package Contents
    :type createdAt: str
    :param updatedAt: The update time of the chatllm project.
    :type updatedAt: str
+   :param createdByUserId: The ID of the user who created the chatllm project.
+   :type createdByUserId: int
+   :param accessLevel: The access level of the chatllm project.
+   :type accessLevel: str
    :param verticalType: The vertical type (HEALTH or null for regular projects).
    :type verticalType: str
    :param preferences: The preferences JSON for vertical projects.
@@ -17367,6 +17383,16 @@ Package Contents
 
 
    .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: created_by_user_id
+      :value: None
+
+
+
+   .. py:attribute:: access_level
       :value: None
 
 
@@ -27799,7 +27825,7 @@ Package Contents
 
 
 
-   .. py:method:: download_agent_attachment(deployment_id, attachment_id)
+   .. py:method:: download_agent_attachment(deployment_id, attachment_id, deployment_conversation_id = None)
 
       Return an agent attachment.
 
@@ -27807,6 +27833,8 @@ Package Contents
       :type deployment_id: str
       :param attachment_id: The attachment ID.
       :type attachment_id: str
+      :param deployment_conversation_id: The deployment conversation ID.
+      :type deployment_conversation_id: str
 
 
 
@@ -31809,12 +31837,14 @@ Package Contents
 
 
 
-   .. py:method:: download_agent_attachment(attachment_id)
+   .. py:method:: download_agent_attachment(attachment_id, deployment_conversation_id = None)
 
       Return an agent attachment.
 
       :param attachment_id: The attachment ID.
       :type attachment_id: str
+      :param deployment_conversation_id: The deployment conversation ID.
+      :type deployment_conversation_id: str
 
 
 
@@ -31916,7 +31946,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31965,6 +31995,8 @@ Package Contents
    :type searchSuggestions: list
    :param chatllmTaskId: The chatllm task id associated with the deployment conversation.
    :type chatllmTaskId: str
+   :param chatllmProjectId: The chatllm project id associated with the deployment conversation.
+   :type chatllmProjectId: str
    :param conversationStatus: The status of the deployment conversation (used for deep agent conversations).
    :type conversationStatus: str
    :param computerStatus: The status of the computer associated with the deployment conversation (used for deep agent conversations).
@@ -31993,7 +32025,7 @@ Package Contents
    :type pushNotificationsEnabled: bool
    :param platform: The platform the conversation was created from (WEB, IOS, ANDROID).
    :type platform: str
-   :param agentType: The type of agent for the deployment conversation (e.g., META_AGENT).
+   :param agentType: The type of agent for the deployment conversation (e.g., MASTER_AGENT).
    :type agentType: str
    :param agentLifecycle: The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).
    :type agentLifecycle: str
@@ -32105,6 +32137,11 @@ Package Contents
 
 
    .. py:attribute:: chatllm_task_id
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_id
       :value: None
 
 
@@ -32347,7 +32384,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32440,6 +32477,8 @@ Package Contents
    :type isLastMessage: bool
    :param allowTaskAutomation: Whether to show the automate task button. Only set for the last message in the conversation.
    :type allowTaskAutomation: bool
+   :param mediaStudioContext: The Media Studio context for the message, including mode, selected model, preferences, and uploaded files.
+   :type mediaStudioContext: dict
 
 
    .. py:attribute:: role
@@ -32648,6 +32687,11 @@ Package Contents
 
 
    .. py:attribute:: allow_task_automation
+      :value: None
+
+
+
+   .. py:attribute:: media_studio_context
       :value: None
 
 
@@ -34455,7 +34499,7 @@ Package Contents
    :type emailDomainId: id
    :param hostname: The hostname
    :type hostname: str
-   :param verificationStatus: NOT_CONFIGURED | PENDING | VERIFIED | FAILED
+   :param verificationStatus: NOT_CONFIGURED | CONFIGURING | PENDING | VERIFIED | FAILED
    :type verificationStatus: str
    :param dnsRecords: DNS records (empty for list view)
    :type dnsRecords: list
@@ -54749,6 +54793,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.91'
+   :value: '1.4.92'
 
 

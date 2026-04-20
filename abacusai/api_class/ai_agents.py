@@ -897,12 +897,25 @@ class InputNode(WorkflowGraphNode):
             is_file_input = (
                 prop_schema.get('format') == 'data-url' or
                 (isinstance(ui_widget, dict) and ui_widget.get('ui:widget') == 'file') or
-                ui_widget == 'file'
+                ui_widget == 'file' or
+                (prop_schema.get('type') == 'array' and isinstance(prop_schema.get('items'), dict) and prop_schema['items'].get('format') == 'data-url')
             )
             if is_file_input:
-                prop_schema['type'] = 'string'
-                prop_schema['format'] = 'data-url'
-                input_schema.ui_schema[prop_name] = {'ui:widget': 'file'}
+                if prop_schema.get('type') == 'array':
+                    items = prop_schema.get('items')
+                    if not isinstance(items, dict):
+                        items = {}
+                        prop_schema['items'] = items
+                    items.setdefault('type', 'string')
+                    items.setdefault('format', 'data-url')
+                else:
+                    prop_schema['type'] = 'string'
+                    prop_schema['format'] = 'data-url'
+                existing_ui = input_schema.ui_schema.get(prop_name)
+                if isinstance(existing_ui, dict):
+                    existing_ui.setdefault('ui:widget', 'file')
+                else:
+                    input_schema.ui_schema[prop_name] = {'ui:widget': 'file'}
 
     def __init__(self, name: str, input_mappings: Union[Dict[str, WorkflowNodeInputMapping], List[WorkflowNodeInputMapping]] = None, output_mappings: Union[List[str], Dict[str, str], List[WorkflowNodeOutputMapping]] = None, input_schema: WorkflowNodeInputSchema = None, output_schema: WorkflowNodeOutputSchema = None, description: str = None, function_name: str = None, source_code: str = None, uid: str = None):
         self.uid = uid or str(uuid.uuid4())[:6]

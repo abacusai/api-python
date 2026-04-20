@@ -9,7 +9,7 @@ class EmailDomain(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             emailDomainId (id): The email domain ID (null when NOT_CONFIGURED)
             hostname (str): The hostname
-            verificationStatus (str): NOT_CONFIGURED | PENDING | VERIFIED | FAILED
+            verificationStatus (str): NOT_CONFIGURED | CONFIGURING | PENDING | VERIFIED | FAILED
             dnsRecords (list): DNS records (empty for list view)
             isAbacusManaged (bool): Whether DNS is Abacus-managed
     """

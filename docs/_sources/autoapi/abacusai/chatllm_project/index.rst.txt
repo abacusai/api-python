@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None)
+.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,10 @@ Module Contents
    :type createdAt: str
    :param updatedAt: The update time of the chatllm project.
    :type updatedAt: str
+   :param createdByUserId: The ID of the user who created the chatllm project.
+   :type createdByUserId: int
+   :param accessLevel: The access level of the chatllm project.
+   :type accessLevel: str
    :param verticalType: The vertical type (HEALTH or null for regular projects).
    :type verticalType: str
    :param preferences: The preferences JSON for vertical projects.
@@ -70,6 +74,16 @@ Module Contents
 
 
    .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: created_by_user_id
+      :value: None
+
+
+
+   .. py:attribute:: access_level
       :value: None
 
 

@@ -716,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.91'
+    client_version = '1.4.92'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2946,13 +2946,14 @@ class ReadOnlyClient(BaseApiClient):
             Vertical: List of available verticals."""
         return self._call_api('listVerticals', 'GET', query_params={}, parse_type=Vertical)
 
-    def download_agent_attachment(self, deployment_id: str, attachment_id: str) -> io.BytesIO:
+    def download_agent_attachment(self, deployment_id: str, attachment_id: str, deployment_conversation_id: str = None) -> io.BytesIO:
         """Return an agent attachment.
 
         Args:
             deployment_id (str): The deployment ID.
-            attachment_id (str): The attachment ID."""
-        return self._proxy_request('downloadAgentAttachment', 'GET', query_params={'deploymentId': deployment_id, 'attachmentId': attachment_id}, is_sync=True, streamable_response=True)
+            attachment_id (str): The attachment ID.
+            deployment_conversation_id (str): The deployment conversation ID."""
+        return self._proxy_request('downloadAgentAttachment', 'GET', query_params={'deploymentId': deployment_id, 'attachmentId': attachment_id, 'deploymentConversationId': deployment_conversation_id}, is_sync=True, streamable_response=True)
 
     def describe_agent(self, agent_id: str) -> Agent:
         """Retrieves a full description of the specified model.
@@ -7887,7 +7888,7 @@ class ApiClient(ReadOnlyClient):
         Args:
             message (str): The user's message/task for DeepAgent to complete
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created."""
-        return self._proxy_request('getDeepAgentResponse', 'POST', query_params={}, body={'message': message, 'deploymentConversationId': deployment_conversation_id}, is_sync=True, timeout=3600)
+        return self._proxy_request('getDeepAgentResponse', 'POST', query_params={}, body={'message': message, 'deploymentConversationId': deployment_conversation_id}, is_sync=True, timeout=4500)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.

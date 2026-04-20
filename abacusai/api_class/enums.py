@@ -570,6 +570,7 @@ class LLMName(ApiEnum):
     CLAUDE_V4_6_SONNET = 'CLAUDE_V4_6_SONNET'
     CLAUDE_V4_5_OPUS = 'CLAUDE_V4_5_OPUS'
     CLAUDE_V4_6_OPUS = 'CLAUDE_V4_6_OPUS'
+    CLAUDE_V4_7_OPUS = 'CLAUDE_V4_7_OPUS'
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     GEMINI_2_PRO = 'GEMINI_2_PRO'
@@ -862,7 +863,7 @@ class DeploymentConversationType(ApiEnum):
 
 
 class DeploymentConversationAgentType(ApiEnum):
-    META_AGENT = 'META_AGENT'
+    MASTER_AGENT = 'META_AGENT'
 
 
 class AgentLifecycle(ApiEnum):
