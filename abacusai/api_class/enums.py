@@ -427,7 +427,6 @@ class ApplicationConnectorType(ApiEnum):
     OUTLOOK = 'OUTLOOK'
     BIGQUERY = 'BIGQUERY'
     AZURESTORAGE = 'AZURESTORAGE'
-    SHOPIFY = 'SHOPIFY'
     SNOWFLAKEUSER = 'SNOWFLAKEUSER'
 
     @classmethod
@@ -451,7 +450,6 @@ class ApplicationConnectorType(ApiEnum):
             cls.GENERIC_OAUTH,
             cls.OUTLOOK,
             cls.BIGQUERY,
-            cls.SHOPIFY,
             cls.SNOWFLAKEUSER,
         ]
 
@@ -526,7 +524,7 @@ class VectorStoreTextEncoder(ApiEnum):
 @deprecated_enums('OPENAI_GPT4_32K', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT',
                   'OPENAI_GPT4', 'OPENAI_GPT4_128K', 'OPENAI_GPT4_128K_LATEST',
                   'OPENAI_O1_MINI',
-                  'GEMINI_1_5_PRO', 'GEMINI_1_5_FLASH', 'GEMINI_2_PRO', 'GEMINI_2_FLASH', 'GEMINI_2_FLASH_THINKING',
+                  'GEMINI_1_5_PRO', 'GEMINI_1_5_FLASH', 'GEMINI_2_PRO', 'GEMINI_2_FLASH',
                   'XAI_GROK',
                   'CLAUDE_V3_HAIKU', 'CLAUDE_V3_OPUS', 'CLAUDE_V3_5_HAIKU', 'CLAUDE_V3_5_SONNET', 'CLAUDE_V3_7_SONNET',
                   'CLAUDE_V4_SONNET', 'CLAUDE_V4_OPUS',
@@ -559,6 +557,7 @@ class LLMName(ApiEnum):
     OPENAI_GPT5_4 = 'OPENAI_GPT5_4'
     OPENAI_GPT5_4_NANO = 'OPENAI_GPT5_4_NANO'
     OPENAI_GPT5_4_MINI = 'OPENAI_GPT5_4_MINI'
+    OPENAI_GPT5_5 = 'OPENAI_GPT5_5'
     CLAUDE_V3_HAIKU = 'CLAUDE_V3_HAIKU'
     CLAUDE_V3_OPUS = 'CLAUDE_V3_OPUS'
     CLAUDE_V3_5_HAIKU = 'CLAUDE_V3_5_HAIKU'
@@ -602,13 +601,14 @@ class LLMName(ApiEnum):
     QWEN3_235B_A22B = 'QWEN3_235B_A22B'
     QWEN3_CODER = 'QWEN3_CODER'
     QWEN3_6 = 'QWEN3_6'
-    QWEN3_6_THINKING = 'QWEN3_6_THINKING'
     DEEPSEEK_V3_1 = 'DEEPSEEK_V3_1'
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
     MINIMAX_M2_7 = 'MINIMAX_M2_7'
     XIAOMI_MIMO_V2_PRO = 'XIAOMI_MIMO_V2_PRO'
     GEMMA_4_31B = 'GEMMA_4_31B'
     ZAI_GLM_5_1 = 'ZAI_GLM_5_1'
+    KIMI_K2_5 = 'KIMI_K2_5'
+    KIMI_K2_6 = 'KIMI_K2_6'
 
 
 class MonitorAlertType(ApiEnum):

@@ -7,7 +7,7 @@ class LastSelectedBot(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            externalApplicationId (str): The ID of the last selected bot (External Application).
+            externalApplicationId (str): The ID of the last selected bot (External Application). None indicates auto mode.
     """
 
     def __init__(self, client, externalApplicationId=None):
