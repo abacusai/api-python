@@ -702,7 +702,7 @@ Module Contents
 
 
 
-   .. py:method:: list_conversations(external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None)
+   .. py:method:: list_conversations(external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None, include_org_level_conversations = False)
 
       Lists all conversations for the given deployment and current user.
 
@@ -716,6 +716,8 @@ Module Contents
       :type limit: int
       :param search: The search query to filter conversations by title.
       :type search: str
+      :param include_org_level_conversations: If true, includes org-level conversations (with no specific user) in the results.
+      :type include_org_level_conversations: bool
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]

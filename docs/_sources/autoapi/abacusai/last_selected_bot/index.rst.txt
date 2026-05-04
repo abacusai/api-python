@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: LastSelectedBot(client, externalApplicationId=None)
+.. py:class:: LastSelectedBot(client, externalApplicationId=None, mode=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,11 +24,32 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param externalApplicationId: The ID of the last selected bot (External Application). None indicates auto mode.
+   :param externalApplicationId: The ID of the last selected bot (External Application).
    :type externalApplicationId: str
+   :param mode: The UI mode selection. One of 'chat', 'auto', 'agent', 'custom_bot'.
+   :type mode: str
+   :param createdAt: Timestamp when the record was first created.
+   :type createdAt: str
+   :param updatedAt: Timestamp when the record was last modified.
+   :type updatedAt: str
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: mode
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
       :value: None
 
 

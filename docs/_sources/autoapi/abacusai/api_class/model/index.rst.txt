@@ -29,7 +29,6 @@ Classes
    abacusai.api_class.model.CumulativeForecastingTrainingConfig
    abacusai.api_class.model.ThemeAnalysisTrainingConfig
    abacusai.api_class.model.AIAgentTrainingConfig
-   abacusai.api_class.model.CustomTrainedModelTrainingConfig
    abacusai.api_class.model.CustomAlgorithmTrainingConfig
    abacusai.api_class.model.OptimizationTrainingConfig
    abacusai.api_class.model._TrainingConfigFactory
@@ -2255,66 +2254,6 @@ Module Contents
 
    .. py:attribute:: agent_output_schema
       :type:  dict
-      :value: None
-
-
-
-   .. py:method:: __post_init__()
-
-
-.. py:class:: CustomTrainedModelTrainingConfig
-
-   Bases: :py:obj:`TrainingConfig`
-
-
-   Training config for the CUSTOM_TRAINED_MODEL problem type
-
-   :param max_catalog_size: Maximum expected catalog size.
-   :type max_catalog_size: int
-   :param max_dimension: Maximum expected dimension of the catalog.
-   :type max_dimension: int
-   :param index_output_path: Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.
-   :type index_output_path: str
-   :param docker_image_uri: Docker image URI.
-   :type docker_image_uri: str
-   :param service_port: Service port.
-   :type service_port: int
-   :param streaming_embeddings: Flag to enable streaming embeddings.
-   :type streaming_embeddings: bool
-
-
-   .. py:attribute:: max_catalog_size
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: max_dimension
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: index_output_path
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: docker_image_uri
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: service_port
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: streaming_embeddings
-      :type:  bool
       :value: None
 
 

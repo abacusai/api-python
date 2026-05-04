@@ -786,30 +786,6 @@ class AIAgentTrainingConfig(TrainingConfig):
 
 
 @dataclasses.dataclass
-class CustomTrainedModelTrainingConfig(TrainingConfig):
-    """
-    Training config for the CUSTOM_TRAINED_MODEL problem type
-
-    Args:
-        max_catalog_size (int): Maximum expected catalog size.
-        max_dimension (int): Maximum expected dimension of the catalog.
-        index_output_path (str): Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.
-        docker_image_uri (str): Docker image URI.
-        service_port (int): Service port.
-        streaming_embeddings (bool): Flag to enable streaming embeddings.
-    """
-    max_catalog_size: int = dataclasses.field(default=None)
-    max_dimension: int = dataclasses.field(default=None)
-    index_output_path: str = dataclasses.field(default=None)
-    docker_image_uri: str = dataclasses.field(default=None)
-    service_port: int = dataclasses.field(default=None)
-    streaming_embeddings: bool = dataclasses.field(default=None)
-
-    def __post_init__(self):
-        self.problem_type = enums.ProblemType.CUSTOM_TRAINED_MODEL
-
-
-@dataclasses.dataclass
 class CustomAlgorithmTrainingConfig(TrainingConfig):
     """
     Training config for the CUSTOM_ALGORITHM problem type
@@ -852,7 +828,6 @@ class _TrainingConfigFactory(_ApiClassFactory):
         enums.ProblemType.CLUSTERING: ClusteringTrainingConfig,
         enums.ProblemType.CLUSTERING_TIMESERIES: ClusteringTimeseriesTrainingConfig,
         enums.ProblemType.CUMULATIVE_FORECASTING: CumulativeForecastingTrainingConfig,
-        enums.ProblemType.CUSTOM_TRAINED_MODEL: CustomTrainedModelTrainingConfig,
         enums.ProblemType.DOCUMENT_CLASSIFICATION: DocumentClassificationTrainingConfig,
         enums.ProblemType.DOCUMENT_SUMMARIZATION: DocumentSummarizationTrainingConfig,
         enums.ProblemType.DOCUMENT_VISUALIZATION: DocumentVisualizationTrainingConfig,

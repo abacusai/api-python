@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.93'
+      :value: '1.4.94'
 
 
 
@@ -2937,7 +2937,7 @@ Module Contents
 
 
 
-   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None)
+   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None, include_org_level_conversations = False)
 
       Lists all conversations for the given deployment and current user.
 
@@ -2953,6 +2953,8 @@ Module Contents
       :type limit: int
       :param search: The search query to filter conversations by title.
       :type search: str
+      :param include_org_level_conversations: If true, includes org-level conversations (with no specific user) in the results.
+      :type include_org_level_conversations: bool
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -6992,80 +6994,6 @@ Module Contents
       :type is_thread_safe: bool
       :param training_config: The training config used to train this model.
       :type training_config: TrainingConfig
-
-      :returns: The updated model.
-      :rtype: Model
-
-
-
-   .. py:method:: update_python_model_zip(model_id, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
-
-      Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-      :param model_id: The unique ID associated with the Python model to be changed.
-      :type model_id: str
-      :param train_function_name: Name of the function found in the train module that will be executed to train the model. It is not executed when this function is run.
-      :type train_function_name: str
-      :param predict_function_name: Name of the function found in the predict module that will be executed to run predictions through the model. It is not executed when this function is run.
-      :type predict_function_name: str
-      :param predict_many_function_name: Name of the function found in the predict module that will be executed to run batch predictions through the model. It is not executed when this function is run.
-      :type predict_many_function_name: str
-      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
-      :type train_module_name: str
-      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
-      :type predict_module_name: str
-      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the function's return value).
-      :type training_input_tables: list
-      :param cpu_size: Size of the CPU for the model training function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the model training function.
-      :type memory: int
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
-      :param use_gpu: Whether this model needs gpu
-      :type use_gpu: bool
-
-      :returns: The updated model.
-      :rtype: Upload
-
-
-
-   .. py:method:: update_python_model_git(model_id, application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, use_gpu = None)
-
-      Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the `ModelVersion` that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-      :param model_id: The unique ID associated with the Python model to be changed.
-      :type model_id: str
-      :param application_connector_id: The unique ID associated with the Git application connector.
-      :type application_connector_id: str
-      :param branch_name: Name of the branch in the Git repository to be used for training.
-      :type branch_name: str
-      :param python_root: Path from the top level of the Git repository to the directory containing the Python source code. If not provided, the default is the root of the Git repository.
-      :type python_root: str
-      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-      :type train_function_name: str
-      :param predict_function_name: Name of the function found in the predict module that will be executed to run predictions through model. It is not executed when this function is run.
-      :type predict_function_name: str
-      :param predict_many_function_name: Name of the function found in the predict module that will be executed to run batch predictions through model. It is not executed when this function is run.
-      :type predict_many_function_name: str
-      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
-      :type train_module_name: str
-      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
-      :type predict_module_name: str
-      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type training_input_tables: list
-      :param cpu_size: Size of the CPU for the model training function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the model training function.
-      :type memory: int
-      :param use_gpu: Whether this model needs gpu
-      :type use_gpu: bool
 
       :returns: The updated model.
       :rtype: Model

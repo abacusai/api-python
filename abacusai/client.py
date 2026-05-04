@@ -716,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.93'
+    client_version = '1.4.94'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2855,7 +2855,7 @@ class ReadOnlyClient(BaseApiClient):
             file_path (str): The path of the file to get."""
         return self._proxy_request('getDeploymentConversationFile', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'filePath': file_path}, is_sync=True, streamable_response=True)
 
-    def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False, limit: int = None, search: str = None) -> List[DeploymentConversation]:
+    def list_deployment_conversations(self, deployment_id: str = None, external_application_id: str = None, conversation_type: Union[DeploymentConversationType, str] = None, fetch_last_llm_info: bool = False, limit: int = None, search: str = None, include_org_level_conversations: bool = False) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
 
         Args:
@@ -2865,10 +2865,11 @@ class ReadOnlyClient(BaseApiClient):
             fetch_last_llm_info (bool): If true, the LLM info for the most recent conversation will be fetched. Only applicable for system-created bots.
             limit (int): The number of conversations to return. Defaults to 600.
             search (str): The search query to filter conversations by title.
+            include_org_level_conversations (bool): If true, includes org-level conversations (with no specific user) in the results.
 
         Returns:
             list[DeploymentConversation]: The deployment conversations."""
-        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id, 'conversationType': conversation_type, 'fetchLastLlmInfo': fetch_last_llm_info, 'limit': limit, 'search': search}, parse_type=DeploymentConversation, is_sync=True)
+        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id, 'conversationType': conversation_type, 'fetchLastLlmInfo': fetch_last_llm_info, 'limit': limit, 'search': search, 'includeOrgLevelConversations': include_org_level_conversations}, parse_type=DeploymentConversation, is_sync=True)
 
     def export_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None) -> DeploymentConversationExport:
         """Export a Deployment Conversation.
@@ -6747,54 +6748,6 @@ class ApiClient(ReadOnlyClient):
         Returns:
             Model: The updated model."""
         return self._call_api('updatePythonModel', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu, 'isThreadSafe': is_thread_safe, 'trainingConfig': training_config}, parse_type=Model)
-
-    def update_python_model_zip(self, model_id: str, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None) -> Upload:
-        """Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-        Args:
-            model_id (str): The unique ID associated with the Python model to be changed.
-            train_function_name (str): Name of the function found in the train module that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the predict module that will be executed to run predictions through the model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the predict module that will be executed to run batch predictions through the model. It is not executed when this function is run.
-            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
-            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the function's return value).
-            cpu_size (str): Size of the CPU for the model training function.
-            memory (int): Memory (in GB) for the model training function.
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-            use_gpu (bool): Whether this model needs gpu
-
-        Returns:
-            Upload: The updated model."""
-        return self._call_api('updatePythonModelZip', 'POST', query_params={}, body={'modelId': model_id, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=Upload)
-
-    def update_python_model_git(self, model_id: str, application_connector_id: str = None, branch_name: str = None, python_root: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None) -> Model:
-        """Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the `ModelVersion` that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-        Args:
-            model_id (str): The unique ID associated with the Python model to be changed.
-            application_connector_id (str): The unique ID associated with the Git application connector.
-            branch_name (str): Name of the branch in the Git repository to be used for training.
-            python_root (str): Path from the top level of the Git repository to the directory containing the Python source code. If not provided, the default is the root of the Git repository.
-            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the predict module that will be executed to run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the predict module that will be executed to run batch predictions through model. It is not executed when this function is run.
-            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
-            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the CPU for the model training function.
-            memory (int): Memory (in GB) for the model training function.
-            use_gpu (bool): Whether this model needs gpu
-
-        Returns:
-            Model: The updated model."""
-        return self._call_api('updatePythonModelGit', 'POST', query_params={}, body={'modelId': model_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'pythonRoot': python_root, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'useGpu': use_gpu}, parse_type=Model)
 
     def set_model_training_config(self, model_id: str, training_config: Union[dict, TrainingConfig], feature_group_ids: List = None) -> Model:
         """Edits the default model training config

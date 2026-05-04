@@ -48,7 +48,6 @@ class ProblemType(ApiEnum):
     PREDICTIVE_MODELING = 'regression'
     FINETUNED_LLM = 'finetuned_llm'
     FORECASTING = 'forecasting'
-    CUSTOM_TRAINED_MODEL = 'plug_and_play'
     CUSTOM_ALGORITHM = 'trainable_plug_and_play'
     FEATURE_STORE = 'feature_store'
     IMAGE_CLASSIFICATION = 'vision_classification'
@@ -401,6 +400,7 @@ class ApplicationConnectorType(ApiEnum):
     ONEDRIVE = 'ONEDRIVE'
     ZENDESK = 'ZENDESK'
     SLACK = 'SLACK'
+    MONDAY = 'MONDAY'
     SHAREPOINT = 'SHAREPOINT'
     TEAMS = 'TEAMS'
     ABACUSUSAGEMETRICS = 'ABACUSUSAGEMETRICS'
@@ -437,6 +437,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.GMAILUSER,
             cls.SLACK,
             cls.JIRA,
+            cls.MONDAY,
             cls.ONEDRIVE,
             cls.SALESFORCE,
             cls.TWITTER,
@@ -585,6 +586,7 @@ class LLMName(ApiEnum):
     XAI_GROK_3_MINI = 'XAI_GROK_3_MINI'
     XAI_GROK_4 = 'XAI_GROK_4'
     XAI_GROK_4_2 = 'XAI_GROK_4_2'
+    XAI_GROK_4_3 = 'XAI_GROK_4_3'
     LLAMA4_MAVERICK = 'LLAMA4_MAVERICK'
     LLAMA3_1_405B = 'LLAMA3_1_405B'
     LLAMA3_1_70B = 'LLAMA3_1_70B'

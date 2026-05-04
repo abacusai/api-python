@@ -5,7 +5,6 @@ from .api_class import AgentInterface, AutonomousTriggerType, TrainingConfig, Wo
 from .code_source import CodeSource
 from .database_connector import DatabaseConnector
 from .feature_group import FeatureGroup
-from .model_location import ModelLocation
 from .model_version import ModelVersion
 from .refresh_schedule import RefreshSchedule
 from .return_class import AbstractApiClass
@@ -44,7 +43,6 @@ class Model(AbstractApiClass):
             notebookId (str): The notebook associated with this model.
             trainingRequired (bool): If training is required to keep the model up-to-date.
             latestModelVersion (ModelVersion): The latest model version.
-            location (ModelLocation): Location information for models that are imported.
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the next model version will be trained
             codeSource (CodeSource): If a python model, information on the source code
             databaseConnector (DatabaseConnector): Database connector used by the model.
@@ -52,7 +50,7 @@ class Model(AbstractApiClass):
             modelConfig (TrainingConfig): The training config options used to train this model.
     """
 
-    def __init__(self, client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={}):
+    def __init__(self, client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={}):
         super().__init__(client, modelId)
         self.name = name
         self.model_id = modelId
@@ -80,7 +78,6 @@ class Model(AbstractApiClass):
         self.use_gpu = useGpu
         self.notebook_id = notebookId
         self.training_required = trainingRequired
-        self.location = client._build_class(ModelLocation, location)
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
         self.code_source = client._build_class(CodeSource, codeSource)
@@ -96,7 +93,7 @@ class Model(AbstractApiClass):
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'model_id': repr(self.model_id), f'model_config_type': repr(self.model_config_type), f'model_prediction_config': repr(self.model_prediction_config), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'train_function_name': repr(self.train_function_name), f'predict_function_name': repr(self.predict_function_name), f'predict_many_function_name': repr(self.predict_many_function_name), f'initialize_function_name': repr(self.initialize_function_name), f'training_input_tables': repr(self.training_input_tables), f'source_code': repr(self.source_code), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'training_feature_group_ids': repr(self.training_feature_group_ids), f'algorithm_model_configs': repr(self.algorithm_model_configs), f'training_vector_store_versions': repr(
-            self.training_vector_store_versions), f'document_retrievers': repr(self.document_retrievers), f'document_retriever_ids': repr(self.document_retriever_ids), f'is_python_model': repr(self.is_python_model), f'default_algorithm': repr(self.default_algorithm), f'custom_algorithm_configs': repr(self.custom_algorithm_configs), f'restricted_algorithms': repr(self.restricted_algorithms), f'use_gpu': repr(self.use_gpu), f'notebook_id': repr(self.notebook_id), f'training_required': repr(self.training_required), f'location': repr(self.location), f'refresh_schedules': repr(self.refresh_schedules), f'code_source': repr(self.code_source), f'database_connector': repr(self.database_connector), f'data_llm_feature_groups': repr(self.data_llm_feature_groups), f'latest_model_version': repr(self.latest_model_version), f'model_config': repr(self.model_config)}
+            self.training_vector_store_versions), f'document_retrievers': repr(self.document_retrievers), f'document_retriever_ids': repr(self.document_retriever_ids), f'is_python_model': repr(self.is_python_model), f'default_algorithm': repr(self.default_algorithm), f'custom_algorithm_configs': repr(self.custom_algorithm_configs), f'restricted_algorithms': repr(self.restricted_algorithms), f'use_gpu': repr(self.use_gpu), f'notebook_id': repr(self.notebook_id), f'training_required': repr(self.training_required), f'refresh_schedules': repr(self.refresh_schedules), f'code_source': repr(self.code_source), f'database_connector': repr(self.database_connector), f'data_llm_feature_groups': repr(self.data_llm_feature_groups), f'latest_model_version': repr(self.latest_model_version), f'model_config': repr(self.model_config)}
         class_name = "Model"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -110,7 +107,7 @@ class Model(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'name': self.name, 'model_id': self.model_id, 'model_config_type': self.model_config_type, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'algorithm_model_configs': self.algorithm_model_configs, 'training_vector_store_versions': self.training_vector_store_versions, 'document_retrievers': self.document_retrievers,
-                'document_retriever_ids': self.document_retriever_ids, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'custom_algorithm_configs': self.custom_algorithm_configs, 'restricted_algorithms': self.restricted_algorithms, 'use_gpu': self.use_gpu, 'notebook_id': self.notebook_id, 'training_required': self.training_required, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'database_connector': self._get_attribute_as_dict(self.database_connector), 'data_llm_feature_groups': self._get_attribute_as_dict(self.data_llm_feature_groups), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version), 'model_config': self._get_attribute_as_dict(self.model_config)}
+                'document_retriever_ids': self.document_retriever_ids, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'custom_algorithm_configs': self.custom_algorithm_configs, 'restricted_algorithms': self.restricted_algorithms, 'use_gpu': self.use_gpu, 'notebook_id': self.notebook_id, 'training_required': self.training_required, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'database_connector': self._get_attribute_as_dict(self.database_connector), 'data_llm_feature_groups': self._get_attribute_as_dict(self.data_llm_feature_groups), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version), 'model_config': self._get_attribute_as_dict(self.model_config)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def describe_train_test_data_split_feature_group(self):
@@ -181,56 +178,6 @@ class Model(AbstractApiClass):
             Model: The updated model.
         """
         return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name, training_input_tables, cpu_size, memory, package_requirements, use_gpu, is_thread_safe, training_config)
-
-    def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None):
-        """
-        Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-        Args:
-            train_function_name (str): Name of the function found in the train module that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the predict module that will be executed to run predictions through the model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the predict module that will be executed to run batch predictions through the model. It is not executed when this function is run.
-            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
-            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the function's return value).
-            cpu_size (str): Size of the CPU for the model training function.
-            memory (int): Memory (in GB) for the model training function.
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-            use_gpu (bool): Whether this model needs gpu
-
-        Returns:
-            Upload: The updated model.
-        """
-        return self.client.update_python_model_zip(self.model_id, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, package_requirements, use_gpu)
-
-    def update_python_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None):
-        """
-        Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the `ModelVersion` that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-        Args:
-            application_connector_id (str): The unique ID associated with the Git application connector.
-            branch_name (str): Name of the branch in the Git repository to be used for training.
-            python_root (str): Path from the top level of the Git repository to the directory containing the Python source code. If not provided, the default is the root of the Git repository.
-            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the predict module that will be executed to run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the predict module that will be executed to run batch predictions through model. It is not executed when this function is run.
-            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
-            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the CPU for the model training function.
-            memory (int): Memory (in GB) for the model training function.
-            use_gpu (bool): Whether this model needs gpu
-
-        Returns:
-            Model: The updated model.
-        """
-        return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, python_root, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, use_gpu)
 
     def set_training_config(self, training_config: Union[dict, TrainingConfig], feature_group_ids: List = None):
         """

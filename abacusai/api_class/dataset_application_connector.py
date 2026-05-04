@@ -133,11 +133,13 @@ class OneDriveDatasetConfig(ApplicationConnectorDatasetConfig):
         csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
         extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
         merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+        skip_sensitivity_labels (bool): If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
     extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
     merge_file_schemas: bool = dataclasses.field(default=False)
+    skip_sensitivity_labels: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.ONEDRIVE
@@ -154,12 +156,14 @@ class SharepointDatasetConfig(ApplicationConnectorDatasetConfig):
         extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
         merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
         add_file_metadata (bool): Signifies if the file metadata should be added to the dataset
+        skip_sensitivity_labels (bool): If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync
     """
     location: str = dataclasses.field(default=None)
     csv_delimiter: str = dataclasses.field(default=None)
     extract_bounding_boxes: bool = dataclasses.field(default=False)  # TODO: Deprecate in favour of document_processing_config
     merge_file_schemas: bool = dataclasses.field(default=False)
     add_file_metadata: bool = dataclasses.field(default=False)
+    skip_sensitivity_labels: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.SHAREPOINT

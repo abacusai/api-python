@@ -242,7 +242,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../model_artifacts_export/index.html">abacusai.model_artifacts_export</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_blueprint_export/index.html">abacusai.model_blueprint_export</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_blueprint_stage/index.html">abacusai.model_blueprint_stage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../model_location/index.html">abacusai.model_location</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_metrics/index.html">abacusai.model_metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_monitor/index.html">abacusai.model_monitor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_monitor_org_summary/index.html">abacusai.model_monitor_org_summary</a></li>
@@ -629,7 +628,10 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputMapping.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputMapping.from_dict">
@@ -685,7 +687,10 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputSchema.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeInputSchema.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeInputSchema.from_dict">
@@ -778,7 +783,10 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputMapping.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeOutputMapping.from_dict">
@@ -810,7 +818,10 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeOutputSchema.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeOutputSchema.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeOutputSchema.from_dict">
@@ -835,6 +846,7 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <li><p><strong>sleep_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The time in seconds to wait before the node gets executed again (interval mode).</p></li>
 <li><p><strong>cron_expression</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A cron expression for scheduling (e.g., ‘0 9 * * <a href="#id1"><span class="problematic" id="id2">*</span></a>’ for daily at 9am).</p></li>
 <li><p><strong>timezone</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Timezone for scheduling (e.g., ‘UTC’, ‘America/New_York’). Defaults to ‘UTC’.</p></li>
+<li><p><strong>is_org_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, the autonomous agent runs a single org-wide loop rather than one loop per user. Defaults to False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -854,6 +866,11 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <span class="sig-name descname"><span class="pre">timezone</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'UTC'</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.TriggerConfig.timezone" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ai_agents.TriggerConfig.is_org_level">
+<span class="sig-name descname"><span class="pre">is_org_level</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.ai_agents.TriggerConfig.is_org_level" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.TriggerConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.TriggerConfig.__post_init__" title="Link to this definition"></a></dt>
@@ -862,7 +879,10 @@ Set to <cite>None</cite> if the type is <cite>USER_INPUT</cite> and the variable
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.TriggerConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.TriggerConfig.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.TriggerConfig.from_dict">
@@ -1018,7 +1038,10 @@ Note: DO NOT specify the output mapping for the tool; it will be inferred automa
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraphNode.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraphNode.is_template_node">
@@ -1145,7 +1168,10 @@ Note: DO NOT specify the output mapping for the tool; it will be inferred automa
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.DecisionNode.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.DecisionNode.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.DecisionNode.from_dict">
@@ -1233,7 +1259,10 @@ chatbot_paramters may contain training_config such as builtin tools, document_re
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.LLMAgentNode.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.LLMAgentNode.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.LLMAgentNode.from_dict">
@@ -1419,7 +1448,10 @@ Regular Python nodes receive the Signal object and can inspect its metadata.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.Signal.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.Signal.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.Signal.from_dict">
@@ -1473,7 +1505,10 @@ Regular Python nodes receive the Signal object and can inspect its metadata.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WebhookTriggerConfig.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WebhookTriggerConfig.from_dict">
@@ -1582,7 +1617,10 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraph.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowGraph.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowGraph.from_dict">
@@ -1628,7 +1666,10 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.AgentConversationMessage.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.AgentConversationMessage.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -1670,7 +1711,10 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateConfig.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateConfig.from_dict">
@@ -1722,7 +1766,10 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateInput.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateInput.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateInput.from_dict">
@@ -1774,7 +1821,10 @@ The condition should be a Pythonic expression string that evaluates to a boolean
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.ai_agents.WorkflowNodeTemplateOutput.from_dict">

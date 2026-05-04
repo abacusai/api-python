@@ -184,7 +184,6 @@ from .model import Model
 from .model_artifacts_export import ModelArtifactsExport
 from .model_blueprint_export import ModelBlueprintExport
 from .model_blueprint_stage import ModelBlueprintStage
-from .model_location import ModelLocation
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
 from .model_monitor_org_summary import ModelMonitorOrgSummary
@@ -307,4 +306,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.93"
+__version__ = "1.4.94"

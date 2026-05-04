@@ -323,12 +323,14 @@ class TriggerConfig(ApiClass):
         sleep_time (int): The time in seconds to wait before the node gets executed again (interval mode).
         cron_expression (str): A cron expression for scheduling (e.g., '0 9 * * *' for daily at 9am).
         timezone (str): Timezone for scheduling (e.g., 'UTC', 'America/New_York'). Defaults to 'UTC'.
+        is_org_level (bool): If True, the autonomous agent runs a single org-wide loop rather than one loop per user. Defaults to False.
 
     Note: Use either sleep_time (interval) OR cron_expression, not both.
     """
     sleep_time: int = dataclasses.field(default=None)
     cron_expression: str = dataclasses.field(default=None)
     timezone: str = dataclasses.field(default='UTC')
+    is_org_level: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         if self.sleep_time is not None and self.cron_expression is not None:
@@ -338,7 +340,8 @@ class TriggerConfig(ApiClass):
         return {
             'sleep_time': self.sleep_time,
             'cron_expression': self.cron_expression,
-            'timezone': self.timezone
+            'timezone': self.timezone,
+            'is_org_level': self.is_org_level
         }
 
     @classmethod
@@ -347,7 +350,8 @@ class TriggerConfig(ApiClass):
         return cls(
             sleep_time=configs.get('sleep_time', None),
             cron_expression=configs.get('cron_expression', None),
-            timezone=configs.get('timezone', 'UTC')
+            timezone=configs.get('timezone', 'UTC'),
+            is_org_level=configs.get('is_org_level', False)
         )
 
 

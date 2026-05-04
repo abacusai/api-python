@@ -199,7 +199,6 @@ Submodules
    /autoapi/abacusai/model_artifacts_export/index
    /autoapi/abacusai/model_blueprint_export/index
    /autoapi/abacusai/model_blueprint_stage/index
-   /autoapi/abacusai/model_location/index
    /autoapi/abacusai/model_metrics/index
    /autoapi/abacusai/model_monitor/index
    /autoapi/abacusai/model_monitor_org_summary/index
@@ -545,7 +544,6 @@ Classes
    abacusai.CumulativeForecastingTrainingConfig
    abacusai.ThemeAnalysisTrainingConfig
    abacusai.AIAgentTrainingConfig
-   abacusai.CustomTrainedModelTrainingConfig
    abacusai.CustomAlgorithmTrainingConfig
    abacusai.OptimizationTrainingConfig
    abacusai._TrainingConfigFactory
@@ -766,7 +764,6 @@ Classes
    abacusai.ModelArtifactsExport
    abacusai.ModelBlueprintExport
    abacusai.ModelBlueprintStage
-   abacusai.ModelLocation
    abacusai.ModelMetrics
    abacusai.ModelMonitor
    abacusai.ModelMonitorOrgSummary
@@ -2431,6 +2428,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2479,6 +2481,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2563,6 +2570,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2586,6 +2598,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(schema)
       :classmethod:
@@ -2605,6 +2622,8 @@ Package Contents
    :type cron_expression: str
    :param timezone: Timezone for scheduling (e.g., 'UTC', 'America/New_York'). Defaults to 'UTC'.
    :type timezone: str
+   :param is_org_level: If True, the autonomous agent runs a single org-wide loop rather than one loop per user. Defaults to False.
+   :type is_org_level: bool
 
    Note: Use either sleep_time (interval) OR cron_expression, not both.
 
@@ -2627,10 +2646,21 @@ Package Contents
 
 
 
+   .. py:attribute:: is_org_level
+      :type:  bool
+      :value: False
+
+
+
    .. py:method:: __post_init__()
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -2749,6 +2779,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: is_template_node()
 
@@ -2833,6 +2868,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(node)
       :classmethod:
@@ -2904,6 +2944,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -3076,6 +3121,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(data)
       :classmethod:
@@ -3121,6 +3171,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -3216,6 +3271,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -3256,6 +3316,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -3298,6 +3363,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3346,6 +3416,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -3390,6 +3465,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3914,6 +3994,10 @@ Package Contents
 .. py:class:: _BatchPredictionArgsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4738,6 +4822,8 @@ Package Contents
    :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
+   :param skip_sensitivity_labels: If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync
+   :type skip_sensitivity_labels: bool
 
 
    .. py:attribute:: location
@@ -4764,6 +4850,12 @@ Package Contents
 
 
 
+   .. py:attribute:: skip_sensitivity_labels
+      :type:  bool
+      :value: False
+
+
+
    .. py:method:: __post_init__()
 
 
@@ -4784,6 +4876,8 @@ Package Contents
    :type merge_file_schemas: bool
    :param add_file_metadata: Signifies if the file metadata should be added to the dataset
    :type add_file_metadata: bool
+   :param skip_sensitivity_labels: If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync
+   :type skip_sensitivity_labels: bool
 
 
    .. py:attribute:: location
@@ -4811,6 +4905,12 @@ Package Contents
 
 
    .. py:attribute:: add_file_metadata
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: skip_sensitivity_labels
       :type:  bool
       :value: False
 
@@ -5412,6 +5512,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -5784,11 +5888,6 @@ Package Contents
 
    .. py:attribute:: FORECASTING
       :value: 'forecasting'
-
-
-
-   .. py:attribute:: CUSTOM_TRAINED_MODEL
-      :value: 'plug_and_play'
 
 
 
@@ -8533,6 +8632,11 @@ Package Contents
 
 
 
+   .. py:attribute:: MONDAY
+      :value: 'MONDAY'
+
+
+
    .. py:attribute:: SHAREPOINT
       :value: 'SHAREPOINT'
 
@@ -9272,6 +9376,11 @@ Package Contents
 
    .. py:attribute:: XAI_GROK_4_2
       :value: 'XAI_GROK_4_2'
+
+
+
+   .. py:attribute:: XAI_GROK_4_3
+      :value: 'XAI_GROK_4_3'
 
 
 
@@ -11163,10 +11272,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
@@ -11261,10 +11366,6 @@ Package Contents
 .. py:class:: _MergeConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_class_key
@@ -13906,66 +14007,6 @@ Package Contents
    .. py:method:: __post_init__()
 
 
-.. py:class:: CustomTrainedModelTrainingConfig
-
-   Bases: :py:obj:`TrainingConfig`
-
-
-   Training config for the CUSTOM_TRAINED_MODEL problem type
-
-   :param max_catalog_size: Maximum expected catalog size.
-   :type max_catalog_size: int
-   :param max_dimension: Maximum expected dimension of the catalog.
-   :type max_dimension: int
-   :param index_output_path: Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.
-   :type index_output_path: str
-   :param docker_image_uri: Docker image URI.
-   :type docker_image_uri: str
-   :param service_port: Service port.
-   :type service_port: int
-   :param streaming_embeddings: Flag to enable streaming embeddings.
-   :type streaming_embeddings: bool
-
-
-   .. py:attribute:: max_catalog_size
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: max_dimension
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: index_output_path
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: docker_image_uri
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: service_port
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: streaming_embeddings
-      :type:  bool
-      :value: None
-
-
-
-   .. py:method:: __post_init__()
-
-
 .. py:class:: CustomAlgorithmTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
@@ -14118,6 +14159,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ForecastingMonitorConfig
 
@@ -14178,6 +14224,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: StdDevThreshold
 
@@ -14206,6 +14257,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ItemAttributesStdDevThreshold
 
@@ -14233,6 +14289,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: RestrictFeatureMappings
@@ -14294,6 +14355,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: MonitorFilteringConfig
 
@@ -14353,6 +14419,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: AlertConditionConfig
@@ -14598,6 +14669,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -14666,6 +14741,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -14709,6 +14788,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: FeatureMappingConfig
@@ -15059,6 +15143,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -15122,10 +15211,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -21524,80 +21622,6 @@ Package Contents
 
 
 
-   .. py:method:: update_python_model_zip(model_id, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
-
-      Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-      :param model_id: The unique ID associated with the Python model to be changed.
-      :type model_id: str
-      :param train_function_name: Name of the function found in the train module that will be executed to train the model. It is not executed when this function is run.
-      :type train_function_name: str
-      :param predict_function_name: Name of the function found in the predict module that will be executed to run predictions through the model. It is not executed when this function is run.
-      :type predict_function_name: str
-      :param predict_many_function_name: Name of the function found in the predict module that will be executed to run batch predictions through the model. It is not executed when this function is run.
-      :type predict_many_function_name: str
-      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
-      :type train_module_name: str
-      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
-      :type predict_module_name: str
-      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the function's return value).
-      :type training_input_tables: list
-      :param cpu_size: Size of the CPU for the model training function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the model training function.
-      :type memory: int
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
-      :param use_gpu: Whether this model needs gpu
-      :type use_gpu: bool
-
-      :returns: The updated model.
-      :rtype: Upload
-
-
-
-   .. py:method:: update_python_model_git(model_id, application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, use_gpu = None)
-
-      Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the `ModelVersion` that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-      :param model_id: The unique ID associated with the Python model to be changed.
-      :type model_id: str
-      :param application_connector_id: The unique ID associated with the Git application connector.
-      :type application_connector_id: str
-      :param branch_name: Name of the branch in the Git repository to be used for training.
-      :type branch_name: str
-      :param python_root: Path from the top level of the Git repository to the directory containing the Python source code. If not provided, the default is the root of the Git repository.
-      :type python_root: str
-      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-      :type train_function_name: str
-      :param predict_function_name: Name of the function found in the predict module that will be executed to run predictions through model. It is not executed when this function is run.
-      :type predict_function_name: str
-      :param predict_many_function_name: Name of the function found in the predict module that will be executed to run batch predictions through model. It is not executed when this function is run.
-      :type predict_many_function_name: str
-      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
-      :type train_module_name: str
-      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
-      :type predict_module_name: str
-      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type training_input_tables: list
-      :param cpu_size: Size of the CPU for the model training function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the model training function.
-      :type memory: int
-      :param use_gpu: Whether this model needs gpu
-      :type use_gpu: bool
-
-      :returns: The updated model.
-      :rtype: Model
-
-
-
    .. py:method:: set_model_training_config(model_id, training_config, feature_group_ids = None)
 
       Edits the default model training config
@@ -27715,7 +27739,7 @@ Package Contents
 
 
 
-   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None)
+   .. py:method:: list_deployment_conversations(deployment_id = None, external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None, include_org_level_conversations = False)
 
       Lists all conversations for the given deployment and current user.
 
@@ -27731,6 +27755,8 @@ Package Contents
       :type limit: int
       :param search: The search query to filter conversations by title.
       :type search: str
+      :param include_org_level_conversations: If true, includes org-level conversations (with no specific user) in the results.
+      :type include_org_level_conversations: bool
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -31804,7 +31830,7 @@ Package Contents
 
 
 
-   .. py:method:: list_conversations(external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None)
+   .. py:method:: list_conversations(external_application_id = None, conversation_type = None, fetch_last_llm_info = False, limit = None, search = None, include_org_level_conversations = False)
 
       Lists all conversations for the given deployment and current user.
 
@@ -31818,6 +31844,8 @@ Package Contents
       :type limit: int
       :param search: The search query to filter conversations by title.
       :type search: str
+      :param include_org_level_conversations: If true, includes org-level conversations (with no specific user) in the results.
+      :type include_org_level_conversations: bool
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
@@ -40805,7 +40833,7 @@ Package Contents
 
 
 
-.. py:class:: LastSelectedBot(client, externalApplicationId=None)
+.. py:class:: LastSelectedBot(client, externalApplicationId=None, mode=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40814,11 +40842,32 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param externalApplicationId: The ID of the last selected bot (External Application). None indicates auto mode.
+   :param externalApplicationId: The ID of the last selected bot (External Application).
    :type externalApplicationId: str
+   :param mode: The UI mode selection. One of 'chat', 'auto', 'agent', 'custom_bot'.
+   :type mode: str
+   :param createdAt: Timestamp when the record was first created.
+   :type createdAt: str
+   :param updatedAt: Timestamp when the record was last modified.
+   :type updatedAt: str
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: mode
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
       :value: None
 
 
@@ -42043,7 +42092,7 @@ Package Contents
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfigType=None, modelPredictionConfig=None, createdAt=None, projectId=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, refreshSchedules={}, codeSource={}, databaseConnector={}, dataLlmFeatureGroups={}, latestModelVersion={}, modelConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42106,8 +42155,6 @@ Package Contents
    :type trainingRequired: bool
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
-   :param location: Location information for models that are imported.
-   :type location: ModelLocation
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained
    :type refreshSchedules: RefreshSchedule
    :param codeSource: If a python model, information on the source code
@@ -42250,9 +42297,6 @@ Package Contents
 
 
 
-   .. py:attribute:: location
-
-
    .. py:attribute:: refresh_schedules
 
 
@@ -42359,76 +42403,6 @@ Package Contents
       :type is_thread_safe: bool
       :param training_config: The training config used to train this model.
       :type training_config: TrainingConfig
-
-      :returns: The updated model.
-      :rtype: Model
-
-
-
-   .. py:method:: update_python_zip(train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
-
-      Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-      :param train_function_name: Name of the function found in the train module that will be executed to train the model. It is not executed when this function is run.
-      :type train_function_name: str
-      :param predict_function_name: Name of the function found in the predict module that will be executed to run predictions through the model. It is not executed when this function is run.
-      :type predict_function_name: str
-      :param predict_many_function_name: Name of the function found in the predict module that will be executed to run batch predictions through the model. It is not executed when this function is run.
-      :type predict_many_function_name: str
-      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
-      :type train_module_name: str
-      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
-      :type predict_module_name: str
-      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the function's return value).
-      :type training_input_tables: list
-      :param cpu_size: Size of the CPU for the model training function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the model training function.
-      :type memory: int
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
-      :param use_gpu: Whether this model needs gpu
-      :type use_gpu: bool
-
-      :returns: The updated model.
-      :rtype: Upload
-
-
-
-   .. py:method:: update_python_git(application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, use_gpu = None)
-
-      Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
-
-      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the `ModelVersion` that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
-
-
-      :param application_connector_id: The unique ID associated with the Git application connector.
-      :type application_connector_id: str
-      :param branch_name: Name of the branch in the Git repository to be used for training.
-      :type branch_name: str
-      :param python_root: Path from the top level of the Git repository to the directory containing the Python source code. If not provided, the default is the root of the Git repository.
-      :type python_root: str
-      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-      :type train_function_name: str
-      :param predict_function_name: Name of the function found in the predict module that will be executed to run predictions through model. It is not executed when this function is run.
-      :type predict_function_name: str
-      :param predict_many_function_name: Name of the function found in the predict module that will be executed to run batch predictions through model. It is not executed when this function is run.
-      :type predict_many_function_name: str
-      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
-      :type train_module_name: str
-      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
-      :type predict_module_name: str
-      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type training_input_tables: list
-      :param cpu_size: Size of the CPU for the model training function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the model training function.
-      :type memory: int
-      :param use_gpu: Whether this model needs gpu
-      :type use_gpu: bool
 
       :returns: The updated model.
       :rtype: Model
@@ -42876,46 +42850,6 @@ Package Contents
 
 
    .. py:attribute:: predecessors
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: ModelLocation(client, location=None, artifactNames=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Provide location information for the plug-and-play model.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param location: Location of the plug-and-play model.
-   :type location: str
-   :param artifactNames: Representations of the names of the artifacts used to create the model.
-   :type artifactNames: dict
-
-
-   .. py:attribute:: location
-      :value: None
-
-
-
-   .. py:attribute:: artifact_names
       :value: None
 
 
@@ -54798,6 +54732,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.93'
+   :value: '1.4.94'
 
 

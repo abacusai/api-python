@@ -242,7 +242,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../model_artifacts_export/index.html">abacusai.model_artifacts_export</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_blueprint_export/index.html">abacusai.model_blueprint_export</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_blueprint_stage/index.html">abacusai.model_blueprint_stage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../model_location/index.html">abacusai.model_location</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_metrics/index.html">abacusai.model_metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_monitor/index.html">abacusai.model_monitor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../model_monitor_org_summary/index.html">abacusai.model_monitor_org_summary</a></li>
@@ -466,19 +465,16 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.AIAgentTrainingConfig" title="abacusai.api_class.model.AIAgentTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AIAgentTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the AI_AGENT problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig" title="abacusai.api_class.model.CustomTrainedModelTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomTrainedModelTrainingConfig</span></code></a></p></td>
-<td><p>Training config for the CUSTOM_TRAINED_MODEL problem type</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig" title="abacusai.api_class.model.CustomAlgorithmTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomAlgorithmTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig" title="abacusai.api_class.model.CustomAlgorithmTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomAlgorithmTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CUSTOM_ALGORITHM problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.OptimizationTrainingConfig" title="abacusai.api_class.model.OptimizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.OptimizationTrainingConfig" title="abacusai.api_class.model.OptimizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the OPTIMIZATION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model._TrainingConfigFactory" title="abacusai.api_class.model._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model._TrainingConfigFactory" title="abacusai.api_class.model._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.DeployableAlgorithm" title="abacusai.api_class.model.DeployableAlgorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.DeployableAlgorithm" title="abacusai.api_class.model.DeployableAlgorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></p></td>
 <td><p>Algorithm that can be deployed to a model.</p></td>
 </tr>
 </tbody>
@@ -2324,60 +2320,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.__post_init__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">CustomTrainedModelTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the CUSTOM_TRAINED_MODEL problem type</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>max_catalog_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum expected catalog size.</p></li>
-<li><p><strong>max_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum expected dimension of the catalog.</p></li>
-<li><p><strong>index_output_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.</p></li>
-<li><p><strong>docker_image_uri</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Docker image URI.</p></li>
-<li><p><strong>service_port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Service port.</p></li>
-<li><p><strong>streaming_embeddings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Flag to enable streaming embeddings.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_catalog_size">
-<span class="sig-name descname"><span class="pre">max_catalog_size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_catalog_size" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_dimension">
-<span class="sig-name descname"><span class="pre">max_dimension</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_dimension" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.index_output_path">
-<span class="sig-name descname"><span class="pre">index_output_path</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.index_output_path" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.docker_image_uri">
-<span class="sig-name descname"><span class="pre">docker_image_uri</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.docker_image_uri" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.service_port">
-<span class="sig-name descname"><span class="pre">service_port</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.service_port" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.streaming_embeddings">
-<span class="sig-name descname"><span class="pre">streaming_embeddings</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.streaming_embeddings" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.__post_init__">
-<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.__post_init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

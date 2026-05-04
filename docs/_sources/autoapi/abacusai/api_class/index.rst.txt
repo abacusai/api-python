@@ -248,7 +248,6 @@ Classes
    abacusai.api_class.CumulativeForecastingTrainingConfig
    abacusai.api_class.ThemeAnalysisTrainingConfig
    abacusai.api_class.AIAgentTrainingConfig
-   abacusai.api_class.CustomTrainedModelTrainingConfig
    abacusai.api_class.CustomAlgorithmTrainingConfig
    abacusai.api_class.OptimizationTrainingConfig
    abacusai.api_class._TrainingConfigFactory
@@ -519,6 +518,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -567,6 +571,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -651,6 +660,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -674,6 +688,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(schema)
       :classmethod:
@@ -693,6 +712,8 @@ Package Contents
    :type cron_expression: str
    :param timezone: Timezone for scheduling (e.g., 'UTC', 'America/New_York'). Defaults to 'UTC'.
    :type timezone: str
+   :param is_org_level: If True, the autonomous agent runs a single org-wide loop rather than one loop per user. Defaults to False.
+   :type is_org_level: bool
 
    Note: Use either sleep_time (interval) OR cron_expression, not both.
 
@@ -715,10 +736,21 @@ Package Contents
 
 
 
+   .. py:attribute:: is_org_level
+      :type:  bool
+      :value: False
+
+
+
    .. py:method:: __post_init__()
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -837,6 +869,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: is_template_node()
 
@@ -921,6 +958,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(node)
       :classmethod:
@@ -992,6 +1034,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -1164,6 +1211,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(data)
       :classmethod:
@@ -1209,6 +1261,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -1304,6 +1361,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -1344,6 +1406,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -1386,6 +1453,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -1434,6 +1506,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -1478,6 +1555,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -2128,6 +2210,10 @@ Package Contents
 .. py:class:: _BatchPredictionArgsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -3195,6 +3281,8 @@ Package Contents
    :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
+   :param skip_sensitivity_labels: If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync
+   :type skip_sensitivity_labels: bool
 
 
    .. py:attribute:: location
@@ -3221,6 +3309,12 @@ Package Contents
 
 
 
+   .. py:attribute:: skip_sensitivity_labels
+      :type:  bool
+      :value: False
+
+
+
    .. py:method:: __post_init__()
 
 
@@ -3241,6 +3335,8 @@ Package Contents
    :type merge_file_schemas: bool
    :param add_file_metadata: Signifies if the file metadata should be added to the dataset
    :type add_file_metadata: bool
+   :param skip_sensitivity_labels: If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync
+   :type skip_sensitivity_labels: bool
 
 
    .. py:attribute:: location
@@ -3268,6 +3364,12 @@ Package Contents
 
 
    .. py:attribute:: add_file_metadata
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: skip_sensitivity_labels
       :type:  bool
       :value: False
 
@@ -3959,6 +4061,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -4394,11 +4500,6 @@ Package Contents
 
    .. py:attribute:: FORECASTING
       :value: 'forecasting'
-
-
-
-   .. py:attribute:: CUSTOM_TRAINED_MODEL
-      :value: 'plug_and_play'
 
 
 
@@ -7143,6 +7244,11 @@ Package Contents
 
 
 
+   .. py:attribute:: MONDAY
+      :value: 'MONDAY'
+
+
+
    .. py:attribute:: SHAREPOINT
       :value: 'SHAREPOINT'
 
@@ -7960,6 +8066,11 @@ Package Contents
 
    .. py:attribute:: XAI_GROK_4_2
       :value: 'XAI_GROK_4_2'
+
+
+
+   .. py:attribute:: XAI_GROK_4_3
+      :value: 'XAI_GROK_4_3'
 
 
 
@@ -10228,10 +10339,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
@@ -10326,10 +10433,6 @@ Package Contents
 .. py:class:: _MergeConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_class_key
@@ -13061,66 +13164,6 @@ Package Contents
    .. py:method:: __post_init__()
 
 
-.. py:class:: CustomTrainedModelTrainingConfig
-
-   Bases: :py:obj:`TrainingConfig`
-
-
-   Training config for the CUSTOM_TRAINED_MODEL problem type
-
-   :param max_catalog_size: Maximum expected catalog size.
-   :type max_catalog_size: int
-   :param max_dimension: Maximum expected dimension of the catalog.
-   :type max_dimension: int
-   :param index_output_path: Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.
-   :type index_output_path: str
-   :param docker_image_uri: Docker image URI.
-   :type docker_image_uri: str
-   :param service_port: Service port.
-   :type service_port: int
-   :param streaming_embeddings: Flag to enable streaming embeddings.
-   :type streaming_embeddings: bool
-
-
-   .. py:attribute:: max_catalog_size
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: max_dimension
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: index_output_path
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: docker_image_uri
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: service_port
-      :type:  int
-      :value: None
-
-
-
-   .. py:attribute:: streaming_embeddings
-      :type:  bool
-      :value: None
-
-
-
-   .. py:method:: __post_init__()
-
-
 .. py:class:: CustomAlgorithmTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
@@ -13394,6 +13437,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ForecastingMonitorConfig
 
@@ -13454,6 +13502,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: StdDevThreshold
 
@@ -13482,6 +13535,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ItemAttributesStdDevThreshold
 
@@ -13509,6 +13567,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: RestrictFeatureMappings
@@ -13570,6 +13633,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: MonitorFilteringConfig
 
@@ -13629,6 +13697,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: ApiClass
@@ -13964,6 +14037,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -14032,6 +14109,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -14075,6 +14156,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: ApiClass
@@ -14668,6 +14754,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -14731,10 +14822,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
