@@ -1,0 +1,71 @@
+abacusai.studio_gen_costs
+=========================
+
+.. py:module:: abacusai.studio_gen_costs
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.studio_gen_costs.StudioGenCosts
+
+
+Module Contents
+---------------
+
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Credit cost estimation data for all Studio models.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param videoCosts: Cost lookup tables for video generation models
+   :type videoCosts: dict
+   :param imageCosts: Cost lookup tables for image generation models
+   :type imageCosts: dict
+   :param lipSyncCosts: Cost lookup tables for lip sync models
+   :type lipSyncCosts: dict
+   :param overhead: Fixed credit overhead per generation (agentic loop cost)
+   :type overhead: int
+
+
+   .. py:attribute:: video_costs
+      :value: None
+
+
+
+   .. py:attribute:: image_costs
+      :value: None
+
+
+
+   .. py:attribute:: lip_sync_costs
+      :value: None
+
+
+
+   .. py:attribute:: overhead
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

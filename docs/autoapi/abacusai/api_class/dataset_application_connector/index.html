@@ -328,6 +328,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../stt_gen_model/index.html">abacusai.stt_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../stt_gen_model_options/index.html">abacusai.stt_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../stt_gen_settings/index.html">abacusai.stt_gen_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../studio_gen_costs/index.html">abacusai.studio_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../template_node_details/index.html">abacusai.template_node_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../tone_details/index.html">abacusai.tone_details</a></li>
@@ -712,7 +713,6 @@
 <li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
 <li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
 <li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
-<li><p><strong>skip_sensitivity_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync</p></li>
 </ul>
 </dd>
 </dl>
@@ -736,11 +736,6 @@
 <span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.skip_sensitivity_labels">
-<span class="sig-name descname"><span class="pre">skip_sensitivity_labels</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.skip_sensitivity_labels" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.__post_init__" title="Link to this definition"></a></dt>
@@ -761,7 +756,6 @@
 <li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
 <li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
 <li><p><strong>add_file_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies if the file metadata should be added to the dataset</p></li>
-<li><p><strong>skip_sensitivity_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync</p></li>
 </ul>
 </dd>
 </dl>
@@ -788,11 +782,6 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.add_file_metadata">
 <span class="sig-name descname"><span class="pre">add_file_metadata</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.add_file_metadata" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.skip_sensitivity_labels">
-<span class="sig-name descname"><span class="pre">skip_sensitivity_labels</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.skip_sensitivity_labels" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

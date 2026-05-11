@@ -285,6 +285,7 @@ Submodules
    /autoapi/abacusai/stt_gen_model/index
    /autoapi/abacusai/stt_gen_model_options/index
    /autoapi/abacusai/stt_gen_settings/index
+   /autoapi/abacusai/studio_gen_costs/index
    /autoapi/abacusai/template_node_details/index
    /autoapi/abacusai/test_point_predictions/index
    /autoapi/abacusai/tone_details/index
@@ -848,6 +849,7 @@ Classes
    abacusai.SttGenModel
    abacusai.SttGenModelOptions
    abacusai.SttGenSettings
+   abacusai.StudioGenCosts
    abacusai.TemplateNodeDetails
    abacusai.TestPointPredictions
    abacusai.ToneDetails
@@ -2428,11 +2430,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2481,11 +2478,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2570,11 +2562,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2597,11 +2584,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2656,11 +2638,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(configs)
@@ -2779,11 +2756,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: is_template_node()
 
@@ -2868,11 +2840,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(node)
       :classmethod:
@@ -2944,11 +2911,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(node)
@@ -3121,11 +3083,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(data)
       :classmethod:
@@ -3171,11 +3128,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(configs)
@@ -3271,11 +3223,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -3316,11 +3263,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -3363,11 +3305,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(mapping)
@@ -3416,11 +3353,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -3465,11 +3397,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(mapping)
@@ -3994,10 +3921,6 @@ Package Contents
 .. py:class:: _BatchPredictionArgsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -4822,8 +4745,6 @@ Package Contents
    :type extract_bounding_boxes: bool
    :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool
-   :param skip_sensitivity_labels: If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync
-   :type skip_sensitivity_labels: bool
 
 
    .. py:attribute:: location
@@ -4850,12 +4771,6 @@ Package Contents
 
 
 
-   .. py:attribute:: skip_sensitivity_labels
-      :type:  bool
-      :value: False
-
-
-
    .. py:method:: __post_init__()
 
 
@@ -4876,8 +4791,6 @@ Package Contents
    :type merge_file_schemas: bool
    :param add_file_metadata: Signifies if the file metadata should be added to the dataset
    :type add_file_metadata: bool
-   :param skip_sensitivity_labels: If enabled, files with CONFIDENTIAL or PRIVATE sensitivity labels will be excluded from sync
-   :type skip_sensitivity_labels: bool
 
 
    .. py:attribute:: location
@@ -4905,12 +4818,6 @@ Package Contents
 
 
    .. py:attribute:: add_file_metadata
-      :type:  bool
-      :value: False
-
-
-
-   .. py:attribute:: skip_sensitivity_labels
       :type:  bool
       :value: False
 
@@ -5510,10 +5417,6 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -11272,6 +11175,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
@@ -11366,6 +11273,10 @@ Package Contents
 .. py:class:: _MergeConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_class_key
@@ -14159,11 +14070,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: ForecastingMonitorConfig
 
@@ -14224,11 +14130,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: StdDevThreshold
 
@@ -14257,11 +14158,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: ItemAttributesStdDevThreshold
 
@@ -14289,11 +14185,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: RestrictFeatureMappings
@@ -14355,11 +14246,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: MonitorFilteringConfig
 
@@ -14419,11 +14305,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: AlertConditionConfig
@@ -14669,10 +14550,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -14741,10 +14618,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -14788,11 +14661,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: FeatureMappingConfig
@@ -15143,11 +15011,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -15211,19 +15074,10 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -28728,7 +28582,7 @@ Package Contents
 
 
 
-.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None)
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28751,6 +28605,10 @@ Package Contents
    :type lastThrottlePopUp: str
    :param alwaysDisplay: Whether to always display the compute point toggle
    :type alwaysDisplay: bool
+   :param freeTierTotal: The initial free tier compute point allocation
+   :type freeTierTotal: int
+   :param freeTierExpiresAt: The ISO timestamp when the free tier expires
+   :type freeTierExpiresAt: str
 
 
    .. py:attribute:: updated_at
@@ -28784,6 +28642,16 @@ Package Contents
 
 
    .. py:attribute:: always_display
+      :value: None
+
+
+
+   .. py:attribute:: free_tier_total
+      :value: None
+
+
+
+   .. py:attribute:: free_tier_expires_at
       :value: None
 
 
@@ -31979,7 +31847,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32046,6 +31914,8 @@ Package Contents
    :type daemonTaskId: str
    :param parentDeploymentConversationId: The parent deployment conversation id associated with the deployment conversation.
    :type parentDeploymentConversationId: str
+   :param sharedHomeDirectory: Whether this conversation is part of a shared-home-directory group — true if it has a parent conversation or at least one child conversation.
+   :type sharedHomeDirectory: bool
    :param introMessage: The intro message for the deployment conversation.
    :type introMessage: str
    :param previewInfo: App preview info.
@@ -32215,6 +32085,11 @@ Package Contents
 
 
    .. py:attribute:: parent_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: shared_home_directory
       :value: None
 
 
@@ -52443,6 +52318,60 @@ Package Contents
 
 
 
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Credit cost estimation data for all Studio models.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param videoCosts: Cost lookup tables for video generation models
+   :type videoCosts: dict
+   :param imageCosts: Cost lookup tables for image generation models
+   :type imageCosts: dict
+   :param lipSyncCosts: Cost lookup tables for lip sync models
+   :type lipSyncCosts: dict
+   :param overhead: Fixed credit overhead per generation (agentic loop cost)
+   :type overhead: int
+
+
+   .. py:attribute:: video_costs
+      :value: None
+
+
+
+   .. py:attribute:: image_costs
+      :value: None
+
+
+
+   .. py:attribute:: lip_sync_costs
+      :value: None
+
+
+
+   .. py:attribute:: overhead
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: TemplateNodeDetails(client, notebookCode=None, workflowGraphNode={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54732,6 +54661,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.94'
+   :value: '1.4.95'
 
 
