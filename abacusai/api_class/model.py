@@ -507,6 +507,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         mcp_servers (List[str]): List of names of MCP servers to use in the ChatLLM. This should not be used with document_retrievers.
         agentic_loop_mode (bool): Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.
         max_page_images (int): Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.
+        max_conversation_messages (int): Maximum number of user messages allowed per conversation. When the limit is reached, users will be prompted to start a new conversation. None implies no limit.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -551,6 +552,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     config_connectors: List[str] = dataclasses.field(default=None)
     mcp_servers: List[str] = dataclasses.field(default=None)
     agentic_loop_mode: bool = dataclasses.field(default=None)
+    max_conversation_messages: int = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

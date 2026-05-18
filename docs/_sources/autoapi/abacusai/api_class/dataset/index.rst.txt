@@ -10,6 +10,7 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.dataset.DatasetConfig
+   abacusai.api_class.dataset.RealtimeContentStoreConfig
    abacusai.api_class.dataset.ParsingConfig
    abacusai.api_class.dataset.DocumentProcessingConfig
    abacusai.api_class.dataset.DatasetDocumentProcessingConfig
@@ -33,6 +34,27 @@ Module Contents
 
    .. py:attribute:: is_documentset
       :type:  bool
+      :value: None
+
+
+
+.. py:class:: RealtimeContentStoreConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Indexing options for a realtime content store dataset. Stored alongside the
+   dataset's data_source and consumed by the indexer cron. Add new realtime-only
+   indexing knobs (chunk_overlap_fraction, encoder, etc.) here rather than as
+   loose keys on data_source.
+
+   :param chunk_size: Number of characters per chunk when splitting documents
+                      for indexing. If unset, the system default for the org is used.
+   :type chunk_size: int
+
+
+   .. py:attribute:: chunk_size
+      :type:  int
       :value: None
 
 

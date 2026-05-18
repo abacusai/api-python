@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.95'
+      :value: '1.4.96'
 
 
 
@@ -6544,7 +6544,7 @@ Module Contents
 
 
 
-   .. py:method:: create_realtime_content_store(table_name, application_connector_id, dataset_config = None)
+   .. py:method:: create_realtime_content_store(table_name, application_connector_id, dataset_config = None, realtime_content_store_config = None)
 
       Creates a real-time content store dataset.
 
@@ -6554,6 +6554,8 @@ Module Contents
       :type application_connector_id: str
       :param dataset_config: Dataset config for the application connector.
       :type dataset_config: ApplicationConnectorDatasetConfig
+      :param realtime_content_store_config: Indexing options for the realtime content store (e.g. chunk_size). Uses org defaults if not provided.
+      :type realtime_content_store_config: RealtimeContentStoreConfig
 
       :returns: The created dataset.
       :rtype: Dataset

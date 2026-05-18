@@ -405,6 +405,7 @@ Classes
    abacusai._StreamingConnectorDatasetConfigFactory
    abacusai.DocumentType
    abacusai.OcrMode
+   abacusai.RealtimeContentStoreConfig
    abacusai.ParsingConfig
    abacusai.DocumentProcessingConfig
    abacusai.DatasetDocumentProcessingConfig
@@ -1360,7 +1361,7 @@ Package Contents
 
 
 
-.. py:class:: AgentDataDocumentInfo(client, docId=None, filename=None, mimeType=None, size=None, pageCount=None)
+.. py:class:: AgentDataDocumentInfo(client, docId=None, filename=None, mimeType=None, size=None, pageCount=None, charCount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1379,6 +1380,8 @@ Package Contents
    :type size: int
    :param pageCount: The total number of pages in the uploaded document.
    :type pageCount: int
+   :param charCount: The number of characters in text-based uploaded documents.
+   :type charCount: int
 
 
    .. py:attribute:: doc_id
@@ -1402,6 +1405,11 @@ Package Contents
 
 
    .. py:attribute:: page_count
+      :value: None
+
+
+
+   .. py:attribute:: char_count
       :value: None
 
 
@@ -2430,6 +2438,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2478,6 +2491,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2562,6 +2580,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2584,6 +2607,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2638,6 +2666,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -2756,6 +2789,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: is_template_node()
 
@@ -2840,6 +2878,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(node)
       :classmethod:
@@ -2911,6 +2954,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -3083,6 +3131,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(data)
       :classmethod:
@@ -3128,6 +3181,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -3223,6 +3281,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -3263,6 +3326,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -3305,6 +3373,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3353,6 +3426,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -3397,6 +3475,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3923,6 +4006,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -4258,6 +4345,27 @@ Package Contents
 
    .. py:method:: advanced_ocr_modes()
       :classmethod:
+
+
+
+.. py:class:: RealtimeContentStoreConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+
+   Indexing options for a realtime content store dataset. Stored alongside the
+   dataset's data_source and consumed by the indexer cron. Add new realtime-only
+   indexing knobs (chunk_overlap_fraction, encoder, etc.) here rather than as
+   loose keys on data_source.
+
+   :param chunk_size: Number of characters per chunk when splitting documents
+                      for indexing. If unset, the system default for the org is used.
+   :type chunk_size: int
+
+
+   .. py:attribute:: chunk_size
+      :type:  int
+      :value: None
 
 
 
@@ -5417,6 +5525,10 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -9367,6 +9479,11 @@ Package Contents
 
 
 
+   .. py:attribute:: QWEN3_6_27B
+      :value: 'QWEN3_6_27B'
+
+
+
    .. py:attribute:: DEEPSEEK_V3_1
       :value: 'DEEPSEEK_V3_1'
 
@@ -11175,10 +11292,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
@@ -11273,10 +11386,6 @@ Package Contents
 .. py:class:: _MergeConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_class_key
@@ -13191,6 +13300,8 @@ Package Contents
    :type agentic_loop_mode: bool
    :param max_page_images: Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.
    :type max_page_images: int
+   :param max_conversation_messages: Maximum number of user messages allowed per conversation. When the limit is reached, users will be prompted to start a new conversation. None implies no limit.
+   :type max_conversation_messages: int
 
 
    .. py:attribute:: document_retrievers
@@ -13447,6 +13558,12 @@ Package Contents
 
    .. py:attribute:: agentic_loop_mode
       :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: max_conversation_messages
+      :type:  int
       :value: None
 
 
@@ -14070,6 +14187,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ForecastingMonitorConfig
 
@@ -14130,6 +14252,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: StdDevThreshold
 
@@ -14158,6 +14285,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ItemAttributesStdDevThreshold
 
@@ -14185,6 +14317,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: RestrictFeatureMappings
@@ -14246,6 +14383,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: MonitorFilteringConfig
 
@@ -14305,6 +14447,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: AlertConditionConfig
@@ -14550,6 +14697,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -14618,6 +14769,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -14661,6 +14816,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: FeatureMappingConfig
@@ -15011,6 +15171,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -15074,10 +15239,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -17478,7 +17652,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -17535,6 +17709,8 @@ Package Contents
    :type webhookUrl: str
    :param pushNotificationsEnabled: Whether push notifications are enabled for the task.
    :type pushNotificationsEnabled: bool
+   :param skills: Names of agent skills pinned to this daemon task.
+   :type skills: list
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -17657,6 +17833,11 @@ Package Contents
 
 
    .. py:attribute:: push_notifications_enabled
+      :value: None
+
+
+
+   .. py:attribute:: skills
       :value: None
 
 
@@ -21020,7 +21201,7 @@ Package Contents
 
 
 
-   .. py:method:: create_realtime_content_store(table_name, application_connector_id, dataset_config = None)
+   .. py:method:: create_realtime_content_store(table_name, application_connector_id, dataset_config = None, realtime_content_store_config = None)
 
       Creates a real-time content store dataset.
 
@@ -21030,6 +21211,8 @@ Package Contents
       :type application_connector_id: str
       :param dataset_config: Dataset config for the application connector.
       :type dataset_config: ApplicationConnectorDatasetConfig
+      :param realtime_content_store_config: Indexing options for the realtime content store (e.g. chunk_size). Uses org defaults if not provided.
+      :type realtime_content_store_config: RealtimeContentStoreConfig
 
       :returns: The created dataset.
       :rtype: Dataset
@@ -30172,7 +30355,7 @@ Package Contents
 
 
 
-.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, disableRealtimeContentProcessing=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}, attachmentParsingConfig={})
+.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, disableRealtimeContentProcessing=None, realtimeContentStoreConfig=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}, attachmentParsingConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30221,6 +30404,8 @@ Package Contents
    :type versionLimit: int
    :param disableRealtimeContentProcessing: Whether realtime content processing is disabled for this dataset (only applicable to REALTIME_CONTENT_STORE datasets).
    :type disableRealtimeContentProcessing: bool
+   :param realtimeContentStoreConfig: Indexing options (e.g. chunk_size) for the realtime content store (only applicable to REALTIME_CONTENT_STORE datasets).
+   :type realtimeContentStoreConfig: dict
    :param latestDatasetVersion: The latest version of this dataset.
    :type latestDatasetVersion: DatasetVersion
    :param schema: List of resolved columns.
@@ -30331,6 +30516,11 @@ Package Contents
 
 
    .. py:attribute:: disable_realtime_content_processing
+      :value: None
+
+
+
+   .. py:attribute:: realtime_content_store_config
       :value: None
 
 
@@ -54661,6 +54851,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.95'
+   :value: '1.4.96'
 
 

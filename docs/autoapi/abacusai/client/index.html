@@ -1139,7 +1139,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.95'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.96'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -8628,7 +8628,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_realtime_content_store">
-<span class="sig-name descname"><span class="pre">create_realtime_content_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">application_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_realtime_content_store" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_realtime_content_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">application_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realtime_content_store_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_realtime_content_store" title="Link to this definition"></a></dt>
 <dd><p>Creates a real-time content store dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -8636,6 +8636,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Organization-unique table name.</p></li>
 <li><p><strong>application_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Unique string identifier of the application connector to download data from.</p></li>
 <li><p><strong>dataset_config</strong> (<a class="reference internal" href="../api_class/dataset_application_connector/index.html#abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig" title="abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig"><em>ApplicationConnectorDatasetConfig</em></a>) – Dataset config for the application connector.</p></li>
+<li><p><strong>realtime_content_store_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.RealtimeContentStoreConfig" title="abacusai.api_class.dataset.RealtimeContentStoreConfig"><em>RealtimeContentStoreConfig</em></a>) – Indexing options for the realtime content store (e.g. chunk_size). Uses org defaults if not provided.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

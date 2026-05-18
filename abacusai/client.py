@@ -42,10 +42,10 @@ from .api_class import (
     ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
     MemorySize, MergeConfig, OperatorConfig, OrganizationSecretType,
     ParsingConfig, PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
-    PythonFunctionType, ResponseSection, SamplingConfig, Segment,
-    StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
-    WorkflowGraph, WorkflowGraphNode, WorkflowNodeTemplateConfig,
-    get_clean_function_source_code_for_agent
+    PythonFunctionType, RealtimeContentStoreConfig, ResponseSection,
+    SamplingConfig, Segment, StreamingConnectorDatasetConfig, TrainingConfig,
+    VectorStoreConfig, WorkflowGraph, WorkflowGraphNode,
+    WorkflowNodeTemplateConfig, get_clean_function_source_code_for_agent
 )
 from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
 from .api_class.ai_agents import WorkflowGraph, WorkflowNodeTemplateConfig
@@ -716,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.95'
+    client_version = '1.4.96'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -6422,17 +6422,18 @@ class ApiClient(ReadOnlyClient):
             Dataset: The streaming dataset created."""
         return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'tableName': table_name, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys, 'versionLimit': version_limit}, parse_type=Dataset)
 
-    def create_realtime_content_store(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None) -> Dataset:
+    def create_realtime_content_store(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None, realtime_content_store_config: Union[dict, RealtimeContentStoreConfig] = None) -> Dataset:
         """Creates a real-time content store dataset.
 
         Args:
             table_name (str): Organization-unique table name.
             application_connector_id (str): Unique string identifier of the application connector to download data from.
             dataset_config (ApplicationConnectorDatasetConfig): Dataset config for the application connector.
+            realtime_content_store_config (RealtimeContentStoreConfig): Indexing options for the realtime content store (e.g. chunk_size). Uses org defaults if not provided.
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createRealtimeContentStore', 'POST', query_params={}, body={'tableName': table_name, 'applicationConnectorId': application_connector_id, 'datasetConfig': dataset_config}, parse_type=Dataset)
+        return self._call_api('createRealtimeContentStore', 'POST', query_params={}, body={'tableName': table_name, 'applicationConnectorId': application_connector_id, 'datasetConfig': dataset_config, 'realtimeContentStoreConfig': realtime_content_store_config}, parse_type=Dataset)
 
     def snapshot_streaming_data(self, dataset_id: str) -> DatasetVersion:
         """Snapshots the current data in the streaming dataset.

@@ -1534,6 +1534,8 @@ Module Contents
    :type agentic_loop_mode: bool
    :param max_page_images: Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.
    :type max_page_images: int
+   :param max_conversation_messages: Maximum number of user messages allowed per conversation. When the limit is reached, users will be prompted to start a new conversation. None implies no limit.
+   :type max_conversation_messages: int
 
 
    .. py:attribute:: document_retrievers
@@ -1790,6 +1792,12 @@ Module Contents
 
    .. py:attribute:: agentic_loop_mode
       :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: max_conversation_messages
+      :type:  int
       :value: None
 
 

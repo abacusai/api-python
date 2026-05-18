@@ -409,19 +409,22 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DatasetConfig" title="abacusai.api_class.dataset.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p></td>
 <td><p>An abstract class for dataset configs</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.ParsingConfig" title="abacusai.api_class.dataset.ParsingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParsingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.RealtimeContentStoreConfig" title="abacusai.api_class.dataset.RealtimeContentStoreConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RealtimeContentStoreConfig</span></code></a></p></td>
+<td><p>Indexing options for a realtime content store dataset. Stored alongside the</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.ParsingConfig" title="abacusai.api_class.dataset.ParsingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParsingConfig</span></code></a></p></td>
 <td><p>Custom config for dataset parsing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DocumentProcessingConfig" title="abacusai.api_class.dataset.DocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentProcessingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DocumentProcessingConfig" title="abacusai.api_class.dataset.DocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentProcessingConfig</span></code></a></p></td>
 <td><p>Document processing configuration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetDocumentProcessingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetDocumentProcessingConfig</span></code></a></p></td>
 <td><p>Document processing configuration for dataset imports.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig" title="abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalDatabaseConnectorConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig" title="abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalDatabaseConnectorConfig</span></code></a></p></td>
 <td><p>Config information for incremental datasets from database connectors</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.AttachmentParsingConfig" title="abacusai.api_class.dataset.AttachmentParsingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AttachmentParsingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset.AttachmentParsingConfig" title="abacusai.api_class.dataset.AttachmentParsingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AttachmentParsingConfig</span></code></a></p></td>
 <td><p>Config information for parsing attachments</p></td>
 </tr>
 </tbody>
@@ -442,6 +445,27 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset.DatasetConfig.is_documentset">
 <span class="sig-name descname"><span class="pre">is_documentset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.dataset.DatasetConfig.is_documentset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.RealtimeContentStoreConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset.</span></span><span class="sig-name descname"><span class="pre">RealtimeContentStoreConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset.RealtimeContentStoreConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Indexing options for a realtime content store dataset. Stored alongside the
+dataset’s data_source and consumed by the indexer cron. Add new realtime-only
+indexing knobs (chunk_overlap_fraction, encoder, etc.) here rather than as
+loose keys on data_source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>chunk_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of characters per chunk when splitting documents
+for indexing. If unset, the system default for the org is used.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset.RealtimeContentStoreConfig.chunk_size">
+<span class="sig-name descname"><span class="pre">chunk_size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.dataset.RealtimeContentStoreConfig.chunk_size" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

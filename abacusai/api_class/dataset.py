@@ -16,6 +16,21 @@ class DatasetConfig(ApiClass):
 
 
 @dataclasses.dataclass
+class RealtimeContentStoreConfig(ApiClass):
+    """
+    Indexing options for a realtime content store dataset. Stored alongside the
+    dataset's data_source and consumed by the indexer cron. Add new realtime-only
+    indexing knobs (chunk_overlap_fraction, encoder, etc.) here rather than as
+    loose keys on data_source.
+
+    Args:
+        chunk_size (int): Number of characters per chunk when splitting documents
+            for indexing. If unset, the system default for the org is used.
+    """
+    chunk_size: int = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
 class ParsingConfig(ApiClass):
     """
     Custom config for dataset parsing.
