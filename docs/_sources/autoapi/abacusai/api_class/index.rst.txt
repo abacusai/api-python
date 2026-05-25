@@ -118,6 +118,8 @@ Classes
    abacusai.api_class.AzureStorageDatasetConfig
    abacusai.api_class.FreshserviceDatasetConfig
    abacusai.api_class.SftpDatasetConfig
+   abacusai.api_class.DropboxDatasetConfig
+   abacusai.api_class.HubspotDatasetConfig
    abacusai.api_class._ApplicationConnectorDatasetConfigFactory
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
@@ -3571,6 +3573,86 @@ Package Contents
 
 
    .. py:attribute:: merge_file_schemas
+      :type:  bool
+      :value: False
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: DropboxDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Dropbox Application Connector
+
+   :param location: The regex location of the files to fetch
+   :type location: str
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str
+   :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset is True
+   :type extract_bounding_boxes: bool
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+   :type merge_file_schemas: bool
+
+
+   .. py:attribute:: location
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: csv_delimiter
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: extract_bounding_boxes
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: merge_file_schemas
+      :type:  bool
+      :value: False
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: HubspotDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for HubSpot Application Connector
+
+   :param object_type: The HubSpot CRM object type to fetch. Supports both standard and custom objects.
+   :type object_type: str
+   :param associations: Optional list of associated object types to include
+   :type associations: list
+   :param archived: Whether to include archived records
+   :type archived: bool
+
+
+   .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: associations
+      :type:  list
+      :value: None
+
+
+
+   .. py:attribute:: archived
       :type:  bool
       :value: False
 
@@ -7310,6 +7392,11 @@ Package Contents
 
 
 
+   .. py:attribute:: HUBSPOT
+      :value: 'HUBSPOT'
+
+
+
    .. py:attribute:: TEAMSSCRAPER
       :value: 'TEAMSSCRAPER'
 
@@ -7387,6 +7474,21 @@ Package Contents
 
    .. py:attribute:: SNOWFLAKEUSER
       :value: 'SNOWFLAKEUSER'
+
+
+
+   .. py:attribute:: DROPBOX
+      :value: 'DROPBOX'
+
+
+
+   .. py:attribute:: FIGMAUSER
+      :value: 'FIGMAUSER'
+
+
+
+   .. py:attribute:: AWSSSO
+      :value: 'AWSSSO'
 
 
 
@@ -8045,6 +8147,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GEMINI_3_5_FLASH
+      :value: 'GEMINI_3_5_FLASH'
+
+
+
    .. py:attribute:: GEMINI_3_1_FLASH_LITE
       :value: 'GEMINI_3_1_FLASH_LITE'
 
@@ -8162,6 +8269,11 @@ Package Contents
 
    .. py:attribute:: QWEN3_6_27B
       :value: 'QWEN3_6_27B'
+
+
+
+   .. py:attribute:: QWEN3_7_MAX
+      :value: 'QWEN3_7_MAX'
 
 
 

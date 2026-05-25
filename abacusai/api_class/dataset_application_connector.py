@@ -277,6 +277,50 @@ class SftpDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class DropboxDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for Dropbox Application Connector
+
+    Args:
+        location (str): The regex location of the files to fetch
+        csv_delimiter (str): If the file format is CSV, use a specific csv delimiter
+        extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset is True
+        merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+    """
+    location: str = dataclasses.field(default=None)
+    csv_delimiter: str = dataclasses.field(default=None)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)
+    merge_file_schemas: bool = dataclasses.field(default=False)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.DROPBOX
+
+
+@dataclasses.dataclass
+class HubspotDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for HubSpot Application Connector
+
+    Args:
+        object_type (str): The HubSpot CRM object type to fetch. Supports both standard and custom objects.
+        associations (list): Optional list of associated object types to include
+        archived (bool): Whether to include archived records
+    """
+    object_type: str = dataclasses.field(default=None)
+    associations: list = dataclasses.field(default=None)
+    archived: bool = dataclasses.field(default=False)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.HUBSPOT
+        if isinstance(self.object_type, dict):
+            self.object_type = self.object_type.get('value') or self.object_type.get('name') or self.object_type.get('label')
+        if isinstance(self.object_type, str):
+            normalized_object_type = self.object_type.strip().lower().replace(' ', '_')
+            if normalized_object_type:
+                self.object_type = normalized_object_type
+
+
+@dataclasses.dataclass
 class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
     config_abstract_class = ApplicationConnectorDatasetConfig
     config_class_key = 'application_connector_type'
@@ -295,4 +339,6 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.SFTPAPPLICATION: SftpDatasetConfig,
         enums.ApplicationConnectorType.OUTLOOK: OutlookDatasetConfig,
         enums.ApplicationConnectorType.AZURESTORAGE: AzureStorageDatasetConfig,
+        enums.ApplicationConnectorType.DROPBOX: DropboxDatasetConfig,
+        enums.ApplicationConnectorType.HUBSPOT: HubspotDatasetConfig,
     }

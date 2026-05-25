@@ -343,6 +343,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_ssh_key/index.html">abacusai.user_ssh_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../vertical/index.html">abacusai.vertical</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../vertical_files_result/index.html">abacusai.vertical_files_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
@@ -662,6 +663,12 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SftpDatasetConfig" title="abacusai.api_class.SftpDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SftpDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for SFTP Application Connector</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.DropboxDatasetConfig" title="abacusai.api_class.DropboxDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DropboxDatasetConfig</span></code></a></p></td>
+<td><p>Dataset config for Dropbox Application Connector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.HubspotDatasetConfig" title="abacusai.api_class.HubspotDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HubspotDatasetConfig</span></code></a></p></td>
+<td><p>Dataset config for HubSpot Application Connector</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
@@ -4958,6 +4965,84 @@ Needs to recalculate them if highlights are unavailable in summary_info</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.DropboxDatasetConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">DropboxDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.DropboxDatasetConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.ApplicationConnectorDatasetConfig" title="abacusai.api_class.ApplicationConnectorDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig</span></code></a></p>
+<p>Dataset config for Dropbox Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter</p></li>
+<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset is True</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DropboxDatasetConfig.location">
+<span class="sig-name descname"><span class="pre">location</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.DropboxDatasetConfig.location" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DropboxDatasetConfig.csv_delimiter">
+<span class="sig-name descname"><span class="pre">csv_delimiter</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.DropboxDatasetConfig.csv_delimiter" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DropboxDatasetConfig.extract_bounding_boxes">
+<span class="sig-name descname"><span class="pre">extract_bounding_boxes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.DropboxDatasetConfig.extract_bounding_boxes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DropboxDatasetConfig.merge_file_schemas">
+<span class="sig-name descname"><span class="pre">merge_file_schemas</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.DropboxDatasetConfig.merge_file_schemas" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.DropboxDatasetConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.DropboxDatasetConfig.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.HubspotDatasetConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">HubspotDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.HubspotDatasetConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.ApplicationConnectorDatasetConfig" title="abacusai.api_class.ApplicationConnectorDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig</span></code></a></p>
+<p>Dataset config for HubSpot Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The HubSpot CRM object type to fetch. Supports both standard and custom objects.</p></li>
+<li><p><strong>associations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Optional list of associated object types to include</p></li>
+<li><p><strong>archived</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to include archived records</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.HubspotDatasetConfig.object_type">
+<span class="sig-name descname"><span class="pre">object_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.HubspotDatasetConfig.object_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.HubspotDatasetConfig.associations">
+<span class="sig-name descname"><span class="pre">associations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.HubspotDatasetConfig.associations" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.HubspotDatasetConfig.archived">
+<span class="sig-name descname"><span class="pre">archived</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.HubspotDatasetConfig.archived" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.HubspotDatasetConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.HubspotDatasetConfig.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class._ApplicationConnectorDatasetConfigFactory">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class._ApplicationConnectorDatasetConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
@@ -8902,6 +8987,11 @@ attributes – see the documentation for details.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.HUBSPOT">
+<span class="sig-name descname"><span class="pre">HUBSPOT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HUBSPOT'</span></span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.HUBSPOT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.TEAMSSCRAPER">
 <span class="sig-name descname"><span class="pre">TEAMSSCRAPER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TEAMSSCRAPER'</span></span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.TEAMSSCRAPER" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -8979,6 +9069,21 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.SNOWFLAKEUSER">
 <span class="sig-name descname"><span class="pre">SNOWFLAKEUSER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SNOWFLAKEUSER'</span></span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.SNOWFLAKEUSER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.DROPBOX">
+<span class="sig-name descname"><span class="pre">DROPBOX</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DROPBOX'</span></span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.DROPBOX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.FIGMAUSER">
+<span class="sig-name descname"><span class="pre">FIGMAUSER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGMAUSER'</span></span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.FIGMAUSER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.AWSSSO">
+<span class="sig-name descname"><span class="pre">AWSSSO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AWSSSO'</span></span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.AWSSSO" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -9652,6 +9757,11 @@ attributes – see the documentation for details.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.GEMINI_3_5_FLASH">
+<span class="sig-name descname"><span class="pre">GEMINI_3_5_FLASH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI_3_5_FLASH'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.GEMINI_3_5_FLASH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.GEMINI_3_1_FLASH_LITE">
 <span class="sig-name descname"><span class="pre">GEMINI_3_1_FLASH_LITE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI_3_1_FLASH_LITE'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.GEMINI_3_1_FLASH_LITE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -9769,6 +9879,11 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.QWEN3_6_27B">
 <span class="sig-name descname"><span class="pre">QWEN3_6_27B</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QWEN3_6_27B'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.QWEN3_6_27B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.QWEN3_7_MAX">
+<span class="sig-name descname"><span class="pre">QWEN3_7_MAX</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QWEN3_7_MAX'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.QWEN3_7_MAX" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

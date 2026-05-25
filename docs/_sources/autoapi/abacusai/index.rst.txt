@@ -300,6 +300,7 @@ Submodules
    /autoapi/abacusai/user/index
    /autoapi/abacusai/user_exception/index
    /autoapi/abacusai/user_group_object_permission/index
+   /autoapi/abacusai/user_ssh_key/index
    /autoapi/abacusai/vertical/index
    /autoapi/abacusai/vertical_files_result/index
    /autoapi/abacusai/video_gen_costs/index
@@ -426,6 +427,8 @@ Classes
    abacusai.AzureStorageDatasetConfig
    abacusai.FreshserviceDatasetConfig
    abacusai.SftpDatasetConfig
+   abacusai.DropboxDatasetConfig
+   abacusai.HubspotDatasetConfig
    abacusai._ApplicationConnectorDatasetConfigFactory
    abacusai.PredictionArguments
    abacusai.OptimizationPredictionArguments
@@ -865,6 +868,7 @@ Classes
    abacusai.User
    abacusai.UserException
    abacusai.UserGroupObjectPermission
+   abacusai.UserSshKey
    abacusai.Vertical
    abacusai.VerticalFilesResult
    abacusai.VideoGenCosts
@@ -5129,6 +5133,86 @@ Package Contents
    .. py:method:: __post_init__()
 
 
+.. py:class:: DropboxDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Dropbox Application Connector
+
+   :param location: The regex location of the files to fetch
+   :type location: str
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str
+   :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset is True
+   :type extract_bounding_boxes: bool
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+   :type merge_file_schemas: bool
+
+
+   .. py:attribute:: location
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: csv_delimiter
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: extract_bounding_boxes
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: merge_file_schemas
+      :type:  bool
+      :value: False
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: HubspotDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for HubSpot Application Connector
+
+   :param object_type: The HubSpot CRM object type to fetch. Supports both standard and custom objects.
+   :type object_type: str
+   :param associations: Optional list of associated object types to include
+   :type associations: list
+   :param archived: Whether to include archived records
+   :type archived: bool
+
+
+   .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: associations
+      :type:  list
+      :value: None
+
+
+
+   .. py:attribute:: archived
+      :type:  bool
+      :value: False
+
+
+
+   .. py:method:: __post_init__()
+
+
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
@@ -8707,6 +8791,11 @@ Package Contents
 
 
 
+   .. py:attribute:: HUBSPOT
+      :value: 'HUBSPOT'
+
+
+
    .. py:attribute:: TEAMSSCRAPER
       :value: 'TEAMSSCRAPER'
 
@@ -8784,6 +8873,21 @@ Package Contents
 
    .. py:attribute:: SNOWFLAKEUSER
       :value: 'SNOWFLAKEUSER'
+
+
+
+   .. py:attribute:: DROPBOX
+      :value: 'DROPBOX'
+
+
+
+   .. py:attribute:: FIGMAUSER
+      :value: 'FIGMAUSER'
+
+
+
+   .. py:attribute:: AWSSSO
+      :value: 'AWSSSO'
 
 
 
@@ -9364,6 +9468,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GEMINI_3_5_FLASH
+      :value: 'GEMINI_3_5_FLASH'
+
+
+
    .. py:attribute:: GEMINI_3_1_FLASH_LITE
       :value: 'GEMINI_3_1_FLASH_LITE'
 
@@ -9481,6 +9590,11 @@ Package Contents
 
    .. py:attribute:: QWEN3_6_27B
       :value: 'QWEN3_6_27B'
+
+
+
+   .. py:attribute:: QWEN3_7_MAX
+      :value: 'QWEN3_7_MAX'
 
 
 
@@ -32037,7 +32151,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32126,6 +32240,8 @@ Package Contents
    :type orchestratorDeploymentConversationId: str
    :param projectCreditsUsed: The total credits used by all the conversations in the project.
    :type projectCreditsUsed: int
+   :param webAppProjectId: The web app project id associated with the deployment conversation, if any.
+   :type webAppProjectId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -32330,6 +32446,11 @@ Package Contents
 
 
    .. py:attribute:: project_credits_used
+      :value: None
+
+
+
+   .. py:attribute:: web_app_project_id
       :value: None
 
 
@@ -53589,6 +53710,74 @@ Package Contents
 
 
 
+.. py:class:: UserSshKey(client, userSshKeyId=None, name=None, publicKey=None, keyType=None, fingerprint=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   User SSH Key
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param userSshKeyId: The ID of the SSH key
+   :type userSshKeyId: id
+   :param name: The name of the SSH key
+   :type name: str
+   :param publicKey: The public key content
+   :type publicKey: str
+   :param keyType: The type of the SSH key
+   :type keyType: str
+   :param fingerprint: The base64-encoded SHA-256 fingerprint
+   :type fingerprint: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+
+
+   .. py:attribute:: user_ssh_key_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: public_key
+      :value: None
+
+
+
+   .. py:attribute:: key_type
+      :value: None
+
+
+
+   .. py:attribute:: fingerprint
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: Vertical(client, externalApplicationId=None, deploymentId=None, name=None, description=None, verticalType=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54851,6 +55040,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.96'
+   :value: '1.4.97'
 
 

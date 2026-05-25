@@ -412,6 +412,7 @@ class ApplicationConnectorType(ApiEnum):
     GMAILUSER = 'GMAILUSER'
     GOOGLESHEETS = 'GOOGLESHEETS'
     GOOGLEDOCS = 'GOOGLEDOCS'
+    HUBSPOT = 'HUBSPOT'
     TEAMSSCRAPER = 'TEAMSSCRAPER'
     GITHUBUSER = 'GITHUBUSER'
     OKTASAML = 'OKTASAML'
@@ -428,6 +429,9 @@ class ApplicationConnectorType(ApiEnum):
     BIGQUERY = 'BIGQUERY'
     AZURESTORAGE = 'AZURESTORAGE'
     SNOWFLAKEUSER = 'SNOWFLAKEUSER'
+    DROPBOX = 'DROPBOX'
+    FIGMAUSER = 'FIGMAUSER'
+    AWSSSO = 'AWSSSO'
 
     @classmethod
     def user_connectors(cls):
@@ -437,6 +441,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.GMAILUSER,
             cls.SLACK,
             cls.JIRA,
+            cls.HUBSPOT,
             cls.MONDAY,
             cls.ONEDRIVE,
             cls.SALESFORCE,
@@ -452,6 +457,9 @@ class ApplicationConnectorType(ApiEnum):
             cls.OUTLOOK,
             cls.BIGQUERY,
             cls.SNOWFLAKEUSER,
+            cls.DROPBOX,
+            cls.FIGMAUSER,
+            cls.AWSSSO,
         ]
 
     @classmethod
@@ -580,6 +588,7 @@ class LLMName(ApiEnum):
     GEMINI_3_1_PRO = 'GEMINI_3_1_PRO'
     GEMINI_2_5_FLASH = 'GEMINI_2_5_FLASH'
     GEMINI_3_FLASH = 'GEMINI_3_FLASH'
+    GEMINI_3_5_FLASH = 'GEMINI_3_5_FLASH'
     GEMINI_3_1_FLASH_LITE = 'GEMINI_3_1_FLASH_LITE'
     XAI_GROK = 'XAI_GROK'
     XAI_GROK_3 = 'XAI_GROK_3'
@@ -604,6 +613,7 @@ class LLMName(ApiEnum):
     QWEN3_CODER = 'QWEN3_CODER'
     QWEN3_6 = 'QWEN3_6'
     QWEN3_6_27B = 'QWEN3_6_27B'
+    QWEN3_7_MAX = 'QWEN3_7_MAX'
     DEEPSEEK_V3_1 = 'DEEPSEEK_V3_1'
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
     MINIMAX_M2_7 = 'MINIMAX_M2_7'
