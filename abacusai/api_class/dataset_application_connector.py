@@ -321,6 +321,26 @@ class HubspotDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class QuickbooksDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for QuickBooks Online Application Connector
+
+    Args:
+        object_type (str): The QuickBooks Online entity to fetch (e.g. Customer, Invoice, Bill, Payment, Account).
+    """
+    object_type: str = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.QUICKBOOKS
+        if isinstance(self.object_type, dict):
+            self.object_type = self.object_type.get('value') or self.object_type.get('name') or self.object_type.get('label')
+        if isinstance(self.object_type, str):
+            normalized_object_type = self.object_type.strip()
+            if normalized_object_type:
+                self.object_type = normalized_object_type
+
+
+@dataclasses.dataclass
 class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
     config_abstract_class = ApplicationConnectorDatasetConfig
     config_class_key = 'application_connector_type'
@@ -341,4 +361,5 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.AZURESTORAGE: AzureStorageDatasetConfig,
         enums.ApplicationConnectorType.DROPBOX: DropboxDatasetConfig,
         enums.ApplicationConnectorType.HUBSPOT: HubspotDatasetConfig,
+        enums.ApplicationConnectorType.QUICKBOOKS: QuickbooksDatasetConfig,
     }

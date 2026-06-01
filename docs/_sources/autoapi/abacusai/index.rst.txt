@@ -429,6 +429,7 @@ Classes
    abacusai.SftpDatasetConfig
    abacusai.DropboxDatasetConfig
    abacusai.HubspotDatasetConfig
+   abacusai.QuickbooksDatasetConfig
    abacusai._ApplicationConnectorDatasetConfigFactory
    abacusai.PredictionArguments
    abacusai.OptimizationPredictionArguments
@@ -5213,6 +5214,26 @@ Package Contents
    .. py:method:: __post_init__()
 
 
+.. py:class:: QuickbooksDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for QuickBooks Online Application Connector
+
+   :param object_type: The QuickBooks Online entity to fetch (e.g. Customer, Invoice, Bill, Payment, Account).
+   :type object_type: str
+
+
+   .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: __post_init__()
+
+
 .. py:class:: _ApplicationConnectorDatasetConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
@@ -8876,6 +8897,11 @@ Package Contents
 
 
 
+   .. py:attribute:: ATHENA
+      :value: 'ATHENA'
+
+
+
    .. py:attribute:: DROPBOX
       :value: 'DROPBOX'
 
@@ -8888,6 +8914,16 @@ Package Contents
 
    .. py:attribute:: AWSSSO
       :value: 'AWSSSO'
+
+
+
+   .. py:attribute:: QUICKBOOKS
+      :value: 'QUICKBOOKS'
+
+
+
+   .. py:attribute:: YOUTUBE
+      :value: 'YOUTUBE'
 
 
 
@@ -9420,6 +9456,11 @@ Package Contents
 
    .. py:attribute:: CLAUDE_V4_7_OPUS
       :value: 'CLAUDE_V4_7_OPUS'
+
+
+
+   .. py:attribute:: CLAUDE_V4_8_OPUS
+      :value: 'CLAUDE_V4_8_OPUS'
 
 
 
@@ -55040,6 +55081,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.97'
+   :value: '1.4.98'
 
 

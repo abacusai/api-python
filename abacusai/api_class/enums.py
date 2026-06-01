@@ -429,9 +429,12 @@ class ApplicationConnectorType(ApiEnum):
     BIGQUERY = 'BIGQUERY'
     AZURESTORAGE = 'AZURESTORAGE'
     SNOWFLAKEUSER = 'SNOWFLAKEUSER'
+    ATHENA = 'ATHENA'
     DROPBOX = 'DROPBOX'
     FIGMAUSER = 'FIGMAUSER'
     AWSSSO = 'AWSSSO'
+    QUICKBOOKS = 'QUICKBOOKS'
+    YOUTUBE = 'YOUTUBE'
 
     @classmethod
     def user_connectors(cls):
@@ -457,14 +460,17 @@ class ApplicationConnectorType(ApiEnum):
             cls.OUTLOOK,
             cls.BIGQUERY,
             cls.SNOWFLAKEUSER,
+            cls.ATHENA,
             cls.DROPBOX,
             cls.FIGMAUSER,
             cls.AWSSSO,
+            cls.QUICKBOOKS,
+            cls.YOUTUBE,
         ]
 
     @classmethod
     def database_connectors(cls):
-        return [cls.SALESFORCE, cls.ODBC, cls.DBC, cls.BIGQUERY, cls.SNOWFLAKEUSER]
+        return [cls.SALESFORCE, cls.ODBC, cls.DBC, cls.BIGQUERY, cls.SNOWFLAKEUSER, cls.ATHENA]
 
 
 class StreamingConnectorType(ApiEnum):
@@ -579,6 +585,7 @@ class LLMName(ApiEnum):
     CLAUDE_V4_5_OPUS = 'CLAUDE_V4_5_OPUS'
     CLAUDE_V4_6_OPUS = 'CLAUDE_V4_6_OPUS'
     CLAUDE_V4_7_OPUS = 'CLAUDE_V4_7_OPUS'
+    CLAUDE_V4_8_OPUS = 'CLAUDE_V4_8_OPUS'
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     GEMINI_2_PRO = 'GEMINI_2_PRO'
