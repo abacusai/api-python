@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: BotInfo(client, externalApplicationId=None, deploymentId=None, externalApplication={})
+.. py:class:: BotInfo(client, externalApplicationId=None, deploymentId=None, agentTasksExhausted=None, externalApplication={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,8 @@ Module Contents
    :type externalApplicationId: str
    :param deploymentId: The deployment ID.
    :type deploymentId: str
+   :param agentTasksExhausted: Whether a basic-tier user has used up their DeepAgent task allowance, in which case new chats default to chat mode.
+   :type agentTasksExhausted: bool
    :param externalApplication: The described external application details.
    :type externalApplication: ExternalApplication
 
@@ -38,6 +40,11 @@ Module Contents
 
 
    .. py:attribute:: deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: agent_tasks_exhausted
       :value: None
 
 

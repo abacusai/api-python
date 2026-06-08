@@ -341,6 +341,30 @@ class QuickbooksDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class DocusignDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for DocuSign Application Connector
+
+    Args:
+        object_type (str): The DocuSign object type to fetch (e.g. envelopes, templates).
+        from_date (str): Optional ISO 8601 date filter for envelope queries.
+        status (str): Optional status filter for envelope queries.
+    """
+    object_type: str = dataclasses.field(default=None)
+    from_date: str = dataclasses.field(default=None)
+    status: str = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.DOCUSIGN
+        if isinstance(self.object_type, dict):
+            self.object_type = self.object_type.get('value') or self.object_type.get('name') or self.object_type.get('label')
+        if isinstance(self.object_type, str):
+            normalized_object_type = self.object_type.strip().lower()
+            if normalized_object_type:
+                self.object_type = normalized_object_type
+
+
+@dataclasses.dataclass
 class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
     config_abstract_class = ApplicationConnectorDatasetConfig
     config_class_key = 'application_connector_type'
@@ -362,4 +386,5 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.DROPBOX: DropboxDatasetConfig,
         enums.ApplicationConnectorType.HUBSPOT: HubspotDatasetConfig,
         enums.ApplicationConnectorType.QUICKBOOKS: QuickbooksDatasetConfig,
+        enums.ApplicationConnectorType.DOCUSIGN: DocusignDatasetConfig,
     }

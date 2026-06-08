@@ -123,7 +123,7 @@ def snake_case(value):
 
 
 def get_clean_function_source_code(func: Callable):
-    sample_lambda = (lambda: 0)
+    sample_lambda = (lambda: 0)  # noqa: E731
     if isinstance(func, type(sample_lambda)) and func.__name__ == sample_lambda.__name__:
         raise ValueError('Lambda function not allowed.')
     source_code = inspect.getsource(func)
@@ -133,7 +133,7 @@ def get_clean_function_source_code(func: Callable):
 
 
 def get_clean_function_source_code_for_agent(func: Callable):
-    sample_lambda = (lambda: 0)
+    sample_lambda = (lambda: 0)  # noqa: E731
     if isinstance(func, type(sample_lambda)) and func.__name__ == sample_lambda.__name__:
         raise ValueError('Lambda function not allowed.')
     source_code = get_source_code(func)

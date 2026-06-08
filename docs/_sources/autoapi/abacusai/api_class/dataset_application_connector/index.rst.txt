@@ -27,6 +27,7 @@ Classes
    abacusai.api_class.dataset_application_connector.DropboxDatasetConfig
    abacusai.api_class.dataset_application_connector.HubspotDatasetConfig
    abacusai.api_class.dataset_application_connector.QuickbooksDatasetConfig
+   abacusai.api_class.dataset_application_connector.DocusignDatasetConfig
    abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory
 
 
@@ -672,6 +673,42 @@ Module Contents
 
 
    .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: DocusignDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for DocuSign Application Connector
+
+   :param object_type: The DocuSign object type to fetch (e.g. envelopes, templates).
+   :type object_type: str
+   :param from_date: Optional ISO 8601 date filter for envelope queries.
+   :type from_date: str
+   :param status: Optional status filter for envelope queries.
+   :type status: str
+
+
+   .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: from_date
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: status
       :type:  str
       :value: None
 

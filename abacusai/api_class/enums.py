@@ -434,7 +434,9 @@ class ApplicationConnectorType(ApiEnum):
     FIGMAUSER = 'FIGMAUSER'
     AWSSSO = 'AWSSSO'
     QUICKBOOKS = 'QUICKBOOKS'
+    TABLEAUUSER = 'TABLEAUUSER'
     YOUTUBE = 'YOUTUBE'
+    DOCUSIGN = 'DOCUSIGN'
 
     @classmethod
     def user_connectors(cls):
@@ -465,7 +467,9 @@ class ApplicationConnectorType(ApiEnum):
             cls.FIGMAUSER,
             cls.AWSSSO,
             cls.QUICKBOOKS,
+            cls.TABLEAUUSER,
             cls.YOUTUBE,
+            cls.DOCUSIGN,
         ]
 
     @classmethod
@@ -624,6 +628,7 @@ class LLMName(ApiEnum):
     DEEPSEEK_V3_1 = 'DEEPSEEK_V3_1'
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
     MINIMAX_M2_7 = 'MINIMAX_M2_7'
+    MINIMAX_M3 = 'MINIMAX_M3'
     XIAOMI_MIMO_V2_PRO = 'XIAOMI_MIMO_V2_PRO'
     GEMMA_4_31B = 'GEMMA_4_31B'
     ZAI_GLM_5_1 = 'ZAI_GLM_5_1'

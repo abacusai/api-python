@@ -287,7 +287,6 @@ from .user_exception import UserException
 from .user_group_object_permission import UserGroupObjectPermission
 from .user_ssh_key import UserSshKey
 from .vertical import Vertical
-from .vertical_files_result import VerticalFilesResult
 from .video_gen_costs import VideoGenCosts
 from .video_gen_model import VideoGenModel
 from .video_gen_model_options import VideoGenModelOptions
@@ -308,4 +307,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.98"
+__version__ = "1.4.99"
