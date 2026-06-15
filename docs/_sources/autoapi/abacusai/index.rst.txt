@@ -68,6 +68,10 @@ Submodules
    /autoapi/abacusai/concatenation_config/index
    /autoapi/abacusai/constants_autocomplete_response/index
    /autoapi/abacusai/conversation_and_project_search_results/index
+   /autoapi/abacusai/cowork_desktop_folder/index
+   /autoapi/abacusai/cowork_dispatch_message/index
+   /autoapi/abacusai/cowork_paired_desktop_folders/index
+   /autoapi/abacusai/cowork_pairing_challenge/index
    /autoapi/abacusai/cpu_gpu_memory_specs/index
    /autoapi/abacusai/cryptography/index
    /autoapi/abacusai/custom_chat_instructions/index
@@ -223,6 +227,7 @@ Submodules
    /autoapi/abacusai/null_violation/index
    /autoapi/abacusai/organization_external_application_settings/index
    /autoapi/abacusai/organization_group/index
+   /autoapi/abacusai/organization_network_policy/index
    /autoapi/abacusai/organization_search_result/index
    /autoapi/abacusai/organization_secret/index
    /autoapi/abacusai/page_data/index
@@ -641,6 +646,10 @@ Classes
    abacusai.ConcatenationConfig
    abacusai.ConstantsAutocompleteResponse
    abacusai.ConversationAndProjectSearchResults
+   abacusai.CoworkDesktopFolder
+   abacusai.CoworkDispatchMessage
+   abacusai.CoworkPairedDesktopFolders
+   abacusai.CoworkPairingChallenge
    abacusai.CpuGpuMemorySpecs
    abacusai.CustomChatInstructions
    abacusai.CustomDomain
@@ -794,6 +803,7 @@ Classes
    abacusai.NullViolation
    abacusai.OrganizationExternalApplicationSettings
    abacusai.OrganizationGroup
+   abacusai.OrganizationNetworkPolicy
    abacusai.OrganizationSearchResult
    abacusai.OrganizationSecret
    abacusai.PageData
@@ -9653,6 +9663,11 @@ Package Contents
 
 
 
+   .. py:attribute:: KIMI_K2_7_CODE
+      :value: 'KIMI_K2_7_CODE'
+
+
+
 .. py:class:: MonitorAlertType(*args, **kwds)
 
    Bases: :py:obj:`ApiEnum`
@@ -11339,6 +11354,11 @@ Package Contents
 
    .. py:attribute:: HEALTH
       :value: 'HEALTH'
+
+
+
+   .. py:attribute:: ROLE_PLAY
+      :value: 'ROLE_PLAY'
 
 
 
@@ -15579,7 +15599,7 @@ Package Contents
       :type:  str
 
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None, userPreferences=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -15606,6 +15626,8 @@ Package Contents
    :type publicHostingDomain: str
    :param expLi: The active logged-in experiment arm for the current org, if any.
    :type expLi: str
+   :param userPreferences: The requesting user's preferences for the active organization (e.g. chatLLM.HOMEPAGE_TILES_COLLAPSED), surfaced here so preference-driven UI state is known at first paint.
+   :type userPreferences: dict
 
 
    .. py:attribute:: api_endpoint
@@ -15649,6 +15671,11 @@ Package Contents
 
 
    .. py:attribute:: exp_li
+      :value: None
+
+
+
+   .. py:attribute:: user_preferences
       :value: None
 
 
@@ -16051,7 +16078,7 @@ Package Contents
 
 
 
-.. py:class:: AudioUrlResult(client, audioUrl=None, creditsUsed=None)
+.. py:class:: AudioUrlResult(client, audioUrl=None, creditsUsed=None, totalVoiceoverCreditsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -16062,8 +16089,10 @@ Package Contents
    :type client: ApiClient
    :param audioUrl: The audio url.
    :type audioUrl: str
-   :param creditsUsed: The credits used.
+   :param creditsUsed: The credits used for this generation (0 when the cached audio is reused).
    :type creditsUsed: float
+   :param totalVoiceoverCreditsUsed: The cumulative credits used voicing this message, across regenerations.
+   :type totalVoiceoverCreditsUsed: float
 
 
    .. py:attribute:: audio_url
@@ -16072,6 +16101,11 @@ Package Contents
 
 
    .. py:attribute:: credits_used
+      :value: None
+
+
+
+   .. py:attribute:: total_voiceover_credits_used
       :value: None
 
 
@@ -19618,7 +19652,7 @@ Package Contents
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -24914,6 +24948,27 @@ Package Contents
 
 
 
+   .. py:method:: set_organization_network_policy(enabled = False, egress_fqdns = None, egress_cidrs = None)
+
+      Set the organization's egress network policy (Agent Firewall) for agent computers.
+
+      The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
+      validated and the change is reconciled onto the organization's agent computers within a few
+      minutes (not synchronously).
+
+
+      :param enabled: Whether to enforce the denylist. When False the policy is stored but not enforced.
+      :type enabled: bool
+      :param egress_fqdns: Exact hostnames to block (no wildcards), e.g. ['ads.tracker.net'].
+      :type egress_fqdns: list
+      :param egress_cidrs: IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24'].
+      :type egress_cidrs: list
+
+      :returns: The organization's egress denylist after the update.
+      :rtype: OrganizationNetworkPolicy
+
+
+
    .. py:method:: add_user_group_object_permission(object_id, user_group_id, object_type, permission = 'ALL')
 
       Add user group object permission for any object type.
@@ -27901,6 +27956,15 @@ Package Contents
 
 
 
+   .. py:method:: list_organization_network_policy()
+
+      Retrieve the organization's egress network policy (Agent Firewall) for agent computers.
+
+      :returns: The organization's current egress denylist and whether it is enforced.
+      :rtype: OrganizationNetworkPolicy
+
+
+
    .. py:method:: download_deployment_conversation_artifacts(deployment_conversation_id)
 
       Download all artifacts (files/code) for a Deep Agent conversation as a single archive.
@@ -29364,6 +29428,262 @@ Package Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CoworkDesktopFolder(client, id=None, label=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   CoWork Desktop Folder
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param id: Opaque workspace id chosen by the desktop (maps to a local path on the host)
+   :type id: str
+   :param label: Human-readable folder label shown on mobile
+   :type label: str
+
+
+   .. py:attribute:: id
+      :value: None
+
+
+
+   .. py:attribute:: label
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CoworkDispatchMessage(client, dispatchMessageId=None, state=None, deploymentConversationId=None, deliverySeq=None, targetDesktopDeviceId=None, mobileDeviceId=None, messageText=None, workspaceOverride=None, createdAt=None, ackedAt=None, completedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   CoWork Dispatch Message
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param dispatchMessageId: The unique ID of the dispatch message
+   :type dispatchMessageId: str
+   :param state: The current state of the dispatch (e.g. pending, completed, failed, cancelled, waiting_approval)
+   :type state: str
+   :param deploymentConversationId: The ID of the deployment conversation the dispatch belongs to
+   :type deploymentConversationId: id
+   :param deliverySeq: The monotonic delivery sequence number for the target desktop device
+   :type deliverySeq: int
+   :param targetDesktopDeviceId: The ID of the desktop device the dispatch is targeted at
+   :type targetDesktopDeviceId: str
+   :param mobileDeviceId: The ID of the mobile device that originated the dispatch
+   :type mobileDeviceId: str
+   :param messageText: The text of the dispatched message
+   :type messageText: str
+   :param workspaceOverride: Opaque workspace id the desktop should open for this dispatch
+   :type workspaceOverride: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param ackedAt: The timestamp when the dispatch was acknowledged
+   :type ackedAt: str
+   :param completedAt: The timestamp when the dispatch reached a terminal state
+   :type completedAt: str
+
+
+   .. py:attribute:: dispatch_message_id
+      :value: None
+
+
+
+   .. py:attribute:: state
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: delivery_seq
+      :value: None
+
+
+
+   .. py:attribute:: target_desktop_device_id
+      :value: None
+
+
+
+   .. py:attribute:: mobile_device_id
+      :value: None
+
+
+
+   .. py:attribute:: message_text
+      :value: None
+
+
+
+   .. py:attribute:: workspace_override
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: acked_at
+      :value: None
+
+
+
+   .. py:attribute:: completed_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CoworkPairedDesktopFolders(client, folders={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   CoWork Paired Desktop Folders
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param folders: Current workspace folders published by the target desktop
+   :type folders: CoworkDesktopFolder
+
+
+   .. py:attribute:: folders
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CoworkPairingChallenge(client, pairingId=None, userCode=None, qrToken=None, verificationDeepLink=None, expiresAt=None, status=None, desktopDeviceId=None, deviceName=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   CoWork Pairing Challenge
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param pairingId: The unique ID of the pairing challenge
+   :type pairingId: str
+   :param userCode: The short human-readable code used to confirm the pairing
+   :type userCode: str
+   :param qrToken: The token encoded in the pairing QR code
+   :type qrToken: str
+   :param verificationDeepLink: The deep link used to verify the pairing from the mobile device
+   :type verificationDeepLink: str
+   :param expiresAt: The timestamp when the pairing challenge expires
+   :type expiresAt: str
+   :param status: The current status of the pairing challenge (e.g. pending)
+   :type status: str
+   :param desktopDeviceId: The ID of the desktop device requesting the pairing
+   :type desktopDeviceId: str
+   :param deviceName: The display name of the desktop device requesting the pairing
+   :type deviceName: str
+
+
+   .. py:attribute:: pairing_id
+      :value: None
+
+
+
+   .. py:attribute:: user_code
+      :value: None
+
+
+
+   .. py:attribute:: qr_token
+      :value: None
+
+
+
+   .. py:attribute:: verification_deep_link
+      :value: None
+
+
+
+   .. py:attribute:: expires_at
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: desktop_device_id
+      :value: None
+
+
+
+   .. py:attribute:: device_name
       :value: None
 
 
@@ -32576,7 +32896,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, voiceoverCreditsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32645,6 +32965,8 @@ Package Contents
    :type routedLlm: str
    :param computePointsUsed: The number of compute points used for the message.
    :type computePointsUsed: int
+   :param voiceoverCreditsUsed: The cumulative credits used generating this message's voiceover audio.
+   :type voiceoverCreditsUsed: float
    :param computerFiles: The list of files that were created by the computer agent.
    :type computerFiles: list
    :param toolUseRequest: The tool use request for the message.
@@ -32819,6 +33141,11 @@ Package Contents
 
 
    .. py:attribute:: compute_points_used
+      :value: None
+
+
+
+   .. py:attribute:: voiceover_credits_used
       :value: None
 
 
@@ -34984,7 +35311,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35033,6 +35360,8 @@ Package Contents
    :type hasFastMode: bool
    :param hasEffortOption: Whether the external application has an effort option.
    :type hasEffortOption: bool
+   :param availableEffortLevels: List of available effort levels for the model (e.g. ['low', 'high']).
+   :type availableEffortLevels: list
    :param onlyImageGenEnabled: Whether to LLM only allows image generation.
    :type onlyImageGenEnabled: bool
    :param projectId: The project id associated with the external application.
@@ -35143,6 +35472,11 @@ Package Contents
 
 
    .. py:attribute:: has_effort_option
+      :value: None
+
+
+
+   .. py:attribute:: available_effort_levels
       :value: None
 
 
@@ -41901,7 +42235,7 @@ Package Contents
 
 
 
-.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41928,6 +42262,8 @@ Package Contents
    :type thumbnailUrl: str
    :param mediaUrl: Signed full media URL (generated at read time)
    :type mediaUrl: str
+   :param filename: Ready-to-use display name (derived from info.title or generation_prompt at read time)
+   :type filename: str
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -41975,6 +42311,11 @@ Package Contents
 
 
    .. py:attribute:: media_url
+      :value: None
+
+
+
+   .. py:attribute:: filename
       :value: None
 
 
@@ -45742,6 +46083,74 @@ Package Contents
 
       :param organization_group_id: Unique string identifier of the Organization Group.
       :type organization_group_id: str
+
+
+
+.. py:class:: OrganizationNetworkPolicy(client, enabled=None, lifecycle=None, egressFqdns=None, egressCidrs=None, updatedAt=None, available=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The organization's egress network policy (Agent Firewall) for agent computers.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param enabled: Whether the egress denylist is currently enforced for the organization.
+   :type enabled: bool
+   :param lifecycle: The policy lifecycle state (ACTIVE when enforced, DISABLED when off).
+   :type lifecycle: str
+   :param egressFqdns: The hostnames blocked for the organization's agent computers.
+   :type egressFqdns: list
+   :param egressCidrs: The IP ranges (CIDR) blocked for the organization's agent computers.
+   :type egressCidrs: list
+   :param updatedAt: The timestamp at which the policy was last modified.
+   :type updatedAt: str
+   :param available: Whether the Agent Firewall is available for this organization.
+   :type available: bool
+
+
+   .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: egress_fqdns
+      :value: None
+
+
+
+   .. py:attribute:: egress_cidrs
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: available
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 
@@ -54973,6 +55382,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.99'
+   :value: '1.4.100'
 
 

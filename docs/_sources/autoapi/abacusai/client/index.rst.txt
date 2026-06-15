@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.99'
+      :value: '1.4.100'
 
 
 
@@ -2975,6 +2975,15 @@ Module Contents
 
 
 
+   .. py:method:: list_organization_network_policy()
+
+      Retrieve the organization's egress network policy (Agent Firewall) for agent computers.
+
+      :returns: The organization's current egress denylist and whether it is enforced.
+      :rtype: OrganizationNetworkPolicy
+
+
+
    .. py:method:: download_deployment_conversation_artifacts(deployment_conversation_id)
 
       Download all artifacts (files/code) for a Deep Agent conversation as a single archive.
@@ -4874,7 +4883,7 @@ Module Contents
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -10167,6 +10176,27 @@ Module Contents
       :type name: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
+
+
+
+   .. py:method:: set_organization_network_policy(enabled = False, egress_fqdns = None, egress_cidrs = None)
+
+      Set the organization's egress network policy (Agent Firewall) for agent computers.
+
+      The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
+      validated and the change is reconciled onto the organization's agent computers within a few
+      minutes (not synchronously).
+
+
+      :param enabled: Whether to enforce the denylist. When False the policy is stored but not enforced.
+      :type enabled: bool
+      :param egress_fqdns: Exact hostnames to block (no wildcards), e.g. ['ads.tracker.net'].
+      :type egress_fqdns: list
+      :param egress_cidrs: IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24'].
+      :type egress_cidrs: list
+
+      :returns: The organization's egress denylist after the update.
+      :rtype: OrganizationNetworkPolicy
 
 
 

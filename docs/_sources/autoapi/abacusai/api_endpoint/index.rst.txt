@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None, userPreferences=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type publicHostingDomain: str
    :param expLi: The active logged-in experiment arm for the current org, if any.
    :type expLi: str
+   :param userPreferences: The requesting user's preferences for the active organization (e.g. chatLLM.HOMEPAGE_TILES_COLLAPSED), surfaced here so preference-driven UI state is known at first paint.
+   :type userPreferences: dict
 
 
    .. py:attribute:: api_endpoint
@@ -85,6 +87,11 @@ Module Contents
 
 
    .. py:attribute:: exp_li
+      :value: None
+
+
+
+   .. py:attribute:: user_preferences
       :value: None
 
 

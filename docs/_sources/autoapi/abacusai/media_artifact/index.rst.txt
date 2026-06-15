@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type thumbnailUrl: str
    :param mediaUrl: Signed full media URL (generated at read time)
    :type mediaUrl: str
+   :param filename: Ready-to-use display name (derived from info.title or generation_prompt at read time)
+   :type filename: str
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -89,6 +91,11 @@ Module Contents
 
 
    .. py:attribute:: media_url
+      :value: None
+
+
+
+   .. py:attribute:: filename
       :value: None
 
 

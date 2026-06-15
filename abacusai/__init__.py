@@ -55,6 +55,10 @@ from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
 from .conversation_and_project_search_results import ConversationAndProjectSearchResults
+from .cowork_desktop_folder import CoworkDesktopFolder
+from .cowork_dispatch_message import CoworkDispatchMessage
+from .cowork_paired_desktop_folders import CoworkPairedDesktopFolders
+from .cowork_pairing_challenge import CoworkPairingChallenge
 from .cpu_gpu_memory_specs import CpuGpuMemorySpecs
 from .custom_chat_instructions import CustomChatInstructions
 from .custom_domain import CustomDomain
@@ -210,6 +214,7 @@ from .notebook_template import NotebookTemplate
 from .null_violation import NullViolation
 from .organization_external_application_settings import OrganizationExternalApplicationSettings
 from .organization_group import OrganizationGroup
+from .organization_network_policy import OrganizationNetworkPolicy
 from .organization_search_result import OrganizationSearchResult
 from .organization_secret import OrganizationSecret
 from .page_data import PageData
@@ -307,4 +312,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.99"
+__version__ = "1.4.100"

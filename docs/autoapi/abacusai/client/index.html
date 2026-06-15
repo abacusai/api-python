@@ -111,6 +111,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../conversation_and_project_search_results/index.html">abacusai.conversation_and_project_search_results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cowork_desktop_folder/index.html">abacusai.cowork_desktop_folder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cowork_dispatch_message/index.html">abacusai.cowork_dispatch_message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cowork_paired_desktop_folders/index.html">abacusai.cowork_paired_desktop_folders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cowork_pairing_challenge/index.html">abacusai.cowork_pairing_challenge</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cpu_gpu_memory_specs/index.html">abacusai.cpu_gpu_memory_specs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cryptography/index.html">abacusai.cryptography</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_chat_instructions/index.html">abacusai.custom_chat_instructions</a></li>
@@ -266,6 +270,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html">abacusai.null_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_external_application_settings/index.html">abacusai.organization_external_application_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html">abacusai.organization_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_network_policy/index.html">abacusai.organization_network_policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html">abacusai.organization_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html">abacusai.organization_secret</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../page_data/index.html">abacusai.page_data</a></li>
@@ -1139,7 +1144,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.99'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.100'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4468,6 +4473,20 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_organization_network_policy">
+<span class="sig-name descname"><span class="pre">list_organization_network_policy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_organization_network_policy" title="Link to this definition"></a></dt>
+<dd><p>Retrieve the organization’s egress network policy (Agent Firewall) for agent computers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The organization’s current egress denylist and whether it is enforced.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../index.html#abacusai.OrganizationNetworkPolicy" title="abacusai.OrganizationNetworkPolicy">OrganizationNetworkPolicy</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.download_deployment_conversation_artifacts">
 <span class="sig-name descname"><span class="pre">download_deployment_conversation_artifacts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.download_deployment_conversation_artifacts" title="Link to this definition"></a></dt>
 <dd><p>Download all artifacts (files/code) for a Deep Agent conversation as a single archive.</p>
@@ -6691,7 +6710,7 @@ If no scope found, will run in local.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The project’s name.</p></li>
-<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/developer-platform/useCases">https://api.abacus.ai/app/help/developer-platform/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.</p></li>
+<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/developer-platform/useCases">https://api.abacus.ai/app/help/developer-platform/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -12808,6 +12827,30 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The new name of the conversation.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.set_organization_network_policy">
+<span class="sig-name descname"><span class="pre">set_organization_network_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress_fqdns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress_cidrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_organization_network_policy" title="Link to this definition"></a></dt>
+<dd><p>Set the organization’s egress network policy (Agent Firewall) for agent computers.</p>
+<p>The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
+validated and the change is reconciled onto the organization’s agent computers within a few
+minutes (not synchronously).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to enforce the denylist. When False the policy is stored but not enforced.</p></li>
+<li><p><strong>egress_fqdns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Exact hostnames to block (no wildcards), e.g. [‘ads.tracker.net’].</p></li>
+<li><p><strong>egress_cidrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – IPv4 addresses or CIDR ranges to block, e.g. [‘203.0.113.0/24’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The organization’s egress denylist after the update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.OrganizationNetworkPolicy" title="abacusai.OrganizationNetworkPolicy">OrganizationNetworkPolicy</a></p>
 </dd>
 </dl>
 </dd></dl>

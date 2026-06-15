@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -64,6 +64,8 @@ Module Contents
    :type hasFastMode: bool
    :param hasEffortOption: Whether the external application has an effort option.
    :type hasEffortOption: bool
+   :param availableEffortLevels: List of available effort levels for the model (e.g. ['low', 'high']).
+   :type availableEffortLevels: list
    :param onlyImageGenEnabled: Whether to LLM only allows image generation.
    :type onlyImageGenEnabled: bool
    :param projectId: The project id associated with the external application.
@@ -174,6 +176,11 @@ Module Contents
 
 
    .. py:attribute:: has_effort_option
+      :value: None
+
+
+
+   .. py:attribute:: available_effort_levels
       :value: None
 
 

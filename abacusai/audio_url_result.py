@@ -8,18 +8,20 @@ class AudioUrlResult(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             audioUrl (str): The audio url.
-            creditsUsed (float): The credits used.
+            creditsUsed (float): The credits used for this generation (0 when the cached audio is reused).
+            totalVoiceoverCreditsUsed (float): The cumulative credits used voicing this message, across regenerations.
     """
 
-    def __init__(self, client, audioUrl=None, creditsUsed=None):
+    def __init__(self, client, audioUrl=None, creditsUsed=None, totalVoiceoverCreditsUsed=None):
         super().__init__(client, None)
         self.audio_url = audioUrl
         self.credits_used = creditsUsed
+        self.total_voiceover_credits_used = totalVoiceoverCreditsUsed
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'audio_url': repr(
-            self.audio_url), f'credits_used': repr(self.credits_used)}
+        repr_dict = {f'audio_url': repr(self.audio_url), f'credits_used': repr(
+            self.credits_used), f'total_voiceover_credits_used': repr(self.total_voiceover_credits_used)}
         class_name = "AudioUrlResult"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -32,5 +34,6 @@ class AudioUrlResult(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'audio_url': self.audio_url, 'credits_used': self.credits_used}
+        resp = {'audio_url': self.audio_url, 'credits_used': self.credits_used,
+                'total_voiceover_credits_used': self.total_voiceover_credits_used}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

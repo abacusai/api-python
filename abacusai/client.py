@@ -147,6 +147,7 @@ from .monitor_alert import MonitorAlert
 from .monitor_alert_version import MonitorAlertVersion
 from .natural_language_explanation import NaturalLanguageExplanation
 from .organization_group import OrganizationGroup
+from .organization_network_policy import OrganizationNetworkPolicy
 from .organization_search_result import OrganizationSearchResult
 from .organization_secret import OrganizationSecret
 from .page_data import PageData
@@ -716,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.99'
+    client_version = '1.4.100'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2881,6 +2882,13 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DeploymentConversationExport: The deployment conversation html export."""
         return self._proxy_request('exportDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, parse_type=DeploymentConversationExport, is_sync=True)
+
+    def list_organization_network_policy(self) -> OrganizationNetworkPolicy:
+        """Retrieve the organization's egress network policy (Agent Firewall) for agent computers.
+
+        Returns:
+            OrganizationNetworkPolicy: The organization's current egress denylist and whether it is enforced."""
+        return self._proxy_request('listOrganizationNetworkPolicy', 'GET', query_params={}, parse_type=OrganizationNetworkPolicy, is_sync=True)
 
     def download_deployment_conversation_artifacts(self, deployment_conversation_id: str) -> io.BytesIO:
         """Download all artifacts (files/code) for a Deep Agent conversation as a single archive.
@@ -5237,7 +5245,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/developer-platform/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project."""
@@ -9080,6 +9088,23 @@ class ApiClient(ReadOnlyClient):
             name (str): The new name of the conversation.
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in."""
         return self._proxy_request('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'name': name}, is_sync=True)
+
+    def set_organization_network_policy(self, enabled: bool = False, egress_fqdns: list = None, egress_cidrs: list = None) -> OrganizationNetworkPolicy:
+        """Set the organization's egress network policy (Agent Firewall) for agent computers.
+
+        The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
+        validated and the change is reconciled onto the organization's agent computers within a few
+        minutes (not synchronously).
+
+
+        Args:
+            enabled (bool): Whether to enforce the denylist. When False the policy is stored but not enforced.
+            egress_fqdns (list): Exact hostnames to block (no wildcards), e.g. ['ads.tracker.net'].
+            egress_cidrs (list): IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24'].
+
+        Returns:
+            OrganizationNetworkPolicy: The organization's egress denylist after the update."""
+        return self._proxy_request('setOrganizationNetworkPolicy', 'POST', query_params={}, body={'enabled': enabled, 'egressFqdns': egress_fqdns, 'egressCidrs': egress_cidrs}, parse_type=OrganizationNetworkPolicy, is_sync=True)
 
     def add_user_group_object_permission(self, object_id: str, user_group_id: str, object_type: str, permission: str = 'ALL'):
         """Add user group object permission for any object type.

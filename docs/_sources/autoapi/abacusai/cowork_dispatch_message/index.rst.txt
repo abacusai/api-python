@@ -1,0 +1,120 @@
+abacusai.cowork_dispatch_message
+================================
+
+.. py:module:: abacusai.cowork_dispatch_message
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.cowork_dispatch_message.CoworkDispatchMessage
+
+
+Module Contents
+---------------
+
+.. py:class:: CoworkDispatchMessage(client, dispatchMessageId=None, state=None, deploymentConversationId=None, deliverySeq=None, targetDesktopDeviceId=None, mobileDeviceId=None, messageText=None, workspaceOverride=None, createdAt=None, ackedAt=None, completedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   CoWork Dispatch Message
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param dispatchMessageId: The unique ID of the dispatch message
+   :type dispatchMessageId: str
+   :param state: The current state of the dispatch (e.g. pending, completed, failed, cancelled, waiting_approval)
+   :type state: str
+   :param deploymentConversationId: The ID of the deployment conversation the dispatch belongs to
+   :type deploymentConversationId: id
+   :param deliverySeq: The monotonic delivery sequence number for the target desktop device
+   :type deliverySeq: int
+   :param targetDesktopDeviceId: The ID of the desktop device the dispatch is targeted at
+   :type targetDesktopDeviceId: str
+   :param mobileDeviceId: The ID of the mobile device that originated the dispatch
+   :type mobileDeviceId: str
+   :param messageText: The text of the dispatched message
+   :type messageText: str
+   :param workspaceOverride: Opaque workspace id the desktop should open for this dispatch
+   :type workspaceOverride: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param ackedAt: The timestamp when the dispatch was acknowledged
+   :type ackedAt: str
+   :param completedAt: The timestamp when the dispatch reached a terminal state
+   :type completedAt: str
+
+
+   .. py:attribute:: dispatch_message_id
+      :value: None
+
+
+
+   .. py:attribute:: state
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: delivery_seq
+      :value: None
+
+
+
+   .. py:attribute:: target_desktop_device_id
+      :value: None
+
+
+
+   .. py:attribute:: mobile_device_id
+      :value: None
+
+
+
+   .. py:attribute:: message_text
+      :value: None
+
+
+
+   .. py:attribute:: workspace_override
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: acked_at
+      :value: None
+
+
+
+   .. py:attribute:: completed_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

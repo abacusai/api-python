@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AudioUrlResult(client, audioUrl=None, creditsUsed=None)
+.. py:class:: AudioUrlResult(client, audioUrl=None, creditsUsed=None, totalVoiceoverCreditsUsed=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,8 +26,10 @@ Module Contents
    :type client: ApiClient
    :param audioUrl: The audio url.
    :type audioUrl: str
-   :param creditsUsed: The credits used.
+   :param creditsUsed: The credits used for this generation (0 when the cached audio is reused).
    :type creditsUsed: float
+   :param totalVoiceoverCreditsUsed: The cumulative credits used voicing this message, across regenerations.
+   :type totalVoiceoverCreditsUsed: float
 
 
    .. py:attribute:: audio_url
@@ -36,6 +38,11 @@ Module Contents
 
 
    .. py:attribute:: credits_used
+      :value: None
+
+
+
+   .. py:attribute:: total_voiceover_credits_used
       :value: None
 
 

@@ -1,0 +1,85 @@
+abacusai.organization_network_policy
+====================================
+
+.. py:module:: abacusai.organization_network_policy
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.organization_network_policy.OrganizationNetworkPolicy
+
+
+Module Contents
+---------------
+
+.. py:class:: OrganizationNetworkPolicy(client, enabled=None, lifecycle=None, egressFqdns=None, egressCidrs=None, updatedAt=None, available=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The organization's egress network policy (Agent Firewall) for agent computers.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param enabled: Whether the egress denylist is currently enforced for the organization.
+   :type enabled: bool
+   :param lifecycle: The policy lifecycle state (ACTIVE when enforced, DISABLED when off).
+   :type lifecycle: str
+   :param egressFqdns: The hostnames blocked for the organization's agent computers.
+   :type egressFqdns: list
+   :param egressCidrs: The IP ranges (CIDR) blocked for the organization's agent computers.
+   :type egressCidrs: list
+   :param updatedAt: The timestamp at which the policy was last modified.
+   :type updatedAt: str
+   :param available: Whether the Agent Firewall is available for this organization.
+   :type available: bool
+
+
+   .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: egress_fqdns
+      :value: None
+
+
+
+   .. py:attribute:: egress_cidrs
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: available
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

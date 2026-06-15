@@ -634,6 +634,7 @@ class LLMName(ApiEnum):
     ZAI_GLM_5_1 = 'ZAI_GLM_5_1'
     KIMI_K2_5 = 'KIMI_K2_5'
     KIMI_K2_6 = 'KIMI_K2_6'
+    KIMI_K2_7_CODE = 'KIMI_K2_7_CODE'
 
 
 class MonitorAlertType(ApiEnum):
@@ -927,3 +928,4 @@ class MediaArtifactType(ApiEnum):
 class VerticalType(ApiEnum):
     """Vertical types for specialized external applications."""
     HEALTH = 'HEALTH'
+    ROLE_PLAY = 'ROLE_PLAY'

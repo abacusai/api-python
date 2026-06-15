@@ -16,9 +16,10 @@ class ApiEndpoint(AbstractApiClass):
             hostingDomain (str): The domain for hosted app deployments
             publicHostingDomain (str): The domain for publicly hosted app deployments
             expLi (str): The active logged-in experiment arm for the current org, if any.
+            userPreferences (dict): The requesting user's preferences for the active organization (e.g. chatLLM.HOMEPAGE_TILES_COLLAPSED), surfaced here so preference-driven UI state is known at first paint.
     """
 
-    def __init__(self, client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None):
+    def __init__(self, client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None, userPreferences=None):
         super().__init__(client, None)
         self.api_endpoint = apiEndpoint
         self.predict_endpoint = predictEndpoint
@@ -29,11 +30,12 @@ class ApiEndpoint(AbstractApiClass):
         self.hosting_domain = hostingDomain
         self.public_hosting_domain = publicHostingDomain
         self.exp_li = expLi
+        self.user_preferences = userPreferences
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'api_endpoint': repr(self.api_endpoint), f'predict_endpoint': repr(self.predict_endpoint), f'proxy_endpoint': repr(self.proxy_endpoint), f'llm_endpoint': repr(self.llm_endpoint), f'external_chat_endpoint': repr(
-            self.external_chat_endpoint), f'dashboard_endpoint': repr(self.dashboard_endpoint), f'hosting_domain': repr(self.hosting_domain), f'public_hosting_domain': repr(self.public_hosting_domain), f'exp_li': repr(self.exp_li)}
+            self.external_chat_endpoint), f'dashboard_endpoint': repr(self.dashboard_endpoint), f'hosting_domain': repr(self.hosting_domain), f'public_hosting_domain': repr(self.public_hosting_domain), f'exp_li': repr(self.exp_li), f'user_preferences': repr(self.user_preferences)}
         class_name = "ApiEndpoint"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -46,6 +48,6 @@ class ApiEndpoint(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'api_endpoint': self.api_endpoint, 'predict_endpoint': self.predict_endpoint, 'proxy_endpoint': self.proxy_endpoint, 'llm_endpoint': self.llm_endpoint, 'external_chat_endpoint':
-                self.external_chat_endpoint, 'dashboard_endpoint': self.dashboard_endpoint, 'hosting_domain': self.hosting_domain, 'public_hosting_domain': self.public_hosting_domain, 'exp_li': self.exp_li}
+        resp = {'api_endpoint': self.api_endpoint, 'predict_endpoint': self.predict_endpoint, 'proxy_endpoint': self.proxy_endpoint, 'llm_endpoint': self.llm_endpoint, 'external_chat_endpoint': self.external_chat_endpoint,
+                'dashboard_endpoint': self.dashboard_endpoint, 'hosting_domain': self.hosting_domain, 'public_hosting_domain': self.public_hosting_domain, 'exp_li': self.exp_li, 'user_preferences': self.user_preferences}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
