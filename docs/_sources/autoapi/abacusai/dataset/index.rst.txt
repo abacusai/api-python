@@ -285,12 +285,14 @@ Module Contents
 
 
 
-   .. py:method:: create_version_from_upload(file_format = None)
+   .. py:method:: create_version_from_upload(file_format = None, parsing_config = None)
 
       Creates a new version of the specified dataset using a local file upload.
 
       :param file_format: File format to be used. If not specified, the service will attempt to detect the file format.
       :type file_format: str
+      :param parsing_config: Custom config for dataset parsing.
+      :type parsing_config: ParsingConfig
 
       :returns: Token to be used when uploading file parts.
       :rtype: Upload

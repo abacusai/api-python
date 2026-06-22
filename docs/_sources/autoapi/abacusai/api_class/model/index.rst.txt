@@ -1501,6 +1501,8 @@ Module Contents
    :type search_score_cutoff: float
    :param include_bm25_retrieval: Combine BM25 search score with vector search using reciprocal rank fusion.
    :type include_bm25_retrieval: bool
+   :param text_boost_weight: Weight of the BM25 text match relative to the vector score when combining them for realtime datasets. Defaults to 2. Only applies to realtime datasets with include_bm25_retrieval enabled.
+   :type text_boost_weight: float
    :param database_connector_id: Database connector ID to use for connecting external database that gives access to structured data to the LLM.
    :type database_connector_id: str
    :param database_connector_ids: List of database connector IDs to use for connecting external databases that give access to structured data to the LLM.
@@ -1684,6 +1686,12 @@ Module Contents
 
    .. py:attribute:: include_bm25_retrieval
       :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: text_boost_weight
+      :type:  float
       :value: None
 
 

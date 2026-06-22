@@ -1,0 +1,57 @@
+abacusai.scene_image_result
+===========================
+
+.. py:module:: abacusai.scene_image_result
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.scene_image_result.SceneImageResult
+
+
+Module Contents
+---------------
+
+.. py:class:: SceneImageResult(client, sceneImage=None, sceneImages=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Role Play scene-image generation result.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param sceneImage: The image just generated ({id, image_url, model, width, height, reference_image_url, created_at}). The image-gen prompt is intentionally omitted (kept internal, in debug info).
+   :type sceneImage: dict
+   :param sceneImages: All scene images stored on the message, oldest first (the full gallery).
+   :type sceneImages: list
+
+
+   .. py:attribute:: scene_image
+      :value: None
+
+
+
+   .. py:attribute:: scene_images
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -156,17 +156,18 @@ class Dataset(AbstractApiClass):
         """
         return self.client.create_dataset_version_from_application_connector(self.dataset_id, dataset_config)
 
-    def create_version_from_upload(self, file_format: str = None):
+    def create_version_from_upload(self, file_format: str = None, parsing_config: Union[dict, ParsingConfig] = None):
         """
         Creates a new version of the specified dataset using a local file upload.
 
         Args:
             file_format (str): File format to be used. If not specified, the service will attempt to detect the file format.
+            parsing_config (ParsingConfig): Custom config for dataset parsing.
 
         Returns:
             Upload: Token to be used when uploading file parts.
         """
-        return self.client.create_dataset_version_from_upload(self.dataset_id, file_format)
+        return self.client.create_dataset_version_from_upload(self.dataset_id, file_format, parsing_config)
 
     def create_version_from_document_reprocessing(self, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None):
         """

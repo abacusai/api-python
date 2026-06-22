@@ -39,10 +39,12 @@ class ParsingConfig(ApiClass):
         escape (str): Escape character for CSV files. Defaults to '"'.
         csv_delimiter (str): Delimiter for CSV files. Defaults to None.
         file_path_with_schema (str): Path to the file with schema. Defaults to None.
+        excel_sheet (str): Name of the sheet to read for multi-sheet Excel/ODS spreadsheets. If not specified and the file has multiple sheets, parsing fails with the list of available sheets. Defaults to None.
     """
     escape: str = dataclasses.field(default='"')
     csv_delimiter: str = dataclasses.field(default=None)
     file_path_with_schema: str = dataclasses.field(default=None)
+    excel_sheet: str = dataclasses.field(default=None)
 
 
 @dataclasses.dataclass

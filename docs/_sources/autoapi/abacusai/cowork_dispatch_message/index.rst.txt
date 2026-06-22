@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CoworkDispatchMessage(client, dispatchMessageId=None, state=None, deploymentConversationId=None, deliverySeq=None, targetDesktopDeviceId=None, mobileDeviceId=None, messageText=None, workspaceOverride=None, createdAt=None, ackedAt=None, completedAt=None)
+.. py:class:: CoworkDispatchMessage(client, dispatchMessageId=None, state=None, deploymentConversationId=None, deliverySeq=None, targetDesktopDeviceId=None, mobileDeviceId=None, messageText=None, workspaceOverride=None, llmName=None, createdAt=None, ackedAt=None, completedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type messageText: str
    :param workspaceOverride: Opaque workspace id the desktop should open for this dispatch
    :type workspaceOverride: str
+   :param llmName: CoWork effort tier llm_name chosen on mobile (from _listCodeBots)
+   :type llmName: str
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param ackedAt: The timestamp when the dispatch was acknowledged
@@ -84,6 +86,11 @@ Module Contents
 
 
    .. py:attribute:: workspace_override
+      :value: None
+
+
+
+   .. py:attribute:: llm_name
       :value: None
 
 

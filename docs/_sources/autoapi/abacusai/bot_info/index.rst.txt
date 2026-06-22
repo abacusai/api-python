@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: BotInfo(client, externalApplicationId=None, deploymentId=None, agentTasksExhausted=None, externalApplication={})
+.. py:class:: BotInfo(client, externalApplicationId=None, deploymentId=None, agentTasksExhausted=None, llmName=None, externalApplication={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type deploymentId: str
    :param agentTasksExhausted: Whether a basic-tier user has used up their DeepAgent task allowance, in which case new chats default to chat mode.
    :type agentTasksExhausted: bool
+   :param llmName: The last-used virtual ChatLLM model on the most-recent conversation, so the homepage pre-selects it.
+   :type llmName: str
    :param externalApplication: The described external application details.
    :type externalApplication: ExternalApplication
 
@@ -45,6 +47,11 @@ Module Contents
 
 
    .. py:attribute:: agent_tasks_exhausted
+      :value: None
+
+
+
+   .. py:attribute:: llm_name
       :value: None
 
 

@@ -437,6 +437,8 @@ class ApplicationConnectorType(ApiEnum):
     TABLEAUUSER = 'TABLEAUUSER'
     YOUTUBE = 'YOUTUBE'
     DOCUSIGN = 'DOCUSIGN'
+    SMARTSHEET = 'SMARTSHEET'
+    ZOOM = 'ZOOM'
 
     @classmethod
     def user_connectors(cls):
@@ -470,6 +472,8 @@ class ApplicationConnectorType(ApiEnum):
             cls.TABLEAUUSER,
             cls.YOUTUBE,
             cls.DOCUSIGN,
+            cls.SMARTSHEET,
+            cls.ZOOM,
         ]
 
     @classmethod
@@ -632,6 +636,7 @@ class LLMName(ApiEnum):
     XIAOMI_MIMO_V2_PRO = 'XIAOMI_MIMO_V2_PRO'
     GEMMA_4_31B = 'GEMMA_4_31B'
     ZAI_GLM_5_1 = 'ZAI_GLM_5_1'
+    ZAI_GLM_5_2 = 'ZAI_GLM_5_2'
     KIMI_K2_5 = 'KIMI_K2_5'
     KIMI_K2_6 = 'KIMI_K2_6'
     KIMI_K2_7_CODE = 'KIMI_K2_7_CODE'

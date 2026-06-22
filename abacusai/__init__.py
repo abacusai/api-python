@@ -135,6 +135,7 @@ from .feature_group_version_logs import FeatureGroupVersionLogs
 from .feature_importance import FeatureImportance
 from .feature_mapping import FeatureMapping
 from .feature_performance_analysis import FeaturePerformanceAnalysis
+from .featured_mcp_server import FeaturedMcpServer
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
@@ -260,6 +261,7 @@ from .regenerate_llm_external_application import RegenerateLlmExternalApplicatio
 from .regenerate_llm_option import RegenerateLlmOption
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
 from .routing_action import RoutingAction
+from .scene_image_result import SceneImageResult
 from .schema import Schema
 from .session_summary import SessionSummary
 from .session_transcript import SessionTranscript
@@ -312,4 +314,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.100"
+__version__ = "1.4.101"

@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.100'
+    client_version = '1.4.101'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -6394,16 +6394,17 @@ class ApiClient(ReadOnlyClient):
             Upload: A reference to be used when uploading file parts."""
         return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'parsingConfig': parsing_config, 'mergeFileSchemas': merge_file_schemas, 'documentProcessingConfig': document_processing_config, 'versionLimit': version_limit}, parse_type=Upload)
 
-    def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
+    def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None, parsing_config: Union[dict, ParsingConfig] = None) -> Upload:
         """Creates a new version of the specified dataset using a local file upload.
 
         Args:
             dataset_id (str): Unique string identifier associated with the dataset.
             file_format (str): File format to be used. If not specified, the service will attempt to detect the file format.
+            parsing_config (ParsingConfig): Custom config for dataset parsing.
 
         Returns:
             Upload: Token to be used when uploading file parts."""
-        return self._call_api('createDatasetVersionFromUpload', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
+        return self._call_api('createDatasetVersionFromUpload', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format, 'parsingConfig': parsing_config}, parse_type=Upload)
 
     def create_dataset_version_from_document_reprocessing(self, dataset_id: str, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None) -> DatasetVersion:
         """Creates a new dataset version for a source docstore dataset with the provided document processing configuration. This does not re-import the data but uses the same data which is imported in the latest dataset version and only performs document processing on it.

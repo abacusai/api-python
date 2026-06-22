@@ -192,6 +192,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../feature_importance/index.html">abacusai.feature_importance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../feature_mapping/index.html">abacusai.feature_mapping</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../feature_performance_analysis/index.html">abacusai.feature_performance_analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../featured_mcp_server/index.html">abacusai.featured_mcp_server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../file_connector/index.html">abacusai.file_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../file_connector_instructions/index.html">abacusai.file_connector_instructions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../file_connector_verification/index.html">abacusai.file_connector_verification</a></li>
@@ -318,6 +319,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../resolved_feature_group_template/index.html">abacusai.resolved_feature_group_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../return_class/index.html">abacusai.return_class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../routing_action/index.html">abacusai.routing_action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../scene_image_result/index.html">abacusai.scene_image_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../schema/index.html">abacusai.schema</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../session_summary/index.html">abacusai.session_summary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../session_transcript/index.html">abacusai.session_transcript</a></li>
@@ -436,7 +438,7 @@
 <td><p>Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert._AlertConditionConfigFactory" title="abacusai.api_class.monitor_alert._AlertConditionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertConditionConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.AlertActionConfig" title="abacusai.api_class.monitor_alert.AlertActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionConfig</span></code></a></p></td>
 <td><p>An abstract class for alert action configs</p></td>
@@ -445,7 +447,7 @@
 <td><p>Email Action Config for Monitor Alerts</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert._AlertActionConfigFactory" title="abacusai.api_class.monitor_alert._AlertActionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertActionConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig" title="abacusai.api_class.monitor_alert.MonitorThresholdConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorThresholdConfig</span></code></a></p></td>
 <td><p>Monitor Threshold Config for Monitor Alerts</p></td>
@@ -699,6 +701,8 @@
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert._AlertConditionConfigFactory">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor_alert.</span></span><span class="sig-name descname"><span class="pre">_AlertConditionConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert._AlertConditionConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert._AlertConditionConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert._AlertConditionConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>
@@ -772,6 +776,8 @@
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert._AlertActionConfigFactory">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor_alert.</span></span><span class="sig-name descname"><span class="pre">_AlertActionConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert._AlertActionConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert._AlertActionConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert._AlertActionConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>
@@ -820,7 +826,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.MonitorThresholdConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 

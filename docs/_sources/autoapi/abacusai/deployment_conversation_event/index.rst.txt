@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, voiceoverCreditsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -84,8 +84,6 @@ Module Contents
    :type routedLlm: str
    :param computePointsUsed: The number of compute points used for the message.
    :type computePointsUsed: int
-   :param voiceoverCreditsUsed: The cumulative credits used generating this message's voiceover audio.
-   :type voiceoverCreditsUsed: float
    :param computerFiles: The list of files that were created by the computer agent.
    :type computerFiles: list
    :param toolUseRequest: The tool use request for the message.
@@ -112,6 +110,8 @@ Module Contents
    :type allowTaskAutomation: bool
    :param mediaStudioContext: The Media Studio context for the message, including mode, selected model, preferences, and uploaded files.
    :type mediaStudioContext: dict
+   :param sceneImages: Role Play scene illustrations generated for this message (the inline gallery; oldest first).
+   :type sceneImages: list
 
 
    .. py:attribute:: role
@@ -264,11 +264,6 @@ Module Contents
 
 
 
-   .. py:attribute:: voiceover_credits_used
-      :value: None
-
-
-
    .. py:attribute:: computer_files
       :value: None
 
@@ -330,6 +325,11 @@ Module Contents
 
 
    .. py:attribute:: media_studio_context
+      :value: None
+
+
+
+   .. py:attribute:: scene_images
       :value: None
 
 
