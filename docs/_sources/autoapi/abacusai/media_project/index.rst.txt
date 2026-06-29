@@ -1,0 +1,99 @@
+abacusai.media_project
+======================
+
+.. py:module:: abacusai.media_project
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.media_project.MediaProject
+
+
+Module Contents
+---------------
+
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Project — a saved Studio video-editor project.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaProjectId: The ID of the media project
+   :type mediaProjectId: id
+   :param name: The project name
+   :type name: str
+   :param editorState: The editor document (settings + media library + timeline), stored snake_case and returned camelCase
+   :type editorState: dict
+   :param lastRenderArtifactId: The media artifact of the latest export, if any
+   :type lastRenderArtifactId: id
+   :param info: Extensible metadata bag
+   :type info: dict
+   :param assetUrls: Map of hashed media_artifact_id -> fresh signed URL (set by describe at read time)
+   :type assetUrls: dict
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+
+
+   .. py:attribute:: media_project_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: editor_state
+      :value: None
+
+
+
+   .. py:attribute:: last_render_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: info
+      :value: None
+
+
+
+   .. py:attribute:: asset_urls
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

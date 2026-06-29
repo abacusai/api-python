@@ -121,6 +121,7 @@ Classes
    abacusai.api_class.DropboxDatasetConfig
    abacusai.api_class.HubspotDatasetConfig
    abacusai.api_class.QuickbooksDatasetConfig
+   abacusai.api_class.MondayDatasetConfig
    abacusai.api_class.DocusignDatasetConfig
    abacusai.api_class._ApplicationConnectorDatasetConfigFactory
    abacusai.api_class.ApiClass
@@ -211,6 +212,7 @@ Classes
    abacusai.api_class.OrganizationSecretType
    abacusai.api_class.DaemonTaskLifecycleUpdateAction
    abacusai.api_class.MediaArtifactType
+   abacusai.api_class.MediaArtifactOrigin
    abacusai.api_class.VerticalType
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
@@ -3683,6 +3685,34 @@ Package Contents
 
 
    .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: MondayDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Monday.com Application Connector
+
+   :param object_type: The Monday.com object to fetch (e.g. boards, workspaces, users, updates, items).
+   :type object_type: str
+   :param board_id: The Monday.com board id to fetch items from. Required only when object_type is 'items'.
+   :type board_id: str
+
+
+   .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: board_id
       :type:  str
       :value: None
 
@@ -10297,6 +10327,29 @@ Package Contents
 
    .. py:attribute:: AUDIO
       :value: 'AUDIO'
+
+
+
+.. py:class:: MediaArtifactOrigin(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   How a media artifact entered the gallery.
+
+
+   .. py:attribute:: GENERATED
+      :value: 'generated'
+
+
+
+   .. py:attribute:: UPLOADED
+      :value: 'uploaded'
+
+
+
+   .. py:attribute:: EDITOR_EXPORT
+      :value: 'editor_export'
 
 
 

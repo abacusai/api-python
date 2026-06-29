@@ -27,6 +27,7 @@ Classes
    abacusai.api_class.dataset_application_connector.DropboxDatasetConfig
    abacusai.api_class.dataset_application_connector.HubspotDatasetConfig
    abacusai.api_class.dataset_application_connector.QuickbooksDatasetConfig
+   abacusai.api_class.dataset_application_connector.MondayDatasetConfig
    abacusai.api_class.dataset_application_connector.DocusignDatasetConfig
    abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory
 
@@ -673,6 +674,34 @@ Module Contents
 
 
    .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: MondayDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Monday.com Application Connector
+
+   :param object_type: The Monday.com object to fetch (e.g. boards, workspaces, users, updates, items).
+   :type object_type: str
+   :param board_id: The Monday.com board id to fetch items from. Required only when object_type is 'items'.
+   :type board_id: str
+
+
+   .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: board_id
       :type:  str
       :value: None
 

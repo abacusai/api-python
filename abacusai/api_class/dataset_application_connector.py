@@ -341,6 +341,32 @@ class QuickbooksDatasetConfig(ApplicationConnectorDatasetConfig):
 
 
 @dataclasses.dataclass
+class MondayDatasetConfig(ApplicationConnectorDatasetConfig):
+    """
+    Dataset config for Monday.com Application Connector
+
+    Args:
+        object_type (str): The Monday.com object to fetch (e.g. boards, workspaces, users, updates, items).
+        board_id (str): The Monday.com board id to fetch items from. Required only when object_type is 'items'.
+    """
+    object_type: str = dataclasses.field(default=None)
+    board_id: str = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.MONDAY
+        if isinstance(self.object_type, dict):
+            self.object_type = self.object_type.get('value') or self.object_type.get('name') or self.object_type.get('label')
+        if isinstance(self.object_type, str):
+            normalized_object_type = self.object_type.strip().lower()
+            if normalized_object_type:
+                self.object_type = normalized_object_type
+        if isinstance(self.board_id, dict):
+            self.board_id = self.board_id.get('value') or self.board_id.get('name') or self.board_id.get('label')
+        if self.board_id is not None:
+            self.board_id = str(self.board_id).strip() or None
+
+
+@dataclasses.dataclass
 class DocusignDatasetConfig(ApplicationConnectorDatasetConfig):
     """
     Dataset config for DocuSign Application Connector
@@ -386,5 +412,6 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.DROPBOX: DropboxDatasetConfig,
         enums.ApplicationConnectorType.HUBSPOT: HubspotDatasetConfig,
         enums.ApplicationConnectorType.QUICKBOOKS: QuickbooksDatasetConfig,
+        enums.ApplicationConnectorType.MONDAY: MondayDatasetConfig,
         enums.ApplicationConnectorType.DOCUSIGN: DocusignDatasetConfig,
     }

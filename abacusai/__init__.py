@@ -56,6 +56,7 @@ from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
 from .conversation_and_project_search_results import ConversationAndProjectSearchResults
 from .cowork_desktop_folder import CoworkDesktopFolder
+from .cowork_dispatch_attachment import CoworkDispatchAttachment
 from .cowork_dispatch_message import CoworkDispatchMessage
 from .cowork_paired_desktop_folders import CoworkPairedDesktopFolders
 from .cowork_pairing_challenge import CoworkPairingChallenge
@@ -181,6 +182,7 @@ from .mcp_server import McpServer
 from .mcp_server_connection import McpServerConnection
 from .mcp_server_query_result import McpServerQueryResult
 from .media_artifact import MediaArtifact
+from .media_project import MediaProject
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
 from .mobile_app_build_status import MobileAppBuildStatus
@@ -314,4 +316,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.101"
+__version__ = "1.4.102"

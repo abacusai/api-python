@@ -930,6 +930,13 @@ class MediaArtifactType(ApiEnum):
     AUDIO = 'AUDIO'
 
 
+class MediaArtifactOrigin(ApiEnum):
+    """How a media artifact entered the gallery."""
+    GENERATED = 'generated'
+    UPLOADED = 'uploaded'
+    EDITOR_EXPORT = 'editor_export'
+
+
 class VerticalType(ApiEnum):
     """Vertical types for specialized external applications."""
     HEALTH = 'HEALTH'

@@ -112,6 +112,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../conversation_and_project_search_results/index.html">abacusai.conversation_and_project_search_results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cowork_desktop_folder/index.html">abacusai.cowork_desktop_folder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../cowork_dispatch_attachment/index.html">abacusai.cowork_dispatch_attachment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cowork_dispatch_message/index.html">abacusai.cowork_dispatch_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cowork_paired_desktop_folders/index.html">abacusai.cowork_paired_desktop_folders</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cowork_pairing_challenge/index.html">abacusai.cowork_pairing_challenge</a></li>
@@ -239,6 +240,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mcp_server_connection/index.html">abacusai.mcp_server_connection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mcp_server_query_result/index.html">abacusai.mcp_server_query_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../media_artifact/index.html">abacusai.media_artifact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../media_project/index.html">abacusai.media_project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mobile_app_build_status/index.html">abacusai.mobile_app_build_status</a></li>
@@ -467,10 +469,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.QuickbooksDatasetConfig" title="abacusai.api_class.dataset_application_connector.QuickbooksDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuickbooksDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for QuickBooks Online Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.DocusignDatasetConfig" title="abacusai.api_class.dataset_application_connector.DocusignDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocusignDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.MondayDatasetConfig" title="abacusai.api_class.dataset_application_connector.MondayDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MondayDatasetConfig</span></code></a></p></td>
+<td><p>Dataset config for Monday.com Application Connector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.DocusignDatasetConfig" title="abacusai.api_class.dataset_application_connector.DocusignDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocusignDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for DocuSign Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory" title="abacusai.api_class.dataset_application_connector._ApplicationConnectorDatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApplicationConnectorDatasetConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
@@ -1103,6 +1108,36 @@ Needs to recalculate them if highlights are unavailable in summary_info</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.QuickbooksDatasetConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.QuickbooksDatasetConfig.__post_init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.MondayDatasetConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset_application_connector.</span></span><span class="sig-name descname"><span class="pre">MondayDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.MondayDatasetConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig" title="abacusai.api_class.dataset_application_connector.ApplicationConnectorDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApplicationConnectorDatasetConfig</span></code></a></p>
+<p>Dataset config for Monday.com Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The Monday.com object to fetch (e.g. boards, workspaces, users, updates, items).</p></li>
+<li><p><strong>board_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The Monday.com board id to fetch items from. Required only when object_type is ‘items’.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.MondayDatasetConfig.object_type">
+<span class="sig-name descname"><span class="pre">object_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.MondayDatasetConfig.object_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.MondayDatasetConfig.board_id">
+<span class="sig-name descname"><span class="pre">board_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.MondayDatasetConfig.board_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.MondayDatasetConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.MondayDatasetConfig.__post_init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

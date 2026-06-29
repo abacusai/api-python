@@ -112,6 +112,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../conversation_and_project_search_results/index.html">abacusai.conversation_and_project_search_results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cowork_desktop_folder/index.html">abacusai.cowork_desktop_folder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../cowork_dispatch_attachment/index.html">abacusai.cowork_dispatch_attachment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cowork_dispatch_message/index.html">abacusai.cowork_dispatch_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cowork_paired_desktop_folders/index.html">abacusai.cowork_paired_desktop_folders</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cowork_pairing_challenge/index.html">abacusai.cowork_pairing_challenge</a></li>
@@ -239,6 +240,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mcp_server_connection/index.html">abacusai.mcp_server_connection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mcp_server_query_result/index.html">abacusai.mcp_server_query_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../media_artifact/index.html">abacusai.media_artifact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../media_project/index.html">abacusai.media_project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mobile_app_build_status/index.html">abacusai.mobile_app_build_status</a></li>
@@ -632,7 +634,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.MediaArtifactType" title="abacusai.api_class.enums.MediaArtifactType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MediaArtifactType</span></code></a></p></td>
 <td><p>Type of media artifact</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.VerticalType" title="abacusai.api_class.enums.VerticalType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VerticalType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.MediaArtifactOrigin" title="abacusai.api_class.enums.MediaArtifactOrigin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MediaArtifactOrigin</span></code></a></p></td>
+<td><p>How a media artifact entered the gallery.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.VerticalType" title="abacusai.api_class.enums.VerticalType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VerticalType</span></code></a></p></td>
 <td><p>Vertical types for specialized external applications.</p></td>
 </tr>
 </tbody>
@@ -6701,6 +6706,28 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactType.AUDIO">
 <span class="sig-name descname"><span class="pre">AUDIO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AUDIO'</span></span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactType.AUDIO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactOrigin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">MediaArtifactOrigin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactOrigin" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.enums.ApiEnum" title="abacusai.api_class.enums.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
+<p>How a media artifact entered the gallery.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactOrigin.GENERATED">
+<span class="sig-name descname"><span class="pre">GENERATED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'generated'</span></span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactOrigin.GENERATED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactOrigin.UPLOADED">
+<span class="sig-name descname"><span class="pre">UPLOADED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'uploaded'</span></span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactOrigin.UPLOADED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MediaArtifactOrigin.EDITOR_EXPORT">
+<span class="sig-name descname"><span class="pre">EDITOR_EXPORT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'editor_export'</span></span><a class="headerlink" href="#abacusai.api_class.enums.MediaArtifactOrigin.EDITOR_EXPORT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

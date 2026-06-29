@@ -69,6 +69,7 @@ Submodules
    /autoapi/abacusai/constants_autocomplete_response/index
    /autoapi/abacusai/conversation_and_project_search_results/index
    /autoapi/abacusai/cowork_desktop_folder/index
+   /autoapi/abacusai/cowork_dispatch_attachment/index
    /autoapi/abacusai/cowork_dispatch_message/index
    /autoapi/abacusai/cowork_paired_desktop_folders/index
    /autoapi/abacusai/cowork_pairing_challenge/index
@@ -196,6 +197,7 @@ Submodules
    /autoapi/abacusai/mcp_server_connection/index
    /autoapi/abacusai/mcp_server_query_result/index
    /autoapi/abacusai/media_artifact/index
+   /autoapi/abacusai/media_project/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
    /autoapi/abacusai/mobile_app_build_status/index
@@ -436,6 +438,7 @@ Classes
    abacusai.DropboxDatasetConfig
    abacusai.HubspotDatasetConfig
    abacusai.QuickbooksDatasetConfig
+   abacusai.MondayDatasetConfig
    abacusai.DocusignDatasetConfig
    abacusai._ApplicationConnectorDatasetConfigFactory
    abacusai.PredictionArguments
@@ -520,6 +523,7 @@ Classes
    abacusai.OrganizationSecretType
    abacusai.DaemonTaskLifecycleUpdateAction
    abacusai.MediaArtifactType
+   abacusai.MediaArtifactOrigin
    abacusai.VerticalType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
@@ -649,6 +653,7 @@ Classes
    abacusai.ConstantsAutocompleteResponse
    abacusai.ConversationAndProjectSearchResults
    abacusai.CoworkDesktopFolder
+   abacusai.CoworkDispatchAttachment
    abacusai.CoworkDispatchMessage
    abacusai.CoworkPairedDesktopFolders
    abacusai.CoworkPairingChallenge
@@ -774,6 +779,7 @@ Classes
    abacusai.McpServerConnection
    abacusai.McpServerQueryResult
    abacusai.MediaArtifact
+   abacusai.MediaProject
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
    abacusai.MobileAppBuildStatus
@@ -5254,6 +5260,34 @@ Package Contents
 
 
    .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: MondayDatasetConfig
+
+   Bases: :py:obj:`ApplicationConnectorDatasetConfig`
+
+
+   Dataset config for Monday.com Application Connector
+
+   :param object_type: The Monday.com object to fetch (e.g. boards, workspaces, users, updates, items).
+   :type object_type: str
+   :param board_id: The Monday.com board id to fetch items from. Required only when object_type is 'items'.
+   :type board_id: str
+
+
+   .. py:attribute:: object_type
+      :type:  str
+      :value: None
+
+
+
+   .. py:attribute:: board_id
       :type:  str
       :value: None
 
@@ -11451,6 +11485,29 @@ Package Contents
 
    .. py:attribute:: AUDIO
       :value: 'AUDIO'
+
+
+
+.. py:class:: MediaArtifactOrigin(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   How a media artifact entered the gallery.
+
+
+   .. py:attribute:: GENERATED
+      :value: 'generated'
+
+
+
+   .. py:attribute:: UPLOADED
+      :value: 'uploaded'
+
+
+
+   .. py:attribute:: EDITOR_EXPORT
+      :value: 'editor_export'
 
 
 
@@ -29656,6 +29713,60 @@ Package Contents
 
 
 
+.. py:class:: CoworkDispatchAttachment(client, attachmentId=None, filename=None, mimeType=None, deploymentId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   CoWork desktop file upload result.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param attachmentId: Attachment id for downloadAgentAttachment
+   :type attachmentId: str
+   :param filename: Original filename
+   :type filename: str
+   :param mimeType: MIME type of the uploaded file
+   :type mimeType: str
+   :param deploymentId: Hashed deployment id used for attachment storage lookup
+   :type deploymentId: id
+
+
+   .. py:attribute:: attachment_id
+      :value: None
+
+
+
+   .. py:attribute:: filename
+      :value: None
+
+
+
+   .. py:attribute:: mime_type
+      :value: None
+
+
+
+   .. py:attribute:: deployment_id
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: CoworkDispatchMessage(client, dispatchMessageId=None, state=None, deploymentConversationId=None, deliverySeq=None, targetDesktopDeviceId=None, mobileDeviceId=None, messageText=None, workspaceOverride=None, llmName=None, createdAt=None, ackedAt=None, completedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -30938,7 +31049,7 @@ Package Contents
 
 
 
-.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, disableRealtimeContentProcessing=None, realtimeContentStoreConfig=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}, attachmentParsingConfig={})
+.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, versionLimit=None, disableRealtimeContentProcessing=None, forceFullResync=None, realtimeContentStoreConfig=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={}, documentProcessingConfig={}, attachmentParsingConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30987,6 +31098,8 @@ Package Contents
    :type versionLimit: int
    :param disableRealtimeContentProcessing: Whether realtime content processing is disabled for this dataset (only applicable to REALTIME_CONTENT_STORE datasets).
    :type disableRealtimeContentProcessing: bool
+   :param forceFullResync: Whether a complete reindex is pending pickup by the import scheduler (only applicable to REALTIME_CONTENT_STORE datasets).
+   :type forceFullResync: bool
    :param realtimeContentStoreConfig: Indexing options (e.g. chunk_size) for the realtime content store (only applicable to REALTIME_CONTENT_STORE datasets).
    :type realtimeContentStoreConfig: dict
    :param latestDatasetVersion: The latest version of this dataset.
@@ -31099,6 +31212,11 @@ Package Contents
 
 
    .. py:attribute:: disable_realtime_content_processing
+      :value: None
+
+
+
+   .. py:attribute:: force_full_resync
       :value: None
 
 
@@ -32622,7 +32740,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32715,6 +32833,8 @@ Package Contents
    :type projectCreditsUsed: int
    :param webAppProjectId: The web app project id associated with the deployment conversation, if any.
    :type webAppProjectId: str
+   :param roleplayCharacter: For Role Play conversations, the minimal character display (name and image) attached so a viewer who does not own the private character can still see who they're chatting with.
+   :type roleplayCharacter: dict
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -32929,6 +33049,11 @@ Package Contents
 
 
    .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: roleplay_character
       :value: None
 
 
@@ -42544,7 +42669,7 @@ Package Contents
 
 
 
-.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, origin=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42561,6 +42686,8 @@ Package Contents
    :type info: dict
    :param sourceDeploymentConversationId: The source conversation ID
    :type sourceDeploymentConversationId: id
+   :param origin: How the artifact entered the gallery (generated, uploaded, editor_export)
+   :type origin: str
    :param isFavorited: Whether the artifact is favorited
    :type isFavorited: bool
    :param isShared: Whether the artifact is shared publicly
@@ -42599,6 +42726,11 @@ Package Contents
 
 
 
+   .. py:attribute:: origin
+      :value: None
+
+
+
    .. py:attribute:: is_favorited
       :value: None
 
@@ -42625,6 +42757,88 @@ Package Contents
 
 
    .. py:attribute:: filename
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Project — a saved Studio video-editor project.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaProjectId: The ID of the media project
+   :type mediaProjectId: id
+   :param name: The project name
+   :type name: str
+   :param editorState: The editor document (settings + media library + timeline), stored snake_case and returned camelCase
+   :type editorState: dict
+   :param lastRenderArtifactId: The media artifact of the latest export, if any
+   :type lastRenderArtifactId: id
+   :param info: Extensible metadata bag
+   :type info: dict
+   :param assetUrls: Map of hashed media_artifact_id -> fresh signed URL (set by describe at read time)
+   :type assetUrls: dict
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+
+
+   .. py:attribute:: media_project_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: editor_state
+      :value: None
+
+
+
+   .. py:attribute:: last_render_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: info
+      :value: None
+
+
+
+   .. py:attribute:: asset_urls
       :value: None
 
 
@@ -55731,6 +55945,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.101'
+   :value: '1.4.102'
 
 
