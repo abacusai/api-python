@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.102'
+    client_version = '1.4.103'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -4778,7 +4778,7 @@ class ApiClient(ReadOnlyClient):
             ModelUpload: Collection of upload IDs to upload the model artifacts."""
         return self._call_api('createModelVersionFromLocalFiles', 'POST', query_params={}, body={'modelId': model_id, 'optionalArtifacts': optional_artifacts}, parse_type=ModelUpload)
 
-    def get_streaming_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, user_info: dict = None):
+    def get_streaming_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, exclude_thinking_segments: bool = False, user_info: dict = None):
         """Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
         Args:
@@ -4794,6 +4794,7 @@ class ApiClient(ReadOnlyClient):
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
             include_search_results (bool): If True, will also return search results, if relevant.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
             user_info (dict): The information of the user to act on behalf of for user restricted data sources. """
         headers = {'APIKEY': self.api_key}
         if (system_message is not None) and ('behavior_instructions' not in (chat_config or {})):
@@ -4811,6 +4812,7 @@ class ApiClient(ReadOnlyClient):
             'chatConfig': chat_config,
             'ignoreDocuments': ignore_documents,
             'includeSearchResults': include_search_results,
+            'excludeThinkingSegments': exclude_thinking_segments,
             'userInfo': user_info
         }
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
@@ -4819,7 +4821,7 @@ class ApiClient(ReadOnlyClient):
                 'Failed to resolve proxy endpoint. Please verify that the deployment ID and deployment token are valid.')
         return sse_asynchronous_generator(f'{endpoint}/api/getStreamingChatResponse', headers, body)
 
-    def get_streaming_conversation_response(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, user_info: dict = None):
+    def get_streaming_conversation_response(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, exclude_thinking_segments: bool = False, user_info: dict = None):
         """Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
         Args:
@@ -4837,6 +4839,7 @@ class ApiClient(ReadOnlyClient):
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
             include_search_results (bool): If True, will also return search results, if relevant.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
             user_info (dict): The information of the user to act on behalf of for user restricted data sources. """
         headers = {'APIKEY': self.api_key}
         if (system_message is not None) and ('behavior_instructions' not in (chat_config or {})):
@@ -4856,6 +4859,7 @@ class ApiClient(ReadOnlyClient):
             'chatConfig': chat_config,
             'ignoreDocuments': ignore_documents,
             'includeSearchResults': include_search_results,
+            'excludeThinkingSegments': exclude_thinking_segments,
             'userInfo': user_info
         }
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
@@ -4864,7 +4868,7 @@ class ApiClient(ReadOnlyClient):
                 'Failed to resolve proxy endpoint. Please verify that the deployment ID and deployment token are valid.')
         return sse_asynchronous_generator(f'{endpoint}/api/getStreamingConversationResponse', headers, body)
 
-    def get_streaming_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, attachments: dict = None):
+    def get_streaming_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, exclude_thinking_segments: bool = False, attachments: dict = None):
         """Return an asynchronous generator which continues the conversation based on the input messages, search results, and uploaded binary data.
 
         Args:
@@ -4880,6 +4884,7 @@ class ApiClient(ReadOnlyClient):
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
             include_search_results (bool): If True, will also return search results, if relevant.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
             attachments (dict): A dictionary of binary data to use as input. The key is the filename, and the value is the binary data. """
         headers = {'APIKEY': self.api_key}
         if (system_message is not None) and ('behavior_instructions' not in (chat_config or {})):
@@ -4896,7 +4901,8 @@ class ApiClient(ReadOnlyClient):
             'searchScoreCutoff': search_score_cutoff,
             'chatConfig': chat_config,
             'ignoreDocuments': ignore_documents,
-            'includeSearchResults': include_search_results
+            'includeSearchResults': include_search_results,
+            'excludeThinkingSegments': exclude_thinking_segments
         }
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
@@ -4904,7 +4910,7 @@ class ApiClient(ReadOnlyClient):
                 'Failed to resolve proxy endpoint. Please verify that the deployment ID and deployment token are valid.')
         return sse_asynchronous_generator_with_files(f'{endpoint}/api/getStreamingChatResponseWithBinaryData', headers, body, attachments)
 
-    def get_streaming_conversation_response_with_binary_data(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, attachments: dict = None):
+    def get_streaming_conversation_response_with_binary_data(self, deployment_token: str, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, include_search_results: bool = False, exclude_thinking_segments: bool = False, attachments: dict = None):
         """Return an asynchronous generator which continues the conversation based on the input message, search results, and uploaded binary data.
 
         Args:
@@ -4922,6 +4928,7 @@ class ApiClient(ReadOnlyClient):
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
             include_search_results (bool): If True, will also return search results, if relevant.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
             attachments (dict): A dictionary of binary data to use as input. The key is the filename, and the value is the binary data. """
         headers = {'APIKEY': self.api_key}
         if (system_message is not None) and ('behavior_instructions' not in (chat_config or {})):
@@ -4940,7 +4947,8 @@ class ApiClient(ReadOnlyClient):
             'searchScoreCutoff': search_score_cutoff,
             'chatConfig': chat_config,
             'ignoreDocuments': ignore_documents,
-            'includeSearchResults': include_search_results
+            'includeSearchResults': include_search_results,
+            'excludeThinkingSegments': exclude_thinking_segments
         }
         endpoint = self._get_proxy_endpoint(deployment_id, deployment_token)
         if endpoint is None:
@@ -7769,24 +7777,7 @@ class ApiClient(ReadOnlyClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, user_info: dict = None) -> Dict:
-        """Return a chat response which continues the conversation based on the input messages and search results.
-
-        Args:
-            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-            deployment_id (str): The unique identifier to a deployment created under the project.
-            messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
-            llm_name (str): Name of the specific LLM backend to use to power the chat experience
-            num_completion_tokens (int): Default for maximum number of tokens for chat answers
-            temperature (float): The generative LLM temperature
-            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
-            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
-            chat_config (dict): A dictionary specifying the query chat config override."""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'userInfo': user_info}, server_override=prediction_url)
-
-    def get_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, attachments: None = None) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, user_info: dict = None, exclude_thinking_segments: bool = False) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -7799,12 +7790,31 @@ class ApiClient(ReadOnlyClient):
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifying the query chat config override.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'userInfo': user_info, 'excludeThinkingSegments': exclude_thinking_segments}, server_override=prediction_url)
+
+    def get_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None) -> Dict:
+        """Return a chat response which continues the conversation based on the input messages and search results.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
+            llm_name (str): Name of the specific LLM backend to use to power the chat experience
+            num_completion_tokens (int): Default for maximum number of tokens for chat answers
+            temperature (float): The generative LLM temperature
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
+            chat_config (dict): A dictionary specifying the query chat config override.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
             attachments (None): A dictionary of binary data to use to answer the queries."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config}, files=attachments, server_override=prediction_url)
+        return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'excludeThinkingSegments': json.dumps(exclude_thinking_segments) if (exclude_thinking_segments is not None and not isinstance(exclude_thinking_segments, str)) else exclude_thinking_segments}, files=attachments, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False, exclude_thinking_segments: bool = False) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -7820,12 +7830,13 @@ class ApiClient(ReadOnlyClient):
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
             doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
-            execute_usercode_tool (bool): If True, will return the tool output in the response."""
+            execute_usercode_tool (bool): If True, will return the tool output in the response.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'docInfos': doc_infos, 'userInfo': user_info, 'executeUsercodeTool': execute_usercode_tool}, server_override=prediction_url)
+        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'docInfos': doc_infos, 'userInfo': user_info, 'executeUsercodeTool': execute_usercode_tool, 'excludeThinkingSegments': exclude_thinking_segments}, server_override=prediction_url)
 
-    def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, attachments: None = None) -> Dict:
+    def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -7840,10 +7851,11 @@ class ApiClient(ReadOnlyClient):
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
             attachments (None): A dictionary of binary data to use to answer the queries."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config}, files=attachments, server_override=prediction_url)
+        return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'excludeThinkingSegments': json.dumps(exclude_thinking_segments) if (exclude_thinking_segments is not None and not isinstance(exclude_thinking_segments, str)) else exclude_thinking_segments}, files=attachments, server_override=prediction_url)
 
     def get_deep_agent_response(self, message: str, deployment_conversation_id: str = None) -> Dict:
         """Return a DeepAgent response with generated files if any, based on the input message.
@@ -9094,14 +9106,15 @@ class ApiClient(ReadOnlyClient):
         """Set the organization's egress network policy (Agent Firewall) for agent computers.
 
         The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
-        validated and the change is reconciled onto the organization's agent computers within a few
-        minutes (not synchronously).
+        validated and the whole request is rejected (nothing is written) if any entry is malformed, is a
+        reserved hostname, or is a protected/IPv6 CIDR (see below). Accepted changes are reconciled onto
+        the organization's agent computers within a few minutes (not synchronously).
 
 
         Args:
             enabled (bool): Whether to enforce the denylist. When False the policy is stored but not enforced.
-            egress_fqdns (list): Exact hostnames to block (no wildcards), e.g. ['ads.tracker.net'].
-            egress_cidrs (list): IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24'].
+            egress_fqdns (list): Hostnames to block. An exact hostname (e.g. 'ads.tracker.net') blocks that name only; a wildcard (e.g. '*.tracker.net') blocks the domain and all its subdomains at any depth. Only a single leading '*.' is supported. Reserved names required by the organization's own computers (e.g. *.cluster.local, cloud metadata, platform APIs) are rejected.
+            egress_cidrs (list): IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24']. CIDRs that overlap internal / metadata / loopback ranges, and IPv6 CIDRs, are rejected.
 
         Returns:
             OrganizationNetworkPolicy: The organization's egress denylist after the update."""

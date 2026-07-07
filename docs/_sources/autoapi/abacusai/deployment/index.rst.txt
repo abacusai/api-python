@@ -514,7 +514,7 @@ Module Contents
 
 
 
-   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
+   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -542,10 +542,12 @@ Module Contents
       :type doc_infos: list
       :param execute_usercode_tool: If True, will return the tool output in the response.
       :type execute_usercode_tool: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -569,6 +571,8 @@ Module Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
 

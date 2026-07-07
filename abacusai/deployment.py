@@ -345,7 +345,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_realtime_monitor(self.deployment_id, realtime_monitor_schedule, lookback_time)
 
-    def get_conversation_response(self, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False):
+    def get_conversation_response(self, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False, exclude_thinking_segments: bool = False):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -362,10 +362,11 @@ class Deployment(AbstractApiClass):
             chat_config (dict): A dictionary specifiying the query chat config override.
             doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
             execute_usercode_tool (bool): If True, will return the tool output in the response.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
         """
-        return self.client.get_conversation_response(self.deployment_id, message, deployment_token, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, doc_infos, user_info, execute_usercode_tool)
+        return self.client.get_conversation_response(self.deployment_id, message, deployment_token, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, doc_infos, user_info, execute_usercode_tool, exclude_thinking_segments)
 
-    def get_conversation_response_with_binary_data(self, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, attachments: None = None):
+    def get_conversation_response_with_binary_data(self, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -380,9 +381,10 @@ class Deployment(AbstractApiClass):
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
+            exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
             attachments (None): A dictionary of binary data to use to answer the queries.
         """
-        return self.client.get_conversation_response_with_binary_data(self.deployment_id, deployment_token, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, attachments)
+        return self.client.get_conversation_response_with_binary_data(self.deployment_id, deployment_token, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, exclude_thinking_segments, attachments)
 
     def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, batch_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
         """

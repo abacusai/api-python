@@ -9562,6 +9562,11 @@ Package Contents
 
 
 
+   .. py:attribute:: CLAUDE_V5_SONNET
+      :value: 'CLAUDE_V5_SONNET'
+
+
+
    .. py:attribute:: CLAUDE_V4_5_OPUS
       :value: 'CLAUDE_V4_5_OPUS'
 
@@ -16342,7 +16347,7 @@ Package Contents
 
 
 
-.. py:class:: AuditLog(client, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None)
+.. py:class:: AuditLog(client, auditLogId=None, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -16351,6 +16356,8 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param auditLogId: The id of the entry; pass as start_after_id to paginate
+   :type auditLogId: int
    :param createdAt: The timestamp when the audit log entry was created
    :type createdAt: str
    :param userId: The hashed ID of the user who performed the action
@@ -16365,6 +16372,11 @@ Package Contents
    :type refreshPolicyId: str
    :param pipelineId: The hashed ID of the pipeline if applicable
    :type pipelineId: str
+
+
+   .. py:attribute:: audit_log_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
@@ -19426,7 +19438,7 @@ Package Contents
 
 
 
-   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, user_info = None)
+   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, exclude_thinking_segments = False, user_info = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -19454,12 +19466,14 @@ Package Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param user_info: The information of the user to act on behalf of for user restricted data sources.
       :type user_info: dict
 
 
 
-   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, user_info = None)
+   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, exclude_thinking_segments = False, user_info = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -19491,12 +19505,14 @@ Package Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param user_info: The information of the user to act on behalf of for user restricted data sources.
       :type user_info: dict
 
 
 
-   .. py:method:: get_streaming_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, attachments = None)
+   .. py:method:: get_streaming_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, exclude_thinking_segments = False, attachments = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages, search results, and uploaded binary data.
 
@@ -19524,12 +19540,14 @@ Package Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use as input. The key is the filename, and the value is the binary data.
       :type attachments: dict
 
 
 
-   .. py:method:: get_streaming_conversation_response_with_binary_data(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, attachments = None)
+   .. py:method:: get_streaming_conversation_response_with_binary_data(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, exclude_thinking_segments = False, attachments = None)
 
       Return an asynchronous generator which continues the conversation based on the input message, search results, and uploaded binary data.
 
@@ -19561,6 +19579,8 @@ Package Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use as input. The key is the filename, and the value is the binary data.
       :type attachments: dict
 
@@ -23406,7 +23426,7 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -23428,10 +23448,12 @@ Package Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
 
 
 
-   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
+   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -23453,12 +23475,14 @@ Package Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -23488,10 +23512,12 @@ Package Contents
       :type doc_infos: list
       :param execute_usercode_tool: If True, will return the tool output in the response.
       :type execute_usercode_tool: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -23517,6 +23543,8 @@ Package Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
 
@@ -25179,15 +25207,16 @@ Package Contents
       Set the organization's egress network policy (Agent Firewall) for agent computers.
 
       The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
-      validated and the change is reconciled onto the organization's agent computers within a few
-      minutes (not synchronously).
+      validated and the whole request is rejected (nothing is written) if any entry is malformed, is a
+      reserved hostname, or is a protected/IPv6 CIDR (see below). Accepted changes are reconciled onto
+      the organization's agent computers within a few minutes (not synchronously).
 
 
       :param enabled: Whether to enforce the denylist. When False the policy is stored but not enforced.
       :type enabled: bool
-      :param egress_fqdns: Exact hostnames to block (no wildcards), e.g. ['ads.tracker.net'].
+      :param egress_fqdns: Hostnames to block. An exact hostname (e.g. 'ads.tracker.net') blocks that name only; a wildcard (e.g. '*.tracker.net') blocks the domain and all its subdomains at any depth. Only a single leading '*.' is supported. Reserved names required by the organization's own computers (e.g. *.cluster.local, cloud metadata, platform APIs) are rejected.
       :type egress_fqdns: list
-      :param egress_cidrs: IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24'].
+      :param egress_cidrs: IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24']. CIDRs that overlap internal / metadata / loopback ranges, and IPv6 CIDRs, are rejected.
       :type egress_cidrs: list
 
       :returns: The organization's egress denylist after the update.
@@ -32403,7 +32432,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
+   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -32431,10 +32460,12 @@ Package Contents
       :type doc_infos: list
       :param execute_usercode_tool: If True, will return the tool output in the response.
       :type execute_usercode_tool: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -32458,6 +32489,8 @@ Package Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
 
@@ -41496,7 +41529,7 @@ Package Contents
 
 
 
-.. py:class:: ImageGenSettings(client, settings=None, warnings=None, model={})
+.. py:class:: ImageGenSettings(client, settings=None, warnings=None, mediaCapabilities=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41509,6 +41542,8 @@ Package Contents
    :type settings: dict
    :param warnings: The warnings for each model.
    :type warnings: dict
+   :param mediaCapabilities: Maps each model to its accepted media types and input slots (derived from settings).
+   :type mediaCapabilities: dict
    :param model: Dropdown for models available for image generation.
    :type model: ImageGenModel
 
@@ -41519,6 +41554,11 @@ Package Contents
 
 
    .. py:attribute:: warnings
+      :value: None
+
+
+
+   .. py:attribute:: media_capabilities
       :value: None
 
 
@@ -42786,7 +42826,7 @@ Package Contents
 
 
 
-.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, thumbnailUrls=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42807,6 +42847,8 @@ Package Contents
    :type info: dict
    :param assetUrls: Map of hashed media_artifact_id -> fresh signed URL (set by describe at read time)
    :type assetUrls: dict
+   :param thumbnailUrls: Map of hashed media_artifact_id -> fresh signed thumbnail URL (set by describe at read time)
+   :type thumbnailUrls: dict
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -42839,6 +42881,11 @@ Package Contents
 
 
    .. py:attribute:: asset_urls
+      :value: None
+
+
+
+   .. py:attribute:: thumbnail_urls
       :value: None
 
 
@@ -48832,7 +48879,7 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -48854,10 +48901,12 @@ Package Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
 
 
 
-   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
+   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -48879,12 +48928,14 @@ Package Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -48914,10 +48965,12 @@ Package Contents
       :type doc_infos: list
       :param execute_usercode_tool: If True, will return the tool output in the response.
       :type execute_usercode_tool: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -48943,6 +48996,8 @@ Package Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
 
@@ -54937,7 +54992,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, settings=None, warnings=None, descriptions=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, descriptions=None, audioModes=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -54952,12 +55007,16 @@ Package Contents
    :type modelsByType: dict
    :param imageFieldsByModel: Maps each model to the list of image input field names.
    :type imageFieldsByModel: dict
+   :param mediaCapabilities: Maps each model to its accepted media types and input slots (derived from settings).
+   :type mediaCapabilities: dict
    :param settings: The settings for each model.
    :type settings: dict
    :param warnings: The warnings for each model.
    :type warnings: dict
    :param descriptions: The descriptions for each model.
    :type descriptions: dict
+   :param audioModes: Maps models without a generate_audio toggle to a fixed audio behaviour ('alwaysOn'/'none').
+   :type audioModes: dict
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
 
@@ -54977,6 +55036,11 @@ Package Contents
 
 
 
+   .. py:attribute:: media_capabilities
+      :value: None
+
+
+
    .. py:attribute:: settings
       :value: None
 
@@ -54988,6 +55052,11 @@ Package Contents
 
 
    .. py:attribute:: descriptions
+      :value: None
+
+
+
+   .. py:attribute:: audio_modes
       :value: None
 
 
@@ -55945,6 +56014,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.102'
+   :value: '1.4.103'
 
 

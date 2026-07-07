@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.102'
+      :value: '1.4.103'
 
 
 
@@ -4433,7 +4433,7 @@ Module Contents
 
 
 
-   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, user_info = None)
+   .. py:method:: get_streaming_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, exclude_thinking_segments = False, user_info = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -4461,12 +4461,14 @@ Module Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param user_info: The information of the user to act on behalf of for user restricted data sources.
       :type user_info: dict
 
 
 
-   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, user_info = None)
+   .. py:method:: get_streaming_conversation_response(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, exclude_thinking_segments = False, user_info = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages and search results.
 
@@ -4498,12 +4500,14 @@ Module Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param user_info: The information of the user to act on behalf of for user restricted data sources.
       :type user_info: dict
 
 
 
-   .. py:method:: get_streaming_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, attachments = None)
+   .. py:method:: get_streaming_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, exclude_thinking_segments = False, attachments = None)
 
       Return an asynchronous generator which continues the conversation based on the input messages, search results, and uploaded binary data.
 
@@ -4531,12 +4535,14 @@ Module Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use as input. The key is the filename, and the value is the binary data.
       :type attachments: dict
 
 
 
-   .. py:method:: get_streaming_conversation_response_with_binary_data(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, attachments = None)
+   .. py:method:: get_streaming_conversation_response_with_binary_data(deployment_token, deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, include_search_results = False, exclude_thinking_segments = False, attachments = None)
 
       Return an asynchronous generator which continues the conversation based on the input message, search results, and uploaded binary data.
 
@@ -4568,6 +4574,8 @@ Module Contents
       :type ignore_documents: bool
       :param include_search_results: If True, will also return search results, if relevant.
       :type include_search_results: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the streaming output. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use as input. The key is the filename, and the value is the binary data.
       :type attachments: dict
 
@@ -8413,7 +8421,7 @@ Module Contents
 
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -8435,10 +8443,12 @@ Module Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
 
 
 
-   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
+   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -8460,12 +8470,14 @@ Module Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -8495,10 +8507,12 @@ Module Contents
       :type doc_infos: list
       :param execute_usercode_tool: If True, will return the tool output in the response.
       :type execute_usercode_tool: bool
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -8524,6 +8538,8 @@ Module Contents
       :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
+      :param exclude_thinking_segments: If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
+      :type exclude_thinking_segments: bool
       :param attachments: A dictionary of binary data to use to answer the queries.
       :type attachments: None
 
@@ -10186,15 +10202,16 @@ Module Contents
       Set the organization's egress network policy (Agent Firewall) for agent computers.
 
       The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
-      validated and the change is reconciled onto the organization's agent computers within a few
-      minutes (not synchronously).
+      validated and the whole request is rejected (nothing is written) if any entry is malformed, is a
+      reserved hostname, or is a protected/IPv6 CIDR (see below). Accepted changes are reconciled onto
+      the organization's agent computers within a few minutes (not synchronously).
 
 
       :param enabled: Whether to enforce the denylist. When False the policy is stored but not enforced.
       :type enabled: bool
-      :param egress_fqdns: Exact hostnames to block (no wildcards), e.g. ['ads.tracker.net'].
+      :param egress_fqdns: Hostnames to block. An exact hostname (e.g. 'ads.tracker.net') blocks that name only; a wildcard (e.g. '*.tracker.net') blocks the domain and all its subdomains at any depth. Only a single leading '*.' is supported. Reserved names required by the organization's own computers (e.g. *.cluster.local, cloud metadata, platform APIs) are rejected.
       :type egress_fqdns: list
-      :param egress_cidrs: IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24'].
+      :param egress_cidrs: IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24']. CIDRs that overlap internal / metadata / loopback ranges, and IPv6 CIDRs, are rejected.
       :type egress_cidrs: list
 
       :returns: The organization's egress denylist after the update.

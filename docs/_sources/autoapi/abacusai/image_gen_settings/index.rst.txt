@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ImageGenSettings(client, settings=None, warnings=None, model={})
+.. py:class:: ImageGenSettings(client, settings=None, warnings=None, mediaCapabilities=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,8 @@ Module Contents
    :type settings: dict
    :param warnings: The warnings for each model.
    :type warnings: dict
+   :param mediaCapabilities: Maps each model to its accepted media types and input slots (derived from settings).
+   :type mediaCapabilities: dict
    :param model: Dropdown for models available for image generation.
    :type model: ImageGenModel
 
@@ -38,6 +40,11 @@ Module Contents
 
 
    .. py:attribute:: warnings
+      :value: None
+
+
+
+   .. py:attribute:: media_capabilities
       :value: None
 
 

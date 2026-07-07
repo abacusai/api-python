@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, settings=None, warnings=None, descriptions=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, descriptions=None, audioModes=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,12 +30,16 @@ Module Contents
    :type modelsByType: dict
    :param imageFieldsByModel: Maps each model to the list of image input field names.
    :type imageFieldsByModel: dict
+   :param mediaCapabilities: Maps each model to its accepted media types and input slots (derived from settings).
+   :type mediaCapabilities: dict
    :param settings: The settings for each model.
    :type settings: dict
    :param warnings: The warnings for each model.
    :type warnings: dict
    :param descriptions: The descriptions for each model.
    :type descriptions: dict
+   :param audioModes: Maps models without a generate_audio toggle to a fixed audio behaviour ('alwaysOn'/'none').
+   :type audioModes: dict
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
 
@@ -55,6 +59,11 @@ Module Contents
 
 
 
+   .. py:attribute:: media_capabilities
+      :value: None
+
+
+
    .. py:attribute:: settings
       :value: None
 
@@ -66,6 +75,11 @@ Module Contents
 
 
    .. py:attribute:: descriptions
+      :value: None
+
+
+
+   .. py:attribute:: audio_modes
       :value: None
 
 

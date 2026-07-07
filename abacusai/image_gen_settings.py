@@ -10,19 +10,21 @@ class ImageGenSettings(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             settings (dict): The settings for each model.
             warnings (dict): The warnings for each model.
+            mediaCapabilities (dict): Maps each model to its accepted media types and input slots (derived from settings).
             model (ImageGenModel): Dropdown for models available for image generation.
     """
 
-    def __init__(self, client, settings=None, warnings=None, model={}):
+    def __init__(self, client, settings=None, warnings=None, mediaCapabilities=None, model={}):
         super().__init__(client, None)
         self.settings = settings
         self.warnings = warnings
+        self.media_capabilities = mediaCapabilities
         self.model = client._build_class(ImageGenModel, model)
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'settings': repr(self.settings), f'warnings': repr(
-            self.warnings), f'model': repr(self.model)}
+            self.warnings), f'media_capabilities': repr(self.media_capabilities), f'model': repr(self.model)}
         class_name = "ImageGenSettings"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -36,5 +38,5 @@ class ImageGenSettings(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'settings': self.settings, 'warnings': self.warnings,
-                'model': self._get_attribute_as_dict(self.model)}
+                'media_capabilities': self.media_capabilities, 'model': self._get_attribute_as_dict(self.model)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

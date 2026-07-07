@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AuditLog(client, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None)
+.. py:class:: AuditLog(client, auditLogId=None, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,6 +24,8 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param auditLogId: The id of the entry; pass as start_after_id to paginate
+   :type auditLogId: int
    :param createdAt: The timestamp when the audit log entry was created
    :type createdAt: str
    :param userId: The hashed ID of the user who performed the action
@@ -38,6 +40,11 @@ Module Contents
    :type refreshPolicyId: str
    :param pipelineId: The hashed ID of the pipeline if applicable
    :type pipelineId: str
+
+
+   .. py:attribute:: audit_log_id
+      :value: None
+
 
 
    .. py:attribute:: created_at
