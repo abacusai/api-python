@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, error=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,12 @@ Module Contents
    :type hostname: str
    :param requiredInput: The required input for the build
    :type requiredInput: str
+   :param providers: Apple provider/team options when awaiting a selection
+   :type providers: list
+   :param selectionType: Whether the pending selection is for a 'team' or a 'provider'
+   :type selectionType: str
+   :param phoneNumbers: Trusted phone number options when awaiting a 2FA phone selection
+   :type phoneNumbers: list
    :param error: The error message for the build
    :type error: str
 
@@ -59,6 +65,21 @@ Module Contents
 
 
    .. py:attribute:: required_input
+      :value: None
+
+
+
+   .. py:attribute:: providers
+      :value: None
+
+
+
+   .. py:attribute:: selection_type
+      :value: None
+
+
+
+   .. py:attribute:: phone_numbers
       :value: None
 
 

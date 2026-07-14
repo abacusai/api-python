@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -74,6 +74,8 @@ Module Contents
    :type pushNotificationsEnabled: bool
    :param skills: Names of agent skills pinned to this daemon task.
    :type skills: list
+   :param isRsi: Whether the daemon task is a recursively self-improving (RSI) task.
+   :type isRsi: bool
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -201,6 +203,11 @@ Module Contents
 
 
    .. py:attribute:: skills
+      :value: None
+
+
+
+   .. py:attribute:: is_rsi
       :value: None
 
 

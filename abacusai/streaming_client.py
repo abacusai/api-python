@@ -53,10 +53,10 @@ class StreamingClient(BaseApiClient):
         return self._call_api('upsertMultipleItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'upserts': upserts, 'catalogId': catalog_id}, server_override=prediction_url)
 
     def append_data(self, feature_group_id: str, streaming_token: str, data: dict):
-        """Appends new data into the feature group for a given lookup key recordId.
+        """Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if the data does not include one.
 
         Args:
-            feature_group_id (str): Unique string identifier for the streaming feature group to record data to.
+            feature_group_id (str): Unique string identifier for the streaming or online feature group to record data to.
             streaming_token (str): The streaming token for authenticating requests.
             data (dict): The data to record as a JSON object."""
         prediction_url = self._get_streaming_endpoint(
@@ -64,10 +64,10 @@ class StreamingClient(BaseApiClient):
         return self._call_api('appendData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
     def append_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
-        """Appends new data into the feature group for a given lookup key recordId.
+        """Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if a row does not include one.
 
         Args:
-            feature_group_id (str): Unique string identifier of the streaming feature group to record data to.
+            feature_group_id (str): Unique string identifier of the streaming or online feature group to record data to.
             streaming_token (str): Streaming token for authenticating requests.
             data (list): Data to record, as a list of JSON objects."""
         prediction_url = self._get_streaming_endpoint(

@@ -34,6 +34,8 @@ Submodules
    /autoapi/abacusai/app_user_group_sign_in_token/index
    /autoapi/abacusai/application_connector/index
    /autoapi/abacusai/audio_gen_settings/index
+   /autoapi/abacusai/audio_listener_transcript_search_result/index
+   /autoapi/abacusai/audio_listener_transcript_search_results/index
    /autoapi/abacusai/audio_url_result/index
    /autoapi/abacusai/audit_log/index
    /autoapi/abacusai/batch_prediction/index
@@ -42,6 +44,7 @@ Submodules
    /autoapi/abacusai/bot_info/index
    /autoapi/abacusai/categorical_range_violation/index
    /autoapi/abacusai/chat_message/index
+   /autoapi/abacusai/chat_segment_artifact/index
    /autoapi/abacusai/chat_session/index
    /autoapi/abacusai/chatllm_computer/index
    /autoapi/abacusai/chatllm_computer_status/index
@@ -165,9 +168,7 @@ Submodules
    /autoapi/abacusai/graph_dashboard/index
    /autoapi/abacusai/holdout_analysis/index
    /autoapi/abacusai/holdout_analysis_version/index
-   /autoapi/abacusai/hosted_app/index
    /autoapi/abacusai/hosted_app_container/index
-   /autoapi/abacusai/hosted_app_file_read/index
    /autoapi/abacusai/hosted_artifact/index
    /autoapi/abacusai/hosted_database/index
    /autoapi/abacusai/hosted_database_snapshot/index
@@ -198,6 +199,7 @@ Submodules
    /autoapi/abacusai/mcp_server_query_result/index
    /autoapi/abacusai/media_artifact/index
    /autoapi/abacusai/media_project/index
+   /autoapi/abacusai/memory_bucket/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
    /autoapi/abacusai/mobile_app_build_status/index
@@ -278,6 +280,7 @@ Submodules
    /autoapi/abacusai/resolved_feature_group_template/index
    /autoapi/abacusai/return_class/index
    /autoapi/abacusai/routing_action/index
+   /autoapi/abacusai/rsi_task_run_history/index
    /autoapi/abacusai/scene_image_result/index
    /autoapi/abacusai/schema/index
    /autoapi/abacusai/session_summary/index
@@ -317,6 +320,7 @@ Submodules
    /autoapi/abacusai/video_gen_settings/index
    /autoapi/abacusai/video_search_result/index
    /autoapi/abacusai/voice_gen_details/index
+   /autoapi/abacusai/web_app_api_key/index
    /autoapi/abacusai/web_app_conversation/index
    /autoapi/abacusai/web_app_deployment/index
    /autoapi/abacusai/web_app_deployment_permission_dict/index
@@ -614,6 +618,8 @@ Classes
    abacusai.AppUserGroupSignInToken
    abacusai.ApplicationConnector
    abacusai.AudioGenSettings
+   abacusai.AudioListenerTranscriptSearchResult
+   abacusai.AudioListenerTranscriptSearchResults
    abacusai.AudioUrlResult
    abacusai.AuditLog
    abacusai.BatchPrediction
@@ -622,6 +628,7 @@ Classes
    abacusai.BotInfo
    abacusai.CategoricalRangeViolation
    abacusai.ChatMessage
+   abacusai.ChatSegmentArtifact
    abacusai.ChatSession
    abacusai.ChatllmComputer
    abacusai.ChatllmComputerStatus
@@ -747,9 +754,7 @@ Classes
    abacusai.GraphDashboard
    abacusai.HoldoutAnalysis
    abacusai.HoldoutAnalysisVersion
-   abacusai.HostedApp
    abacusai.HostedAppContainer
-   abacusai.HostedAppFileRead
    abacusai.HostedArtifact
    abacusai.HostedDatabase
    abacusai.HostedDatabaseSnapshot
@@ -780,6 +785,7 @@ Classes
    abacusai.McpServerQueryResult
    abacusai.MediaArtifact
    abacusai.MediaProject
+   abacusai.MemoryBucket
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
    abacusai.MobileAppBuildStatus
@@ -858,6 +864,7 @@ Classes
    abacusai.RegenerateLlmOption
    abacusai.ResolvedFeatureGroupTemplate
    abacusai.RoutingAction
+   abacusai.RsiTaskRunHistory
    abacusai.SceneImageResult
    abacusai.Schema
    abacusai.SessionSummary
@@ -897,6 +904,7 @@ Classes
    abacusai.VideoGenSettings
    abacusai.VideoSearchResult
    abacusai.VoiceGenDetails
+   abacusai.WebAppApiKey
    abacusai.WebAppConversation
    abacusai.WebAppDeployment
    abacusai.WebAppDeploymentPermissionDict
@@ -9517,6 +9525,21 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT5_6_SOL
+      :value: 'OPENAI_GPT5_6_SOL'
+
+
+
+   .. py:attribute:: OPENAI_GPT5_6_TERRA
+      :value: 'OPENAI_GPT5_6_TERRA'
+
+
+
+   .. py:attribute:: OPENAI_GPT5_6_LUNA
+      :value: 'OPENAI_GPT5_6_LUNA'
+
+
+
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
@@ -9672,6 +9695,11 @@ Package Contents
 
 
 
+   .. py:attribute:: XAI_GROK_4_5
+      :value: 'XAI_GROK_4_5'
+
+
+
    .. py:attribute:: LLAMA4_MAVERICK
       :value: 'LLAMA4_MAVERICK'
 
@@ -9779,6 +9807,11 @@ Package Contents
 
    .. py:attribute:: MINIMAX_M3
       :value: 'MINIMAX_M3'
+
+
+
+   .. py:attribute:: MUSE_SPARK_1_1
+      :value: 'MUSE_SPARK_1_1'
 
 
 
@@ -11531,6 +11564,11 @@ Package Contents
 
    .. py:attribute:: ROLE_PLAY
       :value: 'ROLE_PLAY'
+
+
+
+   .. py:attribute:: LEGAL
+      :value: 'LEGAL'
 
 
 
@@ -16142,7 +16180,7 @@ Package Contents
 
 
 
-.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None, createdBy=None)
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None, createdBy=None, configOnly=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -16169,6 +16207,8 @@ Package Contents
    :type baseConnector: str
    :param createdBy: The email of the user who created this connector.
    :type createdBy: str
+   :param configOnly: Whether this is a config-only connector.
+   :type configOnly: bool
 
 
    .. py:attribute:: application_connector_id
@@ -16212,6 +16252,11 @@ Package Contents
 
 
    .. py:attribute:: created_by
+      :value: None
+
+
+
+   .. py:attribute:: config_only
       :value: None
 
 
@@ -16290,6 +16335,147 @@ Package Contents
    .. py:attribute:: settings
       :value: None
 
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerTranscriptSearchResult(client, deploymentConversationId=None, name=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, eventSequenceNumber=None, eventType=None, transcriptCreatedAt=None, snippet=None, score=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A single audio listener transcript search hit.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The unique identifier of the deployment conversation the transcript belongs to.
+   :type deploymentConversationId: str
+   :param name: The name of the deployment conversation.
+   :type name: str
+   :param ownerUserId: The user id of the owner of the deployment conversation.
+   :type ownerUserId: str
+   :param createdAt: The timestamp at which the deployment conversation was created.
+   :type createdAt: str
+   :param lastEventCreatedAt: The timestamp at which the most recent event in the conversation was created.
+   :type lastEventCreatedAt: str
+   :param eventSequenceNumber: The sequence number of the matched transcript event within the conversation.
+   :type eventSequenceNumber: int
+   :param eventType: The type of the matched transcript event.
+   :type eventType: str
+   :param transcriptCreatedAt: The timestamp at which the matched transcript event was created.
+   :type transcriptCreatedAt: str
+   :param snippet: The matching transcript snippet.
+   :type snippet: str
+   :param score: The relevance score of the search hit.
+   :type score: int
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: last_event_created_at
+      :value: None
+
+
+
+   .. py:attribute:: event_sequence_number
+      :value: None
+
+
+
+   .. py:attribute:: event_type
+      :value: None
+
+
+
+   .. py:attribute:: transcript_created_at
+      :value: None
+
+
+
+   .. py:attribute:: snippet
+      :value: None
+
+
+
+   .. py:attribute:: score
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerTranscriptSearchResults(client, query=None, total=None, results={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Search response for audio listener transcript snippets.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param query: The search query that produced these results.
+   :type query: str
+   :param total: The total number of matching results.
+   :type total: int
+   :param results: The list of matching transcript search hits.
+   :type results: AudioListenerTranscriptSearchResult
+
+
+   .. py:attribute:: query
+      :value: None
+
+
+
+   .. py:attribute:: total
+      :value: None
+
+
+
+   .. py:attribute:: results
 
 
    .. py:attribute:: deprecated_keys
@@ -17526,6 +17712,95 @@ Package Contents
 
 
 
+.. py:class:: ChatSegmentArtifact(client, artifactId=None, artifactMetadata=None, artifactType=None, storageType=None, content=None, renderingContent=None, publicUrl=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Shared Code/Artifact Segment
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param artifactId: The ID of the chat segment artifact
+   :type artifactId: id
+   :param artifactMetadata: Metadata (identifier, title, componentName, language, readonly, etc.)
+   :type artifactMetadata: dict
+   :param artifactType: The artifact type (SQL, PYTHON, REACT, JSX, MARKDOWN, HTML, SVG, XML, CSS, JSON, JAVASCRIPT, TEXT)
+   :type artifactType: str
+   :param storageType: Where content is stored ('inline' or 's3')
+   :type storageType: str
+   :param content: Inline artifact content (present when storage_type='inline')
+   :type content: str
+   :param renderingContent: Rendering code for ReactComponents, if applicable
+   :type renderingContent: str
+   :param publicUrl: CDN URL for S3-backed content (present when storage_type='s3')
+   :type publicUrl: str
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+
+
+   .. py:attribute:: artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: artifact_metadata
+      :value: None
+
+
+
+   .. py:attribute:: artifact_type
+      :value: None
+
+
+
+   .. py:attribute:: storage_type
+      :value: None
+
+
+
+   .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: rendering_content
+      :value: None
+
+
+
+   .. py:attribute:: public_url
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, name=None, createdAt=None, status=None, aiBuildingInProgress=None, notification=None, whiteboard=None, chatHistory={}, nextAiBuildingTask={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -18009,7 +18284,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -18068,6 +18343,8 @@ Package Contents
    :type pushNotificationsEnabled: bool
    :param skills: Names of agent skills pinned to this daemon task.
    :type skills: list
+   :param isRsi: Whether the daemon task is a recursively self-improving (RSI) task.
+   :type isRsi: bool
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -18195,6 +18472,11 @@ Package Contents
 
 
    .. py:attribute:: skills
+      :value: None
+
+
+
+   .. py:attribute:: is_rsi
       :value: None
 
 
@@ -23426,7 +23708,7 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -23453,7 +23735,7 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
+   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -23482,7 +23764,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -23517,7 +23799,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -24241,9 +24523,9 @@ Package Contents
 
    .. py:method:: append_data(feature_group_id, streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if the data does not include one.
 
-      :param feature_group_id: Unique string identifier for the streaming feature group to record data to.
+      :param feature_group_id: Unique string identifier for the streaming or online feature group to record data to.
       :type feature_group_id: str
       :param streaming_token: The streaming token for authenticating requests.
       :type streaming_token: str
@@ -24254,9 +24536,9 @@ Package Contents
 
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if a row does not include one.
 
-      :param feature_group_id: Unique string identifier of the streaming feature group to record data to.
+      :param feature_group_id: Unique string identifier of the streaming or online feature group to record data to.
       :type feature_group_id: str
       :param streaming_token: Streaming token for authenticating requests.
       :type streaming_token: str
@@ -28028,12 +28310,13 @@ Package Contents
 
 
 
-   .. py:method:: list_organization_secrets(decrypt_value = False, secret_type = OrganizationSecretType.ORG_SECRET)
+   .. py:method:: list_organization_secrets(secret_type = OrganizationSecretType.ORG_SECRET)
 
-      Lists all secrets for an organization.
+      Lists all secrets for an organization. Secret values are not decrypted; use
 
-      :param decrypt_value: Whether to decrypt the secret values.
-      :type decrypt_value: bool
+      getOrganizationSecret to retrieve the value of a specific secret.
+
+
       :param secret_type: Filter secrets by type. Use OrganizationSecretType enum values.
       :type secret_type: OrganizationSecretType
 
@@ -30059,7 +30342,7 @@ Package Contents
 
 
 
-.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, experimentalFeatures=None)
+.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, experimentalFeatures=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30082,6 +30365,8 @@ Package Contents
    :type enablePlayground: bool
    :param enableMemories: Whether or not memories are enabled.
    :type enableMemories: bool
+   :param enableMemoryConsolidation: Whether the org has the memory-consolidation ("dreaming") feature enabled.
+   :type enableMemoryConsolidation: bool
    :param experimentalFeatures: Experimental features.
    :type experimentalFeatures: dict
 
@@ -30117,6 +30402,11 @@ Package Contents
 
 
    .. py:attribute:: enable_memories
+      :value: None
+
+
+
+   .. py:attribute:: enable_memory_consolidation
       :value: None
 
 
@@ -30842,7 +31132,7 @@ Package Contents
 
 
 
-.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None)
+.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None, configOnly=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30865,6 +31155,8 @@ Package Contents
    :type createdAt: str
    :param createdBy: The email of the user who created this connector.
    :type createdBy: str
+   :param configOnly: Whether this is a config-only connector.
+   :type configOnly: bool
 
 
    .. py:attribute:: database_connector_id
@@ -30898,6 +31190,11 @@ Package Contents
 
 
    .. py:attribute:: created_by
+      :value: None
+
+
+
+   .. py:attribute:: config_only
       :value: None
 
 
@@ -32432,7 +32729,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
+   .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -32465,7 +32762,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -37767,7 +38064,7 @@ Package Contents
 
    .. py:method:: append_data(streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if the data does not include one.
 
       :param streaming_token: The streaming token for authenticating requests.
       :type streaming_token: str
@@ -37778,7 +38075,7 @@ Package Contents
 
    .. py:method:: append_multiple_data(streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if a row does not include one.
 
       :param streaming_token: Streaming token for authenticating requests.
       :type streaming_token: str
@@ -40713,60 +41010,6 @@ Package Contents
 
 
 
-.. py:class:: HostedApp(client, hostedAppId=None, deploymentConversationId=None, name=None, createdAt=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Hosted App
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param hostedAppId: The ID of the hosted app
-   :type hostedAppId: id
-   :param deploymentConversationId: The ID of the deployment conversation
-   :type deploymentConversationId: id
-   :param name: The name of the hosted app
-   :type name: str
-   :param createdAt: The creation timestamp
-   :type createdAt: str
-
-
-   .. py:attribute:: hosted_app_id
-      :value: None
-
-
-
-   .. py:attribute:: deployment_conversation_id
-      :value: None
-
-
-
-   .. py:attribute:: name
-      :value: None
-
-
-
-   .. py:attribute:: created_at
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
 .. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -40991,60 +41234,6 @@ Package Contents
 
 
    .. py:attribute:: is_throttled
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: HostedAppFileRead(client, content=None, start=None, end=None, retcode=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Result of reading file content from a hosted app container.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param content: The contents of the file or a portion of it.
-   :type content: str
-   :param start: If present, the starting position of the read.
-   :type start: int
-   :param end: If present, the last position in the file returned in this read.
-   :type end: int
-   :param retcode: If the read is associated with a log the return code of the command.
-   :type retcode: int
-
-
-   .. py:attribute:: content
-      :value: None
-
-
-
-   .. py:attribute:: start
-      :value: None
-
-
-
-   .. py:attribute:: end
-      :value: None
-
-
-
-   .. py:attribute:: retcode
       :value: None
 
 
@@ -42709,7 +42898,7 @@ Package Contents
 
 
 
-.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, origin=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, origin=None, docId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42728,6 +42917,8 @@ Package Contents
    :type sourceDeploymentConversationId: id
    :param origin: How the artifact entered the gallery (generated, uploaded, editor_export)
    :type origin: str
+   :param docId: Source document-upload id when promoted from a chat/notebook file (else None)
+   :type docId: str
    :param isFavorited: Whether the artifact is favorited
    :type isFavorited: bool
    :param isShared: Whether the artifact is shared publicly
@@ -42767,6 +42958,11 @@ Package Contents
 
 
    .. py:attribute:: origin
+      :value: None
+
+
+
+   .. py:attribute:: doc_id
       :value: None
 
 
@@ -42826,7 +43022,7 @@ Package Contents
 
 
 
-.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, thumbnailUrls=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42849,6 +43045,8 @@ Package Contents
    :type assetUrls: dict
    :param thumbnailUrls: Map of hashed media_artifact_id -> fresh signed thumbnail URL (set by describe at read time)
    :type thumbnailUrls: dict
+   :param thumbnailUrl: Fresh signed cover image for the project (latest export or first video clip), set at read time
+   :type thumbnailUrl: str
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -42890,12 +43088,92 @@ Package Contents
 
 
 
+   .. py:attribute:: thumbnail_url
+      :value: None
+
+
+
    .. py:attribute:: created_at
       :value: None
 
 
 
    .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MemoryBucket(client, bucketKey=None, name=None, shortDescription=None, priority=None, content=None, updatedAtTimestamp=None, humanEdited=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A consolidated long-term memory bucket for the user (the DeepAgent "dreaming" brain).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param bucketKey: Stable slug for the bucket (also the rendered filename stem).
+   :type bucketKey: str
+   :param name: Human-readable bucket title.
+   :type name: str
+   :param shortDescription: One-line description of the bucket.
+   :type shortDescription: str
+   :param priority: Importance, 1 (low) to 5 (high).
+   :type priority: int
+   :param content: Markdown body of the bucket.
+   :type content: str
+   :param updatedAtTimestamp: Last-updated time (unix seconds).
+   :type updatedAtTimestamp: int
+   :param humanEdited: Whether the user has edited this bucket (the cron is additive-only for it).
+   :type humanEdited: bool
+
+
+   .. py:attribute:: bucket_key
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: short_description
+      :value: None
+
+
+
+   .. py:attribute:: priority
+      :value: None
+
+
+
+   .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: updated_at_timestamp
+      :value: None
+
+
+
+   .. py:attribute:: human_edited
       :value: None
 
 
@@ -43033,7 +43311,7 @@ Package Contents
 
 
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, error=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43052,6 +43330,12 @@ Package Contents
    :type hostname: str
    :param requiredInput: The required input for the build
    :type requiredInput: str
+   :param providers: Apple provider/team options when awaiting a selection
+   :type providers: list
+   :param selectionType: Whether the pending selection is for a 'team' or a 'provider'
+   :type selectionType: str
+   :param phoneNumbers: Trusted phone number options when awaiting a 2FA phone selection
+   :type phoneNumbers: list
    :param error: The error message for the build
    :type error: str
 
@@ -43077,6 +43361,21 @@ Package Contents
 
 
    .. py:attribute:: required_input
+      :value: None
+
+
+
+   .. py:attribute:: providers
+      :value: None
+
+
+
+   .. py:attribute:: selection_type
+      :value: None
+
+
+
+   .. py:attribute:: phone_numbers
       :value: None
 
 
@@ -48879,7 +49178,7 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -48906,7 +49205,7 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
+   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -48935,7 +49234,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -48970,7 +49269,7 @@ Package Contents
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -52807,6 +53106,137 @@ Package Contents
 
 
 
+.. py:class:: RsiTaskRunHistory(client, objective=None, metricName=None, direction=None, baselineValue=None, minSample=None, noiseFloor=None, lifecycle=None, totalCount=None, gradedCount=None, limit=None, offset=None, iterations=None, trend=None, sourceDeploymentConversationId=None, workdir=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Run history of a recursively self-improving (RSI) daemon task
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param objective: The user's natural-language objective the task improves at.
+   :type objective: str
+   :param metricName: The name of the measured metric.
+   :type metricName: str
+   :param direction: Whether the metric should 'increase' or 'decrease'.
+   :type direction: str
+   :param baselineValue: The metric value measured at task setup.
+   :type baselineValue: float
+   :param minSample: Minimum sample size required to grade a run.
+   :type minSample: int
+   :param noiseFloor: Absolute metric band treated as no change.
+   :type noiseFloor: float
+   :param lifecycle: The lifecycle of the daemon task.
+   :type lifecycle: str
+   :param totalCount: Total number of runs with an iteration record.
+   :type totalCount: int
+   :param gradedCount: Number of runs whose iteration record has been graded (closed).
+   :type gradedCount: int
+   :param limit: The page size used for the iterations list.
+   :type limit: int
+   :param offset: The offset used for the iterations list.
+   :type offset: int
+   :param iterations: One page of per-run records, newest first (iteration_index, status, value_before, value_after, delta, n_sample, verdict, change_summary, measured_at, failure_reason, run_record, created_at, run_lifecycle).
+   :type iterations: list
+   :param trend: Compact full history for charting, oldest first (index, value, verdict; the in-flight run appears last with pending=true at its comparison baseline).
+   :type trend: list
+   :param sourceDeploymentConversationId: The conversation whose filesystem holds the RSI workdir (for fetching run records).
+   :type sourceDeploymentConversationId: str
+   :param workdir: The RSI working directory on that filesystem.
+   :type workdir: str
+
+
+   .. py:attribute:: objective
+      :value: None
+
+
+
+   .. py:attribute:: metric_name
+      :value: None
+
+
+
+   .. py:attribute:: direction
+      :value: None
+
+
+
+   .. py:attribute:: baseline_value
+      :value: None
+
+
+
+   .. py:attribute:: min_sample
+      :value: None
+
+
+
+   .. py:attribute:: noise_floor
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: total_count
+      :value: None
+
+
+
+   .. py:attribute:: graded_count
+      :value: None
+
+
+
+   .. py:attribute:: limit
+      :value: None
+
+
+
+   .. py:attribute:: offset
+      :value: None
+
+
+
+   .. py:attribute:: iterations
+      :value: None
+
+
+
+   .. py:attribute:: trend
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: workdir
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: SceneImageResult(client, sceneImage=None, sceneImages=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -53225,9 +53655,9 @@ Package Contents
 
    .. py:method:: append_data(feature_group_id, streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if the data does not include one.
 
-      :param feature_group_id: Unique string identifier for the streaming feature group to record data to.
+      :param feature_group_id: Unique string identifier for the streaming or online feature group to record data to.
       :type feature_group_id: str
       :param streaming_token: The streaming token for authenticating requests.
       :type streaming_token: str
@@ -53238,9 +53668,9 @@ Package Contents
 
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if a row does not include one.
 
-      :param feature_group_id: Unique string identifier of the streaming feature group to record data to.
+      :param feature_group_id: Unique string identifier of the streaming or online feature group to record data to.
       :type feature_group_id: str
       :param streaming_token: Streaming token for authenticating requests.
       :type streaming_token: str
@@ -55180,6 +55610,53 @@ Package Contents
 
 
 
+.. py:class:: WebAppApiKey(client, webAppProjectId=None, apiKeyId=None, hostname=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A web app and the LLM API key bound to it.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The ID of the web app project (the logical app).
+   :type webAppProjectId: id
+   :param apiKeyId: The ID of the LLM API key bound to the app.
+   :type apiKeyId: id
+   :param hostname: A hostname the app is served on.
+   :type hostname: str
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: api_key_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -55248,7 +55725,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppDeployment(client, webAppDeploymentId=None, hostname=None, accessLevel=None, llmArtifactId=None, artifactsPath=None, applicationType=None, memoryGb=None)
+.. py:class:: WebAppDeployment(client, webAppDeploymentId=None, hostname=None, accessLevel=None, llmArtifactId=None, artifactsPath=None, applicationType=None, memoryGb=None, apiKeyId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55271,6 +55748,8 @@ Package Contents
    :type applicationType: str
    :param memoryGb: The memory in GB of the web app deployment.
    :type memoryGb: float
+   :param apiKeyId: The ID of the LLM API key bound to this web app.
+   :type apiKeyId: id
 
 
    .. py:attribute:: web_app_deployment_id
@@ -55304,6 +55783,11 @@ Package Contents
 
 
    .. py:attribute:: memory_gb
+      :value: None
+
+
+
+   .. py:attribute:: api_key_id
       :value: None
 
 
@@ -56014,6 +56498,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.103'
+   :value: '1.4.104'
 
 

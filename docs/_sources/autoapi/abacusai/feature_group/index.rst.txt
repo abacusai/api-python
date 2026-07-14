@@ -1340,7 +1340,7 @@ Module Contents
 
    .. py:method:: append_data(streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if the data does not include one.
 
       :param streaming_token: The streaming token for authenticating requests.
       :type streaming_token: str
@@ -1351,7 +1351,7 @@ Module Contents
 
    .. py:method:: append_multiple_data(streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if a row does not include one.
 
       :param streaming_token: Streaming token for authenticating requests.
       :type streaming_token: str

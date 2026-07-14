@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, origin=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, origin=None, docId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type sourceDeploymentConversationId: id
    :param origin: How the artifact entered the gallery (generated, uploaded, editor_export)
    :type origin: str
+   :param docId: Source document-upload id when promoted from a chat/notebook file (else None)
+   :type docId: str
    :param isFavorited: Whether the artifact is favorited
    :type isFavorited: bool
    :param isShared: Whether the artifact is shared publicly
@@ -73,6 +75,11 @@ Module Contents
 
 
    .. py:attribute:: origin
+      :value: None
+
+
+
+   .. py:attribute:: doc_id
       :value: None
 
 

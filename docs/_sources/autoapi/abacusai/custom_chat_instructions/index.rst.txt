@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, experimentalFeatures=None)
+.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, experimentalFeatures=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type enablePlayground: bool
    :param enableMemories: Whether or not memories are enabled.
    :type enableMemories: bool
+   :param enableMemoryConsolidation: Whether the org has the memory-consolidation ("dreaming") feature enabled.
+   :type enableMemoryConsolidation: bool
    :param experimentalFeatures: Experimental features.
    :type experimentalFeatures: dict
 
@@ -73,6 +75,11 @@ Module Contents
 
 
    .. py:attribute:: enable_memories
+      :value: None
+
+
+
+   .. py:attribute:: enable_memory_consolidation
       :value: None
 
 

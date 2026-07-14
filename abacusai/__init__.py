@@ -21,6 +21,8 @@ from .app_user_group import AppUserGroup
 from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
 from .audio_gen_settings import AudioGenSettings
+from .audio_listener_transcript_search_result import AudioListenerTranscriptSearchResult
+from .audio_listener_transcript_search_results import AudioListenerTranscriptSearchResults
 from .audio_url_result import AudioUrlResult
 from .audit_log import AuditLog
 from .batch_prediction import BatchPrediction
@@ -29,6 +31,7 @@ from .batch_prediction_version_logs import BatchPredictionVersionLogs
 from .bot_info import BotInfo
 from .categorical_range_violation import CategoricalRangeViolation
 from .chat_message import ChatMessage
+from .chat_segment_artifact import ChatSegmentArtifact
 from .chat_session import ChatSession
 from .chatllm_computer import ChatllmComputer
 from .chatllm_computer_status import ChatllmComputerStatus
@@ -150,9 +153,7 @@ from .generated_pit_feature_config_option import GeneratedPitFeatureConfigOption
 from .graph_dashboard import GraphDashboard
 from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
-from .hosted_app import HostedApp
 from .hosted_app_container import HostedAppContainer
-from .hosted_app_file_read import HostedAppFileRead
 from .hosted_artifact import HostedArtifact
 from .hosted_database import HostedDatabase
 from .hosted_database_snapshot import HostedDatabaseSnapshot
@@ -183,6 +184,7 @@ from .mcp_server_connection import McpServerConnection
 from .mcp_server_query_result import McpServerQueryResult
 from .media_artifact import MediaArtifact
 from .media_project import MediaProject
+from .memory_bucket import MemoryBucket
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
 from .mobile_app_build_status import MobileAppBuildStatus
@@ -263,6 +265,7 @@ from .regenerate_llm_external_application import RegenerateLlmExternalApplicatio
 from .regenerate_llm_option import RegenerateLlmOption
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
 from .routing_action import RoutingAction
+from .rsi_task_run_history import RsiTaskRunHistory
 from .scene_image_result import SceneImageResult
 from .schema import Schema
 from .session_summary import SessionSummary
@@ -302,6 +305,7 @@ from .video_gen_model_options import VideoGenModelOptions
 from .video_gen_settings import VideoGenSettings
 from .video_search_result import VideoSearchResult
 from .voice_gen_details import VoiceGenDetails
+from .web_app_api_key import WebAppApiKey
 from .web_app_conversation import WebAppConversation
 from .web_app_deployment import WebAppDeployment
 from .web_app_deployment_permission_dict import WebAppDeploymentPermissionDict
@@ -316,4 +320,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.103"
+__version__ = "1.4.104"

@@ -14,9 +14,10 @@ class WebAppDeployment(AbstractApiClass):
             artifactsPath (str): The path to the artifacts of the web app deployment.
             applicationType (str): The type of application.
             memoryGb (float): The memory in GB of the web app deployment.
+            apiKeyId (id): The ID of the LLM API key bound to this web app.
     """
 
-    def __init__(self, client, webAppDeploymentId=None, hostname=None, accessLevel=None, llmArtifactId=None, artifactsPath=None, applicationType=None, memoryGb=None):
+    def __init__(self, client, webAppDeploymentId=None, hostname=None, accessLevel=None, llmArtifactId=None, artifactsPath=None, applicationType=None, memoryGb=None, apiKeyId=None):
         super().__init__(client, webAppDeploymentId)
         self.web_app_deployment_id = webAppDeploymentId
         self.hostname = hostname
@@ -25,11 +26,12 @@ class WebAppDeployment(AbstractApiClass):
         self.artifacts_path = artifactsPath
         self.application_type = applicationType
         self.memory_gb = memoryGb
+        self.api_key_id = apiKeyId
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'web_app_deployment_id': repr(self.web_app_deployment_id), f'hostname': repr(self.hostname), f'access_level': repr(self.access_level), f'llm_artifact_id': repr(
-            self.llm_artifact_id), f'artifacts_path': repr(self.artifacts_path), f'application_type': repr(self.application_type), f'memory_gb': repr(self.memory_gb)}
+            self.llm_artifact_id), f'artifacts_path': repr(self.artifacts_path), f'application_type': repr(self.application_type), f'memory_gb': repr(self.memory_gb), f'api_key_id': repr(self.api_key_id)}
         class_name = "WebAppDeployment"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -42,6 +44,6 @@ class WebAppDeployment(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'web_app_deployment_id': self.web_app_deployment_id, 'hostname': self.hostname, 'access_level': self.access_level,
-                'llm_artifact_id': self.llm_artifact_id, 'artifacts_path': self.artifacts_path, 'application_type': self.application_type, 'memory_gb': self.memory_gb}
+        resp = {'web_app_deployment_id': self.web_app_deployment_id, 'hostname': self.hostname, 'access_level': self.access_level, 'llm_artifact_id': self.llm_artifact_id,
+                'artifacts_path': self.artifacts_path, 'application_type': self.application_type, 'memory_gb': self.memory_gb, 'api_key_id': self.api_key_id}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

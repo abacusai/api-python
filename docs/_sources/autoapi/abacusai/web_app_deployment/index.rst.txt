@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppDeployment(client, webAppDeploymentId=None, hostname=None, accessLevel=None, llmArtifactId=None, artifactsPath=None, applicationType=None, memoryGb=None)
+.. py:class:: WebAppDeployment(client, webAppDeploymentId=None, hostname=None, accessLevel=None, llmArtifactId=None, artifactsPath=None, applicationType=None, memoryGb=None, apiKeyId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type applicationType: str
    :param memoryGb: The memory in GB of the web app deployment.
    :type memoryGb: float
+   :param apiKeyId: The ID of the LLM API key bound to this web app.
+   :type apiKeyId: id
 
 
    .. py:attribute:: web_app_deployment_id
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: memory_gb
+      :value: None
+
+
+
+   .. py:attribute:: api_key_id
       :value: None
 
 

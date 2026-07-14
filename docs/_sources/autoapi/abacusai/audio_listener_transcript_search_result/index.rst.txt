@@ -1,0 +1,113 @@
+abacusai.audio_listener_transcript_search_result
+================================================
+
+.. py:module:: abacusai.audio_listener_transcript_search_result
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_transcript_search_result.AudioListenerTranscriptSearchResult
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerTranscriptSearchResult(client, deploymentConversationId=None, name=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, eventSequenceNumber=None, eventType=None, transcriptCreatedAt=None, snippet=None, score=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A single audio listener transcript search hit.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The unique identifier of the deployment conversation the transcript belongs to.
+   :type deploymentConversationId: str
+   :param name: The name of the deployment conversation.
+   :type name: str
+   :param ownerUserId: The user id of the owner of the deployment conversation.
+   :type ownerUserId: str
+   :param createdAt: The timestamp at which the deployment conversation was created.
+   :type createdAt: str
+   :param lastEventCreatedAt: The timestamp at which the most recent event in the conversation was created.
+   :type lastEventCreatedAt: str
+   :param eventSequenceNumber: The sequence number of the matched transcript event within the conversation.
+   :type eventSequenceNumber: int
+   :param eventType: The type of the matched transcript event.
+   :type eventType: str
+   :param transcriptCreatedAt: The timestamp at which the matched transcript event was created.
+   :type transcriptCreatedAt: str
+   :param snippet: The matching transcript snippet.
+   :type snippet: str
+   :param score: The relevance score of the search hit.
+   :type score: int
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: last_event_created_at
+      :value: None
+
+
+
+   .. py:attribute:: event_sequence_number
+      :value: None
+
+
+
+   .. py:attribute:: event_type
+      :value: None
+
+
+
+   .. py:attribute:: transcript_created_at
+      :value: None
+
+
+
+   .. py:attribute:: snippet
+      :value: None
+
+
+
+   .. py:attribute:: score
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

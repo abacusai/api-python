@@ -1,0 +1,64 @@
+abacusai.web_app_api_key
+========================
+
+.. py:module:: abacusai.web_app_api_key
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.web_app_api_key.WebAppApiKey
+
+
+Module Contents
+---------------
+
+.. py:class:: WebAppApiKey(client, webAppProjectId=None, apiKeyId=None, hostname=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A web app and the LLM API key bound to it.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The ID of the web app project (the logical app).
+   :type webAppProjectId: id
+   :param apiKeyId: The ID of the LLM API key bound to the app.
+   :type apiKeyId: id
+   :param hostname: A hostname the app is served on.
+   :type hostname: str
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: api_key_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

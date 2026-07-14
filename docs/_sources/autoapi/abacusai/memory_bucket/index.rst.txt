@@ -1,0 +1,92 @@
+abacusai.memory_bucket
+======================
+
+.. py:module:: abacusai.memory_bucket
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.memory_bucket.MemoryBucket
+
+
+Module Contents
+---------------
+
+.. py:class:: MemoryBucket(client, bucketKey=None, name=None, shortDescription=None, priority=None, content=None, updatedAtTimestamp=None, humanEdited=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A consolidated long-term memory bucket for the user (the DeepAgent "dreaming" brain).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param bucketKey: Stable slug for the bucket (also the rendered filename stem).
+   :type bucketKey: str
+   :param name: Human-readable bucket title.
+   :type name: str
+   :param shortDescription: One-line description of the bucket.
+   :type shortDescription: str
+   :param priority: Importance, 1 (low) to 5 (high).
+   :type priority: int
+   :param content: Markdown body of the bucket.
+   :type content: str
+   :param updatedAtTimestamp: Last-updated time (unix seconds).
+   :type updatedAtTimestamp: int
+   :param humanEdited: Whether the user has edited this bucket (the cron is additive-only for it).
+   :type humanEdited: bool
+
+
+   .. py:attribute:: bucket_key
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: short_description
+      :value: None
+
+
+
+   .. py:attribute:: priority
+      :value: None
+
+
+
+   .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: updated_at_timestamp
+      :value: None
+
+
+
+   .. py:attribute:: human_edited
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

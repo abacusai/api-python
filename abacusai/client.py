@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.103'
+    client_version = '1.4.104'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2748,16 +2748,18 @@ class ReadOnlyClient(BaseApiClient):
             OrganizationSecret: The secret."""
         return self._call_api('getOrganizationSecret', 'GET', query_params={'secretKey': secret_key}, parse_type=OrganizationSecret)
 
-    def list_organization_secrets(self, decrypt_value: bool = False, secret_type: Union[OrganizationSecretType, str] = OrganizationSecretType.ORG_SECRET) -> List[OrganizationSecret]:
-        """Lists all secrets for an organization.
+    def list_organization_secrets(self, secret_type: Union[OrganizationSecretType, str] = OrganizationSecretType.ORG_SECRET) -> List[OrganizationSecret]:
+        """Lists all secrets for an organization. Secret values are not decrypted; use
+
+        getOrganizationSecret to retrieve the value of a specific secret.
+
 
         Args:
-            decrypt_value (bool): Whether to decrypt the secret values.
             secret_type (OrganizationSecretType): Filter secrets by type. Use OrganizationSecretType enum values.
 
         Returns:
             list[OrganizationSecret]: List of secrets."""
-        return self._call_api('listOrganizationSecrets', 'GET', query_params={'decryptValue': decrypt_value, 'secretType': secret_type}, parse_type=OrganizationSecret)
+        return self._call_api('listOrganizationSecrets', 'GET', query_params={'secretType': secret_type}, parse_type=OrganizationSecret)
 
     def get_app_user_group_sign_in_token(self, user_group_id: str, email: str, name: str) -> AppUserGroupSignInToken:
         """Get a token for a user group user to sign in.
@@ -7777,7 +7779,7 @@ class ApiClient(ReadOnlyClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, user_info: dict = None, exclude_thinking_segments: bool = False) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, user_info: dict = None, exclude_thinking_segments: bool = False) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -7795,7 +7797,7 @@ class ApiClient(ReadOnlyClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'userInfo': user_info, 'excludeThinkingSegments': exclude_thinking_segments}, server_override=prediction_url)
 
-    def get_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None) -> Dict:
+    def get_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -7814,7 +7816,7 @@ class ApiClient(ReadOnlyClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'excludeThinkingSegments': json.dumps(exclude_thinking_segments) if (exclude_thinking_segments is not None and not isinstance(exclude_thinking_segments, str)) else exclude_thinking_segments}, files=attachments, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False, exclude_thinking_segments: bool = False) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False, exclude_thinking_segments: bool = False) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -7836,7 +7838,7 @@ class ApiClient(ReadOnlyClient):
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'docInfos': doc_infos, 'userInfo': user_info, 'executeUsercodeTool': execute_usercode_tool, 'excludeThinkingSegments': exclude_thinking_segments}, server_override=prediction_url)
 
-    def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None) -> Dict:
+    def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -8401,10 +8403,10 @@ class ApiClient(ReadOnlyClient):
         return self._call_api('upsertMultipleItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'upserts': upserts, 'catalogId': catalog_id}, server_override=prediction_url)
 
     def append_data(self, feature_group_id: str, streaming_token: str, data: dict):
-        """Appends new data into the feature group for a given lookup key recordId.
+        """Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if the data does not include one.
 
         Args:
-            feature_group_id (str): Unique string identifier for the streaming feature group to record data to.
+            feature_group_id (str): Unique string identifier for the streaming or online feature group to record data to.
             streaming_token (str): The streaming token for authenticating requests.
             data (dict): The data to record as a JSON object."""
         prediction_url = self._get_streaming_endpoint(
@@ -8412,10 +8414,10 @@ class ApiClient(ReadOnlyClient):
         return self._call_api('appendData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
     def append_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
-        """Appends new data into the feature group for a given lookup key recordId.
+        """Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if a row does not include one.
 
         Args:
-            feature_group_id (str): Unique string identifier of the streaming feature group to record data to.
+            feature_group_id (str): Unique string identifier of the streaming or online feature group to record data to.
             streaming_token (str): Streaming token for authenticating requests.
             data (list): Data to record, as a list of JSON objects."""
         prediction_url = self._get_streaming_endpoint(

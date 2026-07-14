@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None)
+.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None, configOnly=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type createdAt: str
    :param createdBy: The email of the user who created this connector.
    :type createdBy: str
+   :param configOnly: Whether this is a config-only connector.
+   :type configOnly: bool
 
 
    .. py:attribute:: database_connector_id
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: created_by
+      :value: None
+
+
+
+   .. py:attribute:: config_only
       :value: None
 
 

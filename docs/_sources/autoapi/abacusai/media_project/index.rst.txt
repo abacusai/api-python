@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, thumbnailUrls=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type assetUrls: dict
    :param thumbnailUrls: Map of hashed media_artifact_id -> fresh signed thumbnail URL (set by describe at read time)
    :type thumbnailUrls: dict
+   :param thumbnailUrl: Fresh signed cover image for the project (latest export or first video clip), set at read time
+   :type thumbnailUrl: str
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -75,6 +77,11 @@ Module Contents
 
 
    .. py:attribute:: thumbnail_urls
+      :value: None
+
+
+
+   .. py:attribute:: thumbnail_url
       :value: None
 
 

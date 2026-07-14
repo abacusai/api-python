@@ -1042,7 +1042,7 @@ class FeatureGroup(AbstractApiClass):
 
     def append_data(self, streaming_token: str, data: dict):
         """
-        Appends new data into the feature group for a given lookup key recordId.
+        Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if the data does not include one.
 
         Args:
             streaming_token (str): The streaming token for authenticating requests.
@@ -1052,7 +1052,7 @@ class FeatureGroup(AbstractApiClass):
 
     def append_multiple_data(self, streaming_token: str, data: list):
         """
-        Appends new data into the feature group for a given lookup key recordId.
+        Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if a row does not include one.
 
         Args:
             streaming_token (str): Streaming token for authenticating requests.

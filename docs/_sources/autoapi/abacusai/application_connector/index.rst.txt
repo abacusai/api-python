@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None, createdBy=None)
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None, createdBy=None, configOnly=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type baseConnector: str
    :param createdBy: The email of the user who created this connector.
    :type createdBy: str
+   :param configOnly: Whether this is a config-only connector.
+   :type configOnly: bool
 
 
    .. py:attribute:: application_connector_id
@@ -85,6 +87,11 @@ Module Contents
 
 
    .. py:attribute:: created_by
+      :value: None
+
+
+
+   .. py:attribute:: config_only
       :value: None
 
 

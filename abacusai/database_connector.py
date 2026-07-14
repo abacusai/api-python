@@ -14,9 +14,10 @@ class DatabaseConnector(AbstractApiClass):
             auth (dict): Non-secret connection information for this connector.
             createdAt (str): The ISO-8601 string indicating when the API key was created.
             createdBy (str): The email of the user who created this connector.
+            configOnly (bool): Whether this is a config-only connector.
     """
 
-    def __init__(self, client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None):
+    def __init__(self, client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None, configOnly=None):
         super().__init__(client, databaseConnectorId)
         self.database_connector_id = databaseConnectorId
         self.service = service
@@ -25,11 +26,12 @@ class DatabaseConnector(AbstractApiClass):
         self.auth = auth
         self.created_at = createdAt
         self.created_by = createdBy
+        self.config_only = configOnly
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'database_connector_id': repr(self.database_connector_id), f'service': repr(self.service), f'name': repr(
-            self.name), f'status': repr(self.status), f'auth': repr(self.auth), f'created_at': repr(self.created_at), f'created_by': repr(self.created_by)}
+        repr_dict = {f'database_connector_id': repr(self.database_connector_id), f'service': repr(self.service), f'name': repr(self.name), f'status': repr(
+            self.status), f'auth': repr(self.auth), f'created_at': repr(self.created_at), f'created_by': repr(self.created_by), f'config_only': repr(self.config_only)}
         class_name = "DatabaseConnector"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -42,8 +44,8 @@ class DatabaseConnector(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'database_connector_id': self.database_connector_id, 'service': self.service, 'name': self.name,
-                'status': self.status, 'auth': self.auth, 'created_at': self.created_at, 'created_by': self.created_by}
+        resp = {'database_connector_id': self.database_connector_id, 'service': self.service, 'name': self.name, 'status': self.status,
+                'auth': self.auth, 'created_at': self.created_at, 'created_by': self.created_by, 'config_only': self.config_only}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def list_objects(self, fetch_raw_data: bool = False):

@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.103'
+      :value: '1.4.104'
 
 
 
@@ -2792,12 +2792,13 @@ Module Contents
 
 
 
-   .. py:method:: list_organization_secrets(decrypt_value = False, secret_type = OrganizationSecretType.ORG_SECRET)
+   .. py:method:: list_organization_secrets(secret_type = OrganizationSecretType.ORG_SECRET)
 
-      Lists all secrets for an organization.
+      Lists all secrets for an organization. Secret values are not decrypted; use
 
-      :param decrypt_value: Whether to decrypt the secret values.
-      :type decrypt_value: bool
+      getOrganizationSecret to retrieve the value of a specific secret.
+
+
       :param secret_type: Filter secrets by type. Use OrganizationSecretType enum values.
       :type secret_type: OrganizationSecretType
 
@@ -8421,7 +8422,7 @@ Module Contents
 
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, user_info = None, exclude_thinking_segments = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -8448,7 +8449,7 @@ Module Contents
 
 
 
-   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
+   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -8477,7 +8478,7 @@ Module Contents
 
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -8512,7 +8513,7 @@ Module Contents
 
 
 
-   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
+   .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, exclude_thinking_segments = False, attachments = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -9236,9 +9237,9 @@ Module Contents
 
    .. py:method:: append_data(feature_group_id, streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if the data does not include one.
 
-      :param feature_group_id: Unique string identifier for the streaming feature group to record data to.
+      :param feature_group_id: Unique string identifier for the streaming or online feature group to record data to.
       :type feature_group_id: str
       :param streaming_token: The streaming token for authenticating requests.
       :type streaming_token: str
@@ -9249,9 +9250,9 @@ Module Contents
 
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
 
-      Appends new data into the feature group for a given lookup key recordId.
+      Appends new data into the feature group for a given lookup key recordId. For online feature groups, a value is generated for the primary key if a row does not include one.
 
-      :param feature_group_id: Unique string identifier of the streaming feature group to record data to.
+      :param feature_group_id: Unique string identifier of the streaming or online feature group to record data to.
       :type feature_group_id: str
       :param streaming_token: Streaming token for authenticating requests.
       :type streaming_token: str
