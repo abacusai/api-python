@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: OrganizationNetworkPolicy(client, enabled=None, lifecycle=None, egressFqdns=None, egressCidrs=None, updatedAt=None, available=None)
+.. py:class:: OrganizationNetworkPolicy(client, enabled=None, lifecycle=None, egressFqdns=None, updatedAt=None, available=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,8 +30,6 @@ Module Contents
    :type lifecycle: str
    :param egressFqdns: The hostnames blocked for the organization's agent computers.
    :type egressFqdns: list
-   :param egressCidrs: The IP ranges (CIDR) blocked for the organization's agent computers.
-   :type egressCidrs: list
    :param updatedAt: The timestamp at which the policy was last modified.
    :type updatedAt: str
    :param available: Whether the Agent Firewall is available for this organization.
@@ -49,11 +47,6 @@ Module Contents
 
 
    .. py:attribute:: egress_fqdns
-      :value: None
-
-
-
-   .. py:attribute:: egress_cidrs
       :value: None
 
 

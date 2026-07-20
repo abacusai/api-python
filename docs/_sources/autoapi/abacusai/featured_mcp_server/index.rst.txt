@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: FeaturedMcpServer(client, key=None, name=None, url=None, tagline=None, description=None, iconUrl=None, categories=None, author=None, authorUrl=None, docsUrl=None, oauth2=None, rank=None, tools=None, toolCount=None)
+.. py:class:: FeaturedMcpServer(client, key=None, name=None, url=None, tagline=None, description=None, iconUrl=None, categories=None, author=None, authorUrl=None, docsUrl=None, oauth2=None, rank=None, tools=None, toolCount=None, requiredFields=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -52,6 +52,8 @@ Module Contents
    :type tools: list
    :param toolCount: Total tool count (differs from len(tools) only if the YAML caps the list).
    :type toolCount: int
+   :param requiredFields: Config the user must supply before connecting (e.g. a per-workspace URL or OAuth client ID); empty for one-click servers. Each field: name, label, placeholder, type, optional, target, help.
+   :type requiredFields: list
 
 
    .. py:attribute:: key
@@ -120,6 +122,11 @@ Module Contents
 
 
    .. py:attribute:: tool_count
+      :value: None
+
+
+
+   .. py:attribute:: required_fields
       :value: None
 
 

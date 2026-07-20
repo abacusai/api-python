@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.104'
+      :value: '1.4.105'
 
 
 
@@ -1466,6 +1466,21 @@ Module Contents
       :type config_connector: str
 
       :returns: The application connector with the authentication details.
+      :rtype: UnifiedConnector
+
+
+
+   .. py:method:: get_org_connector_auth(deployment_conversation_id = None)
+
+      Returns org-level connector auth bound to a deployment conversation. Currently
+
+      supports Slack only: the org bot token for a SLACK_TAG conversation.
+
+
+      :param deployment_conversation_id: The SLACK_TAG deployment conversation id used to resolve Slack context.
+      :type deployment_conversation_id: str
+
+      :returns: The org-level connector with the authentication details.
       :rtype: UnifiedConnector
 
 
@@ -2782,7 +2797,11 @@ Module Contents
 
    .. py:method:: get_organization_secret(secret_key)
 
-      Gets a secret.
+      Gets a secret. The secret value is only returned when called from an Abacus-managed
+
+      environment (an agent, usercode runtime, or hosted notebook owned by your organization,
+      or the organization's system API key); otherwise the value is masked.
+
 
       :param secret_key: The secret key.
       :type secret_key: str
@@ -10198,22 +10217,20 @@ Module Contents
 
 
 
-   .. py:method:: set_organization_network_policy(enabled = False, egress_fqdns = None, egress_cidrs = None)
+   .. py:method:: set_organization_network_policy(enabled = False, egress_fqdns = None)
 
       Set the organization's egress network policy (Agent Firewall) for agent computers.
 
-      The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
-      validated and the whole request is rejected (nothing is written) if any entry is malformed, is a
-      reserved hostname, or is a protected/IPv6 CIDR (see below). Accepted changes are reconciled onto
-      the organization's agent computers within a few minutes (not synchronously).
+      The baseline is allow-all; the policy lists the hostnames to block. Entries are validated and the
+      whole request is rejected (nothing is written) if any entry is malformed or is a reserved hostname
+      (see below). Accepted changes are reconciled onto the organization's agent computers within a few
+      minutes (not synchronously).
 
 
       :param enabled: Whether to enforce the denylist. When False the policy is stored but not enforced.
       :type enabled: bool
       :param egress_fqdns: Hostnames to block. An exact hostname (e.g. 'ads.tracker.net') blocks that name only; a wildcard (e.g. '*.tracker.net') blocks the domain and all its subdomains at any depth. Only a single leading '*.' is supported. Reserved names required by the organization's own computers (e.g. *.cluster.local, cloud metadata, platform APIs) are rejected.
       :type egress_fqdns: list
-      :param egress_cidrs: IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24']. CIDRs that overlap internal / metadata / loopback ranges, and IPv6 CIDRs, are rejected.
-      :type egress_cidrs: list
 
       :returns: The organization's egress denylist after the update.
       :rtype: OrganizationNetworkPolicy

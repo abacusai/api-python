@@ -646,6 +646,8 @@ class LLMName(ApiEnum):
     KIMI_K2_5 = 'KIMI_K2_5'
     KIMI_K2_6 = 'KIMI_K2_6'
     KIMI_K2_7_CODE = 'KIMI_K2_7_CODE'
+    KIMI_K3 = 'KIMI_K3'
+    INKLING = 'INKLING'
 
 
 class MonitorAlertType(ApiEnum):
@@ -897,6 +899,7 @@ class DeploymentConversationType(ApiEnum):
     CODE_LLM_NON_INTERACTIVE = 'CODE_LLM_NON_INTERACTIVE'
     BROWSER_EXTENSION = 'BROWSER_EXTENSION'
     OFFICE = 'OFFICE'
+    SLACK_TAG = 'SLACK_TAG'
 
 
 class DeploymentConversationAgentType(ApiEnum):

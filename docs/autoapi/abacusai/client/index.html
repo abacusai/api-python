@@ -1152,7 +1152,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.104'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.105'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2407,6 +2407,24 @@ and avoids execution of the further workflow.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The application connector with the authentication details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.UnifiedConnector" title="abacusai.UnifiedConnector">UnifiedConnector</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_org_connector_auth">
+<span class="sig-name descname"><span class="pre">get_org_connector_auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_org_connector_auth" title="Link to this definition"></a></dt>
+<dd><p>Returns org-level connector auth bound to a deployment conversation. Currently</p>
+<p>supports Slack only: the org bot token for a SLACK_TAG conversation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SLACK_TAG deployment conversation id used to resolve Slack context.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The org-level connector with the authentication details.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.UnifiedConnector" title="abacusai.UnifiedConnector">UnifiedConnector</a></p>
@@ -4229,7 +4247,9 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_organization_secret">
 <span class="sig-name descname"><span class="pre">get_organization_secret</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">secret_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_organization_secret" title="Link to this definition"></a></dt>
-<dd><p>Gets a secret.</p>
+<dd><p>Gets a secret. The secret value is only returned when called from an Abacus-managed</p>
+<p>environment (an agent, usercode runtime, or hosted notebook owned by your organization,
+or the organization’s system API key); otherwise the value is masked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>secret_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The secret key.</p>
@@ -12848,18 +12868,17 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.set_organization_network_policy">
-<span class="sig-name descname"><span class="pre">set_organization_network_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress_fqdns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress_cidrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_organization_network_policy" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_organization_network_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress_fqdns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_organization_network_policy" title="Link to this definition"></a></dt>
 <dd><p>Set the organization’s egress network policy (Agent Firewall) for agent computers.</p>
-<p>The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
-validated and the whole request is rejected (nothing is written) if any entry is malformed, is a
-reserved hostname, or is a protected/IPv6 CIDR (see below). Accepted changes are reconciled onto
-the organization’s agent computers within a few minutes (not synchronously).</p>
+<p>The baseline is allow-all; the policy lists the hostnames to block. Entries are validated and the
+whole request is rejected (nothing is written) if any entry is malformed or is a reserved hostname
+(see below). Accepted changes are reconciled onto the organization’s agent computers within a few
+minutes (not synchronously).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to enforce the denylist. When False the policy is stored but not enforced.</p></li>
 <li><p><strong>egress_fqdns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Hostnames to block. An exact hostname (e.g. ‘ads.tracker.net’) blocks that name only; a wildcard (e.g. ‘<em>.tracker.net’) blocks the domain and all its subdomains at any depth. Only a single leading ‘</em>.’ is supported. Reserved names required by the organization’s own computers (e.g. <a href="#id21"><span class="problematic" id="id22">*</span></a>.cluster.local, cloud metadata, platform APIs) are rejected.</p></li>
-<li><p><strong>egress_cidrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – IPv4 addresses or CIDR ranges to block, e.g. [‘203.0.113.0/24’]. CIDRs that overlap internal / metadata / loopback ranges, and IPv6 CIDRs, are rejected.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

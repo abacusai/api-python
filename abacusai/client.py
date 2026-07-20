@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.104'
+    client_version = '1.4.105'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1691,6 +1691,19 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             UnifiedConnector: The application connector with the authentication details."""
         return self._call_api('getUserConnectorAuth', 'GET', query_params={'service': service, 'scopes': scopes, 'genericOauthService': generic_oauth_service, 'configConnector': config_connector}, parse_type=UnifiedConnector)
+
+    def get_org_connector_auth(self, deployment_conversation_id: str = None) -> UnifiedConnector:
+        """Returns org-level connector auth bound to a deployment conversation. Currently
+
+        supports Slack only: the org bot token for a SLACK_TAG conversation.
+
+
+        Args:
+            deployment_conversation_id (str): The SLACK_TAG deployment conversation id used to resolve Slack context.
+
+        Returns:
+            UnifiedConnector: The org-level connector with the authentication details."""
+        return self._call_api('getOrgConnectorAuth', 'GET', query_params={'deploymentConversationId': deployment_conversation_id}, parse_type=UnifiedConnector)
 
     def get_user_mcp_connector_auth(self, mcp_server_name: str = None) -> ApplicationConnector:
         """Get the auth for a MCP connector
@@ -2739,7 +2752,11 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('listModules', 'GET', query_params={}, parse_type=Module)
 
     def get_organization_secret(self, secret_key: str) -> OrganizationSecret:
-        """Gets a secret.
+        """Gets a secret. The secret value is only returned when called from an Abacus-managed
+
+        environment (an agent, usercode runtime, or hosted notebook owned by your organization,
+        or the organization's system API key); otherwise the value is masked.
+
 
         Args:
             secret_key (str): The secret key.
@@ -9104,23 +9121,22 @@ class ApiClient(ReadOnlyClient):
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in."""
         return self._proxy_request('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'name': name}, is_sync=True)
 
-    def set_organization_network_policy(self, enabled: bool = False, egress_fqdns: list = None, egress_cidrs: list = None) -> OrganizationNetworkPolicy:
+    def set_organization_network_policy(self, enabled: bool = False, egress_fqdns: list = None) -> OrganizationNetworkPolicy:
         """Set the organization's egress network policy (Agent Firewall) for agent computers.
 
-        The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
-        validated and the whole request is rejected (nothing is written) if any entry is malformed, is a
-        reserved hostname, or is a protected/IPv6 CIDR (see below). Accepted changes are reconciled onto
-        the organization's agent computers within a few minutes (not synchronously).
+        The baseline is allow-all; the policy lists the hostnames to block. Entries are validated and the
+        whole request is rejected (nothing is written) if any entry is malformed or is a reserved hostname
+        (see below). Accepted changes are reconciled onto the organization's agent computers within a few
+        minutes (not synchronously).
 
 
         Args:
             enabled (bool): Whether to enforce the denylist. When False the policy is stored but not enforced.
             egress_fqdns (list): Hostnames to block. An exact hostname (e.g. 'ads.tracker.net') blocks that name only; a wildcard (e.g. '*.tracker.net') blocks the domain and all its subdomains at any depth. Only a single leading '*.' is supported. Reserved names required by the organization's own computers (e.g. *.cluster.local, cloud metadata, platform APIs) are rejected.
-            egress_cidrs (list): IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24']. CIDRs that overlap internal / metadata / loopback ranges, and IPv6 CIDRs, are rejected.
 
         Returns:
             OrganizationNetworkPolicy: The organization's egress denylist after the update."""
-        return self._proxy_request('setOrganizationNetworkPolicy', 'POST', query_params={}, body={'enabled': enabled, 'egressFqdns': egress_fqdns, 'egressCidrs': egress_cidrs}, parse_type=OrganizationNetworkPolicy, is_sync=True)
+        return self._proxy_request('setOrganizationNetworkPolicy', 'POST', query_params={}, body={'enabled': enabled, 'egressFqdns': egress_fqdns}, parse_type=OrganizationNetworkPolicy, is_sync=True)
 
     def add_user_group_object_permission(self, object_id: str, user_group_id: str, object_type: str, permission: str = 'ALL'):
         """Add user group object permission for any object type.

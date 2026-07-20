@@ -5015,6 +5015,8 @@ Package Contents
    :param resolve_matching_documents: Whether to get matching document references for response instead of prompt.
                                       Needs to recalculate them if highlights are unavailable in summary_info
    :type resolve_matching_documents: bool
+   :param lookback_days: If set, only import conversations with events in the last N days. Defaults to the entire history.
+   :type lookback_days: int
 
 
    .. py:attribute:: include_entire_conversation_history
@@ -5032,6 +5034,12 @@ Package Contents
    .. py:attribute:: resolve_matching_documents
       :type:  bool
       :value: False
+
+
+
+   .. py:attribute:: lookback_days
+      :type:  int
+      :value: None
 
 
 
@@ -9850,6 +9858,16 @@ Package Contents
 
 
 
+   .. py:attribute:: KIMI_K3
+      :value: 'KIMI_K3'
+
+
+
+   .. py:attribute:: INKLING
+      :value: 'INKLING'
+
+
+
 .. py:class:: MonitorAlertType(*args, **kwds)
 
    Bases: :py:obj:`ApiEnum`
@@ -11290,6 +11308,11 @@ Package Contents
 
    .. py:attribute:: OFFICE
       :value: 'OFFICE'
+
+
+
+   .. py:attribute:: SLACK_TAG
+      :value: 'SLACK_TAG'
 
 
 
@@ -13644,6 +13667,8 @@ Package Contents
    :type enable_tool_bar: bool
    :param enable_inline_source_citations: Enable inline citations of the sources in the response.
    :type enable_inline_source_citations: bool
+   :param enable_voice: Enable voice input.
+   :type enable_voice: bool
    :param response_format: (str): When set to 'JSON', the LLM will generate a JSON formatted string.
    :param json_response_instructions: Instructions to be followed while generating the json_response if `response_format` is set to "JSON". This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.
    :type json_response_instructions: str
@@ -13876,6 +13901,12 @@ Package Contents
 
 
    .. py:attribute:: enable_inline_source_citations
+      :type:  bool
+      :value: None
+
+
+
+   .. py:attribute:: enable_voice
       :type:  bool
       :value: None
 
@@ -25484,22 +25515,20 @@ Package Contents
 
 
 
-   .. py:method:: set_organization_network_policy(enabled = False, egress_fqdns = None, egress_cidrs = None)
+   .. py:method:: set_organization_network_policy(enabled = False, egress_fqdns = None)
 
       Set the organization's egress network policy (Agent Firewall) for agent computers.
 
-      The baseline is allow-all; the policy lists the hostnames and IP ranges to block. Entries are
-      validated and the whole request is rejected (nothing is written) if any entry is malformed, is a
-      reserved hostname, or is a protected/IPv6 CIDR (see below). Accepted changes are reconciled onto
-      the organization's agent computers within a few minutes (not synchronously).
+      The baseline is allow-all; the policy lists the hostnames to block. Entries are validated and the
+      whole request is rejected (nothing is written) if any entry is malformed or is a reserved hostname
+      (see below). Accepted changes are reconciled onto the organization's agent computers within a few
+      minutes (not synchronously).
 
 
       :param enabled: Whether to enforce the denylist. When False the policy is stored but not enforced.
       :type enabled: bool
       :param egress_fqdns: Hostnames to block. An exact hostname (e.g. 'ads.tracker.net') blocks that name only; a wildcard (e.g. '*.tracker.net') blocks the domain and all its subdomains at any depth. Only a single leading '*.' is supported. Reserved names required by the organization's own computers (e.g. *.cluster.local, cloud metadata, platform APIs) are rejected.
       :type egress_fqdns: list
-      :param egress_cidrs: IPv4 addresses or CIDR ranges to block, e.g. ['203.0.113.0/24']. CIDRs that overlap internal / metadata / loopback ranges, and IPv6 CIDRs, are rejected.
-      :type egress_cidrs: list
 
       :returns: The organization's egress denylist after the update.
       :rtype: OrganizationNetworkPolicy
@@ -26988,6 +27017,21 @@ Package Contents
 
 
 
+   .. py:method:: get_org_connector_auth(deployment_conversation_id = None)
+
+      Returns org-level connector auth bound to a deployment conversation. Currently
+
+      supports Slack only: the org bot token for a SLACK_TAG conversation.
+
+
+      :param deployment_conversation_id: The SLACK_TAG deployment conversation id used to resolve Slack context.
+      :type deployment_conversation_id: str
+
+      :returns: The org-level connector with the authentication details.
+      :rtype: UnifiedConnector
+
+
+
    .. py:method:: get_user_mcp_connector_auth(mcp_server_name = None)
 
       Get the auth for a MCP connector
@@ -28300,7 +28344,11 @@ Package Contents
 
    .. py:method:: get_organization_secret(secret_key)
 
-      Gets a secret.
+      Gets a secret. The secret value is only returned when called from an Abacus-managed
+
+      environment (an agent, usercode runtime, or hosted notebook owned by your organization,
+      or the organization's system API key); otherwise the value is masked.
+
 
       :param secret_key: The secret key.
       :type secret_key: str
@@ -28908,7 +28956,7 @@ Package Contents
 
 
 
-.. py:class:: CodeBot(client, llmName=None, name=None, coworkName=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None, provider=None, isUserApiKeyAllowed=None, isRateLimited=None, apiKeyUrl=None)
+.. py:class:: CodeBot(client, llmName=None, name=None, coworkName=None, imageUploadSupported=None, codeAgentSupported=None, codeEditSupported=None, isPremium=None, llmBotIcon=None, provider=None, isUserApiKeyAllowed=None, isRateLimited=None, apiKeyUrl=None, isCustomRouter=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28941,6 +28989,8 @@ Package Contents
    :type isRateLimited: bool
    :param apiKeyUrl: The URL to get the API key.
    :type apiKeyUrl: str
+   :param isCustomRouter: Whether this entry is an org-defined custom router (custom_<slug>).
+   :type isCustomRouter: bool
 
 
    .. py:attribute:: llm_name
@@ -28999,6 +29049,11 @@ Package Contents
 
 
    .. py:attribute:: api_key_url
+      :value: None
+
+
+
+   .. py:attribute:: is_custom_router
       :value: None
 
 
@@ -30220,7 +30275,7 @@ Package Contents
 
 
 
-.. py:class:: CoworkPairingChallenge(client, pairingId=None, userCode=None, qrToken=None, verificationDeepLink=None, expiresAt=None, status=None, desktopDeviceId=None, deviceName=None)
+.. py:class:: CoworkPairingChallenge(client, pairingId=None, userCode=None, qrToken=None, verificationDeepLink=None, expiresAt=None, status=None, desktopDeviceId=None, deviceName=None, mobileDeviceId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30245,6 +30300,8 @@ Package Contents
    :type desktopDeviceId: str
    :param deviceName: The display name of the desktop device requesting the pairing
    :type deviceName: str
+   :param mobileDeviceId: The ID of the mobile device that accepted the pairing
+   :type mobileDeviceId: str
 
 
    .. py:attribute:: pairing_id
@@ -30283,6 +30340,11 @@ Package Contents
 
 
    .. py:attribute:: device_name
+      :value: None
+
+
+
+   .. py:attribute:: mobile_device_id
       :value: None
 
 
@@ -33070,7 +33132,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33163,6 +33225,8 @@ Package Contents
    :type projectCreditsUsed: int
    :param webAppProjectId: The web app project id associated with the deployment conversation, if any.
    :type webAppProjectId: str
+   :param personalAgentComputerId: For SuperComputer conversations, the personal agent computer (VM) this conversation is pinned to, if any.
+   :type personalAgentComputerId: str
    :param roleplayCharacter: For Role Play conversations, the minimal character display (name and image) attached so a viewer who does not own the private character can still see who they're chatting with.
    :type roleplayCharacter: dict
    :param history: The history of the deployment conversation.
@@ -33383,6 +33447,11 @@ Package Contents
 
 
 
+   .. py:attribute:: personal_agent_computer_id
+      :value: None
+
+
+
    .. py:attribute:: roleplay_character
       :value: None
 
@@ -33409,6 +33478,21 @@ Package Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+
+   .. py:method:: get_org_connector_auth()
+
+      Returns org-level connector auth bound to a deployment conversation. Currently
+
+      supports Slack only: the org bot token for a SLACK_TAG conversation.
+
+
+      :param deployment_conversation_id: The SLACK_TAG deployment conversation id used to resolve Slack context.
+      :type deployment_conversation_id: str
+
+      :returns: The org-level connector with the authentication details.
+      :rtype: UnifiedConnector
 
 
 
@@ -33536,7 +33620,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33551,6 +33635,8 @@ Package Contents
    :type text: str
    :param timestamp: The timestamp at which the message was sent
    :type timestamp: str
+   :param isDaemonResumeReply: Daemon task conversations only. Whether this user message is a reply to a run's request_user_input (rendered as a normal chat message instead of a task run block).
+   :type isDaemonResumeReply: bool
    :param messageIndex: The index of the message in the conversation
    :type messageIndex: int
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
@@ -33646,6 +33732,11 @@ Package Contents
 
 
    .. py:attribute:: timestamp
+      :value: None
+
+
+
+   .. py:attribute:: is_daemon_resume_reply
       :value: None
 
 
@@ -39835,7 +39926,7 @@ Package Contents
 
 
 
-.. py:class:: FeaturedMcpServer(client, key=None, name=None, url=None, tagline=None, description=None, iconUrl=None, categories=None, author=None, authorUrl=None, docsUrl=None, oauth2=None, rank=None, tools=None, toolCount=None)
+.. py:class:: FeaturedMcpServer(client, key=None, name=None, url=None, tagline=None, description=None, iconUrl=None, categories=None, author=None, authorUrl=None, docsUrl=None, oauth2=None, rank=None, tools=None, toolCount=None, requiredFields=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39872,6 +39963,8 @@ Package Contents
    :type tools: list
    :param toolCount: Total tool count (differs from len(tools) only if the YAML caps the list).
    :type toolCount: int
+   :param requiredFields: Config the user must supply before connecting (e.g. a per-workspace URL or OAuth client ID); empty for one-click servers. Each field: name, label, placeholder, type, optional, target, help.
+   :type requiredFields: list
 
 
    .. py:attribute:: key
@@ -39940,6 +40033,11 @@ Package Contents
 
 
    .. py:attribute:: tool_count
+      :value: None
+
+
+
+   .. py:attribute:: required_fields
       :value: None
 
 
@@ -41010,7 +41108,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None)
+.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41081,6 +41179,8 @@ Package Contents
    :type domainAliases: list
    :param isThrottled: Whether the app was stopped due to excessive resource usage
    :type isThrottled: bool
+   :param scDeployedUrls: Live deployed URLs of a supercomputer conversation (tracked in conversation metadata)
+   :type scDeployedUrls: list
 
 
    .. py:attribute:: hosted_app_container_id
@@ -41234,6 +41334,11 @@ Package Contents
 
 
    .. py:attribute:: is_throttled
+      :value: None
+
+
+
+   .. py:attribute:: sc_deployed_urls
       :value: None
 
 
@@ -42165,7 +42270,7 @@ Package Contents
 
 
 
-.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasSeparateProdDatabase=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None, accessLevel=None)
+.. py:class:: LlmArtifact(client, llmArtifactId=None, info=None, description=None, createdAt=None, webAppDeploymentId=None, deploymentStatus=None, isLatest=None, deploymentConversationId=None, webAppProjectId=None, hasDatabase=None, hasStorage=None, projectMetadata=None, hasSeparateProdDatabase=None, hasDatabaseSnapshot=None, supportsPreviewRestore=None, accessLevel=None, isDatabaseLimited=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42206,6 +42311,8 @@ Package Contents
    :type supportsPreviewRestore: bool
    :param accessLevel: The access level of the artifact
    :type accessLevel: str
+   :param isDatabaseLimited: Whether the database has exceeded its storage quota and is in read-only mode
+   :type isDatabaseLimited: bool
 
 
    .. py:attribute:: llm_artifact_id
@@ -42284,6 +42391,11 @@ Package Contents
 
 
    .. py:attribute:: access_level
+      :value: None
+
+
+
+   .. py:attribute:: is_database_limited
       :value: None
 
 
@@ -46955,7 +47067,7 @@ Package Contents
 
 
 
-.. py:class:: OrganizationNetworkPolicy(client, enabled=None, lifecycle=None, egressFqdns=None, egressCidrs=None, updatedAt=None, available=None)
+.. py:class:: OrganizationNetworkPolicy(client, enabled=None, lifecycle=None, egressFqdns=None, updatedAt=None, available=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46970,8 +47082,6 @@ Package Contents
    :type lifecycle: str
    :param egressFqdns: The hostnames blocked for the organization's agent computers.
    :type egressFqdns: list
-   :param egressCidrs: The IP ranges (CIDR) blocked for the organization's agent computers.
-   :type egressCidrs: list
    :param updatedAt: The timestamp at which the policy was last modified.
    :type updatedAt: str
    :param available: Whether the Agent Firewall is available for this organization.
@@ -46989,11 +47099,6 @@ Package Contents
 
 
    .. py:attribute:: egress_fqdns
-      :value: None
-
-
-
-   .. py:attribute:: egress_cidrs
       :value: None
 
 
@@ -55840,7 +55945,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None, targetPersonalAgentComputerId=None, targetUserId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55867,6 +55972,10 @@ Package Contents
    :type isRootDomain: bool
    :param isDeployed: Whether the web app domain is deployed
    :type isDeployed: bool
+   :param targetPersonalAgentComputerId: The Supercomputer VM this domain routes to (null when serving hosted apps)
+   :type targetPersonalAgentComputerId: id
+   :param targetUserId: The user who owns the target Supercomputer VM
+   :type targetUserId: id
 
 
    .. py:attribute:: web_app_domain_id
@@ -55910,6 +56019,16 @@ Package Contents
 
 
    .. py:attribute:: is_deployed
+      :value: None
+
+
+
+   .. py:attribute:: target_personal_agent_computer_id
+      :value: None
+
+
+
+   .. py:attribute:: target_user_id
       :value: None
 
 
@@ -56498,6 +56617,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.104'
+   :value: '1.4.105'
 
 

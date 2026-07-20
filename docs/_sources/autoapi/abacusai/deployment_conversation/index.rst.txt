@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -108,6 +108,8 @@ Module Contents
    :type projectCreditsUsed: int
    :param webAppProjectId: The web app project id associated with the deployment conversation, if any.
    :type webAppProjectId: str
+   :param personalAgentComputerId: For SuperComputer conversations, the personal agent computer (VM) this conversation is pinned to, if any.
+   :type personalAgentComputerId: str
    :param roleplayCharacter: For Role Play conversations, the minimal character display (name and image) attached so a viewer who does not own the private character can still see who they're chatting with.
    :type roleplayCharacter: dict
    :param history: The history of the deployment conversation.
@@ -328,6 +330,11 @@ Module Contents
 
 
 
+   .. py:attribute:: personal_agent_computer_id
+      :value: None
+
+
+
    .. py:attribute:: roleplay_character
       :value: None
 
@@ -354,6 +361,21 @@ Module Contents
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+
+   .. py:method:: get_org_connector_auth()
+
+      Returns org-level connector auth bound to a deployment conversation. Currently
+
+      supports Slack only: the org bot token for a SLACK_TAG conversation.
+
+
+      :param deployment_conversation_id: The SLACK_TAG deployment conversation id used to resolve Slack context.
+      :type deployment_conversation_id: str
+
+      :returns: The org-level connector with the authentication details.
+      :rtype: UnifiedConnector
 
 
 

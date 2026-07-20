@@ -421,6 +421,8 @@ Module Contents
    :param resolve_matching_documents: Whether to get matching document references for response instead of prompt.
                                       Needs to recalculate them if highlights are unavailable in summary_info
    :type resolve_matching_documents: bool
+   :param lookback_days: If set, only import conversations with events in the last N days. Defaults to the entire history.
+   :type lookback_days: int
 
 
    .. py:attribute:: include_entire_conversation_history
@@ -438,6 +440,12 @@ Module Contents
    .. py:attribute:: resolve_matching_documents
       :type:  bool
       :value: False
+
+
+
+   .. py:attribute:: lookback_days
+      :type:  int
+      :value: None
 
 
 

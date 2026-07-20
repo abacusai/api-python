@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CoworkPairingChallenge(client, pairingId=None, userCode=None, qrToken=None, verificationDeepLink=None, expiresAt=None, status=None, desktopDeviceId=None, deviceName=None)
+.. py:class:: CoworkPairingChallenge(client, pairingId=None, userCode=None, qrToken=None, verificationDeepLink=None, expiresAt=None, status=None, desktopDeviceId=None, deviceName=None, mobileDeviceId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type desktopDeviceId: str
    :param deviceName: The display name of the desktop device requesting the pairing
    :type deviceName: str
+   :param mobileDeviceId: The ID of the mobile device that accepted the pairing
+   :type mobileDeviceId: str
 
 
    .. py:attribute:: pairing_id
@@ -78,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: device_name
+      :value: None
+
+
+
+   .. py:attribute:: mobile_device_id
       :value: None
 
 

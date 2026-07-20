@@ -4831,6 +4831,7 @@ inheritance.</p>
 <li><p><strong>include_all_feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to include all feedback for this deployment conversation</p></li>
 <li><p><strong>resolve_matching_documents</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to get matching document references for response instead of prompt.
 Needs to recalculate them if highlights are unavailable in summary_info</p></li>
+<li><p><strong>lookback_days</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – If set, only import conversations with events in the last N days. Defaults to the entire history.</p></li>
 </ul>
 </dd>
 </dl>
@@ -4847,6 +4848,11 @@ Needs to recalculate them if highlights are unavailable in summary_info</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.AbacusUsageMetricsDatasetConfig.resolve_matching_documents">
 <span class="sig-name descname"><span class="pre">resolve_matching_documents</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#abacusai.api_class.AbacusUsageMetricsDatasetConfig.resolve_matching_documents" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.AbacusUsageMetricsDatasetConfig.lookback_days">
+<span class="sig-name descname"><span class="pre">lookback_days</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.AbacusUsageMetricsDatasetConfig.lookback_days" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -10129,6 +10135,16 @@ attributes – see the documentation for details.</p>
 <span class="sig-name descname"><span class="pre">KIMI_K2_7_CODE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'KIMI_K2_7_CODE'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.KIMI_K2_7_CODE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.KIMI_K3">
+<span class="sig-name descname"><span class="pre">KIMI_K3</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'KIMI_K3'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.KIMI_K3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.INKLING">
+<span class="sig-name descname"><span class="pre">INKLING</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INKLING'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.INKLING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -11834,6 +11850,11 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.OFFICE">
 <span class="sig-name descname"><span class="pre">OFFICE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OFFICE'</span></span><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.OFFICE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.DeploymentConversationType.SLACK_TAG">
+<span class="sig-name descname"><span class="pre">SLACK_TAG</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SLACK_TAG'</span></span><a class="headerlink" href="#abacusai.api_class.DeploymentConversationType.SLACK_TAG" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -14261,6 +14282,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>unknown_answer_phrase</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Fallback response when the LLM can’t find an answer.</p></li>
 <li><p><strong>enable_tool_bar</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.</p></li>
 <li><p><strong>enable_inline_source_citations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Enable inline citations of the sources in the response.</p></li>
+<li><p><strong>enable_voice</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Enable voice input.</p></li>
 <li><p><strong>response_format</strong> – (str): When set to ‘JSON’, the LLM will generate a JSON formatted string.</p></li>
 <li><p><strong>json_response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Instructions to be followed while generating the json_response if <cite>response_format</cite> is set to “JSON”. This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.</p></li>
 <li><p><strong>json_response_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Specifies the JSON schema that the model should adhere to if <cite>response_format</cite> is set to “JSON”. This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields ‘type’, ‘required’ and ‘description’. For example - ‘{“sample_field”: {“type”: “integer”, “required”: true, “description”: “Sample Field”}}’</p></li>
@@ -14452,6 +14474,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.enable_inline_source_citations">
 <span class="sig-name descname"><span class="pre">enable_inline_source_citations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.enable_inline_source_citations" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.enable_voice">
+<span class="sig-name descname"><span class="pre">enable_voice</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.enable_voice" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

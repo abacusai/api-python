@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None, targetPersonalAgentComputerId=None, targetUserId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,10 @@ Module Contents
    :type isRootDomain: bool
    :param isDeployed: Whether the web app domain is deployed
    :type isDeployed: bool
+   :param targetPersonalAgentComputerId: The Supercomputer VM this domain routes to (null when serving hosted apps)
+   :type targetPersonalAgentComputerId: id
+   :param targetUserId: The user who owns the target Supercomputer VM
+   :type targetUserId: id
 
 
    .. py:attribute:: web_app_domain_id
@@ -85,6 +89,16 @@ Module Contents
 
 
    .. py:attribute:: is_deployed
+      :value: None
+
+
+
+   .. py:attribute:: target_personal_agent_computer_id
+      :value: None
+
+
+
+   .. py:attribute:: target_user_id
       :value: None
 
 
