@@ -1,0 +1,97 @@
+abacusai.web_app_self_heal_info
+===============================
+
+.. py:module:: abacusai.web_app_self_heal_info
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.web_app_self_heal_info.WebAppSelfHealInfo
+
+
+Module Contents
+---------------
+
+.. py:class:: WebAppSelfHealInfo(client, webAppProjectId=None, appName=None, deploymentConversationId=None, stagingHostname=None, projectType=None, settings=None, hasRecentTraffic=None, issues={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Self-heal issues and settings for a web app project (_listWebAppIssues).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID
+   :type webAppProjectId: id
+   :param appName: Name of the app's build conversation
+   :type appName: str
+   :param deploymentConversationId: The app's build conversation ID
+   :type deploymentConversationId: id
+   :param stagingHostname: The hostname fixes are staged on
+   :type stagingHostname: str
+   :param projectType: web_app | web_service | mobile_app
+   :type projectType: str
+   :param settings: The project's self_heal settings (enabled, notify_recipients, tag, hostname, capture_client_errors)
+   :type settings: dict
+   :param hasRecentTraffic: Whether a deployment served a successful external request recently
+   :type hasRecentTraffic: bool
+   :param issues: The project's issues
+   :type issues: WebAppIssue
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: app_name
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: staging_hostname
+      :value: None
+
+
+
+   .. py:attribute:: project_type
+      :value: None
+
+
+
+   .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: has_recent_traffic
+      :value: None
+
+
+
+   .. py:attribute:: issues
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

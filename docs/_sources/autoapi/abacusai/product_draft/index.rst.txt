@@ -1,0 +1,71 @@
+abacusai.product_draft
+======================
+
+.. py:module:: abacusai.product_draft
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.product_draft.ProductDraft
+
+
+Module Contents
+---------------
+
+.. py:class:: ProductDraft(client, name=None, assetType=None, sourceUrl=None, imageUrls=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Product Draft — the unsaved result of scraping a product/app URL (becomes a VideoAsset on create).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The scraped display name
+   :type name: str
+   :param assetType: Detected kind (app for app-store URLs, else product)
+   :type assetType: str
+   :param sourceUrl: The scraped page URL
+   :type sourceUrl: str
+   :param imageUrls: Hero image URLs found on the page (remote; downloaded to S3 on createVideoAsset)
+   :type imageUrls: list
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: asset_type
+      :value: None
+
+
+
+   .. py:attribute:: source_url
+      :value: None
+
+
+
+   .. py:attribute:: image_urls
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

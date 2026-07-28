@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type phoneNumbers: list
    :param error: The error message for the build
    :type error: str
+   :param expired: True when a SUCCESS build is old enough that its EAS download link is likely dead
+   :type expired: bool
 
 
    .. py:attribute:: status
@@ -85,6 +87,11 @@ Module Contents
 
 
    .. py:attribute:: error
+      :value: None
+
+
+
+   .. py:attribute:: expired
       :value: None
 
 

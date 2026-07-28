@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,8 @@ Module Contents
    :type deploymentConversationId: str
    :param sourceDeploymentConversationId: The source deployment conversation id associated with the chatllm task.
    :type sourceDeploymentConversationId: str
+   :param latestSourceDeploymentConversationId: The most recent conversation in the source conversation's thread family (excluding task-run conversations).
+   :type latestSourceDeploymentConversationId: str
    :param enableEmailAlerts: Whether email alerts are enabled for the chatllm task.
    :type enableEmailAlerts: bool
    :param email: The email to send alerts to.
@@ -68,6 +70,10 @@ Module Contents
    :type webAppHostname: str
    :param triggerType: The trigger type of the daemon task (scheduled or event_based).
    :type triggerType: str
+   :param nextRunSkipped: Whether the next scheduled run was stopped (skipped) by the user.
+   :type nextRunSkipped: bool
+   :param skippedRunTime: The unix timestamp of the run being skipped, when next_run_skipped is true.
+   :type skippedRunTime: int
    :param webhookUrl: The webhook URL for event-based daemon tasks.
    :type webhookUrl: str
    :param pushNotificationsEnabled: Whether push notifications are enabled for the task.
@@ -76,6 +82,22 @@ Module Contents
    :type skills: list
    :param isRsi: Whether the daemon task is a recursively self-improving (RSI) task.
    :type isRsi: bool
+   :param isSupercomputer: Whether the daemon task runs on the user's SuperComputer VM (pinned via its conversation).
+   :type isSupercomputer: bool
+   :param personalAgentComputerId: The id of the SuperComputer VM the task is pinned to, when is_supercomputer is true.
+   :type personalAgentComputerId: str
+   :param currentEffort: The worker effort the task currently runs on (auto/medium/high/xhigh/max).
+   :type currentEffort: str
+   :param effortLadder: The pickable effort rungs available for this task.
+   :type effortLadder: list
+   :param isOwner: Whether the requesting user owns the task.
+   :type isOwner: bool
+   :param sharedPermission: The permission the task was shared with ('VIEW' or 'EDIT'); only set for non-owners.
+   :type sharedPermission: str
+   :param ownerEmail: The task owner's email; only set for non-owners.
+   :type ownerEmail: str
+   :param resumeRequestId: The streaming request id for a reply/follow-up just dispatched via answer_daemon_task_input, for the UI to attach the live stream immediately.
+   :type resumeRequestId: str
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -137,6 +159,11 @@ Module Contents
 
 
 
+   .. py:attribute:: latest_source_deployment_conversation_id
+      :value: None
+
+
+
    .. py:attribute:: enable_email_alerts
       :value: None
 
@@ -192,6 +219,16 @@ Module Contents
 
 
 
+   .. py:attribute:: next_run_skipped
+      :value: None
+
+
+
+   .. py:attribute:: skipped_run_time
+      :value: None
+
+
+
    .. py:attribute:: webhook_url
       :value: None
 
@@ -208,6 +245,46 @@ Module Contents
 
 
    .. py:attribute:: is_rsi
+      :value: None
+
+
+
+   .. py:attribute:: is_supercomputer
+      :value: None
+
+
+
+   .. py:attribute:: personal_agent_computer_id
+      :value: None
+
+
+
+   .. py:attribute:: current_effort
+      :value: None
+
+
+
+   .. py:attribute:: effort_ladder
+      :value: None
+
+
+
+   .. py:attribute:: is_owner
+      :value: None
+
+
+
+   .. py:attribute:: shared_permission
+      :value: None
+
+
+
+   .. py:attribute:: owner_email
+      :value: None
+
+
+
+   .. py:attribute:: resume_request_id
       :value: None
 
 

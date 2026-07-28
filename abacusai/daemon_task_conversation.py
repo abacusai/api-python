@@ -12,20 +12,24 @@ class DaemonTaskConversation(AbstractApiClass):
             updatedAt (str): The last update timestamp
             deploymentConversationName (str): The name of the conversation
             externalApplicationId (str): The external application ID
+            runCount (int): Number of task run instances attached to this conversation
+            runNumber (int): 1-based run number from the instance sequence; None when the conversation holds multiple runs
     """
 
-    def __init__(self, client, deploymentConversationId=None, createdAt=None, updatedAt=None, deploymentConversationName=None, externalApplicationId=None):
+    def __init__(self, client, deploymentConversationId=None, createdAt=None, updatedAt=None, deploymentConversationName=None, externalApplicationId=None, runCount=None, runNumber=None):
         super().__init__(client, None)
         self.deployment_conversation_id = deploymentConversationId
         self.created_at = createdAt
         self.updated_at = updatedAt
         self.deployment_conversation_name = deploymentConversationName
         self.external_application_id = externalApplicationId
+        self.run_count = runCount
+        self.run_number = runNumber
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'created_at': repr(self.created_at), f'updated_at': repr(
-            self.updated_at), f'deployment_conversation_name': repr(self.deployment_conversation_name), f'external_application_id': repr(self.external_application_id)}
+        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'deployment_conversation_name': repr(
+            self.deployment_conversation_name), f'external_application_id': repr(self.external_application_id), f'run_count': repr(self.run_count), f'run_number': repr(self.run_number)}
         class_name = "DaemonTaskConversation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -38,6 +42,6 @@ class DaemonTaskConversation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'created_at': self.created_at, 'updated_at': self.updated_at,
-                'deployment_conversation_name': self.deployment_conversation_name, 'external_application_id': self.external_application_id}
+        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'created_at': self.created_at, 'updated_at': self.updated_at, 'deployment_conversation_name':
+                self.deployment_conversation_name, 'external_application_id': self.external_application_id, 'run_count': self.run_count, 'run_number': self.run_number}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

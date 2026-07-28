@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DaemonTaskConversation(client, deploymentConversationId=None, createdAt=None, updatedAt=None, deploymentConversationName=None, externalApplicationId=None)
+.. py:class:: DaemonTaskConversation(client, deploymentConversationId=None, createdAt=None, updatedAt=None, deploymentConversationName=None, externalApplicationId=None, runCount=None, runNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,10 @@ Module Contents
    :type deploymentConversationName: str
    :param externalApplicationId: The external application ID
    :type externalApplicationId: str
+   :param runCount: Number of task run instances attached to this conversation
+   :type runCount: int
+   :param runNumber: 1-based run number from the instance sequence; None when the conversation holds multiple runs
+   :type runNumber: int
 
 
    .. py:attribute:: deployment_conversation_id
@@ -57,6 +61,16 @@ Module Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: run_count
+      :value: None
+
+
+
+   .. py:attribute:: run_number
       :value: None
 
 

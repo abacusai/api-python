@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.105'
+      :value: '1.4.106'
 
 
 
@@ -6565,20 +6565,25 @@ Module Contents
 
    .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None, version_limit = 30)
 
-      Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
+      Creates an online feature group backed dataset that accepts writes over an extended period of time.
+
+      Legacy streaming datasets are deprecated: every dataset created by this method is an online
+      feature group. If no primary_key is provided, the feature group uses a default primary key
+      column and appended rows without a value for it get server-generated unique keys.
+
 
       :param table_name: The feature group table name to create for this dataset.
       :type table_name: str
       :param primary_key: The optional primary key column name for the dataset.
       :type primary_key: str
-      :param update_timestamp_key: Name of the feature which defines the update timestamp of the feature group. Used in concatenation and primary key deduplication. Only relevant if lookup keys are set.
+      :param update_timestamp_key: Deprecated. Not supported for online feature groups.
       :type update_timestamp_key: str
-      :param lookup_keys: List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
+      :param lookup_keys: Deprecated. Not supported for online feature groups.
       :type lookup_keys: list
       :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
       :type version_limit: int
 
-      :returns: The streaming dataset created.
+      :returns: The dataset created.
       :rtype: Dataset
 
 
@@ -10301,7 +10306,7 @@ Module Contents
 
 
 
-   .. py:method:: invite_users_to_app_user_group(user_group_id, emails)
+   .. py:method:: invite_users_to_app_user_group(user_group_id, emails, role = None)
 
       Invite users to an App User Group. This method will send the specified email addresses an invitation link to join a specific user group.
 
@@ -10312,6 +10317,8 @@ Module Contents
       :type user_group_id: str
       :param emails: The email addresses to invite to your user group.
       :type emails: List
+      :param role: The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the organization default when unset.
+      :type role: str
 
       :returns: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not.
       :rtype: ExternalInvite

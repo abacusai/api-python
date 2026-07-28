@@ -15,7 +15,7 @@ class MediaArtifact(AbstractApiClass):
             docId (str): Source document-upload id when promoted from a chat/notebook file (else None)
             isFavorited (bool): Whether the artifact is favorited
             isShared (bool): Whether the artifact is shared publicly
-            publicUrl (str): The permanent public URL (set after sharing)
+            publicUrl (str): The public URL for a shared artifact (set after sharing; on clouds without a CDN it is generated at read time)
             thumbnailUrl (str): Signed thumbnail URL (generated at read time)
             mediaUrl (str): Signed full media URL (generated at read time)
             filename (str): Ready-to-use display name (derived from info.title or generation_prompt at read time)

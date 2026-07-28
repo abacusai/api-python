@@ -1,4 +1,5 @@
 from .abacus_api import AbacusApi
+from .ad_template import AdTemplate
 from .address import Address
 from .agent import Agent
 from .agent_chat_message import AgentChatMessage
@@ -25,6 +26,8 @@ from .audio_listener_transcript_search_result import AudioListenerTranscriptSear
 from .audio_listener_transcript_search_results import AudioListenerTranscriptSearchResults
 from .audio_url_result import AudioUrlResult
 from .audit_log import AuditLog
+from .avatar import Avatar
+from .avatar_candidate import AvatarCandidate
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
@@ -72,6 +75,7 @@ from .custom_metric_version import CustomMetricVersion
 from .custom_train_function_info import CustomTrainFunctionInfo
 from .daemon_task_conversation import DaemonTaskConversation
 from .daemon_task_instance import DaemonTaskInstance
+from .daemon_task_permissions import DaemonTaskPermissions
 from .data_consistency_duplication import DataConsistencyDuplication
 from .data_metrics import DataMetrics
 from .data_prep_logs import DataPrepLogs
@@ -246,6 +250,7 @@ from .prediction_operator_version import PredictionOperatorVersion
 from .presentation_export_result import PresentationExportResult
 from .private_web_app_deployment import PrivateWebAppDeployment
 from .problem_type import ProblemType
+from .product_draft import ProductDraft
 from .project import Project
 from .project_config import ProjectConfig
 from .project_feature_group import ProjectFeatureGroup
@@ -299,6 +304,7 @@ from .user_exception import UserException
 from .user_group_object_permission import UserGroupObjectPermission
 from .user_ssh_key import UserSshKey
 from .vertical import Vertical
+from .video_asset import VideoAsset
 from .video_gen_costs import VideoGenCosts
 from .video_gen_model import VideoGenModel
 from .video_gen_model_options import VideoGenModelOptions
@@ -309,8 +315,13 @@ from .web_app_api_key import WebAppApiKey
 from .web_app_conversation import WebAppConversation
 from .web_app_deployment import WebAppDeployment
 from .web_app_deployment_permission_dict import WebAppDeploymentPermissionDict
+from .web_app_development_cost import WebAppDevelopmentCost
 from .web_app_domain import WebAppDomain
+from .web_app_issue import WebAppIssue
 from .web_app_project import WebAppProject
+from .web_app_security_finding import WebAppSecurityFinding
+from .web_app_security_scan_info import WebAppSecurityScanInfo
+from .web_app_self_heal_info import WebAppSelfHealInfo
 from .web_page_response import WebPageResponse
 from .web_search_response import WebSearchResponse
 from .web_search_result import WebSearchResult
@@ -320,4 +331,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.105"
+__version__ = "1.4.106"

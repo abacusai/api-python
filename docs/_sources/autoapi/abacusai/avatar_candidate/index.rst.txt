@@ -1,0 +1,57 @@
+abacusai.avatar_candidate
+=========================
+
+.. py:module:: abacusai.avatar_candidate
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.avatar_candidate.AvatarCandidate
+
+
+Module Contents
+---------------
+
+.. py:class:: AvatarCandidate(client, s3Key=None, url=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Avatar Candidate — one generated portrait option from generateAvatarCandidates.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param s3Key: Opaque candidate reference — pass back to createAvatar as imageRefs[{s3Key}]
+   :type s3Key: str
+   :param url: Signed preview URL for the candidate grid
+   :type url: str
+
+
+   .. py:attribute:: s3_key
+      :value: None
+
+
+
+   .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.105'
+    client_version = '1.4.106'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -6445,17 +6445,22 @@ class ApiClient(ReadOnlyClient):
         return self._call_api('createDatasetVersionFromDocumentReprocessing', 'POST', query_params={'datasetId': dataset_id}, body={'documentProcessingConfig': document_processing_config}, parse_type=DatasetVersion)
 
     def create_streaming_dataset(self, table_name: str, primary_key: str = None, update_timestamp_key: str = None, lookup_keys: list = None, version_limit: int = 30) -> Dataset:
-        """Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
+        """Creates an online feature group backed dataset that accepts writes over an extended period of time.
+
+        Legacy streaming datasets are deprecated: every dataset created by this method is an online
+        feature group. If no primary_key is provided, the feature group uses a default primary key
+        column and appended rows without a value for it get server-generated unique keys.
+
 
         Args:
             table_name (str): The feature group table name to create for this dataset.
             primary_key (str): The optional primary key column name for the dataset.
-            update_timestamp_key (str): Name of the feature which defines the update timestamp of the feature group. Used in concatenation and primary key deduplication. Only relevant if lookup keys are set.
-            lookup_keys (list): List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
+            update_timestamp_key (str): Deprecated. Not supported for online feature groups.
+            lookup_keys (list): Deprecated. Not supported for online feature groups.
             version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
 
         Returns:
-            Dataset: The streaming dataset created."""
+            Dataset: The dataset created."""
         return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'tableName': table_name, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys, 'versionLimit': version_limit}, parse_type=Dataset)
 
     def create_realtime_content_store(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None, realtime_content_store_config: Union[dict, RealtimeContentStoreConfig] = None) -> Dataset:
@@ -7811,7 +7816,7 @@ class ApiClient(ReadOnlyClient):
             chat_config (dict): A dictionary specifying the query chat config override.
             exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
+            deployment_id, deployment_token)
         return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'userInfo': user_info, 'excludeThinkingSegments': exclude_thinking_segments}, server_override=prediction_url)
 
     def get_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None) -> Dict:
@@ -7830,7 +7835,7 @@ class ApiClient(ReadOnlyClient):
             exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
             attachments (None): A dictionary of binary data to use to answer the queries."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
+            deployment_id, deployment_token)
         return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'excludeThinkingSegments': json.dumps(exclude_thinking_segments) if (exclude_thinking_segments is not None and not isinstance(exclude_thinking_segments, str)) else exclude_thinking_segments}, files=attachments, server_override=prediction_url)
 
     def get_conversation_response(self, deployment_id: str, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False, exclude_thinking_segments: bool = False) -> Dict:
@@ -7852,7 +7857,7 @@ class ApiClient(ReadOnlyClient):
             execute_usercode_tool (bool): If True, will return the tool output in the response.
             exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
+            deployment_id, deployment_token)
         return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'docInfos': doc_infos, 'userInfo': user_info, 'executeUsercodeTool': execute_usercode_tool, 'excludeThinkingSegments': exclude_thinking_segments}, server_override=prediction_url)
 
     def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, exclude_thinking_segments: bool = False, attachments: None = None) -> Dict:
@@ -7873,7 +7878,7 @@ class ApiClient(ReadOnlyClient):
             exclude_thinking_segments (bool): If True, the model's thinking/reasoning text will be excluded from the response. Defaults to False.
             attachments (None): A dictionary of binary data to use to answer the queries."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
+            deployment_id, deployment_token)
         return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'excludeThinkingSegments': json.dumps(exclude_thinking_segments) if (exclude_thinking_segments is not None and not isinstance(exclude_thinking_segments, str)) else exclude_thinking_segments}, files=attachments, server_override=prediction_url)
 
     def get_deep_agent_response(self, message: str, deployment_conversation_id: str = None) -> Dict:
@@ -8198,7 +8203,7 @@ class ApiClient(ReadOnlyClient):
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
+            deployment_id, deployment_token)
         return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column, 'minScore': min_score, 'requiredPhrases': required_phrases, 'filterClause': filter_clause, 'crowdingLimits': crowding_limits, 'includeTextSearch': include_text_search}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
 
     def get_completion(self, deployment_token: str, deployment_id: str, prompt: str) -> Dict:
@@ -9184,7 +9189,7 @@ class ApiClient(ReadOnlyClient):
             user_group_id (str): The ID of the App User Group."""
         return self._call_api('deleteAppUserGroup', 'DELETE', query_params={'userGroupId': user_group_id})
 
-    def invite_users_to_app_user_group(self, user_group_id: str, emails: List) -> ExternalInvite:
+    def invite_users_to_app_user_group(self, user_group_id: str, emails: List, role: str = None) -> ExternalInvite:
         """Invite users to an App User Group. This method will send the specified email addresses an invitation link to join a specific user group.
 
         This will allow them to use any chatbots that this user group has access to.
@@ -9193,10 +9198,11 @@ class ApiClient(ReadOnlyClient):
         Args:
             user_group_id (str): The ID of the App User Group to invite the user to.
             emails (List): The email addresses to invite to your user group.
+            role (str): The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the organization default when unset.
 
         Returns:
             ExternalInvite: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not."""
-        return self._call_api('inviteUsersToAppUserGroup', 'POST', query_params={}, body={'userGroupId': user_group_id, 'emails': emails}, parse_type=ExternalInvite)
+        return self._call_api('inviteUsersToAppUserGroup', 'POST', query_params={}, body={'userGroupId': user_group_id, 'emails': emails, 'role': role}, parse_type=ExternalInvite)
 
     def add_users_to_app_user_group(self, user_group_id: str, user_emails: list):
         """Adds users to a App User Group.

@@ -1,0 +1,111 @@
+abacusai.web_app_security_scan_info
+===================================
+
+.. py:module:: abacusai.web_app_security_scan_info
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.web_app_security_scan_info.WebAppSecurityScanInfo
+
+
+Module Contents
+---------------
+
+.. py:class:: WebAppSecurityScanInfo(client, webAppProjectId=None, appName=None, deploymentConversationId=None, isDeployed=None, scanStatus=None, scanStartedAt=None, scanCompletedAt=None, scanError=None, settings=None, findings={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Security scan state and findings for a web app project (_listAppSecurityFindings).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID
+   :type webAppProjectId: id
+   :param appName: Name of the app's build conversation
+   :type appName: str
+   :param deploymentConversationId: The app's build conversation ID
+   :type deploymentConversationId: id
+   :param isDeployed: Whether the app currently has an active deployment
+   :type isDeployed: bool
+   :param scanStatus: Status of the latest scan (RUNNING | COMPLETE | FAILED), if any
+   :type scanStatus: str
+   :param scanStartedAt: When the latest scan started
+   :type scanStartedAt: str
+   :param scanCompletedAt: When the latest scan completed
+   :type scanCompletedAt: str
+   :param scanError: Error message when the latest scan failed
+   :type scanError: str
+   :param settings: The project's security_scan settings (notify_recipients)
+   :type settings: dict
+   :param findings: The project's findings
+   :type findings: WebAppSecurityFinding
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: app_name
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: is_deployed
+      :value: None
+
+
+
+   .. py:attribute:: scan_status
+      :value: None
+
+
+
+   .. py:attribute:: scan_started_at
+      :value: None
+
+
+
+   .. py:attribute:: scan_completed_at
+      :value: None
+
+
+
+   .. py:attribute:: scan_error
+      :value: None
+
+
+
+   .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: findings
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

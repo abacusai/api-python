@@ -1,0 +1,113 @@
+abacusai.web_app_security_finding
+=================================
+
+.. py:module:: abacusai.web_app_security_finding
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.web_app_security_finding.WebAppSecurityFinding
+
+
+Module Contents
+---------------
+
+.. py:class:: WebAppSecurityFinding(client, webAppSecurityFindingId=None, category=None, severity=None, title=None, detail=None, filePath=None, recommendation=None, status=None, lastSeen=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A security finding detected by a security scan of a deployed web app.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppSecurityFindingId: The finding ID
+   :type webAppSecurityFindingId: id
+   :param category: DEPENDENCY | SECRET | AUTH | CONFIG | CODE
+   :type category: str
+   :param severity: LOW | MEDIUM | HIGH | CRITICAL
+   :type severity: str
+   :param title: Short title of the finding
+   :type title: str
+   :param detail: Detailed description of the vulnerability
+   :type detail: str
+   :param filePath: The affected file, when applicable
+   :type filePath: str
+   :param recommendation: Suggested remediation
+   :type recommendation: str
+   :param status: OPEN | ACKNOWLEDGED | RESOLVED | WONT_FIX
+   :type status: str
+   :param lastSeen: When the finding was last confirmed by a scan
+   :type lastSeen: str
+   :param createdAt: When the finding was first detected
+   :type createdAt: str
+
+
+   .. py:attribute:: web_app_security_finding_id
+      :value: None
+
+
+
+   .. py:attribute:: category
+      :value: None
+
+
+
+   .. py:attribute:: severity
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: detail
+      :value: None
+
+
+
+   .. py:attribute:: file_path
+      :value: None
+
+
+
+   .. py:attribute:: recommendation
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: last_seen
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

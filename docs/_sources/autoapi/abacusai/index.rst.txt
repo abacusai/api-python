@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    /autoapi/abacusai/abacus_api/index
+   /autoapi/abacusai/ad_template/index
    /autoapi/abacusai/address/index
    /autoapi/abacusai/agent/index
    /autoapi/abacusai/agent_chat_message/index
@@ -38,6 +39,8 @@ Submodules
    /autoapi/abacusai/audio_listener_transcript_search_results/index
    /autoapi/abacusai/audio_url_result/index
    /autoapi/abacusai/audit_log/index
+   /autoapi/abacusai/avatar/index
+   /autoapi/abacusai/avatar_candidate/index
    /autoapi/abacusai/batch_prediction/index
    /autoapi/abacusai/batch_prediction_version/index
    /autoapi/abacusai/batch_prediction_version_logs/index
@@ -86,6 +89,7 @@ Submodules
    /autoapi/abacusai/custom_train_function_info/index
    /autoapi/abacusai/daemon_task_conversation/index
    /autoapi/abacusai/daemon_task_instance/index
+   /autoapi/abacusai/daemon_task_permissions/index
    /autoapi/abacusai/data_consistency_duplication/index
    /autoapi/abacusai/data_metrics/index
    /autoapi/abacusai/data_prep_logs/index
@@ -259,6 +263,7 @@ Submodules
    /autoapi/abacusai/presentation_export_result/index
    /autoapi/abacusai/private_web_app_deployment/index
    /autoapi/abacusai/problem_type/index
+   /autoapi/abacusai/product_draft/index
    /autoapi/abacusai/project/index
    /autoapi/abacusai/project_config/index
    /autoapi/abacusai/project_feature_group/index
@@ -314,6 +319,7 @@ Submodules
    /autoapi/abacusai/user_group_object_permission/index
    /autoapi/abacusai/user_ssh_key/index
    /autoapi/abacusai/vertical/index
+   /autoapi/abacusai/video_asset/index
    /autoapi/abacusai/video_gen_costs/index
    /autoapi/abacusai/video_gen_model/index
    /autoapi/abacusai/video_gen_model_options/index
@@ -324,8 +330,13 @@ Submodules
    /autoapi/abacusai/web_app_conversation/index
    /autoapi/abacusai/web_app_deployment/index
    /autoapi/abacusai/web_app_deployment_permission_dict/index
+   /autoapi/abacusai/web_app_development_cost/index
    /autoapi/abacusai/web_app_domain/index
+   /autoapi/abacusai/web_app_issue/index
    /autoapi/abacusai/web_app_project/index
+   /autoapi/abacusai/web_app_security_finding/index
+   /autoapi/abacusai/web_app_security_scan_info/index
+   /autoapi/abacusai/web_app_self_heal_info/index
    /autoapi/abacusai/web_page_response/index
    /autoapi/abacusai/web_search_response/index
    /autoapi/abacusai/web_search_result/index
@@ -361,6 +372,7 @@ Classes
 .. autoapisummary::
 
    abacusai.AbacusApi
+   abacusai.AdTemplate
    abacusai.Address
    abacusai.Agent
    abacusai.AgentChatMessage
@@ -622,6 +634,8 @@ Classes
    abacusai.AudioListenerTranscriptSearchResults
    abacusai.AudioUrlResult
    abacusai.AuditLog
+   abacusai.Avatar
+   abacusai.AvatarCandidate
    abacusai.BatchPrediction
    abacusai.BatchPredictionVersion
    abacusai.BatchPredictionVersionLogs
@@ -673,6 +687,7 @@ Classes
    abacusai.CustomTrainFunctionInfo
    abacusai.DaemonTaskConversation
    abacusai.DaemonTaskInstance
+   abacusai.DaemonTaskPermissions
    abacusai.DataConsistencyDuplication
    abacusai.DataMetrics
    abacusai.DataPrepLogs
@@ -845,6 +860,7 @@ Classes
    abacusai.PresentationExportResult
    abacusai.PrivateWebAppDeployment
    abacusai.ProblemType
+   abacusai.ProductDraft
    abacusai.Project
    abacusai.ProjectConfig
    abacusai.ProjectFeatureGroup
@@ -898,6 +914,7 @@ Classes
    abacusai.UserGroupObjectPermission
    abacusai.UserSshKey
    abacusai.Vertical
+   abacusai.VideoAsset
    abacusai.VideoGenCosts
    abacusai.VideoGenModel
    abacusai.VideoGenModelOptions
@@ -908,8 +925,13 @@ Classes
    abacusai.WebAppConversation
    abacusai.WebAppDeployment
    abacusai.WebAppDeploymentPermissionDict
+   abacusai.WebAppDevelopmentCost
    abacusai.WebAppDomain
+   abacusai.WebAppIssue
    abacusai.WebAppProject
+   abacusai.WebAppSecurityFinding
+   abacusai.WebAppSecurityScanInfo
+   abacusai.WebAppSelfHealInfo
    abacusai.WebPageResponse
    abacusai.WebSearchResponse
    abacusai.WebSearchResult
@@ -961,6 +983,102 @@ Package Contents
 
 
    .. py:attribute:: score
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AdTemplate(client, slug=None, name=None, category=None, speaks=None, supportsAvatar=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, description=None, exampleMedia=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Ad Template — a Studio ad format card (client-safe registry fields; recipes stay server-side).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param slug: Stable template identifier
+   :type slug: str
+   :param name: Display name
+   :type name: str
+   :param category: Explore subtab (ugc, tiktok, commercial)
+   :type category: str
+   :param speaks: Whether the avatar speaks (voice/lip-sync formats)
+   :type speaks: bool
+   :param supportsAvatar: Whether an avatar can be attached (some formats are product-only)
+   :type supportsAvatar: bool
+   :param defaultDuration: Suggested duration in seconds
+   :type defaultDuration: int
+   :param defaultAspectRatio: Suggested aspect ratio
+   :type defaultAspectRatio: str
+   :param cardOneLiner: One-line pitch on the format card
+   :type cardOneLiner: str
+   :param description: Gallery caption / display copy
+   :type description: str
+   :param exampleMedia: CDN URLs of preview videos for the card
+   :type exampleMedia: list
+
+
+   .. py:attribute:: slug
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: category
+      :value: None
+
+
+
+   .. py:attribute:: speaks
+      :value: None
+
+
+
+   .. py:attribute:: supports_avatar
+      :value: None
+
+
+
+   .. py:attribute:: default_duration
+      :value: None
+
+
+
+   .. py:attribute:: default_aspect_ratio
+      :value: None
+
+
+
+   .. py:attribute:: card_one_liner
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: example_media
       :value: None
 
 
@@ -8926,6 +9044,21 @@ Package Contents
 
 
 
+   .. py:attribute:: GOOGLEANALYTICSUSER
+      :value: 'GOOGLEANALYTICSUSER'
+
+
+
+   .. py:attribute:: GOOGLESEARCHCONSOLE
+      :value: 'GOOGLESEARCHCONSOLE'
+
+
+
+   .. py:attribute:: GOOGLECHAT
+      :value: 'GOOGLECHAT'
+
+
+
    .. py:attribute:: HUBSPOT
       :value: 'HUBSPOT'
 
@@ -9618,6 +9751,11 @@ Package Contents
 
 
 
+   .. py:attribute:: CLAUDE_V5_OPUS
+      :value: 'CLAUDE_V5_OPUS'
+
+
+
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
 
@@ -9665,6 +9803,16 @@ Package Contents
 
    .. py:attribute:: GEMINI_3_5_FLASH
       :value: 'GEMINI_3_5_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_3_6_FLASH
+      :value: 'GEMINI_3_6_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_3_5_FLASH_LITE
+      :value: 'GEMINI_3_5_FLASH_LITE'
 
 
 
@@ -11592,6 +11740,11 @@ Package Contents
 
    .. py:attribute:: LEGAL
       :value: 'LEGAL'
+
+
+
+   .. py:attribute:: FINANCE
+      :value: 'FINANCE'
 
 
 
@@ -13665,10 +13818,10 @@ Package Contents
    :type unknown_answer_phrase: str
    :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
    :type enable_tool_bar: bool
+   :param enable_voice: Allow users to talk to this chatbot with a realtime voice agent that adds a microphone button opening a spoken, tool-using conversation.
+   :type enable_voice: bool
    :param enable_inline_source_citations: Enable inline citations of the sources in the response.
    :type enable_inline_source_citations: bool
-   :param enable_voice: Enable voice input.
-   :type enable_voice: bool
    :param response_format: (str): When set to 'JSON', the LLM will generate a JSON formatted string.
    :param json_response_instructions: Instructions to be followed while generating the json_response if `response_format` is set to "JSON". This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.
    :type json_response_instructions: str
@@ -13900,13 +14053,13 @@ Package Contents
 
 
 
-   .. py:attribute:: enable_inline_source_citations
+   .. py:attribute:: enable_voice
       :type:  bool
       :value: None
 
 
 
-   .. py:attribute:: enable_voice
+   .. py:attribute:: enable_inline_source_citations
       :type:  bool
       :value: None
 
@@ -16646,6 +16799,142 @@ Package Contents
 
 
 
+.. py:class:: Avatar(client, avatarId=None, name=None, description=None, isStock=None, isFavorited=None, voiceStatus=None, voicePreviewUrl=None, imageUrls=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Avatar — a persistent, reusable identity (reference image + optional cloned voice) for Studio generations.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param avatarId: The ID of the avatar
+   :type avatarId: id
+   :param name: The avatar's display name
+   :type name: str
+   :param description: Persona/descriptor used by the ad script writer and shown in the detail dialog
+   :type description: str
+   :param isStock: Whether this is a seeded starter avatar (read-only, visible to every org)
+   :type isStock: bool
+   :param isFavorited: Whether the avatar is favorited
+   :type isFavorited: bool
+   :param voiceStatus: Voice lifecycle state (none, processing, ready, failed), derived at read time
+   :type voiceStatus: str
+   :param voicePreviewUrl: Signed URL of the stored voice sample when one exists, generated at read time
+   :type voicePreviewUrl: str
+   :param imageUrls: Signed URLs of the reference images (first = front reference/card thumbnail), generated at read time
+   :type imageUrls: list
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+
+
+   .. py:attribute:: avatar_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: is_stock
+      :value: None
+
+
+
+   .. py:attribute:: is_favorited
+      :value: None
+
+
+
+   .. py:attribute:: voice_status
+      :value: None
+
+
+
+   .. py:attribute:: voice_preview_url
+      :value: None
+
+
+
+   .. py:attribute:: image_urls
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AvatarCandidate(client, s3Key=None, url=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Avatar Candidate — one generated portrait option from generateAvatarCandidates.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param s3Key: Opaque candidate reference — pass back to createAvatar as imageRefs[{s3Key}]
+   :type s3Key: str
+   :param url: Signed preview URL for the candidate grid
+   :type url: str
+
+
+   .. py:attribute:: s3_key
+      :value: None
+
+
+
+   .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -18315,7 +18604,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -18346,6 +18635,8 @@ Package Contents
    :type deploymentConversationId: str
    :param sourceDeploymentConversationId: The source deployment conversation id associated with the chatllm task.
    :type sourceDeploymentConversationId: str
+   :param latestSourceDeploymentConversationId: The most recent conversation in the source conversation's thread family (excluding task-run conversations).
+   :type latestSourceDeploymentConversationId: str
    :param enableEmailAlerts: Whether email alerts are enabled for the chatllm task.
    :type enableEmailAlerts: bool
    :param email: The email to send alerts to.
@@ -18368,6 +18659,10 @@ Package Contents
    :type webAppHostname: str
    :param triggerType: The trigger type of the daemon task (scheduled or event_based).
    :type triggerType: str
+   :param nextRunSkipped: Whether the next scheduled run was stopped (skipped) by the user.
+   :type nextRunSkipped: bool
+   :param skippedRunTime: The unix timestamp of the run being skipped, when next_run_skipped is true.
+   :type skippedRunTime: int
    :param webhookUrl: The webhook URL for event-based daemon tasks.
    :type webhookUrl: str
    :param pushNotificationsEnabled: Whether push notifications are enabled for the task.
@@ -18376,6 +18671,22 @@ Package Contents
    :type skills: list
    :param isRsi: Whether the daemon task is a recursively self-improving (RSI) task.
    :type isRsi: bool
+   :param isSupercomputer: Whether the daemon task runs on the user's SuperComputer VM (pinned via its conversation).
+   :type isSupercomputer: bool
+   :param personalAgentComputerId: The id of the SuperComputer VM the task is pinned to, when is_supercomputer is true.
+   :type personalAgentComputerId: str
+   :param currentEffort: The worker effort the task currently runs on (auto/medium/high/xhigh/max).
+   :type currentEffort: str
+   :param effortLadder: The pickable effort rungs available for this task.
+   :type effortLadder: list
+   :param isOwner: Whether the requesting user owns the task.
+   :type isOwner: bool
+   :param sharedPermission: The permission the task was shared with ('VIEW' or 'EDIT'); only set for non-owners.
+   :type sharedPermission: str
+   :param ownerEmail: The task owner's email; only set for non-owners.
+   :type ownerEmail: str
+   :param resumeRequestId: The streaming request id for a reply/follow-up just dispatched via answer_daemon_task_input, for the UI to attach the live stream immediately.
+   :type resumeRequestId: str
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -18437,6 +18748,11 @@ Package Contents
 
 
 
+   .. py:attribute:: latest_source_deployment_conversation_id
+      :value: None
+
+
+
    .. py:attribute:: enable_email_alerts
       :value: None
 
@@ -18492,6 +18808,16 @@ Package Contents
 
 
 
+   .. py:attribute:: next_run_skipped
+      :value: None
+
+
+
+   .. py:attribute:: skipped_run_time
+      :value: None
+
+
+
    .. py:attribute:: webhook_url
       :value: None
 
@@ -18508,6 +18834,46 @@ Package Contents
 
 
    .. py:attribute:: is_rsi
+      :value: None
+
+
+
+   .. py:attribute:: is_supercomputer
+      :value: None
+
+
+
+   .. py:attribute:: personal_agent_computer_id
+      :value: None
+
+
+
+   .. py:attribute:: current_effort
+      :value: None
+
+
+
+   .. py:attribute:: effort_ladder
+      :value: None
+
+
+
+   .. py:attribute:: is_owner
+      :value: None
+
+
+
+   .. py:attribute:: shared_permission
+      :value: None
+
+
+
+   .. py:attribute:: owner_email
+      :value: None
+
+
+
+   .. py:attribute:: resume_request_id
       :value: None
 
 
@@ -21863,20 +22229,25 @@ Package Contents
 
    .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None, version_limit = 30)
 
-      Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
+      Creates an online feature group backed dataset that accepts writes over an extended period of time.
+
+      Legacy streaming datasets are deprecated: every dataset created by this method is an online
+      feature group. If no primary_key is provided, the feature group uses a default primary key
+      column and appended rows without a value for it get server-generated unique keys.
+
 
       :param table_name: The feature group table name to create for this dataset.
       :type table_name: str
       :param primary_key: The optional primary key column name for the dataset.
       :type primary_key: str
-      :param update_timestamp_key: Name of the feature which defines the update timestamp of the feature group. Used in concatenation and primary key deduplication. Only relevant if lookup keys are set.
+      :param update_timestamp_key: Deprecated. Not supported for online feature groups.
       :type update_timestamp_key: str
-      :param lookup_keys: List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
+      :param lookup_keys: Deprecated. Not supported for online feature groups.
       :type lookup_keys: list
       :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
       :type version_limit: int
 
-      :returns: The streaming dataset created.
+      :returns: The dataset created.
       :rtype: Dataset
 
 
@@ -25599,7 +25970,7 @@ Package Contents
 
 
 
-   .. py:method:: invite_users_to_app_user_group(user_group_id, emails)
+   .. py:method:: invite_users_to_app_user_group(user_group_id, emails, role = None)
 
       Invite users to an App User Group. This method will send the specified email addresses an invitation link to join a specific user group.
 
@@ -25610,6 +25981,8 @@ Package Contents
       :type user_group_id: str
       :param emails: The email addresses to invite to your user group.
       :type emails: List
+      :param role: The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the organization default when unset.
+      :type role: str
 
       :returns: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not.
       :rtype: ExternalInvite
@@ -30813,7 +31186,7 @@ Package Contents
 
 
 
-.. py:class:: DaemonTaskConversation(client, deploymentConversationId=None, createdAt=None, updatedAt=None, deploymentConversationName=None, externalApplicationId=None)
+.. py:class:: DaemonTaskConversation(client, deploymentConversationId=None, createdAt=None, updatedAt=None, deploymentConversationName=None, externalApplicationId=None, runCount=None, runNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30832,6 +31205,10 @@ Package Contents
    :type deploymentConversationName: str
    :param externalApplicationId: The external application ID
    :type externalApplicationId: str
+   :param runCount: Number of task run instances attached to this conversation
+   :type runCount: int
+   :param runNumber: 1-based run number from the instance sequence; None when the conversation holds multiple runs
+   :type runNumber: int
 
 
    .. py:attribute:: deployment_conversation_id
@@ -30855,6 +31232,16 @@ Package Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: run_count
+      :value: None
+
+
+
+   .. py:attribute:: run_number
       :value: None
 
 
@@ -30923,6 +31310,53 @@ Package Contents
 
 
    .. py:attribute:: lifecycle_info
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: DaemonTaskPermissions(client, daemonTaskId=None, userPermissions=None, userGroupPermissions=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Daemon Task Sharing Permissions
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param daemonTaskId: The ID of the daemon task.
+   :type daemonTaskId: id
+   :param userPermissions: List of tuples containing (user_id, permission).
+   :type userPermissions: list
+   :param userGroupPermissions: List of tuples containing (user_group_id, permission).
+   :type userGroupPermissions: list
+
+
+   .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: user_permissions
+      :value: None
+
+
+
+   .. py:attribute:: user_group_permissions
       :value: None
 
 
@@ -33132,7 +33566,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33185,6 +33619,8 @@ Package Contents
    :type chatllmTaskId: str
    :param chatllmProjectId: The chatllm project id associated with the deployment conversation.
    :type chatllmProjectId: str
+   :param verticalType: For Expert (vertical) conversations, the owning vertical's type (HEALTH / ROLE_PLAY / LEGAL); null for regular conversations. Lets the unified list mark Expert convos and pick their icon.
+   :type verticalType: str
    :param conversationStatus: The status of the deployment conversation (used for deep agent conversations).
    :type conversationStatus: str
    :param computerStatus: The status of the computer associated with the deployment conversation (used for deep agent conversations).
@@ -33199,6 +33635,8 @@ Package Contents
    :type contestNames: list[str]
    :param daemonTaskId: The daemon task id associated with the deployment conversation.
    :type daemonTaskId: str
+   :param daemonTaskRunNumber: The 1-based run number of this conversation within its daemon task, set only for conversations holding a single run.
+   :type daemonTaskRunNumber: int
    :param parentDeploymentConversationId: The parent deployment conversation id associated with the deployment conversation.
    :type parentDeploymentConversationId: str
    :param sharedHomeDirectory: Whether this conversation is part of a shared-home-directory group — true if it has a parent conversation or at least one child conversation.
@@ -33227,6 +33665,8 @@ Package Contents
    :type webAppProjectId: str
    :param personalAgentComputerId: For SuperComputer conversations, the personal agent computer (VM) this conversation is pinned to, if any.
    :type personalAgentComputerId: str
+   :param scDeployedUrls: For SuperComputer conversations, the deployed URLs across the conversation's shared-home family (derived at read time; entries carry url and recorded_at).
+   :type scDeployedUrls: list
    :param roleplayCharacter: For Role Play conversations, the minimal character display (name and image) attached so a viewer who does not own the private character can still see who they're chatting with.
    :type roleplayCharacter: dict
    :param history: The history of the deployment conversation.
@@ -33347,6 +33787,11 @@ Package Contents
 
 
 
+   .. py:attribute:: vertical_type
+      :value: None
+
+
+
    .. py:attribute:: conversation_status
       :value: None
 
@@ -33378,6 +33823,11 @@ Package Contents
 
 
    .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: daemon_task_run_number
       :value: None
 
 
@@ -33448,6 +33898,11 @@ Package Contents
 
 
    .. py:attribute:: personal_agent_computer_id
+      :value: None
+
+
+
+   .. py:attribute:: sc_deployed_urls
       :value: None
 
 
@@ -43035,7 +43490,7 @@ Package Contents
    :type isFavorited: bool
    :param isShared: Whether the artifact is shared publicly
    :type isShared: bool
-   :param publicUrl: The permanent public URL (set after sharing)
+   :param publicUrl: The public URL for a shared artifact (set after sharing; on clouds without a CDN it is generated at read time)
    :type publicUrl: str
    :param thumbnailUrl: Signed thumbnail URL (generated at read time)
    :type thumbnailUrl: str
@@ -43230,7 +43685,7 @@ Package Contents
 
 
 
-.. py:class:: MemoryBucket(client, bucketKey=None, name=None, shortDescription=None, priority=None, content=None, updatedAtTimestamp=None, humanEdited=None)
+.. py:class:: MemoryBucket(client, bucketKey=None, name=None, shortDescription=None, priority=None, content=None, updatedAtTimestamp=None, humanEdited=None, contentVersion=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43253,6 +43708,8 @@ Package Contents
    :type updatedAtTimestamp: int
    :param humanEdited: Whether the user has edited this bucket (the cron is additive-only for it).
    :type humanEdited: bool
+   :param contentVersion: Version of the body, for optimistic concurrency. Pass the value you read back as expected_content_version when saving an edit; the save is rejected if it has moved.
+   :type contentVersion: int
 
 
    .. py:attribute:: bucket_key
@@ -43286,6 +43743,11 @@ Package Contents
 
 
    .. py:attribute:: human_edited
+      :value: None
+
+
+
+   .. py:attribute:: content_version
       :value: None
 
 
@@ -43423,7 +43885,7 @@ Package Contents
 
 
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43450,6 +43912,8 @@ Package Contents
    :type phoneNumbers: list
    :param error: The error message for the build
    :type error: str
+   :param expired: True when a SUCCESS build is old enough that its EAS download link is likely dead
+   :type expired: bool
 
 
    .. py:attribute:: status
@@ -43497,6 +43961,11 @@ Package Contents
 
 
 
+   .. py:attribute:: expired
+      :value: None
+
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -43512,7 +43981,7 @@ Package Contents
 
 
 
-.. py:class:: MobileBuildInfo(client, type=None, buildUrl=None, status=None, llmArtifactId=None, mobileAppBuildId=None)
+.. py:class:: MobileBuildInfo(client, type=None, buildUrl=None, status=None, llmArtifactId=None, mobileAppBuildId=None, expired=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43531,6 +44000,8 @@ Package Contents
    :type llmArtifactId: str
    :param mobileAppBuildId: The mobile app build id.
    :type mobileAppBuildId: str
+   :param expired: True when a SUCCESS build is old enough that its EAS download link is likely dead.
+   :type expired: bool
 
 
    .. py:attribute:: type
@@ -43554,6 +44025,11 @@ Package Contents
 
 
    .. py:attribute:: mobile_app_build_id
+      :value: None
+
+
+
+   .. py:attribute:: expired
       :value: None
 
 
@@ -50634,6 +51110,60 @@ Package Contents
 
 
 
+.. py:class:: ProductDraft(client, name=None, assetType=None, sourceUrl=None, imageUrls=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Product Draft — the unsaved result of scraping a product/app URL (becomes a VideoAsset on create).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The scraped display name
+   :type name: str
+   :param assetType: Detected kind (app for app-store URLs, else product)
+   :type assetType: str
+   :param sourceUrl: The scraped page URL
+   :type sourceUrl: str
+   :param imageUrls: Hero image URLs found on the page (remote; downloaded to S3 on createVideoAsset)
+   :type imageUrls: list
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: asset_type
+      :value: None
+
+
+
+   .. py:attribute:: source_url
+      :value: None
+
+
+
+   .. py:attribute:: image_urls
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, tags=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -53211,7 +53741,7 @@ Package Contents
 
 
 
-.. py:class:: RsiTaskRunHistory(client, objective=None, metricName=None, direction=None, baselineValue=None, minSample=None, noiseFloor=None, lifecycle=None, totalCount=None, gradedCount=None, limit=None, offset=None, iterations=None, trend=None, sourceDeploymentConversationId=None, workdir=None)
+.. py:class:: RsiTaskRunHistory(client, objective=None, metricName=None, direction=None, baselineValue=None, minSample=None, noiseFloor=None, lifecycle=None, totalCount=None, gradedCount=None, limit=None, offset=None, iterations=None, trend=None, sourceDeploymentConversationId=None, workdir=None, hostedDatabaseId=None, components=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -53250,6 +53780,10 @@ Package Contents
    :type sourceDeploymentConversationId: str
    :param workdir: The RSI working directory on that filesystem.
    :type workdir: str
+   :param hostedDatabaseId: The task's hosted database holding the rsi_runs ledger and task tables (null for pre-ledger tasks).
+   :type hostedDatabaseId: str
+   :param components: For a composite metric, the sub-metric definitions (name, direction, weight, baseline, lo, hi); each iteration also carries its measured {name: value} map under `components`.
+   :type components: list
 
 
    .. py:attribute:: objective
@@ -53323,6 +53857,16 @@ Package Contents
 
 
    .. py:attribute:: workdir
+      :value: None
+
+
+
+   .. py:attribute:: hosted_database_id
+      :value: None
+
+
+
+   .. py:attribute:: components
       :value: None
 
 
@@ -54164,7 +54708,7 @@ Package Contents
 
 
 
-.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None)
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None, imageDisplayThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -54181,6 +54725,8 @@ Package Contents
    :type lipSyncCosts: dict
    :param overhead: Fixed credit overhead per generation (agentic loop cost)
    :type overhead: int
+   :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
+   :type imageDisplayThreshold: int
 
 
    .. py:attribute:: video_costs
@@ -54199,6 +54745,11 @@ Package Contents
 
 
    .. py:attribute:: overhead
+      :value: None
+
+
+
+   .. py:attribute:: image_display_threshold
       :value: None
 
 
@@ -55374,6 +55925,81 @@ Package Contents
 
 
 
+.. py:class:: VideoAsset(client, videoAssetId=None, assetType=None, name=None, sourceUrl=None, imageUrls=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Video Asset — reusable generation collateral (a product or app today; extensible by asset_type).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param videoAssetId: The ID of the video asset
+   :type videoAssetId: id
+   :param assetType: The kind of collateral (product, app)
+   :type assetType: str
+   :param name: The asset's display name
+   :type name: str
+   :param sourceUrl: The page the asset was scraped from, if any
+   :type sourceUrl: str
+   :param imageUrls: Signed URLs of the stored images (hero first), generated at read time
+   :type imageUrls: list
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+
+
+   .. py:attribute:: video_asset_id
+      :value: None
+
+
+
+   .. py:attribute:: asset_type
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: source_url
+      :value: None
+
+
+
+   .. py:attribute:: image_urls
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: VideoGenCosts(client, modelCosts=None, expensiveModels=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -55762,7 +56388,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None)
+.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55783,6 +56409,8 @@ Package Contents
    :type createdAt: str
    :param conversationType: The type of the conversation
    :type conversationType: str
+   :param userTurnCount: Number of user messages in the conversation; only populated when requested
+   :type userTurnCount: int
 
 
    .. py:attribute:: deployment_conversation_id
@@ -55811,6 +56439,11 @@ Package Contents
 
 
    .. py:attribute:: conversation_type
+      :value: None
+
+
+
+   .. py:attribute:: user_turn_count
       :value: None
 
 
@@ -55945,6 +56578,46 @@ Package Contents
 
 
 
+.. py:class:: WebAppDevelopmentCost(client, webAppProjectId=None, appCreationCost=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Rough estimated build cost for a single web app project (_getWebAppProjectDevelopmentCost).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID.
+   :type webAppProjectId: id
+   :param appCreationCost: Rough estimated $ cost to build/iterate this app. Omitted from the response (the filter strips None) when the feature is disabled for the org.
+   :type appCreationCost: float
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: app_creation_cost
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None, targetPersonalAgentComputerId=None, targetUserId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -56048,6 +56721,95 @@ Package Contents
 
 
 
+.. py:class:: WebAppIssue(client, webAppIssueId=None, summary=None, severity=None, source=None, sampleTrace=None, occurrenceCount=None, status=None, lastSeen=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A self-heal issue detected in a deployed web app's production logs.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppIssueId: The issue ID
+   :type webAppIssueId: id
+   :param summary: Plain-English one-line summary of the error
+   :type summary: str
+   :param severity: LOW | MEDIUM | HIGH | CRITICAL
+   :type severity: str
+   :param source: SERVER | CLIENT — where the error originated
+   :type source: str
+   :param sampleTrace: A sample error trace for this issue
+   :type sampleTrace: str
+   :param occurrenceCount: Number of times this error has been seen
+   :type occurrenceCount: int
+   :param status: OPEN | FIXING | AWAITING_USER | RESOLVED | WONT_DO
+   :type status: str
+   :param lastSeen: When the error was last seen
+   :type lastSeen: str
+   :param createdAt: When the issue was first detected
+   :type createdAt: str
+
+
+   .. py:attribute:: web_app_issue_id
+      :value: None
+
+
+
+   .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: severity
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :value: None
+
+
+
+   .. py:attribute:: sample_trace
+      :value: None
+
+
+
+   .. py:attribute:: occurrence_count
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: last_seen
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebAppProject(client, webAppProjectId=None, sourceDeploymentConversationId=None, deployedStatus=None, hostnames=None, projectMetadata=None, projectType=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -56118,6 +56880,276 @@ Package Contents
 
 
    .. py:attribute:: email_domains
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: WebAppSecurityFinding(client, webAppSecurityFindingId=None, category=None, severity=None, title=None, detail=None, filePath=None, recommendation=None, status=None, lastSeen=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A security finding detected by a security scan of a deployed web app.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppSecurityFindingId: The finding ID
+   :type webAppSecurityFindingId: id
+   :param category: DEPENDENCY | SECRET | AUTH | CONFIG | CODE
+   :type category: str
+   :param severity: LOW | MEDIUM | HIGH | CRITICAL
+   :type severity: str
+   :param title: Short title of the finding
+   :type title: str
+   :param detail: Detailed description of the vulnerability
+   :type detail: str
+   :param filePath: The affected file, when applicable
+   :type filePath: str
+   :param recommendation: Suggested remediation
+   :type recommendation: str
+   :param status: OPEN | ACKNOWLEDGED | RESOLVED | WONT_FIX
+   :type status: str
+   :param lastSeen: When the finding was last confirmed by a scan
+   :type lastSeen: str
+   :param createdAt: When the finding was first detected
+   :type createdAt: str
+
+
+   .. py:attribute:: web_app_security_finding_id
+      :value: None
+
+
+
+   .. py:attribute:: category
+      :value: None
+
+
+
+   .. py:attribute:: severity
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: detail
+      :value: None
+
+
+
+   .. py:attribute:: file_path
+      :value: None
+
+
+
+   .. py:attribute:: recommendation
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: last_seen
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: WebAppSecurityScanInfo(client, webAppProjectId=None, appName=None, deploymentConversationId=None, isDeployed=None, scanStatus=None, scanStartedAt=None, scanCompletedAt=None, scanError=None, settings=None, findings={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Security scan state and findings for a web app project (_listAppSecurityFindings).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID
+   :type webAppProjectId: id
+   :param appName: Name of the app's build conversation
+   :type appName: str
+   :param deploymentConversationId: The app's build conversation ID
+   :type deploymentConversationId: id
+   :param isDeployed: Whether the app currently has an active deployment
+   :type isDeployed: bool
+   :param scanStatus: Status of the latest scan (RUNNING | COMPLETE | FAILED), if any
+   :type scanStatus: str
+   :param scanStartedAt: When the latest scan started
+   :type scanStartedAt: str
+   :param scanCompletedAt: When the latest scan completed
+   :type scanCompletedAt: str
+   :param scanError: Error message when the latest scan failed
+   :type scanError: str
+   :param settings: The project's security_scan settings (notify_recipients)
+   :type settings: dict
+   :param findings: The project's findings
+   :type findings: WebAppSecurityFinding
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: app_name
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: is_deployed
+      :value: None
+
+
+
+   .. py:attribute:: scan_status
+      :value: None
+
+
+
+   .. py:attribute:: scan_started_at
+      :value: None
+
+
+
+   .. py:attribute:: scan_completed_at
+      :value: None
+
+
+
+   .. py:attribute:: scan_error
+      :value: None
+
+
+
+   .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: findings
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: WebAppSelfHealInfo(client, webAppProjectId=None, appName=None, deploymentConversationId=None, stagingHostname=None, projectType=None, settings=None, hasRecentTraffic=None, issues={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Self-heal issues and settings for a web app project (_listWebAppIssues).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID
+   :type webAppProjectId: id
+   :param appName: Name of the app's build conversation
+   :type appName: str
+   :param deploymentConversationId: The app's build conversation ID
+   :type deploymentConversationId: id
+   :param stagingHostname: The hostname fixes are staged on
+   :type stagingHostname: str
+   :param projectType: web_app | web_service | mobile_app
+   :type projectType: str
+   :param settings: The project's self_heal settings (enabled, notify_recipients, tag, hostname, capture_client_errors)
+   :type settings: dict
+   :param hasRecentTraffic: Whether a deployment served a successful external request recently
+   :type hasRecentTraffic: bool
+   :param issues: The project's issues
+   :type issues: WebAppIssue
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: app_name
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: staging_hostname
+      :value: None
+
+
+
+   .. py:attribute:: project_type
+      :value: None
+
+
+
+   .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: has_recent_traffic
+      :value: None
+
+
+
+   .. py:attribute:: issues
 
 
    .. py:attribute:: deprecated_keys
@@ -56617,6 +57649,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.105'
+   :value: '1.4.106'
 
 

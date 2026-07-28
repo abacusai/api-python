@@ -498,8 +498,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
         enable_response_caching (bool): Enable caching of LLM responses to speed up response times and improve reproducibility.
         unknown_answer_phrase (str): Fallback response when the LLM can't find an answer.
         enable_tool_bar (bool): Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
+        enable_voice (bool): Allow users to talk to this chatbot with a realtime voice agent that adds a microphone button opening a spoken, tool-using conversation.
         enable_inline_source_citations (bool): Enable inline citations of the sources in the response.
-        enable_voice (bool): Enable voice input.
         response_format: (str): When set to 'JSON', the LLM will generate a JSON formatted string.
         json_response_instructions (str): Instructions to be followed while generating the json_response if `response_format` is set to "JSON". This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.
         json_response_schema (str): Specifies the JSON schema that the model should adhere to if `response_format` is set to "JSON". This should be a json-formatted string where each field of the expected schema is mapped to a dictionary containing the fields 'type', 'required' and 'description'. For example - '{"sample_field": {"type": "integer", "required": true, "description": "Sample Field"}}'
@@ -546,8 +546,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
     enable_response_caching: bool = dataclasses.field(default=None)
     unknown_answer_phrase: str = dataclasses.field(default=None)
     enable_tool_bar: bool = dataclasses.field(default=None)
-    enable_inline_source_citations: bool = dataclasses.field(default=None)
     enable_voice: bool = dataclasses.field(default=None)
+    enable_inline_source_citations: bool = dataclasses.field(default=None)
     response_format: str = dataclasses.field(default=None)
     json_response_instructions: str = dataclasses.field(default=None)
     json_response_schema: str = dataclasses.field(default=None)

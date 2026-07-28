@@ -1,0 +1,57 @@
+abacusai.web_app_development_cost
+=================================
+
+.. py:module:: abacusai.web_app_development_cost
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.web_app_development_cost.WebAppDevelopmentCost
+
+
+Module Contents
+---------------
+
+.. py:class:: WebAppDevelopmentCost(client, webAppProjectId=None, appCreationCost=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Rough estimated build cost for a single web app project (_getWebAppProjectDevelopmentCost).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID.
+   :type webAppProjectId: id
+   :param appCreationCost: Rough estimated $ cost to build/iterate this app. Omitted from the response (the filter strips None) when the feature is disabled for the org.
+   :type appCreationCost: float
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: app_creation_cost
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

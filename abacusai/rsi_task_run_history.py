@@ -22,9 +22,11 @@ class RsiTaskRunHistory(AbstractApiClass):
             trend (list): Compact full history for charting, oldest first (index, value, verdict; the in-flight run appears last with pending=true at its comparison baseline).
             sourceDeploymentConversationId (str): The conversation whose filesystem holds the RSI workdir (for fetching run records).
             workdir (str): The RSI working directory on that filesystem.
+            hostedDatabaseId (str): The task's hosted database holding the rsi_runs ledger and task tables (null for pre-ledger tasks).
+            components (list): For a composite metric, the sub-metric definitions (name, direction, weight, baseline, lo, hi); each iteration also carries its measured {name: value} map under `components`.
     """
 
-    def __init__(self, client, objective=None, metricName=None, direction=None, baselineValue=None, minSample=None, noiseFloor=None, lifecycle=None, totalCount=None, gradedCount=None, limit=None, offset=None, iterations=None, trend=None, sourceDeploymentConversationId=None, workdir=None):
+    def __init__(self, client, objective=None, metricName=None, direction=None, baselineValue=None, minSample=None, noiseFloor=None, lifecycle=None, totalCount=None, gradedCount=None, limit=None, offset=None, iterations=None, trend=None, sourceDeploymentConversationId=None, workdir=None, hostedDatabaseId=None, components=None):
         super().__init__(client, None)
         self.objective = objective
         self.metric_name = metricName
@@ -41,11 +43,13 @@ class RsiTaskRunHistory(AbstractApiClass):
         self.trend = trend
         self.source_deployment_conversation_id = sourceDeploymentConversationId
         self.workdir = workdir
+        self.hosted_database_id = hostedDatabaseId
+        self.components = components
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'objective': repr(self.objective), f'metric_name': repr(self.metric_name), f'direction': repr(self.direction), f'baseline_value': repr(self.baseline_value), f'min_sample': repr(self.min_sample), f'noise_floor': repr(self.noise_floor), f'lifecycle': repr(self.lifecycle), f'total_count': repr(
-            self.total_count), f'graded_count': repr(self.graded_count), f'limit': repr(self.limit), f'offset': repr(self.offset), f'iterations': repr(self.iterations), f'trend': repr(self.trend), f'source_deployment_conversation_id': repr(self.source_deployment_conversation_id), f'workdir': repr(self.workdir)}
+        repr_dict = {f'objective': repr(self.objective), f'metric_name': repr(self.metric_name), f'direction': repr(self.direction), f'baseline_value': repr(self.baseline_value), f'min_sample': repr(self.min_sample), f'noise_floor': repr(self.noise_floor), f'lifecycle': repr(self.lifecycle), f'total_count': repr(self.total_count), f'graded_count': repr(
+            self.graded_count), f'limit': repr(self.limit), f'offset': repr(self.offset), f'iterations': repr(self.iterations), f'trend': repr(self.trend), f'source_deployment_conversation_id': repr(self.source_deployment_conversation_id), f'workdir': repr(self.workdir), f'hosted_database_id': repr(self.hosted_database_id), f'components': repr(self.components)}
         class_name = "RsiTaskRunHistory"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -58,6 +62,6 @@ class RsiTaskRunHistory(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'objective': self.objective, 'metric_name': self.metric_name, 'direction': self.direction, 'baseline_value': self.baseline_value, 'min_sample': self.min_sample, 'noise_floor': self.noise_floor, 'lifecycle': self.lifecycle, 'total_count': self.total_count,
-                'graded_count': self.graded_count, 'limit': self.limit, 'offset': self.offset, 'iterations': self.iterations, 'trend': self.trend, 'source_deployment_conversation_id': self.source_deployment_conversation_id, 'workdir': self.workdir}
+        resp = {'objective': self.objective, 'metric_name': self.metric_name, 'direction': self.direction, 'baseline_value': self.baseline_value, 'min_sample': self.min_sample, 'noise_floor': self.noise_floor, 'lifecycle': self.lifecycle, 'total_count': self.total_count, 'graded_count': self.graded_count,
+                'limit': self.limit, 'offset': self.offset, 'iterations': self.iterations, 'trend': self.trend, 'source_deployment_conversation_id': self.source_deployment_conversation_id, 'workdir': self.workdir, 'hosted_database_id': self.hosted_database_id, 'components': self.components}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

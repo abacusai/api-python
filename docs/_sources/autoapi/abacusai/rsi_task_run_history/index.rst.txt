@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: RsiTaskRunHistory(client, objective=None, metricName=None, direction=None, baselineValue=None, minSample=None, noiseFloor=None, lifecycle=None, totalCount=None, gradedCount=None, limit=None, offset=None, iterations=None, trend=None, sourceDeploymentConversationId=None, workdir=None)
+.. py:class:: RsiTaskRunHistory(client, objective=None, metricName=None, direction=None, baselineValue=None, minSample=None, noiseFloor=None, lifecycle=None, totalCount=None, gradedCount=None, limit=None, offset=None, iterations=None, trend=None, sourceDeploymentConversationId=None, workdir=None, hostedDatabaseId=None, components=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -54,6 +54,10 @@ Module Contents
    :type sourceDeploymentConversationId: str
    :param workdir: The RSI working directory on that filesystem.
    :type workdir: str
+   :param hostedDatabaseId: The task's hosted database holding the rsi_runs ledger and task tables (null for pre-ledger tasks).
+   :type hostedDatabaseId: str
+   :param components: For a composite metric, the sub-metric definitions (name, direction, weight, baseline, lo, hi); each iteration also carries its measured {name: value} map under `components`.
+   :type components: list
 
 
    .. py:attribute:: objective
@@ -127,6 +131,16 @@ Module Contents
 
 
    .. py:attribute:: workdir
+      :value: None
+
+
+
+   .. py:attribute:: hosted_database_id
+      :value: None
+
+
+
+   .. py:attribute:: components
       :value: None
 
 

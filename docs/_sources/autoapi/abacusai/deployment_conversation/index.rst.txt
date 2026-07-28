@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -68,6 +68,8 @@ Module Contents
    :type chatllmTaskId: str
    :param chatllmProjectId: The chatllm project id associated with the deployment conversation.
    :type chatllmProjectId: str
+   :param verticalType: For Expert (vertical) conversations, the owning vertical's type (HEALTH / ROLE_PLAY / LEGAL); null for regular conversations. Lets the unified list mark Expert convos and pick their icon.
+   :type verticalType: str
    :param conversationStatus: The status of the deployment conversation (used for deep agent conversations).
    :type conversationStatus: str
    :param computerStatus: The status of the computer associated with the deployment conversation (used for deep agent conversations).
@@ -82,6 +84,8 @@ Module Contents
    :type contestNames: list[str]
    :param daemonTaskId: The daemon task id associated with the deployment conversation.
    :type daemonTaskId: str
+   :param daemonTaskRunNumber: The 1-based run number of this conversation within its daemon task, set only for conversations holding a single run.
+   :type daemonTaskRunNumber: int
    :param parentDeploymentConversationId: The parent deployment conversation id associated with the deployment conversation.
    :type parentDeploymentConversationId: str
    :param sharedHomeDirectory: Whether this conversation is part of a shared-home-directory group — true if it has a parent conversation or at least one child conversation.
@@ -110,6 +114,8 @@ Module Contents
    :type webAppProjectId: str
    :param personalAgentComputerId: For SuperComputer conversations, the personal agent computer (VM) this conversation is pinned to, if any.
    :type personalAgentComputerId: str
+   :param scDeployedUrls: For SuperComputer conversations, the deployed URLs across the conversation's shared-home family (derived at read time; entries carry url and recorded_at).
+   :type scDeployedUrls: list
    :param roleplayCharacter: For Role Play conversations, the minimal character display (name and image) attached so a viewer who does not own the private character can still see who they're chatting with.
    :type roleplayCharacter: dict
    :param history: The history of the deployment conversation.
@@ -230,6 +236,11 @@ Module Contents
 
 
 
+   .. py:attribute:: vertical_type
+      :value: None
+
+
+
    .. py:attribute:: conversation_status
       :value: None
 
@@ -261,6 +272,11 @@ Module Contents
 
 
    .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: daemon_task_run_number
       :value: None
 
 
@@ -331,6 +347,11 @@ Module Contents
 
 
    .. py:attribute:: personal_agent_computer_id
+      :value: None
+
+
+
+   .. py:attribute:: sc_deployed_urls
       :value: None
 
 

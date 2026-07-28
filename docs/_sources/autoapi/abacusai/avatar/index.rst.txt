@@ -1,0 +1,113 @@
+abacusai.avatar
+===============
+
+.. py:module:: abacusai.avatar
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.avatar.Avatar
+
+
+Module Contents
+---------------
+
+.. py:class:: Avatar(client, avatarId=None, name=None, description=None, isStock=None, isFavorited=None, voiceStatus=None, voicePreviewUrl=None, imageUrls=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Avatar — a persistent, reusable identity (reference image + optional cloned voice) for Studio generations.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param avatarId: The ID of the avatar
+   :type avatarId: id
+   :param name: The avatar's display name
+   :type name: str
+   :param description: Persona/descriptor used by the ad script writer and shown in the detail dialog
+   :type description: str
+   :param isStock: Whether this is a seeded starter avatar (read-only, visible to every org)
+   :type isStock: bool
+   :param isFavorited: Whether the avatar is favorited
+   :type isFavorited: bool
+   :param voiceStatus: Voice lifecycle state (none, processing, ready, failed), derived at read time
+   :type voiceStatus: str
+   :param voicePreviewUrl: Signed URL of the stored voice sample when one exists, generated at read time
+   :type voicePreviewUrl: str
+   :param imageUrls: Signed URLs of the reference images (first = front reference/card thumbnail), generated at read time
+   :type imageUrls: list
+   :param createdAt: The creation timestamp
+   :type createdAt: str
+   :param updatedAt: The last update timestamp
+   :type updatedAt: str
+
+
+   .. py:attribute:: avatar_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: is_stock
+      :value: None
+
+
+
+   .. py:attribute:: is_favorited
+      :value: None
+
+
+
+   .. py:attribute:: voice_status
+      :value: None
+
+
+
+   .. py:attribute:: voice_preview_url
+      :value: None
+
+
+
+   .. py:attribute:: image_urls
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

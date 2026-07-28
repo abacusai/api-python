@@ -7496,6 +7496,21 @@ Package Contents
 
 
 
+   .. py:attribute:: GOOGLEANALYTICSUSER
+      :value: 'GOOGLEANALYTICSUSER'
+
+
+
+   .. py:attribute:: GOOGLESEARCHCONSOLE
+      :value: 'GOOGLESEARCHCONSOLE'
+
+
+
+   .. py:attribute:: GOOGLECHAT
+      :value: 'GOOGLECHAT'
+
+
+
    .. py:attribute:: HUBSPOT
       :value: 'HUBSPOT'
 
@@ -8266,6 +8281,11 @@ Package Contents
 
 
 
+   .. py:attribute:: CLAUDE_V5_OPUS
+      :value: 'CLAUDE_V5_OPUS'
+
+
+
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
 
@@ -8313,6 +8333,16 @@ Package Contents
 
    .. py:attribute:: GEMINI_3_5_FLASH
       :value: 'GEMINI_3_5_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_3_6_FLASH
+      :value: 'GEMINI_3_6_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_3_5_FLASH_LITE
+      :value: 'GEMINI_3_5_FLASH_LITE'
 
 
 
@@ -10426,6 +10456,11 @@ Package Contents
 
    .. py:attribute:: LEGAL
       :value: 'LEGAL'
+
+
+
+   .. py:attribute:: FINANCE
+      :value: 'FINANCE'
 
 
 
@@ -12780,10 +12815,10 @@ Package Contents
    :type unknown_answer_phrase: str
    :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
    :type enable_tool_bar: bool
+   :param enable_voice: Allow users to talk to this chatbot with a realtime voice agent that adds a microphone button opening a spoken, tool-using conversation.
+   :type enable_voice: bool
    :param enable_inline_source_citations: Enable inline citations of the sources in the response.
    :type enable_inline_source_citations: bool
-   :param enable_voice: Enable voice input.
-   :type enable_voice: bool
    :param response_format: (str): When set to 'JSON', the LLM will generate a JSON formatted string.
    :param json_response_instructions: Instructions to be followed while generating the json_response if `response_format` is set to "JSON". This can include the schema information if the schema is dynamic and its keys cannot be pre-determined.
    :type json_response_instructions: str
@@ -13015,13 +13050,13 @@ Package Contents
 
 
 
-   .. py:attribute:: enable_inline_source_citations
+   .. py:attribute:: enable_voice
       :type:  bool
       :value: None
 
 
 
-   .. py:attribute:: enable_voice
+   .. py:attribute:: enable_inline_source_citations
       :type:  bool
       :value: None
 

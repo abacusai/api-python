@@ -16,9 +16,10 @@ class MobileAppBuildStatus(AbstractApiClass):
             selectionType (str): Whether the pending selection is for a 'team' or a 'provider'
             phoneNumbers (list): Trusted phone number options when awaiting a 2FA phone selection
             error (str): The error message for the build
+            expired (bool): True when a SUCCESS build is old enough that its EAS download link is likely dead
     """
 
-    def __init__(self, client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None):
+    def __init__(self, client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None):
         super().__init__(client, None)
         self.status = status
         self.build_url = buildUrl
@@ -29,11 +30,12 @@ class MobileAppBuildStatus(AbstractApiClass):
         self.selection_type = selectionType
         self.phone_numbers = phoneNumbers
         self.error = error
+        self.expired = expired
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'status': repr(self.status), f'build_url': repr(self.build_url), f'mobile_app_build_id': repr(self.mobile_app_build_id), f'hostname': repr(self.hostname), f'required_input': repr(
-            self.required_input), f'providers': repr(self.providers), f'selection_type': repr(self.selection_type), f'phone_numbers': repr(self.phone_numbers), f'error': repr(self.error)}
+            self.required_input), f'providers': repr(self.providers), f'selection_type': repr(self.selection_type), f'phone_numbers': repr(self.phone_numbers), f'error': repr(self.error), f'expired': repr(self.expired)}
         class_name = "MobileAppBuildStatus"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -46,6 +48,6 @@ class MobileAppBuildStatus(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'status': self.status, 'build_url': self.build_url, 'mobile_app_build_id': self.mobile_app_build_id, 'hostname': self.hostname,
-                'required_input': self.required_input, 'providers': self.providers, 'selection_type': self.selection_type, 'phone_numbers': self.phone_numbers, 'error': self.error}
+        resp = {'status': self.status, 'build_url': self.build_url, 'mobile_app_build_id': self.mobile_app_build_id, 'hostname': self.hostname, 'required_input': self.required_input,
+                'providers': self.providers, 'selection_type': self.selection_type, 'phone_numbers': self.phone_numbers, 'error': self.error, 'expired': self.expired}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

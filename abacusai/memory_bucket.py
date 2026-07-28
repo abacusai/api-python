@@ -14,9 +14,10 @@ class MemoryBucket(AbstractApiClass):
             content (str): Markdown body of the bucket.
             updatedAtTimestamp (int): Last-updated time (unix seconds).
             humanEdited (bool): Whether the user has edited this bucket (the cron is additive-only for it).
+            contentVersion (int): Version of the body, for optimistic concurrency. Pass the value you read back as expected_content_version when saving an edit; the save is rejected if it has moved.
     """
 
-    def __init__(self, client, bucketKey=None, name=None, shortDescription=None, priority=None, content=None, updatedAtTimestamp=None, humanEdited=None):
+    def __init__(self, client, bucketKey=None, name=None, shortDescription=None, priority=None, content=None, updatedAtTimestamp=None, humanEdited=None, contentVersion=None):
         super().__init__(client, None)
         self.bucket_key = bucketKey
         self.name = name
@@ -25,11 +26,12 @@ class MemoryBucket(AbstractApiClass):
         self.content = content
         self.updated_at_timestamp = updatedAtTimestamp
         self.human_edited = humanEdited
+        self.content_version = contentVersion
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'bucket_key': repr(self.bucket_key), f'name': repr(self.name), f'short_description': repr(self.short_description), f'priority': repr(
-            self.priority), f'content': repr(self.content), f'updated_at_timestamp': repr(self.updated_at_timestamp), f'human_edited': repr(self.human_edited)}
+        repr_dict = {f'bucket_key': repr(self.bucket_key), f'name': repr(self.name), f'short_description': repr(self.short_description), f'priority': repr(self.priority), f'content': repr(
+            self.content), f'updated_at_timestamp': repr(self.updated_at_timestamp), f'human_edited': repr(self.human_edited), f'content_version': repr(self.content_version)}
         class_name = "MemoryBucket"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -43,5 +45,5 @@ class MemoryBucket(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'bucket_key': self.bucket_key, 'name': self.name, 'short_description': self.short_description, 'priority': self.priority,
-                'content': self.content, 'updated_at_timestamp': self.updated_at_timestamp, 'human_edited': self.human_edited}
+                'content': self.content, 'updated_at_timestamp': self.updated_at_timestamp, 'human_edited': self.human_edited, 'content_version': self.content_version}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

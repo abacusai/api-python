@@ -1,0 +1,113 @@
+abacusai.ad_template
+====================
+
+.. py:module:: abacusai.ad_template
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.ad_template.AdTemplate
+
+
+Module Contents
+---------------
+
+.. py:class:: AdTemplate(client, slug=None, name=None, category=None, speaks=None, supportsAvatar=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, description=None, exampleMedia=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Ad Template — a Studio ad format card (client-safe registry fields; recipes stay server-side).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param slug: Stable template identifier
+   :type slug: str
+   :param name: Display name
+   :type name: str
+   :param category: Explore subtab (ugc, tiktok, commercial)
+   :type category: str
+   :param speaks: Whether the avatar speaks (voice/lip-sync formats)
+   :type speaks: bool
+   :param supportsAvatar: Whether an avatar can be attached (some formats are product-only)
+   :type supportsAvatar: bool
+   :param defaultDuration: Suggested duration in seconds
+   :type defaultDuration: int
+   :param defaultAspectRatio: Suggested aspect ratio
+   :type defaultAspectRatio: str
+   :param cardOneLiner: One-line pitch on the format card
+   :type cardOneLiner: str
+   :param description: Gallery caption / display copy
+   :type description: str
+   :param exampleMedia: CDN URLs of preview videos for the card
+   :type exampleMedia: list
+
+
+   .. py:attribute:: slug
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: category
+      :value: None
+
+
+
+   .. py:attribute:: speaks
+      :value: None
+
+
+
+   .. py:attribute:: supports_avatar
+      :value: None
+
+
+
+   .. py:attribute:: default_duration
+      :value: None
+
+
+
+   .. py:attribute:: default_aspect_ratio
+      :value: None
+
+
+
+   .. py:attribute:: card_one_liner
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: example_media
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

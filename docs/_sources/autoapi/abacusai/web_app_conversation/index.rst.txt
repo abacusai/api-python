@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None)
+.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type createdAt: str
    :param conversationType: The type of the conversation
    :type conversationType: str
+   :param userTurnCount: Number of user messages in the conversation; only populated when requested
+   :type userTurnCount: int
 
 
    .. py:attribute:: deployment_conversation_id
@@ -64,6 +66,11 @@ Module Contents
 
 
    .. py:attribute:: conversation_type
+      :value: None
+
+
+
+   .. py:attribute:: user_turn_count
       :value: None
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MemoryBucket(client, bucketKey=None, name=None, shortDescription=None, priority=None, content=None, updatedAtTimestamp=None, humanEdited=None)
+.. py:class:: MemoryBucket(client, bucketKey=None, name=None, shortDescription=None, priority=None, content=None, updatedAtTimestamp=None, humanEdited=None, contentVersion=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type updatedAtTimestamp: int
    :param humanEdited: Whether the user has edited this bucket (the cron is additive-only for it).
    :type humanEdited: bool
+   :param contentVersion: Version of the body, for optimistic concurrency. Pass the value you read back as expected_content_version when saving an edit; the save is rejected if it has moved.
+   :type contentVersion: int
 
 
    .. py:attribute:: bucket_key
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: human_edited
+      :value: None
+
+
+
+   .. py:attribute:: content_version
       :value: None
 
 
