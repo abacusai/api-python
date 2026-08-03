@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.106'
+      :value: '1.4.107'
 
 
 
@@ -1631,6 +1631,19 @@ Module Contents
       :param max_width: Rescales the returned image so the width is less than or equal to the given maximum width, while preserving the aspect ratio.
       :type max_width: int
       :param max_height: Rescales the returned image so the height is less than or equal to the given maximum height, while preserving the aspect ratio.
+      :type max_height: int
+
+
+
+   .. py:method:: get_docstore_video_thumbnail(doc_id, max_width = None, max_height = None)
+
+      Return a still frame for a document store video by id.
+
+      :param doc_id: A unique Docstore string identifier for the video.
+      :type doc_id: str
+      :param max_width: Rescales the returned frame so the width is less than or equal to the given maximum width, while preserving the aspect ratio.
+      :type max_width: int
+      :param max_height: Rescales the returned frame so the height is less than or equal to the given maximum height, while preserving the aspect ratio.
       :type max_height: int
 
 

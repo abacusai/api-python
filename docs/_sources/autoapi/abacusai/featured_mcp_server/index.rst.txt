@@ -15,12 +15,12 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: FeaturedMcpServer(client, key=None, name=None, url=None, tagline=None, description=None, iconUrl=None, categories=None, author=None, authorUrl=None, docsUrl=None, oauth2=None, rank=None, tools=None, toolCount=None, requiredFields=None)
+.. py:class:: FeaturedMcpServer(client, key=None, name=None, url=None, tagline=None, description=None, iconUrl=None, categories=None, author=None, authorUrl=None, docsUrl=None, oauth2=None, rank=None, tools=None, toolCount=None, requiredFields=None, command=None, args=None, env=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   A curated remote MCP server shown in the MCP server gallery.
+   A curated MCP server shown in the MCP server gallery.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -28,7 +28,7 @@ Module Contents
    :type key: str
    :param name: Display name of the MCP server.
    :type name: str
-   :param url: The remote MCP server (streamable HTTP) endpoint URL.
+   :param url: The remote MCP server (streamable HTTP) endpoint URL; absent for local servers.
    :type url: str
    :param tagline: One-line description shown on the gallery card.
    :type tagline: str
@@ -54,6 +54,12 @@ Module Contents
    :type toolCount: int
    :param requiredFields: Config the user must supply before connecting (e.g. a per-workspace URL or OAuth client ID); empty for one-click servers. Each field: name, label, placeholder, type, optional, target, help.
    :type requiredFields: list
+   :param command: Executable to spawn for a local server (e.g. uvx); its presence is what marks the server local, and it is absent for remote ones.
+   :type command: str
+   :param args: Arguments passed to the local server's command.
+   :type args: list
+   :param env: Fixed environment variables for a local server, each {name, value}; user-supplied secrets are collected via required_fields instead.
+   :type env: list
 
 
    .. py:attribute:: key
@@ -127,6 +133,21 @@ Module Contents
 
 
    .. py:attribute:: required_fields
+      :value: None
+
+
+
+   .. py:attribute:: command
+      :value: None
+
+
+
+   .. py:attribute:: args
+      :value: None
+
+
+
+   .. py:attribute:: env
       :value: None
 
 

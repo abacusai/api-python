@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.106'
+    client_version = '1.4.107'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1822,6 +1822,15 @@ class ReadOnlyClient(BaseApiClient):
             max_width (int): Rescales the returned image so the width is less than or equal to the given maximum width, while preserving the aspect ratio.
             max_height (int): Rescales the returned image so the height is less than or equal to the given maximum height, while preserving the aspect ratio."""
         return self._proxy_request('getDocstoreImage', 'GET', query_params={'docId': doc_id, 'maxWidth': max_width, 'maxHeight': max_height}, is_sync=True, streamable_response=True)
+
+    def get_docstore_video_thumbnail(self, doc_id: str, max_width: int = None, max_height: int = None) -> io.BytesIO:
+        """Return a still frame for a document store video by id.
+
+        Args:
+            doc_id (str): A unique Docstore string identifier for the video.
+            max_width (int): Rescales the returned frame so the width is less than or equal to the given maximum width, while preserving the aspect ratio.
+            max_height (int): Rescales the returned frame so the height is less than or equal to the given maximum height, while preserving the aspect ratio."""
+        return self._proxy_request('getDocstoreVideoThumbnail', 'GET', query_params={'docId': doc_id, 'maxWidth': max_width, 'maxHeight': max_height}, is_sync=True, streamable_response=True)
 
     def describe_train_test_data_split_feature_group(self, model_id: str) -> FeatureGroup:
         """Get the train and test data split for a trained model by its unique identifier. This is only supported for models with custom algorithms.

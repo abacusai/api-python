@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, createdAt=None, updatedAt=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44,6 +44,8 @@ Module Contents
    :type display: bool
    :param globalSkill: Whether this skill is an organization-level global skill.
    :type globalSkill: bool
+   :param owned: Whether the skill's files live in the scope being listed, so the caller can edit them.
+   :type owned: bool
    :param createdAt: The timestamp when the skill was created.
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
@@ -96,6 +98,11 @@ Module Contents
 
 
    .. py:attribute:: global_skill
+      :value: None
+
+
+
+   .. py:attribute:: owned
       :value: None
 
 

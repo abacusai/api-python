@@ -57,6 +57,7 @@ from .code_source import CodeSource
 from .code_suggestion_validation_response import CodeSuggestionValidationResponse
 from .code_summary_response import CodeSummaryResponse
 from .codellm_embedding_constants import CodellmEmbeddingConstants
+from .complete_user_info import CompleteUserInfo
 from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
@@ -331,4 +332,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.106"
+__version__ = "1.4.107"

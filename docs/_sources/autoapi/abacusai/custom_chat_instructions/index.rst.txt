@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, experimentalFeatures=None)
+.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, experimentalFeatures=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type enableMemories: bool
    :param enableMemoryConsolidation: Whether the org has the memory-consolidation ("dreaming") feature enabled.
    :type enableMemoryConsolidation: bool
+   :param hasLegacyChatllmMemories: Whether the user has content in either legacy memory store (ChatLLM /memories/preferences.txt or the DeepAgent explicit_user_preferences folder), so the memories UI keeps them on the old memories view instead of the AI Brain page.
+   :type hasLegacyChatllmMemories: bool
    :param experimentalFeatures: Experimental features.
    :type experimentalFeatures: dict
 
@@ -80,6 +82,11 @@ Module Contents
 
 
    .. py:attribute:: enable_memory_consolidation
+      :value: None
+
+
+
+   .. py:attribute:: has_legacy_chatllm_memories
       :value: None
 
 

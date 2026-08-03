@@ -15,24 +15,18 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, hostedAppContainerId=None, hostedAppId=None, deploymentConversationId=None, hostedAppVersion=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, containerImage=None, route=None, appConfig=None, isDev=None, isDeployable=None, isPreviewAvailable=None, lifecycle=None, status=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   Hosted app + Deep agent container information.
+   Deep agent app listing information.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param hostedAppContainerId: The ID of the hosted app container
-   :type hostedAppContainerId: id
-   :param hostedAppId: The ID of the hosted app
-   :type hostedAppId: id
    :param deploymentConversationId: The deployment conversation ID
    :type deploymentConversationId: id
-   :param hostedAppVersion: The instance of the hosted app
-   :type hostedAppVersion: id
-   :param name: The name of the hosted app
+   :param name: The name of the app
    :type name: str
    :param userId: The ID of the creation user
    :type userId: id
@@ -42,22 +36,8 @@ Module Contents
    :type createdAt: str
    :param updatedAt: Last update timestamp
    :type updatedAt: str
-   :param containerImage: Container image name
-   :type containerImage: str
-   :param route: Container route
-   :type route: str
-   :param appConfig: App configuration
-   :type appConfig: dict
-   :param isDev: Whether this is a dev container
-   :type isDev: bool
    :param isDeployable: Can this version be deployed
    :type isDeployable: bool
-   :param isPreviewAvailable: Is the dev preview available on the container
-   :type isPreviewAvailable: bool
-   :param lifecycle: Container lifecycle status (PENDING/DEPLOYING/ACTIVE/FAILED/STOPPED/DELETING)
-   :type lifecycle: str
-   :param status: Container status (RUNNING/STOPPED/DEPLOYING/FAILED)
-   :type status: str
    :param deployedStatus: Deployment status (PENDING/ACTIVE/STOPPED/NOT_DEPLOYED)
    :type deployedStatus: str
    :param accessLevel: Access Level (PUBLIC/PRIVATE/DEDICATED/OWNER_ONLY)
@@ -90,22 +70,7 @@ Module Contents
    :type scDeployedUrls: list
 
 
-   .. py:attribute:: hosted_app_container_id
-      :value: None
-
-
-
-   .. py:attribute:: hosted_app_id
-      :value: None
-
-
-
    .. py:attribute:: deployment_conversation_id
-      :value: None
-
-
-
-   .. py:attribute:: hosted_app_version
       :value: None
 
 
@@ -135,42 +100,7 @@ Module Contents
 
 
 
-   .. py:attribute:: container_image
-      :value: None
-
-
-
-   .. py:attribute:: route
-      :value: None
-
-
-
-   .. py:attribute:: app_config
-      :value: None
-
-
-
-   .. py:attribute:: is_dev
-      :value: None
-
-
-
    .. py:attribute:: is_deployable
-      :value: None
-
-
-
-   .. py:attribute:: is_preview_available
-      :value: None
-
-
-
-   .. py:attribute:: lifecycle
-      :value: None
-
-
-
-   .. py:attribute:: status
       :value: None
 
 

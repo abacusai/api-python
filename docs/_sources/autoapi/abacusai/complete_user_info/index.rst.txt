@@ -1,0 +1,89 @@
+abacusai.complete_user_info
+===========================
+
+.. py:module:: abacusai.complete_user_info
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.complete_user_info.CompleteUserInfo
+
+
+Module Contents
+---------------
+
+.. py:class:: CompleteUserInfo(client, validApplicationConnectors=None, validAgentConnectors=None, availableExperiments=None, userInfo={}, orgAppSettings={}, externalApplications={}, externalApplicationDescribes={}, autoTopupConfig={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The ChatLLM Teams page-load bundle: the payloads of several page-load endpoints in one
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param validApplicationConnectors: The _listValidApplicationConnectors payload.
+   :type validApplicationConnectors: dict
+   :param validAgentConnectors: The _listValidAgentConnectors payload.
+   :type validAgentConnectors: dict
+   :param availableExperiments: The _getAvailableExperiments payload.
+   :type availableExperiments: list
+   :param userInfo: The _getUserInfo payload.
+   :type userInfo: InternalUserInfo
+   :param orgAppSettings: The _describeOrganizationExternalApplicationSettings payload.
+   :type orgAppSettings: OrganizationExternalApplicationSettings
+   :param externalApplications: The listExternalApplications payload.
+   :type externalApplications: ExternalApplication
+   :param externalApplicationDescribes: Full describes of the apps a page load can open (super-agent, RouteLLM base, last-selected bot).
+   :type externalApplicationDescribes: ExternalApplication
+   :param autoTopupConfig: The _getAutoTopupConfig payload (org admins only).
+   :type autoTopupConfig: AutoTopupConfig
+
+
+   .. py:attribute:: valid_application_connectors
+      :value: None
+
+
+
+   .. py:attribute:: valid_agent_connectors
+      :value: None
+
+
+
+   .. py:attribute:: available_experiments
+      :value: None
+
+
+
+   .. py:attribute:: user_info
+
+
+   .. py:attribute:: org_app_settings
+
+
+   .. py:attribute:: external_applications
+
+
+   .. py:attribute:: external_application_describes
+
+
+   .. py:attribute:: auto_topup_config
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

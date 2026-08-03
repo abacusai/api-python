@@ -3,13 +3,13 @@ from .return_class import AbstractApiClass
 
 class FeaturedMcpServer(AbstractApiClass):
     """
-        A curated remote MCP server shown in the MCP server gallery.
+        A curated MCP server shown in the MCP server gallery.
 
         Args:
             client (ApiClient): An authenticated API Client instance
             key (str): Stable identifier; used as the connection name on connect.
             name (str): Display name of the MCP server.
-            url (str): The remote MCP server (streamable HTTP) endpoint URL.
+            url (str): The remote MCP server (streamable HTTP) endpoint URL; absent for local servers.
             tagline (str): One-line description shown on the gallery card.
             description (str): Longer description shown in the detail view.
             iconUrl (str): Full URL of the server icon.
@@ -22,9 +22,12 @@ class FeaturedMcpServer(AbstractApiClass):
             tools (list): Names of the tools the server provides.
             toolCount (int): Total tool count (differs from len(tools) only if the YAML caps the list).
             requiredFields (list): Config the user must supply before connecting (e.g. a per-workspace URL or OAuth client ID); empty for one-click servers. Each field: name, label, placeholder, type, optional, target, help.
+            command (str): Executable to spawn for a local server (e.g. uvx); its presence is what marks the server local, and it is absent for remote ones.
+            args (list): Arguments passed to the local server's command.
+            env (list): Fixed environment variables for a local server, each {name, value}; user-supplied secrets are collected via required_fields instead.
     """
 
-    def __init__(self, client, key=None, name=None, url=None, tagline=None, description=None, iconUrl=None, categories=None, author=None, authorUrl=None, docsUrl=None, oauth2=None, rank=None, tools=None, toolCount=None, requiredFields=None):
+    def __init__(self, client, key=None, name=None, url=None, tagline=None, description=None, iconUrl=None, categories=None, author=None, authorUrl=None, docsUrl=None, oauth2=None, rank=None, tools=None, toolCount=None, requiredFields=None, command=None, args=None, env=None):
         super().__init__(client, None)
         self.key = key
         self.name = name
@@ -41,11 +44,14 @@ class FeaturedMcpServer(AbstractApiClass):
         self.tools = tools
         self.tool_count = toolCount
         self.required_fields = requiredFields
+        self.command = command
+        self.args = args
+        self.env = env
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'key': repr(self.key), f'name': repr(self.name), f'url': repr(self.url), f'tagline': repr(self.tagline), f'description': repr(self.description), f'icon_url': repr(self.icon_url), f'categories': repr(self.categories), f'author': repr(
-            self.author), f'author_url': repr(self.author_url), f'docs_url': repr(self.docs_url), f'oauth2': repr(self.oauth2), f'rank': repr(self.rank), f'tools': repr(self.tools), f'tool_count': repr(self.tool_count), f'required_fields': repr(self.required_fields)}
+        repr_dict = {f'key': repr(self.key), f'name': repr(self.name), f'url': repr(self.url), f'tagline': repr(self.tagline), f'description': repr(self.description), f'icon_url': repr(self.icon_url), f'categories': repr(self.categories), f'author': repr(self.author), f'author_url': repr(
+            self.author_url), f'docs_url': repr(self.docs_url), f'oauth2': repr(self.oauth2), f'rank': repr(self.rank), f'tools': repr(self.tools), f'tool_count': repr(self.tool_count), f'required_fields': repr(self.required_fields), f'command': repr(self.command), f'args': repr(self.args), f'env': repr(self.env)}
         class_name = "FeaturedMcpServer"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -58,6 +64,6 @@ class FeaturedMcpServer(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'key': self.key, 'name': self.name, 'url': self.url, 'tagline': self.tagline, 'description': self.description, 'icon_url': self.icon_url, 'categories': self.categories, 'author': self.author,
-                'author_url': self.author_url, 'docs_url': self.docs_url, 'oauth2': self.oauth2, 'rank': self.rank, 'tools': self.tools, 'tool_count': self.tool_count, 'required_fields': self.required_fields}
+        resp = {'key': self.key, 'name': self.name, 'url': self.url, 'tagline': self.tagline, 'description': self.description, 'icon_url': self.icon_url, 'categories': self.categories, 'author': self.author, 'author_url': self.author_url,
+                'docs_url': self.docs_url, 'oauth2': self.oauth2, 'rank': self.rank, 'tools': self.tools, 'tool_count': self.tool_count, 'required_fields': self.required_fields, 'command': self.command, 'args': self.args, 'env': self.env}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

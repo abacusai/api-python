@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,8 @@ Module Contents
    :type deploymentConversationId: str
    :param sourceDeploymentConversationId: The source deployment conversation id associated with the chatllm task.
    :type sourceDeploymentConversationId: str
+   :param sourceDeploymentConversationName: The name of the source deployment conversation, for linking back to it.
+   :type sourceDeploymentConversationName: str
    :param latestSourceDeploymentConversationId: The most recent conversation in the source conversation's thread family (excluding task-run conversations).
    :type latestSourceDeploymentConversationId: str
    :param enableEmailAlerts: Whether email alerts are enabled for the chatllm task.
@@ -86,7 +88,7 @@ Module Contents
    :type isSupercomputer: bool
    :param personalAgentComputerId: The id of the SuperComputer VM the task is pinned to, when is_supercomputer is true.
    :type personalAgentComputerId: str
-   :param currentEffort: The worker effort the task currently runs on (auto/medium/high/xhigh/max).
+   :param currentEffort: The worker effort the task currently runs on (auto/simple/medium/high/xhigh/max).
    :type currentEffort: str
    :param effortLadder: The pickable effort rungs available for this task.
    :type effortLadder: list
@@ -155,6 +157,11 @@ Module Contents
 
 
    .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_name
       :value: None
 
 

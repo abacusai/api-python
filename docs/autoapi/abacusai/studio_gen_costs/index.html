@@ -106,6 +106,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../code_suggestion_validation_response/index.html">abacusai.code_suggestion_validation_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_summary_response/index.html">abacusai.code_summary_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../codellm_embedding_constants/index.html">abacusai.codellm_embedding_constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../complete_user_info/index.html">abacusai.complete_user_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
@@ -436,7 +437,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.studio_gen_costs.StudioGenCosts">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.studio_gen_costs.</span></span><span class="sig-name descname"><span class="pre">StudioGenCosts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoCosts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imageCosts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lipSyncCosts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overhead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imageDisplayThreshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.studio_gen_costs.StudioGenCosts" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.studio_gen_costs.</span></span><span class="sig-name descname"><span class="pre">StudioGenCosts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoCosts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imageCosts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lipSyncCosts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overhead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adOverhead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imageDisplayThreshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.studio_gen_costs.StudioGenCosts" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Credit cost estimation data for all Studio models.</p>
 <dl class="field-list simple">
@@ -447,6 +448,7 @@
 <li><p><strong>imageCosts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Cost lookup tables for image generation models</p></li>
 <li><p><strong>lipSyncCosts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Cost lookup tables for lip sync models</p></li>
 <li><p><strong>overhead</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Fixed credit overhead per generation (agentic loop cost)</p></li>
+<li><p><strong>adOverhead</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Credit overhead for a Studio ad, used in place of overhead (research + prompt writing)</p></li>
 <li><p><strong>imageDisplayThreshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – FE hides image estimates below this many credits (pre-overhead)</p></li>
 </ul>
 </dd>
@@ -469,6 +471,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.studio_gen_costs.StudioGenCosts.overhead">
 <span class="sig-name descname"><span class="pre">overhead</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.studio_gen_costs.StudioGenCosts.overhead" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.studio_gen_costs.StudioGenCosts.ad_overhead">
+<span class="sig-name descname"><span class="pre">ad_overhead</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.studio_gen_costs.StudioGenCosts.ad_overhead" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

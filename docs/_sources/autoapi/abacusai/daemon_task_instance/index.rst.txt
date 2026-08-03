@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DaemonTaskInstance(client, daemonTaskVersion=None, daemonTaskId=None, deploymentConversationId=None, lifecycle=None, createdAt=None, lifecycleInfo=None)
+.. py:class:: DaemonTaskInstance(client, daemonTaskVersion=None, daemonTaskId=None, deploymentConversationId=None, lifecycle=None, createdAt=None, updatedAt=None, lifecycleInfo=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,8 +32,10 @@ Module Contents
    :type deploymentConversationId: str
    :param lifecycle: The lifecycle status (PENDING, EXECUTING, COMPLETED, FAILED).
    :type lifecycle: str
-   :param createdAt: When this instance was created.
+   :param createdAt: When this instance was created, i.e. when the run started.
    :type createdAt: str
+   :param updatedAt: When this instance last changed lifecycle, i.e. when the run ended once it is COMPLETED/FAILED.
+   :type updatedAt: str
    :param lifecycleInfo: Additional lifecycle information (e.g., error details).
    :type lifecycleInfo: dict
 
@@ -59,6 +61,11 @@ Module Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
       :value: None
 
 

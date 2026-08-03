@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None, imageDisplayThreshold=None)
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None, adOverhead=None, imageDisplayThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,8 @@ Module Contents
    :type lipSyncCosts: dict
    :param overhead: Fixed credit overhead per generation (agentic loop cost)
    :type overhead: int
+   :param adOverhead: Credit overhead for a Studio ad, used in place of overhead (research + prompt writing)
+   :type adOverhead: int
    :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
    :type imageDisplayThreshold: int
 
@@ -52,6 +54,11 @@ Module Contents
 
 
    .. py:attribute:: overhead
+      :value: None
+
+
+
+   .. py:attribute:: ad_overhead
       :value: None
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: VideoAsset(client, videoAssetId=None, assetType=None, name=None, sourceUrl=None, imageUrls=None, createdAt=None, updatedAt=None)
+.. py:class:: VideoAsset(client, videoAssetId=None, assetType=None, name=None, sourceUrl=None, imageUrls=None, urls=None, documentNames=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,10 @@ Module Contents
    :type sourceUrl: str
    :param imageUrls: Signed URLs of the stored images (hero first), generated at read time
    :type imageUrls: list
+   :param urls: Extra product links attached as research material
+   :type urls: list
+   :param documentNames: Names of the uploaded documents attached as research material
+   :type documentNames: list
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -61,6 +65,16 @@ Module Contents
 
 
    .. py:attribute:: image_urls
+      :value: None
+
+
+
+   .. py:attribute:: urls
+      :value: None
+
+
+
+   .. py:attribute:: document_names
       :value: None
 
 

@@ -100,7 +100,7 @@ class BatchPredictionVersion(AbstractApiClass):
             BatchPredictionArgs, globalPredictionArgs)
         self.batch_prediction_args = client._build_class(getattr(
             api_class, batchPredictionArgsType, BatchPredictionArgs) if batchPredictionArgsType else BatchPredictionArgs, batchPredictionArgs)
-        self.deprecated_keys = {'global_prediction_args', 'explanations'}
+        self.deprecated_keys = {'explanations', 'global_prediction_args'}
 
     def __repr__(self):
         repr_dict = {f'batch_prediction_version': repr(self.batch_prediction_version), f'batch_prediction_id': repr(self.batch_prediction_id), f'status': repr(self.status), f'drift_monitor_status': repr(self.drift_monitor_status), f'deployment_id': repr(self.deployment_id), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'predictions_started_at': repr(self.predictions_started_at), f'predictions_completed_at': repr(self.predictions_completed_at), f'database_output_error': repr(self.database_output_error), f'total_predictions': repr(self.total_predictions), f'failed_predictions': repr(self.failed_predictions), f'database_connector_id': repr(self.database_connector_id), f'database_output_configuration': repr(self.database_output_configuration), f'file_connector_output_location': repr(self.file_connector_output_location), f'file_output_format': repr(self.file_output_format), f'connector_type': repr(self.connector_type), f'legacy_input_location': repr(self.legacy_input_location), f'error': repr(self.error), f'drift_monitor_error': repr(self.drift_monitor_error), f'monitor_warnings': repr(self.monitor_warnings), f'csv_input_prefix': repr(
