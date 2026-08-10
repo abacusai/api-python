@@ -41,7 +41,7 @@ class DeploymentConversationEvent(AbstractApiClass):
             computePointsUsed (int): The number of compute points used for the message.
             computerFiles (list): The list of files that were created by the computer agent.
             toolUseRequest (dict): The tool use request for the message.
-            toolUseResult (dict): The tool use response for the message.
+            toolUseResult (dict | list): The tool use response for the message — a single dict for one tool call, a list for a batched (parallel tool calls) round.
             verificationSummary (str): The summary of the verification process for the message.
             attachedUserFileNames (list): The list of files attached by the user on the message.
             parallelToolResponses (list): The list of processed tool responses for parallel tool execution.

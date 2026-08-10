@@ -92,8 +92,8 @@ Module Contents
    :type computerFiles: list
    :param toolUseRequest: The tool use request for the message.
    :type toolUseRequest: dict
-   :param toolUseResult: The tool use response for the message.
-   :type toolUseResult: dict
+   :param toolUseResult: The tool use response for the message — a single dict for one tool call, a list for a batched (parallel tool calls) round.
+   :type toolUseResult: dict | list
    :param verificationSummary: The summary of the verification process for the message.
    :type verificationSummary: str
    :param attachedUserFileNames: The list of files attached by the user on the message.

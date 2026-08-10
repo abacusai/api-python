@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -94,6 +94,12 @@ Module Contents
    :type effortLadder: list
    :param isOwner: Whether the requesting user owns the task.
    :type isOwner: bool
+   :param isOrgShared: Whether the task is shared org-wide.
+   :type isOrgShared: bool
+   :param isDirectlyShared: Whether the task was shared with the requesting user or their groups directly; only set for non-owners.
+   :type isDirectlyShared: bool
+   :param isProjectShared: Whether the task is visible because its source conversation belongs to a project the requesting user is a member of; only set for non-owners.
+   :type isProjectShared: bool
    :param sharedPermission: The permission the task was shared with ('VIEW' or 'EDIT'); only set for non-owners.
    :type sharedPermission: str
    :param ownerEmail: The task owner's email; only set for non-owners.
@@ -277,6 +283,21 @@ Module Contents
 
 
    .. py:attribute:: is_owner
+      :value: None
+
+
+
+   .. py:attribute:: is_org_shared
+      :value: None
+
+
+
+   .. py:attribute:: is_directly_shared
+      :value: None
+
+
+
+   .. py:attribute:: is_project_shared
       :value: None
 
 

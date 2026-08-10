@@ -83,6 +83,7 @@ Classes
    abacusai.api_class.enums.DaemonTaskLifecycleUpdateAction
    abacusai.api_class.enums.MediaArtifactType
    abacusai.api_class.enums.MediaArtifactOrigin
+   abacusai.api_class.enums.MediaArtifactKind
    abacusai.api_class.enums.VerticalType
 
 
@@ -3180,6 +3181,11 @@ Module Contents
 
 
 
+   .. py:attribute:: SHOPIFY
+      :value: 'SHOPIFY'
+
+
+
    .. py:attribute:: SNOWFLAKEUSER
       :value: 'SNOWFLAKEUSER'
 
@@ -3232,6 +3238,16 @@ Module Contents
 
    .. py:attribute:: ZOOM
       :value: 'ZOOM'
+
+
+
+   .. py:attribute:: METAADS
+      :value: 'METAADS'
+
+
+
+   .. py:attribute:: NETSUITE
+      :value: 'NETSUITE'
 
 
 
@@ -4065,6 +4081,11 @@ Module Contents
 
 
 
+   .. py:attribute:: QWEN3_8_MAX
+      :value: 'QWEN3_8_MAX'
+
+
+
    .. py:attribute:: DEEPSEEK_V3_1
       :value: 'DEEPSEEK_V3_1'
 
@@ -4087,6 +4108,11 @@ Module Contents
 
    .. py:attribute:: MUSE_SPARK_1_1
       :value: 'MUSE_SPARK_1_1'
+
+
+
+   .. py:attribute:: MUSE_SPARK_1_2
+      :value: 'MUSE_SPARK_1_2'
 
 
 
@@ -4530,6 +4556,11 @@ Module Contents
 
    .. py:attribute:: CONNECTOR_TOOL
       :value: 'CONNECTOR_TOOL'
+
+
+
+   .. py:attribute:: TEMPLATE_TOOL
+      :value: 'TEMPLATE_TOOL'
 
 
 
@@ -6022,6 +6053,32 @@ Module Contents
 
    .. py:attribute:: EDITOR_EXPORT
       :value: 'editor_export'
+
+
+
+.. py:class:: MediaArtifactKind(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   What produced a media artifact, for the gallery's Explainers/Ads sub-filters. Derived from the
+   provenance the producing tool stamps on info, so there is no column to backfill.
+   PLAIN is the complement — an ordinary generation, carrying none of that provenance — so the
+   Videos tab can show plain videos without the ads and explainers that have their own tabs.
+
+
+   .. py:attribute:: AD
+      :value: 'ad'
+
+
+
+   .. py:attribute:: EXPLAINER
+      :value: 'explainer'
+
+
+
+   .. py:attribute:: PLAIN
+      :value: 'plain'
 
 
 

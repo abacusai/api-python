@@ -1,0 +1,106 @@
+abacusai.health_insight
+=======================
+
+.. py:module:: abacusai.health_insight
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.health_insight.HealthInsight
+
+
+Module Contents
+---------------
+
+.. py:class:: HealthInsight(client, healthInsightId=None, category=None, timeRange=None, title=None, body=None, sourceProvider=None, followUpPrompt=None, status=None, generatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A generated Health insight card (grounded in the user's connected wearable data).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param healthInsightId: The ID of the insight card.
+   :type healthInsightId: id
+   :param category: heart | sleep | activity | summary.
+   :type category: str
+   :param timeRange: week | month | 3month.
+   :type timeRange: str
+   :param title: Short headline.
+   :type title: str
+   :param body: 1-2 sentence insight body.
+   :type body: str
+   :param sourceProvider: Provider the insight is attributed to (oura, fitbit, ...).
+   :type sourceProvider: str
+   :param followUpPrompt: Suggested first-person question for the "Ask ->" chat follow-up.
+   :type followUpPrompt: str
+   :param status: current | stale.
+   :type status: str
+   :param generatedAt: When the card was generated.
+   :type generatedAt: str
+
+
+   .. py:attribute:: health_insight_id
+      :value: None
+
+
+
+   .. py:attribute:: category
+      :value: None
+
+
+
+   .. py:attribute:: time_range
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: body
+      :value: None
+
+
+
+   .. py:attribute:: source_provider
+      :value: None
+
+
+
+   .. py:attribute:: follow_up_prompt
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: generated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

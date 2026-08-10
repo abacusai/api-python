@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppProject(client, webAppProjectId=None, sourceDeploymentConversationId=None, deployedStatus=None, hostnames=None, projectMetadata=None, projectType=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
+.. py:class:: WebAppProject(client, webAppProjectId=None, sourceDeploymentConversationId=None, deployedStatus=None, hostnames=None, projectMetadata=None, projectType=None, hasSupportAgent=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type projectMetadata: dict
    :param projectType: web_app | web_service | mobile_app
    :type projectType: str
+   :param hasSupportAgent: Whether this app has a support agent linked
+   :type hasSupportAgent: bool
    :param hostedDatabaseId: The ID of the hosted database
    :type hostedDatabaseId: id
    :param hostedDevDatabaseId: The ID of the hosted dev database
@@ -70,6 +72,11 @@ Module Contents
 
 
    .. py:attribute:: project_type
+      :value: None
+
+
+
+   .. py:attribute:: has_support_agent
       :value: None
 
 

@@ -1,0 +1,71 @@
+abacusai.audio_listener_export_settings
+=======================================
+
+.. py:module:: abacusai.audio_listener_export_settings
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_export_settings.AudioListenerExportSettings
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, isOrgEnabled=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Where a user's Listener session transcripts are automatically exported.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param isEnabled: Whether transcripts are automatically exported when a session ends.
+   :type isEnabled: bool
+   :param service: The file connector transcripts are exported to (GOOGLEDRIVEUSER, ONEDRIVE, BOX or DROPBOX).
+   :type service: str
+   :param folderId: The connector folder id transcripts are written to, if one was chosen.
+   :type folderId: str
+   :param isOrgEnabled: Whether the organization allows transcript export at all.
+   :type isOrgEnabled: bool
+
+
+   .. py:attribute:: is_enabled
+      :value: None
+
+
+
+   .. py:attribute:: service
+      :value: None
+
+
+
+   .. py:attribute:: folder_id
+      :value: None
+
+
+
+   .. py:attribute:: is_org_enabled
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -35,6 +35,7 @@ Submodules
    /autoapi/abacusai/app_user_group_sign_in_token/index
    /autoapi/abacusai/application_connector/index
    /autoapi/abacusai/audio_gen_settings/index
+   /autoapi/abacusai/audio_listener_export_settings/index
    /autoapi/abacusai/audio_listener_transcript_search_result/index
    /autoapi/abacusai/audio_listener_transcript_search_results/index
    /autoapi/abacusai/audio_url_result/index
@@ -75,6 +76,7 @@ Submodules
    /autoapi/abacusai/concatenation_config/index
    /autoapi/abacusai/constants_autocomplete_response/index
    /autoapi/abacusai/conversation_and_project_search_results/index
+   /autoapi/abacusai/conversation_credits/index
    /autoapi/abacusai/cowork_desktop_folder/index
    /autoapi/abacusai/cowork_dispatch_attachment/index
    /autoapi/abacusai/cowork_dispatch_message/index
@@ -171,6 +173,8 @@ Submodules
    /autoapi/abacusai/generated_pit_feature_config_option/index
    /autoapi/abacusai/global_context/index
    /autoapi/abacusai/graph_dashboard/index
+   /autoapi/abacusai/health_data_source/index
+   /autoapi/abacusai/health_insight/index
    /autoapi/abacusai/holdout_analysis/index
    /autoapi/abacusai/holdout_analysis_version/index
    /autoapi/abacusai/hosted_app_container/index
@@ -204,6 +208,7 @@ Submodules
    /autoapi/abacusai/mcp_server_query_result/index
    /autoapi/abacusai/media_artifact/index
    /autoapi/abacusai/media_project/index
+   /autoapi/abacusai/media_project_render_state/index
    /autoapi/abacusai/memory_bucket/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
@@ -541,6 +546,7 @@ Classes
    abacusai.DaemonTaskLifecycleUpdateAction
    abacusai.MediaArtifactType
    abacusai.MediaArtifactOrigin
+   abacusai.MediaArtifactKind
    abacusai.VerticalType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
@@ -631,6 +637,7 @@ Classes
    abacusai.AppUserGroupSignInToken
    abacusai.ApplicationConnector
    abacusai.AudioGenSettings
+   abacusai.AudioListenerExportSettings
    abacusai.AudioListenerTranscriptSearchResult
    abacusai.AudioListenerTranscriptSearchResults
    abacusai.AudioUrlResult
@@ -675,6 +682,7 @@ Classes
    abacusai.ConcatenationConfig
    abacusai.ConstantsAutocompleteResponse
    abacusai.ConversationAndProjectSearchResults
+   abacusai.ConversationCredits
    abacusai.CoworkDesktopFolder
    abacusai.CoworkDispatchAttachment
    abacusai.CoworkDispatchMessage
@@ -769,6 +777,8 @@ Classes
    abacusai.FunctionLogs
    abacusai.GeneratedPitFeatureConfigOption
    abacusai.GraphDashboard
+   abacusai.HealthDataSource
+   abacusai.HealthInsight
    abacusai.HoldoutAnalysis
    abacusai.HoldoutAnalysisVersion
    abacusai.HostedAppContainer
@@ -802,6 +812,7 @@ Classes
    abacusai.McpServerQueryResult
    abacusai.MediaArtifact
    abacusai.MediaProject
+   abacusai.MediaProjectRenderState
    abacusai.MemoryBucket
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
@@ -2604,11 +2615,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2657,11 +2663,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2746,11 +2747,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2773,11 +2769,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(schema)
@@ -2832,11 +2823,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(configs)
@@ -2955,11 +2941,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: is_template_node()
 
@@ -3044,11 +3025,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(node)
       :classmethod:
@@ -3120,11 +3096,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(node)
@@ -3297,11 +3268,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(data)
       :classmethod:
@@ -3347,11 +3313,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(configs)
@@ -3447,11 +3408,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -3492,11 +3448,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -3539,11 +3490,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(mapping)
@@ -3592,11 +3538,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -3641,11 +3582,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
    .. py:method:: from_dict(mapping)
@@ -4170,10 +4106,6 @@ Package Contents
 .. py:class:: _BatchPredictionArgsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -5871,10 +5803,6 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -9148,6 +9076,11 @@ Package Contents
 
 
 
+   .. py:attribute:: SHOPIFY
+      :value: 'SHOPIFY'
+
+
+
    .. py:attribute:: SNOWFLAKEUSER
       :value: 'SNOWFLAKEUSER'
 
@@ -9200,6 +9133,16 @@ Package Contents
 
    .. py:attribute:: ZOOM
       :value: 'ZOOM'
+
+
+
+   .. py:attribute:: METAADS
+      :value: 'METAADS'
+
+
+
+   .. py:attribute:: NETSUITE
+      :value: 'NETSUITE'
 
 
 
@@ -9955,6 +9898,11 @@ Package Contents
 
 
 
+   .. py:attribute:: QWEN3_8_MAX
+      :value: 'QWEN3_8_MAX'
+
+
+
    .. py:attribute:: DEEPSEEK_V3_1
       :value: 'DEEPSEEK_V3_1'
 
@@ -9977,6 +9925,11 @@ Package Contents
 
    .. py:attribute:: MUSE_SPARK_1_1
       :value: 'MUSE_SPARK_1_1'
+
+
+
+   .. py:attribute:: MUSE_SPARK_1_2
+      :value: 'MUSE_SPARK_1_2'
 
 
 
@@ -10420,6 +10373,11 @@ Package Contents
 
    .. py:attribute:: CONNECTOR_TOOL
       :value: 'CONNECTOR_TOOL'
+
+
+
+   .. py:attribute:: TEMPLATE_TOOL
+      :value: 'TEMPLATE_TOOL'
 
 
 
@@ -11729,6 +11687,32 @@ Package Contents
 
 
 
+.. py:class:: MediaArtifactKind(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   What produced a media artifact, for the gallery's Explainers/Ads sub-filters. Derived from the
+   provenance the producing tool stamps on info, so there is no column to backfill.
+   PLAIN is the complement — an ordinary generation, carrying none of that provenance — so the
+   Videos tab can show plain videos without the ads and explainers that have their own tabs.
+
+
+   .. py:attribute:: AD
+      :value: 'ad'
+
+
+
+   .. py:attribute:: EXPLAINER
+      :value: 'explainer'
+
+
+
+   .. py:attribute:: PLAIN
+      :value: 'plain'
+
+
+
 .. py:class:: VerticalType(*args, **kwds)
 
    Bases: :py:obj:`ApiEnum`
@@ -11836,6 +11820,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
@@ -11930,6 +11918,10 @@ Package Contents
 .. py:class:: _MergeConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_class_key
@@ -14747,11 +14739,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: ForecastingMonitorConfig
 
@@ -14812,11 +14799,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: StdDevThreshold
 
@@ -14845,11 +14827,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: ItemAttributesStdDevThreshold
 
@@ -14877,11 +14854,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: RestrictFeatureMappings
@@ -14943,11 +14915,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: MonitorFilteringConfig
 
@@ -15007,11 +14974,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: AlertConditionConfig
@@ -15257,10 +15219,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -15329,10 +15287,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_abstract_class
 
 
@@ -15376,11 +15330,6 @@ Package Contents
 
 
    .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
 
 
 .. py:class:: FeatureMappingConfig
@@ -15731,11 +15680,6 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -15799,19 +15743,10 @@ Package Contents
 
    .. py:method:: to_dict()
 
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -16526,6 +16461,60 @@ Package Contents
 
 
    .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, isOrgEnabled=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Where a user's Listener session transcripts are automatically exported.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param isEnabled: Whether transcripts are automatically exported when a session ends.
+   :type isEnabled: bool
+   :param service: The file connector transcripts are exported to (GOOGLEDRIVEUSER, ONEDRIVE, BOX or DROPBOX).
+   :type service: str
+   :param folderId: The connector folder id transcripts are written to, if one was chosen.
+   :type folderId: str
+   :param isOrgEnabled: Whether the organization allows transcript export at all.
+   :type isOrgEnabled: bool
+
+
+   .. py:attribute:: is_enabled
+      :value: None
+
+
+
+   .. py:attribute:: service
+      :value: None
+
+
+
+   .. py:attribute:: folder_id
+      :value: None
+
+
+
+   .. py:attribute:: is_org_enabled
       :value: None
 
 
@@ -18613,7 +18602,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -18692,6 +18681,12 @@ Package Contents
    :type effortLadder: list
    :param isOwner: Whether the requesting user owns the task.
    :type isOwner: bool
+   :param isOrgShared: Whether the task is shared org-wide.
+   :type isOrgShared: bool
+   :param isDirectlyShared: Whether the task was shared with the requesting user or their groups directly; only set for non-owners.
+   :type isDirectlyShared: bool
+   :param isProjectShared: Whether the task is visible because its source conversation belongs to a project the requesting user is a member of; only set for non-owners.
+   :type isProjectShared: bool
    :param sharedPermission: The permission the task was shared with ('VIEW' or 'EDIT'); only set for non-owners.
    :type sharedPermission: str
    :param ownerEmail: The task owner's email; only set for non-owners.
@@ -18875,6 +18870,21 @@ Package Contents
 
 
    .. py:attribute:: is_owner
+      :value: None
+
+
+
+   .. py:attribute:: is_org_shared
+      :value: None
+
+
+
+   .. py:attribute:: is_directly_shared
+      :value: None
+
+
+
+   .. py:attribute:: is_project_shared
       :value: None
 
 
@@ -20527,7 +20537,7 @@ Package Contents
       :type body: str
       :param is_html: Whether the body is html or not.
       :type is_html: bool
-      :param attachments: A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes).
+      :param attachments: A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes). The value can also be a (filename, data, content_type, headers) tuple; an attachment whose headers set a Content-ID is embedded inline so an HTML body can reference it as cid:<content-id>.
       :type attachments: None
 
 
@@ -28749,7 +28759,9 @@ Package Contents
       Gets a secret. The secret value is only returned when called from an Abacus-managed
 
       environment (an agent, usercode runtime, or hosted notebook owned by your organization,
-      or the organization's system API key); otherwise the value is masked.
+      or the organization's system API key); otherwise the value is masked. Secrets restricted
+      to specific user groups are only readable by members of those groups, organization admins,
+      and system execution environments; agent and tool executions act as the requesting user.
 
 
       :param secret_key: The secret key.
@@ -28764,7 +28776,10 @@ Package Contents
 
       Lists all secrets for an organization. Secret values are not decrypted; use
 
-      getOrganizationSecret to retrieve the value of a specific secret.
+      getOrganizationSecret to retrieve the value of a specific secret. Secrets restricted to
+      specific user groups are omitted unless the caller is a member of an allowed group, an
+      organization admin, or a system execution environment; agent and tool executions act as
+      the requesting user.
 
 
       :param secret_type: Filter secrets by type. Use OrganizationSecretType enum values.
@@ -30514,6 +30529,81 @@ Package Contents
 
 
 
+.. py:class:: ConversationCredits(client, deploymentConversationId=None, name=None, conversationType=None, isDeleted=None, unit=None, credits=None, turns=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Credits one conversation spent on a single day (_getConversationCreditsForDay).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The ID of the deployment conversation.
+   :type deploymentConversationId: id
+   :param name: The conversation title.
+   :type name: str
+   :param conversationType: The type of the conversation.
+   :type conversationType: str
+   :param isDeleted: True when the conversation itself has been deleted; its credits survive.
+   :type isDeleted: bool
+   :param unit: 'credits' for self-serve, 'usd' for enterprise -- the unit `credits` is expressed in.
+   :type unit: str
+   :param credits: Spend on the requested day only, not the conversation's lifetime.
+   :type credits: float
+   :param turns: Conversation events on that day.
+   :type turns: int
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: conversation_type
+      :value: None
+
+
+
+   .. py:attribute:: is_deleted
+      :value: None
+
+
+
+   .. py:attribute:: unit
+      :value: None
+
+
+
+   .. py:attribute:: credits
+      :value: None
+
+
+
+   .. py:attribute:: turns
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: CoworkDesktopFolder(client, id=None, label=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -31444,7 +31534,7 @@ Package Contents
 
 
 
-.. py:class:: DaemonTaskPermissions(client, daemonTaskId=None, userPermissions=None, userGroupPermissions=None)
+.. py:class:: DaemonTaskPermissions(client, daemonTaskId=None, userPermissions=None, userGroupPermissions=None, shareWithOrg=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31459,6 +31549,8 @@ Package Contents
    :type userPermissions: list
    :param userGroupPermissions: List of tuples containing (user_group_id, permission).
    :type userGroupPermissions: list
+   :param shareWithOrg: Whether the task is shared org-wide (view-only for everyone in the org).
+   :type shareWithOrg: bool
 
 
    .. py:attribute:: daemon_task_id
@@ -31472,6 +31564,11 @@ Package Contents
 
 
    .. py:attribute:: user_group_permissions
+      :value: None
+
+
+
+   .. py:attribute:: share_with_org
       :value: None
 
 
@@ -33681,7 +33778,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33786,6 +33883,8 @@ Package Contents
    :type scDeployedUrls: list
    :param roleplayCharacter: For Role Play conversations, the minimal character display (name and image) attached so a viewer who does not own the private character can still see who they're chatting with.
    :type roleplayCharacter: dict
+   :param loopType: For Media Studio conversations, the dedicated agentic loop the conversation is pinned to (e.g. ad_creation); null when unpinned or not Media Studio.
+   :type loopType: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -34034,6 +34133,11 @@ Package Contents
 
 
 
+   .. py:attribute:: loop_type
+      :value: None
+
+
+
    .. py:attribute:: history
 
 
@@ -34274,8 +34378,8 @@ Package Contents
    :type computerFiles: list
    :param toolUseRequest: The tool use request for the message.
    :type toolUseRequest: dict
-   :param toolUseResult: The tool use response for the message.
-   :type toolUseResult: dict
+   :param toolUseResult: The tool use response for the message — a single dict for one tool call, a list for a batched (parallel tool calls) round.
+   :type toolUseResult: dict | list
    :param verificationSummary: The summary of the verification process for the message.
    :type verificationSummary: str
    :param attachedUserFileNames: The list of files attached by the user on the message.
@@ -36626,7 +36730,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36689,6 +36793,8 @@ Package Contents
    :type deepagentEffortModes: list
    :param defaultDeepagentEffortMode: The default effort mode for the Deep Agent. Only applicable for super agent applications.
    :type defaultDeepagentEffortMode: str
+   :param deepagentDefaultFromGroup: Whether default_deepagent_effort_mode comes from an admin-set user group default, which seeds new conversations ahead of the user's remembered effort pick. Only applicable for super agent applications.
+   :type deepagentDefaultFromGroup: bool
 
 
    .. py:attribute:: name
@@ -36822,6 +36928,11 @@ Package Contents
 
 
    .. py:attribute:: default_deepagent_effort_mode
+      :value: None
+
+
+
+   .. py:attribute:: deepagent_default_from_group
       :value: None
 
 
@@ -41463,6 +41574,177 @@ Package Contents
 
 
 
+.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A connected Health data source (a wearable/device via Terra).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param healthDataSourceId: The ID of the data source.
+   :type healthDataSourceId: id
+   :param provider: Provider key (oura, fitbit, garmin, ...).
+   :type provider: str
+   :param kind: wearable | nutrition | cgm.
+   :type kind: str
+   :param status: active | syncing | error | disconnected.
+   :type status: str
+   :param errorDetail: Populated when status is 'error'.
+   :type errorDetail: str
+   :param connectedAt: When the source was connected.
+   :type connectedAt: str
+   :param lastSyncedAt: Last successful sync time.
+   :type lastSyncedAt: str
+   :param isLiveSync: Whether this source is refreshed by pulling the aggregator, as opposed to by not refreshable at all (a retired source, kept for its history). Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
+   :type isLiveSync: bool
+
+
+   .. py:attribute:: health_data_source_id
+      :value: None
+
+
+
+   .. py:attribute:: provider
+      :value: None
+
+
+
+   .. py:attribute:: kind
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: error_detail
+      :value: None
+
+
+
+   .. py:attribute:: connected_at
+      :value: None
+
+
+
+   .. py:attribute:: last_synced_at
+      :value: None
+
+
+
+   .. py:attribute:: is_live_sync
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: HealthInsight(client, healthInsightId=None, category=None, timeRange=None, title=None, body=None, sourceProvider=None, followUpPrompt=None, status=None, generatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A generated Health insight card (grounded in the user's connected wearable data).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param healthInsightId: The ID of the insight card.
+   :type healthInsightId: id
+   :param category: heart | sleep | activity | summary.
+   :type category: str
+   :param timeRange: week | month | 3month.
+   :type timeRange: str
+   :param title: Short headline.
+   :type title: str
+   :param body: 1-2 sentence insight body.
+   :type body: str
+   :param sourceProvider: Provider the insight is attributed to (oura, fitbit, ...).
+   :type sourceProvider: str
+   :param followUpPrompt: Suggested first-person question for the "Ask ->" chat follow-up.
+   :type followUpPrompt: str
+   :param status: current | stale.
+   :type status: str
+   :param generatedAt: When the card was generated.
+   :type generatedAt: str
+
+
+   .. py:attribute:: health_insight_id
+      :value: None
+
+
+
+   .. py:attribute:: category
+      :value: None
+
+
+
+   .. py:attribute:: time_range
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: body
+      :value: None
+
+
+
+   .. py:attribute:: source_provider
+      :value: None
+
+
+
+   .. py:attribute:: follow_up_prompt
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: generated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: HoldoutAnalysis(client, holdoutAnalysisId=None, name=None, featureGroupIds=None, modelId=None, modelName=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -41713,7 +41995,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41766,6 +42048,8 @@ Package Contents
    :type isThrottled: bool
    :param scDeployedUrls: Live deployed URLs of a supercomputer conversation (tracked in conversation metadata)
    :type scDeployedUrls: list
+   :param hasSupportAgent: Whether this app has a support agent linked
+   :type hasSupportAgent: bool
 
 
    .. py:attribute:: deployment_conversation_id
@@ -41874,6 +42158,11 @@ Package Contents
 
 
    .. py:attribute:: sc_deployed_urls
+      :value: None
+
+
+
+   .. py:attribute:: has_support_agent
       :value: None
 
 
@@ -43669,7 +43958,7 @@ Package Contents
 
 
 
-.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, sourceDeploymentConversationId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43686,6 +43975,8 @@ Package Contents
    :type editorState: dict
    :param lastRenderArtifactId: The media artifact of the latest export, if any
    :type lastRenderArtifactId: id
+   :param sourceDeploymentConversationId: The conversation this project was handed off from, if any
+   :type sourceDeploymentConversationId: id
    :param info: Extensible metadata bag
    :type info: dict
    :param assetUrls: Map of hashed media_artifact_id -> fresh signed URL (set by describe at read time)
@@ -43720,6 +44011,11 @@ Package Contents
 
 
 
+   .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
    .. py:attribute:: info
       :value: None
 
@@ -43746,6 +44042,53 @@ Package Contents
 
 
    .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MediaProjectRenderState(client, mediaProjectId=None, activeRender=None, lastRenderStats=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Project Render State — a project's export markers, without the project itself.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaProjectId: The ID of the media project
+   :type mediaProjectId: id
+   :param activeRender: The render in flight (stage, request id, start times), absent when idle
+   :type activeRender: dict
+   :param lastRenderStats: The previous successful render's actuals, which seed the time estimate
+   :type lastRenderStats: dict
+
+
+   .. py:attribute:: media_project_id
+      :value: None
+
+
+
+   .. py:attribute:: active_render
+      :value: None
+
+
+
+   .. py:attribute:: last_render_stats
       :value: None
 
 
@@ -47734,7 +48077,7 @@ Package Contents
 
 
 
-.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None, createdByEmail=None)
+.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None, createdByEmail=None, allowedUserGroupIds=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -47753,6 +48096,8 @@ Package Contents
    :type metadata: dict
    :param createdByEmail: The email of the user who created the secret.
    :type createdByEmail: str
+   :param allowedUserGroupIds: User groups the secret is restricted to; unset when the secret is unrestricted.
+   :type allowedUserGroupIds: list
 
 
    .. py:attribute:: secret_key
@@ -47776,6 +48121,11 @@ Package Contents
 
 
    .. py:attribute:: created_by_email
+      :value: None
+
+
+
+   .. py:attribute:: allowed_user_group_ids
       :value: None
 
 
@@ -54788,7 +55138,7 @@ Package Contents
 
 
 
-.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None, adOverhead=None, imageDisplayThreshold=None)
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -54805,6 +55155,8 @@ Package Contents
    :type lipSyncCosts: dict
    :param overhead: Fixed credit overhead per generation (agentic loop cost)
    :type overhead: int
+   :param videoOverhead: Credit overhead for video/lip-sync generations, used in place of overhead
+   :type videoOverhead: int
    :param adOverhead: Credit overhead for a Studio ad, used in place of overhead (research + prompt writing)
    :type adOverhead: int
    :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
@@ -54827,6 +55179,11 @@ Package Contents
 
 
    .. py:attribute:: overhead
+      :value: None
+
+
+
+   .. py:attribute:: video_overhead
       :value: None
 
 
@@ -55951,7 +56308,7 @@ Package Contents
 
 
 
-.. py:class:: Vertical(client, externalApplicationId=None, deploymentId=None, name=None, description=None, verticalType=None)
+.. py:class:: Vertical(client, externalApplicationId=None, deploymentId=None, name=None, description=None, verticalType=None, urlPath=None, verticalAgentMode=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55970,6 +56327,10 @@ Package Contents
    :type description: str
    :param verticalType: The type of vertical (e.g., HEALTH).
    :type verticalType: str
+   :param urlPath: The vertical's routing slug (e.g. 'health', or 'legal-agent' for an Agent app).
+   :type urlPath: str
+   :param verticalAgentMode: Whether this is the vertical's Agent app rather than its Chat app. Legal and Finance expose both on one deployment, so they share a vertical_type and this is what tells them apart.
+   :type verticalAgentMode: bool
 
 
    .. py:attribute:: external_application_id
@@ -55993,6 +56354,16 @@ Package Contents
 
 
    .. py:attribute:: vertical_type
+      :value: None
+
+
+
+   .. py:attribute:: url_path
+      :value: None
+
+
+
+   .. py:attribute:: vertical_agent_mode
       :value: None
 
 
@@ -56911,7 +57282,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppProject(client, webAppProjectId=None, sourceDeploymentConversationId=None, deployedStatus=None, hostnames=None, projectMetadata=None, projectType=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
+.. py:class:: WebAppProject(client, webAppProjectId=None, sourceDeploymentConversationId=None, deployedStatus=None, hostnames=None, projectMetadata=None, projectType=None, hasSupportAgent=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -56932,6 +57303,8 @@ Package Contents
    :type projectMetadata: dict
    :param projectType: web_app | web_service | mobile_app
    :type projectType: str
+   :param hasSupportAgent: Whether this app has a support agent linked
+   :type hasSupportAgent: bool
    :param hostedDatabaseId: The ID of the hosted database
    :type hostedDatabaseId: id
    :param hostedDevDatabaseId: The ID of the hosted dev database
@@ -56966,6 +57339,11 @@ Package Contents
 
 
    .. py:attribute:: project_type
+      :value: None
+
+
+
+   .. py:attribute:: has_support_agent
       :value: None
 
 
@@ -57750,6 +58128,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.107'
+   :value: '1.4.108'
 
 

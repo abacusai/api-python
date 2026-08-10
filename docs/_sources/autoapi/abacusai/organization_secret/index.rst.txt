@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None, createdByEmail=None)
+.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None, metadata=None, createdByEmail=None, allowedUserGroupIds=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type metadata: dict
    :param createdByEmail: The email of the user who created the secret.
    :type createdByEmail: str
+   :param allowedUserGroupIds: User groups the secret is restricted to; unset when the secret is unrestricted.
+   :type allowedUserGroupIds: list
 
 
    .. py:attribute:: secret_key
@@ -57,6 +59,11 @@ Module Contents
 
 
    .. py:attribute:: created_by_email
+      :value: None
+
+
+
+   .. py:attribute:: allowed_user_group_ids
       :value: None
 
 

@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.107'
+      :value: '1.4.108'
 
 
 
@@ -2813,7 +2813,9 @@ Module Contents
       Gets a secret. The secret value is only returned when called from an Abacus-managed
 
       environment (an agent, usercode runtime, or hosted notebook owned by your organization,
-      or the organization's system API key); otherwise the value is masked.
+      or the organization's system API key); otherwise the value is masked. Secrets restricted
+      to specific user groups are only readable by members of those groups, organization admins,
+      and system execution environments; agent and tool executions act as the requesting user.
 
 
       :param secret_key: The secret key.
@@ -2828,7 +2830,10 @@ Module Contents
 
       Lists all secrets for an organization. Secret values are not decrypted; use
 
-      getOrganizationSecret to retrieve the value of a specific secret.
+      getOrganizationSecret to retrieve the value of a specific secret. Secrets restricted to
+      specific user groups are omitted unless the caller is a member of an allowed group, an
+      organization admin, or a system execution environment; agent and tool executions act as
+      the requesting user.
 
 
       :param secret_type: Filter secrets by type. Use OrganizationSecretType enum values.
@@ -4860,7 +4865,7 @@ Module Contents
       :type body: str
       :param is_html: Whether the body is html or not.
       :type is_html: bool
-      :param attachments: A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes).
+      :param attachments: A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes). The value can also be a (filename, data, content_type, headers) tuple; an attachment whose headers set a Content-ID is embedded inline so an HTML body can reference it as cid:<content-id>.
       :type attachments: None
 
 

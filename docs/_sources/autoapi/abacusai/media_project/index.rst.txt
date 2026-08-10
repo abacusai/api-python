@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, sourceDeploymentConversationId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,8 @@ Module Contents
    :type editorState: dict
    :param lastRenderArtifactId: The media artifact of the latest export, if any
    :type lastRenderArtifactId: id
+   :param sourceDeploymentConversationId: The conversation this project was handed off from, if any
+   :type sourceDeploymentConversationId: id
    :param info: Extensible metadata bag
    :type info: dict
    :param assetUrls: Map of hashed media_artifact_id -> fresh signed URL (set by describe at read time)
@@ -62,6 +64,11 @@ Module Contents
 
 
    .. py:attribute:: last_render_artifact_id
+      :value: None
+
+
+
+   .. py:attribute:: source_deployment_conversation_id
       :value: None
 
 

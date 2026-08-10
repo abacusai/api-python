@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -68,6 +68,8 @@ Module Contents
    :type isThrottled: bool
    :param scDeployedUrls: Live deployed URLs of a supercomputer conversation (tracked in conversation metadata)
    :type scDeployedUrls: list
+   :param hasSupportAgent: Whether this app has a support agent linked
+   :type hasSupportAgent: bool
 
 
    .. py:attribute:: deployment_conversation_id
@@ -176,6 +178,11 @@ Module Contents
 
 
    .. py:attribute:: sc_deployed_urls
+      :value: None
+
+
+
+   .. py:attribute:: has_support_agent
       :value: None
 
 

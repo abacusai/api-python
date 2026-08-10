@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.107'
+    client_version = '1.4.108'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2764,7 +2764,9 @@ class ReadOnlyClient(BaseApiClient):
         """Gets a secret. The secret value is only returned when called from an Abacus-managed
 
         environment (an agent, usercode runtime, or hosted notebook owned by your organization,
-        or the organization's system API key); otherwise the value is masked.
+        or the organization's system API key); otherwise the value is masked. Secrets restricted
+        to specific user groups are only readable by members of those groups, organization admins,
+        and system execution environments; agent and tool executions act as the requesting user.
 
 
         Args:
@@ -2777,7 +2779,10 @@ class ReadOnlyClient(BaseApiClient):
     def list_organization_secrets(self, secret_type: Union[OrganizationSecretType, str] = OrganizationSecretType.ORG_SECRET) -> List[OrganizationSecret]:
         """Lists all secrets for an organization. Secret values are not decrypted; use
 
-        getOrganizationSecret to retrieve the value of a specific secret.
+        getOrganizationSecret to retrieve the value of a specific secret. Secrets restricted to
+        specific user groups are omitted unless the caller is a member of an allowed group, an
+        organization admin, or a system execution environment; agent and tool executions act as
+        the requesting user.
 
 
         Args:
@@ -5235,7 +5240,7 @@ class ApiClient(ReadOnlyClient):
             subject (str): The subject of the email.
             body (str): The body of the email.
             is_html (bool): Whether the body is html or not.
-            attachments (None): A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes)."""
+            attachments (None): A dictionary where the key is the filename (including the file extension), and the value is either a file-like object (e.g., an open file in binary mode) or raw file data (e.g., bytes). The value can also be a (filename, data, content_type, headers) tuple; an attachment whose headers set a Content-ID is embedded inline so an HTML body can reference it as cid:<content-id>."""
         return self._call_api('sendEmail', 'POST', query_params={}, data={'email': json.dumps(email) if (email is not None and not isinstance(email, str)) else email, 'subject': json.dumps(subject) if (subject is not None and not isinstance(subject, str)) else subject, 'body': json.dumps(body) if (body is not None and not isinstance(body, str)) else body, 'isHtml': json.dumps(is_html) if (is_html is not None and not isinstance(is_html, str)) else is_html}, files=attachments)
 
     def set_user_role_to_platform(self, workspace: str, email: str):

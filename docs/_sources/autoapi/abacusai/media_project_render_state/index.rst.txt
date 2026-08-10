@@ -1,0 +1,64 @@
+abacusai.media_project_render_state
+===================================
+
+.. py:module:: abacusai.media_project_render_state
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.media_project_render_state.MediaProjectRenderState
+
+
+Module Contents
+---------------
+
+.. py:class:: MediaProjectRenderState(client, mediaProjectId=None, activeRender=None, lastRenderStats=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Project Render State — a project's export markers, without the project itself.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaProjectId: The ID of the media project
+   :type mediaProjectId: id
+   :param activeRender: The render in flight (stage, request id, start times), absent when idle
+   :type activeRender: dict
+   :param lastRenderStats: The previous successful render's actuals, which seed the time estimate
+   :type lastRenderStats: dict
+
+
+   .. py:attribute:: media_project_id
+      :value: None
+
+
+
+   .. py:attribute:: active_render
+      :value: None
+
+
+
+   .. py:attribute:: last_render_stats
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

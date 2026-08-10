@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DaemonTaskPermissions(client, daemonTaskId=None, userPermissions=None, userGroupPermissions=None)
+.. py:class:: DaemonTaskPermissions(client, daemonTaskId=None, userPermissions=None, userGroupPermissions=None, shareWithOrg=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type userPermissions: list
    :param userGroupPermissions: List of tuples containing (user_group_id, permission).
    :type userGroupPermissions: list
+   :param shareWithOrg: Whether the task is shared org-wide (view-only for everyone in the org).
+   :type shareWithOrg: bool
 
 
    .. py:attribute:: daemon_task_id
@@ -43,6 +45,11 @@ Module Contents
 
 
    .. py:attribute:: user_group_permissions
+      :value: None
+
+
+
+   .. py:attribute:: share_with_org
       :value: None
 
 

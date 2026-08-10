@@ -431,6 +431,7 @@ class ApplicationConnectorType(ApiEnum):
     OUTLOOK = 'OUTLOOK'
     BIGQUERY = 'BIGQUERY'
     AZURESTORAGE = 'AZURESTORAGE'
+    SHOPIFY = 'SHOPIFY'
     SNOWFLAKEUSER = 'SNOWFLAKEUSER'
     ATHENA = 'ATHENA'
     DROPBOX = 'DROPBOX'
@@ -442,6 +443,8 @@ class ApplicationConnectorType(ApiEnum):
     DOCUSIGN = 'DOCUSIGN'
     SMARTSHEET = 'SMARTSHEET'
     ZOOM = 'ZOOM'
+    METAADS = 'METAADS'
+    NETSUITE = 'NETSUITE'
 
     @classmethod
     def user_connectors(cls):
@@ -469,6 +472,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.GENERIC_OAUTH,
             cls.OUTLOOK,
             cls.BIGQUERY,
+            cls.SHOPIFY,
             cls.SNOWFLAKEUSER,
             cls.ATHENA,
             cls.DROPBOX,
@@ -480,6 +484,8 @@ class ApplicationConnectorType(ApiEnum):
             cls.DOCUSIGN,
             cls.SMARTSHEET,
             cls.ZOOM,
+            cls.METAADS,
+            cls.NETSUITE,
         ]
 
     @classmethod
@@ -643,11 +649,13 @@ class LLMName(ApiEnum):
     QWEN3_6 = 'QWEN3_6'
     QWEN3_6_27B = 'QWEN3_6_27B'
     QWEN3_7_MAX = 'QWEN3_7_MAX'
+    QWEN3_8_MAX = 'QWEN3_8_MAX'
     DEEPSEEK_V3_1 = 'DEEPSEEK_V3_1'
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
     MINIMAX_M2_7 = 'MINIMAX_M2_7'
     MINIMAX_M3 = 'MINIMAX_M3'
     MUSE_SPARK_1_1 = 'MUSE_SPARK_1_1'
+    MUSE_SPARK_1_2 = 'MUSE_SPARK_1_2'
     XIAOMI_MIMO_V2_PRO = 'XIAOMI_MIMO_V2_PRO'
     GEMMA_4_31B = 'GEMMA_4_31B'
     ZAI_GLM_5_1 = 'ZAI_GLM_5_1'
@@ -703,6 +711,7 @@ class PythonFunctionType(ApiEnum):
     STEP_FUNCTION = 'STEP_FUNCTION'
     USERCODE_TOOL = 'USERCODE_TOOL'
     CONNECTOR_TOOL = 'CONNECTOR_TOOL'
+    TEMPLATE_TOOL = 'TEMPLATE_TOOL'
 
 
 class EvalArtifactType(ApiEnum):
@@ -953,6 +962,16 @@ class MediaArtifactOrigin(ApiEnum):
     GENERATED = 'generated'
     UPLOADED = 'uploaded'
     EDITOR_EXPORT = 'editor_export'
+
+
+class MediaArtifactKind(ApiEnum):
+    """What produced a media artifact, for the gallery's Explainers/Ads sub-filters. Derived from the
+    provenance the producing tool stamps on info, so there is no column to backfill.
+    PLAIN is the complement — an ordinary generation, carrying none of that provenance — so the
+    Videos tab can show plain videos without the ads and explainers that have their own tabs."""
+    AD = 'ad'
+    EXPLAINER = 'explainer'
+    PLAIN = 'plain'
 
 
 class VerticalType(ApiEnum):

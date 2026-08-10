@@ -22,6 +22,7 @@ from .app_user_group import AppUserGroup
 from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
 from .audio_gen_settings import AudioGenSettings
+from .audio_listener_export_settings import AudioListenerExportSettings
 from .audio_listener_transcript_search_result import AudioListenerTranscriptSearchResult
 from .audio_listener_transcript_search_results import AudioListenerTranscriptSearchResults
 from .audio_url_result import AudioUrlResult
@@ -62,6 +63,7 @@ from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
 from .conversation_and_project_search_results import ConversationAndProjectSearchResults
+from .conversation_credits import ConversationCredits
 from .cowork_desktop_folder import CoworkDesktopFolder
 from .cowork_dispatch_attachment import CoworkDispatchAttachment
 from .cowork_dispatch_message import CoworkDispatchMessage
@@ -156,6 +158,8 @@ from .fs_entry import FsEntry
 from .function_logs import FunctionLogs
 from .generated_pit_feature_config_option import GeneratedPitFeatureConfigOption
 from .graph_dashboard import GraphDashboard
+from .health_data_source import HealthDataSource
+from .health_insight import HealthInsight
 from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
 from .hosted_app_container import HostedAppContainer
@@ -189,6 +193,7 @@ from .mcp_server_connection import McpServerConnection
 from .mcp_server_query_result import McpServerQueryResult
 from .media_artifact import MediaArtifact
 from .media_project import MediaProject
+from .media_project_render_state import MediaProjectRenderState
 from .memory_bucket import MemoryBucket
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
@@ -332,4 +337,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.107"
+__version__ = "1.4.108"

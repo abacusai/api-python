@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -78,6 +78,8 @@ Module Contents
    :type deepagentEffortModes: list
    :param defaultDeepagentEffortMode: The default effort mode for the Deep Agent. Only applicable for super agent applications.
    :type defaultDeepagentEffortMode: str
+   :param deepagentDefaultFromGroup: Whether default_deepagent_effort_mode comes from an admin-set user group default, which seeds new conversations ahead of the user's remembered effort pick. Only applicable for super agent applications.
+   :type deepagentDefaultFromGroup: bool
 
 
    .. py:attribute:: name
@@ -211,6 +213,11 @@ Module Contents
 
 
    .. py:attribute:: default_deepagent_effort_mode
+      :value: None
+
+
+
+   .. py:attribute:: deepagent_default_from_group
       :value: None
 
 

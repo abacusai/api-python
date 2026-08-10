@@ -1,0 +1,99 @@
+abacusai.health_data_source
+===========================
+
+.. py:module:: abacusai.health_data_source
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.health_data_source.HealthDataSource
+
+
+Module Contents
+---------------
+
+.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A connected Health data source (a wearable/device via Terra).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param healthDataSourceId: The ID of the data source.
+   :type healthDataSourceId: id
+   :param provider: Provider key (oura, fitbit, garmin, ...).
+   :type provider: str
+   :param kind: wearable | nutrition | cgm.
+   :type kind: str
+   :param status: active | syncing | error | disconnected.
+   :type status: str
+   :param errorDetail: Populated when status is 'error'.
+   :type errorDetail: str
+   :param connectedAt: When the source was connected.
+   :type connectedAt: str
+   :param lastSyncedAt: Last successful sync time.
+   :type lastSyncedAt: str
+   :param isLiveSync: Whether this source is refreshed by pulling the aggregator, as opposed to by not refreshable at all (a retired source, kept for its history). Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
+   :type isLiveSync: bool
+
+
+   .. py:attribute:: health_data_source_id
+      :value: None
+
+
+
+   .. py:attribute:: provider
+      :value: None
+
+
+
+   .. py:attribute:: kind
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: error_detail
+      :value: None
+
+
+
+   .. py:attribute:: connected_at
+      :value: None
+
+
+
+   .. py:attribute:: last_synced_at
+      :value: None
+
+
+
+   .. py:attribute:: is_live_sync
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
