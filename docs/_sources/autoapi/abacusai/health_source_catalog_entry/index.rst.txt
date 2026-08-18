@@ -1,0 +1,134 @@
+abacusai.health_source_catalog_entry
+====================================
+
+.. py:module:: abacusai.health_source_catalog_entry
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.health_source_catalog_entry.HealthSourceCatalogEntry
+
+
+Module Contents
+---------------
+
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, mobileOnlyDetail=None, retiredDetail=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One provider the Health Data Sources surface can show — what it is called, how it looks, and how (or
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param provider: Provider key (oura, fitbit, garmin, ...), matching HealthDataSource.provider.
+   :type provider: str
+   :param name: Brand name, shown as-is (never translated).
+   :type name: str
+   :param category: Stable display key the client maps to a translated label (Wearable, Fitness, Smart scale, Nutrition, Medical, CGM).
+   :type category: str
+   :param kind: wearable | nutrition | cgm — the ingestion-side data shape, not a user-facing label.
+   :type kind: str
+   :param color: Hex brand colour for the circular source badge.
+   :type color: str
+   :param glyph: One or two characters drawn on that badge when no icon renders.
+   :type glyph: str
+   :param iconUrl: A WHITE monochrome mark on transparency, to be composited over `color`. One asset works in light and dark, on web and native. Absent for a provider whose mark isn't published yet — draw `glyph` instead.
+   :type iconUrl: str
+   :param connectMode: web_oauth (Terra's hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores) | none (retired: existing rows stay readable, nothing new can be added). Derived from the same provider tuples the connect endpoints enforce, so a client that offers what this says can never be refused for offering the wrong thing.
+   :type connectMode: str
+   :param primaryRank: Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
+   :type primaryRank: int
+   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Resolved per org from the health_coming_soon_sources flag, so web and app agree on what has shipped.
+   :type comingSoon: bool
+   :param deprecating: Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
+   :type deprecating: bool
+   :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
+   :type mobileOnlyDetail: str
+   :param retiredDetail: Why an existing row can no longer sync. Present only when the provider is retired.
+   :type retiredDetail: str
+
+
+   .. py:attribute:: provider
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: category
+      :value: None
+
+
+
+   .. py:attribute:: kind
+      :value: None
+
+
+
+   .. py:attribute:: color
+      :value: None
+
+
+
+   .. py:attribute:: glyph
+      :value: None
+
+
+
+   .. py:attribute:: icon_url
+      :value: None
+
+
+
+   .. py:attribute:: connect_mode
+      :value: None
+
+
+
+   .. py:attribute:: primary_rank
+      :value: None
+
+
+
+   .. py:attribute:: coming_soon
+      :value: None
+
+
+
+   .. py:attribute:: deprecating
+      :value: None
+
+
+
+   .. py:attribute:: mobile_only_detail
+      :value: None
+
+
+
+   .. py:attribute:: retired_detail
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

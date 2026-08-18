@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, descriptions=None, audioModes=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type settings: dict
    :param warnings: The warnings for each model.
    :type warnings: dict
+   :param highCostModels: Models whose warning should render highlighted rather than muted.
+   :type highCostModels: list
    :param descriptions: The descriptions for each model.
    :type descriptions: dict
    :param audioModes: Maps models without a generate_audio toggle to a fixed audio behaviour ('alwaysOn'/'none').
@@ -70,6 +72,11 @@ Module Contents
 
 
    .. py:attribute:: warnings
+      :value: None
+
+
+
+   .. py:attribute:: high_cost_models
       :value: None
 
 

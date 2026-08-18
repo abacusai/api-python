@@ -218,6 +218,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../graph_dashboard/index.html">abacusai.graph_dashboard</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../health_data_source/index.html">abacusai.health_data_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../health_insight/index.html">abacusai.health_insight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../health_source_catalog_entry/index.html">abacusai.health_source_catalog_entry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../holdout_analysis/index.html">abacusai.holdout_analysis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../holdout_analysis_version/index.html">abacusai.holdout_analysis_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../hosted_app_container/index.html">abacusai.hosted_app_container</a></li>
@@ -312,7 +313,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../presentation_export_result/index.html">abacusai.presentation_export_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../private_web_app_deployment/index.html">abacusai.private_web_app_deployment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../problem_type/index.html">abacusai.problem_type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../product_draft/index.html">abacusai.product_draft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../product_link_preview/index.html">abacusai.product_link_preview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../project/index.html">abacusai.project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../project_config/index.html">abacusai.project_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../project_feature_group/index.html">abacusai.project_feature_group</a></li>
@@ -366,10 +367,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_exception/index.html">abacusai.user_exception</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user_info_with_billing/index.html">abacusai.user_info_with_billing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_ssh_key/index.html">abacusai.user_ssh_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../vertical/index.html">abacusai.vertical</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_asset/index.html">abacusai.video_asset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
@@ -2222,8 +2223,63 @@ attributes – see the documentation for details.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.M4A">
+<span class="sig-name descname"><span class="pre">M4A</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m4a'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.M4A" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.WAV">
+<span class="sig-name descname"><span class="pre">WAV</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wav'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.WAV" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.AAC">
+<span class="sig-name descname"><span class="pre">AAC</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'aac'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.AAC" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.FLAC">
+<span class="sig-name descname"><span class="pre">FLAC</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flac'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.FLAC" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.OGG">
+<span class="sig-name descname"><span class="pre">OGG</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ogg'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.OGG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.AMR">
+<span class="sig-name descname"><span class="pre">AMR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'amr'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.AMR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.AIFF">
+<span class="sig-name descname"><span class="pre">AIFF</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'aiff'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.AIFF" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.MP4">
 <span class="sig-name descname"><span class="pre">MP4</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MP4'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.MP4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.AVI">
+<span class="sig-name descname"><span class="pre">AVI</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'avi'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.AVI" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.MKV">
+<span class="sig-name descname"><span class="pre">MKV</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mkv'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.MKV" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.M4V">
+<span class="sig-name descname"><span class="pre">M4V</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m4v'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.M4V" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.FileFormat.THREE_GP">
+<span class="sig-name descname"><span class="pre">THREE_GP</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'3gp'</span></span><a class="headerlink" href="#abacusai.api_class.enums.FileFormat.THREE_GP" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -3956,6 +4012,26 @@ attributes – see the documentation for details.</p>
 <span class="sig-name descname"><span class="pre">NETSUITE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NETSUITE'</span></span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.NETSUITE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ApplicationConnectorType.MONGODB">
+<span class="sig-name descname"><span class="pre">MONGODB</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MONGODB'</span></span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.MONGODB" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ApplicationConnectorType.AZURECLOUD">
+<span class="sig-name descname"><span class="pre">AZURECLOUD</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AZURECLOUD'</span></span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.AZURECLOUD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ApplicationConnectorType.GCPCLOUD">
+<span class="sig-name descname"><span class="pre">GCPCLOUD</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GCPCLOUD'</span></span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.GCPCLOUD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ApplicationConnectorType.MYSQL">
+<span class="sig-name descname"><span class="pre">MYSQL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MYSQL'</span></span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.MYSQL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.ApplicationConnectorType.user_connectors">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">user_connectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.enums.ApplicationConnectorType.user_connectors" title="Link to this definition"></a></dt>
@@ -4667,6 +4743,11 @@ attributes – see the documentation for details.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.GEMINI_3_7_FLASH">
+<span class="sig-name descname"><span class="pre">GEMINI_3_7_FLASH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI_3_7_FLASH'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.GEMINI_3_7_FLASH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.GEMINI_3_5_FLASH_LITE">
 <span class="sig-name descname"><span class="pre">GEMINI_3_5_FLASH_LITE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI_3_5_FLASH_LITE'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.GEMINI_3_5_FLASH_LITE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -4709,6 +4790,11 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.XAI_GROK_4_5">
 <span class="sig-name descname"><span class="pre">XAI_GROK_4_5</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XAI_GROK_4_5'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.XAI_GROK_4_5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.XAI_GROK_4_6">
+<span class="sig-name descname"><span class="pre">XAI_GROK_4_6</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XAI_GROK_4_6'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.XAI_GROK_4_6" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4804,6 +4890,11 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.QWEN3_8_MAX">
 <span class="sig-name descname"><span class="pre">QWEN3_8_MAX</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QWEN3_8_MAX'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.QWEN3_8_MAX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.LLMName.QWEN3_8_27B">
+<span class="sig-name descname"><span class="pre">QWEN3_8_27B</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QWEN3_8_27B'</span></span><a class="headerlink" href="#abacusai.api_class.enums.LLMName.QWEN3_8_27B" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

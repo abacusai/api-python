@@ -1,0 +1,64 @@
+abacusai.product_link_preview
+=============================
+
+.. py:module:: abacusai.product_link_preview
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.product_link_preview.ProductLinkPreview
+
+
+Module Contents
+---------------
+
+.. py:class:: ProductLinkPreview(client, name=None, assetType=None, imageUrls=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Product Link Preview — what a product page yielded, read before any generation is paid for.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The product name read off the page
+   :type name: str
+   :param assetType: The kind of collateral the link resolves to (product, app)
+   :type assetType: str
+   :param imageUrls: The page's gallery candidates, to hand back to createVideoAsset
+   :type imageUrls: list
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: asset_type
+      :value: None
+
+
+
+   .. py:attribute:: image_urls
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

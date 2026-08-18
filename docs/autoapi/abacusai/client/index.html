@@ -218,6 +218,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../graph_dashboard/index.html">abacusai.graph_dashboard</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../health_data_source/index.html">abacusai.health_data_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../health_insight/index.html">abacusai.health_insight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../health_source_catalog_entry/index.html">abacusai.health_source_catalog_entry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../holdout_analysis/index.html">abacusai.holdout_analysis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../holdout_analysis_version/index.html">abacusai.holdout_analysis_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app_container/index.html">abacusai.hosted_app_container</a></li>
@@ -312,7 +313,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../presentation_export_result/index.html">abacusai.presentation_export_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../private_web_app_deployment/index.html">abacusai.private_web_app_deployment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html">abacusai.problem_type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../product_draft/index.html">abacusai.product_draft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../product_link_preview/index.html">abacusai.product_link_preview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project/index.html">abacusai.project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_config/index.html">abacusai.project_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_feature_group/index.html">abacusai.project_feature_group</a></li>
@@ -366,10 +367,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html">abacusai.user_exception</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_info_with_billing/index.html">abacusai.user_info_with_billing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_ssh_key/index.html">abacusai.user_ssh_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../vertical/index.html">abacusai.vertical</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_asset/index.html">abacusai.video_asset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
@@ -1169,7 +1170,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.108'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.109'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -5585,12 +5586,16 @@ ending code cell.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.import_module">
-<span class="sig-name descname"><span class="pre">import_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.import_module" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">import_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite_existing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.import_module" title="Link to this definition"></a></dt>
 <dd><p>Import a module created previously. It will reload if has been imported before.
-This will be equivalent to including from that module file.</p>
+By default this is equivalent to including from that module file, so the module’s names are copied into the main namespace.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>name</strong> (<em>String</em>) – Name of the module to import.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>String</em>) – Name of the module to import.</p></li>
+<li><p><strong>target_name</strong> (<em>String</em>) – If set, bind the module itself under this name in the main namespace instead of copying its names into it, equivalent to <cite>import &lt;name&gt; as &lt;target_name&gt;</cite>.</p></li>
+<li><p><strong>overwrite_existing</strong> (<em>Boolean</em>) – Whether names copied into the main namespace replace names already defined there. Ignored when target_name is set.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the imported python module</p>

@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.108'
+    client_version = '1.4.109'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3972,17 +3972,22 @@ class ApiClient(ReadOnlyClient):
         source_code = get_module_code_from_notebook(file_path)
         return self.update_module(name=name, source_code=source_code)
 
-    def import_module(self, name):
+    def import_module(self, name, target_name: str = None, overwrite_existing: bool = True):
         """
         Import a module created previously. It will reload if has been imported before.
-        This will be equivalent to including from that module file.
+        By default this is equivalent to including from that module file, so the module's names are copied into the main namespace.
 
         Args:
             name (String): Name of the module to import.
+            target_name (String): If set, bind the module itself under this name in the main namespace instead of copying its names into it, equivalent to `import <name> as <target_name>`.
+            overwrite_existing (Boolean): Whether names copied into the main namespace replace names already defined there. Ignored when target_name is set.
 
         Returns:
             module: the imported python module
         """
+        if target_name and not target_name.isidentifier():
+            raise ValueError(
+                f'target_name "{target_name}" is not a valid python identifier')
         module = self.describe_module(name)
         temp_dir = tempfile.gettempdir()
         with open(os.path.join(temp_dir, name + '.py'), 'w') as file:
@@ -3995,15 +4000,20 @@ class ApiClient(ReadOnlyClient):
         else:
             module = importlib.import_module(name)
 
+        import __main__ as the_main
+        if target_name:
+            setattr(the_main, target_name, module)
+            return module
+
         # respect __all__ if exists
         if '__all__' in module.__dict__:
             names = module.__dict__['__all__']
         else:
             # otherwise we import all names that don't begin with _
             names = [x for x in module.__dict__ if not x.startswith('_')]
-        import __main__ as the_main
-        for name in names:
-            setattr(the_main, name, getattr(module, name))
+        for attr_name in names:
+            if overwrite_existing or not hasattr(the_main, attr_name):
+                setattr(the_main, attr_name, getattr(module, attr_name))
         return module
 
     def run_workflow_graph(self, workflow_graph: WorkflowGraph, sample_user_inputs: dict = {}, agent_workflow_node_id: str = None, agent_interface: AgentInterface = None, package_requirements: list = None):
@@ -9566,7 +9576,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             DocumentRetrieverLookupResult: The documentation snippet found from the document retriever."""
-        return self._call_api('getDocumentSnippet', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'documentId': document_id, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index}, parse_type=DocumentRetrieverLookupResult)
+        return self._proxy_request('getDocumentSnippet', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'documentId': document_id, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index}, parse_type=DocumentRetrieverLookupResult, is_sync=True)
 
     def restart_document_retriever(self, document_retriever_id: str):
         """Restart the document retriever if it is stopped or has failed. This will start the deployment of the document retriever,

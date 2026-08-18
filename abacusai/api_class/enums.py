@@ -214,7 +214,18 @@ class FileFormat(ApiEnum):
     TXT = 'txt'
     EML = 'eml'
     MP3 = 'MP3'
+    M4A = 'm4a'
+    WAV = 'wav'
+    AAC = 'aac'
+    FLAC = 'flac'
+    OGG = 'ogg'
+    AMR = 'amr'
+    AIFF = 'aiff'
     MP4 = 'MP4'
+    AVI = 'avi'
+    MKV = 'mkv'
+    M4V = 'm4v'
+    THREE_GP = '3gp'
     FLV = 'flv'
     MOV = 'mov'
     MPG = 'mpg'
@@ -445,6 +456,10 @@ class ApplicationConnectorType(ApiEnum):
     ZOOM = 'ZOOM'
     METAADS = 'METAADS'
     NETSUITE = 'NETSUITE'
+    MONGODB = 'MONGODB'
+    AZURECLOUD = 'AZURECLOUD'
+    GCPCLOUD = 'GCPCLOUD'
+    MYSQL = 'MYSQL'
 
     @classmethod
     def user_connectors(cls):
@@ -486,11 +501,15 @@ class ApplicationConnectorType(ApiEnum):
             cls.ZOOM,
             cls.METAADS,
             cls.NETSUITE,
+            cls.MONGODB,
+            cls.AZURECLOUD,
+            cls.GCPCLOUD,
+            cls.MYSQL,
         ]
 
     @classmethod
     def database_connectors(cls):
-        return [cls.SALESFORCE, cls.ODBC, cls.DBC, cls.BIGQUERY, cls.SNOWFLAKEUSER, cls.ATHENA]
+        return [cls.SALESFORCE, cls.ODBC, cls.DBC, cls.BIGQUERY, cls.SNOWFLAKEUSER, cls.ATHENA, cls.MONGODB, cls.MYSQL]
 
 
 class StreamingConnectorType(ApiEnum):
@@ -622,6 +641,7 @@ class LLMName(ApiEnum):
     GEMINI_3_FLASH = 'GEMINI_3_FLASH'
     GEMINI_3_5_FLASH = 'GEMINI_3_5_FLASH'
     GEMINI_3_6_FLASH = 'GEMINI_3_6_FLASH'
+    GEMINI_3_7_FLASH = 'GEMINI_3_7_FLASH'
     GEMINI_3_5_FLASH_LITE = 'GEMINI_3_5_FLASH_LITE'
     GEMINI_3_1_FLASH_LITE = 'GEMINI_3_1_FLASH_LITE'
     XAI_GROK = 'XAI_GROK'
@@ -631,6 +651,7 @@ class LLMName(ApiEnum):
     XAI_GROK_4_2 = 'XAI_GROK_4_2'
     XAI_GROK_4_3 = 'XAI_GROK_4_3'
     XAI_GROK_4_5 = 'XAI_GROK_4_5'
+    XAI_GROK_4_6 = 'XAI_GROK_4_6'
     LLAMA4_MAVERICK = 'LLAMA4_MAVERICK'
     LLAMA3_1_405B = 'LLAMA3_1_405B'
     LLAMA3_1_70B = 'LLAMA3_1_70B'
@@ -650,6 +671,7 @@ class LLMName(ApiEnum):
     QWEN3_6_27B = 'QWEN3_6_27B'
     QWEN3_7_MAX = 'QWEN3_7_MAX'
     QWEN3_8_MAX = 'QWEN3_8_MAX'
+    QWEN3_8_27B = 'QWEN3_8_27B'
     DEEPSEEK_V3_1 = 'DEEPSEEK_V3_1'
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
     MINIMAX_M2_7 = 'MINIMAX_M2_7'

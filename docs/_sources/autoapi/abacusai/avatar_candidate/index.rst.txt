@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AvatarCandidate(client, s3Key=None, url=None)
+.. py:class:: AvatarCandidate(client, s3Key=None, url=None, thumbUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,8 @@ Module Contents
    :type s3Key: str
    :param url: Signed preview URL for the candidate grid
    :type url: str
+   :param thumbUrl: Signed URL of a small copy, for the 2x2 chooser grid
+   :type thumbUrl: str
 
 
    .. py:attribute:: s3_key
@@ -36,6 +38,11 @@ Module Contents
 
 
    .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: thumb_url
       :value: None
 
 

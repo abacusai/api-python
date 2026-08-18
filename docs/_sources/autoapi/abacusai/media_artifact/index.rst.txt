@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, origin=None, docId=None, isFavorited=None, isShared=None, publicUrl=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, origin=None, docId=None, isFavorited=None, isShared=None, publicUrl=None, shareType=None, shareToken=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,10 +38,14 @@ Module Contents
    :type docId: str
    :param isFavorited: Whether the artifact is favorited
    :type isFavorited: bool
-   :param isShared: Whether the artifact is shared publicly
+   :param isShared: Whether the artifact is shared (publicly or org-wide)
    :type isShared: bool
    :param publicUrl: The public URL for a shared artifact (set after sharing; on clouds without a CDN it is generated at read time)
    :type publicUrl: str
+   :param shareType: The sharing scope of the artifact (PUBLIC, ORGANIZATION or USERS), or None when not shared
+   :type shareType: str
+   :param shareToken: Deterministic token for the gated share read (getSharedMediaArtifact), which enforces the live share state
+   :type shareToken: str
    :param thumbnailUrl: Signed thumbnail URL (generated at read time)
    :type thumbnailUrl: str
    :param mediaUrl: Signed full media URL (generated at read time)
@@ -95,6 +99,16 @@ Module Contents
 
 
    .. py:attribute:: public_url
+      :value: None
+
+
+
+   .. py:attribute:: share_type
+      :value: None
+
+
+
+   .. py:attribute:: share_token
       :value: None
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None)
+.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None, exp=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type passwordsDisabled: bool
    :param externalServiceForRoles: The external service that is managing the user roles.
    :type externalServiceForRoles: str
+   :param exp: The logged-out experiment arm assigned to the visitor, if any.
+   :type exp: str
 
 
    .. py:attribute:: logo
@@ -57,6 +59,11 @@ Module Contents
 
 
    .. py:attribute:: external_service_for_roles
+      :value: None
+
+
+
+   .. py:attribute:: exp
       :value: None
 
 

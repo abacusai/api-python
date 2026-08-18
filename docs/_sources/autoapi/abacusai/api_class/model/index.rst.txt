@@ -1540,6 +1540,8 @@ Module Contents
    :type max_page_images: int
    :param max_conversation_messages: Maximum number of user messages allowed per conversation. When the limit is reached, users will be prompted to start a new conversation. None implies no limit.
    :type max_conversation_messages: int
+   :param search_site_restrict: List of website domains or URLs to restrict web search results to (e.g. ["example.com", "docs.example.com/help"]). When set, web searches will only return results from these sites.
+   :type search_site_restrict: List[str]
 
 
    .. py:attribute:: document_retrievers
@@ -1814,6 +1816,12 @@ Module Contents
 
    .. py:attribute:: max_conversation_messages
       :type:  int
+      :value: None
+
+
+
+   .. py:attribute:: search_site_restrict
+      :type:  List[str]
       :value: None
 
 

@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.108'
+      :value: '1.4.109'
 
 
 
@@ -3901,13 +3901,17 @@ Module Contents
 
 
 
-   .. py:method:: import_module(name)
+   .. py:method:: import_module(name, target_name = None, overwrite_existing = True)
 
       Import a module created previously. It will reload if has been imported before.
-      This will be equivalent to including from that module file.
+      By default this is equivalent to including from that module file, so the module's names are copied into the main namespace.
 
       :param name: Name of the module to import.
       :type name: String
+      :param target_name: If set, bind the module itself under this name in the main namespace instead of copying its names into it, equivalent to `import <name> as <target_name>`.
+      :type target_name: String
+      :param overwrite_existing: Whether names copied into the main namespace replace names already defined there. Ignored when target_name is set.
+      :type overwrite_existing: Boolean
 
       :returns: the imported python module
       :rtype: module

@@ -218,6 +218,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../graph_dashboard/index.html">abacusai.graph_dashboard</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../health_data_source/index.html">abacusai.health_data_source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../health_insight/index.html">abacusai.health_insight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../health_source_catalog_entry/index.html">abacusai.health_source_catalog_entry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../holdout_analysis/index.html">abacusai.holdout_analysis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../holdout_analysis_version/index.html">abacusai.holdout_analysis_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../hosted_app_container/index.html">abacusai.hosted_app_container</a></li>
@@ -312,7 +313,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../presentation_export_result/index.html">abacusai.presentation_export_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../private_web_app_deployment/index.html">abacusai.private_web_app_deployment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../problem_type/index.html">abacusai.problem_type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../product_draft/index.html">abacusai.product_draft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../product_link_preview/index.html">abacusai.product_link_preview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../project/index.html">abacusai.project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../project_config/index.html">abacusai.project_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../project_feature_group/index.html">abacusai.project_feature_group</a></li>
@@ -366,10 +367,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../../user/index.html">abacusai.user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_exception/index.html">abacusai.user_exception</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_group_object_permission/index.html">abacusai.user_group_object_permission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user_info_with_billing/index.html">abacusai.user_info_with_billing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../user_ssh_key/index.html">abacusai.user_ssh_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../vertical/index.html">abacusai.vertical</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_asset/index.html">abacusai.video_asset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../video_gen_costs/index.html">abacusai.video_gen_costs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_model/index.html">abacusai.video_gen_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_model_options/index.html">abacusai.video_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../video_gen_settings/index.html">abacusai.video_gen_settings</a></li>
@@ -1684,6 +1685,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>agentic_loop_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Enables use of agentic loop that uses a series of tool calls when needed to respond. If set to False, the agentic loop will not be used. If not set or set to Auto, the agentic loop will be automatically used based on certain conditions like presence of tools in the model.</p></li>
 <li><p><strong>max_page_images</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.</p></li>
 <li><p><strong>max_conversation_messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum number of user messages allowed per conversation. When the limit is reached, users will be prompted to start a new conversation. None implies no limit.</p></li>
+<li><p><strong>search_site_restrict</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of website domains or URLs to restrict web search results to (e.g. [“example.com”, “docs.example.com/help”]). When set, web searches will only return results from these sites.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1915,6 +1917,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.max_conversation_messages">
 <span class="sig-name descname"><span class="pre">max_conversation_messages</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.max_conversation_messages" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.search_site_restrict">
+<span class="sig-name descname"><span class="pre">search_site_restrict</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.search_site_restrict" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

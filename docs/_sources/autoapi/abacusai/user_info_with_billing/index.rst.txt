@@ -1,0 +1,72 @@
+abacusai.user_info_with_billing
+===============================
+
+.. py:module:: abacusai.user_info_with_billing
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.user_info_with_billing.UserInfoWithBilling
+
+
+Module Contents
+---------------
+
+.. py:class:: UserInfoWithBilling(client, tiersInfo=None, publicKey=None, userInfo={}, billingInfo={}, activePromotion={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The billing-funnel page-load bundle: the payloads of _getUserInfo, _getBillingInfo,
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param tiersInfo: The _getTiersInfo payload.
+   :type tiersInfo: list
+   :param publicKey: The _getPublicKey payload (Stripe publishable key).
+   :type publicKey: str
+   :param userInfo: The _getUserInfo payload.
+   :type userInfo: InternalUserInfo
+   :param billingInfo: The _getBillingInfo payload.
+   :type billingInfo: BillingInfo
+   :param activePromotion: The getActivePromotion payload.
+   :type activePromotion: ActivePromo
+
+
+   .. py:attribute:: tiers_info
+      :value: None
+
+
+
+   .. py:attribute:: public_key
+      :value: None
+
+
+
+   .. py:attribute:: user_info
+
+
+   .. py:attribute:: billing_info
+
+
+   .. py:attribute:: active_promotion
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

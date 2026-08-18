@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Avatar(client, avatarId=None, name=None, description=None, isStock=None, isFavorited=None, voiceStatus=None, voicePreviewUrl=None, imageUrls=None, createdAt=None, updatedAt=None)
+.. py:class:: Avatar(client, avatarId=None, name=None, description=None, isStock=None, isFavorited=None, voiceStatus=None, voicePreviewUrl=None, imageUrls=None, thumbnailUrls=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,8 +38,10 @@ Module Contents
    :type voiceStatus: str
    :param voicePreviewUrl: Signed URL of the stored voice sample when one exists, generated at read time
    :type voicePreviewUrl: str
-   :param imageUrls: Signed URLs of the reference images (first = front reference/card thumbnail), generated at read time
+   :param imageUrls: Full-size signed URLs of the reference images (first = the front reference, the one the cards show), generated at read time
    :type imageUrls: list
+   :param thumbnailUrls: Signed URLs of the card-sized copies, same order as image_urls (falls back to the full image where there is none)
+   :type thumbnailUrls: list
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -82,6 +84,11 @@ Module Contents
 
 
    .. py:attribute:: image_urls
+      :value: None
+
+
+
+   .. py:attribute:: thumbnail_urls
       :value: None
 
 
