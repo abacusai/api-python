@@ -74,6 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api_client_utils/index.html">abacusai.api_client_utils</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api_endpoint/index.html">abacusai.api_endpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api_key/index.html">abacusai.api_key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../app_template/index.html">abacusai.app_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../app_user_group/index.html">abacusai.app_user_group</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../app_user_group_sign_in_token/index.html">abacusai.app_user_group_sign_in_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../application_connector/index.html">abacusai.application_connector</a></li>
@@ -85,6 +86,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../audit_log/index.html">abacusai.audit_log</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../avatar/index.html">abacusai.avatar</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../avatar_candidate/index.html">abacusai.avatar_candidate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../avatar_voice_candidate/index.html">abacusai.avatar_voice_candidate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../batch_prediction/index.html">abacusai.batch_prediction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
@@ -253,6 +255,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../../media_artifact/index.html">abacusai.media_artifact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../media_project/index.html">abacusai.media_project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../media_project_render_state/index.html">abacusai.media_project_render_state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../media_project_revision/index.html">abacusai.media_project_revision</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../media_project_revision_document/index.html">abacusai.media_project_revision_document</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../memory_bucket/index.html">abacusai.memory_bucket</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
@@ -447,7 +451,7 @@
 <td><p>Database connector export config for feature groups</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.refresh._FeatureGroupExportConfigFactory" title="abacusai.api_class.refresh._FeatureGroupExportConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_FeatureGroupExportConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
 </table>
@@ -502,7 +506,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.refresh.FileConnectorExportConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.refresh.FileConnectorExportConfig.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -561,7 +568,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.refresh.DatabaseConnectorExportConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.refresh.DatabaseConnectorExportConfig.to_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -569,6 +579,8 @@
 <dt class="sig sig-object py" id="abacusai.api_class.refresh._FeatureGroupExportConfigFactory">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.refresh.</span></span><span class="sig-name descname"><span class="pre">_FeatureGroupExportConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.refresh._FeatureGroupExportConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.refresh._FeatureGroupExportConfigFactory.config_abstract_class">
 <span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.refresh._FeatureGroupExportConfigFactory.config_abstract_class" title="Link to this definition"></a></dt>

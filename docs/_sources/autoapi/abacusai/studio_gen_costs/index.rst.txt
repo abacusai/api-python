@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None)
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None, shortsVideogenDiscount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type imageCosts: dict
    :param lipSyncCosts: Cost lookup tables for lip sync models
    :type lipSyncCosts: dict
+   :param voiceDesignCredits: Flat credit estimate for designing one avatar voice (generateAvatarVoice)
+   :type voiceDesignCredits: int
    :param overhead: Fixed credit overhead per generation (agentic loop cost)
    :type overhead: int
    :param videoOverhead: Credit overhead for video/lip-sync generations, used in place of overhead
@@ -38,6 +40,8 @@ Module Contents
    :type adOverhead: int
    :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
    :type imageDisplayThreshold: int
+   :param shortsVideogenDiscount: Fraction off the listed video rate for Shorts renders (fal pass-through); estimates show the list rate slashed
+   :type shortsVideogenDiscount: float
 
 
    .. py:attribute:: video_costs
@@ -51,6 +55,11 @@ Module Contents
 
 
    .. py:attribute:: lip_sync_costs
+      :value: None
+
+
+
+   .. py:attribute:: voice_design_credits
       :value: None
 
 
@@ -71,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: image_display_threshold
+      :value: None
+
+
+
+   .. py:attribute:: shorts_videogen_discount
       :value: None
 
 

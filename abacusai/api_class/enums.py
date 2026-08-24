@@ -236,6 +236,7 @@ class FileFormat(ApiEnum):
     MSG = 'msg'
     TS = 'TS'
     TSX = 'TSX'
+    EPUB = 'epub'
 
 
 class ExperimentationMode(ApiEnum):
@@ -429,6 +430,7 @@ class ApplicationConnectorType(ApiEnum):
     HUBSPOT = 'HUBSPOT'
     TEAMSSCRAPER = 'TEAMSSCRAPER'
     GITHUBUSER = 'GITHUBUSER'
+    GITLABUSER = 'GITLABUSER'
     OKTASAML = 'OKTASAML'
     BOX = 'BOX'
     SFTPAPPLICATION = 'SFTPAPPLICATION'
@@ -482,6 +484,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.CONFLUENCE,
             cls.BOX,
             cls.GITHUBUSER,
+            cls.GITLABUSER,
             cls.ODBC,
             cls.DBC,
             cls.GENERIC_OAUTH,
@@ -682,11 +685,13 @@ class LLMName(ApiEnum):
     GEMMA_4_31B = 'GEMMA_4_31B'
     ZAI_GLM_5_1 = 'ZAI_GLM_5_1'
     ZAI_GLM_5_2 = 'ZAI_GLM_5_2'
+    ZAI_GLM_5_3 = 'ZAI_GLM_5_3'
     KIMI_K2_5 = 'KIMI_K2_5'
     KIMI_K2_6 = 'KIMI_K2_6'
     KIMI_K2_7_CODE = 'KIMI_K2_7_CODE'
     KIMI_K3 = 'KIMI_K3'
     INKLING = 'INKLING'
+    OX_ALPHA = 'OX_ALPHA'
 
 
 class MonitorAlertType(ApiEnum):

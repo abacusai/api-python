@@ -1,0 +1,57 @@
+abacusai.avatar_voice_candidate
+===============================
+
+.. py:module:: abacusai.avatar_voice_candidate
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.avatar_voice_candidate.AvatarVoiceCandidate
+
+
+Module Contents
+---------------
+
+.. py:class:: AvatarVoiceCandidate(client, s3Key=None, previewUrl=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Avatar Voice Candidate — one designed voice sample from generateAvatarVoice.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param s3Key: Opaque sample reference — pass back to attachAvatarVoice as generatedS3Key
+   :type s3Key: str
+   :param previewUrl: Signed URL of the sample, for auditioning it before it is kept
+   :type previewUrl: str
+
+
+   .. py:attribute:: s3_key
+      :value: None
+
+
+
+   .. py:attribute:: preview_url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -31,6 +31,7 @@ Submodules
    /autoapi/abacusai/api_client_utils/index
    /autoapi/abacusai/api_endpoint/index
    /autoapi/abacusai/api_key/index
+   /autoapi/abacusai/app_template/index
    /autoapi/abacusai/app_user_group/index
    /autoapi/abacusai/app_user_group_sign_in_token/index
    /autoapi/abacusai/application_connector/index
@@ -42,6 +43,7 @@ Submodules
    /autoapi/abacusai/audit_log/index
    /autoapi/abacusai/avatar/index
    /autoapi/abacusai/avatar_candidate/index
+   /autoapi/abacusai/avatar_voice_candidate/index
    /autoapi/abacusai/batch_prediction/index
    /autoapi/abacusai/batch_prediction_version/index
    /autoapi/abacusai/batch_prediction_version_logs/index
@@ -210,6 +212,8 @@ Submodules
    /autoapi/abacusai/media_artifact/index
    /autoapi/abacusai/media_project/index
    /autoapi/abacusai/media_project_render_state/index
+   /autoapi/abacusai/media_project_revision/index
+   /autoapi/abacusai/media_project_revision_document/index
    /autoapi/abacusai/memory_bucket/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
@@ -634,6 +638,7 @@ Classes
    abacusai.DataframeResponseSection
    abacusai.ApiEndpoint
    abacusai.ApiKey
+   abacusai.AppTemplate
    abacusai.AppUserGroup
    abacusai.AppUserGroupSignInToken
    abacusai.ApplicationConnector
@@ -645,6 +650,7 @@ Classes
    abacusai.AuditLog
    abacusai.Avatar
    abacusai.AvatarCandidate
+   abacusai.AvatarVoiceCandidate
    abacusai.BatchPrediction
    abacusai.BatchPredictionVersion
    abacusai.BatchPredictionVersionLogs
@@ -815,6 +821,8 @@ Classes
    abacusai.MediaArtifact
    abacusai.MediaProject
    abacusai.MediaProjectRenderState
+   abacusai.MediaProjectRevision
+   abacusai.MediaProjectRevisionDocument
    abacusai.MemoryBucket
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
@@ -1017,7 +1025,7 @@ Package Contents
 
 
 
-.. py:class:: AdTemplate(client, slug=None, name=None, category=None, speaks=None, supportsAvatar=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None)
+.. py:class:: AdTemplate(client, slug=None, name=None, category=None, speaks=None, supportsAvatar=None, needsProduct=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1030,12 +1038,14 @@ Package Contents
    :type slug: str
    :param name: Display name
    :type name: str
-   :param category: Explore subtab (ugc, tiktok, commercial)
+   :param category: Catalog category — one of ugc, tiktok, commercial
    :type category: str
    :param speaks: Whether the avatar speaks (voice/lip-sync formats)
    :type speaks: bool
    :param supportsAvatar: Whether an avatar can be attached (some formats are product-only)
    :type supportsAvatar: bool
+   :param needsProduct: False for avatar-only social formats (no product; avatar required). Absent means True
+   :type needsProduct: bool
    :param defaultDuration: Suggested duration in seconds
    :type defaultDuration: int
    :param defaultAspectRatio: Suggested aspect ratio
@@ -1071,6 +1081,11 @@ Package Contents
 
 
    .. py:attribute:: supports_avatar
+      :value: None
+
+
+
+   .. py:attribute:: needs_product
       :value: None
 
 
@@ -2624,6 +2639,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2672,6 +2692,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2756,6 +2781,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -2778,6 +2808,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(schema)
@@ -2832,6 +2867,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -2950,6 +2990,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: is_template_node()
 
@@ -3034,6 +3079,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(node)
       :classmethod:
@@ -3105,6 +3155,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(node)
@@ -3277,6 +3332,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(data)
       :classmethod:
@@ -3322,6 +3382,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(configs)
@@ -3417,6 +3482,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(graph)
       :classmethod:
@@ -3457,6 +3527,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: WorkflowNodeTemplateConfig
@@ -3499,6 +3574,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -3547,6 +3627,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
    .. py:method:: from_dict(mapping)
       :classmethod:
@@ -3591,6 +3676,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
    .. py:method:: from_dict(mapping)
@@ -4115,6 +4205,10 @@ Package Contents
 .. py:class:: _BatchPredictionArgsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -5436,6 +5530,11 @@ Package Contents
    .. py:attribute:: config_class_map
 
 
+   .. py:method:: from_dict(config)
+      :classmethod:
+
+
+
 .. py:class:: PredictionArguments
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -5812,6 +5911,10 @@ Package Contents
 .. py:class:: _PredictionArgumentsFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -7590,6 +7693,11 @@ Package Contents
 
 
 
+   .. py:attribute:: EPUB
+      :value: 'epub'
+
+
+
 .. py:class:: ExperimentationMode(*args, **kwds)
 
    Bases: :py:obj:`ApiEnum`
@@ -9075,6 +9183,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GITLABUSER
+      :value: 'GITLABUSER'
+
+
+
    .. py:attribute:: OKTASAML
       :value: 'OKTASAML'
 
@@ -10052,6 +10165,11 @@ Package Contents
 
 
 
+   .. py:attribute:: ZAI_GLM_5_3
+      :value: 'ZAI_GLM_5_3'
+
+
+
    .. py:attribute:: KIMI_K2_5
       :value: 'KIMI_K2_5'
 
@@ -10074,6 +10192,11 @@ Package Contents
 
    .. py:attribute:: INKLING
       :value: 'INKLING'
+
+
+
+   .. py:attribute:: OX_ALPHA
+      :value: 'OX_ALPHA'
 
 
 
@@ -11919,10 +12042,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
@@ -12017,10 +12136,6 @@ Package Contents
 .. py:class:: _MergeConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_class_key
@@ -13943,6 +14058,8 @@ Package Contents
    :type max_conversation_messages: int
    :param search_site_restrict: List of website domains or URLs to restrict web search results to (e.g. ["example.com", "docs.example.com/help"]). When set, web searches will only return results from these sites.
    :type search_site_restrict: List[str]
+   :param tool_response_token_limit: Max tokens of a custom tool response passed to the LLM. Larger responses are truncated and saved to a file. Defaults to 16384, max 32768.
+   :type tool_response_token_limit: int
 
 
    .. py:attribute:: document_retrievers
@@ -14223,6 +14340,12 @@ Package Contents
 
    .. py:attribute:: search_site_restrict
       :type:  List[str]
+      :value: None
+
+
+
+   .. py:attribute:: tool_response_token_limit
+      :type:  int
       :value: None
 
 
@@ -14846,6 +14969,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ForecastingMonitorConfig
 
@@ -14906,6 +15034,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: StdDevThreshold
 
@@ -14934,6 +15067,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ItemAttributesStdDevThreshold
 
@@ -14961,6 +15099,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: RestrictFeatureMappings
@@ -15022,6 +15165,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: MonitorFilteringConfig
 
@@ -15081,6 +15229,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: AlertConditionConfig
@@ -15326,6 +15479,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -15394,6 +15551,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_abstract_class
 
 
@@ -15437,6 +15598,11 @@ Package Contents
 
 
    .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 
 .. py:class:: FeatureMappingConfig
@@ -15787,6 +15953,11 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: DatabaseConnectorExportConfig
 
@@ -15850,10 +16021,19 @@ Package Contents
 
    .. py:method:: to_dict()
 
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_abstract_class
@@ -16285,6 +16465,109 @@ Package Contents
 
       :param api_key_id: The ID of the API key to delete.
       :type api_key_id: str
+
+
+
+.. py:class:: AppTemplate(client, templateId=None, templateType=None, name=None, description=None, longDescription=None, category=None, tags=None, techStack=None, thumbUrl=None, videoUrl=None, templateUrl=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   App Template — a curated remixable web app in the Templates gallery (client-safe registry
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param templateId: Stable template identifier (registry key)
+   :type templateId: str
+   :param templateType: The kind of template (web_app today)
+   :type templateType: str
+   :param name: Card title
+   :type name: str
+   :param description: Card one-liner
+   :type description: str
+   :param longDescription: Detail-modal copy
+   :type longDescription: str
+   :param category: Gallery filter category
+   :type category: str
+   :param tags: Search/filter tags
+   :type tags: list
+   :param techStack: Technologies shown in the detail modal
+   :type techStack: list
+   :param thumbUrl: Card thumbnail URL
+   :type thumbUrl: str
+   :param videoUrl: Demo video URL for the detail modal
+   :type videoUrl: str
+   :param templateUrl: Deployed demo app URL powering the live preview iframe
+   :type templateUrl: str
+
+
+   .. py:attribute:: template_id
+      :value: None
+
+
+
+   .. py:attribute:: template_type
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: long_description
+      :value: None
+
+
+
+   .. py:attribute:: category
+      :value: None
+
+
+
+   .. py:attribute:: tags
+      :value: None
+
+
+
+   .. py:attribute:: tech_stack
+      :value: None
+
+
+
+   .. py:attribute:: thumb_url
+      :value: None
+
+
+
+   .. py:attribute:: video_url
+      :value: None
+
+
+
+   .. py:attribute:: template_url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 
@@ -17035,6 +17318,46 @@ Package Contents
 
 
    .. py:attribute:: thumb_url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AvatarVoiceCandidate(client, s3Key=None, previewUrl=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Avatar Voice Candidate — one designed voice sample from generateAvatarVoice.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param s3Key: Opaque sample reference — pass back to attachAvatarVoice as generatedS3Key
+   :type s3Key: str
+   :param previewUrl: Signed URL of the sample, for auditioning it before it is kept
+   :type previewUrl: str
+
+
+   .. py:attribute:: s3_key
+      :value: None
+
+
+
+   .. py:attribute:: preview_url
       :value: None
 
 
@@ -31972,7 +32295,7 @@ Package Contents
 
 
 
-.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None, configOnly=None)
+.. py:class:: DatabaseConnector(client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None, createdBy=None, configOnly=None, baseConnector=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31997,6 +32320,8 @@ Package Contents
    :type createdBy: str
    :param configOnly: Whether this is a config-only connector.
    :type configOnly: bool
+   :param baseConnector: The hashed ID of the config connector this user connector is based on (for config connector flows)
+   :type baseConnector: str
 
 
    .. py:attribute:: database_connector_id
@@ -32035,6 +32360,11 @@ Package Contents
 
 
    .. py:attribute:: config_only
+      :value: None
+
+
+
+   .. py:attribute:: base_connector
       :value: None
 
 
@@ -36869,7 +37199,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, createdAt=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36896,6 +37226,8 @@ Package Contents
    :type useCase: str
    :param isAgent: Whether the external application is an agent.
    :type isAgent: bool
+   :param createdAt: When the external application was created.
+   :type createdAt: str
    :param status: The status of the deployment.
    :type status: str
    :param deploymentConversationRetentionHours: The retention policy for the external application.
@@ -36977,6 +37309,11 @@ Package Contents
 
 
    .. py:attribute:: is_agent
+      :value: None
+
+
+
+   .. py:attribute:: created_at
       :value: None
 
 
@@ -41736,9 +42073,9 @@ Package Contents
    :type connectedAt: str
    :param lastSyncedAt: Last successful sync time.
    :type lastSyncedAt: str
-   :param isLiveSync: Whether this source is refreshed by pulling the aggregator, as opposed to by not refreshable at all (a retired source, kept for its history). Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
+   :param isLiveSync: Whether this source is refreshed by pulling the aggregator, as opposed to not being refreshable at all. Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
    :type isLiveSync: bool
-   :param isImported: Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Both this and a retired source report is_live_sync False, but they are different things to a user — "we no longer support this device" versus "this data was imported and is read-only" — and only the server can tell them apart, since the fact that separates them (the absent aggregator_ref) is never exposed.
+   :param isImported: Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Such a row reports is_live_sync False, and this is what lets a client say WHY — readings that never came from a device, rather than a connection that broke — which only the server can tell, since the fact behind it (the absent aggregator_ref) is never exposed.
    :type isImported: bool
 
 
@@ -41891,7 +42228,7 @@ Package Contents
 
 
 
-.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, mobileOnlyDetail=None, retiredDetail=None)
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, mobileOnlyDetail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41914,7 +42251,7 @@ Package Contents
    :type glyph: str
    :param iconUrl: A WHITE monochrome mark on transparency, to be composited over `color`. One asset works in light and dark, on web and native. Absent for a provider whose mark isn't published yet — draw `glyph` instead.
    :type iconUrl: str
-   :param connectMode: web_oauth (Terra's hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores) | none (retired: existing rows stay readable, nothing new can be added). Derived from the same provider tuples the connect endpoints enforce, so a client that offers what this says can never be refused for offering the wrong thing.
+   :param connectMode: web_oauth (Terra's hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores). Derived from the same provider tuple the connect endpoint enforces, so a client that offers what this says can never be refused for offering the wrong thing.
    :type connectMode: str
    :param primaryRank: Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
    :type primaryRank: int
@@ -41924,8 +42261,6 @@ Package Contents
    :type deprecating: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
    :type mobileOnlyDetail: str
-   :param retiredDetail: Why an existing row can no longer sync. Present only when the provider is retired.
-   :type retiredDetail: str
 
 
    .. py:attribute:: provider
@@ -41984,11 +42319,6 @@ Package Contents
 
 
    .. py:attribute:: mobile_only_detail
-      :value: None
-
-
-
-   .. py:attribute:: retired_detail
       :value: None
 
 
@@ -44235,7 +44565,7 @@ Package Contents
 
 
 
-.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, sourceDeploymentConversationId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, sourceDeploymentConversationId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, lastRenderUrl=None, lastRenderThumbnailUrl=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44262,6 +44592,10 @@ Package Contents
    :type thumbnailUrls: dict
    :param thumbnailUrl: Fresh signed cover image for the project (latest export or first video clip), set at read time
    :type thumbnailUrl: str
+   :param lastRenderUrl: Fresh signed URL of the latest export itself, set at read time. Distinct from thumbnail_url, which may be an explicit cover or a source clip rather than the export
+   :type lastRenderUrl: str
+   :param lastRenderThumbnailUrl: Fresh signed poster frame for that export, set at read time
+   :type lastRenderThumbnailUrl: str
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -44309,6 +44643,16 @@ Package Contents
 
 
    .. py:attribute:: thumbnail_url
+      :value: None
+
+
+
+   .. py:attribute:: last_render_url
+      :value: None
+
+
+
+   .. py:attribute:: last_render_thumbnail_url
       :value: None
 
 
@@ -44366,6 +44710,135 @@ Package Contents
 
 
    .. py:attribute:: last_render_stats
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MediaProjectRevision(client, mediaProjectRevisionId=None, origin=None, description=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Project Revision — one checkpoint in a Studio video project's history.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaProjectRevisionId: The ID of the revision
+   :type mediaProjectRevisionId: id
+   :param origin: Who it was taken for — 'agent', 'user' or 'backup'
+   :type origin: str
+   :param description: A short line describing the write it checkpointed, if any
+   :type description: str
+   :param createdAt: When it was taken
+   :type createdAt: str
+
+
+   .. py:attribute:: media_project_revision_id
+      :value: None
+
+
+
+   .. py:attribute:: origin
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MediaProjectRevisionDocument(client, mediaProjectRevisionId=None, origin=None, description=None, editorState=None, assetUrls=None, thumbnailUrls=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Project Revision Document — one checkpoint WITH the document it holds.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaProjectRevisionId: The ID of the revision
+   :type mediaProjectRevisionId: id
+   :param origin: Who it was taken for — 'agent', 'user' or 'backup'
+   :type origin: str
+   :param description: A short line describing the write it checkpointed, if any
+   :type description: str
+   :param editorState: The document as it stood at that checkpoint, stored snake_case and returned camelCase
+   :type editorState: dict
+   :param assetUrls: Map of hashed media_artifact_id -> fresh signed URL, for the media this revision references (set at read time)
+   :type assetUrls: dict
+   :param thumbnailUrls: The same for their poster frames, which the media bin draws (set at read time)
+   :type thumbnailUrls: dict
+   :param createdAt: When it was taken
+   :type createdAt: str
+
+
+   .. py:attribute:: media_project_revision_id
+      :value: None
+
+
+
+   .. py:attribute:: origin
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: editor_state
+      :value: None
+
+
+
+   .. py:attribute:: asset_urls
+      :value: None
+
+
+
+   .. py:attribute:: thumbnail_urls
+      :value: None
+
+
+
+   .. py:attribute:: created_at
       :value: None
 
 
@@ -55415,7 +55888,7 @@ Package Contents
 
 
 
-.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None)
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None, shortsVideogenDiscount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55430,6 +55903,8 @@ Package Contents
    :type imageCosts: dict
    :param lipSyncCosts: Cost lookup tables for lip sync models
    :type lipSyncCosts: dict
+   :param voiceDesignCredits: Flat credit estimate for designing one avatar voice (generateAvatarVoice)
+   :type voiceDesignCredits: int
    :param overhead: Fixed credit overhead per generation (agentic loop cost)
    :type overhead: int
    :param videoOverhead: Credit overhead for video/lip-sync generations, used in place of overhead
@@ -55438,6 +55913,8 @@ Package Contents
    :type adOverhead: int
    :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
    :type imageDisplayThreshold: int
+   :param shortsVideogenDiscount: Fraction off the listed video rate for Shorts renders (fal pass-through); estimates show the list rate slashed
+   :type shortsVideogenDiscount: float
 
 
    .. py:attribute:: video_costs
@@ -55451,6 +55928,11 @@ Package Contents
 
 
    .. py:attribute:: lip_sync_costs
+      :value: None
+
+
+
+   .. py:attribute:: voice_design_credits
       :value: None
 
 
@@ -55471,6 +55953,11 @@ Package Contents
 
 
    .. py:attribute:: image_display_threshold
+      :value: None
+
+
+
+   .. py:attribute:: shorts_videogen_discount
       :value: None
 
 
@@ -56715,7 +57202,7 @@ Package Contents
 
 
 
-.. py:class:: VideoAsset(client, videoAssetId=None, assetType=None, name=None, sourceUrl=None, imageUrls=None, sourceImageUrls=None, urls=None, documentNames=None, createdAt=None, updatedAt=None)
+.. py:class:: VideoAsset(client, videoAssetId=None, assetType=None, name=None, sourceUrl=None, imageUrls=None, thumbnailUrls=None, sourceImageUrls=None, sourceThumbnailUrls=None, urls=None, documentNames=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -56732,10 +57219,14 @@ Package Contents
    :type name: str
    :param sourceUrl: The page the asset was scraped from, if any
    :type sourceUrl: str
-   :param imageUrls: Signed URLs of the stored images (hero first), generated at read time
+   :param imageUrls: Full-size signed URLs of the stored images (hero first), generated at read time
    :type imageUrls: list
+   :param thumbnailUrls: Signed URLs of the card-sized copies, same order as image_urls (falls back to the full image where there is none)
+   :type thumbnailUrls: list
    :param sourceImageUrls: Signed URLs of the photos those images were generated from, if any
    :type sourceImageUrls: list
+   :param sourceThumbnailUrls: Signed URLs of the card-sized copies of those photos, same order and same fallback
+   :type sourceThumbnailUrls: list
    :param urls: Extra product links attached as research material
    :type urls: list
    :param documentNames: Names of the uploaded documents attached as research material
@@ -56771,7 +57262,17 @@ Package Contents
 
 
 
+   .. py:attribute:: thumbnail_urls
+      :value: None
+
+
+
    .. py:attribute:: source_image_urls
+      :value: None
+
+
+
+   .. py:attribute:: source_thumbnail_urls
       :value: None
 
 
@@ -58434,6 +58935,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.109'
+   :value: '1.4.110'
 
 

@@ -417,3 +417,10 @@ class _ApplicationConnectorDatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.MONDAY: MondayDatasetConfig,
         enums.ApplicationConnectorType.DOCUSIGN: DocusignDatasetConfig,
     }
+
+    @classmethod
+    def from_dict(cls, config: dict) -> ApplicationConnectorDatasetConfig:
+        # skip_sensitivity_labels moved to the connector; configs stored before that still carry a default False
+        if isinstance(config, dict):
+            config = {k: v for k, v in config.items() if v or k not in ('skip_sensitivity_labels', 'skipSensitivityLabels')}
+        return super().from_dict(config)

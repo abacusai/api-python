@@ -1542,6 +1542,8 @@ Module Contents
    :type max_conversation_messages: int
    :param search_site_restrict: List of website domains or URLs to restrict web search results to (e.g. ["example.com", "docs.example.com/help"]). When set, web searches will only return results from these sites.
    :type search_site_restrict: List[str]
+   :param tool_response_token_limit: Max tokens of a custom tool response passed to the LLM. Larger responses are truncated and saved to a file. Defaults to 16384, max 32768.
+   :type tool_response_token_limit: int
 
 
    .. py:attribute:: document_retrievers
@@ -1822,6 +1824,12 @@ Module Contents
 
    .. py:attribute:: search_site_restrict
       :type:  List[str]
+      :value: None
+
+
+
+   .. py:attribute:: tool_response_token_limit
+      :type:  int
       :value: None
 
 

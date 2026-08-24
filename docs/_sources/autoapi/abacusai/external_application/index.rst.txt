@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, createdAt=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isCustomizable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type useCase: str
    :param isAgent: Whether the external application is an agent.
    :type isAgent: bool
+   :param createdAt: When the external application was created.
+   :type createdAt: str
    :param status: The status of the deployment.
    :type status: str
    :param deploymentConversationRetentionHours: The retention policy for the external application.
@@ -123,6 +125,11 @@ Module Contents
 
 
    .. py:attribute:: is_agent
+      :value: None
+
+
+
+   .. py:attribute:: created_at
       :value: None
 
 

@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.109'
+    client_version = '1.4.110'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1812,7 +1812,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Args:
             doc_id (str): Unique Docstore string identifier for the document."""
-        return self._call_api('getDocstoreDocument', 'GET', query_params={'docId': doc_id}, streamable_response=True)
+        return self._proxy_request('getDocstoreDocument', 'GET', query_params={'docId': doc_id}, is_sync=True, streamable_response=True)
 
     def get_docstore_image(self, doc_id: str, max_width: int = None, max_height: int = None) -> io.BytesIO:
         """Return a document store image by id.

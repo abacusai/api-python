@@ -67,6 +67,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html">abacusai.api_client_utils</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_endpoint/index.html">abacusai.api_endpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html">abacusai.api_key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../app_template/index.html">abacusai.app_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../app_user_group/index.html">abacusai.app_user_group</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../app_user_group_sign_in_token/index.html">abacusai.app_user_group_sign_in_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
@@ -78,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../audit_log/index.html">abacusai.audit_log</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../avatar/index.html">abacusai.avatar</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../avatar_candidate/index.html">abacusai.avatar_candidate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../avatar_voice_candidate/index.html">abacusai.avatar_voice_candidate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html">abacusai.batch_prediction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
@@ -250,6 +252,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../media_artifact/index.html">abacusai.media_artifact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../media_project/index.html">abacusai.media_project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../media_project_render_state/index.html">abacusai.media_project_render_state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../media_project_revision/index.html">abacusai.media_project_revision</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../media_project_revision_document/index.html">abacusai.media_project_revision_document</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../memory_bucket/index.html">abacusai.memory_bucket</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
@@ -457,8 +461,8 @@
 <li><p><strong>errorDetail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Why this source is not delivering what it should. Set when status is ‘error’, and also on an ‘active’ source that the provider has only partly authorized — the connection works and some data flows, but a whole category of it never will until the user re-grants (see ingestion._missing_scope_advisory). Clients must branch on <cite>status</cite> for severity rather than treating the presence of this field as failure.</p></li>
 <li><p><strong>connectedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – When the source was connected.</p></li>
 <li><p><strong>lastSyncedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Last successful sync time.</p></li>
-<li><p><strong>isLiveSync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether this source is refreshed by pulling the aggregator, as opposed to by not refreshable at all (a retired source, kept for its history). Not derivable from <cite>provider</cite>: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.</p></li>
-<li><p><strong>isImported</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether this source’s readings were uploaded from a file rather than pulled from a provider connection. Both this and a retired source report is_live_sync False, but they are different things to a user — “we no longer support this device” versus “this data was imported and is read-only” — and only the server can tell them apart, since the fact that separates them (the absent aggregator_ref) is never exposed.</p></li>
+<li><p><strong>isLiveSync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether this source is refreshed by pulling the aggregator, as opposed to not being refreshable at all. Not derivable from <cite>provider</cite>: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.</p></li>
+<li><p><strong>isImported</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether this source’s readings were uploaded from a file rather than pulled from a provider connection. Such a row reports is_live_sync False, and this is what lets a client say WHY — readings that never came from a device, rather than a connection that broke — which only the server can tell, since the fact behind it (the absent aggregator_ref) is never exposed.</p></li>
 </ul>
 </dd>
 </dl>

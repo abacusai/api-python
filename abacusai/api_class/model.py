@@ -511,6 +511,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         max_page_images (int): Maximum number of page images to extract and send to the LLM for visual analysis from RAG search results. Defaults to 5.
         max_conversation_messages (int): Maximum number of user messages allowed per conversation. When the limit is reached, users will be prompted to start a new conversation. None implies no limit.
         search_site_restrict (List[str]): List of website domains or URLs to restrict web search results to (e.g. ["example.com", "docs.example.com/help"]). When set, web searches will only return results from these sites.
+        tool_response_token_limit (int): Max tokens of a custom tool response passed to the LLM. Larger responses are truncated and saved to a file. Defaults to 16384, max 32768.
     """
     document_retrievers: List[str] = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -559,6 +560,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     agentic_loop_mode: bool = dataclasses.field(default=None)
     max_conversation_messages: int = dataclasses.field(default=None)
     search_site_restrict: List[str] = dataclasses.field(default=None)
+    tool_response_token_limit: int = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

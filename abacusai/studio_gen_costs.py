@@ -10,26 +10,30 @@ class StudioGenCosts(AbstractApiClass):
             videoCosts (dict): Cost lookup tables for video generation models
             imageCosts (dict): Cost lookup tables for image generation models
             lipSyncCosts (dict): Cost lookup tables for lip sync models
+            voiceDesignCredits (int): Flat credit estimate for designing one avatar voice (generateAvatarVoice)
             overhead (int): Fixed credit overhead per generation (agentic loop cost)
             videoOverhead (int): Credit overhead for video/lip-sync generations, used in place of overhead
             adOverhead (int): Credit overhead for a Studio ad, used in place of overhead (research + prompt writing)
             imageDisplayThreshold (int): FE hides image estimates below this many credits (pre-overhead)
+            shortsVideogenDiscount (float): Fraction off the listed video rate for Shorts renders (fal pass-through); estimates show the list rate slashed
     """
 
-    def __init__(self, client, videoCosts=None, imageCosts=None, lipSyncCosts=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None):
+    def __init__(self, client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None, shortsVideogenDiscount=None):
         super().__init__(client, None)
         self.video_costs = videoCosts
         self.image_costs = imageCosts
         self.lip_sync_costs = lipSyncCosts
+        self.voice_design_credits = voiceDesignCredits
         self.overhead = overhead
         self.video_overhead = videoOverhead
         self.ad_overhead = adOverhead
         self.image_display_threshold = imageDisplayThreshold
+        self.shorts_videogen_discount = shortsVideogenDiscount
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'video_costs': repr(self.video_costs), f'image_costs': repr(self.image_costs), f'lip_sync_costs': repr(self.lip_sync_costs), f'overhead': repr(
-            self.overhead), f'video_overhead': repr(self.video_overhead), f'ad_overhead': repr(self.ad_overhead), f'image_display_threshold': repr(self.image_display_threshold)}
+        repr_dict = {f'video_costs': repr(self.video_costs), f'image_costs': repr(self.image_costs), f'lip_sync_costs': repr(self.lip_sync_costs), f'voice_design_credits': repr(self.voice_design_credits), f'overhead': repr(
+            self.overhead), f'video_overhead': repr(self.video_overhead), f'ad_overhead': repr(self.ad_overhead), f'image_display_threshold': repr(self.image_display_threshold), f'shorts_videogen_discount': repr(self.shorts_videogen_discount)}
         class_name = "StudioGenCosts"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -42,6 +46,6 @@ class StudioGenCosts(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'video_costs': self.video_costs, 'image_costs': self.image_costs, 'lip_sync_costs': self.lip_sync_costs, 'overhead': self.overhead,
-                'video_overhead': self.video_overhead, 'ad_overhead': self.ad_overhead, 'image_display_threshold': self.image_display_threshold}
+        resp = {'video_costs': self.video_costs, 'image_costs': self.image_costs, 'lip_sync_costs': self.lip_sync_costs, 'voice_design_credits': self.voice_design_credits, 'overhead': self.overhead,
+                'video_overhead': self.video_overhead, 'ad_overhead': self.ad_overhead, 'image_display_threshold': self.image_display_threshold, 'shorts_videogen_discount': self.shorts_videogen_discount}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

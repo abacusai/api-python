@@ -18,6 +18,7 @@ from .annotations_status import AnnotationsStatus
 from .api_class import *
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
+from .app_template import AppTemplate
 from .app_user_group import AppUserGroup
 from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
@@ -29,6 +30,7 @@ from .audio_url_result import AudioUrlResult
 from .audit_log import AuditLog
 from .avatar import Avatar
 from .avatar_candidate import AvatarCandidate
+from .avatar_voice_candidate import AvatarVoiceCandidate
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
@@ -195,6 +197,8 @@ from .mcp_server_query_result import McpServerQueryResult
 from .media_artifact import MediaArtifact
 from .media_project import MediaProject
 from .media_project_render_state import MediaProjectRenderState
+from .media_project_revision import MediaProjectRevision
+from .media_project_revision_document import MediaProjectRevisionDocument
 from .memory_bucket import MemoryBucket
 from .memory_options import MemoryOptions
 from .messaging_connector_response import MessagingConnectorResponse
@@ -338,4 +342,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.109"
+__version__ = "1.4.110"

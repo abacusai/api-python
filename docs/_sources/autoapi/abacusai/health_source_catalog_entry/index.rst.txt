@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, mobileOnlyDetail=None, retiredDetail=None)
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, mobileOnlyDetail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,7 +38,7 @@ Module Contents
    :type glyph: str
    :param iconUrl: A WHITE monochrome mark on transparency, to be composited over `color`. One asset works in light and dark, on web and native. Absent for a provider whose mark isn't published yet — draw `glyph` instead.
    :type iconUrl: str
-   :param connectMode: web_oauth (Terra's hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores) | none (retired: existing rows stay readable, nothing new can be added). Derived from the same provider tuples the connect endpoints enforce, so a client that offers what this says can never be refused for offering the wrong thing.
+   :param connectMode: web_oauth (Terra's hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores). Derived from the same provider tuple the connect endpoint enforces, so a client that offers what this says can never be refused for offering the wrong thing.
    :type connectMode: str
    :param primaryRank: Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
    :type primaryRank: int
@@ -48,8 +48,6 @@ Module Contents
    :type deprecating: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
    :type mobileOnlyDetail: str
-   :param retiredDetail: Why an existing row can no longer sync. Present only when the provider is retired.
-   :type retiredDetail: str
 
 
    .. py:attribute:: provider
@@ -108,11 +106,6 @@ Module Contents
 
 
    .. py:attribute:: mobile_only_detail
-      :value: None
-
-
-
-   .. py:attribute:: retired_detail
       :value: None
 
 

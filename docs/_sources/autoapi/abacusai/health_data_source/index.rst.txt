@@ -38,9 +38,9 @@ Module Contents
    :type connectedAt: str
    :param lastSyncedAt: Last successful sync time.
    :type lastSyncedAt: str
-   :param isLiveSync: Whether this source is refreshed by pulling the aggregator, as opposed to by not refreshable at all (a retired source, kept for its history). Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
+   :param isLiveSync: Whether this source is refreshed by pulling the aggregator, as opposed to not being refreshable at all. Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
    :type isLiveSync: bool
-   :param isImported: Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Both this and a retired source report is_live_sync False, but they are different things to a user — "we no longer support this device" versus "this data was imported and is read-only" — and only the server can tell them apart, since the fact that separates them (the absent aggregator_ref) is never exposed.
+   :param isImported: Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Such a row reports is_live_sync False, and this is what lets a client say WHY — readings that never came from a device, rather than a connection that broke — which only the server can tell, since the fact behind it (the absent aggregator_ref) is never exposed.
    :type isImported: bool
 
 

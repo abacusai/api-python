@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, sourceDeploymentConversationId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaProject(client, mediaProjectId=None, name=None, editorState=None, lastRenderArtifactId=None, sourceDeploymentConversationId=None, info=None, assetUrls=None, thumbnailUrls=None, thumbnailUrl=None, lastRenderUrl=None, lastRenderThumbnailUrl=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,10 @@ Module Contents
    :type thumbnailUrls: dict
    :param thumbnailUrl: Fresh signed cover image for the project (latest export or first video clip), set at read time
    :type thumbnailUrl: str
+   :param lastRenderUrl: Fresh signed URL of the latest export itself, set at read time. Distinct from thumbnail_url, which may be an explicit cover or a source clip rather than the export
+   :type lastRenderUrl: str
+   :param lastRenderThumbnailUrl: Fresh signed poster frame for that export, set at read time
+   :type lastRenderThumbnailUrl: str
    :param createdAt: The creation timestamp
    :type createdAt: str
    :param updatedAt: The last update timestamp
@@ -89,6 +93,16 @@ Module Contents
 
 
    .. py:attribute:: thumbnail_url
+      :value: None
+
+
+
+   .. py:attribute:: last_render_url
+      :value: None
+
+
+
+   .. py:attribute:: last_render_thumbnail_url
       :value: None
 
 

@@ -1,0 +1,92 @@
+abacusai.media_project_revision_document
+========================================
+
+.. py:module:: abacusai.media_project_revision_document
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.media_project_revision_document.MediaProjectRevisionDocument
+
+
+Module Contents
+---------------
+
+.. py:class:: MediaProjectRevisionDocument(client, mediaProjectRevisionId=None, origin=None, description=None, editorState=None, assetUrls=None, thumbnailUrls=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Media Project Revision Document — one checkpoint WITH the document it holds.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mediaProjectRevisionId: The ID of the revision
+   :type mediaProjectRevisionId: id
+   :param origin: Who it was taken for — 'agent', 'user' or 'backup'
+   :type origin: str
+   :param description: A short line describing the write it checkpointed, if any
+   :type description: str
+   :param editorState: The document as it stood at that checkpoint, stored snake_case and returned camelCase
+   :type editorState: dict
+   :param assetUrls: Map of hashed media_artifact_id -> fresh signed URL, for the media this revision references (set at read time)
+   :type assetUrls: dict
+   :param thumbnailUrls: The same for their poster frames, which the media bin draws (set at read time)
+   :type thumbnailUrls: dict
+   :param createdAt: When it was taken
+   :type createdAt: str
+
+
+   .. py:attribute:: media_project_revision_id
+      :value: None
+
+
+
+   .. py:attribute:: origin
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: editor_state
+      :value: None
+
+
+
+   .. py:attribute:: asset_urls
+      :value: None
+
+
+
+   .. py:attribute:: thumbnail_urls
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

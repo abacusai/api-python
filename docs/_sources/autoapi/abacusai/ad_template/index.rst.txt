@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AdTemplate(client, slug=None, name=None, category=None, speaks=None, supportsAvatar=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None)
+.. py:class:: AdTemplate(client, slug=None, name=None, category=None, speaks=None, supportsAvatar=None, needsProduct=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,12 +28,14 @@ Module Contents
    :type slug: str
    :param name: Display name
    :type name: str
-   :param category: Explore subtab (ugc, tiktok, commercial)
+   :param category: Catalog category — one of ugc, tiktok, commercial
    :type category: str
    :param speaks: Whether the avatar speaks (voice/lip-sync formats)
    :type speaks: bool
    :param supportsAvatar: Whether an avatar can be attached (some formats are product-only)
    :type supportsAvatar: bool
+   :param needsProduct: False for avatar-only social formats (no product; avatar required). Absent means True
+   :type needsProduct: bool
    :param defaultDuration: Suggested duration in seconds
    :type defaultDuration: int
    :param defaultAspectRatio: Suggested aspect ratio
@@ -69,6 +71,11 @@ Module Contents
 
 
    .. py:attribute:: supports_avatar
+      :value: None
+
+
+
+   .. py:attribute:: needs_product
       :value: None
 
 

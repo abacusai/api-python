@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: VideoAsset(client, videoAssetId=None, assetType=None, name=None, sourceUrl=None, imageUrls=None, sourceImageUrls=None, urls=None, documentNames=None, createdAt=None, updatedAt=None)
+.. py:class:: VideoAsset(client, videoAssetId=None, assetType=None, name=None, sourceUrl=None, imageUrls=None, thumbnailUrls=None, sourceImageUrls=None, sourceThumbnailUrls=None, urls=None, documentNames=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,10 +32,14 @@ Module Contents
    :type name: str
    :param sourceUrl: The page the asset was scraped from, if any
    :type sourceUrl: str
-   :param imageUrls: Signed URLs of the stored images (hero first), generated at read time
+   :param imageUrls: Full-size signed URLs of the stored images (hero first), generated at read time
    :type imageUrls: list
+   :param thumbnailUrls: Signed URLs of the card-sized copies, same order as image_urls (falls back to the full image where there is none)
+   :type thumbnailUrls: list
    :param sourceImageUrls: Signed URLs of the photos those images were generated from, if any
    :type sourceImageUrls: list
+   :param sourceThumbnailUrls: Signed URLs of the card-sized copies of those photos, same order and same fallback
+   :type sourceThumbnailUrls: list
    :param urls: Extra product links attached as research material
    :type urls: list
    :param documentNames: Names of the uploaded documents attached as research material
@@ -71,7 +75,17 @@ Module Contents
 
 
 
+   .. py:attribute:: thumbnail_urls
+      :value: None
+
+
+
    .. py:attribute:: source_image_urls
+      :value: None
+
+
+
+   .. py:attribute:: source_thumbnail_urls
       :value: None
 
 
