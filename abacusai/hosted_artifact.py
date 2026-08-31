@@ -7,7 +7,7 @@ class HostedArtifact(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            hostnames (list): The urls at which the application is being hosted.
+            hostnames (list): The urls at which the application is being hosted, each with its deployment tag, access level and whether the caller may read its traffic analytics.
             artifactType (str): The type of artifact being hosted.
             llmArtifactId (str): The artifact id being hosted.
             lifecycle (str): The lifecycle of the artifact.

@@ -16,7 +16,7 @@ class HostedAppContainer(AbstractApiClass):
             isDeployable (bool): Can this version be deployed
             deployedStatus (str): Deployment status (PENDING/ACTIVE/STOPPED/NOT_DEPLOYED)
             accessLevel (str): Access Level (PUBLIC/PRIVATE/DEDICATED/OWNER_ONLY)
-            hostnames (list[dict]): Hostnames and tags of the deployed app
+            hostnames (list[dict]): Hostnames of the deployed app, each with its tag, access level and whether the caller may read its traffic analytics
             llmArtifactId (id): The ID of the LLM artifact
             artifactType (str): The type of the artifact
             deployedLlmArtifactId (id): The ID of the deployed LLM artifact

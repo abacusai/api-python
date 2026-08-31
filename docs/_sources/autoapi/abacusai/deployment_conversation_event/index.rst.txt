@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -116,6 +116,12 @@ Module Contents
    :type mediaStudioContext: dict
    :param sceneImages: Role Play scene illustrations generated for this message (the inline gallery; oldest first).
    :type sceneImages: list
+   :param savedMemoryBuckets: AI Brain memories this turn's consolidation saved ({key, name, op, preview} per bucket).
+   :type savedMemoryBuckets: list
+   :param recalledMemoryBuckets: Bucket keys of AI Brain memories the agent read while producing this response.
+   :type recalledMemoryBuckets: list
+   :param memoryFeedback: The user's feedback on this turn's saved/applied memories, keyed '{action}:{bucket_key}'.
+   :type memoryFeedback: dict
 
 
    .. py:attribute:: role
@@ -344,6 +350,21 @@ Module Contents
 
 
    .. py:attribute:: scene_images
+      :value: None
+
+
+
+   .. py:attribute:: saved_memory_buckets
+      :value: None
+
+
+
+   .. py:attribute:: recalled_memory_buckets
+      :value: None
+
+
+
+   .. py:attribute:: memory_feedback
       :value: None
 
 

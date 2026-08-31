@@ -33,7 +33,6 @@ Submodules
    /autoapi/abacusai/api_key/index
    /autoapi/abacusai/app_template/index
    /autoapi/abacusai/app_user_group/index
-   /autoapi/abacusai/app_user_group_sign_in_token/index
    /autoapi/abacusai/application_connector/index
    /autoapi/abacusai/audio_gen_settings/index
    /autoapi/abacusai/audio_listener_export_settings/index
@@ -47,6 +46,7 @@ Submodules
    /autoapi/abacusai/batch_prediction/index
    /autoapi/abacusai/batch_prediction_version/index
    /autoapi/abacusai/batch_prediction_version_logs/index
+   /autoapi/abacusai/bot/index
    /autoapi/abacusai/bot_info/index
    /autoapi/abacusai/categorical_range_violation/index
    /autoapi/abacusai/chat_message/index
@@ -640,7 +640,6 @@ Classes
    abacusai.ApiKey
    abacusai.AppTemplate
    abacusai.AppUserGroup
-   abacusai.AppUserGroupSignInToken
    abacusai.ApplicationConnector
    abacusai.AudioGenSettings
    abacusai.AudioListenerExportSettings
@@ -654,6 +653,7 @@ Classes
    abacusai.BatchPrediction
    abacusai.BatchPredictionVersion
    abacusai.BatchPredictionVersionLogs
+   abacusai.Bot
    abacusai.BotInfo
    abacusai.CategoricalRangeViolation
    abacusai.ChatMessage
@@ -1025,7 +1025,7 @@ Package Contents
 
 
 
-.. py:class:: AdTemplate(client, slug=None, name=None, category=None, speaks=None, supportsAvatar=None, needsProduct=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None)
+.. py:class:: AdTemplate(client, slug=None, name=None, category=None, supportsAvatar=None, needsProduct=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1040,8 +1040,6 @@ Package Contents
    :type name: str
    :param category: Catalog category — one of ugc, tiktok, commercial
    :type category: str
-   :param speaks: Whether the avatar speaks (voice/lip-sync formats)
-   :type speaks: bool
    :param supportsAvatar: Whether an avatar can be attached (some formats are product-only)
    :type supportsAvatar: bool
    :param needsProduct: False for avatar-only social formats (no product; avatar required). Absent means True
@@ -1071,11 +1069,6 @@ Package Contents
 
 
    .. py:attribute:: category
-      :value: None
-
-
-
-   .. py:attribute:: speaks
       :value: None
 
 
@@ -1661,7 +1654,7 @@ Package Contents
 
 
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, hashedOwnerUserId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1696,6 +1689,20 @@ Package Contents
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
    :type updatedAt: str
+   :param accessLevel: Sharing audience of an owned user skill: PRIVATE, USER_GROUPS (specific people), or PUBLIC (anyone in the organization).
+   :type accessLevel: str
+   :param sharedSkill: Whether this skill is shared to the viewer by another user (use-only).
+   :type sharedSkill: bool
+   :param sharedByEmail: Email of the user who shared this skill, on skills shared to the viewer.
+   :type sharedByEmail: str
+   :param shareCount: Number of people an owned skill is shared with.
+   :type shareCount: int
+   :param sharedStoreDir: Directory name of the viewer's own copy of a shared skill, present once they opt in.
+   :type sharedStoreDir: str
+   :param hashedAgentSkillId: Hashed skill id used by skill share links.
+   :type hashedAgentSkillId: str
+   :param hashedOwnerUserId: Hashed id of the user whose store holds this skill's files.
+   :type hashedOwnerUserId: str
 
 
    .. py:attribute:: agent_skill_id
@@ -1759,6 +1766,41 @@ Package Contents
 
 
    .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: access_level
+      :value: None
+
+
+
+   .. py:attribute:: shared_skill
+      :value: None
+
+
+
+   .. py:attribute:: shared_by_email
+      :value: None
+
+
+
+   .. py:attribute:: share_count
+      :value: None
+
+
+
+   .. py:attribute:: shared_store_dir
+      :value: None
+
+
+
+   .. py:attribute:: hashed_agent_skill_id
+      :value: None
+
+
+
+   .. py:attribute:: hashed_owner_user_id
       :value: None
 
 
@@ -9168,6 +9210,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GOOGLEADS
+      :value: 'GOOGLEADS'
+
+
+
    .. py:attribute:: HUBSPOT
       :value: 'HUBSPOT'
 
@@ -9315,6 +9362,11 @@ Package Contents
 
    .. py:attribute:: METAADS
       :value: 'METAADS'
+
+
+
+   .. py:attribute:: INSTAGRAM
+      :value: 'INSTAGRAM'
 
 
 
@@ -10110,6 +10162,11 @@ Package Contents
 
 
 
+   .. py:attribute:: QWEN3_8_FLASH_NEXT
+      :value: 'QWEN3_8_FLASH_NEXT'
+
+
+
    .. py:attribute:: QWEN3_8_27B
       :value: 'QWEN3_8_27B'
 
@@ -10167,6 +10224,11 @@ Package Contents
 
    .. py:attribute:: ZAI_GLM_5_3
       :value: 'ZAI_GLM_5_3'
+
+
+
+   .. py:attribute:: ZAI_GLM_5_3_FLASH
+      :value: 'ZAI_GLM_5_3_FLASH'
 
 
 
@@ -14031,7 +14093,7 @@ Package Contents
    :type enable_response_caching: bool
    :param unknown_answer_phrase: Fallback response when the LLM can't find an answer.
    :type unknown_answer_phrase: str
-   :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
+   :param enable_tool_bar: Enable built-in agent tools in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
    :type enable_tool_bar: bool
    :param enable_voice: Allow users to talk to this chatbot with a realtime voice agent that adds a microphone button opening a spoken, tool-using conversation.
    :type enable_voice: bool
@@ -14044,7 +14106,7 @@ Package Contents
    :type json_response_schema: str
    :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM. Only available for Enterprise users and will cause validation errors if set to True for ChatLLM Teams users.
    :type mask_pii: bool
-   :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
+   :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling agent tools (enable_tool_bar flag).
    :type builtin_tools: List[SystemConnectorTool]
    :param config_connectors: List of names of config connectors to use in the ChatLLM. This should not be used with document_retrievers.
    :type config_connectors: List[str]
@@ -16665,39 +16727,6 @@ Package Contents
 
 
 
-.. py:class:: AppUserGroupSignInToken(client, token=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   User Group Sign In Token
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param token: The token to sign in the user
-   :type token: str
-
-
-   .. py:attribute:: token
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
 .. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, serviceName=None, name=None, createdAt=None, status=None, auth=None, baseConnector=None, createdBy=None, configOnly=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -18272,6 +18301,158 @@ Package Contents
 
 
 
+.. py:class:: Bot(client, botId=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A persistent chat bot (long-running agent the user messages like a contact)
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param botId: The id of the bot.
+   :type botId: str
+   :param name: The name of the bot.
+   :type name: str
+   :param description: The description of the bot.
+   :type description: str
+   :param instructions: The user-provided instructions/persona for the bot.
+   :type instructions: str
+   :param personality: The bot's self-maintained personality (tone, voice, quirks).
+   :type personality: str
+   :param memory: The bot's persistent memory notes.
+   :type memory: str
+   :param avatar: The avatar for the bot.
+   :type avatar: str
+   :param status: The current activity status of the bot (IDLE, WORKING, WAITING_FOR_USER).
+   :type status: str
+   :param lifecycle: The lifecycle of the bot (ACTIVE, ARCHIVED).
+   :type lifecycle: str
+   :param deploymentConversationId: The bot's persistent conversation id.
+   :type deploymentConversationId: str
+   :param externalApplicationId: The external application id associated with the bot.
+   :type externalApplicationId: str
+   :param lastMessagePreview: A preview of the last message in the bot's conversation.
+   :type lastMessagePreview: str
+   :param lastMessageAt: Unix timestamp of the last message in the bot's conversation.
+   :type lastMessageAt: int
+   :param unreadCount: The number of unread bot messages.
+   :type unreadCount: int
+   :param createdAt: Unix timestamp of when the bot was created.
+   :type createdAt: int
+   :param schedule: The bot's heartbeat schedule (frequency/time/day_of_week/timezone), if any.
+   :type schedule: dict
+   :param tasks: The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule); _describeBot only.
+   :type tasks: list
+   :param channels: The bot's configured messaging channels keyed by channel name; secret values are masked.
+   :type channels: dict
+
+
+   .. py:attribute:: bot_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: instructions
+      :value: None
+
+
+
+   .. py:attribute:: personality
+      :value: None
+
+
+
+   .. py:attribute:: memory
+      :value: None
+
+
+
+   .. py:attribute:: avatar
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: last_message_preview
+      :value: None
+
+
+
+   .. py:attribute:: last_message_at
+      :value: None
+
+
+
+   .. py:attribute:: unread_count
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: schedule
+      :value: None
+
+
+
+   .. py:attribute:: tasks
+      :value: None
+
+
+
+   .. py:attribute:: channels
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: BotInfo(client, externalApplicationId=None, deploymentId=None, agentTasksExhausted=None, llmName=None, externalApplication={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -19046,7 +19227,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, numUnreadFailedTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, numUnreadFailedTaskInstances=None, numUnreadLimitBlockedTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -19087,8 +19268,10 @@ Package Contents
    :type email: str
    :param numUnreadTaskInstances: The number of unread task instances for the chatllm task.
    :type numUnreadTaskInstances: int
-   :param numUnreadFailedTaskInstances: The number of unread FAILED task instances for the chatllm task.
+   :param numUnreadFailedTaskInstances: The number of unread FAILED task instances for the chatllm task, excluding limit-blocked skips.
    :type numUnreadFailedTaskInstances: int
+   :param numUnreadLimitBlockedTaskInstances: The number of unread runs skipped by a credit/plan limit, collapsed for display.
+   :type numUnreadLimitBlockedTaskInstances: int
    :param computePointsUsed: The compute points used for the chatllm task.
    :type computePointsUsed: int
    :param displayMarkdown: The display markdown for the chatllm task.
@@ -19226,6 +19409,11 @@ Package Contents
 
 
    .. py:attribute:: num_unread_failed_task_instances
+      :value: None
+
+
+
+   .. py:attribute:: num_unread_limit_blocked_task_instances
       :value: None
 
 
@@ -20485,7 +20673,7 @@ Package Contents
    .. py:method:: _get_doc_retriever_deployment_info(document_retriever_id)
 
 
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = False)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -20520,7 +20708,7 @@ Package Contents
       :type filter_clause: str
       :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
       :type crowding_limits: dict
-      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
       :type include_text_search: bool
 
       :returns: The relevant documentation results found from the document retriever.
@@ -25090,7 +25278,7 @@ Package Contents
 
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = False)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -25127,7 +25315,7 @@ Package Contents
       :type filter_clause: str
       :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set. An entry in the map can also be a map specifying the limit per attribute value rather than a single limit for all values. This allows a per value limit for attributes. If an attribute value is not present in the map its limit defaults to zero.
       :type crowding_limits: dict
-      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
       :type include_text_search: bool
 
       :returns: The relevant documentation results found from the document retriever.
@@ -29213,8 +29401,9 @@ Package Contents
 
       Gets a secret. The secret value is only returned when called from an Abacus-managed
 
-      environment (an agent, usercode runtime, or hosted notebook owned by your organization,
-      or the organization's system API key); otherwise the value is masked. Secrets restricted
+      environment (an agent, usercode runtime, or hosted notebook owned by your organization, the
+      code server testing an organization administrator's usercode tool, or the organization's system
+      API key); otherwise the value is masked. Secrets restricted
       to specific user groups are only readable by members of those groups, organization admins,
       and system execution environments; agent and tool executions act as the requesting user.
 
@@ -29242,22 +29431,6 @@ Package Contents
 
       :returns: List of secrets.
       :rtype: list[OrganizationSecret]
-
-
-
-   .. py:method:: get_app_user_group_sign_in_token(user_group_id, email, name)
-
-      Get a token for a user group user to sign in.
-
-      :param user_group_id: The ID of the user group.
-      :type user_group_id: str
-      :param email: The email of the user.
-      :type email: str
-      :param name: The name of the user.
-      :type name: str
-
-      :returns: The token to sign in the user
-      :rtype: AppUserGroupSignInToken
 
 
 
@@ -33360,7 +33533,7 @@ Package Contents
 
 
 
-.. py:class:: DefaultLlm(client, name=None, enum=None)
+.. py:class:: DefaultLlm(client, name=None, enum=None, isDeprecated=None, inPicker=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33373,6 +33546,10 @@ Package Contents
    :type name: str
    :param enum: The enum of the LLM.
    :type enum: str
+   :param isDeprecated: Whether the model is deprecated (enterprise footprint entries) — rendered greyed in the enable/disable menu.
+   :type isDeprecated: bool
+   :param inPicker: For a greyed deprecated entry, whether it's promoted into the new-chat picker.
+   :type inPicker: bool
 
 
    .. py:attribute:: name
@@ -33381,6 +33558,16 @@ Package Contents
 
 
    .. py:attribute:: enum
+      :value: None
+
+
+
+   .. py:attribute:: is_deprecated
+      :value: None
+
+
+
+   .. py:attribute:: in_picker
       :value: None
 
 
@@ -34240,7 +34427,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34295,6 +34482,8 @@ Package Contents
    :type chatllmTaskId: str
    :param chatllmProjectId: The chatllm project id associated with the deployment conversation.
    :type chatllmProjectId: str
+   :param chatllmProjectAccessible: Whether the viewer may open the associated project; false for a conversation shared directly with a viewer who is not part of its project.
+   :type chatllmProjectAccessible: bool
    :param verticalType: For Expert (vertical) conversations, the owning vertical's type (HEALTH / ROLE_PLAY / LEGAL); null for regular conversations. Lets the unified list mark Expert convos and pick their icon.
    :type verticalType: str
    :param conversationStatus: The status of the deployment conversation (used for deep agent conversations).
@@ -34468,6 +34657,11 @@ Package Contents
 
 
    .. py:attribute:: chatllm_project_id
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_accessible
       :value: None
 
 
@@ -34770,7 +34964,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34871,6 +35065,12 @@ Package Contents
    :type mediaStudioContext: dict
    :param sceneImages: Role Play scene illustrations generated for this message (the inline gallery; oldest first).
    :type sceneImages: list
+   :param savedMemoryBuckets: AI Brain memories this turn's consolidation saved ({key, name, op, preview} per bucket).
+   :type savedMemoryBuckets: list
+   :param recalledMemoryBuckets: Bucket keys of AI Brain memories the agent read while producing this response.
+   :type recalledMemoryBuckets: list
+   :param memoryFeedback: The user's feedback on this turn's saved/applied memories, keyed '{action}:{bucket_key}'.
+   :type memoryFeedback: dict
 
 
    .. py:attribute:: role
@@ -35099,6 +35299,21 @@ Package Contents
 
 
    .. py:attribute:: scene_images
+      :value: None
+
+
+
+   .. py:attribute:: saved_memory_buckets
+      :value: None
+
+
+
+   .. py:attribute:: recalled_memory_buckets
+      :value: None
+
+
+
+   .. py:attribute:: memory_feedback
       :value: None
 
 
@@ -35525,7 +35740,7 @@ Package Contents
 
 
 
-   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = False)
+   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -35558,7 +35773,7 @@ Package Contents
       :type filter_clause: str
       :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
       :type crowding_limits: dict
-      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
       :type include_text_search: bool
 
       :returns: The relevant documentation results found from the document retriever.
@@ -42615,7 +42830,7 @@ Package Contents
    :type deployedStatus: str
    :param accessLevel: Access Level (PUBLIC/PRIVATE/DEDICATED/OWNER_ONLY)
    :type accessLevel: str
-   :param hostnames: Hostnames and tags of the deployed app
+   :param hostnames: Hostnames of the deployed app, each with its tag, access level and whether the caller may read its traffic analytics
    :type hostnames: list[dict]
    :param llmArtifactId: The ID of the LLM artifact
    :type llmArtifactId: id
@@ -42784,7 +42999,7 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param hostnames: The urls at which the application is being hosted.
+   :param hostnames: The urls at which the application is being hosted, each with its deployment tag, access level and whether the caller may read its traffic analytics.
    :type hostnames: list
    :param artifactType: The type of artifact being hosted.
    :type artifactType: str
@@ -42864,7 +43079,7 @@ Package Contents
 
 
 
-.. py:class:: HostedDatabase(client, hostedDatabaseId=None, displayName=None, createdAt=None, updatedAt=None, lifecycle=None)
+.. py:class:: HostedDatabase(client, hostedDatabaseId=None, displayName=None, createdAt=None, updatedAt=None, lifecycle=None, credentialsRotatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42883,6 +43098,8 @@ Package Contents
    :type updatedAt: str
    :param lifecycle: The lifecycle of the hosted database
    :type lifecycle: str
+   :param credentialsRotatedAt: The timestamp of the last credential rotation, if the credentials were ever rotated
+   :type credentialsRotatedAt: str
 
 
    .. py:attribute:: hosted_database_id
@@ -42906,6 +43123,11 @@ Package Contents
 
 
    .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: credentials_rotated_at
       :value: None
 
 
@@ -44427,7 +44649,7 @@ Package Contents
 
 
 
-.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, origin=None, docId=None, isFavorited=None, isShared=None, publicUrl=None, shareType=None, shareToken=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
+.. py:class:: MediaArtifact(client, mediaArtifactId=None, mediaType=None, info=None, sourceDeploymentConversationId=None, conversationName=None, origin=None, docId=None, isFavorited=None, isShared=None, publicUrl=None, shareType=None, shareToken=None, thumbnailUrl=None, mediaUrl=None, filename=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44444,6 +44666,8 @@ Package Contents
    :type info: dict
    :param sourceDeploymentConversationId: The source conversation ID
    :type sourceDeploymentConversationId: id
+   :param conversationName: The source conversation's name (set only on conversation-grouped lists)
+   :type conversationName: str
    :param origin: How the artifact entered the gallery (generated, uploaded, editor_export)
    :type origin: str
    :param docId: Source document-upload id when promoted from a chat/notebook file (else None)
@@ -44486,6 +44710,11 @@ Package Contents
 
 
    .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: conversation_name
       :value: None
 
 
@@ -51405,7 +51634,7 @@ Package Contents
 
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = False)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -51442,7 +51671,7 @@ Package Contents
       :type filter_clause: str
       :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set. An entry in the map can also be a map specifying the limit per attribute value rather than a single limit for all values. This allows a per value limit for attributes. If an attribute value is not present in the map its limit defaults to zero.
       :type crowding_limits: dict
-      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
       :type include_text_search: bool
 
       :returns: The relevant documentation results found from the document retriever.
@@ -58935,6 +59164,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.110'
+   :value: '1.4.111'
 
 

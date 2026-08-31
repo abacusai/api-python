@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DefaultLlm(client, name=None, enum=None)
+.. py:class:: DefaultLlm(client, name=None, enum=None, isDeprecated=None, inPicker=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,10 @@ Module Contents
    :type name: str
    :param enum: The enum of the LLM.
    :type enum: str
+   :param isDeprecated: Whether the model is deprecated (enterprise footprint entries) — rendered greyed in the enable/disable menu.
+   :type isDeprecated: bool
+   :param inPicker: For a greyed deprecated entry, whether it's promoted into the new-chat picker.
+   :type inPicker: bool
 
 
    .. py:attribute:: name
@@ -36,6 +40,16 @@ Module Contents
 
 
    .. py:attribute:: enum
+      :value: None
+
+
+
+   .. py:attribute:: is_deprecated
+      :value: None
+
+
+
+   .. py:attribute:: in_picker
       :value: None
 
 

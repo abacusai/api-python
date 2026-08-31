@@ -20,7 +20,6 @@ from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
 from .app_template import AppTemplate
 from .app_user_group import AppUserGroup
-from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
 from .audio_gen_settings import AudioGenSettings
 from .audio_listener_export_settings import AudioListenerExportSettings
@@ -34,6 +33,7 @@ from .avatar_voice_candidate import AvatarVoiceCandidate
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
+from .bot import Bot
 from .bot_info import BotInfo
 from .categorical_range_violation import CategoricalRangeViolation
 from .chat_message import ChatMessage
@@ -342,4 +342,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.110"
+__version__ = "1.4.111"

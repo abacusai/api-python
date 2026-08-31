@@ -1,0 +1,169 @@
+abacusai.bot
+============
+
+.. py:module:: abacusai.bot
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.bot.Bot
+
+
+Module Contents
+---------------
+
+.. py:class:: Bot(client, botId=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A persistent chat bot (long-running agent the user messages like a contact)
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param botId: The id of the bot.
+   :type botId: str
+   :param name: The name of the bot.
+   :type name: str
+   :param description: The description of the bot.
+   :type description: str
+   :param instructions: The user-provided instructions/persona for the bot.
+   :type instructions: str
+   :param personality: The bot's self-maintained personality (tone, voice, quirks).
+   :type personality: str
+   :param memory: The bot's persistent memory notes.
+   :type memory: str
+   :param avatar: The avatar for the bot.
+   :type avatar: str
+   :param status: The current activity status of the bot (IDLE, WORKING, WAITING_FOR_USER).
+   :type status: str
+   :param lifecycle: The lifecycle of the bot (ACTIVE, ARCHIVED).
+   :type lifecycle: str
+   :param deploymentConversationId: The bot's persistent conversation id.
+   :type deploymentConversationId: str
+   :param externalApplicationId: The external application id associated with the bot.
+   :type externalApplicationId: str
+   :param lastMessagePreview: A preview of the last message in the bot's conversation.
+   :type lastMessagePreview: str
+   :param lastMessageAt: Unix timestamp of the last message in the bot's conversation.
+   :type lastMessageAt: int
+   :param unreadCount: The number of unread bot messages.
+   :type unreadCount: int
+   :param createdAt: Unix timestamp of when the bot was created.
+   :type createdAt: int
+   :param schedule: The bot's heartbeat schedule (frequency/time/day_of_week/timezone), if any.
+   :type schedule: dict
+   :param tasks: The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule); _describeBot only.
+   :type tasks: list
+   :param channels: The bot's configured messaging channels keyed by channel name; secret values are masked.
+   :type channels: dict
+
+
+   .. py:attribute:: bot_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: instructions
+      :value: None
+
+
+
+   .. py:attribute:: personality
+      :value: None
+
+
+
+   .. py:attribute:: memory
+      :value: None
+
+
+
+   .. py:attribute:: avatar
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: last_message_preview
+      :value: None
+
+
+
+   .. py:attribute:: last_message_at
+      :value: None
+
+
+
+   .. py:attribute:: unread_count
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: schedule
+      :value: None
+
+
+
+   .. py:attribute:: tasks
+      :value: None
+
+
+
+   .. py:attribute:: channels
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

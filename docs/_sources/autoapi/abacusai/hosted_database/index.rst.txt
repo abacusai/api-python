@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedDatabase(client, hostedDatabaseId=None, displayName=None, createdAt=None, updatedAt=None, lifecycle=None)
+.. py:class:: HostedDatabase(client, hostedDatabaseId=None, displayName=None, createdAt=None, updatedAt=None, lifecycle=None, credentialsRotatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type updatedAt: str
    :param lifecycle: The lifecycle of the hosted database
    :type lifecycle: str
+   :param credentialsRotatedAt: The timestamp of the last credential rotation, if the credentials were ever rotated
+   :type credentialsRotatedAt: str
 
 
    .. py:attribute:: hosted_database_id
@@ -57,6 +59,11 @@ Module Contents
 
 
    .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: credentials_rotated_at
       :value: None
 
 

@@ -7577,6 +7577,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GOOGLEADS
+      :value: 'GOOGLEADS'
+
+
+
    .. py:attribute:: HUBSPOT
       :value: 'HUBSPOT'
 
@@ -7724,6 +7729,11 @@ Package Contents
 
    .. py:attribute:: METAADS
       :value: 'METAADS'
+
+
+
+   .. py:attribute:: INSTAGRAM
+      :value: 'INSTAGRAM'
 
 
 
@@ -8597,6 +8607,11 @@ Package Contents
 
 
 
+   .. py:attribute:: QWEN3_8_FLASH_NEXT
+      :value: 'QWEN3_8_FLASH_NEXT'
+
+
+
    .. py:attribute:: QWEN3_8_27B
       :value: 'QWEN3_8_27B'
 
@@ -8654,6 +8669,11 @@ Package Contents
 
    .. py:attribute:: ZAI_GLM_5_3
       :value: 'ZAI_GLM_5_3'
+
+
+
+   .. py:attribute:: ZAI_GLM_5_3_FLASH
+      :value: 'ZAI_GLM_5_3_FLASH'
 
 
 
@@ -12985,7 +13005,7 @@ Package Contents
    :type enable_response_caching: bool
    :param unknown_answer_phrase: Fallback response when the LLM can't find an answer.
    :type unknown_answer_phrase: str
-   :param enable_tool_bar: Enable the tool bar in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
+   :param enable_tool_bar: Enable built-in agent tools in Enterprise ChatLLM to provide additional functionalities like tool_use, web_search, image_gen, etc. Enabling this requires enable_web_search to be enabled.
    :type enable_tool_bar: bool
    :param enable_voice: Allow users to talk to this chatbot with a realtime voice agent that adds a microphone button opening a spoken, tool-using conversation.
    :type enable_voice: bool
@@ -12998,7 +13018,7 @@ Package Contents
    :type json_response_schema: str
    :param mask_pii: Mask PII in the prompts and uploaded documents before sending it to the LLM. Only available for Enterprise users and will cause validation errors if set to True for ChatLLM Teams users.
    :type mask_pii: bool
-   :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling tool bar (enable_tool_bar flag).
+   :param builtin_tools: List of builtin system connector tools to use in the ChatLLM. Using builtin tools does not require enabling agent tools (enable_tool_bar flag).
    :type builtin_tools: List[SystemConnectorTool]
    :param config_connectors: List of names of config connectors to use in the ChatLLM. This should not be used with document_retrievers.
    :type config_connectors: List[str]

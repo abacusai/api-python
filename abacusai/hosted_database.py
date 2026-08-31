@@ -12,20 +12,22 @@ class HostedDatabase(AbstractApiClass):
             createdAt (str): The creation timestamp
             updatedAt (str): The last update timestamp
             lifecycle (str): The lifecycle of the hosted database
+            credentialsRotatedAt (str): The timestamp of the last credential rotation, if the credentials were ever rotated
     """
 
-    def __init__(self, client, hostedDatabaseId=None, displayName=None, createdAt=None, updatedAt=None, lifecycle=None):
+    def __init__(self, client, hostedDatabaseId=None, displayName=None, createdAt=None, updatedAt=None, lifecycle=None, credentialsRotatedAt=None):
         super().__init__(client, hostedDatabaseId)
         self.hosted_database_id = hostedDatabaseId
         self.display_name = displayName
         self.created_at = createdAt
         self.updated_at = updatedAt
         self.lifecycle = lifecycle
+        self.credentials_rotated_at = credentialsRotatedAt
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'hosted_database_id': repr(self.hosted_database_id), f'display_name': repr(self.display_name), f'created_at': repr(
-            self.created_at), f'updated_at': repr(self.updated_at), f'lifecycle': repr(self.lifecycle)}
+            self.created_at), f'updated_at': repr(self.updated_at), f'lifecycle': repr(self.lifecycle), f'credentials_rotated_at': repr(self.credentials_rotated_at)}
         class_name = "HostedDatabase"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -38,6 +40,6 @@ class HostedDatabase(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'hosted_database_id': self.hosted_database_id, 'display_name': self.display_name,
-                'created_at': self.created_at, 'updated_at': self.updated_at, 'lifecycle': self.lifecycle}
+        resp = {'hosted_database_id': self.hosted_database_id, 'display_name': self.display_name, 'created_at': self.created_at,
+                'updated_at': self.updated_at, 'lifecycle': self.lifecycle, 'credentials_rotated_at': self.credentials_rotated_at}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.110'
+      :value: '1.4.111'
 
 
 
@@ -2812,8 +2812,9 @@ Module Contents
 
       Gets a secret. The secret value is only returned when called from an Abacus-managed
 
-      environment (an agent, usercode runtime, or hosted notebook owned by your organization,
-      or the organization's system API key); otherwise the value is masked. Secrets restricted
+      environment (an agent, usercode runtime, or hosted notebook owned by your organization, the
+      code server testing an organization administrator's usercode tool, or the organization's system
+      API key); otherwise the value is masked. Secrets restricted
       to specific user groups are only readable by members of those groups, organization admins,
       and system execution environments; agent and tool executions act as the requesting user.
 
@@ -2841,22 +2842,6 @@ Module Contents
 
       :returns: List of secrets.
       :rtype: list[OrganizationSecret]
-
-
-
-   .. py:method:: get_app_user_group_sign_in_token(user_group_id, email, name)
-
-      Get a token for a user group user to sign in.
-
-      :param user_group_id: The ID of the user group.
-      :type user_group_id: str
-      :param email: The email of the user.
-      :type email: str
-      :param name: The name of the user.
-      :type name: str
-
-      :returns: The token to sign in the user
-      :rtype: AppUserGroupSignInToken
 
 
 
@@ -4362,7 +4347,7 @@ Module Contents
    .. py:method:: _get_doc_retriever_deployment_info(document_retriever_id)
 
 
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = False)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -4397,7 +4382,7 @@ Module Contents
       :type filter_clause: str
       :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
       :type crowding_limits: dict
-      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
       :type include_text_search: bool
 
       :returns: The relevant documentation results found from the document retriever.
@@ -8967,7 +8952,7 @@ Module Contents
 
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = False)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None, required_phrases = None, filter_clause = None, crowding_limits = None, include_text_search = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -9004,7 +8989,7 @@ Module Contents
       :type filter_clause: str
       :param crowding_limits: A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set. An entry in the map can also be a map specifying the limit per attribute value rather than a single limit for all values. This allows a per value limit for attributes. If an attribute value is not present in the map its limit defaults to zero.
       :type crowding_limits: dict
-      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+      :param include_text_search: If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
       :type include_text_search: bool
 
       :returns: The relevant documentation results found from the document retriever.

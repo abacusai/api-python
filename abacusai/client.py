@@ -60,7 +60,6 @@ from .api_client_utils import (
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
 from .app_user_group import AppUserGroup
-from .app_user_group_sign_in_token import AppUserGroupSignInToken
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
@@ -717,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.110'
+    client_version = '1.4.111'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2763,8 +2762,9 @@ class ReadOnlyClient(BaseApiClient):
     def get_organization_secret(self, secret_key: str) -> OrganizationSecret:
         """Gets a secret. The secret value is only returned when called from an Abacus-managed
 
-        environment (an agent, usercode runtime, or hosted notebook owned by your organization,
-        or the organization's system API key); otherwise the value is masked. Secrets restricted
+        environment (an agent, usercode runtime, or hosted notebook owned by your organization, the
+        code server testing an organization administrator's usercode tool, or the organization's system
+        API key); otherwise the value is masked. Secrets restricted
         to specific user groups are only readable by members of those groups, organization admins,
         and system execution environments; agent and tool executions act as the requesting user.
 
@@ -2791,18 +2791,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[OrganizationSecret]: List of secrets."""
         return self._call_api('listOrganizationSecrets', 'GET', query_params={'secretType': secret_type}, parse_type=OrganizationSecret)
-
-    def get_app_user_group_sign_in_token(self, user_group_id: str, email: str, name: str) -> AppUserGroupSignInToken:
-        """Get a token for a user group user to sign in.
-
-        Args:
-            user_group_id (str): The ID of the user group.
-            email (str): The email of the user.
-            name (str): The name of the user.
-
-        Returns:
-            AppUserGroupSignInToken: The token to sign in the user"""
-        return self._call_api('getAppUserGroupSignInToken', 'GET', query_params={'userGroupId': user_group_id, 'email': email, 'name': name}, parse_type=AppUserGroupSignInToken)
 
     def get_active_promotion(self) -> Dict:
         """Get the active promotion configuration and validate user's promotion."""
@@ -4592,8 +4580,8 @@ class ApiClient(ReadOnlyClient):
         request_id = self._get_agent_app_request_id()
         caller = self._get_agent_caller()
         proxy_caller = self._is_proxy_app_caller()
+        segment = response_section.to_dict()
         if request_id and caller:
-            segment = response_section.to_dict()
             extra_args = {'stream_type': StreamType.SEGMENT.value}
             if hasattr(_request_context, 'agent_workflow_node_id'):
                 extra_args.update(
@@ -4737,7 +4725,7 @@ class ApiClient(ReadOnlyClient):
     def get_matching_documents(self, document_retriever_id: str, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None,
                                max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None,
                                filter_clause: str = None, crowding_limits: Dict[str, int] = None,
-                               include_text_search: bool = False) -> List[DocumentRetrieverLookupResult]:
+                               include_text_search: bool = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -4759,7 +4747,7 @@ class ApiClient(ReadOnlyClient):
             required_phrases (list): If provided, each result will have at least one of the phrases.
             filter_clause (str): If provided, filter the results of the query using this sql where clause.
             crowding_limits (dict): A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
-            include_text_search (bool): If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+            include_text_search (bool): If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
 
@@ -8199,7 +8187,7 @@ class ApiClient(ReadOnlyClient):
             agent_workflow_node_id (str): An optional agent workflow node id to trigger agent execution from an intermediate node."""
         return self._proxy_request('executeSyncConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos, 'agentWorkflowNodeId': agent_workflow_node_id}, is_sync=True)
 
-    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: dict = None, include_text_search: bool = False) -> List[DocumentRetrieverLookupResult]:
+    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: dict = None, include_text_search: bool = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -8222,7 +8210,7 @@ class ApiClient(ReadOnlyClient):
             required_phrases (list): If provided, each result will contain at least one of the phrases in the given list. The matching is whitespace and case insensitive.
             filter_clause (str): If provided, filter the results of the query using this sql where clause.
             crowding_limits (dict): A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set. An entry in the map can also be a map specifying the limit per attribute value rather than a single limit for all values. This allows a per value limit for attributes. If an attribute value is not present in the map its limit defaults to zero.
-            include_text_search (bool): If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+            include_text_search (bool): If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""

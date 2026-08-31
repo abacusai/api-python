@@ -427,6 +427,7 @@ class ApplicationConnectorType(ApiEnum):
     GOOGLEANALYTICSUSER = 'GOOGLEANALYTICSUSER'
     GOOGLESEARCHCONSOLE = 'GOOGLESEARCHCONSOLE'
     GOOGLECHAT = 'GOOGLECHAT'
+    GOOGLEADS = 'GOOGLEADS'
     HUBSPOT = 'HUBSPOT'
     TEAMSSCRAPER = 'TEAMSSCRAPER'
     GITHUBUSER = 'GITHUBUSER'
@@ -457,6 +458,7 @@ class ApplicationConnectorType(ApiEnum):
     SMARTSHEET = 'SMARTSHEET'
     ZOOM = 'ZOOM'
     METAADS = 'METAADS'
+    INSTAGRAM = 'INSTAGRAM'
     NETSUITE = 'NETSUITE'
     MONGODB = 'MONGODB'
     AZURECLOUD = 'AZURECLOUD'
@@ -472,6 +474,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.GOOGLEANALYTICSUSER,
             cls.GOOGLESEARCHCONSOLE,
             cls.GOOGLECHAT,
+            cls.GOOGLEADS,
             cls.SLACK,
             cls.JIRA,
             cls.HUBSPOT,
@@ -503,6 +506,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.SMARTSHEET,
             cls.ZOOM,
             cls.METAADS,
+            cls.INSTAGRAM,
             cls.NETSUITE,
             cls.MONGODB,
             cls.AZURECLOUD,
@@ -582,10 +586,15 @@ class VectorStoreTextEncoder(ApiEnum):
                   'OPENAI_GPT4', 'OPENAI_GPT4_128K', 'OPENAI_GPT4_128K_LATEST',
                   'OPENAI_O1_MINI',
                   'GEMINI_1_5_PRO', 'GEMINI_1_5_FLASH', 'GEMINI_2_PRO', 'GEMINI_2_FLASH',
-                  'XAI_GROK',
+                  'GEMINI_2_5_PRO', 'GEMINI_3_PRO',
+                  'XAI_GROK', 'XAI_GROK_3', 'XAI_GROK_3_MINI', 'XAI_GROK_4', 'XAI_GROK_4_2',
                   'CLAUDE_V3_HAIKU', 'CLAUDE_V3_OPUS', 'CLAUDE_V3_5_HAIKU', 'CLAUDE_V3_5_SONNET', 'CLAUDE_V3_7_SONNET',
                   'CLAUDE_V4_SONNET', 'CLAUDE_V4_OPUS',
-                  'LLAMA3_LARGE_CHAT', 'QWEN_2_5_32B_BASE')
+                  'LLAMA3_LARGE_CHAT', 'LLAMA3_1_405B', 'LLAMA3_1_70B', 'LLAMA3_1_8B', 'LLAMA3_3_70B', 'LLAMA4_MAVERICK',
+                  'QWEN_2_5_32B_BASE', 'QWEN_2_5_32B', 'QWEN_2_5_72B', 'QWQ_32B',
+                  'DEEPSEEK_V3_1', 'DEEPSEEK_R1',
+                  'ZAI_GLM_5_1', 'OX_ALPHA',
+                  )
 class LLMName(ApiEnum):
     OPENAI_GPT3_5 = 'OPENAI_GPT3_5'
     OPENAI_GPT3_5_TEXT = 'OPENAI_GPT3_5_TEXT'
@@ -674,6 +683,7 @@ class LLMName(ApiEnum):
     QWEN3_6_27B = 'QWEN3_6_27B'
     QWEN3_7_MAX = 'QWEN3_7_MAX'
     QWEN3_8_MAX = 'QWEN3_8_MAX'
+    QWEN3_8_FLASH_NEXT = 'QWEN3_8_FLASH_NEXT'
     QWEN3_8_27B = 'QWEN3_8_27B'
     DEEPSEEK_V3_1 = 'DEEPSEEK_V3_1'
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
@@ -686,6 +696,7 @@ class LLMName(ApiEnum):
     ZAI_GLM_5_1 = 'ZAI_GLM_5_1'
     ZAI_GLM_5_2 = 'ZAI_GLM_5_2'
     ZAI_GLM_5_3 = 'ZAI_GLM_5_3'
+    ZAI_GLM_5_3_FLASH = 'ZAI_GLM_5_3_FLASH'
     KIMI_K2_5 = 'KIMI_K2_5'
     KIMI_K2_6 = 'KIMI_K2_6'
     KIMI_K2_7_CODE = 'KIMI_K2_7_CODE'

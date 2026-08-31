@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, hashedOwnerUserId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,6 +50,20 @@ Module Contents
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
    :type updatedAt: str
+   :param accessLevel: Sharing audience of an owned user skill: PRIVATE, USER_GROUPS (specific people), or PUBLIC (anyone in the organization).
+   :type accessLevel: str
+   :param sharedSkill: Whether this skill is shared to the viewer by another user (use-only).
+   :type sharedSkill: bool
+   :param sharedByEmail: Email of the user who shared this skill, on skills shared to the viewer.
+   :type sharedByEmail: str
+   :param shareCount: Number of people an owned skill is shared with.
+   :type shareCount: int
+   :param sharedStoreDir: Directory name of the viewer's own copy of a shared skill, present once they opt in.
+   :type sharedStoreDir: str
+   :param hashedAgentSkillId: Hashed skill id used by skill share links.
+   :type hashedAgentSkillId: str
+   :param hashedOwnerUserId: Hashed id of the user whose store holds this skill's files.
+   :type hashedOwnerUserId: str
 
 
    .. py:attribute:: agent_skill_id
@@ -113,6 +127,41 @@ Module Contents
 
 
    .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: access_level
+      :value: None
+
+
+
+   .. py:attribute:: shared_skill
+      :value: None
+
+
+
+   .. py:attribute:: shared_by_email
+      :value: None
+
+
+
+   .. py:attribute:: share_count
+      :value: None
+
+
+
+   .. py:attribute:: shared_store_dir
+      :value: None
+
+
+
+   .. py:attribute:: hashed_agent_skill_id
+      :value: None
+
+
+
+   .. py:attribute:: hashed_owner_user_id
       :value: None
 
 

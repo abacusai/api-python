@@ -69,7 +69,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html">abacusai.api_key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../app_template/index.html">abacusai.app_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../app_user_group/index.html">abacusai.app_user_group</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../app_user_group_sign_in_token/index.html">abacusai.app_user_group_sign_in_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_gen_settings/index.html">abacusai.audio_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_export_settings/index.html">abacusai.audio_listener_export_settings</a></li>
@@ -83,6 +82,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html">abacusai.batch_prediction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot/index.html">abacusai.bot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_info/index.html">abacusai.bot_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../categorical_range_violation/index.html">abacusai.categorical_range_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_message/index.html">abacusai.chat_message</a></li>
@@ -463,7 +463,7 @@
 <li><p><strong>isDeployable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Can this version be deployed</p></li>
 <li><p><strong>deployedStatus</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Deployment status (PENDING/ACTIVE/STOPPED/NOT_DEPLOYED)</p></li>
 <li><p><strong>accessLevel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Access Level (PUBLIC/PRIVATE/DEDICATED/OWNER_ONLY)</p></li>
-<li><p><strong>hostnames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>]</em>) – Hostnames and tags of the deployed app</p></li>
+<li><p><strong>hostnames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>]</em>) – Hostnames of the deployed app, each with its tag, access level and whether the caller may read its traffic analytics</p></li>
 <li><p><strong>llmArtifactId</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.ResponseSection.id" title="abacusai.api_class.ResponseSection.id"><em>id</em></a>) – The ID of the LLM artifact</p></li>
 <li><p><strong>artifactType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of the artifact</p></li>
 <li><p><strong>deployedLlmArtifactId</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.ResponseSection.id" title="abacusai.api_class.ResponseSection.id"><em>id</em></a>) – The ID of the deployed LLM artifact</p></li>

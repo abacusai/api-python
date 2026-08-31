@@ -208,7 +208,7 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.describe().latest_document_retriever_version.deployment_status
 
-    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: Dict[str, Union[int, Dict[str, int]]] = None, include_text_search: bool = False):
+    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None, required_phrases: list = None, filter_clause: str = None, crowding_limits: Dict[str, Union[int, Dict[str, int]]] = None, include_text_search: bool = None):
         """
         Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -230,7 +230,7 @@ class DocumentRetriever(AbstractApiClass):
             required_phrases (list): If provided, each result will have at least one of the phrases.
             filter_clause (str): If provided, filter the results of the query using this sql where clause.
             crowding_limits (dict): A dictionary mapping metadata columns to the maximum number of results per unique value of the column. This is used to ensure diversity of metadata attribute values in the results. If a particular attribute value has already reached its maximum count, further results with that same attribute value will be excluded from the final result set.
-            include_text_search (bool): If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important.
+            include_text_search (bool): If true, combine the ranking of results from a BM25 text search over the documents with the vector search using reciprocal rank fusion. It leverages both lexical and semantic matching for better overall results. It's particularly valuable in professional, technical, or specialized fields where both precision in terminology and understanding of context are important. Defaults to enabled when the retriever has a text-search index (built automatically for smaller document sets), and disabled otherwise; pass false to force it off.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever.
