@@ -14,9 +14,10 @@ class WebAppConversation(AbstractApiClass):
             createdAt (str): The creation timestamp
             conversationType (str): The type of the conversation
             userTurnCount (int): Number of user messages in the conversation; only populated when requested
+            appllmBranch (str): Git branch the conversation works on; only set for branch-mode conversations
     """
 
-    def __init__(self, client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None):
+    def __init__(self, client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None, appllmBranch=None):
         super().__init__(client, None)
         self.deployment_conversation_id = deploymentConversationId
         self.llm_artifact_id = llmArtifactId
@@ -25,11 +26,12 @@ class WebAppConversation(AbstractApiClass):
         self.created_at = createdAt
         self.conversation_type = conversationType
         self.user_turn_count = userTurnCount
+        self.appllm_branch = appllmBranch
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'llm_artifact_id': repr(self.llm_artifact_id), f'deployment_conversation_name': repr(self.deployment_conversation_name), f'external_application_id': repr(
-            self.external_application_id), f'created_at': repr(self.created_at), f'conversation_type': repr(self.conversation_type), f'user_turn_count': repr(self.user_turn_count)}
+            self.external_application_id), f'created_at': repr(self.created_at), f'conversation_type': repr(self.conversation_type), f'user_turn_count': repr(self.user_turn_count), f'appllm_branch': repr(self.appllm_branch)}
         class_name = "WebAppConversation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -43,5 +45,5 @@ class WebAppConversation(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'deployment_conversation_id': self.deployment_conversation_id, 'llm_artifact_id': self.llm_artifact_id, 'deployment_conversation_name': self.deployment_conversation_name,
-                'external_application_id': self.external_application_id, 'created_at': self.created_at, 'conversation_type': self.conversation_type, 'user_turn_count': self.user_turn_count}
+                'external_application_id': self.external_application_id, 'created_at': self.created_at, 'conversation_type': self.conversation_type, 'user_turn_count': self.user_turn_count, 'appllm_branch': self.appllm_branch}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

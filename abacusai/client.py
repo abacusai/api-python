@@ -716,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.111'
+    client_version = '1.4.112'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -3119,6 +3119,19 @@ class ReadOnlyClient(BaseApiClient):
             list of dicts, each dict contains the model name, description, id, and api price info.
         """
         return self._call_api('listRouteLLMModels', 'GET', query_params={})
+
+    def list_route_llm_tools(self):
+        """Lists the Abacus tools this organization can name in the RouteLLM API's abacus_tools parameter.
+
+        Every tool the API can address is listed, runnable or not: "supported" is false for one the
+        RouteLLM API cannot run (a tool taking file attachments, which chat/completions cannot supply),
+        and "requires_connectors" names the user-level connectors it needs authorized first.
+
+        Return:
+            dict with the org's tools - each with its name, description, JSON-Schema parameters,
+            required connectors, and whether it is supported.
+        """
+        return self._call_api('listRouteLLMTools', 'GET', query_params={})
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):

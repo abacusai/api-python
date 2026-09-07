@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Bot(client, botId=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, agentNetwork=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,6 +26,14 @@ Module Contents
    :type client: ApiClient
    :param botId: The id of the bot.
    :type botId: str
+   :param ownerUserId: The user id of the agent's owner.
+   :type ownerUserId: str
+   :param isOwner: Whether the caller owns the agent; False for a teammate's agent shared with the caller (via its conversation).
+   :type isOwner: bool
+   :param canEdit: Whether the caller may edit, delete and re-share the agent (the owner, or a teammate shared with the editor role).
+   :type canEdit: bool
+   :param ownerEmail: The owner's email; shared agents in _listBots only.
+   :type ownerEmail: str
    :param name: The name of the bot.
    :type name: str
    :param description: The description of the bot.
@@ -56,13 +64,49 @@ Module Contents
    :type createdAt: int
    :param schedule: The bot's heartbeat schedule (frequency/time/day_of_week/timezone), if any.
    :type schedule: dict
-   :param tasks: The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule); _describeBot only.
+   :param tasks: The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule; event tasks also carry webhook_url); _describeBot only.
    :type tasks: list
    :param channels: The bot's configured messaging channels keyed by channel name; secret values are masked.
    :type channels: dict
+   :param learnedPersonality: Personality the bot learned on its own from user feedback; _describeBot only.
+   :type learnedPersonality: str
+   :param learnedInstructions: Rules the bot learned on its own from user feedback; _describeBot only.
+   :type learnedInstructions: str
+   :param profileHistory: Changelog of the bot's self-edits to the learned fields (t/field/old/new, chronological; undo entries flagged); _describeBot only.
+   :type profileHistory: list
+   :param selfReview: Latest self-review state (n/last_t/score/note); _describeBot only.
+   :type selfReview: dict
+   :param playbooks: Reusable procedures the bot saved (name/body/t/uses/wins/losses, chronological); _describeBot only.
+   :type playbooks: list
+   :param proactiveBudget: User-set daily cap on proactive messages from high-frequency fires (hourly heartbeat + minute tasks); None when uncapped; _describeBot only.
+   :type proactiveBudget: int
+   :param chattyGreetings: Whether the agent says a short personal hello when the owner opens its chat in the web UI (default True); _describeBot only.
+   :type chattyGreetings: bool
+   :param agentNetwork: Agent-to-agent messaging state (discoverable/own_agents/contacts); _describeBot only.
+   :type agentNetwork: dict
 
 
    .. py:attribute:: bot_id
+      :value: None
+
+
+
+   .. py:attribute:: owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: is_owner
+      :value: None
+
+
+
+   .. py:attribute:: can_edit
+      :value: None
+
+
+
+   .. py:attribute:: owner_email
       :value: None
 
 
@@ -148,6 +192,46 @@ Module Contents
 
 
    .. py:attribute:: channels
+      :value: None
+
+
+
+   .. py:attribute:: learned_personality
+      :value: None
+
+
+
+   .. py:attribute:: learned_instructions
+      :value: None
+
+
+
+   .. py:attribute:: profile_history
+      :value: None
+
+
+
+   .. py:attribute:: self_review
+      :value: None
+
+
+
+   .. py:attribute:: playbooks
+      :value: None
+
+
+
+   .. py:attribute:: proactive_budget
+      :value: None
+
+
+
+   .. py:attribute:: chatty_greetings
+      :value: None
+
+
+
+   .. py:attribute:: agent_network
       :value: None
 
 

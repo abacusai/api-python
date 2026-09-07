@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None)
+.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None, appllmBranch=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type conversationType: str
    :param userTurnCount: Number of user messages in the conversation; only populated when requested
    :type userTurnCount: int
+   :param appllmBranch: Git branch the conversation works on; only set for branch-mode conversations
+   :type appllmBranch: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -71,6 +73,11 @@ Module Contents
 
 
    .. py:attribute:: user_turn_count
+      :value: None
+
+
+
+   .. py:attribute:: appllm_branch
       :value: None
 
 

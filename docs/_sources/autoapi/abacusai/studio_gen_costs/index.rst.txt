@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None, shortsVideogenDiscount=None)
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,8 +40,6 @@ Module Contents
    :type adOverhead: int
    :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
    :type imageDisplayThreshold: int
-   :param shortsVideogenDiscount: Fraction off the listed video rate for Shorts renders (fal pass-through); estimates show the list rate slashed
-   :type shortsVideogenDiscount: float
 
 
    .. py:attribute:: video_costs
@@ -80,11 +78,6 @@ Module Contents
 
 
    .. py:attribute:: image_display_threshold
-      :value: None
-
-
-
-   .. py:attribute:: shorts_videogen_discount
       :value: None
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, hashedOwnerUserId=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, hashedOwnerUserId=None, userDisabled=None, usedByTasks=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -64,6 +64,10 @@ Module Contents
    :type hashedAgentSkillId: str
    :param hashedOwnerUserId: Hashed id of the user whose store holds this skill's files.
    :type hashedOwnerUserId: str
+   :param userDisabled: Whether the user explicitly disabled this system skill, keeping it listed instead of returning it to the import library.
+   :type userDisabled: bool
+   :param usedByTasks: Whether any of the user's daemon tasks reference this skill, so disabling it will ask for confirmation.
+   :type usedByTasks: bool
 
 
    .. py:attribute:: agent_skill_id
@@ -162,6 +166,16 @@ Module Contents
 
 
    .. py:attribute:: hashed_owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: user_disabled
+      :value: None
+
+
+
+   .. py:attribute:: used_by_tasks
       :value: None
 
 

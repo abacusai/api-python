@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -126,6 +126,10 @@ Module Contents
    :type roleplayCharacter: dict
    :param loopType: For Media Studio conversations, the dedicated agentic loop the conversation is pinned to (e.g. ad_creation); null when unpinned or not Media Studio.
    :type loopType: str
+   :param pendingTriggerType: Set while the conversation is paused waiting for a scheduled resume (e.g. TIMED); null once resumed.
+   :type pendingTriggerType: str
+   :param nextTriggerCheckTime: When the scheduler will next resume the paused conversation; null when not paused.
+   :type nextTriggerCheckTime: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -385,6 +389,16 @@ Module Contents
 
 
    .. py:attribute:: loop_type
+      :value: None
+
+
+
+   .. py:attribute:: pending_trigger_type
+      :value: None
+
+
+
+   .. py:attribute:: next_trigger_check_time
       :value: None
 
 

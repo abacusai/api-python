@@ -6,6 +6,7 @@ from .agent_chat_message import AgentChatMessage
 from .agent_conversation import AgentConversation
 from .agent_data_document_info import AgentDataDocumentInfo
 from .agent_data_execution_result import AgentDataExecutionResult
+from .agent_network import AgentNetwork
 from .agent_skill import AgentSkill
 from .agent_version import AgentVersion
 from .ai_building_task import AiBuildingTask
@@ -342,4 +343,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.111"
+__version__ = "1.4.112"

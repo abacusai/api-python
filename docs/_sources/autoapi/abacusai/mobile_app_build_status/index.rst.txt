@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, logUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44,6 +44,14 @@ Module Contents
    :type error: str
    :param expired: True when a SUCCESS build is old enough that its EAS download link is likely dead
    :type expired: bool
+   :param phase: Native Swift builds: the archive step in progress ('archiving', 'exporting', 'uploading')
+   :type phase: str
+   :param createdAt: When the build was started (ISO 8601)
+   :type createdAt: str
+   :param testflight: Native Swift builds: what Apple reported about the uploaded build
+   :type testflight: dict
+   :param logUrl: Native Swift builds: short-lived link to the archive log once the build finished
+   :type logUrl: str
 
 
    .. py:attribute:: status
@@ -92,6 +100,26 @@ Module Contents
 
 
    .. py:attribute:: expired
+      :value: None
+
+
+
+   .. py:attribute:: phase
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: testflight
+      :value: None
+
+
+
+   .. py:attribute:: log_url
       :value: None
 
 

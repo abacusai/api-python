@@ -54,6 +54,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../agent_conversation/index.html">abacusai.agent_conversation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_document_info/index.html">abacusai.agent_data_document_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_execution_result/index.html">abacusai.agent_data_execution_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_network/index.html">abacusai.agent_network</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_skill/index.html">abacusai.agent_skill</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_version/index.html">abacusai.agent_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ai_building_task/index.html">abacusai.ai_building_task</a></li>
@@ -1174,7 +1175,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.111'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.112'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4893,6 +4894,21 @@ Use with the conversation ID of a Deep Agent conversation to download all genera
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list of dicts, each dict contains the model name, description, id, and api price info.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_route_llm_tools">
+<span class="sig-name descname"><span class="pre">list_route_llm_tools</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_route_llm_tools" title="Link to this definition"></a></dt>
+<dd><p>Lists the Abacus tools this organization can name in the RouteLLM API’s abacus_tools parameter.</p>
+<p>Every tool the API can address is listed, runnable or not: “supported” is false for one the
+RouteLLM API cannot run (a tool taking file attachments, which chat/completions cannot supply),
+and “requires_connectors” names the user-level connectors it needs authorized first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict with the org’s tools - each with its name, description, JSON-Schema parameters,
+required connectors, and whether it is supported.</p>
 </dd>
 </dl>
 </dd></dl>

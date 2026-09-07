@@ -18,6 +18,7 @@ Submodules
    /autoapi/abacusai/agent_conversation/index
    /autoapi/abacusai/agent_data_document_info/index
    /autoapi/abacusai/agent_data_execution_result/index
+   /autoapi/abacusai/agent_network/index
    /autoapi/abacusai/agent_skill/index
    /autoapi/abacusai/agent_version/index
    /autoapi/abacusai/ai_building_task/index
@@ -390,6 +391,7 @@ Classes
    abacusai.AgentConversation
    abacusai.AgentDataDocumentInfo
    abacusai.AgentDataExecutionResult
+   abacusai.AgentNetwork
    abacusai.AgentSkill
    abacusai.AgentVersion
    abacusai.AiBuildingTask
@@ -1654,7 +1656,61 @@ Package Contents
 
 
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, hashedOwnerUserId=None)
+.. py:class:: AgentNetwork(client, discoverable=None, orgHasOtherUsers=None, ownAgents=None, contacts=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Agent-to-agent messaging state of a personal agent
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param discoverable: Whether teammates in the org can find this agent and request a contact.
+   :type discoverable: bool
+   :param orgHasOtherUsers: Whether the owner's org has other users (teammate controls are shown only then).
+   :type orgHasOtherUsers: bool
+   :param ownAgents: The owner's other agents (bot_id/name/description); always reachable.
+   :type ownAgents: list
+   :param contacts: Teammate agents (bot_id/name/description/owner_user_id/owner_name/status/t); status is PENDING_IN, PENDING_OUT or ACCEPTED.
+   :type contacts: list
+
+
+   .. py:attribute:: discoverable
+      :value: None
+
+
+
+   .. py:attribute:: org_has_other_users
+      :value: None
+
+
+
+   .. py:attribute:: own_agents
+      :value: None
+
+
+
+   .. py:attribute:: contacts
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, hashedOwnerUserId=None, userDisabled=None, usedByTasks=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1703,6 +1759,10 @@ Package Contents
    :type hashedAgentSkillId: str
    :param hashedOwnerUserId: Hashed id of the user whose store holds this skill's files.
    :type hashedOwnerUserId: str
+   :param userDisabled: Whether the user explicitly disabled this system skill, keeping it listed instead of returning it to the import library.
+   :type userDisabled: bool
+   :param usedByTasks: Whether any of the user's daemon tasks reference this skill, so disabling it will ask for confirmation.
+   :type usedByTasks: bool
 
 
    .. py:attribute:: agent_skill_id
@@ -1801,6 +1861,16 @@ Package Contents
 
 
    .. py:attribute:: hashed_owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: user_disabled
+      :value: None
+
+
+
+   .. py:attribute:: used_by_tasks
       :value: None
 
 
@@ -9395,6 +9465,21 @@ Package Contents
 
 
 
+   .. py:attribute:: DISCORD
+      :value: 'DISCORD'
+
+
+
+   .. py:attribute:: TELEGRAM
+      :value: 'TELEGRAM'
+
+
+
+   .. py:attribute:: WHATSAPP
+      :value: 'WHATSAPP'
+
+
+
    .. py:method:: user_connectors()
       :classmethod:
 
@@ -9882,6 +9967,11 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT6_ASTRA
+      :value: 'OPENAI_GPT6_ASTRA'
+
+
+
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
@@ -10014,6 +10104,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_3_7_FLASH
       :value: 'GEMINI_3_7_FLASH'
+
+
+
+   .. py:attribute:: GEMINI_3_8_FLASH
+      :value: 'GEMINI_3_8_FLASH'
 
 
 
@@ -10199,6 +10294,11 @@ Package Contents
 
    .. py:attribute:: MUSE_SPARK_1_2
       :value: 'MUSE_SPARK_1_2'
+
+
+
+   .. py:attribute:: MUSE_SPARK_1_3
+      :value: 'MUSE_SPARK_1_3'
 
 
 
@@ -17134,7 +17234,7 @@ Package Contents
 
 
 
-.. py:class:: AuditLog(client, auditLogId=None, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None)
+.. py:class:: AuditLog(client, auditLogId=None, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None, description=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -17159,6 +17259,8 @@ Package Contents
    :type refreshPolicyId: str
    :param pipelineId: The hashed ID of the pipeline if applicable
    :type pipelineId: str
+   :param description: The administrative setting the action changed and its new value, when the action changed one
+   :type description: str
 
 
    .. py:attribute:: audit_log_id
@@ -17197,6 +17299,11 @@ Package Contents
 
 
    .. py:attribute:: pipeline_id
+      :value: None
+
+
+
+   .. py:attribute:: description
       :value: None
 
 
@@ -18301,7 +18408,7 @@ Package Contents
 
 
 
-.. py:class:: Bot(client, botId=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, agentNetwork=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -18312,6 +18419,14 @@ Package Contents
    :type client: ApiClient
    :param botId: The id of the bot.
    :type botId: str
+   :param ownerUserId: The user id of the agent's owner.
+   :type ownerUserId: str
+   :param isOwner: Whether the caller owns the agent; False for a teammate's agent shared with the caller (via its conversation).
+   :type isOwner: bool
+   :param canEdit: Whether the caller may edit, delete and re-share the agent (the owner, or a teammate shared with the editor role).
+   :type canEdit: bool
+   :param ownerEmail: The owner's email; shared agents in _listBots only.
+   :type ownerEmail: str
    :param name: The name of the bot.
    :type name: str
    :param description: The description of the bot.
@@ -18342,13 +18457,49 @@ Package Contents
    :type createdAt: int
    :param schedule: The bot's heartbeat schedule (frequency/time/day_of_week/timezone), if any.
    :type schedule: dict
-   :param tasks: The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule); _describeBot only.
+   :param tasks: The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule; event tasks also carry webhook_url); _describeBot only.
    :type tasks: list
    :param channels: The bot's configured messaging channels keyed by channel name; secret values are masked.
    :type channels: dict
+   :param learnedPersonality: Personality the bot learned on its own from user feedback; _describeBot only.
+   :type learnedPersonality: str
+   :param learnedInstructions: Rules the bot learned on its own from user feedback; _describeBot only.
+   :type learnedInstructions: str
+   :param profileHistory: Changelog of the bot's self-edits to the learned fields (t/field/old/new, chronological; undo entries flagged); _describeBot only.
+   :type profileHistory: list
+   :param selfReview: Latest self-review state (n/last_t/score/note); _describeBot only.
+   :type selfReview: dict
+   :param playbooks: Reusable procedures the bot saved (name/body/t/uses/wins/losses, chronological); _describeBot only.
+   :type playbooks: list
+   :param proactiveBudget: User-set daily cap on proactive messages from high-frequency fires (hourly heartbeat + minute tasks); None when uncapped; _describeBot only.
+   :type proactiveBudget: int
+   :param chattyGreetings: Whether the agent says a short personal hello when the owner opens its chat in the web UI (default True); _describeBot only.
+   :type chattyGreetings: bool
+   :param agentNetwork: Agent-to-agent messaging state (discoverable/own_agents/contacts); _describeBot only.
+   :type agentNetwork: dict
 
 
    .. py:attribute:: bot_id
+      :value: None
+
+
+
+   .. py:attribute:: owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: is_owner
+      :value: None
+
+
+
+   .. py:attribute:: can_edit
+      :value: None
+
+
+
+   .. py:attribute:: owner_email
       :value: None
 
 
@@ -18434,6 +18585,46 @@ Package Contents
 
 
    .. py:attribute:: channels
+      :value: None
+
+
+
+   .. py:attribute:: learned_personality
+      :value: None
+
+
+
+   .. py:attribute:: learned_instructions
+      :value: None
+
+
+
+   .. py:attribute:: profile_history
+      :value: None
+
+
+
+   .. py:attribute:: self_review
+      :value: None
+
+
+
+   .. py:attribute:: playbooks
+      :value: None
+
+
+
+   .. py:attribute:: proactive_budget
+      :value: None
+
+
+
+   .. py:attribute:: chatty_greetings
+      :value: None
+
+
+
+   .. py:attribute:: agent_network
       :value: None
 
 
@@ -18655,7 +18846,7 @@ Package Contents
 
 
 
-.. py:class:: ChatSegmentArtifact(client, artifactId=None, artifactMetadata=None, artifactType=None, storageType=None, content=None, renderingContent=None, publicUrl=None, createdAt=None, updatedAt=None)
+.. py:class:: ChatSegmentArtifact(client, artifactId=None, artifactMetadata=None, artifactType=None, storageType=None, content=None, renderingContent=None, publicUrl=None, createdAt=None, updatedAt=None, isOwner=None, deploymentConversationId=None, ownerEmail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -18682,6 +18873,12 @@ Package Contents
    :type createdAt: str
    :param updatedAt: The last update timestamp
    :type updatedAt: str
+   :param isOwner: Present (true) only when the requester owns the artifact
+   :type isOwner: bool
+   :param deploymentConversationId: Source conversation, owner-only — lets the share page mount the share dialog
+   :type deploymentConversationId: id
+   :param ownerEmail: Owner's email, present only for signed-in non-owner viewers (read-only share panel)
+   :type ownerEmail: str
 
 
    .. py:attribute:: artifact_id
@@ -18725,6 +18922,21 @@ Package Contents
 
 
    .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: is_owner
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: owner_email
       :value: None
 
 
@@ -19187,7 +19399,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmReferralInvite(client, userAlreadyExists=None, successfulInvites=None)
+.. py:class:: ChatllmReferralInvite(client, userAlreadyExists=None, successfulInvites=None, failedToSend=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -19200,6 +19412,8 @@ Package Contents
    :type userAlreadyExists: list
    :param successfulInvites: List of users successfully invited.
    :type successfulInvites: list
+   :param failedToSend: Emails whose invite could not be sent from the user's Gmail account.
+   :type failedToSend: list
 
 
    .. py:attribute:: user_already_exists
@@ -19208,6 +19422,11 @@ Package Contents
 
 
    .. py:attribute:: successful_invites
+      :value: None
+
+
+
+   .. py:attribute:: failed_to_send
       :value: None
 
 
@@ -19227,7 +19446,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, numUnreadFailedTaskInstances=None, numUnreadLimitBlockedTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, numUnreadFailedTaskInstances=None, numUnreadLimitBlockedTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, eventSource=None, eventFilter=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, botId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -19294,6 +19513,10 @@ Package Contents
    :type skippedRunTime: int
    :param webhookUrl: The webhook URL for event-based daemon tasks.
    :type webhookUrl: str
+   :param eventSource: The inbound event source for event-based tasks that are not webhook-driven (e.g. 'gmail').
+   :type eventSource: str
+   :param eventFilter: Deterministic match rules for the event source (e.g. from_contains, subject_contains).
+   :type eventFilter: dict
    :param pushNotificationsEnabled: Whether push notifications are enabled for the task.
    :type pushNotificationsEnabled: bool
    :param skills: Names of agent skills pinned to this daemon task.
@@ -19322,6 +19545,8 @@ Package Contents
    :type ownerEmail: str
    :param resumeRequestId: The streaming request id for a reply/follow-up just dispatched via answer_daemon_task_input, for the UI to attach the live stream immediately.
    :type resumeRequestId: str
+   :param botId: The id of the personal agent (bot) that owns the task; only set for bot-managed tasks.
+   :type botId: str
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -19473,6 +19698,16 @@ Package Contents
 
 
 
+   .. py:attribute:: event_source
+      :value: None
+
+
+
+   .. py:attribute:: event_filter
+      :value: None
+
+
+
    .. py:attribute:: push_notifications_enabled
       :value: None
 
@@ -19539,6 +19774,11 @@ Package Contents
 
 
    .. py:attribute:: resume_request_id
+      :value: None
+
+
+
+   .. py:attribute:: bot_id
       :value: None
 
 
@@ -29857,6 +30097,19 @@ Package Contents
 
 
 
+   .. py:method:: list_route_llm_tools()
+
+      Lists the Abacus tools this organization can name in the RouteLLM API's abacus_tools parameter.
+
+      Every tool the API can address is listed, runnable or not: "supported" is false for one the
+      RouteLLM API cannot run (a tool taking file attachments, which chat/completions cannot supply),
+      and "requires_connectors" names the user-level connectors it needs authorized first.
+
+      :returns: dict with the org's tools - each with its name, description, JSON-Schema parameters,
+                required connectors, and whether it is supported.
+
+
+
 .. py:class:: ToolResponse(*args, **kwargs)
 
    Bases: :py:obj:`AgentResponse`
@@ -34427,7 +34680,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34538,6 +34791,10 @@ Package Contents
    :type roleplayCharacter: dict
    :param loopType: For Media Studio conversations, the dedicated agentic loop the conversation is pinned to (e.g. ad_creation); null when unpinned or not Media Studio.
    :type loopType: str
+   :param pendingTriggerType: Set while the conversation is paused waiting for a scheduled resume (e.g. TIMED); null once resumed.
+   :type pendingTriggerType: str
+   :param nextTriggerCheckTime: When the scheduler will next resume the paused conversation; null when not paused.
+   :type nextTriggerCheckTime: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -34801,6 +35058,16 @@ Package Contents
 
 
 
+   .. py:attribute:: pending_trigger_type
+      :value: None
+
+
+
+   .. py:attribute:: next_trigger_check_time
+      :value: None
+
+
+
    .. py:attribute:: history
 
 
@@ -34964,7 +35231,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34981,6 +35248,8 @@ Package Contents
    :type timestamp: str
    :param isDaemonResumeReply: Daemon task conversations only. Whether this user message is a reply to a run's request_user_input (rendered as a normal chat message instead of a task run block).
    :type isDaemonResumeReply: bool
+   :param isTriggered: Whether this user message was injected by the scheduler to resume a paused conversation (e.g. a wait-for-condition check), rather than typed by the user.
+   :type isTriggered: bool
    :param messageIndex: The index of the message in the conversation
    :type messageIndex: int
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
@@ -35089,6 +35358,11 @@ Package Contents
 
 
    .. py:attribute:: is_daemon_resume_reply
+      :value: None
+
+
+
+   .. py:attribute:: is_triggered
       :value: None
 
 
@@ -45287,7 +45561,7 @@ Package Contents
 
 
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, logUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45316,6 +45590,14 @@ Package Contents
    :type error: str
    :param expired: True when a SUCCESS build is old enough that its EAS download link is likely dead
    :type expired: bool
+   :param phase: Native Swift builds: the archive step in progress ('archiving', 'exporting', 'uploading')
+   :type phase: str
+   :param createdAt: When the build was started (ISO 8601)
+   :type createdAt: str
+   :param testflight: Native Swift builds: what Apple reported about the uploaded build
+   :type testflight: dict
+   :param logUrl: Native Swift builds: short-lived link to the archive log once the build finished
+   :type logUrl: str
 
 
    .. py:attribute:: status
@@ -45364,6 +45646,26 @@ Package Contents
 
 
    .. py:attribute:: expired
+      :value: None
+
+
+
+   .. py:attribute:: phase
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: testflight
+      :value: None
+
+
+
+   .. py:attribute:: log_url
       :value: None
 
 
@@ -56117,7 +56419,7 @@ Package Contents
 
 
 
-.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None, shortsVideogenDiscount=None)
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -56142,8 +56444,6 @@ Package Contents
    :type adOverhead: int
    :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
    :type imageDisplayThreshold: int
-   :param shortsVideogenDiscount: Fraction off the listed video rate for Shorts renders (fal pass-through); estimates show the list rate slashed
-   :type shortsVideogenDiscount: float
 
 
    .. py:attribute:: video_costs
@@ -56182,11 +56482,6 @@ Package Contents
 
 
    .. py:attribute:: image_display_threshold
-      :value: None
-
-
-
-   .. py:attribute:: shorts_videogen_discount
       :value: None
 
 
@@ -57896,7 +58191,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None)
+.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None, appllmBranch=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -57919,6 +58214,8 @@ Package Contents
    :type conversationType: str
    :param userTurnCount: Number of user messages in the conversation; only populated when requested
    :type userTurnCount: int
+   :param appllmBranch: Git branch the conversation works on; only set for branch-mode conversations
+   :type appllmBranch: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -57952,6 +58249,11 @@ Package Contents
 
 
    .. py:attribute:: user_turn_count
+      :value: None
+
+
+
+   .. py:attribute:: appllm_branch
       :value: None
 
 
@@ -58318,7 +58620,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppProject(client, webAppProjectId=None, sourceDeploymentConversationId=None, deployedStatus=None, hostnames=None, projectMetadata=None, projectType=None, hasSupportAgent=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
+.. py:class:: WebAppProject(client, webAppProjectId=None, name=None, sourceDeploymentConversationId=None, deployedStatus=None, hostnames=None, projectMetadata=None, projectType=None, hasSupportAgent=None, hostedDatabaseId=None, hostedDevDatabaseId=None, emailDomains={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58329,6 +58631,8 @@ Package Contents
    :type client: ApiClient
    :param webAppProjectId: The project ID
    :type webAppProjectId: id
+   :param name: The project's name, falling back to its source conversation's name
+   :type name: str
    :param sourceDeploymentConversationId: Source deployment conversation ID
    :type sourceDeploymentConversationId: id
    :param deployedStatus: ACTIVE | NOT_DEPLOYED
@@ -58350,6 +58654,11 @@ Package Contents
 
 
    .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: name
       :value: None
 
 
@@ -59164,6 +59473,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.111'
+   :value: '1.4.112'
 
 

@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.111'
+      :value: '1.4.112'
 
 
 
@@ -3265,6 +3265,19 @@ Module Contents
       This function is used to list all the models and their rates, for routellm api.
 
       :returns: list of dicts, each dict contains the model name, description, id, and api price info.
+
+
+
+   .. py:method:: list_route_llm_tools()
+
+      Lists the Abacus tools this organization can name in the RouteLLM API's abacus_tools parameter.
+
+      Every tool the API can address is listed, runnable or not: "supported" is false for one the
+      RouteLLM API cannot run (a tool taking file attachments, which chat/completions cannot supply),
+      and "requires_connectors" names the user-level connectors it needs authorized first.
+
+      :returns: dict with the org's tools - each with its name, description, JSON-Schema parameters,
+                required connectors, and whether it is supported.
 
 
 

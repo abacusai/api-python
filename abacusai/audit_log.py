@@ -15,9 +15,10 @@ class AuditLog(AbstractApiClass):
             source (str): The source of the action (api, ui, pipeline, cli, system)
             refreshPolicyId (str): The hashed ID of the refresh policy if applicable
             pipelineId (str): The hashed ID of the pipeline if applicable
+            description (str): The administrative setting the action changed and its new value, when the action changed one
     """
 
-    def __init__(self, client, auditLogId=None, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None):
+    def __init__(self, client, auditLogId=None, createdAt=None, userId=None, objectId=None, action=None, source=None, refreshPolicyId=None, pipelineId=None, description=None):
         super().__init__(client, auditLogId)
         self.audit_log_id = auditLogId
         self.created_at = createdAt
@@ -27,11 +28,12 @@ class AuditLog(AbstractApiClass):
         self.source = source
         self.refresh_policy_id = refreshPolicyId
         self.pipeline_id = pipelineId
+        self.description = description
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'audit_log_id': repr(self.audit_log_id), f'created_at': repr(self.created_at), f'user_id': repr(self.user_id), f'object_id': repr(
-            self.object_id), f'action': repr(self.action), f'source': repr(self.source), f'refresh_policy_id': repr(self.refresh_policy_id), f'pipeline_id': repr(self.pipeline_id)}
+        repr_dict = {f'audit_log_id': repr(self.audit_log_id), f'created_at': repr(self.created_at), f'user_id': repr(self.user_id), f'object_id': repr(self.object_id), f'action': repr(
+            self.action), f'source': repr(self.source), f'refresh_policy_id': repr(self.refresh_policy_id), f'pipeline_id': repr(self.pipeline_id), f'description': repr(self.description)}
         class_name = "AuditLog"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -44,6 +46,6 @@ class AuditLog(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'audit_log_id': self.audit_log_id, 'created_at': self.created_at, 'user_id': self.user_id, 'object_id': self.object_id,
-                'action': self.action, 'source': self.source, 'refresh_policy_id': self.refresh_policy_id, 'pipeline_id': self.pipeline_id}
+        resp = {'audit_log_id': self.audit_log_id, 'created_at': self.created_at, 'user_id': self.user_id, 'object_id': self.object_id, 'action': self.action,
+                'source': self.source, 'refresh_policy_id': self.refresh_policy_id, 'pipeline_id': self.pipeline_id, 'description': self.description}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
