@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MobileBuildInfo(client, type=None, buildUrl=None, status=None, llmArtifactId=None, mobileAppBuildId=None, expired=None)
+.. py:class:: MobileBuildInfo(client, type=None, buildUrl=None, status=None, llmArtifactId=None, mobileAppBuildId=None, expired=None, appVersion=None, buildNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,10 @@ Module Contents
    :type mobileAppBuildId: str
    :param expired: True when a SUCCESS build is old enough that its EAS download link is likely dead.
    :type expired: bool
+   :param appVersion: The release version the build shipped as (Android versionName, iOS CFBundleShortVersionString)
+   :type appVersion: str
+   :param buildNumber: The automatic build number of the build (Android versionCode, iOS CFBundleVersion)
+   :type buildNumber: int
 
 
    .. py:attribute:: type
@@ -64,6 +68,16 @@ Module Contents
 
 
    .. py:attribute:: expired
+      :value: None
+
+
+
+   .. py:attribute:: app_version
+      :value: None
+
+
+
+   .. py:attribute:: build_number
       :value: None
 
 

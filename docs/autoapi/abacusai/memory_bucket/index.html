@@ -84,7 +84,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot/index.html">abacusai.bot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_channel_options/index.html">abacusai.bot_channel_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_info/index.html">abacusai.bot_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_routine_catalog/index.html">abacusai.bot_routine_catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_template_catalog/index.html">abacusai.bot_template_catalog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../categorical_range_violation/index.html">abacusai.categorical_range_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_message/index.html">abacusai.chat_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_segment_artifact/index.html">abacusai.chat_segment_artifact</a></li>
@@ -455,14 +458,14 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>bucketKey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Stable slug for the bucket (also the rendered filename stem).</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Human-readable bucket title.</p></li>
-<li><p><strong>shortDescription</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – One-line description of the bucket.</p></li>
-<li><p><strong>priority</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Importance, 1 (low) to 5 (high).</p></li>
-<li><p><strong>content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Markdown body of the bucket.</p></li>
-<li><p><strong>updatedAtTimestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Last-updated time (unix seconds).</p></li>
-<li><p><strong>humanEdited</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the user has edited this bucket (the cron is additive-only for it).</p></li>
-<li><p><strong>contentVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Version of the body, for optimistic concurrency. Pass the value you read back as expected_content_version when saving an edit; the save is rejected if it has moved.</p></li>
+<li><p><strong>bucketKey</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Stable slug for the bucket (also the rendered filename stem).</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Human-readable bucket title.</p></li>
+<li><p><strong>shortDescription</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – One-line description of the bucket.</p></li>
+<li><p><strong>priority</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Importance, 1 (low) to 5 (high).</p></li>
+<li><p><strong>content</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Markdown body of the bucket.</p></li>
+<li><p><strong>updatedAtTimestamp</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Last-updated time (unix seconds).</p></li>
+<li><p><strong>humanEdited</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the user has edited this bucket (the cron is additive-only for it).</p></li>
+<li><p><strong>contentVersion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Version of the body, for optimistic concurrency. Pass the value you read back as expected_content_version when saving an edit; the save is rejected if it has moved.</p></li>
 </ul>
 </dd>
 </dl>
@@ -525,7 +528,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>

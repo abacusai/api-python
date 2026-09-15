@@ -262,7 +262,7 @@ Module Contents
 
 
 
-   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
+   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None)
 
       Updates an External Application.
 
@@ -278,6 +278,8 @@ Module Contents
       :type deployment_conversation_retention_hours: int
       :param reset_retention_policy: If true, the retention policy will be removed.
       :type reset_retention_policy: bool
+      :param voice_config: Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
+      :type voice_config: dict
 
       :returns: The updated External Application.
       :rtype: ExternalApplication

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, chineseModelsDisabled=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type descriptions: dict
    :param audioModes: Maps models without a generate_audio toggle to a fixed audio behaviour ('alwaysOn'/'none').
    :type audioModes: dict
+   :param chineseModelsDisabled: Whether the org disables Chinese models, which routes Auto through a different table.
+   :type chineseModelsDisabled: bool
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
 
@@ -87,6 +89,11 @@ Module Contents
 
 
    .. py:attribute:: audio_modes
+      :value: None
+
+
+
+   .. py:attribute:: chinese_models_disabled
       :value: None
 
 

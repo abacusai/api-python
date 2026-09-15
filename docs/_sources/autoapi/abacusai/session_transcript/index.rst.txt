@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: SessionTranscript(client, role=None, content=None)
+.. py:class:: SessionTranscript(client, role=None, content=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -28,6 +28,8 @@ Module Contents
    :type role: str
    :param content: The content of the transcript.
    :type content: str
+   :param createdAt: When the transcript line was recorded.
+   :type createdAt: str
 
 
    .. py:attribute:: role
@@ -36,6 +38,11 @@ Module Contents
 
 
    .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: created_at
       :value: None
 
 

@@ -84,7 +84,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot/index.html">abacusai.bot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_channel_options/index.html">abacusai.bot_channel_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_info/index.html">abacusai.bot_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_routine_catalog/index.html">abacusai.bot_routine_catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_template_catalog/index.html">abacusai.bot_template_catalog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../categorical_range_violation/index.html">abacusai.categorical_range_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_message/index.html">abacusai.chat_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_segment_artifact/index.html">abacusai.chat_segment_artifact</a></li>
@@ -455,18 +458,18 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>provider</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Provider key (oura, fitbit, garmin, …), matching HealthDataSource.provider.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Brand name, shown as-is (never translated).</p></li>
-<li><p><strong>category</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Stable display key the client maps to a translated label (Wearable, Fitness, Smart scale, Nutrition, Medical, CGM).</p></li>
-<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – wearable | nutrition | cgm — the ingestion-side data shape, not a user-facing label.</p></li>
-<li><p><strong>color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Hex brand colour for the circular source badge.</p></li>
-<li><p><strong>glyph</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – One or two characters drawn on that badge when no icon renders.</p></li>
-<li><p><strong>iconUrl</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A WHITE monochrome mark on transparency, to be composited over <cite>color</cite>. One asset works in light and dark, on web and native. Absent for a provider whose mark isn’t published yet — draw <cite>glyph</cite> instead.</p></li>
-<li><p><strong>connectMode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – web_oauth (Terra’s hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores). Derived from the same provider tuple the connect endpoint enforces, so a client that offers what this says can never be refused for offering the wrong thing.</p></li>
-<li><p><strong>primaryRank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client’s metrics view attribute a reading to the same device.</p></li>
-<li><p><strong>comingSoon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Held back from launch — list it, but offer no way to connect it. Resolved per org from the health_coming_soon_sources flag, so web and app agree on what has shipped.</p></li>
-<li><p><strong>deprecating</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Supported, but the provider is winding the integration down (Google Fit’s REST API in favour of Health Connect) — best-effort.</p></li>
-<li><p><strong>mobileOnlyDetail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Why a browser can’t connect this one, for a web user. Present only when connect_mode is mobile_app.</p></li>
+<li><p><strong>provider</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Provider key (oura, fitbit, garmin, …), matching HealthDataSource.provider.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Brand name, shown as-is (never translated).</p></li>
+<li><p><strong>category</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Stable display key the client maps to a translated label (Wearable, Fitness, Smart scale, Nutrition, Medical, CGM).</p></li>
+<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – wearable | nutrition | cgm — the ingestion-side data shape, not a user-facing label.</p></li>
+<li><p><strong>color</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Hex brand colour for the circular source badge.</p></li>
+<li><p><strong>glyph</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – One or two characters drawn on that badge when no icon renders.</p></li>
+<li><p><strong>iconUrl</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A WHITE monochrome mark on transparency, to be composited over <cite>color</cite>. One asset works in light and dark, on web and native. Absent for a provider whose mark isn’t published yet — draw <cite>glyph</cite> instead.</p></li>
+<li><p><strong>connectMode</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – web_oauth (Terra’s hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores). Derived from the same provider tuple the connect endpoint enforces, so a client that offers what this says can never be refused for offering the wrong thing.</p></li>
+<li><p><strong>primaryRank</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client’s metrics view attribute a reading to the same device.</p></li>
+<li><p><strong>comingSoon</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.</p></li>
+<li><p><strong>deprecating</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Supported, but the provider is winding the integration down (Google Fit’s REST API in favour of Health Connect) — best-effort.</p></li>
+<li><p><strong>mobileOnlyDetail</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Why a browser can’t connect this one, for a web user. Present only when connect_mode is mobile_app.</p></li>
 </ul>
 </dd>
 </dl>
@@ -549,7 +552,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>

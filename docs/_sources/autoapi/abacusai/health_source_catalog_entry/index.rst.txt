@@ -42,7 +42,7 @@ Module Contents
    :type connectMode: str
    :param primaryRank: Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
    :type primaryRank: int
-   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Resolved per org from the health_coming_soon_sources flag, so web and app agree on what has shipped.
+   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.
    :type comingSoon: bool
    :param deprecating: Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
    :type deprecating: bool

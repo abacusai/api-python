@@ -456,17 +456,22 @@ class ApplicationConnectorType(ApiEnum):
     YOUTUBE = 'YOUTUBE'
     DOCUSIGN = 'DOCUSIGN'
     SMARTSHEET = 'SMARTSHEET'
+    AUTODESK = 'AUTODESK'
     ZOOM = 'ZOOM'
     METAADS = 'METAADS'
+    WHATSAPPBUSINESS = 'WHATSAPPBUSINESS'
+    MESSENGER = 'MESSENGER'
     INSTAGRAM = 'INSTAGRAM'
     NETSUITE = 'NETSUITE'
     MONGODB = 'MONGODB'
     AZURECLOUD = 'AZURECLOUD'
     GCPCLOUD = 'GCPCLOUD'
+    TELEGRAMBOT = 'TELEGRAMBOT'
     MYSQL = 'MYSQL'
     DISCORD = 'DISCORD'
     TELEGRAM = 'TELEGRAM'
     WHATSAPP = 'WHATSAPP'
+    EMAIL = 'EMAIL'
 
     @classmethod
     def user_connectors(cls):
@@ -507,13 +512,17 @@ class ApplicationConnectorType(ApiEnum):
             cls.YOUTUBE,
             cls.DOCUSIGN,
             cls.SMARTSHEET,
+            cls.AUTODESK,
             cls.ZOOM,
             cls.METAADS,
+            cls.WHATSAPPBUSINESS,
+            cls.MESSENGER,
             cls.INSTAGRAM,
             cls.NETSUITE,
             cls.MONGODB,
             cls.AZURECLOUD,
             cls.GCPCLOUD,
+            cls.TELEGRAMBOT,
             cls.MYSQL,
         ]
 
@@ -596,7 +605,7 @@ class VectorStoreTextEncoder(ApiEnum):
                   'LLAMA3_LARGE_CHAT', 'LLAMA3_1_405B', 'LLAMA3_1_70B', 'LLAMA3_1_8B', 'LLAMA3_3_70B', 'LLAMA4_MAVERICK',
                   'QWEN_2_5_32B_BASE', 'QWEN_2_5_32B', 'QWEN_2_5_72B', 'QWQ_32B',
                   'DEEPSEEK_V3_1', 'DEEPSEEK_R1',
-                  'ZAI_GLM_5_1', 'OX_ALPHA',
+                  'ZAI_GLM_5_1', 'OX_ALPHA', 'ABACUS_DRACARYS',
                   )
 class LLMName(ApiEnum):
     OPENAI_GPT3_5 = 'OPENAI_GPT3_5'

@@ -9,16 +9,19 @@ class SessionTranscript(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             role (str): The role of the transcript.
             content (str): The content of the transcript.
+            createdAt (str): When the transcript line was recorded.
     """
 
-    def __init__(self, client, role=None, content=None):
+    def __init__(self, client, role=None, content=None, createdAt=None):
         super().__init__(client, None)
         self.role = role
         self.content = content
+        self.created_at = createdAt
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'role': repr(self.role), f'content': repr(self.content)}
+        repr_dict = {f'role': repr(self.role), f'content': repr(
+            self.content), f'created_at': repr(self.created_at)}
         class_name = "SessionTranscript"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -31,5 +34,6 @@ class SessionTranscript(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'role': self.role, 'content': self.content}
+        resp = {'role': self.role, 'content': self.content,
+                'created_at': self.created_at}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

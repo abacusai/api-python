@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -104,6 +104,10 @@ Module Contents
    :type latestContext: dict
    :param shareType: The sharing status of the deployment conversation (PUBLIC or PRIVATE).
    :type shareType: str
+   :param isShared: Whether the owner has an active share on the conversation (org/public tier or any person/group grant). Set on list responses.
+   :type isShared: bool
+   :param isArchived: Whether the owner archived the conversation (hidden from the default lists).
+   :type isArchived: bool
    :param pushNotificationsEnabled: Whether push notifications are enabled for the deployment conversation.
    :type pushNotificationsEnabled: bool
    :param platform: The platform the conversation was created from (WEB, IOS, ANDROID).
@@ -334,6 +338,16 @@ Module Contents
 
 
    .. py:attribute:: share_type
+      :value: None
+
+
+
+   .. py:attribute:: is_shared
+      :value: None
+
+
+
+   .. py:attribute:: is_archived
       :value: None
 
 

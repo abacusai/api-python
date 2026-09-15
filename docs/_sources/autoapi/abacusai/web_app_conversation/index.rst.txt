@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None, appllmBranch=None)
+.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None, appllmBranch=None, appllmBranchMergedArtifactId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type userTurnCount: int
    :param appllmBranch: Git branch the conversation works on; only set for branch-mode conversations
    :type appllmBranch: str
+   :param appllmBranchMergedArtifactId: Hashed ID of the branch checkpoint last merged into main; only set for merged branches
+   :type appllmBranchMergedArtifactId: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -78,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: appllm_branch
+      :value: None
+
+
+
+   .. py:attribute:: appllm_branch_merged_artifact_id
       :value: None
 
 

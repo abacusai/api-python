@@ -16,7 +16,7 @@ class HealthSourceCatalogEntry(AbstractApiClass):
             iconUrl (str): A WHITE monochrome mark on transparency, to be composited over `color`. One asset works in light and dark, on web and native. Absent for a provider whose mark isn't published yet — draw `glyph` instead.
             connectMode (str): web_oauth (Terra's hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores). Derived from the same provider tuple the connect endpoint enforces, so a client that offers what this says can never be refused for offering the wrong thing.
             primaryRank (int): Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
-            comingSoon (bool): Held back from launch — list it, but offer no way to connect it. Resolved per org from the health_coming_soon_sources flag, so web and app agree on what has shipped.
+            comingSoon (bool): Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.
             deprecating (bool): Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
             mobileOnlyDetail (str): Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
     """

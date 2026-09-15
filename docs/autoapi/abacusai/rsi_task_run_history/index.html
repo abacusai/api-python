@@ -84,7 +84,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot/index.html">abacusai.bot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_channel_options/index.html">abacusai.bot_channel_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_info/index.html">abacusai.bot_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_routine_catalog/index.html">abacusai.bot_routine_catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_template_catalog/index.html">abacusai.bot_template_catalog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../categorical_range_violation/index.html">abacusai.categorical_range_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_message/index.html">abacusai.chat_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chat_segment_artifact/index.html">abacusai.chat_segment_artifact</a></li>
@@ -455,23 +458,23 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>objective</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The user’s natural-language objective the task improves at.</p></li>
-<li><p><strong>metricName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the measured metric.</p></li>
-<li><p><strong>direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Whether the metric should ‘increase’ or ‘decrease’.</p></li>
-<li><p><strong>baselineValue</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The metric value measured at task setup.</p></li>
-<li><p><strong>minSample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Minimum sample size required to grade a run.</p></li>
-<li><p><strong>noiseFloor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Absolute metric band treated as no change.</p></li>
-<li><p><strong>lifecycle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The lifecycle of the daemon task.</p></li>
-<li><p><strong>totalCount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Total number of runs with an iteration record.</p></li>
-<li><p><strong>gradedCount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of runs whose iteration record has been graded (closed).</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The page size used for the iterations list.</p></li>
-<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The offset used for the iterations list.</p></li>
-<li><p><strong>iterations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – One page of per-run records, newest first (iteration_index, status, value_before, value_after, delta, n_sample, verdict, change_summary, measured_at, failure_reason, run_record, created_at, run_lifecycle).</p></li>
-<li><p><strong>trend</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Compact full history for charting, oldest first (index, value, verdict; the in-flight run appears last with pending=true at its comparison baseline).</p></li>
-<li><p><strong>sourceDeploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The conversation whose filesystem holds the RSI workdir (for fetching run records).</p></li>
-<li><p><strong>workdir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The RSI working directory on that filesystem.</p></li>
-<li><p><strong>hostedDatabaseId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The task’s hosted database holding the rsi_runs ledger and task tables (null for pre-ledger tasks).</p></li>
-<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – For a composite metric, the sub-metric definitions (name, direction, weight, baseline, lo, hi); each iteration also carries its measured {name: value} map under <cite>components</cite>.</p></li>
+<li><p><strong>objective</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The user’s natural-language objective the task improves at.</p></li>
+<li><p><strong>metricName</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the measured metric.</p></li>
+<li><p><strong>direction</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Whether the metric should ‘increase’ or ‘decrease’.</p></li>
+<li><p><strong>baselineValue</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The metric value measured at task setup.</p></li>
+<li><p><strong>minSample</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Minimum sample size required to grade a run.</p></li>
+<li><p><strong>noiseFloor</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Absolute metric band treated as no change.</p></li>
+<li><p><strong>lifecycle</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The lifecycle of the daemon task.</p></li>
+<li><p><strong>totalCount</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Total number of runs with an iteration record.</p></li>
+<li><p><strong>gradedCount</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of runs whose iteration record has been graded (closed).</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The page size used for the iterations list.</p></li>
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The offset used for the iterations list.</p></li>
+<li><p><strong>iterations</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – One page of per-run records, newest first (iteration_index, status, value_before, value_after, delta, n_sample, verdict, change_summary, measured_at, failure_reason, run_record, created_at, run_lifecycle).</p></li>
+<li><p><strong>trend</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Compact full history for charting, oldest first (index, value, verdict; the in-flight run appears last with pending=true at its comparison baseline).</p></li>
+<li><p><strong>sourceDeploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The conversation whose filesystem holds the RSI workdir (for fetching run records).</p></li>
+<li><p><strong>workdir</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The RSI working directory on that filesystem.</p></li>
+<li><p><strong>hostedDatabaseId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The task’s hosted database holding the rsi_runs ledger and task tables (null for pre-ledger tasks).</p></li>
+<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – For a composite metric, the sub-metric definitions (name, direction, weight, baseline, lo, hi); each iteration also carries its measured {name: value} map under <cite>components</cite>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -579,7 +582,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>

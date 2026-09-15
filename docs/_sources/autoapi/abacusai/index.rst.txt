@@ -48,7 +48,10 @@ Submodules
    /autoapi/abacusai/batch_prediction_version/index
    /autoapi/abacusai/batch_prediction_version_logs/index
    /autoapi/abacusai/bot/index
+   /autoapi/abacusai/bot_channel_options/index
    /autoapi/abacusai/bot_info/index
+   /autoapi/abacusai/bot_routine_catalog/index
+   /autoapi/abacusai/bot_template_catalog/index
    /autoapi/abacusai/categorical_range_violation/index
    /autoapi/abacusai/chat_message/index
    /autoapi/abacusai/chat_segment_artifact/index
@@ -656,7 +659,10 @@ Classes
    abacusai.BatchPredictionVersion
    abacusai.BatchPredictionVersionLogs
    abacusai.Bot
+   abacusai.BotChannelOptions
    abacusai.BotInfo
+   abacusai.BotRoutineCatalog
+   abacusai.BotTemplateCatalog
    abacusai.CategoricalRangeViolation
    abacusai.ChatMessage
    abacusai.ChatSegmentArtifact
@@ -1710,7 +1716,7 @@ Package Contents
 
 
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, hashedOwnerUserId=None, userDisabled=None, usedByTasks=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1757,8 +1763,6 @@ Package Contents
    :type sharedStoreDir: str
    :param hashedAgentSkillId: Hashed skill id used by skill share links.
    :type hashedAgentSkillId: str
-   :param hashedOwnerUserId: Hashed id of the user whose store holds this skill's files.
-   :type hashedOwnerUserId: str
    :param userDisabled: Whether the user explicitly disabled this system skill, keeping it listed instead of returning it to the import library.
    :type userDisabled: bool
    :param usedByTasks: Whether any of the user's daemon tasks reference this skill, so disabling it will ask for confirmation.
@@ -1856,11 +1860,6 @@ Package Contents
 
 
    .. py:attribute:: hashed_agent_skill_id
-      :value: None
-
-
-
-   .. py:attribute:: hashed_owner_user_id
       :value: None
 
 
@@ -9425,6 +9424,11 @@ Package Contents
 
 
 
+   .. py:attribute:: AUTODESK
+      :value: 'AUTODESK'
+
+
+
    .. py:attribute:: ZOOM
       :value: 'ZOOM'
 
@@ -9432,6 +9436,16 @@ Package Contents
 
    .. py:attribute:: METAADS
       :value: 'METAADS'
+
+
+
+   .. py:attribute:: WHATSAPPBUSINESS
+      :value: 'WHATSAPPBUSINESS'
+
+
+
+   .. py:attribute:: MESSENGER
+      :value: 'MESSENGER'
 
 
 
@@ -9460,6 +9474,11 @@ Package Contents
 
 
 
+   .. py:attribute:: TELEGRAMBOT
+      :value: 'TELEGRAMBOT'
+
+
+
    .. py:attribute:: MYSQL
       :value: 'MYSQL'
 
@@ -9477,6 +9496,11 @@ Package Contents
 
    .. py:attribute:: WHATSAPP
       :value: 'WHATSAPP'
+
+
+
+   .. py:attribute:: EMAIL
+      :value: 'EMAIL'
 
 
 
@@ -18408,7 +18432,7 @@ Package Contents
 
 
 
-.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, agentNetwork=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -18423,7 +18447,7 @@ Package Contents
    :type ownerUserId: str
    :param isOwner: Whether the caller owns the agent; False for a teammate's agent shared with the caller (via its conversation).
    :type isOwner: bool
-   :param canEdit: Whether the caller may edit, delete and re-share the agent (the owner, or a teammate shared with the editor role).
+   :param canEdit: Whether the caller may edit, delete and re-share the agent (the owner, a teammate shared with the editor role, or any teammate with conversation access to the agent's project).
    :type canEdit: bool
    :param ownerEmail: The owner's email; shared agents in _listBots only.
    :type ownerEmail: str
@@ -18445,6 +18469,8 @@ Package Contents
    :type lifecycle: str
    :param deploymentConversationId: The bot's persistent conversation id.
    :type deploymentConversationId: str
+   :param chatllmProjectId: The project the agent belongs to (its files, skills and instructions apply, and every teammate who can see the project sees it and every project editor may edit it); None for a personal agent outside a project.
+   :type chatllmProjectId: str
    :param externalApplicationId: The external application id associated with the bot.
    :type externalApplicationId: str
    :param lastMessagePreview: A preview of the last message in the bot's conversation.
@@ -18475,8 +18501,12 @@ Package Contents
    :type proactiveBudget: int
    :param chattyGreetings: Whether the agent says a short personal hello when the owner opens its chat in the web UI (default True); _describeBot only.
    :type chattyGreetings: bool
+   :param quietHours: {'start': 'HH:MM', 'end': 'HH:MM'} window (agent timezone) in which high-frequency fires stay silent; None when the owner turned quiet hours off; _describeBot only.
+   :type quietHours: dict
    :param agentNetwork: Agent-to-agent messaging state (discoverable/own_agents/contacts); _describeBot only.
    :type agentNetwork: dict
+   :param pushNotificationsEnabled: Whether the agent may send mobile push notifications (the agent conversation's own switch); _describeBot only.
+   :type pushNotificationsEnabled: bool
 
 
    .. py:attribute:: bot_id
@@ -18545,6 +18575,11 @@ Package Contents
 
 
    .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_id
       :value: None
 
 
@@ -18624,7 +18659,64 @@ Package Contents
 
 
 
+   .. py:attribute:: quiet_hours
+      :value: None
+
+
+
    .. py:attribute:: agent_network
+      :value: None
+
+
+
+   .. py:attribute:: push_notifications_enabled
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: BotChannelOptions(client, sharedChannels=None, telegramBotUsername=None, channels=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   What the Personal Agents channel screens may offer on this cluster
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param sharedChannels: Channels this cluster runs a shared Abacus bot for, so they link by QR / deep link with no user-supplied tokens.
+   :type sharedChannels: list
+   :param telegramBotUsername: The shared Telegram bot's username, when there is one.
+   :type telegramBotUsername: str
+   :param channels: Every supported channel: channel, label, whether it is shared, whether the 'use your own bot' screen should offer it (offers_own_bot), and the credential form it takes (credential_fields: key/label/secret, in display order).
+   :type channels: list
+
+
+   .. py:attribute:: shared_channels
+      :value: None
+
+
+
+   .. py:attribute:: telegram_bot_username
+      :value: None
+
+
+
+   .. py:attribute:: channels
       :value: None
 
 
@@ -18686,6 +18778,86 @@ Package Contents
 
 
    .. py:attribute:: external_application
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: BotRoutineCatalog(client, routines=None, categories=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The one-click routines a user can add to a personal agent
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param routines: The routines, in display order (id/title/description/avatar/color/categories/name/schedule/prompt, plus required_service and inputs where they apply).
+   :type routines: list
+   :param categories: The filter pills in display order (id/label); 'all' is the default view.
+   :type categories: list
+
+
+   .. py:attribute:: routines
+      :value: None
+
+
+
+   .. py:attribute:: categories
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: BotTemplateCatalog(client, templates=None, categories=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The starter agent templates offered on the Personal Agents landing
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param templates: The templates, in display order (id/title/description/prompt/personality/avatar/color/categories, plus template, brand_icon and background_task where they apply). Chief of Staff is first.
+   :type templates: list
+   :param categories: The filter pills in display order (id/label); 'featured' is the default view.
+   :type categories: list
+
+
+   .. py:attribute:: templates
+      :value: None
+
+
+
+   .. py:attribute:: categories
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -26998,7 +27170,7 @@ Package Contents
 
 
 
-   .. py:method:: update_external_application(external_application_id, name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
+   .. py:method:: update_external_application(external_application_id, name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None)
 
       Updates an External Application.
 
@@ -27016,6 +27188,8 @@ Package Contents
       :type deployment_conversation_retention_hours: int
       :param reset_retention_policy: If true, the retention policy will be removed.
       :type reset_retention_policy: bool
+      :param voice_config: Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
+      :type voice_config: dict
 
       :returns: The updated External Application.
       :rtype: ExternalApplication
@@ -34680,7 +34854,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34769,6 +34943,10 @@ Package Contents
    :type latestContext: dict
    :param shareType: The sharing status of the deployment conversation (PUBLIC or PRIVATE).
    :type shareType: str
+   :param isShared: Whether the owner has an active share on the conversation (org/public tier or any person/group grant). Set on list responses.
+   :type isShared: bool
+   :param isArchived: Whether the owner archived the conversation (hidden from the default lists).
+   :type isArchived: bool
    :param pushNotificationsEnabled: Whether push notifications are enabled for the deployment conversation.
    :type pushNotificationsEnabled: bool
    :param platform: The platform the conversation was created from (WEB, IOS, ANDROID).
@@ -34999,6 +35177,16 @@ Package Contents
 
 
    .. py:attribute:: share_type
+      :value: None
+
+
+
+   .. py:attribute:: is_shared
+      :value: None
+
+
+
+   .. py:attribute:: is_archived
       :value: None
 
 
@@ -37935,7 +38123,7 @@ Package Contents
 
 
 
-   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
+   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None)
 
       Updates an External Application.
 
@@ -37951,6 +38139,8 @@ Package Contents
       :type deployment_conversation_retention_hours: int
       :param reset_retention_policy: If true, the retention policy will be removed.
       :type reset_retention_policy: bool
+      :param voice_config: Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
+      :type voice_config: dict
 
       :returns: The updated External Application.
       :rtype: ExternalApplication
@@ -42744,7 +42934,7 @@ Package Contents
    :type connectMode: str
    :param primaryRank: Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
    :type primaryRank: int
-   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Resolved per org from the health_coming_soon_sources flag, so web and app agree on what has shipped.
+   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.
    :type comingSoon: bool
    :param deprecating: Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
    :type deprecating: bool
@@ -43077,7 +43267,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43120,6 +43310,10 @@ Package Contents
    :type webAppProjectId: id
    :param parentConversationId: The ID of the parent conversation
    :type parentConversationId: id
+   :param appllmBranch: Git branch of the newest checkpoint when it was saved from a branch conversation
+   :type appllmBranch: str
+   :param branches: Open (not yet merged) branch conversations of the app, each with its conversation id, name, git branch, latest checkpoint, preview hostnames and owner
+   :type branches: list[dict]
    :param projectMetadata: The metadata of the web app project
    :type projectMetadata: dict
    :param memoryGb: The memory in GB of the web app deployment
@@ -43215,6 +43409,16 @@ Package Contents
 
 
    .. py:attribute:: parent_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: appllm_branch
+      :value: None
+
+
+
+   .. py:attribute:: branches
       :value: None
 
 
@@ -45561,7 +45765,7 @@ Package Contents
 
 
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, logUrl=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, logUrl=None, appVersion=None, buildNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45598,6 +45802,10 @@ Package Contents
    :type testflight: dict
    :param logUrl: Native Swift builds: short-lived link to the archive log once the build finished
    :type logUrl: str
+   :param appVersion: The release version the build shipped as (Android versionName, iOS CFBundleShortVersionString)
+   :type appVersion: str
+   :param buildNumber: The automatic build number of the build (Android versionCode, iOS CFBundleVersion)
+   :type buildNumber: int
 
 
    .. py:attribute:: status
@@ -45670,6 +45878,16 @@ Package Contents
 
 
 
+   .. py:attribute:: app_version
+      :value: None
+
+
+
+   .. py:attribute:: build_number
+      :value: None
+
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -45685,7 +45903,7 @@ Package Contents
 
 
 
-.. py:class:: MobileBuildInfo(client, type=None, buildUrl=None, status=None, llmArtifactId=None, mobileAppBuildId=None, expired=None)
+.. py:class:: MobileBuildInfo(client, type=None, buildUrl=None, status=None, llmArtifactId=None, mobileAppBuildId=None, expired=None, appVersion=None, buildNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45706,6 +45924,10 @@ Package Contents
    :type mobileAppBuildId: str
    :param expired: True when a SUCCESS build is old enough that its EAS download link is likely dead.
    :type expired: bool
+   :param appVersion: The release version the build shipped as (Android versionName, iOS CFBundleShortVersionString)
+   :type appVersion: str
+   :param buildNumber: The automatic build number of the build (Android versionCode, iOS CFBundleVersion)
+   :type buildNumber: int
 
 
    .. py:attribute:: type
@@ -45734,6 +45956,16 @@ Package Contents
 
 
    .. py:attribute:: expired
+      :value: None
+
+
+
+   .. py:attribute:: app_version
+      :value: None
+
+
+
+   .. py:attribute:: build_number
       :value: None
 
 
@@ -55755,7 +55987,7 @@ Package Contents
 
 
 
-.. py:class:: SessionTranscript(client, role=None, content=None)
+.. py:class:: SessionTranscript(client, role=None, content=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55768,6 +56000,8 @@ Package Contents
    :type role: str
    :param content: The content of the transcript.
    :type content: str
+   :param createdAt: When the transcript line was recorded.
+   :type createdAt: str
 
 
    .. py:attribute:: role
@@ -55776,6 +56010,11 @@ Package Contents
 
 
    .. py:attribute:: content
+      :value: None
+
+
+
+   .. py:attribute:: created_at
       :value: None
 
 
@@ -57949,7 +58188,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, chineseModelsDisabled=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -57976,6 +58215,8 @@ Package Contents
    :type descriptions: dict
    :param audioModes: Maps models without a generate_audio toggle to a fixed audio behaviour ('alwaysOn'/'none').
    :type audioModes: dict
+   :param chineseModelsDisabled: Whether the org disables Chinese models, which routes Auto through a different table.
+   :type chineseModelsDisabled: bool
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
 
@@ -58021,6 +58262,11 @@ Package Contents
 
 
    .. py:attribute:: audio_modes
+      :value: None
+
+
+
+   .. py:attribute:: chinese_models_disabled
       :value: None
 
 
@@ -58191,7 +58437,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None, appllmBranch=None)
+.. py:class:: WebAppConversation(client, deploymentConversationId=None, llmArtifactId=None, deploymentConversationName=None, externalApplicationId=None, createdAt=None, conversationType=None, userTurnCount=None, appllmBranch=None, appllmBranchMergedArtifactId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58216,6 +58462,8 @@ Package Contents
    :type userTurnCount: int
    :param appllmBranch: Git branch the conversation works on; only set for branch-mode conversations
    :type appllmBranch: str
+   :param appllmBranchMergedArtifactId: Hashed ID of the branch checkpoint last merged into main; only set for merged branches
+   :type appllmBranchMergedArtifactId: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -58254,6 +58502,11 @@ Package Contents
 
 
    .. py:attribute:: appllm_branch
+      :value: None
+
+
+
+   .. py:attribute:: appllm_branch_merged_artifact_id
       :value: None
 
 
@@ -58428,7 +58681,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None, targetPersonalAgentComputerId=None, targetUserId=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, alternateDnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None, targetPersonalAgentComputerId=None, targetUserId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58449,6 +58702,8 @@ Package Contents
    :type nameservers: list
    :param dnsRecords: The DNS records of the web app domain
    :type dnsRecords: list
+   :param alternateDnsRecords: Equivalent CNAME records a user may add instead of the A records in dns_records (computed at read time, never stored)
+   :type alternateDnsRecords: list
    :param metadata: The metadata of the web app domain
    :type metadata: dict
    :param isRootDomain: Whether the web app domain is a root domain
@@ -58487,6 +58742,11 @@ Package Contents
 
 
    .. py:attribute:: dns_records
+      :value: None
+
+
+
+   .. py:attribute:: alternate_dns_records
       :value: None
 
 
@@ -59473,6 +59733,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.112'
+   :value: '1.4.113'
 
 

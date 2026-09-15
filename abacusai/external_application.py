@@ -108,7 +108,7 @@ class ExternalApplication(AbstractApiClass):
         """
         return self.client.remove_developers_from_external_application(self.external_application_id)
 
-    def update(self, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False):
+    def update(self, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False, voice_config: dict = None):
         """
         Updates an External Application.
 
@@ -119,11 +119,12 @@ class ExternalApplication(AbstractApiClass):
             deployment_id (str): The ID of the deployment to use.
             deployment_conversation_retention_hours (int): The number of hours to retain the conversations for.
             reset_retention_policy (bool): If true, the retention policy will be removed.
+            voice_config (dict): Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
 
         Returns:
             ExternalApplication: The updated External Application.
         """
-        return self.client.update_external_application(self.external_application_id, name, description, theme, deployment_id, deployment_conversation_retention_hours, reset_retention_policy)
+        return self.client.update_external_application(self.external_application_id, name, description, theme, deployment_id, deployment_conversation_retention_hours, reset_retention_policy, voice_config)
 
     def refresh(self):
         """

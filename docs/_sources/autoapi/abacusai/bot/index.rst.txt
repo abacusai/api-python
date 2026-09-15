@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, agentNetwork=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,7 +30,7 @@ Module Contents
    :type ownerUserId: str
    :param isOwner: Whether the caller owns the agent; False for a teammate's agent shared with the caller (via its conversation).
    :type isOwner: bool
-   :param canEdit: Whether the caller may edit, delete and re-share the agent (the owner, or a teammate shared with the editor role).
+   :param canEdit: Whether the caller may edit, delete and re-share the agent (the owner, a teammate shared with the editor role, or any teammate with conversation access to the agent's project).
    :type canEdit: bool
    :param ownerEmail: The owner's email; shared agents in _listBots only.
    :type ownerEmail: str
@@ -52,6 +52,8 @@ Module Contents
    :type lifecycle: str
    :param deploymentConversationId: The bot's persistent conversation id.
    :type deploymentConversationId: str
+   :param chatllmProjectId: The project the agent belongs to (its files, skills and instructions apply, and every teammate who can see the project sees it and every project editor may edit it); None for a personal agent outside a project.
+   :type chatllmProjectId: str
    :param externalApplicationId: The external application id associated with the bot.
    :type externalApplicationId: str
    :param lastMessagePreview: A preview of the last message in the bot's conversation.
@@ -82,8 +84,12 @@ Module Contents
    :type proactiveBudget: int
    :param chattyGreetings: Whether the agent says a short personal hello when the owner opens its chat in the web UI (default True); _describeBot only.
    :type chattyGreetings: bool
+   :param quietHours: {'start': 'HH:MM', 'end': 'HH:MM'} window (agent timezone) in which high-frequency fires stay silent; None when the owner turned quiet hours off; _describeBot only.
+   :type quietHours: dict
    :param agentNetwork: Agent-to-agent messaging state (discoverable/own_agents/contacts); _describeBot only.
    :type agentNetwork: dict
+   :param pushNotificationsEnabled: Whether the agent may send mobile push notifications (the agent conversation's own switch); _describeBot only.
+   :type pushNotificationsEnabled: bool
 
 
    .. py:attribute:: bot_id
@@ -152,6 +158,11 @@ Module Contents
 
 
    .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_id
       :value: None
 
 
@@ -231,7 +242,17 @@ Module Contents
 
 
 
+   .. py:attribute:: quiet_hours
+      :value: None
+
+
+
    .. py:attribute:: agent_network
+      :value: None
+
+
+
+   .. py:attribute:: push_notifications_enabled
       :value: None
 
 

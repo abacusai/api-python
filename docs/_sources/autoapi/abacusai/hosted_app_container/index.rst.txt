@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58,6 +58,10 @@ Module Contents
    :type webAppProjectId: id
    :param parentConversationId: The ID of the parent conversation
    :type parentConversationId: id
+   :param appllmBranch: Git branch of the newest checkpoint when it was saved from a branch conversation
+   :type appllmBranch: str
+   :param branches: Open (not yet merged) branch conversations of the app, each with its conversation id, name, git branch, latest checkpoint, preview hostnames and owner
+   :type branches: list[dict]
    :param projectMetadata: The metadata of the web app project
    :type projectMetadata: dict
    :param memoryGb: The memory in GB of the web app deployment
@@ -153,6 +157,16 @@ Module Contents
 
 
    .. py:attribute:: parent_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: appllm_branch
+      :value: None
+
+
+
+   .. py:attribute:: branches
       :value: None
 
 

@@ -91,7 +91,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../../batch_prediction_version/index.html">abacusai.batch_prediction_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../bot/index.html">abacusai.bot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../bot_channel_options/index.html">abacusai.bot_channel_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../bot_info/index.html">abacusai.bot_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../bot_routine_catalog/index.html">abacusai.bot_routine_catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../bot_template_catalog/index.html">abacusai.bot_template_catalog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../categorical_range_violation/index.html">abacusai.categorical_range_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../chat_message/index.html">abacusai.chat_message</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../chat_segment_artifact/index.html">abacusai.chat_segment_artifact</a></li>
@@ -510,12 +513,12 @@
 <p>Accuracy Below Threshold Condition Config for Monitor Alerts</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p>
+<dd class="field-odd"><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.AccuracyBelowThresholdConditionConfig.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.AccuracyBelowThresholdConditionConfig.threshold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.AccuracyBelowThresholdConditionConfig.threshold" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -534,9 +537,9 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>feature_drift_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.FeatureDriftType" title="abacusai.api_class.enums.FeatureDriftType"><em>FeatureDriftType</em></a>) – Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.</p></li>
-<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
-<li><p><strong>minimum_violations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of columns that must exceed the specified threshold to trigger an alert.</p></li>
-<li><p><strong>feature_names</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of feature names to monitor for this alert.</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
+<li><p><strong>minimum_violations</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of columns that must exceed the specified threshold to trigger an alert.</p></li>
+<li><p><strong>feature_names</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of feature names to monitor for this alert.</p></li>
 </ul>
 </dd>
 </dl>
@@ -547,17 +550,17 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.threshold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.threshold" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.minimum_violations">
-<span class="sig-name descname"><span class="pre">minimum_violations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.minimum_violations" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">minimum_violations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.minimum_violations" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.feature_names">
-<span class="sig-name descname"><span class="pre">feature_names</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.feature_names" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">feature_names</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.feature_names" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -576,7 +579,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>feature_drift_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.FeatureDriftType" title="abacusai.api_class.enums.FeatureDriftType"><em>FeatureDriftType</em></a>) – Target drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.</p></li>
-<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
 </ul>
 </dd>
 </dl>
@@ -587,7 +590,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.TargetDriftConditionConfig.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.TargetDriftConditionConfig.threshold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.TargetDriftConditionConfig.threshold" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -606,7 +609,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>feature_drift_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.FeatureDriftType" title="abacusai.api_class.enums.FeatureDriftType"><em>FeatureDriftType</em></a>) – History length drift type to apply the threshold on to determine whether the history length has drifted significantly enough to be a violation.</p></li>
-<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
 </ul>
 </dd>
 </dl>
@@ -617,7 +620,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.HistoryLengthDriftConditionConfig.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.HistoryLengthDriftConditionConfig.threshold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.HistoryLengthDriftConditionConfig.threshold" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -636,7 +639,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data_integrity_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.DataIntegrityViolationType" title="abacusai.api_class.enums.DataIntegrityViolationType"><em>DataIntegrityViolationType</em></a>) – This option selects the data integrity violations to monitor for this alert.</p></li>
-<li><p><strong>minimum_violations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of columns that must exceed the specified threshold to trigger an alert.</p></li>
+<li><p><strong>minimum_violations</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of columns that must exceed the specified threshold to trigger an alert.</p></li>
 </ul>
 </dd>
 </dl>
@@ -647,7 +650,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.DataIntegrityViolationConditionConfig.minimum_violations">
-<span class="sig-name descname"><span class="pre">minimum_violations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.DataIntegrityViolationConditionConfig.minimum_violations" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">minimum_violations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.DataIntegrityViolationConditionConfig.minimum_violations" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -666,8 +669,8 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>bias_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BiasType" title="abacusai.api_class.enums.BiasType"><em>BiasType</em></a>) – This option selects the bias metric to monitor for this alert.</p></li>
-<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
-<li><p><strong>minimum_violations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of columns that must exceed the specified threshold to trigger an alert.</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
+<li><p><strong>minimum_violations</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of columns that must exceed the specified threshold to trigger an alert.</p></li>
 </ul>
 </dd>
 </dl>
@@ -678,12 +681,12 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.BiasViolationConditionConfig.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.BiasViolationConditionConfig.threshold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.BiasViolationConditionConfig.threshold" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.BiasViolationConditionConfig.minimum_violations">
-<span class="sig-name descname"><span class="pre">minimum_violations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.BiasViolationConditionConfig.minimum_violations" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">minimum_violations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.BiasViolationConditionConfig.minimum_violations" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -706,17 +709,17 @@
 :type aggregation_type: str</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.PredictionCountConditionConfig.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.threshold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.threshold" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_window">
-<span class="sig-name descname"><span class="pre">aggregation_window</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_window" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">aggregation_window</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_window" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_type">
-<span class="sig-name descname"><span class="pre">aggregation_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_type" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">aggregation_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -779,19 +782,19 @@ inheritance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>email_recipients</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of email addresses to send the alert to.</p></li>
-<li><p><strong>email_body</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Body of the email to send.</p></li>
+<li><p><strong>email_recipients</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of email addresses to send the alert to.</p></li>
+<li><p><strong>email_body</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Body of the email to send.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.EmailActionConfig.email_recipients">
-<span class="sig-name descname"><span class="pre">email_recipients</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.EmailActionConfig.email_recipients" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">email_recipients</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.EmailActionConfig.email_recipients" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.EmailActionConfig.email_body">
-<span class="sig-name descname"><span class="pre">email_body</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.EmailActionConfig.email_body" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">email_body</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.EmailActionConfig.email_body" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -844,12 +847,12 @@ inheritance.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.MonitorThresholdConfig.at_risk_threshold">
-<span class="sig-name descname"><span class="pre">at_risk_threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.at_risk_threshold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">at_risk_threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.at_risk_threshold" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.MonitorThresholdConfig.severely_drifting_threshold">
-<span class="sig-name descname"><span class="pre">severely_drifting_threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.severely_drifting_threshold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">severely_drifting_threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.severely_drifting_threshold" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

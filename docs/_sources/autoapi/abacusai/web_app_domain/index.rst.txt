@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None, targetPersonalAgentComputerId=None, targetUserId=None)
+.. py:class:: WebAppDomain(client, webAppDomainId=None, hostname=None, domainType=None, lifecycle=None, nameservers=None, dnsRecords=None, alternateDnsRecords=None, metadata=None, isRootDomain=None, isDeployed=None, targetPersonalAgentComputerId=None, targetUserId=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type nameservers: list
    :param dnsRecords: The DNS records of the web app domain
    :type dnsRecords: list
+   :param alternateDnsRecords: Equivalent CNAME records a user may add instead of the A records in dns_records (computed at read time, never stored)
+   :type alternateDnsRecords: list
    :param metadata: The metadata of the web app domain
    :type metadata: dict
    :param isRootDomain: Whether the web app domain is a root domain
@@ -74,6 +76,11 @@ Module Contents
 
 
    .. py:attribute:: dns_records
+      :value: None
+
+
+
+   .. py:attribute:: alternate_dns_records
       :value: None
 
 

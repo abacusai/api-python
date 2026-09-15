@@ -1,0 +1,57 @@
+abacusai.bot_template_catalog
+=============================
+
+.. py:module:: abacusai.bot_template_catalog
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.bot_template_catalog.BotTemplateCatalog
+
+
+Module Contents
+---------------
+
+.. py:class:: BotTemplateCatalog(client, templates=None, categories=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The starter agent templates offered on the Personal Agents landing
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param templates: The templates, in display order (id/title/description/prompt/personality/avatar/color/categories, plus template, brand_icon and background_task where they apply). Chief of Staff is first.
+   :type templates: list
+   :param categories: The filter pills in display order (id/label); 'featured' is the default view.
+   :type categories: list
+
+
+   .. py:attribute:: templates
+      :value: None
+
+
+
+   .. py:attribute:: categories
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, logUrl=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, logUrl=None, appVersion=None, buildNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -52,6 +52,10 @@ Module Contents
    :type testflight: dict
    :param logUrl: Native Swift builds: short-lived link to the archive log once the build finished
    :type logUrl: str
+   :param appVersion: The release version the build shipped as (Android versionName, iOS CFBundleShortVersionString)
+   :type appVersion: str
+   :param buildNumber: The automatic build number of the build (Android versionCode, iOS CFBundleVersion)
+   :type buildNumber: int
 
 
    .. py:attribute:: status
@@ -120,6 +124,16 @@ Module Contents
 
 
    .. py:attribute:: log_url
+      :value: None
+
+
+
+   .. py:attribute:: app_version
+      :value: None
+
+
+
+   .. py:attribute:: build_number
       :value: None
 
 

@@ -716,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.112'
+    client_version = '1.4.113'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -9303,7 +9303,7 @@ class ApiClient(ReadOnlyClient):
             ExternalApplication: The newly created External Application."""
         return self._call_api('createExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'description': description, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
 
-    def update_external_application(self, external_application_id: str, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False) -> ExternalApplication:
+    def update_external_application(self, external_application_id: str, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False, voice_config: dict = None) -> ExternalApplication:
         """Updates an External Application.
 
         Args:
@@ -9314,10 +9314,11 @@ class ApiClient(ReadOnlyClient):
             deployment_id (str): The ID of the deployment to use.
             deployment_conversation_retention_hours (int): The number of hours to retain the conversations for.
             reset_retention_policy (bool): If true, the retention policy will be removed.
+            voice_config (dict): Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
 
         Returns:
             ExternalApplication: The updated External Application."""
-        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'description': description, 'theme': theme, 'deploymentConversationRetentionHours': deployment_conversation_retention_hours, 'resetRetentionPolicy': reset_retention_policy}, parse_type=ExternalApplication)
+        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'description': description, 'theme': theme, 'deploymentConversationRetentionHours': deployment_conversation_retention_hours, 'resetRetentionPolicy': reset_retention_policy, 'voiceConfig': voice_config}, parse_type=ExternalApplication)
 
     def delete_external_application(self, external_application_id: str):
         """Deletes an External Application.

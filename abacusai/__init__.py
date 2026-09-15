@@ -35,7 +35,10 @@ from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
 from .bot import Bot
+from .bot_channel_options import BotChannelOptions
 from .bot_info import BotInfo
+from .bot_routine_catalog import BotRoutineCatalog
+from .bot_template_catalog import BotTemplateCatalog
 from .categorical_range_violation import CategoricalRangeViolation
 from .chat_message import ChatMessage
 from .chat_segment_artifact import ChatSegmentArtifact
@@ -343,4 +346,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.112"
+__version__ = "1.4.113"

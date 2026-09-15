@@ -1,0 +1,57 @@
+abacusai.bot_routine_catalog
+============================
+
+.. py:module:: abacusai.bot_routine_catalog
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.bot_routine_catalog.BotRoutineCatalog
+
+
+Module Contents
+---------------
+
+.. py:class:: BotRoutineCatalog(client, routines=None, categories=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The one-click routines a user can add to a personal agent
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param routines: The routines, in display order (id/title/description/avatar/color/categories/name/schedule/prompt, plus required_service and inputs where they apply).
+   :type routines: list
+   :param categories: The filter pills in display order (id/label); 'all' is the default view.
+   :type categories: list
+
+
+   .. py:attribute:: routines
+      :value: None
+
+
+
+   .. py:attribute:: categories
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
