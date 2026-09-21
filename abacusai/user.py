@@ -12,7 +12,7 @@ class User(AbstractApiClass):
             name (str): The User's name.
             email (str): The User's primary email address.
             createdAt (str): The date and time when the user joined Abacus.AI.
-            status (str): `ACTIVE` when the user has accepted an invite to join the organization, else `INVITED`.
+            status (str): `ACTIVE` when the user has accepted an invite to join the organization, `PAUSED` when their access is paused, else `INVITED`.
             organizationGroups (OrganizationGroup): List of Organization Groups this user belongs to.
     """
 

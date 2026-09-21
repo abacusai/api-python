@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AdTemplate(client, slug=None, name=None, category=None, supportsAvatar=None, needsProduct=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None)
+.. py:class:: AdTemplate(client, slug=None, name=None, category=None, supportsAvatar=None, needsProduct=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None, exampleMediaPreview=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,8 @@ Module Contents
    :type description: str
    :param exampleMedia: CDN URLs of preview videos for the card
    :type exampleMedia: list
+   :param exampleMediaPreview: Compressed 480p encodes of example_media, for the card walls
+   :type exampleMediaPreview: list
 
 
    .. py:attribute:: slug
@@ -99,6 +101,11 @@ Module Contents
 
 
    .. py:attribute:: example_media
+      :value: None
+
+
+
+   .. py:attribute:: example_media_preview
       :value: None
 
 

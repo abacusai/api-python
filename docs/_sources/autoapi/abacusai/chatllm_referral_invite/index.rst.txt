@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmReferralInvite(client, userAlreadyExists=None, successfulInvites=None, failedToSend=None)
+.. py:class:: ChatllmReferralInvite(client, userAlreadyExists=None, successfulInvites=None, failedToSend=None, invitesSent=None, milestoneCreditsGranted=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,10 @@ Module Contents
    :type successfulInvites: list
    :param failedToSend: Emails whose invite could not be sent from the user's Gmail account.
    :type failedToSend: list
+   :param invitesSent: The user's total invites on record after this call (AbacusAI Bot invites only).
+   :type invitesSent: int
+   :param milestoneCreditsGranted: Credits granted by this call when it crossed the invite milestone, else 0 (AbacusAI Bot invites only).
+   :type milestoneCreditsGranted: int
 
 
    .. py:attribute:: user_already_exists
@@ -43,6 +47,16 @@ Module Contents
 
 
    .. py:attribute:: failed_to_send
+      :value: None
+
+
+
+   .. py:attribute:: invites_sent
+      :value: None
+
+
+
+   .. py:attribute:: milestone_credits_granted
       :value: None
 
 

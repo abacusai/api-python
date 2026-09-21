@@ -716,7 +716,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.113'
+    client_version = '1.4.114'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -747,8 +747,9 @@ class BaseApiClient:
                     endpoint_info = self._call_api('getApiEndpoint', 'GET')
                     self.prediction_endpoint = endpoint_info['predictEndpoint']
                     self.proxy_endpoint = endpoint_info.get('proxyEndpoint')
+                    self.api_endpoint = endpoint_info['apiEndpoint']
                     if not self.server:
-                        self.server = endpoint_info['apiEndpoint']
+                        self.server = self.api_endpoint
                     break
                 except Exception as e:
                     logging.warning(f'Error while calling API: {e}')
@@ -761,7 +762,8 @@ class BaseApiClient:
             'g')
         if not skip_version_check:
             try:
-                self.web_version = self._call_api('version', 'GET')
+                self.web_version = self._call_api(
+                    'version', 'GET', server_override=self.api_endpoint)
                 if version.parse(self.web_version) > version.parse(self.client_version):
                     warnings.warn(
                         'A new version of the Abacus.AI library is available')
@@ -769,7 +771,7 @@ class BaseApiClient:
                         f'Current Version: {self.client_version} -> New Version: {self.web_version}')
             except Exception:
                 logging.error(
-                    f'Failed get the current API version from Abacus.AI ({self.server or DEFAULT_SERVER}/api/v0/version)')
+                    f'Failed get the current API version from Abacus.AI ({self.api_endpoint or self.server or DEFAULT_SERVER}/api/v0/version)')
         # Modify traceback
         if not include_tb:
             excepthook = sys.excepthook
@@ -4729,7 +4731,7 @@ class ApiClient(ReadOnlyClient):
         @lru_cache()
         def _cached_doc_retriever_deployment_info(document_retriever_id: str, ttl_hash: int):
             info = self._call_api('_getDocRetrieverDeploymentInfo', 'GET', query_params={
-                                  'documentRetrieverId': document_retriever_id})
+                                  'documentRetrieverId': document_retriever_id}, server_override=self.api_endpoint)
             deployment_token = info['deploymentToken']
             deployment_id = info['deploymentId']
             return deployment_token, deployment_id

@@ -262,6 +262,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../memory_options/index.html">abacusai.memory_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../messaging_connector_response/index.html">abacusai.messaging_connector_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mobile_app_build_status/index.html">abacusai.mobile_app_build_status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_app_identifiers/index.html">abacusai.mobile_app_identifiers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mobile_build_info/index.html">abacusai.mobile_build_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html">abacusai.model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_artifacts_export/index.html">abacusai.model_artifacts_export</a></li>
@@ -397,6 +398,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../web_search_result/index.html">abacusai.web_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../web_service_trigger_run/index.html">abacusai.web_service_trigger_run</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html">abacusai.webhook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../whatsapp_referral_invite/index.html">abacusai.whatsapp_referral_invite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../workflow_graph_node_details/index.html">abacusai.workflow_graph_node_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../workflow_node_template/index.html">abacusai.workflow_node_template</a></li>
 </ul>
@@ -451,7 +453,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.chatllm_referral_invite.ChatllmReferralInvite">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.chatllm_referral_invite.</span></span><span class="sig-name descname"><span class="pre">ChatllmReferralInvite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userAlreadyExists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">successfulInvites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">failedToSend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.chatllm_referral_invite.ChatllmReferralInvite" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.chatllm_referral_invite.</span></span><span class="sig-name descname"><span class="pre">ChatllmReferralInvite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userAlreadyExists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">successfulInvites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">failedToSend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invitesSent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">milestoneCreditsGranted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.chatllm_referral_invite.ChatllmReferralInvite" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>The response of the Chatllm Referral Invite for different emails</p>
 <dl class="field-list simple">
@@ -461,6 +463,8 @@
 <li><p><strong>userAlreadyExists</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – List of user emails not successfullt invited, because they are already registered users.</p></li>
 <li><p><strong>successfulInvites</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – List of users successfully invited.</p></li>
 <li><p><strong>failedToSend</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Emails whose invite could not be sent from the user’s Gmail account.</p></li>
+<li><p><strong>invitesSent</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The user’s total invites on record after this call (AbacusAI Bot invites only).</p></li>
+<li><p><strong>milestoneCreditsGranted</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Credits granted by this call when it crossed the invite milestone, else 0 (AbacusAI Bot invites only).</p></li>
 </ul>
 </dd>
 </dl>
@@ -477,6 +481,16 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.chatllm_referral_invite.ChatllmReferralInvite.failed_to_send">
 <span class="sig-name descname"><span class="pre">failed_to_send</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.chatllm_referral_invite.ChatllmReferralInvite.failed_to_send" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.chatllm_referral_invite.ChatllmReferralInvite.invites_sent">
+<span class="sig-name descname"><span class="pre">invites_sent</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.chatllm_referral_invite.ChatllmReferralInvite.invites_sent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.chatllm_referral_invite.ChatllmReferralInvite.milestone_credits_granted">
+<span class="sig-name descname"><span class="pre">milestone_credits_granted</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.chatllm_referral_invite.ChatllmReferralInvite.milestone_credits_granted" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

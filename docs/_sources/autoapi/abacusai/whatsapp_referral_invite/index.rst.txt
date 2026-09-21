@@ -1,0 +1,64 @@
+abacusai.whatsapp_referral_invite
+=================================
+
+.. py:module:: abacusai.whatsapp_referral_invite
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.whatsapp_referral_invite.WhatsappReferralInvite
+
+
+Module Contents
+---------------
+
+.. py:class:: WhatsappReferralInvite(client, newInvites=None, invitesSent=None, milestoneCreditsGranted=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   WhatsApp invites the AbacusAI Bot desktop app recorded for the invite milestone
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param newInvites: Recipients not invited by this user before.
+   :type newInvites: int
+   :param invitesSent: The user's total invites on record, every channel.
+   :type invitesSent: int
+   :param milestoneCreditsGranted: Credits granted by this call when it crossed the milestone, else 0.
+   :type milestoneCreditsGranted: int
+
+
+   .. py:attribute:: new_invites
+      :value: None
+
+
+
+   .. py:attribute:: invites_sent
+      :value: None
+
+
+
+   .. py:attribute:: milestone_credits_granted
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

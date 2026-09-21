@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: BotChannelOptions(client, sharedChannels=None, telegramBotUsername=None, channels=None)
+.. py:class:: BotChannelOptions(client, sharedChannels=None, telegramBotUsername=None, channels=None, slackWorkspace=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type telegramBotUsername: str
    :param channels: Every supported channel: channel, label, whether it is shared, whether the 'use your own bot' screen should offer it (offers_own_bot), and the credential form it takes (credential_fields: key/label/secret, in display order).
    :type channels: list
+   :param slackWorkspace: The admin-installed Slack workspace personal agents can be reached from (team_id, workspace_name, linked: whether this user tied their Slack account to Abacus.AI), when the org has one.
+   :type slackWorkspace: dict
 
 
    .. py:attribute:: shared_channels
@@ -43,6 +45,11 @@ Module Contents
 
 
    .. py:attribute:: channels
+      :value: None
+
+
+
+   .. py:attribute:: slack_workspace
       :value: None
 
 

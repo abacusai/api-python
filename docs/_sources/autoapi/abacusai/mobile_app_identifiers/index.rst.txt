@@ -1,0 +1,127 @@
+abacusai.mobile_app_identifiers
+===============================
+
+.. py:module:: abacusai.mobile_app_identifiers
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.mobile_app_identifiers.MobileAppIdentifiers
+
+
+Module Contents
+---------------
+
+.. py:class:: MobileAppIdentifiers(client, packageName=None, bundleId=None, appScheme=None, identifierSource=None, packageNameLocked=None, packageNameLockReason=None, packageNameLockedAt=None, bundleIdLocked=None, bundleIdLockReason=None, bundleIdLockedAt=None, packageNameTakenOnStore=None, bundleIdTakenOnStore=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A mobile app's store identifiers and whether each is still changeable.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param packageName: Android applicationId, e.g. com.acme.fieldkit
+   :type packageName: str
+   :param bundleId: iOS bundle identifier
+   :type bundleId: str
+   :param appScheme: Deep-link scheme. Derived, and not user-editable
+   :type appScheme: str
+   :param identifierSource: 'default' (platform-generated) or 'custom' (the user set it)
+   :type identifierSource: str
+   :param packageNameLocked: True once something outside our database committed to it
+   :type packageNameLocked: bool
+   :param packageNameLockReason: why it is fixed -- 'play_upload_artifact', 'preview_build' (a successful .apk), 'push_setup', 'already_chosen' (the user spent their one change), 'matches_other_platform' (the bundle id committed and the two must match), or 'lock_state_unavailable'
+   :type packageNameLockReason: str
+   :param packageNameLockedAt: When the row that caused the lock was created (ISO 8601)
+   :type packageNameLockedAt: str
+   :param bundleIdLocked: True once a successful iOS build reached App Store Connect
+   :type bundleIdLocked: bool
+   :param bundleIdLockReason: why it is fixed -- 'apple_registration' (a successful iOS build reached App Store Connect), 'apple_app_record' (the ASC record exists, which happens before any build), 'already_chosen', 'matches_other_platform' (the package name committed and the two must match), or 'lock_state_unavailable'
+   :type bundleIdLockReason: str
+   :param bundleIdLockedAt: When the row that caused the lock was created (ISO 8601)
+   :type bundleIdLockedAt: str
+   :param packageNameTakenOnStore: Advisory: a published Play app already uses it. Absent when unknown
+   :type packageNameTakenOnStore: bool
+   :param bundleIdTakenOnStore: Advisory: a published App Store app already uses it. Absent when unknown
+   :type bundleIdTakenOnStore: bool
+
+
+   .. py:attribute:: package_name
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id
+      :value: None
+
+
+
+   .. py:attribute:: app_scheme
+      :value: None
+
+
+
+   .. py:attribute:: identifier_source
+      :value: None
+
+
+
+   .. py:attribute:: package_name_locked
+      :value: None
+
+
+
+   .. py:attribute:: package_name_lock_reason
+      :value: None
+
+
+
+   .. py:attribute:: package_name_locked_at
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id_locked
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id_lock_reason
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id_locked_at
+      :value: None
+
+
+
+   .. py:attribute:: package_name_taken_on_store
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id_taken_on_store
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -17,7 +17,7 @@ class AppUserGroup(AbstractApiClass):
             isExternalServiceGroup (bool): Whether the App User Group corresponds to a user group that's defined in an external service (i.e Microsft Active Directory or Okta) or not
             externalServiceGroupId (str): The identifier that corresponds to the app user group's external service group representation
             creationSource (str): The source of the app user group
-            users (User): The users in the user group.
+            users (User): The users in the user group. Each carries a `status` of `ACTIVE` or `PAUSED`.
     """
 
     def __init__(self, client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, hasExternalApplicationReporting=None, isExternalServiceGroup=None, externalServiceGroupId=None, creationSource=None, users={}):

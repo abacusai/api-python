@@ -10,7 +10,7 @@ class AgentNetwork(AbstractApiClass):
             discoverable (bool): Whether teammates in the org can find this agent and request a contact.
             orgHasOtherUsers (bool): Whether the owner's org has other users (teammate controls are shown only then).
             ownAgents (list): The owner's other agents (bot_id/name/description); always reachable.
-            contacts (list): Teammate agents (bot_id/name/description/owner_user_id/owner_name/status/t); status is PENDING_IN, PENDING_OUT or ACCEPTED.
+            contacts (list): Other people's agents (bot_id/name/owner_user_id/owner_name/status/t/org_id/external); status is PENDING_IN, PENDING_OUT or ACCEPTED; external agents live in another org (org_id set) and may be on another cluster.
     """
 
     def __init__(self, client, discoverable=None, orgHasOtherUsers=None, ownAgents=None, contacts=None):

@@ -605,7 +605,7 @@ class VectorStoreTextEncoder(ApiEnum):
                   'LLAMA3_LARGE_CHAT', 'LLAMA3_1_405B', 'LLAMA3_1_70B', 'LLAMA3_1_8B', 'LLAMA3_3_70B', 'LLAMA4_MAVERICK',
                   'QWEN_2_5_32B_BASE', 'QWEN_2_5_32B', 'QWEN_2_5_72B', 'QWQ_32B',
                   'DEEPSEEK_V3_1', 'DEEPSEEK_R1',
-                  'ZAI_GLM_5_1', 'OX_ALPHA', 'ABACUS_DRACARYS',
+                  'ZAI_GLM_5_1', 'OX_ALPHA', 'UNION_ALPHA', 'ABACUS_DRACARYS',
                   )
 class LLMName(ApiEnum):
     OPENAI_GPT3_5 = 'OPENAI_GPT3_5'
@@ -655,6 +655,8 @@ class LLMName(ApiEnum):
     CLAUDE_V4_7_OPUS = 'CLAUDE_V4_7_OPUS'
     CLAUDE_V4_8_OPUS = 'CLAUDE_V4_8_OPUS'
     CLAUDE_V5_OPUS = 'CLAUDE_V5_OPUS'
+    CLAUDE_V5_FABLE = 'CLAUDE_V5_FABLE'
+    CLAUDE_V5_1_FABLE = 'CLAUDE_V5_1_FABLE'
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'
     GEMINI_1_5_FLASH = 'GEMINI_1_5_FLASH'
     GEMINI_2_PRO = 'GEMINI_2_PRO'
@@ -718,6 +720,7 @@ class LLMName(ApiEnum):
     KIMI_K3 = 'KIMI_K3'
     INKLING = 'INKLING'
     OX_ALPHA = 'OX_ALPHA'
+    UNION_ALPHA = 'UNION_ALPHA'
 
 
 class MonitorAlertType(ApiEnum):

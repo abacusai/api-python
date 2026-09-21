@@ -751,6 +751,7 @@ class DecisionNode(WorkflowGraphNode):
 
     @classmethod
     def from_dict(cls, node: dict):
+        validate_input_dict_param(node, friendly_class_name='decision_node', must_contain=['name', 'source_code'])
         return cls(
             name=node['name'],
             condition=node['source_code'],
@@ -829,6 +830,7 @@ class LLMAgentNode(WorkflowGraphNode):
 
     @classmethod
     def from_dict(cls, node: dict):
+        validate_input_dict_param(node, friendly_class_name='llm_agent_node', must_contain=['name', 'chatbot_deployment_id', 'chatbot_parameters'])
         instance = cls(
             name=node['name'],
             chatbot_deployment_id=node['chatbot_deployment_id'],

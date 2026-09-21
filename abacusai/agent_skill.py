@@ -26,7 +26,7 @@ class AgentSkill(AbstractApiClass):
             shareCount (int): Number of people an owned skill is shared with.
             sharedStoreDir (str): Directory name of the viewer's own copy of a shared skill, present once they opt in.
             hashedAgentSkillId (str): Hashed skill id used by skill share links.
-            userDisabled (bool): Whether the user explicitly disabled this system skill, keeping it listed instead of returning it to the import library.
+            userDisabled (bool): Whether this system skill, or (in a project listing) this linked user skill, was explicitly disabled in the listed scope, keeping it listed instead of returning it to the import library.
             usedByTasks (bool): Whether any of the user's daemon tasks reference this skill, so disabling it will ask for confirmation.
     """
 

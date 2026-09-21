@@ -222,6 +222,7 @@ Submodules
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
    /autoapi/abacusai/mobile_app_build_status/index
+   /autoapi/abacusai/mobile_app_identifiers/index
    /autoapi/abacusai/mobile_build_info/index
    /autoapi/abacusai/model/index
    /autoapi/abacusai/model_artifacts_export/index
@@ -357,6 +358,7 @@ Submodules
    /autoapi/abacusai/web_search_result/index
    /autoapi/abacusai/web_service_trigger_run/index
    /autoapi/abacusai/webhook/index
+   /autoapi/abacusai/whatsapp_referral_invite/index
    /autoapi/abacusai/workflow_graph_node_details/index
    /autoapi/abacusai/workflow_node_template/index
 
@@ -835,6 +837,7 @@ Classes
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
    abacusai.MobileAppBuildStatus
+   abacusai.MobileAppIdentifiers
    abacusai.MobileBuildInfo
    abacusai.Model
    abacusai.ModelArtifactsExport
@@ -968,6 +971,7 @@ Classes
    abacusai.WebSearchResult
    abacusai.WebServiceTriggerRun
    abacusai.Webhook
+   abacusai.WhatsappReferralInvite
    abacusai.WorkflowGraphNodeDetails
    abacusai.WorkflowNodeTemplate
 
@@ -1033,7 +1037,7 @@ Package Contents
 
 
 
-.. py:class:: AdTemplate(client, slug=None, name=None, category=None, supportsAvatar=None, needsProduct=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None)
+.. py:class:: AdTemplate(client, slug=None, name=None, category=None, supportsAvatar=None, needsProduct=None, defaultDuration=None, defaultAspectRatio=None, cardOneLiner=None, cardDescription=None, description=None, exampleMedia=None, exampleMediaPreview=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1064,6 +1068,8 @@ Package Contents
    :type description: str
    :param exampleMedia: CDN URLs of preview videos for the card
    :type exampleMedia: list
+   :param exampleMediaPreview: Compressed 480p encodes of example_media, for the card walls
+   :type exampleMediaPreview: list
 
 
    .. py:attribute:: slug
@@ -1117,6 +1123,11 @@ Package Contents
 
 
    .. py:attribute:: example_media
+      :value: None
+
+
+
+   .. py:attribute:: example_media_preview
       :value: None
 
 
@@ -1677,7 +1688,7 @@ Package Contents
    :type orgHasOtherUsers: bool
    :param ownAgents: The owner's other agents (bot_id/name/description); always reachable.
    :type ownAgents: list
-   :param contacts: Teammate agents (bot_id/name/description/owner_user_id/owner_name/status/t); status is PENDING_IN, PENDING_OUT or ACCEPTED.
+   :param contacts: Other people's agents (bot_id/name/owner_user_id/owner_name/status/t/org_id/external); status is PENDING_IN, PENDING_OUT or ACCEPTED; external agents live in another org (org_id set) and may be on another cluster.
    :type contacts: list
 
 
@@ -1763,7 +1774,7 @@ Package Contents
    :type sharedStoreDir: str
    :param hashedAgentSkillId: Hashed skill id used by skill share links.
    :type hashedAgentSkillId: str
-   :param userDisabled: Whether the user explicitly disabled this system skill, keeping it listed instead of returning it to the import library.
+   :param userDisabled: Whether this system skill, or (in a project listing) this linked user skill, was explicitly disabled in the listed scope, keeping it listed instead of returning it to the import library.
    :type userDisabled: bool
    :param usedByTasks: Whether any of the user's daemon tasks reference this skill, so disabling it will ask for confirmation.
    :type usedByTasks: bool
@@ -10071,6 +10082,16 @@ Package Contents
 
 
 
+   .. py:attribute:: CLAUDE_V5_FABLE
+      :value: 'CLAUDE_V5_FABLE'
+
+
+
+   .. py:attribute:: CLAUDE_V5_1_FABLE
+      :value: 'CLAUDE_V5_1_FABLE'
+
+
+
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
 
@@ -10383,6 +10404,11 @@ Package Contents
 
    .. py:attribute:: OX_ALPHA
       :value: 'OX_ALPHA'
+
+
+
+   .. py:attribute:: UNION_ALPHA
+      :value: 'UNION_ALPHA'
 
 
 
@@ -16784,7 +16810,7 @@ Package Contents
    :type externalServiceGroupId: str
    :param creationSource: The source of the app user group
    :type creationSource: str
-   :param users: The users in the user group.
+   :param users: The users in the user group. Each carries a `status` of `ACTIVE` or `PAUSED`.
    :type users: User
 
 
@@ -18689,7 +18715,7 @@ Package Contents
 
 
 
-.. py:class:: BotChannelOptions(client, sharedChannels=None, telegramBotUsername=None, channels=None)
+.. py:class:: BotChannelOptions(client, sharedChannels=None, telegramBotUsername=None, channels=None, slackWorkspace=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -18704,6 +18730,8 @@ Package Contents
    :type telegramBotUsername: str
    :param channels: Every supported channel: channel, label, whether it is shared, whether the 'use your own bot' screen should offer it (offers_own_bot), and the credential form it takes (credential_fields: key/label/secret, in display order).
    :type channels: list
+   :param slackWorkspace: The admin-installed Slack workspace personal agents can be reached from (team_id, workspace_name, linked: whether this user tied their Slack account to Abacus.AI), when the org has one.
+   :type slackWorkspace: dict
 
 
    .. py:attribute:: shared_channels
@@ -18717,6 +18745,11 @@ Package Contents
 
 
    .. py:attribute:: channels
+      :value: None
+
+
+
+   .. py:attribute:: slack_workspace
       :value: None
 
 
@@ -19571,7 +19604,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmReferralInvite(client, userAlreadyExists=None, successfulInvites=None, failedToSend=None)
+.. py:class:: ChatllmReferralInvite(client, userAlreadyExists=None, successfulInvites=None, failedToSend=None, invitesSent=None, milestoneCreditsGranted=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -19586,6 +19619,10 @@ Package Contents
    :type successfulInvites: list
    :param failedToSend: Emails whose invite could not be sent from the user's Gmail account.
    :type failedToSend: list
+   :param invitesSent: The user's total invites on record after this call (AbacusAI Bot invites only).
+   :type invitesSent: int
+   :param milestoneCreditsGranted: Credits granted by this call when it crossed the invite milestone, else 0 (AbacusAI Bot invites only).
+   :type milestoneCreditsGranted: int
 
 
    .. py:attribute:: user_already_exists
@@ -19599,6 +19636,16 @@ Package Contents
 
 
    .. py:attribute:: failed_to_send
+      :value: None
+
+
+
+   .. py:attribute:: invites_sent
+      :value: None
+
+
+
+   .. py:attribute:: milestone_credits_granted
       :value: None
 
 
@@ -45903,6 +45950,116 @@ Package Contents
 
 
 
+.. py:class:: MobileAppIdentifiers(client, packageName=None, bundleId=None, appScheme=None, identifierSource=None, packageNameLocked=None, packageNameLockReason=None, packageNameLockedAt=None, bundleIdLocked=None, bundleIdLockReason=None, bundleIdLockedAt=None, packageNameTakenOnStore=None, bundleIdTakenOnStore=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A mobile app's store identifiers and whether each is still changeable.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param packageName: Android applicationId, e.g. com.acme.fieldkit
+   :type packageName: str
+   :param bundleId: iOS bundle identifier
+   :type bundleId: str
+   :param appScheme: Deep-link scheme. Derived, and not user-editable
+   :type appScheme: str
+   :param identifierSource: 'default' (platform-generated) or 'custom' (the user set it)
+   :type identifierSource: str
+   :param packageNameLocked: True once something outside our database committed to it
+   :type packageNameLocked: bool
+   :param packageNameLockReason: why it is fixed -- 'play_upload_artifact', 'preview_build' (a successful .apk), 'push_setup', 'already_chosen' (the user spent their one change), 'matches_other_platform' (the bundle id committed and the two must match), or 'lock_state_unavailable'
+   :type packageNameLockReason: str
+   :param packageNameLockedAt: When the row that caused the lock was created (ISO 8601)
+   :type packageNameLockedAt: str
+   :param bundleIdLocked: True once a successful iOS build reached App Store Connect
+   :type bundleIdLocked: bool
+   :param bundleIdLockReason: why it is fixed -- 'apple_registration' (a successful iOS build reached App Store Connect), 'apple_app_record' (the ASC record exists, which happens before any build), 'already_chosen', 'matches_other_platform' (the package name committed and the two must match), or 'lock_state_unavailable'
+   :type bundleIdLockReason: str
+   :param bundleIdLockedAt: When the row that caused the lock was created (ISO 8601)
+   :type bundleIdLockedAt: str
+   :param packageNameTakenOnStore: Advisory: a published Play app already uses it. Absent when unknown
+   :type packageNameTakenOnStore: bool
+   :param bundleIdTakenOnStore: Advisory: a published App Store app already uses it. Absent when unknown
+   :type bundleIdTakenOnStore: bool
+
+
+   .. py:attribute:: package_name
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id
+      :value: None
+
+
+
+   .. py:attribute:: app_scheme
+      :value: None
+
+
+
+   .. py:attribute:: identifier_source
+      :value: None
+
+
+
+   .. py:attribute:: package_name_locked
+      :value: None
+
+
+
+   .. py:attribute:: package_name_lock_reason
+      :value: None
+
+
+
+   .. py:attribute:: package_name_locked_at
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id_locked
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id_lock_reason
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id_locked_at
+      :value: None
+
+
+
+   .. py:attribute:: package_name_taken_on_store
+      :value: None
+
+
+
+   .. py:attribute:: bundle_id_taken_on_store
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: MobileBuildInfo(client, type=None, buildUrl=None, status=None, llmArtifactId=None, mobileAppBuildId=None, expired=None, appVersion=None, buildNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -57617,7 +57774,7 @@ Package Contents
    :type email: str
    :param createdAt: The date and time when the user joined Abacus.AI.
    :type createdAt: str
-   :param status: `ACTIVE` when the user has accepted an invite to join the organization, else `INVITED`.
+   :param status: `ACTIVE` when the user has accepted an invite to join the organization, `PAUSED` when their access is paused, else `INVITED`.
    :type status: str
    :param organizationGroups: List of Organization Groups this user belongs to.
    :type organizationGroups: OrganizationGroup
@@ -59590,6 +59747,53 @@ Package Contents
 
 
 
+.. py:class:: WhatsappReferralInvite(client, newInvites=None, invitesSent=None, milestoneCreditsGranted=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   WhatsApp invites the AbacusAI Bot desktop app recorded for the invite milestone
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param newInvites: Recipients not invited by this user before.
+   :type newInvites: int
+   :param invitesSent: The user's total invites on record, every channel.
+   :type invitesSent: int
+   :param milestoneCreditsGranted: Credits granted by this call when it crossed the milestone, else 0.
+   :type milestoneCreditsGranted: int
+
+
+   .. py:attribute:: new_invites
+      :value: None
+
+
+
+   .. py:attribute:: invites_sent
+      :value: None
+
+
+
+   .. py:attribute:: milestone_credits_granted
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WorkflowGraphNodeDetails(client, packageRequirements=None, connectors=None, workflowGraphNode={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -59733,6 +59937,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.113'
+   :value: '1.4.114'
 
 
