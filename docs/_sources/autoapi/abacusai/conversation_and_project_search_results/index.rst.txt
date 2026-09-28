@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ConversationAndProjectSearchResults(client, deploymentConversationId=None, name=None, chatllmProjectId=None, chatllmProjectName=None, createdAt=None, lastEventCreatedAt=None, conversationType=None, deploymentId=None, externalApplicationId=None)
+.. py:class:: ConversationAndProjectSearchResults(client, deploymentConversationId=None, name=None, chatllmProjectId=None, chatllmProjectName=None, createdAt=None, lastEventCreatedAt=None, conversationType=None, deploymentId=None, externalApplicationId=None, snippet=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type deploymentId: str
    :param externalApplicationId: The external application id associated with the deployment conversation.
    :type externalApplicationId: str
+   :param snippet: An excerpt of the user's messages that matches the search query.
+   :type snippet: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -85,6 +87,11 @@ Module Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: snippet
       :value: None
 
 

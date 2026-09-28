@@ -32,9 +32,11 @@ class HostedAppContainer(AbstractApiClass):
             isThrottled (bool): Whether the app was stopped due to excessive resource usage
             scDeployedUrls (list): Live deployed URLs of a supercomputer conversation (tracked in conversation metadata)
             hasSupportAgent (bool): Whether this app has a support agent linked
+            appAccessOnly (bool): The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open
+            canEdit (bool): Whether the caller passes the app's edit gate (rename, fork, memory, stop, deploy): owner, admin, editor, or a project/task/org-wide edit grant
     """
 
-    def __init__(self, client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None):
+    def __init__(self, client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None):
         super().__init__(client, None)
         self.deployment_conversation_id = deploymentConversationId
         self.name = name
@@ -61,11 +63,13 @@ class HostedAppContainer(AbstractApiClass):
         self.is_throttled = isThrottled
         self.sc_deployed_urls = scDeployedUrls
         self.has_support_agent = hasSupportAgent
+        self.app_access_only = appAccessOnly
+        self.can_edit = canEdit
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'user_id': repr(self.user_id), f'email': repr(self.email), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'is_deployable': repr(self.is_deployable), f'deployed_status': repr(self.deployed_status), f'access_level': repr(self.access_level), f'hostnames': repr(self.hostnames), f'llm_artifact_id': repr(self.llm_artifact_id), f'artifact_type': repr(self.artifact_type), f'deployed_llm_artifact_id': repr(
-            self.deployed_llm_artifact_id), f'has_database': repr(self.has_database), f'has_storage': repr(self.has_storage), f'web_app_project_id': repr(self.web_app_project_id), f'parent_conversation_id': repr(self.parent_conversation_id), f'appllm_branch': repr(self.appllm_branch), f'branches': repr(self.branches), f'project_metadata': repr(self.project_metadata), f'memory_gb': repr(self.memory_gb), f'domain_aliases': repr(self.domain_aliases), f'is_throttled': repr(self.is_throttled), f'sc_deployed_urls': repr(self.sc_deployed_urls), f'has_support_agent': repr(self.has_support_agent)}
+        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'user_id': repr(self.user_id), f'email': repr(self.email), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'is_deployable': repr(self.is_deployable), f'deployed_status': repr(self.deployed_status), f'access_level': repr(self.access_level), f'hostnames': repr(self.hostnames), f'llm_artifact_id': repr(self.llm_artifact_id), f'artifact_type': repr(self.artifact_type), f'deployed_llm_artifact_id': repr(self.deployed_llm_artifact_id), f'has_database': repr(
+            self.has_database), f'has_storage': repr(self.has_storage), f'web_app_project_id': repr(self.web_app_project_id), f'parent_conversation_id': repr(self.parent_conversation_id), f'appllm_branch': repr(self.appllm_branch), f'branches': repr(self.branches), f'project_metadata': repr(self.project_metadata), f'memory_gb': repr(self.memory_gb), f'domain_aliases': repr(self.domain_aliases), f'is_throttled': repr(self.is_throttled), f'sc_deployed_urls': repr(self.sc_deployed_urls), f'has_support_agent': repr(self.has_support_agent), f'app_access_only': repr(self.app_access_only), f'can_edit': repr(self.can_edit)}
         class_name = "HostedAppContainer"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -78,6 +82,6 @@ class HostedAppContainer(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'user_id': self.user_id, 'email': self.email, 'created_at': self.created_at, 'updated_at': self.updated_at, 'is_deployable': self.is_deployable, 'deployed_status': self.deployed_status, 'access_level': self.access_level, 'hostnames': self.hostnames, 'llm_artifact_id': self.llm_artifact_id, 'artifact_type': self.artifact_type, 'deployed_llm_artifact_id': self.deployed_llm_artifact_id,
-                'has_database': self.has_database, 'has_storage': self.has_storage, 'web_app_project_id': self.web_app_project_id, 'parent_conversation_id': self.parent_conversation_id, 'appllm_branch': self.appllm_branch, 'branches': self.branches, 'project_metadata': self.project_metadata, 'memory_gb': self.memory_gb, 'domain_aliases': self.domain_aliases, 'is_throttled': self.is_throttled, 'sc_deployed_urls': self.sc_deployed_urls, 'has_support_agent': self.has_support_agent}
+        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'user_id': self.user_id, 'email': self.email, 'created_at': self.created_at, 'updated_at': self.updated_at, 'is_deployable': self.is_deployable, 'deployed_status': self.deployed_status, 'access_level': self.access_level, 'hostnames': self.hostnames, 'llm_artifact_id': self.llm_artifact_id, 'artifact_type': self.artifact_type, 'deployed_llm_artifact_id': self.deployed_llm_artifact_id, 'has_database': self.has_database,
+                'has_storage': self.has_storage, 'web_app_project_id': self.web_app_project_id, 'parent_conversation_id': self.parent_conversation_id, 'appllm_branch': self.appllm_branch, 'branches': self.branches, 'project_metadata': self.project_metadata, 'memory_gb': self.memory_gb, 'domain_aliases': self.domain_aliases, 'is_throttled': self.is_throttled, 'sc_deployed_urls': self.sc_deployed_urls, 'has_support_agent': self.has_support_agent, 'app_access_only': self.app_access_only, 'can_edit': self.can_edit}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

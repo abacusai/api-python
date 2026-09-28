@@ -1,0 +1,120 @@
+abacusai.audio_listener_template_file
+=====================================
+
+.. py:module:: abacusai.audio_listener_template_file
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_template_file.AudioListenerTemplateFile
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerTemplateFile(client, fileId=None, clientRef=None, filename=None, mimeType=None, sizeBytes=None, pageCount=None, charCount=None, truncated=None, status=None, error=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A reference file of a Listener session template. Only its extracted text is kept; the file itself is not.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param fileId: The file's id.
+   :type fileId: str
+   :param clientRef: The id the desktop app gave the upload.
+   :type clientRef: str
+   :param filename: The file's name.
+   :type filename: str
+   :param mimeType: The file's type.
+   :type mimeType: str
+   :param sizeBytes: The file's size.
+   :type sizeBytes: int
+   :param pageCount: Pages read, for documents that have pages.
+   :type pageCount: int
+   :param charCount: Characters of text kept.
+   :type charCount: int
+   :param truncated: Whether the text was cut to fit the template's 50,000 characters.
+   :type truncated: bool
+   :param status: PROCESSING, READY or FAILED.
+   :type status: str
+   :param error: Why the file failed.
+   :type error: str
+   :param createdAt: When it was added.
+   :type createdAt: str
+
+
+   .. py:attribute:: file_id
+      :value: None
+
+
+
+   .. py:attribute:: client_ref
+      :value: None
+
+
+
+   .. py:attribute:: filename
+      :value: None
+
+
+
+   .. py:attribute:: mime_type
+      :value: None
+
+
+
+   .. py:attribute:: size_bytes
+      :value: None
+
+
+
+   .. py:attribute:: page_count
+      :value: None
+
+
+
+   .. py:attribute:: char_count
+      :value: None
+
+
+
+   .. py:attribute:: truncated
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: error
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

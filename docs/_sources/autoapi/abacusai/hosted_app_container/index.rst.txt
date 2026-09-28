@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -74,6 +74,10 @@ Module Contents
    :type scDeployedUrls: list
    :param hasSupportAgent: Whether this app has a support agent linked
    :type hasSupportAgent: bool
+   :param appAccessOnly: The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open
+   :type appAccessOnly: bool
+   :param canEdit: Whether the caller passes the app's edit gate (rename, fork, memory, stop, deploy): owner, admin, editor, or a project/task/org-wide edit grant
+   :type canEdit: bool
 
 
    .. py:attribute:: deployment_conversation_id
@@ -197,6 +201,16 @@ Module Contents
 
 
    .. py:attribute:: has_support_agent
+      :value: None
+
+
+
+   .. py:attribute:: app_access_only
+      :value: None
+
+
+
+   .. py:attribute:: can_edit
       :value: None
 
 

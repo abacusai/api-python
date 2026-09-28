@@ -1,0 +1,132 @@
+abacusai.audio_listener_template
+================================
+
+.. py:module:: abacusai.audio_listener_template
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_template.AudioListenerTemplate
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerTemplate(client, templateId=None, builtinKey=None, name=None, meetingType=None, meetingBrief=None, insightGuidelines=None, insightIntervalSecs=None, summaryFormat=None, isHidden=None, isModified=None, createdAt=None, updatedAt=None, files={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A Listener session template: a built-in, possibly edited by the user, or one of the user's own.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param templateId: builtin:<key> for a built-in, else the template's id.
+   :type templateId: str
+   :param builtinKey: The built-in's key; absent for the user's own templates.
+   :type builtinKey: str
+   :param name: The template's name.
+   :type name: str
+   :param meetingType: general, meetings, customers, hiring, learning or custom.
+   :type meetingType: str
+   :param meetingBrief: What every job should know about this kind of meeting.
+   :type meetingBrief: str
+   :param insightGuidelines: What insights focus on.
+   :type insightGuidelines: str
+   :param insightIntervalSecs: Seconds between insights; 0 turns them off.
+   :type insightIntervalSecs: int
+   :param summaryFormat: How the summary is written; empty for the default structure.
+   :type summaryFormat: str
+   :param isHidden: A built-in the user hid.
+   :type isHidden: bool
+   :param isModified: A built-in the user changed.
+   :type isModified: bool
+   :param createdAt: When the user's row was created; absent for an unchanged built-in.
+   :type createdAt: str
+   :param updatedAt: When the user's row last changed.
+   :type updatedAt: str
+   :param files: The template's reference files, oldest first.
+   :type files: AudioListenerTemplateFile
+
+
+   .. py:attribute:: template_id
+      :value: None
+
+
+
+   .. py:attribute:: builtin_key
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: meeting_type
+      :value: None
+
+
+
+   .. py:attribute:: meeting_brief
+      :value: None
+
+
+
+   .. py:attribute:: insight_guidelines
+      :value: None
+
+
+
+   .. py:attribute:: insight_interval_secs
+      :value: None
+
+
+
+   .. py:attribute:: summary_format
+      :value: None
+
+
+
+   .. py:attribute:: is_hidden
+      :value: None
+
+
+
+   .. py:attribute:: is_modified
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: files
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

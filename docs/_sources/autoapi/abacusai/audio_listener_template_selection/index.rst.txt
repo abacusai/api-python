@@ -1,0 +1,57 @@
+abacusai.audio_listener_template_selection
+==========================================
+
+.. py:module:: abacusai.audio_listener_template_selection
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_template_selection.AudioListenerTemplateSelection
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerTemplateSelection(client, selectedTemplateId=None, recentTemplateIds=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The template a user's next Listener session starts with, and the ones they used recently.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param selectedTemplateId: The selected template.
+   :type selectedTemplateId: str
+   :param recentTemplateIds: Recently used templates, newest first.
+   :type recentTemplateIds: list
+
+
+   .. py:attribute:: selected_template_id
+      :value: None
+
+
+
+   .. py:attribute:: recent_template_ids
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

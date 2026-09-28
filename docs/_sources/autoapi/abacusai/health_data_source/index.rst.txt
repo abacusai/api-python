@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None)
+.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None, errorKind=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type isLiveSync: bool
    :param isImported: Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Such a row reports is_live_sync False, and this is what lets a client say WHY — readings that never came from a device, rather than a connection that broke — which only the server can tell, since the fact behind it (the absent aggregator_ref) is never exposed.
    :type isImported: bool
+   :param errorKind: `error_detail` as an identifier a client can branch on exactly, instead of inferring it from `status` and `provider`: awaiting_first_data (a phone store connected under 48h ago with nothing delivered yet), never_delivered (connected, nothing has ever arrived), provider_permission (the provider refused access or the consent granted no data scope), partial_scope (active, but a permission keeps one category of data from arriving), connection_lost, sync_failed, or unknown for a sentence written before these were fixed. Null when `error_detail` is null.
+   :type errorKind: str
 
 
    .. py:attribute:: health_data_source_id
@@ -85,6 +87,11 @@ Module Contents
 
 
    .. py:attribute:: is_imported
+      :value: None
+
+
+
+   .. py:attribute:: error_kind
       :value: None
 
 

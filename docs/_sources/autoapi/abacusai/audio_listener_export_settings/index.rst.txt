@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, isOrgEnabled=None)
+.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,10 +26,12 @@ Module Contents
    :type client: ApiClient
    :param isEnabled: Whether transcripts are automatically exported when a session ends.
    :type isEnabled: bool
-   :param service: The file connector transcripts are exported to (GOOGLEDRIVEUSER, ONEDRIVE, BOX or DROPBOX).
+   :param service: The destination transcripts are exported to (GOOGLEDRIVEUSER, ONEDRIVE, BOX, DROPBOX or CHATLLM_PROJECT).
    :type service: str
    :param folderId: The connector folder id transcripts are written to, if one was chosen.
    :type folderId: str
+   :param chatllmProjectId: The Project transcripts are added to, when the destination is CHATLLM_PROJECT.
+   :type chatllmProjectId: id
    :param isOrgEnabled: Whether the organization allows transcript export at all.
    :type isOrgEnabled: bool
 
@@ -45,6 +47,11 @@ Module Contents
 
 
    .. py:attribute:: folder_id
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_id
       :value: None
 
 

@@ -24,6 +24,10 @@ from .app_user_group import AppUserGroup
 from .application_connector import ApplicationConnector
 from .audio_gen_settings import AudioGenSettings
 from .audio_listener_export_settings import AudioListenerExportSettings
+from .audio_listener_template import AudioListenerTemplate
+from .audio_listener_template_file import AudioListenerTemplateFile
+from .audio_listener_template_selection import AudioListenerTemplateSelection
+from .audio_listener_templates import AudioListenerTemplates
 from .audio_listener_transcript_search_result import AudioListenerTranscriptSearchResult
 from .audio_listener_transcript_search_results import AudioListenerTranscriptSearchResults
 from .audio_url_result import AudioUrlResult
@@ -348,4 +352,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.114"
+__version__ = "1.4.115"

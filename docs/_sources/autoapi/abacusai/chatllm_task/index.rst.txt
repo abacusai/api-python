@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, numUnreadFailedTaskInstances=None, numUnreadLimitBlockedTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, eventSource=None, eventFilter=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, botId=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, numUnreadFailedTaskInstances=None, numUnreadLimitBlockedTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, eventSource=None, eventFilter=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, botId=None, lastRunSummary=None, lastRunAt=None, lastRunConversationId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -116,6 +116,12 @@ Module Contents
    :type resumeRequestId: str
    :param botId: The id of the personal agent (bot) that owns the task; only set for bot-managed tasks.
    :type botId: str
+   :param lastRunSummary: What the most recent completed run concluded, in a few sentences; only set for Health tasks, which write one after every run.
+   :type lastRunSummary: str
+   :param lastRunAt: When the most recent completed run started; only set alongside last_run_summary.
+   :type lastRunAt: str
+   :param lastRunConversationId: The conversation the most recent completed run took place in; only set alongside last_run_summary.
+   :type lastRunConversationId: str
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -348,6 +354,21 @@ Module Contents
 
 
    .. py:attribute:: bot_id
+      :value: None
+
+
+
+   .. py:attribute:: last_run_summary
+      :value: None
+
+
+
+   .. py:attribute:: last_run_at
+      :value: None
+
+
+
+   .. py:attribute:: last_run_conversation_id
       :value: None
 
 

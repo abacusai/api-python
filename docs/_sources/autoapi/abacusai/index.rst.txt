@@ -37,6 +37,10 @@ Submodules
    /autoapi/abacusai/application_connector/index
    /autoapi/abacusai/audio_gen_settings/index
    /autoapi/abacusai/audio_listener_export_settings/index
+   /autoapi/abacusai/audio_listener_template/index
+   /autoapi/abacusai/audio_listener_template_file/index
+   /autoapi/abacusai/audio_listener_template_selection/index
+   /autoapi/abacusai/audio_listener_templates/index
    /autoapi/abacusai/audio_listener_transcript_search_result/index
    /autoapi/abacusai/audio_listener_transcript_search_results/index
    /autoapi/abacusai/audio_url_result/index
@@ -650,6 +654,10 @@ Classes
    abacusai.ApplicationConnector
    abacusai.AudioGenSettings
    abacusai.AudioListenerExportSettings
+   abacusai.AudioListenerTemplate
+   abacusai.AudioListenerTemplateFile
+   abacusai.AudioListenerTemplateSelection
+   abacusai.AudioListenerTemplates
    abacusai.AudioListenerTranscriptSearchResult
    abacusai.AudioListenerTranscriptSearchResults
    abacusai.AudioUrlResult
@@ -10007,6 +10015,16 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT6_SOL
+      :value: 'OPENAI_GPT6_SOL'
+
+
+
+   .. py:attribute:: OPENAI_GPT6_LUNA
+      :value: 'OPENAI_GPT6_LUNA'
+
+
+
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
@@ -10079,6 +10097,11 @@ Package Contents
 
    .. py:attribute:: CLAUDE_V5_OPUS
       :value: 'CLAUDE_V5_OPUS'
+
+
+
+   .. py:attribute:: CLAUDE_V5_5_OPUS_THINKING
+      :value: 'CLAUDE_V5_5_OPUS_THINKING'
 
 
 
@@ -10204,6 +10227,11 @@ Package Contents
 
    .. py:attribute:: XAI_GROK_4_6
       :value: 'XAI_GROK_4_6'
+
+
+
+   .. py:attribute:: XAI_GROK_4_7
+      :value: 'XAI_GROK_4_7'
 
 
 
@@ -10347,8 +10375,18 @@ Package Contents
 
 
 
+   .. py:attribute:: MUSE_SPARK_1_3_CONTRIBUTOR
+      :value: 'MUSE_SPARK_1_3_CONTRIBUTOR'
+
+
+
    .. py:attribute:: XIAOMI_MIMO_V2_PRO
       :value: 'XIAOMI_MIMO_V2_PRO'
+
+
+
+   .. py:attribute:: XIAOMI_MIMO_V2_6_PRO
+      :value: 'XIAOMI_MIMO_V2_6_PRO'
 
 
 
@@ -17049,7 +17087,7 @@ Package Contents
 
 
 
-.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, isOrgEnabled=None)
+.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -17060,10 +17098,12 @@ Package Contents
    :type client: ApiClient
    :param isEnabled: Whether transcripts are automatically exported when a session ends.
    :type isEnabled: bool
-   :param service: The file connector transcripts are exported to (GOOGLEDRIVEUSER, ONEDRIVE, BOX or DROPBOX).
+   :param service: The destination transcripts are exported to (GOOGLEDRIVEUSER, ONEDRIVE, BOX, DROPBOX or CHATLLM_PROJECT).
    :type service: str
    :param folderId: The connector folder id transcripts are written to, if one was chosen.
    :type folderId: str
+   :param chatllmProjectId: The Project transcripts are added to, when the destination is CHATLLM_PROJECT.
+   :type chatllmProjectId: id
    :param isOrgEnabled: Whether the organization allows transcript export at all.
    :type isOrgEnabled: bool
 
@@ -17083,9 +17123,324 @@ Package Contents
 
 
 
+   .. py:attribute:: chatllm_project_id
+      :value: None
+
+
+
    .. py:attribute:: is_org_enabled
       :value: None
 
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerTemplate(client, templateId=None, builtinKey=None, name=None, meetingType=None, meetingBrief=None, insightGuidelines=None, insightIntervalSecs=None, summaryFormat=None, isHidden=None, isModified=None, createdAt=None, updatedAt=None, files={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A Listener session template: a built-in, possibly edited by the user, or one of the user's own.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param templateId: builtin:<key> for a built-in, else the template's id.
+   :type templateId: str
+   :param builtinKey: The built-in's key; absent for the user's own templates.
+   :type builtinKey: str
+   :param name: The template's name.
+   :type name: str
+   :param meetingType: general, meetings, customers, hiring, learning or custom.
+   :type meetingType: str
+   :param meetingBrief: What every job should know about this kind of meeting.
+   :type meetingBrief: str
+   :param insightGuidelines: What insights focus on.
+   :type insightGuidelines: str
+   :param insightIntervalSecs: Seconds between insights; 0 turns them off.
+   :type insightIntervalSecs: int
+   :param summaryFormat: How the summary is written; empty for the default structure.
+   :type summaryFormat: str
+   :param isHidden: A built-in the user hid.
+   :type isHidden: bool
+   :param isModified: A built-in the user changed.
+   :type isModified: bool
+   :param createdAt: When the user's row was created; absent for an unchanged built-in.
+   :type createdAt: str
+   :param updatedAt: When the user's row last changed.
+   :type updatedAt: str
+   :param files: The template's reference files, oldest first.
+   :type files: AudioListenerTemplateFile
+
+
+   .. py:attribute:: template_id
+      :value: None
+
+
+
+   .. py:attribute:: builtin_key
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: meeting_type
+      :value: None
+
+
+
+   .. py:attribute:: meeting_brief
+      :value: None
+
+
+
+   .. py:attribute:: insight_guidelines
+      :value: None
+
+
+
+   .. py:attribute:: insight_interval_secs
+      :value: None
+
+
+
+   .. py:attribute:: summary_format
+      :value: None
+
+
+
+   .. py:attribute:: is_hidden
+      :value: None
+
+
+
+   .. py:attribute:: is_modified
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: files
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerTemplateFile(client, fileId=None, clientRef=None, filename=None, mimeType=None, sizeBytes=None, pageCount=None, charCount=None, truncated=None, status=None, error=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A reference file of a Listener session template. Only its extracted text is kept; the file itself is not.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param fileId: The file's id.
+   :type fileId: str
+   :param clientRef: The id the desktop app gave the upload.
+   :type clientRef: str
+   :param filename: The file's name.
+   :type filename: str
+   :param mimeType: The file's type.
+   :type mimeType: str
+   :param sizeBytes: The file's size.
+   :type sizeBytes: int
+   :param pageCount: Pages read, for documents that have pages.
+   :type pageCount: int
+   :param charCount: Characters of text kept.
+   :type charCount: int
+   :param truncated: Whether the text was cut to fit the template's 50,000 characters.
+   :type truncated: bool
+   :param status: PROCESSING, READY or FAILED.
+   :type status: str
+   :param error: Why the file failed.
+   :type error: str
+   :param createdAt: When it was added.
+   :type createdAt: str
+
+
+   .. py:attribute:: file_id
+      :value: None
+
+
+
+   .. py:attribute:: client_ref
+      :value: None
+
+
+
+   .. py:attribute:: filename
+      :value: None
+
+
+
+   .. py:attribute:: mime_type
+      :value: None
+
+
+
+   .. py:attribute:: size_bytes
+      :value: None
+
+
+
+   .. py:attribute:: page_count
+      :value: None
+
+
+
+   .. py:attribute:: char_count
+      :value: None
+
+
+
+   .. py:attribute:: truncated
+      :value: None
+
+
+
+   .. py:attribute:: status
+      :value: None
+
+
+
+   .. py:attribute:: error
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerTemplateSelection(client, selectedTemplateId=None, recentTemplateIds=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The template a user's next Listener session starts with, and the ones they used recently.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param selectedTemplateId: The selected template.
+   :type selectedTemplateId: str
+   :param recentTemplateIds: Recently used templates, newest first.
+   :type recentTemplateIds: list
+
+
+   .. py:attribute:: selected_template_id
+      :value: None
+
+
+
+   .. py:attribute:: recent_template_ids
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerTemplates(client, selectedTemplateId=None, recentTemplateIds=None, customAvailable=None, templates={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A user's Listener session templates.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param selectedTemplateId: The selected template.
+   :type selectedTemplateId: str
+   :param recentTemplateIds: Recently used templates, newest first.
+   :type recentTemplateIds: list
+   :param customAvailable: Whether templates can be created and edited on this cluster yet.
+   :type customAvailable: bool
+   :param templates: Built-ins first, in their order, then the user's own, newest first.
+   :type templates: AudioListenerTemplate
+
+
+   .. py:attribute:: selected_template_id
+      :value: None
+
+
+
+   .. py:attribute:: recent_template_ids
+      :value: None
+
+
+
+   .. py:attribute:: custom_available
+      :value: None
+
+
+
+   .. py:attribute:: templates
 
 
    .. py:attribute:: deprecated_keys
@@ -19665,7 +20020,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, numUnreadFailedTaskInstances=None, numUnreadLimitBlockedTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, eventSource=None, eventFilter=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, botId=None, hostedDatabase={}, latestDaemonTaskInstance={})
+.. py:class:: ChatllmTask(client, chatllmTaskId=None, daemonTaskId=None, taskType=None, name=None, instructions=None, description=None, lifecycle=None, scheduleInfo=None, externalApplicationId=None, deploymentConversationId=None, sourceDeploymentConversationId=None, sourceDeploymentConversationName=None, latestSourceDeploymentConversationId=None, enableEmailAlerts=None, email=None, numUnreadTaskInstances=None, numUnreadFailedTaskInstances=None, numUnreadLimitBlockedTaskInstances=None, computePointsUsed=None, displayMarkdown=None, requiresNewConversation=None, executionMode=None, offerModelSwitch=None, taskDefinition=None, webAppHostname=None, triggerType=None, nextRunSkipped=None, skippedRunTime=None, webhookUrl=None, eventSource=None, eventFilter=None, pushNotificationsEnabled=None, skills=None, isRsi=None, isSupercomputer=None, personalAgentComputerId=None, currentEffort=None, effortLadder=None, isOwner=None, isOrgShared=None, isDirectlyShared=None, isProjectShared=None, sharedPermission=None, ownerEmail=None, resumeRequestId=None, botId=None, lastRunSummary=None, lastRunAt=None, lastRunConversationId=None, hostedDatabase={}, latestDaemonTaskInstance={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -19766,6 +20121,12 @@ Package Contents
    :type resumeRequestId: str
    :param botId: The id of the personal agent (bot) that owns the task; only set for bot-managed tasks.
    :type botId: str
+   :param lastRunSummary: What the most recent completed run concluded, in a few sentences; only set for Health tasks, which write one after every run.
+   :type lastRunSummary: str
+   :param lastRunAt: When the most recent completed run started; only set alongside last_run_summary.
+   :type lastRunAt: str
+   :param lastRunConversationId: The conversation the most recent completed run took place in; only set alongside last_run_summary.
+   :type lastRunConversationId: str
    :param hostedDatabase: The hosted database for the daemon task.
    :type hostedDatabase: HostedDatabase
    :param latestDaemonTaskInstance: The latest task instance for daemon tasks.
@@ -19998,6 +20359,21 @@ Package Contents
 
 
    .. py:attribute:: bot_id
+      :value: None
+
+
+
+   .. py:attribute:: last_run_summary
+      :value: None
+
+
+
+   .. py:attribute:: last_run_at
+      :value: None
+
+
+
+   .. py:attribute:: last_run_conversation_id
       :value: None
 
 
@@ -31542,7 +31918,7 @@ Package Contents
 
 
 
-.. py:class:: ConversationAndProjectSearchResults(client, deploymentConversationId=None, name=None, chatllmProjectId=None, chatllmProjectName=None, createdAt=None, lastEventCreatedAt=None, conversationType=None, deploymentId=None, externalApplicationId=None)
+.. py:class:: ConversationAndProjectSearchResults(client, deploymentConversationId=None, name=None, chatllmProjectId=None, chatllmProjectName=None, createdAt=None, lastEventCreatedAt=None, conversationType=None, deploymentId=None, externalApplicationId=None, snippet=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31569,6 +31945,8 @@ Package Contents
    :type deploymentId: str
    :param externalApplicationId: The external application id associated with the deployment conversation.
    :type externalApplicationId: str
+   :param snippet: An excerpt of the user's messages that matches the search query.
+   :type snippet: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -31612,6 +31990,11 @@ Package Contents
 
 
    .. py:attribute:: external_application_id
+      :value: None
+
+
+
+   .. py:attribute:: snippet
       :value: None
 
 
@@ -35466,7 +35849,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35485,6 +35868,8 @@ Package Contents
    :type isDaemonResumeReply: bool
    :param isTriggered: Whether this user message was injected by the scheduler to resume a paused conversation (e.g. a wait-for-condition check), rather than typed by the user.
    :type isTriggered: bool
+   :param triggerSource: For a triggered user message, what started it when it was not a scheduler resume (e.g. collaborator comments picked up by the agent).
+   :type triggerSource: dict
    :param messageIndex: The index of the message in the conversation
    :type messageIndex: int
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
@@ -35598,6 +35983,11 @@ Package Contents
 
 
    .. py:attribute:: is_triggered
+      :value: None
+
+
+
+   .. py:attribute:: trigger_source
       :value: None
 
 
@@ -42776,7 +43166,7 @@ Package Contents
 
 
 
-.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None)
+.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None, errorKind=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42803,6 +43193,8 @@ Package Contents
    :type isLiveSync: bool
    :param isImported: Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Such a row reports is_live_sync False, and this is what lets a client say WHY — readings that never came from a device, rather than a connection that broke — which only the server can tell, since the fact behind it (the absent aggregator_ref) is never exposed.
    :type isImported: bool
+   :param errorKind: `error_detail` as an identifier a client can branch on exactly, instead of inferring it from `status` and `provider`: awaiting_first_data (a phone store connected under 48h ago with nothing delivered yet), never_delivered (connected, nothing has ever arrived), provider_permission (the provider refused access or the consent granted no data scope), partial_scope (active, but a permission keeps one category of data from arriving), connection_lost, sync_failed, or unknown for a sentence written before these were fixed. Null when `error_detail` is null.
+   :type errorKind: str
 
 
    .. py:attribute:: health_data_source_id
@@ -42846,6 +43238,11 @@ Package Contents
 
 
    .. py:attribute:: is_imported
+      :value: None
+
+
+
+   .. py:attribute:: error_kind
       :value: None
 
 
@@ -43314,7 +43711,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43373,6 +43770,10 @@ Package Contents
    :type scDeployedUrls: list
    :param hasSupportAgent: Whether this app has a support agent linked
    :type hasSupportAgent: bool
+   :param appAccessOnly: The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open
+   :type appAccessOnly: bool
+   :param canEdit: Whether the caller passes the app's edit gate (rename, fork, memory, stop, deploy): owner, admin, editor, or a project/task/org-wide edit grant
+   :type canEdit: bool
 
 
    .. py:attribute:: deployment_conversation_id
@@ -43496,6 +43897,16 @@ Package Contents
 
 
    .. py:attribute:: has_support_agent
+      :value: None
+
+
+
+   .. py:attribute:: app_access_only
+      :value: None
+
+
+
+   .. py:attribute:: can_edit
       :value: None
 
 
@@ -56111,7 +56522,7 @@ Package Contents
 
 
 
-.. py:class:: SessionSummary(client, summary=None)
+.. py:class:: SessionSummary(client, summary=None, templateName=None, meetingType=None, meetingNotes=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -56122,9 +56533,30 @@ Package Contents
    :type client: ApiClient
    :param summary: The summary of the session.
    :type summary: str
+   :param templateName: The name of the Listener template the session ran with, if any.
+   :type templateName: str
+   :param meetingType: The meeting type of that template.
+   :type meetingType: str
+   :param meetingNotes: The session's notes for this meeting, returned only to the session's owner.
+   :type meetingNotes: str
 
 
    .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: template_name
+      :value: None
+
+
+
+   .. py:attribute:: meeting_type
+      :value: None
+
+
+
+   .. py:attribute:: meeting_notes
       :value: None
 
 
@@ -58345,7 +58777,7 @@ Package Contents
 
 
 
-.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, chineseModelsDisabled=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, chineseModelsDisabled=None, studioMaxMode=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58374,6 +58806,8 @@ Package Contents
    :type audioModes: dict
    :param chineseModelsDisabled: Whether the org disables Chinese models, which routes Auto through a different table.
    :type chineseModelsDisabled: bool
+   :param studioMaxMode: Whether the session is the internal max-quality Studio, which routes Auto through the max-mode table.
+   :type studioMaxMode: bool
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
 
@@ -58424,6 +58858,11 @@ Package Contents
 
 
    .. py:attribute:: chinese_models_disabled
+      :value: None
+
+
+
+   .. py:attribute:: studio_max_mode
       :value: None
 
 
@@ -59937,6 +60376,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.114'
+   :value: '1.4.115'
 
 

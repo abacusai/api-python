@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: SessionSummary(client, summary=None)
+.. py:class:: SessionSummary(client, summary=None, templateName=None, meetingType=None, meetingNotes=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,9 +26,30 @@ Module Contents
    :type client: ApiClient
    :param summary: The summary of the session.
    :type summary: str
+   :param templateName: The name of the Listener template the session ran with, if any.
+   :type templateName: str
+   :param meetingType: The meeting type of that template.
+   :type meetingType: str
+   :param meetingNotes: The session's notes for this meeting, returned only to the session's owner.
+   :type meetingNotes: str
 
 
    .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: template_name
+      :value: None
+
+
+
+   .. py:attribute:: meeting_type
+      :value: None
+
+
+
+   .. py:attribute:: meeting_notes
       :value: None
 
 

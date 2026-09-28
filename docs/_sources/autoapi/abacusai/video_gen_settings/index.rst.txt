@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, chineseModelsDisabled=None, model={})
+.. py:class:: VideoGenSettings(client, videoType=None, modelsByType=None, imageFieldsByModel=None, mediaCapabilities=None, settings=None, warnings=None, highCostModels=None, descriptions=None, audioModes=None, chineseModelsDisabled=None, studioMaxMode=None, model={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44,6 +44,8 @@ Module Contents
    :type audioModes: dict
    :param chineseModelsDisabled: Whether the org disables Chinese models, which routes Auto through a different table.
    :type chineseModelsDisabled: bool
+   :param studioMaxMode: Whether the session is the internal max-quality Studio, which routes Auto through the max-mode table.
+   :type studioMaxMode: bool
    :param model: Dropdown for models available for video generation.
    :type model: VideoGenModel
 
@@ -94,6 +96,11 @@ Module Contents
 
 
    .. py:attribute:: chinese_models_disabled
+      :value: None
+
+
+
+   .. py:attribute:: studio_max_mode
       :value: None
 
 
