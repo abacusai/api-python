@@ -1,0 +1,53 @@
+abacusai.project_subscriptions
+==============================
+
+.. py:module:: abacusai.project_subscriptions
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.project_subscriptions.ProjectSubscriptions
+
+
+Module Contents
+---------------
+
+.. py:class:: ProjectSubscriptions(client, schedules={}, channels={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Everything that wakes an AGENT_COORDINATOR project's coordinator (the project's Subscriptions card)
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param schedules: Heartbeat and named tasks with their latest run.
+   :type schedules: ProjectSubscriptionSchedule
+   :param channels: GitHub / webhook event channels.
+   :type channels: ProjectSubscriptionChannel
+
+
+   .. py:attribute:: schedules
+
+
+   .. py:attribute:: channels
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

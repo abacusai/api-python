@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -94,6 +94,8 @@ Module Contents
    :type daemonTaskRunNumber: int
    :param parentDeploymentConversationId: The parent deployment conversation id associated with the deployment conversation.
    :type parentDeploymentConversationId: str
+   :param sourceDeploymentConversationId: The conversation this one was forked from; also set for parallel/workspace copies, which have no parent conversation.
+   :type sourceDeploymentConversationId: str
    :param sharedHomeDirectory: Whether this conversation is part of a shared-home-directory group — true if it has a parent conversation or at least one child conversation.
    :type sharedHomeDirectory: bool
    :param introMessage: The intro message for the deployment conversation.
@@ -317,6 +319,11 @@ Module Contents
 
 
 
+   .. py:attribute:: source_deployment_conversation_id
+      :value: None
+
+
+
    .. py:attribute:: shared_home_directory
       :value: None
 
@@ -477,6 +484,18 @@ Module Contents
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
+
+
+
+   .. py:method:: get_event_segments(conversation_sequence_number)
+
+      Gets the full segments of one event of a deployment conversation, for a turn that get_deployment_conversation trimmed.
+
+      :param conversation_sequence_number: The sequence number (message index) of the event.
+      :type conversation_sequence_number: int
+
+      :returns: The event with its full, untrimmed segments.
+      :rtype: DeploymentConversationEvent
 
 
 

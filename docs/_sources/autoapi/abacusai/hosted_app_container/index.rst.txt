@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None, versionCount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,7 +42,7 @@ Module Contents
    :type deployedStatus: str
    :param accessLevel: Access Level (PUBLIC/PRIVATE/DEDICATED/OWNER_ONLY)
    :type accessLevel: str
-   :param hostnames: Hostnames of the deployed app, each with its tag, access level and whether the caller may read its traffic analytics
+   :param hostnames: Hostnames of the deployed app, each with its tag, access level, when it was last published and whether the caller may read its traffic analytics
    :type hostnames: list[dict]
    :param llmArtifactId: The ID of the LLM artifact
    :type llmArtifactId: id
@@ -78,6 +78,8 @@ Module Contents
    :type appAccessOnly: bool
    :param canEdit: Whether the caller passes the app's edit gate (rename, fork, memory, stop, deploy): owner, admin, editor, or a project/task/org-wide edit grant
    :type canEdit: bool
+   :param versionCount: Number of saved versions (distinct checkpoints) of the app
+   :type versionCount: int
 
 
    .. py:attribute:: deployment_conversation_id
@@ -211,6 +213,11 @@ Module Contents
 
 
    .. py:attribute:: can_edit
+      :value: None
+
+
+
+   .. py:attribute:: version_count
       :value: None
 
 

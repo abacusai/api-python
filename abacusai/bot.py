@@ -20,6 +20,7 @@ class Bot(AbstractApiClass):
             avatar (str): The avatar for the bot.
             status (str): The current activity status of the bot (IDLE, WORKING, WAITING_FOR_USER).
             lifecycle (str): The lifecycle of the bot (ACTIVE, ARCHIVED).
+            role (str): ASSISTANT (default) or COORDINATOR (runs an AGENT_COORDINATOR project).
             deploymentConversationId (str): The bot's persistent conversation id.
             chatllmProjectId (str): The project the agent belongs to (its files, skills and instructions apply, and every teammate who can see the project sees it and every project editor may edit it); None for a personal agent outside a project.
             externalApplicationId (str): The external application id associated with the bot.
@@ -29,7 +30,9 @@ class Bot(AbstractApiClass):
             createdAt (int): Unix timestamp of when the bot was created.
             schedule (dict): The bot's heartbeat schedule (frequency/time/day_of_week/timezone), if any.
             tasks (list): The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule; event tasks also carry webhook_url); _describeBot only.
+            numTasks (int): How many named scheduled tasks the bot has.
             channels (dict): The bot's configured messaging channels keyed by channel name; secret values are masked.
+            channelNames (list): Names of the messaging channels configured on the bot (telegram, whatsapp, ...).
             learnedPersonality (str): Personality the bot learned on its own from user feedback; _describeBot only.
             learnedInstructions (str): Rules the bot learned on its own from user feedback; _describeBot only.
             profileHistory (list): Changelog of the bot's self-edits to the learned fields (t/field/old/new, chronological; undo entries flagged); _describeBot only.
@@ -42,7 +45,7 @@ class Bot(AbstractApiClass):
             pushNotificationsEnabled (bool): Whether the agent may send mobile push notifications (the agent conversation's own switch); _describeBot only.
     """
 
-    def __init__(self, client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None):
+    def __init__(self, client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None):
         super().__init__(client, botId)
         self.bot_id = botId
         self.owner_user_id = ownerUserId
@@ -57,6 +60,7 @@ class Bot(AbstractApiClass):
         self.avatar = avatar
         self.status = status
         self.lifecycle = lifecycle
+        self.role = role
         self.deployment_conversation_id = deploymentConversationId
         self.chatllm_project_id = chatllmProjectId
         self.external_application_id = externalApplicationId
@@ -66,7 +70,9 @@ class Bot(AbstractApiClass):
         self.created_at = createdAt
         self.schedule = schedule
         self.tasks = tasks
+        self.num_tasks = numTasks
         self.channels = channels
+        self.channel_names = channelNames
         self.learned_personality = learnedPersonality
         self.learned_instructions = learnedInstructions
         self.profile_history = profileHistory
@@ -80,8 +86,8 @@ class Bot(AbstractApiClass):
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'bot_id': repr(self.bot_id), f'owner_user_id': repr(self.owner_user_id), f'is_owner': repr(self.is_owner), f'can_edit': repr(self.can_edit), f'owner_email': repr(self.owner_email), f'name': repr(self.name), f'description': repr(self.description), f'instructions': repr(self.instructions), f'personality': repr(self.personality), f'memory': repr(self.memory), f'avatar': repr(self.avatar), f'status': repr(self.status), f'lifecycle': repr(self.lifecycle), f'deployment_conversation_id': repr(self.deployment_conversation_id), f'chatllm_project_id': repr(self.chatllm_project_id), f'external_application_id': repr(self.external_application_id), f'last_message_preview': repr(self.last_message_preview), f'last_message_at': repr(
-            self.last_message_at), f'unread_count': repr(self.unread_count), f'created_at': repr(self.created_at), f'schedule': repr(self.schedule), f'tasks': repr(self.tasks), f'channels': repr(self.channels), f'learned_personality': repr(self.learned_personality), f'learned_instructions': repr(self.learned_instructions), f'profile_history': repr(self.profile_history), f'self_review': repr(self.self_review), f'playbooks': repr(self.playbooks), f'proactive_budget': repr(self.proactive_budget), f'chatty_greetings': repr(self.chatty_greetings), f'quiet_hours': repr(self.quiet_hours), f'agent_network': repr(self.agent_network), f'push_notifications_enabled': repr(self.push_notifications_enabled)}
+        repr_dict = {f'bot_id': repr(self.bot_id), f'owner_user_id': repr(self.owner_user_id), f'is_owner': repr(self.is_owner), f'can_edit': repr(self.can_edit), f'owner_email': repr(self.owner_email), f'name': repr(self.name), f'description': repr(self.description), f'instructions': repr(self.instructions), f'personality': repr(self.personality), f'memory': repr(self.memory), f'avatar': repr(self.avatar), f'status': repr(self.status), f'lifecycle': repr(self.lifecycle), f'role': repr(self.role), f'deployment_conversation_id': repr(self.deployment_conversation_id), f'chatllm_project_id': repr(self.chatllm_project_id), f'external_application_id': repr(self.external_application_id), f'last_message_preview': repr(self.last_message_preview), f'last_message_at': repr(
+            self.last_message_at), f'unread_count': repr(self.unread_count), f'created_at': repr(self.created_at), f'schedule': repr(self.schedule), f'tasks': repr(self.tasks), f'num_tasks': repr(self.num_tasks), f'channels': repr(self.channels), f'channel_names': repr(self.channel_names), f'learned_personality': repr(self.learned_personality), f'learned_instructions': repr(self.learned_instructions), f'profile_history': repr(self.profile_history), f'self_review': repr(self.self_review), f'playbooks': repr(self.playbooks), f'proactive_budget': repr(self.proactive_budget), f'chatty_greetings': repr(self.chatty_greetings), f'quiet_hours': repr(self.quiet_hours), f'agent_network': repr(self.agent_network), f'push_notifications_enabled': repr(self.push_notifications_enabled)}
         class_name = "Bot"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -94,6 +100,6 @@ class Bot(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'bot_id': self.bot_id, 'owner_user_id': self.owner_user_id, 'is_owner': self.is_owner, 'can_edit': self.can_edit, 'owner_email': self.owner_email, 'name': self.name, 'description': self.description, 'instructions': self.instructions, 'personality': self.personality, 'memory': self.memory, 'avatar': self.avatar, 'status': self.status, 'lifecycle': self.lifecycle, 'deployment_conversation_id': self.deployment_conversation_id, 'chatllm_project_id': self.chatllm_project_id, 'external_application_id': self.external_application_id, 'last_message_preview': self.last_message_preview,
-                'last_message_at': self.last_message_at, 'unread_count': self.unread_count, 'created_at': self.created_at, 'schedule': self.schedule, 'tasks': self.tasks, 'channels': self.channels, 'learned_personality': self.learned_personality, 'learned_instructions': self.learned_instructions, 'profile_history': self.profile_history, 'self_review': self.self_review, 'playbooks': self.playbooks, 'proactive_budget': self.proactive_budget, 'chatty_greetings': self.chatty_greetings, 'quiet_hours': self.quiet_hours, 'agent_network': self.agent_network, 'push_notifications_enabled': self.push_notifications_enabled}
+        resp = {'bot_id': self.bot_id, 'owner_user_id': self.owner_user_id, 'is_owner': self.is_owner, 'can_edit': self.can_edit, 'owner_email': self.owner_email, 'name': self.name, 'description': self.description, 'instructions': self.instructions, 'personality': self.personality, 'memory': self.memory, 'avatar': self.avatar, 'status': self.status, 'lifecycle': self.lifecycle, 'role': self.role, 'deployment_conversation_id': self.deployment_conversation_id, 'chatllm_project_id': self.chatllm_project_id, 'external_application_id': self.external_application_id, 'last_message_preview': self.last_message_preview, 'last_message_at': self.last_message_at,
+                'unread_count': self.unread_count, 'created_at': self.created_at, 'schedule': self.schedule, 'tasks': self.tasks, 'num_tasks': self.num_tasks, 'channels': self.channels, 'channel_names': self.channel_names, 'learned_personality': self.learned_personality, 'learned_instructions': self.learned_instructions, 'profile_history': self.profile_history, 'self_review': self.self_review, 'playbooks': self.playbooks, 'proactive_budget': self.proactive_budget, 'chatty_greetings': self.chatty_greetings, 'quiet_hours': self.quiet_hours, 'agent_network': self.agent_network, 'push_notifications_enabled': self.push_notifications_enabled}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

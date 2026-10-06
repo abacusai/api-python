@@ -1,0 +1,71 @@
+abacusai.audio_listener_carry_over
+==================================
+
+.. py:module:: abacusai.audio_listener_carry_over
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_carry_over.AudioListenerCarryOver
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerCarryOver(client, enabled=None, instructions=None, defaultInstructions=None, maxChars=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   What of a calendar meeting's last meeting carries over into it, in the Listener (per meeting: for a recurring one, its series).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param enabled: Whether the meeting gets what its last meeting left open.
+   :type enabled: bool
+   :param instructions: The user's own words for what carries over; empty for the default.
+   :type instructions: str
+   :param defaultInstructions: What carries over without instructions.
+   :type defaultInstructions: str
+   :param maxChars: The longest instructions allowed.
+   :type maxChars: int
+
+
+   .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: instructions
+      :value: None
+
+
+
+   .. py:attribute:: default_instructions
+      :value: None
+
+
+
+   .. py:attribute:: max_chars
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

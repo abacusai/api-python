@@ -23,7 +23,15 @@ from .app_template import AppTemplate
 from .app_user_group import AppUserGroup
 from .application_connector import ApplicationConnector
 from .audio_gen_settings import AudioGenSettings
+from .audio_listener_calendar_events import AudioListenerCalendarEvents
+from .audio_listener_carry_over import AudioListenerCarryOver
 from .audio_listener_export_settings import AudioListenerExportSettings
+from .audio_listener_meeting_brief import AudioListenerMeetingBrief
+from .audio_listener_meeting_session_page import AudioListenerMeetingSessionPage
+from .audio_listener_meeting_sessions import AudioListenerMeetingSessions
+from .audio_listener_meeting_template import AudioListenerMeetingTemplate
+from .audio_listener_session_feedback import AudioListenerSessionFeedback
+from .audio_listener_session_meeting import AudioListenerSessionMeeting
 from .audio_listener_template import AudioListenerTemplate
 from .audio_listener_template_file import AudioListenerTemplateFile
 from .audio_listener_template_selection import AudioListenerTemplateSelection
@@ -74,6 +82,7 @@ from .concatenation_config import ConcatenationConfig
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
 from .conversation_and_project_search_results import ConversationAndProjectSearchResults
 from .conversation_credits import ConversationCredits
+from .coordinator_run import CoordinatorRun
 from .cowork_desktop_folder import CoworkDesktopFolder
 from .cowork_dispatch_attachment import CoworkDispatchAttachment
 from .cowork_dispatch_message import CoworkDispatchMessage
@@ -276,6 +285,10 @@ from .project_config import ProjectConfig
 from .project_feature_group import ProjectFeatureGroup
 from .project_feature_group_schema import ProjectFeatureGroupSchema
 from .project_feature_group_schema_version import ProjectFeatureGroupSchemaVersion
+from .project_memory import ProjectMemory
+from .project_subscription_channel import ProjectSubscriptionChannel
+from .project_subscription_schedule import ProjectSubscriptionSchedule
+from .project_subscriptions import ProjectSubscriptions
 from .project_validation import ProjectValidation
 from .python_function import PythonFunction
 from .python_plot_function import PythonPlotFunction
@@ -352,4 +365,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.115"
+__version__ = "1.4.116"

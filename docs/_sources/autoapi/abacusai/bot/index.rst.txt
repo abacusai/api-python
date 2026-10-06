@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, channels=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,6 +50,8 @@ Module Contents
    :type status: str
    :param lifecycle: The lifecycle of the bot (ACTIVE, ARCHIVED).
    :type lifecycle: str
+   :param role: ASSISTANT (default) or COORDINATOR (runs an AGENT_COORDINATOR project).
+   :type role: str
    :param deploymentConversationId: The bot's persistent conversation id.
    :type deploymentConversationId: str
    :param chatllmProjectId: The project the agent belongs to (its files, skills and instructions apply, and every teammate who can see the project sees it and every project editor may edit it); None for a personal agent outside a project.
@@ -68,8 +70,12 @@ Module Contents
    :type schedule: dict
    :param tasks: The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule; event tasks also carry webhook_url); _describeBot only.
    :type tasks: list
+   :param numTasks: How many named scheduled tasks the bot has.
+   :type numTasks: int
    :param channels: The bot's configured messaging channels keyed by channel name; secret values are masked.
    :type channels: dict
+   :param channelNames: Names of the messaging channels configured on the bot (telegram, whatsapp, ...).
+   :type channelNames: list
    :param learnedPersonality: Personality the bot learned on its own from user feedback; _describeBot only.
    :type learnedPersonality: str
    :param learnedInstructions: Rules the bot learned on its own from user feedback; _describeBot only.
@@ -157,6 +163,11 @@ Module Contents
 
 
 
+   .. py:attribute:: role
+      :value: None
+
+
+
    .. py:attribute:: deployment_conversation_id
       :value: None
 
@@ -202,7 +213,17 @@ Module Contents
 
 
 
+   .. py:attribute:: num_tasks
+      :value: None
+
+
+
    .. py:attribute:: channels
+      :value: None
+
+
+
+   .. py:attribute:: channel_names
       :value: None
 
 

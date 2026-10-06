@@ -1,0 +1,71 @@
+abacusai.audio_listener_meeting_brief
+=====================================
+
+.. py:module:: abacusai.audio_listener_meeting_brief
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_meeting_brief.AudioListenerMeetingBrief
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerMeetingBrief(client, previous=None, followUps=None, seriesTemplateId=None, thisOccurrence=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   What the user's previous Listener session of a meeting left for the next one.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param previous: The previous session of the same meeting (id, name, created_at_ms), if any.
+   :type previous: dict
+   :param followUps: What it left open: action items, commitments and open questions.
+   :type followUps: list
+   :param seriesTemplateId: The template the previous session ran with, when the user still has it.
+   :type seriesTemplateId: str
+   :param thisOccurrence: The user's session of this very occurrence of the meeting (id, name, created_at_ms), if they already have one.
+   :type thisOccurrence: dict
+
+
+   .. py:attribute:: previous
+      :value: None
+
+
+
+   .. py:attribute:: follow_ups
+      :value: None
+
+
+
+   .. py:attribute:: series_template_id
+      :value: None
+
+
+
+   .. py:attribute:: this_occurrence
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

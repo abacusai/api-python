@@ -80,6 +80,7 @@ from .dataset_version_logs import DatasetVersionLogs
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .deployment_conversation import DeploymentConversation
+from .deployment_conversation_event import DeploymentConversationEvent
 from .deployment_conversation_export import DeploymentConversationExport
 from .deployment_statistics import DeploymentStatistics
 from .document_data import DocumentData
@@ -716,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.115'
+    client_version = '1.4.116'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1036,9 +1037,12 @@ class BaseApiClient:
     def _poll(self, obj, wait_states: set, delay: int = 15, timeout: int = 300, poll_args: dict = {}, status_field=None):
         start_time = time.time()
         while obj.get_status(**poll_args) in wait_states:
-            if timeout and time.time() - start_time > timeout:
+            elapsed = time.time() - start_time
+            if timeout and elapsed > timeout:
                 raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
-            time.sleep(delay)
+            # Sleep ~10% of the time waited so far, between 2s and `delay`: short waits return within seconds,
+            # long waits settle at the caller's `delay`, so the overshoot stays under ~10% of the wait.
+            time.sleep(min(delay, max(2, elapsed / 10)))
         return obj.refresh()
 
     def _validate_pandas_df(self, df, clean_column_names: bool):
@@ -2764,7 +2768,7 @@ class ReadOnlyClient(BaseApiClient):
     def get_organization_secret(self, secret_key: str) -> OrganizationSecret:
         """Gets a secret. The secret value is only returned when called from an Abacus-managed
 
-        environment (an agent, usercode runtime, or hosted notebook owned by your organization, the
+        environment (an agent, DeepAgent computer, usercode runtime, or hosted notebook owned by your organization, the
         code server testing an organization administrator's usercode tool, or the organization's system
         API key); otherwise the value is masked. Secrets restricted
         to specific user groups are only readable by members of those groups, organization admins,
@@ -2870,6 +2874,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DeploymentConversation: The deployment conversation."""
         return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'filterIntermediateConversationEvents': filter_intermediate_conversation_events, 'getUnusedDocumentUploads': get_unused_document_uploads, 'start': start, 'limit': limit, 'includeAllVersions': include_all_versions}, parse_type=DeploymentConversation, is_sync=True)
+
+    def get_deployment_conversation_event_segments(self, deployment_conversation_id: str, conversation_sequence_number: int) -> DeploymentConversationEvent:
+        """Gets the full segments of one event of a deployment conversation, for a turn that get_deployment_conversation trimmed.
+
+        Args:
+            deployment_conversation_id (str): Unique ID of the conversation.
+            conversation_sequence_number (int): The sequence number (message index) of the event.
+
+        Returns:
+            DeploymentConversationEvent: The event with its full, untrimmed segments."""
+        return self._proxy_request('getDeploymentConversationEventSegments', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'conversationSequenceNumber': conversation_sequence_number}, parse_type=DeploymentConversationEvent, is_sync=True)
 
     def get_deployment_conversation_file(self, deployment_conversation_id: str, file_path: str) -> io.BytesIO:
         """Gets a deployment conversation file.

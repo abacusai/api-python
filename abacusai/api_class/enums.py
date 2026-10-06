@@ -463,6 +463,7 @@ class ApplicationConnectorType(ApiEnum):
     MESSENGER = 'MESSENGER'
     INSTAGRAM = 'INSTAGRAM'
     NETSUITE = 'NETSUITE'
+    ORACLEFUSION = 'ORACLEFUSION'
     MONGODB = 'MONGODB'
     AZURECLOUD = 'AZURECLOUD'
     GCPCLOUD = 'GCPCLOUD'
@@ -519,6 +520,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.MESSENGER,
             cls.INSTAGRAM,
             cls.NETSUITE,
+            cls.ORACLEFUSION,
             cls.MONGODB,
             cls.AZURECLOUD,
             cls.GCPCLOUD,
@@ -606,6 +608,7 @@ class VectorStoreTextEncoder(ApiEnum):
                   'QWEN_2_5_32B_BASE', 'QWEN_2_5_32B', 'QWEN_2_5_72B', 'QWQ_32B',
                   'DEEPSEEK_V3_1', 'DEEPSEEK_R1',
                   'ZAI_GLM_5_1', 'OX_ALPHA', 'UNION_ALPHA', 'ABACUS_DRACARYS',
+                  'CLAUDE_V5_5_OPUS_THINKING',
                   )
 class LLMName(ApiEnum):
     OPENAI_GPT3_5 = 'OPENAI_GPT3_5'
@@ -642,6 +645,7 @@ class LLMName(ApiEnum):
     OPENAI_GPT6_ASTRA = 'OPENAI_GPT6_ASTRA'
     OPENAI_GPT6_SOL = 'OPENAI_GPT6_SOL'
     OPENAI_GPT6_LUNA = 'OPENAI_GPT6_LUNA'
+    OPENAI_GPT6_1_SOL = 'OPENAI_GPT6_1_SOL'
     CLAUDE_V3_HAIKU = 'CLAUDE_V3_HAIKU'
     CLAUDE_V3_OPUS = 'CLAUDE_V3_OPUS'
     CLAUDE_V3_5_HAIKU = 'CLAUDE_V3_5_HAIKU'
@@ -657,7 +661,9 @@ class LLMName(ApiEnum):
     CLAUDE_V4_7_OPUS = 'CLAUDE_V4_7_OPUS'
     CLAUDE_V4_8_OPUS = 'CLAUDE_V4_8_OPUS'
     CLAUDE_V5_OPUS = 'CLAUDE_V5_OPUS'
+    CLAUDE_V5_5_OPUS = 'CLAUDE_V5_5_OPUS'
     CLAUDE_V5_5_OPUS_THINKING = 'CLAUDE_V5_5_OPUS_THINKING'
+    CLAUDE_V5_5_SONNET = 'CLAUDE_V5_5_SONNET'
     CLAUDE_V5_FABLE = 'CLAUDE_V5_FABLE'
     CLAUDE_V5_1_FABLE = 'CLAUDE_V5_1_FABLE'
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'

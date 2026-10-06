@@ -1,0 +1,92 @@
+abacusai.project_subscription_schedule
+======================================
+
+.. py:module:: abacusai.project_subscription_schedule
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.project_subscription_schedule.ProjectSubscriptionSchedule
+
+
+Module Contents
+---------------
+
+.. py:class:: ProjectSubscriptionSchedule(client, name=None, kind=None, cadence=None, daemonTaskId=None, lastRunLifecycle=None, lastRunAt=None, webhookUrl=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One schedule that wakes a project's coordinator (its check-in or a named task)
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: Display name.
+   :type name: str
+   :param kind: heartbeat or task.
+   :type kind: str
+   :param cadence: Human-readable cadence, e.g. "daily at 09:00" or "on event".
+   :type cadence: str
+   :param daemonTaskId: The backing scheduled task.
+   :type daemonTaskId: str
+   :param lastRunLifecycle: Lifecycle of the newest run, when any.
+   :type lastRunLifecycle: str
+   :param lastRunAt: ISO-8601 time of the newest run, when any.
+   :type lastRunAt: str
+   :param webhookUrl: Signed URL that fires an event task.
+   :type webhookUrl: str
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: kind
+      :value: None
+
+
+
+   .. py:attribute:: cadence
+      :value: None
+
+
+
+   .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: last_run_lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: last_run_at
+      :value: None
+
+
+
+   .. py:attribute:: webhook_url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

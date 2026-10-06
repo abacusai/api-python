@@ -1,0 +1,64 @@
+abacusai.project_memory
+=======================
+
+.. py:module:: abacusai.project_memory
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.project_memory.ProjectMemory
+
+
+Module Contents
+---------------
+
+.. py:class:: ProjectMemory(client, progress=None, learnings=None, decisions=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The shared memory files of an AGENT_COORDINATOR project (the project's Context card)
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param progress: PROGRESS.md, what was done run by run.
+   :type progress: str
+   :param learnings: LEARNINGS.md, what turned out to be true about the codebase, data or domain.
+   :type learnings: str
+   :param decisions: DECISIONS.md, choices made and why.
+   :type decisions: str
+
+
+   .. py:attribute:: progress
+      :value: None
+
+
+
+   .. py:attribute:: learnings
+      :value: None
+
+
+
+   .. py:attribute:: decisions
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

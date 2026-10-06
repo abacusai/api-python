@@ -1,0 +1,71 @@
+abacusai.project_subscription_channel
+=====================================
+
+.. py:module:: abacusai.project_subscription_channel
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.project_subscription_channel.ProjectSubscriptionChannel
+
+
+Module Contents
+---------------
+
+.. py:class:: ProjectSubscriptionChannel(client, channel=None, label=None, secret=None, webhookUrl=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One inbound event channel (GitHub / webhook) wired to a project's coordinator
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param channel: github or webhook.
+   :type channel: str
+   :param label: Display label (repo name or the label given on add).
+   :type label: str
+   :param secret: Signing / shared secret to configure on the sending side.
+   :type secret: str
+   :param webhookUrl: Signed URL the sending side posts to.
+   :type webhookUrl: str
+
+
+   .. py:attribute:: channel
+      :value: None
+
+
+
+   .. py:attribute:: label
+      :value: None
+
+
+
+   .. py:attribute:: secret
+      :value: None
+
+
+
+   .. py:attribute:: webhook_url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

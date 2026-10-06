@@ -1,0 +1,71 @@
+abacusai.audio_listener_calendar_events
+=======================================
+
+.. py:module:: abacusai.audio_listener_calendar_events
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_calendar_events.AudioListenerCalendarEvents
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerCalendarEvents(client, providers=None, events=None, startMs=None, endMs=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The meetings on the user's connected calendars in a window, for the Listener.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param providers: Each calendar provider (google, outlook): whether it is connected, its account, and an error if it could not be read.
+   :type providers: list
+   :param events: The meetings in the window, by start time, from every connected calendar.
+   :type events: list
+   :param startMs: The start of the window read, epoch milliseconds.
+   :type startMs: int
+   :param endMs: The end of the window read, epoch milliseconds.
+   :type endMs: int
+
+
+   .. py:attribute:: providers
+      :value: None
+
+
+
+   .. py:attribute:: events
+      :value: None
+
+
+
+   .. py:attribute:: start_ms
+      :value: None
+
+
+
+   .. py:attribute:: end_ms
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

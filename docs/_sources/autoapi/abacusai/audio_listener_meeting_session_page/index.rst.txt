@@ -1,0 +1,57 @@
+abacusai.audio_listener_meeting_session_page
+============================================
+
+.. py:module:: abacusai.audio_listener_meeting_session_page
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_meeting_session_page.AudioListenerMeetingSessionPage
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerMeetingSessionPage(client, meeting=None, start=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A page of every session of one calendar meeting in the Listener.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param meeting: The meeting (title, provider, recurring, session_count, last_created_at_ms) with this page of its sessions, newest first; null when the session belongs to no recent meeting.
+   :type meeting: dict
+   :param start: The index of the page's first session.
+   :type start: int
+
+
+   .. py:attribute:: meeting
+      :value: None
+
+
+
+   .. py:attribute:: start
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

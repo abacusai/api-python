@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -126,6 +126,12 @@ Module Contents
    :type recalledMemoryBuckets: list
    :param memoryFeedback: The user's feedback on this turn's saved/applied memories, keyed '{action}:{bucket_key}'.
    :type memoryFeedback: dict
+   :param turnRuntimeSecs: DeepAgent turns only. Seconds this response took, from the start of the turn or from the message queued before it.
+   :type turnRuntimeSecs: int
+   :param turnTotalRuntimeSecs: DeepAgent turns only. On the last response of a turn split by messages queued mid-run, seconds the whole turn took.
+   :type turnTotalRuntimeSecs: int
+   :param turnStopped: DeepAgent turns only. Whether the user stopped the turn before it finished.
+   :type turnStopped: bool
 
 
    .. py:attribute:: role
@@ -379,6 +385,21 @@ Module Contents
 
 
    .. py:attribute:: memory_feedback
+      :value: None
+
+
+
+   .. py:attribute:: turn_runtime_secs
+      :value: None
+
+
+
+   .. py:attribute:: turn_total_runtime_secs
+      :value: None
+
+
+
+   .. py:attribute:: turn_stopped
       :value: None
 
 

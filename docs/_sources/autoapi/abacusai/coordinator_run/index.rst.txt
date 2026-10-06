@@ -1,0 +1,92 @@
+abacusai.coordinator_run
+========================
+
+.. py:module:: abacusai.coordinator_run
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.coordinator_run.CoordinatorRun
+
+
+Module Contents
+---------------
+
+.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A DeepAgent run a project's coordinator agent delegated (the project's Active Work rail)
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param taskId: The coordinator's id for the run.
+   :type taskId: str
+   :param title: Short title of the brief.
+   :type title: str
+   :param state: starting, running, finished, cancelled or gone.
+   :type state: str
+   :param startedAt: ISO-8601 UTC time the run was started.
+   :type startedAt: str
+   :param deploymentConversationId: The project conversation the run happens in.
+   :type deploymentConversationId: str
+   :param computePointsUsed: Credits the run has consumed so far, when known.
+   :type computePointsUsed: int
+   :param hasDeliverables: Whether the run declared deliverable files.
+   :type hasDeliverables: bool
+
+
+   .. py:attribute:: task_id
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: state
+      :value: None
+
+
+
+   .. py:attribute:: started_at
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: compute_points_used
+      :value: None
+
+
+
+   .. py:attribute:: has_deliverables
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

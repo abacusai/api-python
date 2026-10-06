@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.115'
+      :value: '1.4.116'
 
 
 
@@ -2812,7 +2812,7 @@ Module Contents
 
       Gets a secret. The secret value is only returned when called from an Abacus-managed
 
-      environment (an agent, usercode runtime, or hosted notebook owned by your organization, the
+      environment (an agent, DeepAgent computer, usercode runtime, or hosted notebook owned by your organization, the
       code server testing an organization administrator's usercode tool, or the organization's system
       API key); otherwise the value is masked. Secrets restricted
       to specific user groups are only readable by members of those groups, organization admins,
@@ -2946,6 +2946,20 @@ Module Contents
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
+
+
+
+   .. py:method:: get_deployment_conversation_event_segments(deployment_conversation_id, conversation_sequence_number)
+
+      Gets the full segments of one event of a deployment conversation, for a turn that get_deployment_conversation trimmed.
+
+      :param deployment_conversation_id: Unique ID of the conversation.
+      :type deployment_conversation_id: str
+      :param conversation_sequence_number: The sequence number (message index) of the event.
+      :type conversation_sequence_number: int
+
+      :returns: The event with its full, untrimmed segments.
+      :rtype: DeploymentConversationEvent
 
 
 

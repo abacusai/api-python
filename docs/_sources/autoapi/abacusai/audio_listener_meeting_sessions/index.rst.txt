@@ -1,0 +1,50 @@
+abacusai.audio_listener_meeting_sessions
+========================================
+
+.. py:module:: abacusai.audio_listener_meeting_sessions
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_meeting_sessions.AudioListenerMeetingSessions
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerMeetingSessions(client, meetings=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The user's recent calendar meetings in the Listener, each with its sessions.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param meetings: Newest first: title, provider, recurring, session_count, last_created_at_ms and the newest sessions (id, name, created_at_ms).
+   :type meetings: list
+
+
+   .. py:attribute:: meetings
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -1,0 +1,55 @@
+abacusai.audio_listener_session_meeting
+=======================================
+
+.. py:module:: abacusai.audio_listener_session_meeting
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_session_meeting.AudioListenerSessionMeeting
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerSessionMeeting(client, meeting=None, brief={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The calendar event a Listener session is attached to, and the brief of its previous meeting.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param meeting: The event as the session keeps it (event_ref, provider, title, start_ms, end_ms, recurring); null when detached.
+   :type meeting: dict
+   :param brief: The previous session of the same meeting and what it left open.
+   :type brief: AudioListenerMeetingBrief
+
+
+   .. py:attribute:: meeting
+      :value: None
+
+
+
+   .. py:attribute:: brief
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

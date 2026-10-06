@@ -435,6 +435,8 @@ class DocstoreUtils:
     MULTI_MODE_OCR_TEXT = 'multi_mode_ocr_text'
     DOCUMENT_PROCESSING_CONFIG = 'document_processing_config'
     DOCUMENT_PROCESSING_VERSION = 'document_processing_version'
+    # the server's cap per _getDocstoreCurrentArchives call
+    CURRENT_ARCHIVES_BATCH_SIZE = 1000
 
     @staticmethod
     def get_archive_id(doc_id: str):
@@ -460,11 +462,14 @@ class DocstoreUtils:
 
     @classmethod
     def get_pandas_pages_df(cls, df, feature_group_version: str, doc_id_column: str, document_column: str,
-                            get_docstore_resource_bytes: Callable[..., bytes], get_document_processing_result_infos: Callable, max_workers: int = 10):
+                            get_docstore_resource_bytes: Callable[..., bytes], get_document_processing_result_infos: Callable, max_workers: int = 10,
+                            get_current_archives: Callable = None):
         from concurrent.futures import ThreadPoolExecutor
 
         import numpy as np
         import pandas as pd
+
+        from .client import ApiException
 
         chunk_size = 10 * 1024 * 1024
 
@@ -537,9 +542,8 @@ class DocstoreUtils:
         def download_archive_chunk(offset: int, size: int, archive_id: str):
             return get_docstore_resource_bytes(feature_group_version, cls.PAGE_DATA, archive_id, offset=offset, size=size)
 
-        pages_list = []
-
-        for archive_id, archive_group_df in group_by_archive:
+        def load_archive_pages(archive_id: str, doc_id_pages) -> List[tuple]:
+            """[(doc_id, page)] for doc_id_pages [(doc_id, pages_ref)] from one archive."""
             load_pages_args = []
             min_offset = None
             max_offset = None
@@ -547,13 +551,13 @@ class DocstoreUtils:
                 feature_group_version, cls.PAGES_ZIP_METADATA, archive_id)
             pages_metadata = json.loads(pages_metadata_bytes.decode('utf-8'))
 
-            for doc_id, pages_ref in archive_group_df[[doc_id_column, document_column]].values:
+            for doc_id, pages_ref in doc_id_pages:
                 if not pages_ref:
                     continue
                 for page in range(pages_ref[cls.FIRST_PAGE], pages_ref[cls.LAST_PAGE] + 1):
                     page_id = cls.get_page_id(doc_id, page)
                     offset, size = pages_metadata[page_id]
-                    load_pages_args.append((offset, size))
+                    load_pages_args.append((doc_id, offset, size))
                     if min_offset is None:
                         min_offset = offset
                     if max_offset is None:
@@ -570,9 +574,60 @@ class DocstoreUtils:
 
             archive_bytes = b''.join(archive_chunks)
 
-            for offset, size in load_pages_args:
-                pages_list.append(
-                    load_page(archive_bytes, offset - min_offset, size))
+            return [(doc_id, load_page(archive_bytes, offset - min_offset, size))
+                    for doc_id, offset, size in load_pages_args]
+
+        def load_pages_from_current_archives(archive_id: str, doc_id_pages, missing: Exception) -> List[dict]:
+            """Pages of doc_id_pages, whose archive is gone, from the archives that now hold those documents, each page
+            carrying the requested doc_id. Re-raises missing when a document cannot be resolved or read."""
+            doc_id_pages = [(doc_id, pages_ref)
+                            for doc_id, pages_ref in doc_id_pages if pages_ref]
+            content_hashes = sorted({cls.get_content_hash(doc_id)
+                                    for doc_id, _ in doc_id_pages})
+            # Best effort, like the server's own fallback: any failure reports the original miss.
+            try:
+                current = {}
+                for i in range(0, len(content_hashes), cls.CURRENT_ARCHIVES_BATCH_SIZE):
+                    current.update(get_current_archives(
+                        content_hashes[i:i + cls.CURRENT_ARCHIVES_BATCH_SIZE]) or {})
+            except Exception:
+                raise missing from None
+            by_archive, requested_doc_ids = {}, {}
+            for doc_id, pages_ref in doc_id_pages:
+                current_archive_id = current.get(cls.get_content_hash(doc_id))
+                if not current_archive_id or current_archive_id == archive_id:
+                    raise missing
+                current_doc_id = doc_id.replace(
+                    archive_id, current_archive_id, 1)
+                by_archive.setdefault(current_archive_id, []).append(
+                    (current_doc_id, pages_ref))
+                requested_doc_ids[current_doc_id] = doc_id
+            pages = []
+            for current_archive_id, current_doc_id_pages in by_archive.items():
+                try:
+                    archive_pages = load_archive_pages(
+                        current_archive_id, current_doc_id_pages)
+                except Exception:
+                    raise missing from None
+                pages.extend({**page, cls.DOC_ID: requested_doc_ids[current_doc_id]}
+                             for current_doc_id, page in archive_pages)
+            return pages
+
+        pages_list = []
+
+        for archive_id, archive_group_df in group_by_archive:
+            doc_id_pages = archive_group_df[[
+                doc_id_column, document_column]].values
+            try:
+                archive_pages = [page for _, page in load_archive_pages(
+                    archive_id, doc_id_pages)]
+            except ApiException as missing:
+                if missing.http_status != 404 or not get_current_archives:
+                    raise
+                # The archive is gone (its dataset version expired): read its documents from the archives that now hold them.
+                archive_pages = load_pages_from_current_archives(
+                    archive_id, doc_id_pages, missing)
+            pages_list.extend(archive_pages)
 
         pages_df = pd.DataFrame(pages_list)
         pages_df = pages_df.replace({np.nan: None})
@@ -584,14 +639,16 @@ class DocstoreUtils:
 
     @classmethod
     def get_pandas_documents_df(cls, df, feature_group_version: str, doc_id_column: str, document_column: str,
-                                get_docstore_resource_bytes: Callable, get_document_processing_result_infos: Callable, max_workers: int = 10):
+                                get_docstore_resource_bytes: Callable, get_document_processing_result_infos: Callable, max_workers: int = 10,
+                                get_current_archives: Callable = None):
         pages_ref_column = f'__{document_column}'
         original_columns = df.columns
 
         # Re-name page_ids column so that the generated document column does not have the same name
         df = df.rename(columns={document_column: pages_ref_column})
         pages_df = cls.get_pandas_pages_df(df, feature_group_version, doc_id_column, pages_ref_column,
-                                           get_docstore_resource_bytes, get_document_processing_result_infos, max_workers)
+                                           get_docstore_resource_bytes, get_document_processing_result_infos, max_workers,
+                                           get_current_archives=get_current_archives)
 
         # pages_df will have "doc_id" as column name which can be different from doc_id_column
         pages_df = pages_df.rename(columns={cls.DOC_ID: doc_id_column})

@@ -308,7 +308,12 @@ class FeatureGroupVersion(AbstractApiClass):
                                                     'documentProcessingVersion': document_processing_version},
                                               is_sync=True)
 
+        def get_current_archives(content_hash_list):
+            return self.client._call_api('_getDocstoreCurrentArchives', 'POST', retry_500=True,
+                                         body={'featureGroupVersion': feature_group_version, 'contentHashList': content_hash_list})
+
         feature_group_version = self.id
         df = self.load_as_pandas(max_workers=max_workers)
         return DocstoreUtils.get_pandas_documents_df(df, feature_group_version, doc_id_column, document_column,
-                                                     get_docstore_resource_bytes, get_document_processing_result_infos, max_workers=max_workers)
+                                                     get_docstore_resource_bytes, get_document_processing_result_infos, max_workers=max_workers,
+                                                     get_current_archives=get_current_archives)

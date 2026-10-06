@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None, exp=None)
+.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None, exp=None, abacusaibotLiteSignup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type externalServiceForRoles: str
    :param exp: The logged-out experiment arm assigned to the visitor, if any.
    :type exp: str
+   :param abacusaibotLiteSignup: Whether AbacusAI Bot sign-ups go to the lightweight /app/signup page.
+   :type abacusaibotLiteSignup: bool
 
 
    .. py:attribute:: logo
@@ -64,6 +66,11 @@ Module Contents
 
 
    .. py:attribute:: exp
+      :value: None
+
+
+
+   .. py:attribute:: abacusaibot_lite_signup
       :value: None
 
 

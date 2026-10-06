@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None)
+.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None, projectMode=None, coordinatorBotId=None, coordinatorDeploymentConversationId=None, coordinatorActiveRuns=None, coordinatorLastRunAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,16 @@ Module Contents
    :type preferences: dict
    :param orchestratorDeploymentConversationId: The ID of the orchestrator deployment conversation.
    :type orchestratorDeploymentConversationId: id
+   :param projectMode: SHARED_WORKSPACE (default) or AGENT_COORDINATOR (one coordinator agent runs the project).
+   :type projectMode: str
+   :param coordinatorBotId: The coordinator agent of an AGENT_COORDINATOR project; None otherwise.
+   :type coordinatorBotId: id
+   :param coordinatorDeploymentConversationId: The coordinator agent's conversation; None otherwise.
+   :type coordinatorDeploymentConversationId: id
+   :param coordinatorActiveRuns: Delegated runs of the coordinator still open (starting or running); None for other projects.
+   :type coordinatorActiveRuns: int
+   :param coordinatorLastRunAt: ISO-8601 UTC start time of the coordinator's most recent delegated run; None if it has none.
+   :type coordinatorLastRunAt: str
 
 
    .. py:attribute:: chatllm_project_id
@@ -99,6 +109,31 @@ Module Contents
 
 
    .. py:attribute:: orchestrator_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: project_mode
+      :value: None
+
+
+
+   .. py:attribute:: coordinator_bot_id
+      :value: None
+
+
+
+   .. py:attribute:: coordinator_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: coordinator_active_runs
+      :value: None
+
+
+
+   .. py:attribute:: coordinator_last_run_at
       :value: None
 
 

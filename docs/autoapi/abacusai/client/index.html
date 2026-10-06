@@ -72,7 +72,15 @@
 <li class="toctree-l3"><a class="reference internal" href="../app_user_group/index.html">abacusai.app_user_group</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_gen_settings/index.html">abacusai.audio_gen_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_calendar_events/index.html">abacusai.audio_listener_calendar_events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_carry_over/index.html">abacusai.audio_listener_carry_over</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_export_settings/index.html">abacusai.audio_listener_export_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_brief/index.html">abacusai.audio_listener_meeting_brief</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_session_page/index.html">abacusai.audio_listener_meeting_session_page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_sessions/index.html">abacusai.audio_listener_meeting_sessions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_template/index.html">abacusai.audio_listener_meeting_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_feedback/index.html">abacusai.audio_listener_session_feedback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_meeting/index.html">abacusai.audio_listener_session_meeting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template/index.html">abacusai.audio_listener_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template_file/index.html">abacusai.audio_listener_template_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template_selection/index.html">abacusai.audio_listener_template_selection</a></li>
@@ -130,6 +138,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../conversation_and_project_search_results/index.html">abacusai.conversation_and_project_search_results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../conversation_credits/index.html">abacusai.conversation_credits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../coordinator_run/index.html">abacusai.coordinator_run</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cowork_desktop_folder/index.html">abacusai.cowork_desktop_folder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cowork_dispatch_attachment/index.html">abacusai.cowork_dispatch_attachment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cowork_dispatch_message/index.html">abacusai.cowork_dispatch_message</a></li>
@@ -332,6 +341,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../project_feature_group/index.html">abacusai.project_feature_group</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_feature_group_schema/index.html">abacusai.project_feature_group_schema</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_feature_group_schema_version/index.html">abacusai.project_feature_group_schema_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_memory/index.html">abacusai.project_memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_subscription_channel/index.html">abacusai.project_subscription_channel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_subscription_schedule/index.html">abacusai.project_subscription_schedule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_subscriptions/index.html">abacusai.project_subscriptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html">abacusai.project_validation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html">abacusai.python_function</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function_validator/index.html">abacusai.python_function_validator</a></li>
@@ -1184,7 +1197,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.115'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.116'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4298,7 +4311,7 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_organization_secret">
 <span class="sig-name descname"><span class="pre">get_organization_secret</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">secret_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_organization_secret" title="Link to this definition"></a></dt>
 <dd><p>Gets a secret. The secret value is only returned when called from an Abacus-managed</p>
-<p>environment (an agent, usercode runtime, or hosted notebook owned by your organization, the
+<p>environment (an agent, DeepAgent computer, usercode runtime, or hosted notebook owned by your organization, the
 code server testing an organization administrator’s usercode tool, or the organization’s system
 API key); otherwise the value is masked. Secrets restricted
 to specific user groups are only readable by members of those groups, organization admins,
@@ -4467,6 +4480,26 @@ the requesting user.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../deployment_conversation/index.html#abacusai.deployment_conversation.DeploymentConversation" title="abacusai.deployment_conversation.DeploymentConversation">DeploymentConversation</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_deployment_conversation_event_segments">
+<span class="sig-name descname"><span class="pre">get_deployment_conversation_event_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation_sequence_number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_deployment_conversation_event_segments" title="Link to this definition"></a></dt>
+<dd><p>Gets the full segments of one event of a deployment conversation, for a turn that get_deployment_conversation trimmed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Unique ID of the conversation.</p></li>
+<li><p><strong>conversation_sequence_number</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The sequence number (message index) of the event.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The event with its full, untrimmed segments.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../deployment_conversation_event/index.html#abacusai.deployment_conversation_event.DeploymentConversationEvent" title="abacusai.deployment_conversation_event.DeploymentConversationEvent">DeploymentConversationEvent</a></p>
 </dd>
 </dl>
 </dd></dl>
