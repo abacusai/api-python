@@ -14,12 +14,13 @@ class HealthDataSource(AbstractApiClass):
             errorDetail (str): Why this source is not delivering what it should. Set when status is 'error', and also on an 'active' source that the provider has only partly authorized — the connection works and some data flows, but a whole category of it never will until the user re-grants (see ingestion._missing_scope_advisory). Clients must branch on `status` for severity rather than treating the presence of this field as failure.
             connectedAt (str): When the source was connected.
             lastSyncedAt (str): Last successful sync time.
-            isLiveSync (bool): Whether this source is refreshed by pulling the aggregator, as opposed to not being refreshable at all. Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
+            isLiveSync (bool): Whether the server keeps this source current on its own — by pulling the aggregator, or by receiving the provider's pushes (a Garmin connected directly) — as opposed to the phone feeding it or nothing feeding it. A client treats such a row as a live connection; asking the server to sync it is always safe (a push-fed row answers with nothing to pull). Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, and a Garmin row is live whether Terra pulls it or Garmin pushes it, so clients must branch on this rather than on a hardcoded provider list.
             isImported (bool): Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Such a row reports is_live_sync False, and this is what lets a client say WHY — readings that never came from a device, rather than a connection that broke — which only the server can tell, since the fact behind it (the absent aggregator_ref) is never exposed.
+            isDeviceUpload (bool): Whether this source is fed by our own app reading the phone's health store and uploading (Apple Health on the HealthKit-direct path). Such a row reports is_live_sync False — there is nothing to pull, the upload is the whole feed — yet it is a live connection: a client treats it as connected and refreshes it by uploading, never by asking the server to sync.
             errorKind (str): `error_detail` as an identifier a client can branch on exactly, instead of inferring it from `status` and `provider`: awaiting_first_data (a phone store connected under 48h ago with nothing delivered yet), never_delivered (connected, nothing has ever arrived), provider_permission (the provider refused access or the consent granted no data scope), partial_scope (active, but a permission keeps one category of data from arriving), connection_lost, sync_failed, or unknown for a sentence written before these were fixed. Null when `error_detail` is null.
     """
 
-    def __init__(self, client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None, errorKind=None):
+    def __init__(self, client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None, isDeviceUpload=None, errorKind=None):
         super().__init__(client, healthDataSourceId)
         self.health_data_source_id = healthDataSourceId
         self.provider = provider
@@ -30,12 +31,13 @@ class HealthDataSource(AbstractApiClass):
         self.last_synced_at = lastSyncedAt
         self.is_live_sync = isLiveSync
         self.is_imported = isImported
+        self.is_device_upload = isDeviceUpload
         self.error_kind = errorKind
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'health_data_source_id': repr(self.health_data_source_id), f'provider': repr(self.provider), f'kind': repr(self.kind), f'status': repr(self.status), f'error_detail': repr(self.error_detail), f'connected_at': repr(
-            self.connected_at), f'last_synced_at': repr(self.last_synced_at), f'is_live_sync': repr(self.is_live_sync), f'is_imported': repr(self.is_imported), f'error_kind': repr(self.error_kind)}
+            self.connected_at), f'last_synced_at': repr(self.last_synced_at), f'is_live_sync': repr(self.is_live_sync), f'is_imported': repr(self.is_imported), f'is_device_upload': repr(self.is_device_upload), f'error_kind': repr(self.error_kind)}
         class_name = "HealthDataSource"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -48,6 +50,6 @@ class HealthDataSource(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'health_data_source_id': self.health_data_source_id, 'provider': self.provider, 'kind': self.kind, 'status': self.status, 'error_detail': self.error_detail,
-                'connected_at': self.connected_at, 'last_synced_at': self.last_synced_at, 'is_live_sync': self.is_live_sync, 'is_imported': self.is_imported, 'error_kind': self.error_kind}
+        resp = {'health_data_source_id': self.health_data_source_id, 'provider': self.provider, 'kind': self.kind, 'status': self.status, 'error_detail': self.error_detail, 'connected_at': self.connected_at,
+                'last_synced_at': self.last_synced_at, 'is_live_sync': self.is_live_sync, 'is_imported': self.is_imported, 'is_device_upload': self.is_device_upload, 'error_kind': self.error_kind}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

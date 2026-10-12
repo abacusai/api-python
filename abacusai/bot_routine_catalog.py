@@ -7,7 +7,7 @@ class BotRoutineCatalog(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            routines (list): The routines, in display order (id/title/description/avatar/color/categories/name/schedule/prompt, plus required_service and inputs where they apply).
+            routines (list): The routines, in display order (id/title/description/avatar/color/categories/name/schedule/prompt, plus inputs, and for mail/calendar routines required_service_type (MAIL / CALENDAR), required_service (the connector id it defaults to), available, connectors ([{service, scopes}]) and unavailable_reason, where they apply).
             categories (list): The filter pills in display order (id/label); 'all' is the default view.
     """
 

@@ -431,6 +431,7 @@ class ApplicationConnectorType(ApiEnum):
     HUBSPOT = 'HUBSPOT'
     TEAMSSCRAPER = 'TEAMSSCRAPER'
     GITHUBUSER = 'GITHUBUSER'
+    GITHUBBOT = 'GITHUBBOT'
     GITLABUSER = 'GITLABUSER'
     OKTASAML = 'OKTASAML'
     BOX = 'BOX'
@@ -496,6 +497,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.CONFLUENCE,
             cls.BOX,
             cls.GITHUBUSER,
+            cls.GITHUBBOT,
             cls.GITLABUSER,
             cls.ODBC,
             cls.DBC,
@@ -664,6 +666,7 @@ class LLMName(ApiEnum):
     CLAUDE_V5_5_OPUS = 'CLAUDE_V5_5_OPUS'
     CLAUDE_V5_5_OPUS_THINKING = 'CLAUDE_V5_5_OPUS_THINKING'
     CLAUDE_V5_5_SONNET = 'CLAUDE_V5_5_SONNET'
+    CLAUDE_V5_5_HAIKU = 'CLAUDE_V5_5_HAIKU'
     CLAUDE_V5_FABLE = 'CLAUDE_V5_FABLE'
     CLAUDE_V5_1_FABLE = 'CLAUDE_V5_1_FABLE'
     GEMINI_1_5_PRO = 'GEMINI_1_5_PRO'

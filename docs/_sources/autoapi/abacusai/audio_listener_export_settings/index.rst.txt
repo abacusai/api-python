@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None)
+.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None, isWebChatEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,6 +34,8 @@ Module Contents
    :type chatllmProjectId: id
    :param isOrgEnabled: Whether the organization allows transcript export at all.
    :type isOrgEnabled: bool
+   :param isWebChatEnabled: Whether the organization allows continuing a session as a chat on the web.
+   :type isWebChatEnabled: bool
 
 
    .. py:attribute:: is_enabled
@@ -57,6 +59,11 @@ Module Contents
 
 
    .. py:attribute:: is_org_enabled
+      :value: None
+
+
+
+   .. py:attribute:: is_web_chat_enabled
       :value: None
 
 

@@ -32,6 +32,7 @@ from .audio_listener_meeting_sessions import AudioListenerMeetingSessions
 from .audio_listener_meeting_template import AudioListenerMeetingTemplate
 from .audio_listener_session_feedback import AudioListenerSessionFeedback
 from .audio_listener_session_meeting import AudioListenerSessionMeeting
+from .audio_listener_speaker import AudioListenerSpeaker
 from .audio_listener_template import AudioListenerTemplate
 from .audio_listener_template_file import AudioListenerTemplateFile
 from .audio_listener_template_selection import AudioListenerTemplateSelection
@@ -96,6 +97,8 @@ from .custom_metric import CustomMetric
 from .custom_metric_version import CustomMetricVersion
 from .custom_train_function_info import CustomTrainFunctionInfo
 from .daemon_task_conversation import DaemonTaskConversation
+from .daemon_task_event import DaemonTaskEvent
+from .daemon_task_events import DaemonTaskEvents
 from .daemon_task_instance import DaemonTaskInstance
 from .daemon_task_permissions import DaemonTaskPermissions
 from .data_consistency_duplication import DataConsistencyDuplication
@@ -365,4 +368,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.116"
+__version__ = "1.4.117"

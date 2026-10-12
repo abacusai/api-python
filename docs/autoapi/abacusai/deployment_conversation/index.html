@@ -81,6 +81,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_template/index.html">abacusai.audio_listener_meeting_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_feedback/index.html">abacusai.audio_listener_session_feedback</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_meeting/index.html">abacusai.audio_listener_session_meeting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_speaker/index.html">abacusai.audio_listener_speaker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template/index.html">abacusai.audio_listener_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template_file/index.html">abacusai.audio_listener_template_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template_selection/index.html">abacusai.audio_listener_template_selection</a></li>
@@ -146,6 +147,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../custom_metric_version/index.html">abacusai.custom_metric_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html">abacusai.custom_train_function_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../daemon_task_conversation/index.html">abacusai.daemon_task_conversation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../daemon_task_event/index.html">abacusai.daemon_task_event</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../daemon_task_events/index.html">abacusai.daemon_task_events</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../daemon_task_instance/index.html">abacusai.daemon_task_instance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../daemon_task_permissions/index.html">abacusai.daemon_task_permissions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_consistency_duplication/index.html">abacusai.data_consistency_duplication</a></li>
@@ -477,62 +480,62 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>deploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The unique identifier of the deployment conversation.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the deployment conversation.</p></li>
-<li><p><strong>deploymentId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment id associated with the deployment conversation.</p></li>
-<li><p><strong>ownerUserId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The user id of the owner of the deployment conversation.</p></li>
-<li><p><strong>ownerOrgId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The organization id of the owner of the deployment conversation.</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The timestamp at which the deployment conversation was created.</p></li>
-<li><p><strong>lastEventCreatedAt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The timestamp at which the most recent corresponding deployment conversation event was created at.</p></li>
-<li><p><strong>hasHistory</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the deployment conversation has any history.</p></li>
-<li><p><strong>externalSessionId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The external session id associated with the deployment conversation.</p></li>
-<li><p><strong>regenerateAttempt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The sequence number of regeneration. Not regenerated if 0.</p></li>
-<li><p><strong>externalApplicationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The external application id associated with the deployment conversation.</p></li>
-<li><p><strong>unusedDocumentUploadIds</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The list of unused document upload ids associated with the deployment conversation.</p></li>
-<li><p><strong>humanizeInstructions</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Instructions for humanizing the conversation.</p></li>
-<li><p><strong>conversationWarning</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Extra text associated with the deployment conversation (to show it at the bottom of chatbot).</p></li>
-<li><p><strong>conversationType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of the conversation, which depicts the application it caters to.</p></li>
-<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Additional backend information about the conversation.</p></li>
-<li><p><strong>hasAppCheckpoints</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the conversation may have saved app checkpoints (web app, web server, or mobile app versions, or it ran on the SuperComputer, whose project checkpoints are recorded per-path) — i.e. deleting it can destroy app versions. Set on list responses.</p></li>
-<li><p><strong>predictionOverrides</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Per-conversation prediction overrides; carries the last-used virtual ChatLLM model’s llm_name so the picker/URL can restore it on reopen.</p></li>
-<li><p><strong>llmDisplayName</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The display name of the LLM model used to generate the most recent response. Only used for system-created bots.</p></li>
-<li><p><strong>llmBotIcon</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The icon location of the LLM model used to generate the most recent response. Only used for system-created bots.</p></li>
-<li><p><strong>searchSuggestions</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – The list of search suggestions for the conversation.</p></li>
-<li><p><strong>chatllmTaskId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The chatllm task id associated with the deployment conversation.</p></li>
-<li><p><strong>chatllmProjectId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The chatllm project id associated with the deployment conversation.</p></li>
-<li><p><strong>chatllmProjectAccessible</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the viewer may open the associated project; false for a conversation shared directly with a viewer who is not part of its project.</p></li>
-<li><p><strong>verticalType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – For Expert (vertical) conversations, the owning vertical’s type (HEALTH / ROLE_PLAY / LEGAL); null for regular conversations. Lets the unified list mark Expert convos and pick their icon.</p></li>
-<li><p><strong>conversationStatus</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The status of the deployment conversation (used for deep agent conversations).</p></li>
-<li><p><strong>computerStatus</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The status of the computer associated with the deployment conversation (used for deep agent conversations).</p></li>
-<li><p><strong>filesystemStatus</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The status of the filesystem associated with the deployment conversation (used for deep agent conversations).</p></li>
-<li><p><strong>totalEvents</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The total number of events in the deployment conversation.</p></li>
-<li><p><strong>firstVisibleEventIndex</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The conversation_sequence_number of the first visible event, for FE pagination boundary.</p></li>
-<li><p><strong>contestNames</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Names of contests that this deployment is a part of.</p></li>
-<li><p><strong>daemonTaskId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The daemon task id associated with the deployment conversation.</p></li>
-<li><p><strong>sourceDaemonTaskId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The daemon task created from this conversation (latest with a hosted database when several were), set on task source conversations.</p></li>
-<li><p><strong>daemonTaskRunNumber</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The 1-based run number of this conversation within its daemon task, set only for conversations holding a single run.</p></li>
-<li><p><strong>parentDeploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The parent deployment conversation id associated with the deployment conversation.</p></li>
-<li><p><strong>sourceDeploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The conversation this one was forked from; also set for parallel/workspace copies, which have no parent conversation.</p></li>
-<li><p><strong>sharedHomeDirectory</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether this conversation is part of a shared-home-directory group — true if it has a parent conversation or at least one child conversation.</p></li>
-<li><p><strong>introMessage</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The intro message for the deployment conversation.</p></li>
-<li><p><strong>previewInfo</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – App preview info.</p></li>
-<li><p><strong>latestContext</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – dict containing a list of important segments for pagination in deepagent.</p></li>
-<li><p><strong>shareType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The sharing status of the deployment conversation (PUBLIC or PRIVATE).</p></li>
-<li><p><strong>isShared</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the owner has an active share on the conversation (org/public tier or any person/group grant). Set on list responses.</p></li>
-<li><p><strong>isArchived</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether the owner archived the conversation (hidden from the default lists).</p></li>
-<li><p><strong>pushNotificationsEnabled</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether push notifications are enabled for the deployment conversation.</p></li>
-<li><p><strong>platform</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The platform the conversation was created from (WEB, IOS, ANDROID).</p></li>
-<li><p><strong>agentType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of agent for the deployment conversation (e.g., MASTER_AGENT).</p></li>
-<li><p><strong>agentLifecycle</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).</p></li>
-<li><p><strong>orchestratorDeploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment conversation id of the orchestrating master agent, if this conversation is a worker in an agent swarm.</p></li>
-<li><p><strong>projectCreditsUsed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The total credits used by all the conversations in the project.</p></li>
-<li><p><strong>webAppProjectId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The web app project id associated with the deployment conversation, if any.</p></li>
-<li><p><strong>personalAgentComputerId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – For SuperComputer conversations, the personal agent computer (VM) this conversation is pinned to, if any.</p></li>
-<li><p><strong>scDeployedUrls</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – For SuperComputer conversations, the deployed URLs across the conversation’s shared-home family (derived at read time; entries carry url and recorded_at).</p></li>
-<li><p><strong>roleplayCharacter</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – For Role Play conversations, the minimal character display (name and image) attached so a viewer who does not own the private character can still see who they’re chatting with.</p></li>
-<li><p><strong>loopType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – For Media Studio conversations, the dedicated agentic loop the conversation is pinned to (e.g. ad_creation); null when unpinned or not Media Studio.</p></li>
-<li><p><strong>pendingTriggerType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Set while the conversation is paused waiting for a scheduled resume (e.g. TIMED); null once resumed.</p></li>
-<li><p><strong>nextTriggerCheckTime</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – When the scheduler will next resume the paused conversation; null when not paused.</p></li>
+<li><p><strong>deploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The unique identifier of the deployment conversation.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The name of the deployment conversation.</p></li>
+<li><p><strong>deploymentId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment id associated with the deployment conversation.</p></li>
+<li><p><strong>ownerUserId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The user id of the owner of the deployment conversation.</p></li>
+<li><p><strong>ownerOrgId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The organization id of the owner of the deployment conversation.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The timestamp at which the deployment conversation was created.</p></li>
+<li><p><strong>lastEventCreatedAt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The timestamp at which the most recent corresponding deployment conversation event was created at.</p></li>
+<li><p><strong>hasHistory</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether the deployment conversation has any history.</p></li>
+<li><p><strong>externalSessionId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The external session id associated with the deployment conversation.</p></li>
+<li><p><strong>regenerateAttempt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The sequence number of regeneration. Not regenerated if 0.</p></li>
+<li><p><strong>externalApplicationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The external application id associated with the deployment conversation.</p></li>
+<li><p><strong>unusedDocumentUploadIds</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em>]</em>) – The list of unused document upload ids associated with the deployment conversation.</p></li>
+<li><p><strong>humanizeInstructions</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>) – Instructions for humanizing the conversation.</p></li>
+<li><p><strong>conversationWarning</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Extra text associated with the deployment conversation (to show it at the bottom of chatbot).</p></li>
+<li><p><strong>conversationType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The type of the conversation, which depicts the application it caters to.</p></li>
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>) – Additional backend information about the conversation.</p></li>
+<li><p><strong>hasAppCheckpoints</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether the conversation may have saved app checkpoints (web app, web server, or mobile app versions, or it ran on the SuperComputer, whose project checkpoints are recorded per-path) — i.e. deleting it can destroy app versions. Set on list responses.</p></li>
+<li><p><strong>predictionOverrides</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>) – Per-conversation prediction overrides; carries the last-used virtual ChatLLM model’s llm_name so the picker/URL can restore it on reopen.</p></li>
+<li><p><strong>llmDisplayName</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The display name of the LLM model used to generate the most recent response. Only used for system-created bots.</p></li>
+<li><p><strong>llmBotIcon</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The icon location of the LLM model used to generate the most recent response. Only used for system-created bots.</p></li>
+<li><p><strong>searchSuggestions</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – The list of search suggestions for the conversation.</p></li>
+<li><p><strong>chatllmTaskId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The chatllm task id associated with the deployment conversation.</p></li>
+<li><p><strong>chatllmProjectId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The chatllm project id associated with the deployment conversation.</p></li>
+<li><p><strong>chatllmProjectAccessible</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether the viewer may open the associated project; false for a conversation shared directly with a viewer who is not part of its project.</p></li>
+<li><p><strong>verticalType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – For Expert (vertical) conversations, the owning vertical’s type (HEALTH / ROLE_PLAY / LEGAL); null for regular conversations. Lets the unified list mark Expert convos and pick their icon.</p></li>
+<li><p><strong>conversationStatus</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The status of the deployment conversation (used for deep agent conversations).</p></li>
+<li><p><strong>computerStatus</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The status of the computer associated with the deployment conversation (used for deep agent conversations).</p></li>
+<li><p><strong>filesystemStatus</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The status of the filesystem associated with the deployment conversation (used for deep agent conversations).</p></li>
+<li><p><strong>totalEvents</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The total number of events in the deployment conversation.</p></li>
+<li><p><strong>firstVisibleEventIndex</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The conversation_sequence_number of the first visible event, for FE pagination boundary.</p></li>
+<li><p><strong>contestNames</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em>]</em>) – Names of contests that this deployment is a part of.</p></li>
+<li><p><strong>daemonTaskId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The daemon task id associated with the deployment conversation.</p></li>
+<li><p><strong>sourceDaemonTaskId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The daemon task created from this conversation (latest with a hosted database when several were), set on task source conversations.</p></li>
+<li><p><strong>daemonTaskRunNumber</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The 1-based run number of this conversation within its daemon task, set only for conversations holding a single run.</p></li>
+<li><p><strong>parentDeploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The parent deployment conversation id associated with the deployment conversation.</p></li>
+<li><p><strong>sourceDeploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The conversation this one was forked from; also set for parallel/workspace copies, which have no parent conversation.</p></li>
+<li><p><strong>sharedHomeDirectory</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether this conversation is part of a shared-home-directory group — true if it has a parent conversation or at least one child conversation.</p></li>
+<li><p><strong>introMessage</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The intro message for the deployment conversation.</p></li>
+<li><p><strong>previewInfo</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>) – App preview info.</p></li>
+<li><p><strong>latestContext</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>) – dict containing a list of important segments for pagination in deepagent.</p></li>
+<li><p><strong>shareType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The sharing status of the deployment conversation (PUBLIC or PRIVATE).</p></li>
+<li><p><strong>isShared</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether the owner has an active share on the conversation (org/public tier or any person/group grant). Set on list responses.</p></li>
+<li><p><strong>isArchived</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether the owner archived the conversation (hidden from the default lists).</p></li>
+<li><p><strong>pushNotificationsEnabled</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether push notifications are enabled for the deployment conversation.</p></li>
+<li><p><strong>platform</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The platform the conversation was created from (WEB, IOS, ANDROID).</p></li>
+<li><p><strong>agentType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The type of agent for the deployment conversation (e.g., MASTER_AGENT).</p></li>
+<li><p><strong>agentLifecycle</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The lifecycle state of the agent (PENDING, STOPPED, COMPLETED).</p></li>
+<li><p><strong>orchestratorDeploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment conversation id of the orchestrating master agent, if this conversation is a worker in an agent swarm.</p></li>
+<li><p><strong>projectCreditsUsed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The total credits used by all the conversations in the project.</p></li>
+<li><p><strong>webAppProjectId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The web app project id associated with the deployment conversation, if any.</p></li>
+<li><p><strong>personalAgentComputerId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – For SuperComputer conversations, the personal agent computer (VM) this conversation is pinned to, if any.</p></li>
+<li><p><strong>scDeployedUrls</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – For SuperComputer conversations, the deployed URLs across the conversation’s shared-home family (derived at read time; entries carry url and recorded_at).</p></li>
+<li><p><strong>roleplayCharacter</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>) – For Role Play conversations, the minimal character display (name and image) attached so a viewer who does not own the private character can still see who they’re chatting with.</p></li>
+<li><p><strong>loopType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – For Media Studio conversations, the dedicated agentic loop the conversation is pinned to (e.g. ad_creation); null when unpinned or not Media Studio.</p></li>
+<li><p><strong>pendingTriggerType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Set while the conversation is paused waiting for a scheduled resume (e.g. TIMED); null once resumed.</p></li>
+<li><p><strong>nextTriggerCheckTime</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – When the scheduler will next resume the paused conversation; null when not paused.</p></li>
 <li><p><strong>history</strong> (<a class="reference internal" href="../deployment_conversation_event/index.html#abacusai.deployment_conversation_event.DeploymentConversationEvent" title="abacusai.deployment_conversation_event.DeploymentConversationEvent"><em>DeploymentConversationEvent</em></a>) – The history of the deployment conversation.</p></li>
 <li><p><strong>hostedArtifacts</strong> (<a class="reference internal" href="../hosted_artifact/index.html#abacusai.hosted_artifact.HostedArtifact" title="abacusai.hosted_artifact.HostedArtifact"><em>HostedArtifact</em></a>) – Artifacts that have been deployed by this conversation.</p></li>
 <li><p><strong>mobileBuildInfo</strong> (<a class="reference internal" href="../index.html#abacusai.MobileBuildInfo" title="abacusai.MobileBuildInfo"><em>MobileBuildInfo</em></a>) – List of mobile app builds with type, build URL, status, and IDs.</p></li>
@@ -853,7 +856,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -865,7 +868,7 @@
 <p>supports Slack only: the org bot token for a SLACK_TAG conversation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SLACK_TAG deployment conversation id used to resolve Slack context.</p>
+<dd class="field-odd"><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The SLACK_TAG deployment conversation id used to resolve Slack context.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The org-level connector with the authentication details.</p>
@@ -883,13 +886,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – External session ID of the conversation.</p></li>
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
-<li><p><strong>filter_intermediate_conversation_events</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, intermediate conversation events will be filtered out. Default is true.</p></li>
-<li><p><strong>get_unused_document_uploads</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, unused document uploads will be returned. Default is false.</p></li>
-<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The start index of the conversation.</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The limit of the conversation.</p></li>
-<li><p><strong>include_all_versions</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, includes all versions of the last bot message for version switching functionality.</p></li>
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – External session ID of the conversation.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
+<li><p><strong>filter_intermediate_conversation_events</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If true, intermediate conversation events will be filtered out. Default is true.</p></li>
+<li><p><strong>get_unused_document_uploads</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If true, unused document uploads will be returned. Default is false.</p></li>
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The start index of the conversation.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The limit of the conversation.</p></li>
+<li><p><strong>include_all_versions</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If True, includes all versions of the last bot message for version switching functionality.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -907,10 +910,10 @@
 <dd><p>Gets the full segments of one event of a deployment conversation, for a turn that get_deployment_conversation trimmed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>conversation_sequence_number</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The sequence number (message index) of the event.</p>
+<dd class="field-odd"><p><strong>conversation_sequence_number</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The sequence number (message index) of the event.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The event with its full, untrimmed segments.</p>
+<dd class="field-even"><p>The conversation event with its full, untrimmed segments.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../deployment_conversation_event/index.html#abacusai.deployment_conversation_event.DeploymentConversationEvent" title="abacusai.deployment_conversation_event.DeploymentConversationEvent">DeploymentConversationEvent</a></p>
@@ -924,7 +927,7 @@
 <dd><p>Gets a deployment conversation file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The path of the file to get.</p>
+<dd class="field-odd"><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The path of the file to get.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -935,7 +938,7 @@
 <dd><p>Delete a Deployment Conversation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -947,9 +950,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The external session id associated with the deployment conversation.</p></li>
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
-<li><p><strong>user_message_indices</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.</p></li>
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The external session id associated with the deployment conversation.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
+<li><p><strong>user_message_indices</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.</p></li>
 </ul>
 </dd>
 </dl>
@@ -962,12 +965,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>message_index</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The index of the deployment conversation message</p></li>
-<li><p><strong>is_useful</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If the message is useful. If true, the message is useful. If false, clear the useful flag.</p></li>
-<li><p><strong>is_not_useful</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.</p></li>
-<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Optional feedback on why the message is useful or not useful</p></li>
-<li><p><strong>feedback_type</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Optional feedback type</p></li>
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
+<li><p><strong>message_index</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The index of the deployment conversation message</p></li>
+<li><p><strong>is_useful</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If the message is useful. If true, the message is useful. If false, clear the useful flag.</p></li>
+<li><p><strong>is_not_useful</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.</p></li>
+<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Optional feedback on why the message is useful or not useful</p></li>
+<li><p><strong>feedback_type</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Optional feedback type</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
 </ul>
 </dd>
 </dl>
@@ -980,8 +983,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The new name of the conversation.</p></li>
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The new name of the conversation.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
 </ul>
 </dd>
 </dl>
@@ -993,7 +996,7 @@
 <dd><p>Export a Deployment Conversation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The external session id associated with the deployment conversation. One of deployment_conversation_id or external_session_id must be provided.</p>
+<dd class="field-odd"><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The external session id associated with the deployment conversation. One of deployment_conversation_id or external_session_id must be provided.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The deployment conversation html export.</p>
@@ -1012,7 +1015,7 @@
 Use with the conversation ID of a Deep Agent conversation to download all generated files locally.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Unique ID of the Deep Agent conversation whose artifacts to download.</p>
+<dd class="field-odd"><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Unique ID of the Deep Agent conversation whose artifacts to download.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1024,8 +1027,8 @@ Use with the conversation ID of a Deep Agent conversation to download all genera
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – External session ID of the conversation.</p></li>
-<li><p><strong>include_document_contents</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, include contents from uploaded documents in the generated messages.</p></li>
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – External session ID of the conversation.</p></li>
+<li><p><strong>include_document_contents</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If true, include contents from uploaded documents in the generated messages.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

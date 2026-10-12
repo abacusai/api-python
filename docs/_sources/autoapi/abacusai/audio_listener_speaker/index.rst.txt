@@ -1,0 +1,64 @@
+abacusai.audio_listener_speaker
+===============================
+
+.. py:module:: abacusai.audio_listener_speaker
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_speaker.AudioListenerSpeaker
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerSpeaker(client, lineIds=None, speaker=None, count=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The name the user gave far-end lines of a Listener session.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param lineIds: The lines named.
+   :type lineIds: list[int]
+   :param speaker: The name as it shows; none when it was taken back.
+   :type speaker: str
+   :param count: How many stored lines changed.
+   :type count: int
+
+
+   .. py:attribute:: line_ids
+      :value: None
+
+
+
+   .. py:attribute:: speaker
+      :value: None
+
+
+
+   .. py:attribute:: count
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

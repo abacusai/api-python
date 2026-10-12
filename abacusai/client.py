@@ -717,7 +717,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.116'
+    client_version = '1.4.117'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -2883,7 +2883,7 @@ class ReadOnlyClient(BaseApiClient):
             conversation_sequence_number (int): The sequence number (message index) of the event.
 
         Returns:
-            DeploymentConversationEvent: The event with its full, untrimmed segments."""
+            DeploymentConversationEvent: The conversation event with its full, untrimmed segments."""
         return self._proxy_request('getDeploymentConversationEventSegments', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'conversationSequenceNumber': conversation_sequence_number}, parse_type=DeploymentConversationEvent, is_sync=True)
 
     def get_deployment_conversation_file(self, deployment_conversation_id: str, file_path: str) -> io.BytesIO:

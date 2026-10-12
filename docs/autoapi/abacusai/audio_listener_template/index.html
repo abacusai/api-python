@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="abacusai.audio_listener_template_file" href="../audio_listener_template_file/index.html" />
-    <link rel="prev" title="abacusai.audio_listener_session_meeting" href="../audio_listener_session_meeting/index.html" /> 
+    <link rel="prev" title="abacusai.audio_listener_speaker" href="../audio_listener_speaker/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -81,6 +81,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_template/index.html">abacusai.audio_listener_meeting_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_feedback/index.html">abacusai.audio_listener_session_feedback</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_meeting/index.html">abacusai.audio_listener_session_meeting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_speaker/index.html">abacusai.audio_listener_speaker</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">abacusai.audio_listener_template</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
@@ -150,6 +151,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../custom_metric_version/index.html">abacusai.custom_metric_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html">abacusai.custom_train_function_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../daemon_task_conversation/index.html">abacusai.daemon_task_conversation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../daemon_task_event/index.html">abacusai.daemon_task_event</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../daemon_task_events/index.html">abacusai.daemon_task_events</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../daemon_task_instance/index.html">abacusai.daemon_task_instance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../daemon_task_permissions/index.html">abacusai.daemon_task_permissions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_consistency_duplication/index.html">abacusai.data_consistency_duplication</a></li>
@@ -477,18 +480,18 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>templateId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – builtin:&lt;key&gt; for a built-in, else the template’s id.</p></li>
-<li><p><strong>builtinKey</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The built-in’s key; absent for the user’s own templates.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The template’s name.</p></li>
-<li><p><strong>meetingType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – general, meetings, customers, hiring, learning or custom.</p></li>
-<li><p><strong>meetingBrief</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – What every job should know about this kind of meeting.</p></li>
-<li><p><strong>insightGuidelines</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – What insights focus on.</p></li>
-<li><p><strong>insightIntervalSecs</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Seconds between insights; 0 turns them off.</p></li>
-<li><p><strong>summaryFormat</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – How the summary is written; empty for the default structure.</p></li>
-<li><p><strong>isHidden</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A built-in the user hid.</p></li>
-<li><p><strong>isModified</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A built-in the user changed.</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – When the user’s row was created; absent for an unchanged built-in.</p></li>
-<li><p><strong>updatedAt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – When the user’s row last changed.</p></li>
+<li><p><strong>templateId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – builtin:&lt;key&gt; for a built-in, else the template’s id.</p></li>
+<li><p><strong>builtinKey</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The built-in’s key; absent for the user’s own templates.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The template’s name.</p></li>
+<li><p><strong>meetingType</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – general, meetings, customers, hiring, learning or custom.</p></li>
+<li><p><strong>meetingBrief</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – What every job should know about this kind of meeting.</p></li>
+<li><p><strong>insightGuidelines</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – What insights focus on.</p></li>
+<li><p><strong>insightIntervalSecs</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Seconds between insights; 0 turns them off.</p></li>
+<li><p><strong>summaryFormat</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – How the summary is written; empty for the default structure.</p></li>
+<li><p><strong>isHidden</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – A built-in the user hid.</p></li>
+<li><p><strong>isModified</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – A built-in the user changed.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – When the user’s row was created; absent for an unchanged built-in.</p></li>
+<li><p><strong>updatedAt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – When the user’s row last changed.</p></li>
 <li><p><strong>files</strong> (<a class="reference internal" href="../audio_listener_template_file/index.html#abacusai.audio_listener_template_file.AudioListenerTemplateFile" title="abacusai.audio_listener_template_file.AudioListenerTemplateFile"><em>AudioListenerTemplateFile</em></a>) – The template’s reference files, oldest first.</p></li>
 </ul>
 </dd>
@@ -577,7 +580,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -591,7 +594,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../audio_listener_session_meeting/index.html" class="btn btn-neutral float-left" title="abacusai.audio_listener_session_meeting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../audio_listener_speaker/index.html" class="btn btn-neutral float-left" title="abacusai.audio_listener_speaker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../audio_listener_template_file/index.html" class="btn btn-neutral float-right" title="abacusai.audio_listener_template_file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

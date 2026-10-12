@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,7 +34,7 @@ Module Contents
    :type isDaemonResumeReply: bool
    :param isTriggered: Whether this user message was injected by the scheduler to resume a paused conversation (e.g. a wait-for-condition check), rather than typed by the user.
    :type isTriggered: bool
-   :param triggerSource: For a triggered user message, what started it when it was not a scheduler resume (e.g. collaborator comments picked up by the agent).
+   :param triggerSource: For a server-started user message, what started it (collaborator comments picked up by the agent, or a personal agent's delegated brief with `type` bot_delegation and the brief as `task`).
    :type triggerSource: dict
    :param messageIndex: The index of the message in the conversation
    :type messageIndex: int
@@ -132,6 +132,10 @@ Module Contents
    :type turnTotalRuntimeSecs: int
    :param turnStopped: DeepAgent turns only. Whether the user stopped the turn before it finished.
    :type turnStopped: bool
+   :param mentions: Project coordinator chats only. Display names of the teammates this user message @mentions.
+   :type mentions: list
+   :param teamMessage: Project coordinator chats only. Whether this user message was posted for teammates with no agent turn.
+   :type teamMessage: bool
 
 
    .. py:attribute:: role
@@ -400,6 +404,16 @@ Module Contents
 
 
    .. py:attribute:: turn_stopped
+      :value: None
+
+
+
+   .. py:attribute:: mentions
+      :value: None
+
+
+
+   .. py:attribute:: team_message
       :value: None
 
 

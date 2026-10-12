@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None, errorKind=None)
+.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None, isDeviceUpload=None, errorKind=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,10 +38,12 @@ Module Contents
    :type connectedAt: str
    :param lastSyncedAt: Last successful sync time.
    :type lastSyncedAt: str
-   :param isLiveSync: Whether this source is refreshed by pulling the aggregator, as opposed to not being refreshable at all. Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
+   :param isLiveSync: Whether the server keeps this source current on its own — by pulling the aggregator, or by receiving the provider's pushes (a Garmin connected directly) — as opposed to the phone feeding it or nothing feeding it. A client treats such a row as a live connection; asking the server to sync it is always safe (a push-fed row answers with nothing to pull). Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, and a Garmin row is live whether Terra pulls it or Garmin pushes it, so clients must branch on this rather than on a hardcoded provider list.
    :type isLiveSync: bool
    :param isImported: Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Such a row reports is_live_sync False, and this is what lets a client say WHY — readings that never came from a device, rather than a connection that broke — which only the server can tell, since the fact behind it (the absent aggregator_ref) is never exposed.
    :type isImported: bool
+   :param isDeviceUpload: Whether this source is fed by our own app reading the phone's health store and uploading (Apple Health on the HealthKit-direct path). Such a row reports is_live_sync False — there is nothing to pull, the upload is the whole feed — yet it is a live connection: a client treats it as connected and refreshes it by uploading, never by asking the server to sync.
+   :type isDeviceUpload: bool
    :param errorKind: `error_detail` as an identifier a client can branch on exactly, instead of inferring it from `status` and `provider`: awaiting_first_data (a phone store connected under 48h ago with nothing delivered yet), never_delivered (connected, nothing has ever arrived), provider_permission (the provider refused access or the consent granted no data scope), partial_scope (active, but a permission keeps one category of data from arriving), connection_lost, sync_failed, or unknown for a sentence written before these were fixed. Null when `error_detail` is null.
    :type errorKind: str
 
@@ -87,6 +89,11 @@ Module Contents
 
 
    .. py:attribute:: is_imported
+      :value: None
+
+
+
+   .. py:attribute:: is_device_upload
       :value: None
 
 

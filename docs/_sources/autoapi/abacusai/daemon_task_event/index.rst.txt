@@ -1,0 +1,127 @@
+abacusai.daemon_task_event
+==========================
+
+.. py:module:: abacusai.daemon_task_event
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.daemon_task_event.DaemonTaskEvent
+
+
+Module Contents
+---------------
+
+.. py:class:: DaemonTaskEvent(client, daemonTaskVersion=None, deploymentConversationId=None, lifecycle=None, failureReason=None, isLimitBlocked=None, isTestRun=None, sequenceNumber=None, createdAt=None, updatedAt=None, source=None, eventType=None, payload=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One delivery to an event-based daemon task (a webhook, inbox or test event that was dispatched as a run).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param daemonTaskVersion: The id of the run the event dispatched.
+   :type daemonTaskVersion: str
+   :param deploymentConversationId: The run conversation.
+   :type deploymentConversationId: str
+   :param lifecycle: The run lifecycle (PENDING, EXECUTING, COMPLETED, FAILED, WAITING_FOR_USER_INPUT).
+   :type lifecycle: str
+   :param failureReason: Why the run failed, when it did.
+   :type failureReason: str
+   :param isLimitBlocked: Whether the run was skipped by a credit/plan limit rather than failing.
+   :type isLimitBlocked: bool
+   :param isTestRun: Whether the user sent the event as a test.
+   :type isTestRun: bool
+   :param sequenceNumber: 0-based run number.
+   :type sequenceNumber: int
+   :param createdAt: When the event arrived.
+   :type createdAt: str
+   :param updatedAt: When the run last changed lifecycle.
+   :type updatedAt: str
+   :param source: Where the event came from (github, slack, gmail, webhook, ...).
+   :type source: str
+   :param eventType: The source's event type (pull_request, email_received, test, ...).
+   :type eventType: str
+   :param payload: The event payload as delivered.
+   :type payload: dict
+
+
+   .. py:attribute:: daemon_task_version
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: failure_reason
+      :value: None
+
+
+
+   .. py:attribute:: is_limit_blocked
+      :value: None
+
+
+
+   .. py:attribute:: is_test_run
+      :value: None
+
+
+
+   .. py:attribute:: sequence_number
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :value: None
+
+
+
+   .. py:attribute:: event_type
+      :value: None
+
+
+
+   .. py:attribute:: payload
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -45,6 +45,7 @@ Submodules
    /autoapi/abacusai/audio_listener_meeting_template/index
    /autoapi/abacusai/audio_listener_session_feedback/index
    /autoapi/abacusai/audio_listener_session_meeting/index
+   /autoapi/abacusai/audio_listener_speaker/index
    /autoapi/abacusai/audio_listener_template/index
    /autoapi/abacusai/audio_listener_template_file/index
    /autoapi/abacusai/audio_listener_template_selection/index
@@ -110,6 +111,8 @@ Submodules
    /autoapi/abacusai/custom_metric_version/index
    /autoapi/abacusai/custom_train_function_info/index
    /autoapi/abacusai/daemon_task_conversation/index
+   /autoapi/abacusai/daemon_task_event/index
+   /autoapi/abacusai/daemon_task_events/index
    /autoapi/abacusai/daemon_task_instance/index
    /autoapi/abacusai/daemon_task_permissions/index
    /autoapi/abacusai/data_consistency_duplication/index
@@ -675,6 +678,7 @@ Classes
    abacusai.AudioListenerMeetingTemplate
    abacusai.AudioListenerSessionFeedback
    abacusai.AudioListenerSessionMeeting
+   abacusai.AudioListenerSpeaker
    abacusai.AudioListenerTemplate
    abacusai.AudioListenerTemplateFile
    abacusai.AudioListenerTemplateSelection
@@ -743,6 +747,8 @@ Classes
    abacusai.CustomMetricVersion
    abacusai.CustomTrainFunctionInfo
    abacusai.DaemonTaskConversation
+   abacusai.DaemonTaskEvent
+   abacusai.DaemonTaskEvents
    abacusai.DaemonTaskInstance
    abacusai.DaemonTaskPermissions
    abacusai.DataConsistencyDuplication
@@ -9344,6 +9350,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GITHUBBOT
+      :value: 'GITHUBBOT'
+
+
+
    .. py:attribute:: GITLABUSER
       :value: 'GITLABUSER'
 
@@ -10148,6 +10159,11 @@ Package Contents
 
    .. py:attribute:: CLAUDE_V5_5_SONNET
       :value: 'CLAUDE_V5_5_SONNET'
+
+
+
+   .. py:attribute:: CLAUDE_V5_5_HAIKU
+      :value: 'CLAUDE_V5_5_HAIKU'
 
 
 
@@ -17241,7 +17257,7 @@ Package Contents
 
 
 
-.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None)
+.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None, isWebChatEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -17260,6 +17276,8 @@ Package Contents
    :type chatllmProjectId: id
    :param isOrgEnabled: Whether the organization allows transcript export at all.
    :type isOrgEnabled: bool
+   :param isWebChatEnabled: Whether the organization allows continuing a session as a chat on the web.
+   :type isWebChatEnabled: bool
 
 
    .. py:attribute:: is_enabled
@@ -17283,6 +17301,11 @@ Package Contents
 
 
    .. py:attribute:: is_org_enabled
+      :value: None
+
+
+
+   .. py:attribute:: is_web_chat_enabled
       :value: None
 
 
@@ -17530,6 +17553,53 @@ Package Contents
 
 
    .. py:attribute:: brief
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerSpeaker(client, lineIds=None, speaker=None, count=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The name the user gave far-end lines of a Listener session.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param lineIds: The lines named.
+   :type lineIds: list[int]
+   :param speaker: The name as it shows; none when it was taken back.
+   :type speaker: str
+   :param count: How many stored lines changed.
+   :type count: int
+
+
+   .. py:attribute:: line_ids
+      :value: None
+
+
+
+   .. py:attribute:: speaker
+      :value: None
+
+
+
+   .. py:attribute:: count
+      :value: None
+
 
 
    .. py:attribute:: deprecated_keys
@@ -19612,7 +19682,7 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param routines: The routines, in display order (id/title/description/avatar/color/categories/name/schedule/prompt, plus required_service and inputs where they apply).
+   :param routines: The routines, in display order (id/title/description/avatar/color/categories/name/schedule/prompt, plus inputs, and for mail/calendar routines required_service_type (MAIL / CALENDAR), required_service (the connector id it defaults to), available, connectors ([{service, scopes}]) and unavailable_reason, where they apply).
    :type routines: list
    :param categories: The filter pills in display order (id/label); 'all' is the default view.
    :type categories: list
@@ -19652,7 +19722,7 @@ Package Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param templates: The templates, in display order (id/title/description/prompt/personality/avatar/color/categories, plus template, brand_icon and background_task where they apply). Chief of Staff is first.
+   :param templates: The templates, in display order (id/title/description/prompt/personality/avatar/color/categories/required_service_types, plus template, brand_icon, setup_checks, background_task and, when the org's disabled connectors rule it out, unavailable_reason where they apply). A setup check or background task needing mail/calendar carries required_service_type (MAIL / CALENDAR), required_service (the connector id it defaults to: the org's first allowed), available and connectors ([{service, scopes}]: the connectors the org allows, any one of which meets it, and the scopes the user's connection must hold). Chief of Staff is first.
    :type templates: list
    :param categories: The filter pills in display order (id/label); 'featured' is the default view.
    :type categories: list
@@ -30839,7 +30909,7 @@ Package Contents
       :param conversation_sequence_number: The sequence number (message index) of the event.
       :type conversation_sequence_number: int
 
-      :returns: The event with its full, untrimmed segments.
+      :returns: The conversation event with its full, untrimmed segments.
       :rtype: DeploymentConversationEvent
 
 
@@ -33471,6 +33541,154 @@ Package Contents
    .. py:attribute:: run_number
       :value: None
 
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: DaemonTaskEvent(client, daemonTaskVersion=None, deploymentConversationId=None, lifecycle=None, failureReason=None, isLimitBlocked=None, isTestRun=None, sequenceNumber=None, createdAt=None, updatedAt=None, source=None, eventType=None, payload=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One delivery to an event-based daemon task (a webhook, inbox or test event that was dispatched as a run).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param daemonTaskVersion: The id of the run the event dispatched.
+   :type daemonTaskVersion: str
+   :param deploymentConversationId: The run conversation.
+   :type deploymentConversationId: str
+   :param lifecycle: The run lifecycle (PENDING, EXECUTING, COMPLETED, FAILED, WAITING_FOR_USER_INPUT).
+   :type lifecycle: str
+   :param failureReason: Why the run failed, when it did.
+   :type failureReason: str
+   :param isLimitBlocked: Whether the run was skipped by a credit/plan limit rather than failing.
+   :type isLimitBlocked: bool
+   :param isTestRun: Whether the user sent the event as a test.
+   :type isTestRun: bool
+   :param sequenceNumber: 0-based run number.
+   :type sequenceNumber: int
+   :param createdAt: When the event arrived.
+   :type createdAt: str
+   :param updatedAt: When the run last changed lifecycle.
+   :type updatedAt: str
+   :param source: Where the event came from (github, slack, gmail, webhook, ...).
+   :type source: str
+   :param eventType: The source's event type (pull_request, email_received, test, ...).
+   :type eventType: str
+   :param payload: The event payload as delivered.
+   :type payload: dict
+
+
+   .. py:attribute:: daemon_task_version
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: lifecycle
+      :value: None
+
+
+
+   .. py:attribute:: failure_reason
+      :value: None
+
+
+
+   .. py:attribute:: is_limit_blocked
+      :value: None
+
+
+
+   .. py:attribute:: is_test_run
+      :value: None
+
+
+
+   .. py:attribute:: sequence_number
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :value: None
+
+
+
+   .. py:attribute:: event_type
+      :value: None
+
+
+
+   .. py:attribute:: payload
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: DaemonTaskEvents(client, totalCount=None, events={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The delivery log of an event-based daemon task.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param totalCount: Total deliveries dispatched for the task (the list is capped).
+   :type totalCount: int
+   :param events: Newest events first.
+   :type events: DaemonTaskEvent
+
+
+   .. py:attribute:: total_count
+      :value: None
+
+
+
+   .. py:attribute:: events
 
 
    .. py:attribute:: deprecated_keys
@@ -36307,7 +36525,7 @@ Package Contents
       :param conversation_sequence_number: The sequence number (message index) of the event.
       :type conversation_sequence_number: int
 
-      :returns: The event with its full, untrimmed segments.
+      :returns: The conversation event with its full, untrimmed segments.
       :rtype: DeploymentConversationEvent
 
 
@@ -36412,7 +36630,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36431,7 +36649,7 @@ Package Contents
    :type isDaemonResumeReply: bool
    :param isTriggered: Whether this user message was injected by the scheduler to resume a paused conversation (e.g. a wait-for-condition check), rather than typed by the user.
    :type isTriggered: bool
-   :param triggerSource: For a triggered user message, what started it when it was not a scheduler resume (e.g. collaborator comments picked up by the agent).
+   :param triggerSource: For a server-started user message, what started it (collaborator comments picked up by the agent, or a personal agent's delegated brief with `type` bot_delegation and the brief as `task`).
    :type triggerSource: dict
    :param messageIndex: The index of the message in the conversation
    :type messageIndex: int
@@ -36529,6 +36747,10 @@ Package Contents
    :type turnTotalRuntimeSecs: int
    :param turnStopped: DeepAgent turns only. Whether the user stopped the turn before it finished.
    :type turnStopped: bool
+   :param mentions: Project coordinator chats only. Display names of the teammates this user message @mentions.
+   :type mentions: list
+   :param teamMessage: Project coordinator chats only. Whether this user message was posted for teammates with no agent turn.
+   :type teamMessage: bool
 
 
    .. py:attribute:: role
@@ -36797,6 +37019,16 @@ Package Contents
 
 
    .. py:attribute:: turn_stopped
+      :value: None
+
+
+
+   .. py:attribute:: mentions
+      :value: None
+
+
+
+   .. py:attribute:: team_message
       :value: None
 
 
@@ -43750,7 +43982,7 @@ Package Contents
 
 
 
-.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None, errorKind=None)
+.. py:class:: HealthDataSource(client, healthDataSourceId=None, provider=None, kind=None, status=None, errorDetail=None, connectedAt=None, lastSyncedAt=None, isLiveSync=None, isImported=None, isDeviceUpload=None, errorKind=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43773,10 +44005,12 @@ Package Contents
    :type connectedAt: str
    :param lastSyncedAt: Last successful sync time.
    :type lastSyncedAt: str
-   :param isLiveSync: Whether this source is refreshed by pulling the aggregator, as opposed to not being refreshable at all. Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, so clients must branch on this rather than on a hardcoded provider list.
+   :param isLiveSync: Whether the server keeps this source current on its own — by pulling the aggregator, or by receiving the provider's pushes (a Garmin connected directly) — as opposed to the phone feeding it or nothing feeding it. A client treats such a row as a live connection; asking the server to sync it is always safe (a push-fed row answers with nothing to pull). Not derivable from `provider`: an Apple Health row is live only once the iOS SDK has connected it, and a Garmin row is live whether Terra pulls it or Garmin pushes it, so clients must branch on this rather than on a hardcoded provider list.
    :type isLiveSync: bool
    :param isImported: Whether this source's readings were uploaded from a file rather than pulled from a provider connection. Such a row reports is_live_sync False, and this is what lets a client say WHY — readings that never came from a device, rather than a connection that broke — which only the server can tell, since the fact behind it (the absent aggregator_ref) is never exposed.
    :type isImported: bool
+   :param isDeviceUpload: Whether this source is fed by our own app reading the phone's health store and uploading (Apple Health on the HealthKit-direct path). Such a row reports is_live_sync False — there is nothing to pull, the upload is the whole feed — yet it is a live connection: a client treats it as connected and refreshes it by uploading, never by asking the server to sync.
+   :type isDeviceUpload: bool
    :param errorKind: `error_detail` as an identifier a client can branch on exactly, instead of inferring it from `status` and `provider`: awaiting_first_data (a phone store connected under 48h ago with nothing delivered yet), never_delivered (connected, nothing has ever arrived), provider_permission (the provider refused access or the consent granted no data scope), partial_scope (active, but a permission keeps one category of data from arriving), connection_lost, sync_failed, or unknown for a sentence written before these were fixed. Null when `error_detail` is null.
    :type errorKind: str
 
@@ -43822,6 +44056,11 @@ Package Contents
 
 
    .. py:attribute:: is_imported
+      :value: None
+
+
+
+   .. py:attribute:: is_device_upload
       :value: None
 
 
@@ -43935,7 +44174,7 @@ Package Contents
 
 
 
-.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, mobileOnlyDetail=None)
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, directUpload=None, mobileOnlyDetail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43966,6 +44205,8 @@ Package Contents
    :type comingSoon: bool
    :param deprecating: Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
    :type deprecating: bool
+   :param directUpload: For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. Per org (health_healthkit_direct); always present, false for every other provider and for every org not on the rollout.
+   :type directUpload: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
    :type mobileOnlyDetail: str
 
@@ -44021,6 +44262,11 @@ Package Contents
 
 
    .. py:attribute:: deprecating
+      :value: None
+
+
+
+   .. py:attribute:: direct_upload
       :value: None
 
 
@@ -46952,7 +47198,7 @@ Package Contents
 
 
 
-.. py:class:: MobileAppIdentifiers(client, packageName=None, bundleId=None, appScheme=None, identifierSource=None, packageNameLocked=None, packageNameLockReason=None, packageNameLockedAt=None, bundleIdLocked=None, bundleIdLockReason=None, bundleIdLockedAt=None, packageNameTakenOnStore=None, bundleIdTakenOnStore=None)
+.. py:class:: MobileAppIdentifiers(client, packageName=None, bundleId=None, appScheme=None, identifierSource=None, packageNameLocked=None, packageNameLockReason=None, packageNameLockedAt=None, bundleIdLocked=None, bundleIdLockReason=None, bundleIdLockedAt=None, packageNameTakenOnStore=None, bundleIdTakenOnStore=None, androidSigningSha1=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46985,6 +47231,8 @@ Package Contents
    :type packageNameTakenOnStore: bool
    :param bundleIdTakenOnStore: Advisory: a published App Store app already uses it. Absent when unknown
    :type bundleIdTakenOnStore: bool
+   :param androidSigningSha1: SHA-1 of the certificate our builds sign with, for restricting a Google API key. Absent until the project's keystore exists
+   :type androidSigningSha1: str
 
 
    .. py:attribute:: package_name
@@ -47043,6 +47291,11 @@ Package Contents
 
 
    .. py:attribute:: bundle_id_taken_on_store
+      :value: None
+
+
+
+   .. py:attribute:: android_signing_sha1
       :value: None
 
 
@@ -61207,6 +61460,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.116'
+   :value: '1.4.117'
 
 

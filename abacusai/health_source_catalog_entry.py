@@ -18,10 +18,11 @@ class HealthSourceCatalogEntry(AbstractApiClass):
             primaryRank (int): Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
             comingSoon (bool): Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.
             deprecating (bool): Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
+            directUpload (bool): For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. Per org (health_healthkit_direct); always present, false for every other provider and for every org not on the rollout.
             mobileOnlyDetail (str): Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
     """
 
-    def __init__(self, client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, mobileOnlyDetail=None):
+    def __init__(self, client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, directUpload=None, mobileOnlyDetail=None):
         super().__init__(client, None)
         self.provider = provider
         self.name = name
@@ -34,12 +35,13 @@ class HealthSourceCatalogEntry(AbstractApiClass):
         self.primary_rank = primaryRank
         self.coming_soon = comingSoon
         self.deprecating = deprecating
+        self.direct_upload = directUpload
         self.mobile_only_detail = mobileOnlyDetail
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'provider': repr(self.provider), f'name': repr(self.name), f'category': repr(self.category), f'kind': repr(self.kind), f'color': repr(self.color), f'glyph': repr(self.glyph), f'icon_url': repr(
-            self.icon_url), f'connect_mode': repr(self.connect_mode), f'primary_rank': repr(self.primary_rank), f'coming_soon': repr(self.coming_soon), f'deprecating': repr(self.deprecating), f'mobile_only_detail': repr(self.mobile_only_detail)}
+        repr_dict = {f'provider': repr(self.provider), f'name': repr(self.name), f'category': repr(self.category), f'kind': repr(self.kind), f'color': repr(self.color), f'glyph': repr(self.glyph), f'icon_url': repr(self.icon_url), f'connect_mode': repr(
+            self.connect_mode), f'primary_rank': repr(self.primary_rank), f'coming_soon': repr(self.coming_soon), f'deprecating': repr(self.deprecating), f'direct_upload': repr(self.direct_upload), f'mobile_only_detail': repr(self.mobile_only_detail)}
         class_name = "HealthSourceCatalogEntry"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -52,6 +54,6 @@ class HealthSourceCatalogEntry(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'provider': self.provider, 'name': self.name, 'category': self.category, 'kind': self.kind, 'color': self.color, 'glyph': self.glyph, 'icon_url': self.icon_url,
-                'connect_mode': self.connect_mode, 'primary_rank': self.primary_rank, 'coming_soon': self.coming_soon, 'deprecating': self.deprecating, 'mobile_only_detail': self.mobile_only_detail}
+        resp = {'provider': self.provider, 'name': self.name, 'category': self.category, 'kind': self.kind, 'color': self.color, 'glyph': self.glyph, 'icon_url': self.icon_url, 'connect_mode': self.connect_mode,
+                'primary_rank': self.primary_rank, 'coming_soon': self.coming_soon, 'deprecating': self.deprecating, 'direct_upload': self.direct_upload, 'mobile_only_detail': self.mobile_only_detail}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

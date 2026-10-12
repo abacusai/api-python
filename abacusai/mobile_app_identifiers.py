@@ -19,9 +19,10 @@ class MobileAppIdentifiers(AbstractApiClass):
             bundleIdLockedAt (str): When the row that caused the lock was created (ISO 8601)
             packageNameTakenOnStore (bool): Advisory: a published Play app already uses it. Absent when unknown
             bundleIdTakenOnStore (bool): Advisory: a published App Store app already uses it. Absent when unknown
+            androidSigningSha1 (str): SHA-1 of the certificate our builds sign with, for restricting a Google API key. Absent until the project's keystore exists
     """
 
-    def __init__(self, client, packageName=None, bundleId=None, appScheme=None, identifierSource=None, packageNameLocked=None, packageNameLockReason=None, packageNameLockedAt=None, bundleIdLocked=None, bundleIdLockReason=None, bundleIdLockedAt=None, packageNameTakenOnStore=None, bundleIdTakenOnStore=None):
+    def __init__(self, client, packageName=None, bundleId=None, appScheme=None, identifierSource=None, packageNameLocked=None, packageNameLockReason=None, packageNameLockedAt=None, bundleIdLocked=None, bundleIdLockReason=None, bundleIdLockedAt=None, packageNameTakenOnStore=None, bundleIdTakenOnStore=None, androidSigningSha1=None):
         super().__init__(client, None)
         self.package_name = packageName
         self.bundle_id = bundleId
@@ -35,11 +36,12 @@ class MobileAppIdentifiers(AbstractApiClass):
         self.bundle_id_locked_at = bundleIdLockedAt
         self.package_name_taken_on_store = packageNameTakenOnStore
         self.bundle_id_taken_on_store = bundleIdTakenOnStore
+        self.android_signing_sha1 = androidSigningSha1
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'package_name': repr(self.package_name), f'bundle_id': repr(self.bundle_id), f'app_scheme': repr(self.app_scheme), f'identifier_source': repr(self.identifier_source), f'package_name_locked': repr(self.package_name_locked), f'package_name_lock_reason': repr(self.package_name_lock_reason), f'package_name_locked_at': repr(
-            self.package_name_locked_at), f'bundle_id_locked': repr(self.bundle_id_locked), f'bundle_id_lock_reason': repr(self.bundle_id_lock_reason), f'bundle_id_locked_at': repr(self.bundle_id_locked_at), f'package_name_taken_on_store': repr(self.package_name_taken_on_store), f'bundle_id_taken_on_store': repr(self.bundle_id_taken_on_store)}
+        repr_dict = {f'package_name': repr(self.package_name), f'bundle_id': repr(self.bundle_id), f'app_scheme': repr(self.app_scheme), f'identifier_source': repr(self.identifier_source), f'package_name_locked': repr(self.package_name_locked), f'package_name_lock_reason': repr(self.package_name_lock_reason), f'package_name_locked_at': repr(self.package_name_locked_at), f'bundle_id_locked': repr(
+            self.bundle_id_locked), f'bundle_id_lock_reason': repr(self.bundle_id_lock_reason), f'bundle_id_locked_at': repr(self.bundle_id_locked_at), f'package_name_taken_on_store': repr(self.package_name_taken_on_store), f'bundle_id_taken_on_store': repr(self.bundle_id_taken_on_store), f'android_signing_sha1': repr(self.android_signing_sha1)}
         class_name = "MobileAppIdentifiers"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -53,5 +55,5 @@ class MobileAppIdentifiers(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'package_name': self.package_name, 'bundle_id': self.bundle_id, 'app_scheme': self.app_scheme, 'identifier_source': self.identifier_source, 'package_name_locked': self.package_name_locked, 'package_name_lock_reason': self.package_name_lock_reason, 'package_name_locked_at': self.package_name_locked_at,
-                'bundle_id_locked': self.bundle_id_locked, 'bundle_id_lock_reason': self.bundle_id_lock_reason, 'bundle_id_locked_at': self.bundle_id_locked_at, 'package_name_taken_on_store': self.package_name_taken_on_store, 'bundle_id_taken_on_store': self.bundle_id_taken_on_store}
+                'bundle_id_locked': self.bundle_id_locked, 'bundle_id_lock_reason': self.bundle_id_lock_reason, 'bundle_id_locked_at': self.bundle_id_locked_at, 'package_name_taken_on_store': self.package_name_taken_on_store, 'bundle_id_taken_on_store': self.bundle_id_taken_on_store, 'android_signing_sha1': self.android_signing_sha1}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

@@ -7,7 +7,7 @@ class BotTemplateCatalog(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            templates (list): The templates, in display order (id/title/description/prompt/personality/avatar/color/categories, plus template, brand_icon and background_task where they apply). Chief of Staff is first.
+            templates (list): The templates, in display order (id/title/description/prompt/personality/avatar/color/categories/required_service_types, plus template, brand_icon, setup_checks, background_task and, when the org's disabled connectors rule it out, unavailable_reason where they apply). A setup check or background task needing mail/calendar carries required_service_type (MAIL / CALENDAR), required_service (the connector id it defaults to: the org's first allowed), available and connectors ([{service, scopes}]: the connectors the org allows, any one of which meets it, and the scopes the user's connection must hold). Chief of Staff is first.
             categories (list): The filter pills in display order (id/label); 'featured' is the default view.
     """
 

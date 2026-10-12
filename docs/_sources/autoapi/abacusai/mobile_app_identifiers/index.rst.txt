@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MobileAppIdentifiers(client, packageName=None, bundleId=None, appScheme=None, identifierSource=None, packageNameLocked=None, packageNameLockReason=None, packageNameLockedAt=None, bundleIdLocked=None, bundleIdLockReason=None, bundleIdLockedAt=None, packageNameTakenOnStore=None, bundleIdTakenOnStore=None)
+.. py:class:: MobileAppIdentifiers(client, packageName=None, bundleId=None, appScheme=None, identifierSource=None, packageNameLocked=None, packageNameLockReason=None, packageNameLockedAt=None, bundleIdLocked=None, bundleIdLockReason=None, bundleIdLockedAt=None, packageNameTakenOnStore=None, bundleIdTakenOnStore=None, androidSigningSha1=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48,6 +48,8 @@ Module Contents
    :type packageNameTakenOnStore: bool
    :param bundleIdTakenOnStore: Advisory: a published App Store app already uses it. Absent when unknown
    :type bundleIdTakenOnStore: bool
+   :param androidSigningSha1: SHA-1 of the certificate our builds sign with, for restricting a Google API key. Absent until the project's keystore exists
+   :type androidSigningSha1: str
 
 
    .. py:attribute:: package_name
@@ -106,6 +108,11 @@ Module Contents
 
 
    .. py:attribute:: bundle_id_taken_on_store
+      :value: None
+
+
+
+   .. py:attribute:: android_signing_sha1
       :value: None
 
 

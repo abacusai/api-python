@@ -197,7 +197,7 @@ class DeploymentConversation(AbstractApiClass):
             conversation_sequence_number (int): The sequence number (message index) of the event.
 
         Returns:
-            DeploymentConversationEvent: The event with its full, untrimmed segments.
+            DeploymentConversationEvent: The conversation event with its full, untrimmed segments.
         """
         return self.client.get_deployment_conversation_event_segments(self.deployment_conversation_id, conversation_sequence_number)
 
