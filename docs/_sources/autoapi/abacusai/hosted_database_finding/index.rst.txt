@@ -1,0 +1,148 @@
+abacusai.hosted_database_finding
+================================
+
+.. py:module:: abacusai.hosted_database_finding
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.hosted_database_finding.HostedDatabaseFinding
+
+
+Module Contents
+---------------
+
+.. py:class:: HostedDatabaseFinding(client, findingId=None, kind=None, severity=None, query=None, table=None, column=None, execSecondsPerHour=None, callsPerHour=None, rowsPerCall=None, blocksPerCall=None, meanMs=None, rows=None, firstSeen=None, lastSeen=None, fixPrompt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A database-health finding for a web app's database (_getHostedDatabaseHealth), as the hourly scan last recorded it.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param findingId: kind:table:column, stable while the finding stands
+   :type findingId: str
+   :param kind: missing_index | repeated_query | substring_search
+   :type kind: str
+   :param severity: LOW | MEDIUM | HIGH | CRITICAL
+   :type severity: str
+   :param query: The statement, normalized, when the finding comes from statement statistics
+   :type query: str
+   :param table: The table involved
+   :type table: str
+   :param column: The column involved, when there is one
+   :type column: str
+   :param execSecondsPerHour: Execution time this statement costs per hour
+   :type execSecondsPerHour: int
+   :param callsPerHour: How often it runs
+   :type callsPerHour: int
+   :param rowsPerCall: Rows it returns per call
+   :type rowsPerCall: float
+   :param blocksPerCall: Buffers it reads per call
+   :type blocksPerCall: float
+   :param meanMs: Mean execution time per call
+   :type meanMs: float
+   :param rows: Rows in the table, for a missing index
+   :type rows: int
+   :param firstSeen: When the scan first recorded this finding
+   :type firstSeen: str
+   :param lastSeen: When the scan last saw it
+   :type lastSeen: str
+   :param fixPrompt: What the agent is asked to change when the finding is sent to it
+   :type fixPrompt: str
+
+
+   .. py:attribute:: finding_id
+      :value: None
+
+
+
+   .. py:attribute:: kind
+      :value: None
+
+
+
+   .. py:attribute:: severity
+      :value: None
+
+
+
+   .. py:attribute:: query
+      :value: None
+
+
+
+   .. py:attribute:: table
+      :value: None
+
+
+
+   .. py:attribute:: column
+      :value: None
+
+
+
+   .. py:attribute:: exec_seconds_per_hour
+      :value: None
+
+
+
+   .. py:attribute:: calls_per_hour
+      :value: None
+
+
+
+   .. py:attribute:: rows_per_call
+      :value: None
+
+
+
+   .. py:attribute:: blocks_per_call
+      :value: None
+
+
+
+   .. py:attribute:: mean_ms
+      :value: None
+
+
+
+   .. py:attribute:: rows
+      :value: None
+
+
+
+   .. py:attribute:: first_seen
+      :value: None
+
+
+
+   .. py:attribute:: last_seen
+      :value: None
+
+
+
+   .. py:attribute:: fix_prompt
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -1,0 +1,90 @@
+abacusai.hosted_database_health
+===============================
+
+.. py:module:: abacusai.hosted_database_health
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.hosted_database_health.HostedDatabaseHealth
+
+
+Module Contents
+---------------
+
+.. py:class:: HostedDatabaseHealth(client, webAppProjectId=None, hostedDatabaseId=None, databaseName=None, deploymentConversationId=None, canFix=None, scannedAt=None, findings={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Database health of a web app's database (_getHostedDatabaseHealth): the findings recorded within the last day.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID
+   :type webAppProjectId: id
+   :param hostedDatabaseId: The database examined
+   :type hostedDatabaseId: id
+   :param databaseName: The database's display name
+   :type databaseName: str
+   :param deploymentConversationId: The app's build conversation ID
+   :type deploymentConversationId: id
+   :param canFix: Whether the caller may send findings to the agent (the app owner or an admin)
+   :type canFix: bool
+   :param scannedAt: When the findings were last recorded
+   :type scannedAt: str
+   :param findings: The findings seen within the last day, most recently seen first
+   :type findings: HostedDatabaseFinding
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: hosted_database_id
+      :value: None
+
+
+
+   .. py:attribute:: database_name
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: can_fix
+      :value: None
+
+
+
+   .. py:attribute:: scanned_at
+      :value: None
+
+
+
+   .. py:attribute:: findings
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

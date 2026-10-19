@@ -1,0 +1,148 @@
+abacusai.shared_audio_listener_session
+======================================
+
+.. py:module:: abacusai.shared_audio_listener_session
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.shared_audio_listener_session.SharedAudioListenerSession
+
+
+Module Contents
+---------------
+
+.. py:class:: SharedAudioListenerSession(client, name=None, ownerName=None, createdAt=None, lastLineAt=None, isLive=None, summary=None, transcripts=None, speakers=None, language=None, chat=None, summaryShared=None, transcriptShared=None, chatShared=None, shareParts=None, editedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A Listener session as its web page shows it, to anyone holding the session's link or to a viewer it is shared with.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The session's title.
+   :type name: str
+   :param ownerName: The name of the person who recorded it, as snapshotted when the link was made; only on the public link path.
+   :type ownerName: str
+   :param createdAt: When the session was created.
+   :type createdAt: str
+   :param lastLineAt: When the last line of speech was recorded.
+   :type lastLineAt: str
+   :param isLive: Whether the session is still recording.
+   :type isLive: bool
+   :param summary: The session's summary, as stored markdown.
+   :type summary: str
+   :param transcripts: The lines of speech: role (user or others), content, created_at and speaker when one was named.
+   :type transcripts: list
+   :param speakers: The far-end speaker names found in the session.
+   :type speakers: list
+   :param language: The language the meeting was held in, when known.
+   :type language: str
+   :param chat: The owner's chat with the assistant about the session, {role: user|assistant, content}, when shared; else empty.
+   :type chat: list
+   :param summaryShared: False when the owner shares the session without its summary, which is then empty.
+   :type summaryShared: bool
+   :param transcriptShared: False when the owner shares the session without its transcript: transcripts and speakers are then empty.
+   :type transcriptShared: bool
+   :param chatShared: Whether the chat is shared with this viewer.
+   :type chatShared: bool
+   :param shareParts: Which parts viewers get, {summary, transcript, chat}; only for the owner or an admin, once someone has access.
+   :type shareParts: dict
+   :param editedAt: When the owner last saved a change to the session, if ever; each changed line carries its own edited_at.
+   :type editedAt: str
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: owner_name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: last_line_at
+      :value: None
+
+
+
+   .. py:attribute:: is_live
+      :value: None
+
+
+
+   .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: transcripts
+      :value: None
+
+
+
+   .. py:attribute:: speakers
+      :value: None
+
+
+
+   .. py:attribute:: language
+      :value: None
+
+
+
+   .. py:attribute:: chat
+      :value: None
+
+
+
+   .. py:attribute:: summary_shared
+      :value: None
+
+
+
+   .. py:attribute:: transcript_shared
+      :value: None
+
+
+
+   .. py:attribute:: chat_shared
+      :value: None
+
+
+
+   .. py:attribute:: share_parts
+      :value: None
+
+
+
+   .. py:attribute:: edited_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

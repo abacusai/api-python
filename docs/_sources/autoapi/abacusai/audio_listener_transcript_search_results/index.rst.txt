@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AudioListenerTranscriptSearchResults(client, query=None, total=None, results={})
+.. py:class:: AudioListenerTranscriptSearchResults(client, query=None, total=None, phrase=None, partial=None, truncated=None, linesCapped=None, queryTerms={}, results={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,8 +26,18 @@ Module Contents
    :type client: ApiClient
    :param query: The search query that produced these results.
    :type query: str
-   :param total: The total number of matching results.
+   :param total: The number of matching sessions.
    :type total: int
+   :param phrase: The words of the query as a phrase, when it has more than one word.
+   :type phrase: str
+   :param partial: Whether a statement hit its time limit and some hits are missing.
+   :type partial: bool
+   :param truncated: Whether the user has more sessions than the search covered.
+   :type truncated: bool
+   :param linesCapped: Whether transcript lines were searched for the newest sessions only; titles and summaries covered them all.
+   :type linesCapped: bool
+   :param queryTerms: The search terms the server used.
+   :type queryTerms: AudioListenerSearchTerm
    :param results: The list of matching transcript search hits.
    :type results: AudioListenerTranscriptSearchResult
 
@@ -40,6 +50,29 @@ Module Contents
    .. py:attribute:: total
       :value: None
 
+
+
+   .. py:attribute:: phrase
+      :value: None
+
+
+
+   .. py:attribute:: partial
+      :value: None
+
+
+
+   .. py:attribute:: truncated
+      :value: None
+
+
+
+   .. py:attribute:: lines_capped
+      :value: None
+
+
+
+   .. py:attribute:: query_terms
 
 
    .. py:attribute:: results

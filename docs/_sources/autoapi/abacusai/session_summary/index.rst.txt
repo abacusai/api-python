@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: SessionSummary(client, summary=None, templateName=None, meetingType=None, meetingNotes=None, meeting=None, previousMeeting=None, feedback=None)
+.. py:class:: SessionSummary(client, summary=None, templateName=None, meetingType=None, meetingNotes=None, meeting=None, previousMeeting=None, feedback=None, summaryShared=None, transcriptShared=None, chatShared=None, shareParts=None, canEdit=None, editBlocked=None, edits=None, summarySeq=None, editedAt=None, summaryEdited=None, summaryKind=None, summaryAt=None, summaryHistory=None, canRewriteSummary=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,34 @@ Module Contents
    :type previousMeeting: dict
    :param feedback: The owner's rating of the session (rating 1 to 5, comment, at_ms), returned only to the owner.
    :type feedback: dict
+   :param summaryShared: Whether this viewer may read the summary (always for the owner and org admins); the summary is empty otherwise.
+   :type summaryShared: bool
+   :param transcriptShared: Whether this viewer may read the transcript.
+   :type transcriptShared: bool
+   :param chatShared: Whether this viewer may read the session's chat.
+   :type chatShared: bool
+   :param shareParts: Which parts the owner shares, {summary, transcript, chat}; returned only to the owner.
+   :type shareParts: dict
+   :param canEdit: Whether the caller may save changes to the session now; returned only to the owner, and only where editing is on.
+   :type canEdit: bool
+   :param editBlocked: Why not, when can_edit is false: recording, paused or finishing.
+   :type editBlocked: str
+   :param edits: The owner's saved changes so far: version (what a save must send), at, lines, summary_seqs; returned only to the owner.
+   :type edits: dict
+   :param summarySeq: The sequence number of the summary row shown, which a saved summary must name; returned only to the owner.
+   :type summarySeq: int
+   :param editedAt: When the owner last saved a change, if ever.
+   :type editedAt: str
+   :param summaryEdited: Whether the summary shown was written by the owner rather than the model.
+   :type summaryEdited: bool
+   :param summaryKind: Where the summary shown came from: model, edit (the owner's hand), rewrite (the owner's instruction).
+   :type summaryKind: str
+   :param summaryAt: When that version was written.
+   :type summaryAt: str
+   :param summaryHistory: The session's summary versions, newest first ({seq, at, kind, base_seq, instruction, preview, from_seq}); returned only to the owner.
+   :type summaryHistory: list[dict]
+   :param canRewriteSummary: Whether the owner may rewrite the summary with an instruction now; returned only to the owner.
+   :type canRewriteSummary: bool
 
 
    .. py:attribute:: summary
@@ -71,6 +99,76 @@ Module Contents
 
 
    .. py:attribute:: feedback
+      :value: None
+
+
+
+   .. py:attribute:: summary_shared
+      :value: None
+
+
+
+   .. py:attribute:: transcript_shared
+      :value: None
+
+
+
+   .. py:attribute:: chat_shared
+      :value: None
+
+
+
+   .. py:attribute:: share_parts
+      :value: None
+
+
+
+   .. py:attribute:: can_edit
+      :value: None
+
+
+
+   .. py:attribute:: edit_blocked
+      :value: None
+
+
+
+   .. py:attribute:: edits
+      :value: None
+
+
+
+   .. py:attribute:: summary_seq
+      :value: None
+
+
+
+   .. py:attribute:: edited_at
+      :value: None
+
+
+
+   .. py:attribute:: summary_edited
+      :value: None
+
+
+
+   .. py:attribute:: summary_kind
+      :value: None
+
+
+
+   .. py:attribute:: summary_at
+      :value: None
+
+
+
+   .. py:attribute:: summary_history
+      :value: None
+
+
+
+   .. py:attribute:: can_rewrite_summary
       :value: None
 
 

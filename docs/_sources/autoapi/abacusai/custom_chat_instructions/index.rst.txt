@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, experimentalFeatures=None)
+.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, experimentalFeatures=None, inheritsDefault=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44,6 +44,8 @@ Module Contents
    :type hasLegacyChatllmMemories: bool
    :param experimentalFeatures: Experimental features.
    :type experimentalFeatures: dict
+   :param inheritsDefault: Nothing is set for this model or its app, so the values shown are the user's default instructions, which chat applies to it.
+   :type inheritsDefault: bool
 
 
    .. py:attribute:: user_information_instructions
@@ -92,6 +94,11 @@ Module Contents
 
 
    .. py:attribute:: experimental_features
+      :value: None
+
+
+
+   .. py:attribute:: inherits_default
       :value: None
 
 

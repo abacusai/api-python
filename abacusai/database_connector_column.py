@@ -9,17 +9,19 @@ class DatabaseConnectorColumn(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             name (str): The unique name of the column.
             externalDataType (str): The data type of column in the external database system.
+            semanticKind (str): For a field of a Snowflake semantic view, whether it is a DIMENSION, FACT or METRIC. Not set for table columns.
     """
 
-    def __init__(self, client, name=None, externalDataType=None):
+    def __init__(self, client, name=None, externalDataType=None, semanticKind=None):
         super().__init__(client, None)
         self.name = name
         self.external_data_type = externalDataType
+        self.semantic_kind = semanticKind
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'external_data_type': repr(
-            self.external_data_type)}
+            self.external_data_type), f'semantic_kind': repr(self.semantic_kind)}
         class_name = "DatabaseConnectorColumn"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -32,5 +34,6 @@ class DatabaseConnectorColumn(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'external_data_type': self.external_data_type}
+        resp = {'name': self.name, 'external_data_type': self.external_data_type,
+                'semantic_kind': self.semantic_kind}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

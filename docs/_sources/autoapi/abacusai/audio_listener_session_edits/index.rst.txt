@@ -1,0 +1,127 @@
+abacusai.audio_listener_session_edits
+=====================================
+
+.. py:module:: abacusai.audio_listener_session_edits
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_session_edits.AudioListenerSessionEdits
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerSessionEdits(client, conflict=None, version=None, editedAt=None, linesChanged=None, speakersChanged=None, summarySaved=None, summarySkipped=None, summarySeq=None, summary=None, summaryKind=None, summaryAt=None, summaryHistory=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The outcome of saving the owner's changes to a Listener session.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param conflict: True when the session was changed elsewhere since the client opened it: nothing was saved, version is the current one.
+   :type conflict: bool
+   :param version: The session's edits version after the save (or the current one on a conflict).
+   :type version: int
+   :param editedAt: When the save landed.
+   :type editedAt: str
+   :param linesChanged: Lines whose text or speaker changed.
+   :type linesChanged: int
+   :param speakersChanged: Lines whose speaker changed.
+   :type speakersChanged: int
+   :param summarySaved: Whether the summary was stored.
+   :type summarySaved: bool
+   :param summarySkipped: True when the summary was not stored because a newer summary row existed.
+   :type summarySkipped: bool
+   :param summarySeq: The summary row the session now shows, which the next saved summary must name; only when a summary was sent.
+   :type summarySeq: int
+   :param summary: The summary the session now shows, when it is not the one the client sent (a skipped save, a restore).
+   :type summary: str
+   :param summaryKind: Where that summary came from: model, edit or rewrite.
+   :type summaryKind: str
+   :param summaryAt: When that version was written.
+   :type summaryAt: str
+   :param summaryHistory: The session's summary versions after the save, newest first.
+   :type summaryHistory: list[dict]
+
+
+   .. py:attribute:: conflict
+      :value: None
+
+
+
+   .. py:attribute:: version
+      :value: None
+
+
+
+   .. py:attribute:: edited_at
+      :value: None
+
+
+
+   .. py:attribute:: lines_changed
+      :value: None
+
+
+
+   .. py:attribute:: speakers_changed
+      :value: None
+
+
+
+   .. py:attribute:: summary_saved
+      :value: None
+
+
+
+   .. py:attribute:: summary_skipped
+      :value: None
+
+
+
+   .. py:attribute:: summary_seq
+      :value: None
+
+
+
+   .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: summary_kind
+      :value: None
+
+
+
+   .. py:attribute:: summary_at
+      :value: None
+
+
+
+   .. py:attribute:: summary_history
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

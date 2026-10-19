@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, directUpload=None, mobileOnlyDetail=None)
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, directUpload=None, mobileOnlyDetail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,8 +26,10 @@ Module Contents
    :type client: ApiClient
    :param provider: Provider key (oura, fitbit, garmin, ...), matching HealthDataSource.provider.
    :type provider: str
-   :param name: Brand name, shown as-is (never translated).
+   :param name: Brand name, shown as-is (never translated). What a reading, workout or insight from this provider is attributed to.
    :type name: str
+   :param connectName: What the connect tile and the connected-source row call it, as-is. Equal to `name` unless the brand distinguishes its app from its devices: Garmin's guidelines want the connection presented as "Garmin Connect" and the data attributed to "Garmin".
+   :type connectName: str
    :param category: Stable display key the client maps to a translated label (Wearable, Fitness, Smart scale, Nutrition, Medical, CGM).
    :type category: str
    :param kind: wearable | nutrition | cgm — the ingestion-side data shape, not a user-facing label.
@@ -36,8 +38,12 @@ Module Contents
    :type color: str
    :param glyph: One or two characters drawn on that badge when no icon renders.
    :type glyph: str
-   :param iconUrl: A WHITE monochrome mark on transparency, to be composited over `color`. One asset works in light and dark, on web and native. Absent for a provider whose mark isn't published yet — draw `glyph` instead.
+   :param iconUrl: For icon_style `mark`, a WHITE monochrome mark on transparency, to be composited over `color`. One asset works in light and dark, on web and native. For icon_style `tile`, the provider's own app tile, to be drawn exactly as served. Absent for a provider whose icon isn't published yet — draw `glyph` instead.
    :type iconUrl: str
+   :param iconStyle: mark (the default: the white mark on a `color` disc, the shape every badge and disc stack draws) | tile (the provider's app tile, drawn unaltered as a rounded square and never tinted, cropped to a circle or placed in a disc stack — Garmin's brand guidelines forbid its mark in avatars and badges, so a client names such a provider in text where it would have drawn a disc).
+   :type iconStyle: str
+   :param attributionRequired: The provider's brand terms require its name beside every view of its data, however many devices the user has (Garmin: "Garmin [device model]" adjacent to each data title). A client otherwise names the device only when there is more than one to tell apart; with any connected provider carrying this it names them always. Always present.
+   :type attributionRequired: bool
    :param connectMode: web_oauth (Terra's hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores). Derived from the same provider tuple the connect endpoint enforces, so a client that offers what this says can never be refused for offering the wrong thing.
    :type connectMode: str
    :param primaryRank: Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
@@ -58,6 +64,11 @@ Module Contents
 
 
    .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: connect_name
       :value: None
 
 
@@ -83,6 +94,16 @@ Module Contents
 
 
    .. py:attribute:: icon_url
+      :value: None
+
+
+
+   .. py:attribute:: icon_style
+      :value: None
+
+
+
+   .. py:attribute:: attribution_required
       :value: None
 
 

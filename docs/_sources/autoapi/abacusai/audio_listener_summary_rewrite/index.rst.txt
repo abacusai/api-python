@@ -1,0 +1,113 @@
+abacusai.audio_listener_summary_rewrite
+=======================================
+
+.. py:module:: abacusai.audio_listener_summary_rewrite
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_summary_rewrite.AudioListenerSummaryRewrite
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerSummaryRewrite(client, summary=None, summarySeq=None, summaryKind=None, summaryAt=None, version=None, editedAt=None, summaryHistory=None, conflict=None, unchanged=None, running=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The outcome of rewriting a Listener session's summary from the owner's instruction.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param summary: The summary the session now shows: the rewritten one, or the current one on a conflict.
+   :type summary: str
+   :param summarySeq: Its summary row, which the next rewrite or save must name.
+   :type summarySeq: int
+   :param summaryKind: Where it came from: model, edit or rewrite.
+   :type summaryKind: str
+   :param summaryAt: When that version was written.
+   :type summaryAt: str
+   :param version: The session's edits version after the rewrite.
+   :type version: int
+   :param editedAt: When the rewrite landed.
+   :type editedAt: str
+   :param summaryHistory: The session's summary versions, newest first.
+   :type summaryHistory: list[dict]
+   :param conflict: True when the summary changed elsewhere since the client read it: nothing was written, summary is the current one.
+   :type conflict: bool
+   :param unchanged: True when the instruction left the summary as it was: nothing was written.
+   :type unchanged: bool
+   :param running: True when a rewrite of this session is already running (another device, or a retry): nothing was started.
+   :type running: bool
+
+
+   .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: summary_seq
+      :value: None
+
+
+
+   .. py:attribute:: summary_kind
+      :value: None
+
+
+
+   .. py:attribute:: summary_at
+      :value: None
+
+
+
+   .. py:attribute:: version
+      :value: None
+
+
+
+   .. py:attribute:: edited_at
+      :value: None
+
+
+
+   .. py:attribute:: summary_history
+      :value: None
+
+
+
+   .. py:attribute:: conflict
+      :value: None
+
+
+
+   .. py:attribute:: unchanged
+      :value: None
+
+
+
+   .. py:attribute:: running
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

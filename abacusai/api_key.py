@@ -15,9 +15,12 @@ class ApiKey(AbstractApiClass):
             createdAt (str): The timestamp when the API key was created.
             expiresAt (str): The timestamp when the API key will expire.
             isExpired (bool): Whether the API key has expired.
+            logRequests (bool): Whether RouteLLM API calls made with the key are recorded for the organization's activity log export.
+            ownerEmail (str): The email of the key's owner; only in an administrator's listing of the organization's keys.
+            systemCreated (bool): Whether the platform created the key (the agent's and deployed apps' keys); only in that listing.
     """
 
-    def __init__(self, client, apiKeyId=None, apiKey=None, apiKeySuffix=None, tag=None, type=None, createdAt=None, expiresAt=None, isExpired=None):
+    def __init__(self, client, apiKeyId=None, apiKey=None, apiKeySuffix=None, tag=None, type=None, createdAt=None, expiresAt=None, isExpired=None, logRequests=None, ownerEmail=None, systemCreated=None):
         super().__init__(client, apiKeyId)
         self.api_key_id = apiKeyId
         self.api_key = apiKey
@@ -27,11 +30,14 @@ class ApiKey(AbstractApiClass):
         self.created_at = createdAt
         self.expires_at = expiresAt
         self.is_expired = isExpired
+        self.log_requests = logRequests
+        self.owner_email = ownerEmail
+        self.system_created = systemCreated
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'api_key_id': repr(self.api_key_id), f'api_key': repr(self.api_key), f'api_key_suffix': repr(self.api_key_suffix), f'tag': repr(
-            self.tag), f'type': repr(self.type), f'created_at': repr(self.created_at), f'expires_at': repr(self.expires_at), f'is_expired': repr(self.is_expired)}
+        repr_dict = {f'api_key_id': repr(self.api_key_id), f'api_key': repr(self.api_key), f'api_key_suffix': repr(self.api_key_suffix), f'tag': repr(self.tag), f'type': repr(self.type), f'created_at': repr(
+            self.created_at), f'expires_at': repr(self.expires_at), f'is_expired': repr(self.is_expired), f'log_requests': repr(self.log_requests), f'owner_email': repr(self.owner_email), f'system_created': repr(self.system_created)}
         class_name = "ApiKey"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -44,8 +50,8 @@ class ApiKey(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'api_key_id': self.api_key_id, 'api_key': self.api_key, 'api_key_suffix': self.api_key_suffix, 'tag': self.tag,
-                'type': self.type, 'created_at': self.created_at, 'expires_at': self.expires_at, 'is_expired': self.is_expired}
+        resp = {'api_key_id': self.api_key_id, 'api_key': self.api_key, 'api_key_suffix': self.api_key_suffix, 'tag': self.tag, 'type': self.type, 'created_at': self.created_at,
+                'expires_at': self.expires_at, 'is_expired': self.is_expired, 'log_requests': self.log_requests, 'owner_email': self.owner_email, 'system_created': self.system_created}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def delete(self):

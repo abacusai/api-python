@@ -1,0 +1,64 @@
+abacusai.agent_rail
+===================
+
+.. py:module:: abacusai.agent_rail
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.agent_rail.AgentRail
+
+
+Module Contents
+---------------
+
+.. py:class:: AgentRail(client, enabled=None, memory=None, brainTopics=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The agent rail beside a personal agent's chat: what the agent knows about its owner
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param enabled: Whether the chat has an agent rail (personal_agent_orchestration, the caller's own personal agent).
+   :type enabled: bool
+   :param memory: sections (core/preferences/people/open_loops/threads -> items [{text, name?, detail?}] and updated_at epoch seconds) and lately (the newest daily note: date/text), from the agent's memory.
+   :type memory: dict
+   :param brainTopics: The AI Brain topics the agent reads (name/description/updated_at); empty when the owner's AI Brain is off.
+   :type brainTopics: list
+
+
+   .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: memory
+      :value: None
+
+
+
+   .. py:attribute:: brain_topics
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

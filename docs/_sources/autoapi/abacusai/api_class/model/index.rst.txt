@@ -1544,6 +1544,8 @@ Module Contents
    :type search_site_restrict: List[str]
    :param tool_response_token_limit: Max tokens of a custom tool response passed to the LLM. Larger responses are truncated and saved to a file. Defaults to 16384, max 32768.
    :type tool_response_token_limit: int
+   :param hide_tool_calls: Hide tool calls in the chat. The model still uses their results.
+   :type hide_tool_calls: bool
 
 
    .. py:attribute:: document_retrievers
@@ -1830,6 +1832,12 @@ Module Contents
 
    .. py:attribute:: tool_response_token_limit
       :type:  int
+      :value: None
+
+
+
+   .. py:attribute:: hide_tool_calls
+      :type:  bool
       :value: None
 
 

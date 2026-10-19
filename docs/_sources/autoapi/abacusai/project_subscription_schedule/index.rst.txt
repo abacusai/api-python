@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ProjectSubscriptionSchedule(client, name=None, kind=None, cadence=None, daemonTaskId=None, lastRunLifecycle=None, lastRunAt=None, webhookUrl=None)
+.. py:class:: ProjectSubscriptionSchedule(client, name=None, kind=None, cadence=None, cron=None, timezone=None, maxRuns=None, state=None, daemonTaskId=None, lastRunLifecycle=None, lastRunAt=None, webhookUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,14 @@ Module Contents
    :type kind: str
    :param cadence: Human-readable cadence, e.g. "daily at 09:00" or "on event".
    :type cadence: str
+   :param cron: The 5-field cron expression, for a free-form cron schedule only.
+   :type cron: str
+   :param timezone: IANA zone the cadence is expressed in.
+   :type timezone: str
+   :param maxRuns: How many times the schedule fires in total, when it is capped.
+   :type maxRuns: int
+   :param state: The schedule's own lifecycle: ACTIVE, COMPLETED (it will not fire again) or PAUSED.
+   :type state: str
    :param daemonTaskId: The backing scheduled task.
    :type daemonTaskId: str
    :param lastRunLifecycle: Lifecycle of the newest run, when any.
@@ -51,6 +59,26 @@ Module Contents
 
 
    .. py:attribute:: cadence
+      :value: None
+
+
+
+   .. py:attribute:: cron
+      :value: None
+
+
+
+   .. py:attribute:: timezone
+      :value: None
+
+
+
+   .. py:attribute:: max_runs
+      :value: None
+
+
+
+   .. py:attribute:: state
       :value: None
 
 

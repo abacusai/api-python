@@ -215,6 +215,7 @@ Classes
    abacusai.api_class.MediaArtifactOrigin
    abacusai.api_class.MediaArtifactKind
    abacusai.api_class.VerticalType
+   abacusai.api_class.SemanticViewImportMode
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.DocumentProcessingConfig
@@ -7727,6 +7728,11 @@ Package Contents
 
 
 
+   .. py:attribute:: ONENOTE
+      :value: 'ONENOTE'
+
+
+
    .. py:attribute:: AUTODESK
       :value: 'AUTODESK'
 
@@ -7739,6 +7745,11 @@ Package Contents
 
    .. py:attribute:: METAADS
       :value: 'METAADS'
+
+
+
+   .. py:attribute:: XADS
+      :value: 'XADS'
 
 
 
@@ -8537,6 +8548,11 @@ Package Contents
 
 
 
+   .. py:attribute:: GEMINI_4_ARGON
+      :value: 'GEMINI_4_ARGON'
+
+
+
    .. py:attribute:: GEMINI_2_5_FLASH
       :value: 'GEMINI_2_5_FLASH'
 
@@ -8764,6 +8780,11 @@ Package Contents
 
    .. py:attribute:: MUSE_SPARK_1_3_CONTRIBUTOR
       :value: 'MUSE_SPARK_1_3_CONTRIBUTOR'
+
+
+
+   .. py:attribute:: MUSE_WONDER_1_0
+      :value: 'MUSE_WONDER_1_0'
 
 
 
@@ -10783,6 +10804,29 @@ Package Contents
 
    .. py:attribute:: FINANCE
       :value: 'FINANCE'
+
+
+
+.. py:class:: SemanticViewImportMode(*args, **kwds)
+
+   Bases: :py:obj:`ApiEnum`
+
+
+   What a dataset created from a Snowflake semantic view holds.
+
+
+   .. py:attribute:: DATA
+      :value: 'DATA'
+
+
+
+   .. py:attribute:: DEFINITION_ROWS
+      :value: 'DEFINITION_ROWS'
+
+
+
+   .. py:attribute:: DEFINITION_YAML
+      :value: 'DEFINITION_YAML'
 
 
 
@@ -13164,6 +13208,8 @@ Package Contents
    :type search_site_restrict: List[str]
    :param tool_response_token_limit: Max tokens of a custom tool response passed to the LLM. Larger responses are truncated and saved to a file. Defaults to 16384, max 32768.
    :type tool_response_token_limit: int
+   :param hide_tool_calls: Hide tool calls in the chat. The model still uses their results.
+   :type hide_tool_calls: bool
 
 
    .. py:attribute:: document_retrievers
@@ -13450,6 +13496,12 @@ Package Contents
 
    .. py:attribute:: tool_response_token_limit
       :type:  int
+      :value: None
+
+
+
+   .. py:attribute:: hide_tool_calls
+      :type:  bool
       :value: None
 
 

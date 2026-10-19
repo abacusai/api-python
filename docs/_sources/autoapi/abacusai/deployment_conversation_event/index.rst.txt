@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,14 @@ Module Contents
    :type isTriggered: bool
    :param triggerSource: For a server-started user message, what started it (collaborator comments picked up by the agent, or a personal agent's delegated brief with `type` bot_delegation and the brief as `task`).
    :type triggerSource: dict
+   :param agentTaskId: Personal agent conversations only. On a bot message posting a delegated run's result, the run's task id (the run card it belongs to).
+   :type agentTaskId: str
+   :param isNoopReply: Personal agent conversations only. Whether this bot message is a server-fired turn's "nothing to report" reply, which clients hide.
+   :type isNoopReply: bool
+   :param attachmentOnlyMessage: Whether this user message was sent as attachments with no typed text; `text` is then the server-built list of the attachment filenames, which the chat shows as attachment chips only.
+   :type attachmentOnlyMessage: bool
+   :param backgroundWake: Cloud CLI conversations only. Set on a user message the client sent to resume the agent for finished background tasks: `tasks` with each task's id, label, exit code, runtime and kind, so a transcript renders the message as task notices rather than as the person speaking.
+   :type backgroundWake: dict
    :param messageIndex: The index of the message in the conversation
    :type messageIndex: int
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
@@ -164,6 +172,26 @@ Module Contents
 
 
    .. py:attribute:: trigger_source
+      :value: None
+
+
+
+   .. py:attribute:: agent_task_id
+      :value: None
+
+
+
+   .. py:attribute:: is_noop_reply
+      :value: None
+
+
+
+   .. py:attribute:: attachment_only_message
+      :value: None
+
+
+
+   .. py:attribute:: background_wake
       :value: None
 
 

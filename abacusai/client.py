@@ -43,9 +43,10 @@ from .api_class import (
     MemorySize, MergeConfig, OperatorConfig, OrganizationSecretType,
     ParsingConfig, PredictionArguments, ProblemType, ProjectFeatureGroupConfig,
     PythonFunctionType, RealtimeContentStoreConfig, ResponseSection,
-    SamplingConfig, Segment, StreamingConnectorDatasetConfig, TrainingConfig,
-    VectorStoreConfig, WorkflowGraph, WorkflowGraphNode,
-    WorkflowNodeTemplateConfig, get_clean_function_source_code_for_agent
+    SamplingConfig, Segment, SemanticViewImportMode,
+    StreamingConnectorDatasetConfig, TrainingConfig, VectorStoreConfig,
+    WorkflowGraph, WorkflowGraphNode, WorkflowNodeTemplateConfig,
+    get_clean_function_source_code_for_agent
 )
 from .api_class.abstract import get_clean_function_source_code, get_clean_function_source_code_for_agent, snake_case
 from .api_class.ai_agents import WorkflowGraph, WorkflowNodeTemplateConfig
@@ -717,7 +718,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.117'
+    client_version = '1.4.118'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -6384,7 +6385,7 @@ class ApiClient(ReadOnlyClient):
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config, 'sqlQuery': sql_query}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, attachment_parsing_config: Union[dict, AttachmentParsingConfig] = None, incremental_database_connector_config: Union[dict, IncrementalDatabaseConnectorConfig] = None, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, version_limit: int = 30) -> Dataset:
+    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, attachment_parsing_config: Union[dict, AttachmentParsingConfig] = None, incremental_database_connector_config: Union[dict, IncrementalDatabaseConnectorConfig] = None, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, version_limit: int = 30, semantic_view: bool = False, semantic_view_import_mode: Union[SemanticViewImportMode, str] = None) -> Dataset:
         """Creates a dataset from a Database Connector.
 
         Args:
@@ -6400,10 +6401,12 @@ class ApiClient(ReadOnlyClient):
             incremental_database_connector_config (IncrementalDatabaseConnectorConfig): The config for incremental datasets. Only valid if incremental is True
             document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration. Only valid when documents are being imported (e.g. importing KnowledgeArticleDescriptions via Salesforce).
             version_limit (int): The number of recent versions to preserve for the dataset (minimum 30).
+            semantic_view (bool): If true, `object_name` is a Snowflake semantic view and `columns` are its dimensions, metrics and facts (`LOGICAL_TABLE.NAME`). An empty `columns` exports every public dimension and metric; facts are row-level and cannot be combined with metrics. Only valid for Snowflake connectors, and not with `sql_query` or `incremental`.
+            semantic_view_import_mode (SemanticViewImportMode): What a semantic view dataset holds. DATA (default) imports rows of the selected dimensions, metrics or facts. DEFINITION_ROWS imports one row per logical table, relationship, dimension, fact and metric with its expression, data type, synonyms and description. DEFINITION_YAML imports the semantic model YAML as a single row. The definition modes take no `columns` or `query_arguments`. Requires `semantic_view`.
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'attachmentParsingConfig': attachment_parsing_config, 'incrementalDatabaseConnectorConfig': incremental_database_connector_config, 'documentProcessingConfig': document_processing_config, 'versionLimit': version_limit}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'attachmentParsingConfig': attachment_parsing_config, 'incrementalDatabaseConnectorConfig': incremental_database_connector_config, 'documentProcessingConfig': document_processing_config, 'versionLimit': version_limit, 'semanticView': semantic_view, 'semanticViewImportMode': semantic_view_import_mode}, parse_type=Dataset)
 
     def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, ApplicationConnectorDatasetConfig] = None, refresh_schedule: str = None, version_limit: int = 30, incremental: bool = False) -> Dataset:
         """Creates a dataset from an Application Connector.

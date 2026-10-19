@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: BotTemplateCatalog(client, templates=None, categories=None)
+.. py:class:: BotTemplateCatalog(client, templates=None, categories=None, taskIdeas=None, taskIdeaThemes=None, serviceConnectors=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -24,10 +24,16 @@ Module Contents
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param templates: The templates, in display order (id/title/description/prompt/personality/avatar/color/categories/required_service_types, plus template, brand_icon, setup_checks, background_task and, when the org's disabled connectors rule it out, unavailable_reason where they apply). A setup check or background task needing mail/calendar carries required_service_type (MAIL / CALENDAR), required_service (the connector id it defaults to: the org's first allowed), available and connectors ([{service, scopes}]: the connectors the org allows, any one of which meets it, and the scopes the user's connection must hold). Chief of Staff is first.
+   :param templates: The templates, in display order (id/title/description/prompt/personality/avatar/color/categories/required_service_types, plus template, brand_icon, setup_checks, background_task, task_ideas and, when the org's disabled connectors rule it out, unavailable_reason where they apply). A setup check or background task needing mail/calendar carries required_service_type (MAIL / CALENDAR), required_service (the connector id it defaults to: the org's first allowed), available and connectors ([{service, scopes}]: the connectors the org allows, any one of which meets it, and the scopes the user's connection must hold). Chief of Staff is first.
    :type templates: list
    :param categories: The filter pills in display order (id/label); 'featured' is the default view.
    :type categories: list
+   :param taskIdeas: Scheduled-task ideas the create-agent dialog offers (id/label/themes/name/prompt/schedule/cadence, plus routine_id, required_service_type (MAIL / CALENDAR) and uses (service types it reads when connected) where they apply). Templates without a setup checklist name theirs in task_ideas.
+   :type taskIdeas: list
+   :param taskIdeaThemes: The idea theme pills in display order (id/label); 'popular' is the default view.
+   :type taskIdeaThemes: list
+   :param serviceConnectors: Per service type (MAIL / CALENDAR), the connectors the org allows ([{service, scopes}]), so a typed task can be matched to them.
+   :type serviceConnectors: dict
 
 
    .. py:attribute:: templates
@@ -36,6 +42,21 @@ Module Contents
 
 
    .. py:attribute:: categories
+      :value: None
+
+
+
+   .. py:attribute:: task_ideas
+      :value: None
+
+
+
+   .. py:attribute:: task_idea_themes
+      :value: None
+
+
+
+   .. py:attribute:: service_connectors
       :value: None
 
 

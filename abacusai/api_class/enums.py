@@ -457,9 +457,11 @@ class ApplicationConnectorType(ApiEnum):
     YOUTUBE = 'YOUTUBE'
     DOCUSIGN = 'DOCUSIGN'
     SMARTSHEET = 'SMARTSHEET'
+    ONENOTE = 'ONENOTE'
     AUTODESK = 'AUTODESK'
     ZOOM = 'ZOOM'
     METAADS = 'METAADS'
+    XADS = 'XADS'
     WHATSAPPBUSINESS = 'WHATSAPPBUSINESS'
     MESSENGER = 'MESSENGER'
     INSTAGRAM = 'INSTAGRAM'
@@ -515,9 +517,11 @@ class ApplicationConnectorType(ApiEnum):
             cls.YOUTUBE,
             cls.DOCUSIGN,
             cls.SMARTSHEET,
+            cls.ONENOTE,
             cls.AUTODESK,
             cls.ZOOM,
             cls.METAADS,
+            cls.XADS,
             cls.WHATSAPPBUSINESS,
             cls.MESSENGER,
             cls.INSTAGRAM,
@@ -676,6 +680,7 @@ class LLMName(ApiEnum):
     GEMINI_2_5_PRO = 'GEMINI_2_5_PRO'
     GEMINI_3_PRO = 'GEMINI_3_PRO'
     GEMINI_3_1_PRO = 'GEMINI_3_1_PRO'
+    GEMINI_4_ARGON = 'GEMINI_4_ARGON'
     GEMINI_2_5_FLASH = 'GEMINI_2_5_FLASH'
     GEMINI_3_FLASH = 'GEMINI_3_FLASH'
     GEMINI_3_5_FLASH = 'GEMINI_3_5_FLASH'
@@ -722,6 +727,7 @@ class LLMName(ApiEnum):
     MUSE_SPARK_1_2 = 'MUSE_SPARK_1_2'
     MUSE_SPARK_1_3 = 'MUSE_SPARK_1_3'
     MUSE_SPARK_1_3_CONTRIBUTOR = 'MUSE_SPARK_1_3_CONTRIBUTOR'
+    MUSE_WONDER_1_0 = 'MUSE_WONDER_1_0'
     XIAOMI_MIMO_V2_PRO = 'XIAOMI_MIMO_V2_PRO'
     XIAOMI_MIMO_V2_6_PRO = 'XIAOMI_MIMO_V2_6_PRO'
     GEMMA_4_31B = 'GEMMA_4_31B'
@@ -1051,3 +1057,10 @@ class VerticalType(ApiEnum):
     ROLE_PLAY = 'ROLE_PLAY'
     LEGAL = 'LEGAL'
     FINANCE = 'FINANCE'
+
+
+class SemanticViewImportMode(ApiEnum):
+    """What a dataset created from a Snowflake semantic view holds."""
+    DATA = 'DATA'  # rows of a SEMANTIC_VIEW query over the selected dimensions, metrics or facts
+    DEFINITION_ROWS = 'DEFINITION_ROWS'  # one row per logical table, relationship, dimension, fact and metric: expression, data type, synonyms, description
+    DEFINITION_YAML = 'DEFINITION_YAML'  # one row holding the semantic model YAML

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AudioListenerSpeaker(client, lineIds=None, speaker=None, count=None)
+.. py:class:: AudioListenerSpeaker(client, lineIds=None, speaker=None, count=None, version=None, editedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,10 @@ Module Contents
    :type speaker: str
    :param count: How many stored lines changed.
    :type count: int
+   :param version: The session's edits version after the change, which a later save must send.
+   :type version: int
+   :param editedAt: When the change landed.
+   :type editedAt: str
 
 
    .. py:attribute:: line_ids
@@ -43,6 +47,16 @@ Module Contents
 
 
    .. py:attribute:: count
+      :value: None
+
+
+
+   .. py:attribute:: version
+      :value: None
+
+
+
+   .. py:attribute:: edited_at
       :value: None
 
 

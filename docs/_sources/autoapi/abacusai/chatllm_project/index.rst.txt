@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None, projectMode=None, coordinatorBotId=None, coordinatorDeploymentConversationId=None, coordinatorActiveRuns=None, coordinatorLastRunAt=None)
+.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, createdByEmail=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None, projectMode=None, coordinatorBotId=None, coordinatorDeploymentConversationId=None, coordinatorActiveRuns=None, coordinatorLastRunAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type updatedAt: str
    :param createdByUserId: The ID of the user who created the chatllm project.
    :type createdByUserId: int
+   :param createdByEmail: The creator's email; only when the list call asks for it (include_creator_emails).
+   :type createdByEmail: str
    :param accessLevel: The access level of the chatllm project.
    :type accessLevel: str
    :param verticalType: The vertical type (HEALTH or null for regular projects).
@@ -89,6 +91,11 @@ Module Contents
 
 
    .. py:attribute:: created_by_user_id
+      :value: None
+
+
+
+   .. py:attribute:: created_by_email
       :value: None
 
 

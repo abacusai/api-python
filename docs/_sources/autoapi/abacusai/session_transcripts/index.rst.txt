@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: SessionTranscripts(client, transcripts=None)
+.. py:class:: SessionTranscripts(client, transcripts=None, transcriptShared=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,9 +26,16 @@ Module Contents
    :type client: ApiClient
    :param transcripts: A list of session transcripts.
    :type transcripts: list[sessiontranscript]
+   :param transcriptShared: False when the session's owner shares it without its transcript: the list is then empty for everyone but the owner.
+   :type transcriptShared: bool
 
 
    .. py:attribute:: transcripts
+      :value: None
+
+
+
+   .. py:attribute:: transcript_shared
       :value: None
 
 

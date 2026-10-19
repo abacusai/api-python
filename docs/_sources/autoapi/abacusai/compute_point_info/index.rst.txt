@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None)
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type freeTierTotal: int
    :param freeTierExpiresAt: The ISO timestamp when the free tier expires
    :type freeTierExpiresAt: str
+   :param firstDaOffer: The "Your first task is on us" pack (cp, granted_at, expires_at; dconv_id / used_cp / used_at once used), if any
+   :type firstDaOffer: dict
 
 
    .. py:attribute:: updated_at
@@ -85,6 +87,11 @@ Module Contents
 
 
    .. py:attribute:: free_tier_expires_at
+      :value: None
+
+
+
+   .. py:attribute:: first_da_offer
       :value: None
 
 

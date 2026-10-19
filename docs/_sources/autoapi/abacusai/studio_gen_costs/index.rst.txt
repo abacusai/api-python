@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None)
+.. py:class:: StudioGenCosts(client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None, autoVideoEstimateHidden=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,8 @@ Module Contents
    :type adOverhead: int
    :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
    :type imageDisplayThreshold: int
+   :param autoVideoEstimateHidden: The org is tossed into studio_driver_video_routing, where an Auto video's model is picked from the message after send: the composer shows no estimate for it
+   :type autoVideoEstimateHidden: bool
 
 
    .. py:attribute:: video_costs
@@ -78,6 +80,11 @@ Module Contents
 
 
    .. py:attribute:: image_display_threshold
+      :value: None
+
+
+
+   .. py:attribute:: auto_video_estimate_hidden
       :value: None
 
 

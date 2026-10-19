@@ -55,6 +55,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_document_info/index.html">abacusai.agent_data_document_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_execution_result/index.html">abacusai.agent_data_execution_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_network/index.html">abacusai.agent_network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_rail/index.html">abacusai.agent_rail</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_skill/index.html">abacusai.agent_skill</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_version/index.html">abacusai.agent_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ai_building_task/index.html">abacusai.ai_building_task</a></li>
@@ -79,9 +80,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_session_page/index.html">abacusai.audio_listener_meeting_session_page</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_sessions/index.html">abacusai.audio_listener_meeting_sessions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_template/index.html">abacusai.audio_listener_meeting_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_search_term/index.html">abacusai.audio_listener_search_term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_edits/index.html">abacusai.audio_listener_session_edits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_feedback/index.html">abacusai.audio_listener_session_feedback</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_meeting/index.html">abacusai.audio_listener_session_meeting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_speaker/index.html">abacusai.audio_listener_speaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_summary_rewrite/index.html">abacusai.audio_listener_summary_rewrite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template/index.html">abacusai.audio_listener_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template_file/index.html">abacusai.audio_listener_template_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template_selection/index.html">abacusai.audio_listener_template_selection</a></li>
@@ -243,6 +247,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app_container/index.html">abacusai.hosted_app_container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_artifact/index.html">abacusai.hosted_artifact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_database/index.html">abacusai.hosted_database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_database_finding/index.html">abacusai.hosted_database_finding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_database_health/index.html">abacusai.hosted_database_health</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_database_snapshot/index.html">abacusai.hosted_database_snapshot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_model_token/index.html">abacusai.hosted_model_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hostname_info/index.html">abacusai.hostname_info</a></li>
@@ -368,6 +374,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../session_transcript/index.html">abacusai.session_transcript</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../session_transcripts/index.html">abacusai.session_transcripts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../sftp_key/index.html">abacusai.sftp_key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../shared_audio_listener_session/index.html">abacusai.shared_audio_listener_session</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../speech_gen_settings/index.html">abacusai.speech_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html">abacusai.streaming_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html">abacusai.streaming_client</a></li>
@@ -464,7 +471,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.coordinator_run.CoordinatorRun" title="abacusai.coordinator_run.CoordinatorRun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CoordinatorRun</span></code></a></p></td>
-<td><p>A DeepAgent run a project's coordinator agent delegated (the project's Active Work rail)</p></td>
+<td><p>A DeepAgent run an agent delegated (a project's Active Work rail, the run cards in the agent's chat)</p></td>
 </tr>
 </tbody>
 </table>
@@ -473,9 +480,9 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.coordinator_run.CoordinatorRun">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.coordinator_run.</span></span><span class="sig-name descname"><span class="pre">CoordinatorRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taskId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startedAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentConversationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">computePointsUsed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hasDeliverables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.coordinator_run.CoordinatorRun" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.coordinator_run.</span></span><span class="sig-name descname"><span class="pre">CoordinatorRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taskId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startedAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentConversationId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">computePointsUsed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hasDeliverables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxTurns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waiting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sentBack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.coordinator_run.CoordinatorRun" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
-<p>A DeepAgent run a project’s coordinator agent delegated (the project’s Active Work rail)</p>
+<p>A DeepAgent run an agent delegated (a project’s Active Work rail, the run cards in the agent’s chat)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -487,6 +494,10 @@
 <li><p><strong>deploymentConversationId</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The project conversation the run happens in.</p></li>
 <li><p><strong>computePointsUsed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Credits the run has consumed so far, when known.</p></li>
 <li><p><strong>hasDeliverables</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether the run declared deliverable files.</p></li>
+<li><p><strong>turns</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Messages the run has taken from its agent, the brief included.</p></li>
+<li><p><strong>maxTurns</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Messages the run can take from its agent.</p></li>
+<li><p><strong>waiting</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether the run stopped on a question for its agent (state reads running).</p></li>
+<li><p><strong>sentBack</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether the run is working on a message its agent sent on its own (e.g. a result it rejected).</p></li>
 </ul>
 </dd>
 </dl>
@@ -523,6 +534,26 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.coordinator_run.CoordinatorRun.has_deliverables">
 <span class="sig-name descname"><span class="pre">has_deliverables</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.coordinator_run.CoordinatorRun.has_deliverables" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.coordinator_run.CoordinatorRun.turns">
+<span class="sig-name descname"><span class="pre">turns</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.coordinator_run.CoordinatorRun.turns" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.coordinator_run.CoordinatorRun.max_turns">
+<span class="sig-name descname"><span class="pre">max_turns</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.coordinator_run.CoordinatorRun.max_turns" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.coordinator_run.CoordinatorRun.waiting">
+<span class="sig-name descname"><span class="pre">waiting</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.coordinator_run.CoordinatorRun.waiting" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.coordinator_run.CoordinatorRun.sent_back">
+<span class="sig-name descname"><span class="pre">sent_back</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.coordinator_run.CoordinatorRun.sent_back" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

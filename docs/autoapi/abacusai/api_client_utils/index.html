@@ -55,6 +55,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_document_info/index.html">abacusai.agent_data_document_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_execution_result/index.html">abacusai.agent_data_execution_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_network/index.html">abacusai.agent_network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_rail/index.html">abacusai.agent_rail</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_skill/index.html">abacusai.agent_skill</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_version/index.html">abacusai.agent_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ai_building_task/index.html">abacusai.ai_building_task</a></li>
@@ -85,9 +86,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_session_page/index.html">abacusai.audio_listener_meeting_session_page</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_sessions/index.html">abacusai.audio_listener_meeting_sessions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_template/index.html">abacusai.audio_listener_meeting_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_search_term/index.html">abacusai.audio_listener_search_term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_edits/index.html">abacusai.audio_listener_session_edits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_feedback/index.html">abacusai.audio_listener_session_feedback</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_meeting/index.html">abacusai.audio_listener_session_meeting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_speaker/index.html">abacusai.audio_listener_speaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_summary_rewrite/index.html">abacusai.audio_listener_summary_rewrite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template/index.html">abacusai.audio_listener_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template_file/index.html">abacusai.audio_listener_template_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_template_selection/index.html">abacusai.audio_listener_template_selection</a></li>
@@ -245,6 +249,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../hosted_app_container/index.html">abacusai.hosted_app_container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_artifact/index.html">abacusai.hosted_artifact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_database/index.html">abacusai.hosted_database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_database_finding/index.html">abacusai.hosted_database_finding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hosted_database_health/index.html">abacusai.hosted_database_health</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_database_snapshot/index.html">abacusai.hosted_database_snapshot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_model_token/index.html">abacusai.hosted_model_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hostname_info/index.html">abacusai.hostname_info</a></li>
@@ -370,6 +376,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../session_transcript/index.html">abacusai.session_transcript</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../session_transcripts/index.html">abacusai.session_transcripts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../sftp_key/index.html">abacusai.sftp_key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../shared_audio_listener_session/index.html">abacusai.shared_audio_listener_session</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../speech_gen_settings/index.html">abacusai.speech_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html">abacusai.streaming_auth_token</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html">abacusai.streaming_client</a></li>
@@ -683,7 +690,7 @@ errors defaults to ‘strict’.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -894,7 +901,7 @@ Needs to be updated if docstore formats change.</p>
 <li><p><strong>feature_group_version</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>)</p></li>
 <li><p><strong>doc_id_column</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>)</p></li>
 <li><p><strong>document_column</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>)</p></li>
-<li><p><strong>get_docstore_resource_bytes</strong> (<em>Callable</em><em>[</em><em>...</em><em>, </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#bytes" title="(in Python v3.15)"><em>bytes</em></a><em>]</em>)</p></li>
+<li><p><strong>get_docstore_resource_bytes</strong> (<em>Callable</em><em>[</em><em>Ellipsis</em><em>, </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#bytes" title="(in Python v3.15)"><em>bytes</em></a><em>]</em>)</p></li>
 <li><p><strong>get_document_processing_result_infos</strong> (<em>Callable</em>)</p></li>
 <li><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>)</p></li>
 <li><p><strong>get_current_archives</strong> (<em>Callable</em>)</p></li>

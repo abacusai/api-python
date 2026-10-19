@@ -17,9 +17,10 @@ class CustomChatInstructions(AbstractApiClass):
             enableMemoryConsolidation (bool): Whether the org has the memory-consolidation ("dreaming") feature enabled.
             hasLegacyChatllmMemories (bool): Whether the user has content in either legacy memory store (ChatLLM /memories/preferences.txt or the DeepAgent explicit_user_preferences folder), so the memories UI keeps them on the old memories view instead of the AI Brain page.
             experimentalFeatures (dict): Experimental features.
+            inheritsDefault (bool): Nothing is set for this model or its app, so the values shown are the user's default instructions, which chat applies to it.
     """
 
-    def __init__(self, client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, experimentalFeatures=None):
+    def __init__(self, client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, experimentalFeatures=None, inheritsDefault=None):
         super().__init__(client, None)
         self.user_information_instructions = userInformationInstructions
         self.response_instructions = responseInstructions
@@ -31,11 +32,12 @@ class CustomChatInstructions(AbstractApiClass):
         self.enable_memory_consolidation = enableMemoryConsolidation
         self.has_legacy_chatllm_memories = hasLegacyChatllmMemories
         self.experimental_features = experimentalFeatures
+        self.inherits_default = inheritsDefault
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'user_information_instructions': repr(self.user_information_instructions), f'response_instructions': repr(self.response_instructions), f'enable_code_execution': repr(self.enable_code_execution), f'enable_image_generation': repr(self.enable_image_generation), f'enable_web_search': repr(
-            self.enable_web_search), f'enable_playground': repr(self.enable_playground), f'enable_memories': repr(self.enable_memories), f'enable_memory_consolidation': repr(self.enable_memory_consolidation), f'has_legacy_chatllm_memories': repr(self.has_legacy_chatllm_memories), f'experimental_features': repr(self.experimental_features)}
+        repr_dict = {f'user_information_instructions': repr(self.user_information_instructions), f'response_instructions': repr(self.response_instructions), f'enable_code_execution': repr(self.enable_code_execution), f'enable_image_generation': repr(self.enable_image_generation), f'enable_web_search': repr(self.enable_web_search), f'enable_playground': repr(
+            self.enable_playground), f'enable_memories': repr(self.enable_memories), f'enable_memory_consolidation': repr(self.enable_memory_consolidation), f'has_legacy_chatllm_memories': repr(self.has_legacy_chatllm_memories), f'experimental_features': repr(self.experimental_features), f'inherits_default': repr(self.inherits_default)}
         class_name = "CustomChatInstructions"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -49,5 +51,5 @@ class CustomChatInstructions(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'user_information_instructions': self.user_information_instructions, 'response_instructions': self.response_instructions, 'enable_code_execution': self.enable_code_execution, 'enable_image_generation': self.enable_image_generation, 'enable_web_search': self.enable_web_search,
-                'enable_playground': self.enable_playground, 'enable_memories': self.enable_memories, 'enable_memory_consolidation': self.enable_memory_consolidation, 'has_legacy_chatllm_memories': self.has_legacy_chatllm_memories, 'experimental_features': self.experimental_features}
+                'enable_playground': self.enable_playground, 'enable_memories': self.enable_memories, 'enable_memory_consolidation': self.enable_memory_consolidation, 'has_legacy_chatllm_memories': self.has_legacy_chatllm_memories, 'experimental_features': self.experimental_features, 'inherits_default': self.inherits_default}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

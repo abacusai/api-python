@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, apiKeySuffix=None, tag=None, type=None, createdAt=None, expiresAt=None, isExpired=None)
+.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, apiKeySuffix=None, tag=None, type=None, createdAt=None, expiresAt=None, isExpired=None, logRequests=None, ownerEmail=None, systemCreated=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -40,6 +40,12 @@ Module Contents
    :type expiresAt: str
    :param isExpired: Whether the API key has expired.
    :type isExpired: bool
+   :param logRequests: Whether RouteLLM API calls made with the key are recorded for the organization's activity log export.
+   :type logRequests: bool
+   :param ownerEmail: The email of the key's owner; only in an administrator's listing of the organization's keys.
+   :type ownerEmail: str
+   :param systemCreated: Whether the platform created the key (the agent's and deployed apps' keys); only in that listing.
+   :type systemCreated: bool
 
 
    .. py:attribute:: api_key_id
@@ -78,6 +84,21 @@ Module Contents
 
 
    .. py:attribute:: is_expired
+      :value: None
+
+
+
+   .. py:attribute:: log_requests
+      :value: None
+
+
+
+   .. py:attribute:: owner_email
+      :value: None
+
+
+
+   .. py:attribute:: system_created
       :value: None
 
 

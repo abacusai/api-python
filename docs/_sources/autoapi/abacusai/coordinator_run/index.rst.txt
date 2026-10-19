@@ -15,12 +15,12 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None)
+.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   A DeepAgent run a project's coordinator agent delegated (the project's Active Work rail)
+   A DeepAgent run an agent delegated (a project's Active Work rail, the run cards in the agent's chat)
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -38,6 +38,14 @@ Module Contents
    :type computePointsUsed: int
    :param hasDeliverables: Whether the run declared deliverable files.
    :type hasDeliverables: bool
+   :param turns: Messages the run has taken from its agent, the brief included.
+   :type turns: int
+   :param maxTurns: Messages the run can take from its agent.
+   :type maxTurns: int
+   :param waiting: Whether the run stopped on a question for its agent (state reads running).
+   :type waiting: bool
+   :param sentBack: Whether the run is working on a message its agent sent on its own (e.g. a result it rejected).
+   :type sentBack: bool
 
 
    .. py:attribute:: task_id
@@ -71,6 +79,26 @@ Module Contents
 
 
    .. py:attribute:: has_deliverables
+      :value: None
+
+
+
+   .. py:attribute:: turns
+      :value: None
+
+
+
+   .. py:attribute:: max_turns
+      :value: None
+
+
+
+   .. py:attribute:: waiting
+      :value: None
+
+
+
+   .. py:attribute:: sent_back
       :value: None
 
 

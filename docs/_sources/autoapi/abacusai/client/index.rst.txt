@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.117'
+      :value: '1.4.118'
 
 
 
@@ -6449,7 +6449,7 @@ Module Contents
 
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, attachment_parsing_config = None, incremental_database_connector_config = None, document_processing_config = None, version_limit = 30)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, attachment_parsing_config = None, incremental_database_connector_config = None, document_processing_config = None, version_limit = 30, semantic_view = False, semantic_view_import_mode = None)
 
       Creates a dataset from a Database Connector.
 
@@ -6477,6 +6477,10 @@ Module Contents
       :type document_processing_config: DatasetDocumentProcessingConfig
       :param version_limit: The number of recent versions to preserve for the dataset (minimum 30).
       :type version_limit: int
+      :param semantic_view: If true, `object_name` is a Snowflake semantic view and `columns` are its dimensions, metrics and facts (`LOGICAL_TABLE.NAME`). An empty `columns` exports every public dimension and metric; facts are row-level and cannot be combined with metrics. Only valid for Snowflake connectors, and not with `sql_query` or `incremental`.
+      :type semantic_view: bool
+      :param semantic_view_import_mode: What a semantic view dataset holds. DATA (default) imports rows of the selected dimensions, metrics or facts. DEFINITION_ROWS imports one row per logical table, relationship, dimension, fact and metric with its expression, data type, synonyms and description. DEFINITION_YAML imports the semantic model YAML as a single row. The definition modes take no `columns` or `query_arguments`. Requires `semantic_view`.
+      :type semantic_view_import_mode: SemanticViewImportMode
 
       :returns: The created dataset.
       :rtype: Dataset

@@ -15,12 +15,12 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AudioListenerTranscriptSearchResult(client, deploymentConversationId=None, name=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, eventSequenceNumber=None, eventType=None, transcriptCreatedAt=None, snippet=None, score=None)
+.. py:class:: AudioListenerTranscriptSearchResult(client, deploymentConversationId=None, name=None, ownerUserId=None, createdAt=None, lastEventCreatedAt=None, eventSequenceNumber=None, eventType=None, transcriptCreatedAt=None, snippet=None, matchKind=None, nameMatched=None, sessionLineHits=None, speaker=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   A single audio listener transcript search hit.
+   A single audio listener transcript search hit. Hits are grouped per session, best session first.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -34,7 +34,7 @@ Module Contents
    :type createdAt: str
    :param lastEventCreatedAt: The timestamp at which the most recent event in the conversation was created.
    :type lastEventCreatedAt: str
-   :param eventSequenceNumber: The sequence number of the matched transcript event within the conversation.
+   :param eventSequenceNumber: The sequence number of the matched transcript event within the conversation; absent for a name-only hit.
    :type eventSequenceNumber: int
    :param eventType: The type of the matched transcript event.
    :type eventType: str
@@ -42,8 +42,14 @@ Module Contents
    :type transcriptCreatedAt: str
    :param snippet: The matching transcript snippet.
    :type snippet: str
-   :param score: The relevance score of the search hit.
-   :type score: int
+   :param matchKind: What matched: 'line' (a transcript line), 'summary' (the session's latest summary) or 'name' (the session name only).
+   :type matchKind: str
+   :param nameMatched: Whether the session name matches the query.
+   :type nameMatched: bool
+   :param sessionLineHits: How many transcript lines of the session match the query.
+   :type sessionLineHits: int
+   :param speaker: Who said the matched line, when known.
+   :type speaker: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -91,7 +97,22 @@ Module Contents
 
 
 
-   .. py:attribute:: score
+   .. py:attribute:: match_kind
+      :value: None
+
+
+
+   .. py:attribute:: name_matched
+      :value: None
+
+
+
+   .. py:attribute:: session_line_hits
+      :value: None
+
+
+
+   .. py:attribute:: speaker
       :value: None
 
 
