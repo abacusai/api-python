@@ -275,7 +275,7 @@ class ForecastingTrainingConfig(TrainingConfig):
         loss_function (ForecastingLossFunction): Loss function for training neural network.
         underprediction_weight (float): Weight for underpredictions
         disable_networks_without_analytic_quantiles (bool): Disable neural networks, which quantile functions do not have analytic expressions (e.g, mixture models)
-        initial_learning_rate (float): Initial learning rate.
+        initial_learning_rate (float): Initial learning rate. For the Multi Scale algorithms this is the peak learning rate of their one-cycle schedule.
         l2_regularization_factor (float): L2 regularization factor.
         dropout_rate (int): Dropout percentage rate.
         recurrent_layers (int): Number of recurrent layers to stack in network.

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None)
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None, wallRecovery=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44,6 +44,8 @@ Module Contents
    :type freeTierExpiresAt: str
    :param firstDaOffer: The "Your first task is on us" pack (cp, granted_at, expires_at; dconv_id / used_cp / used_at once used), if any
    :type firstDaOffer: dict
+   :param wallRecovery: The wall_recovery coin-toss marker (arm, state, claim_until; cp / used / expires_at once claimed), if any
+   :type wallRecovery: dict
 
 
    .. py:attribute:: updated_at
@@ -92,6 +94,11 @@ Module Contents
 
 
    .. py:attribute:: first_da_offer
+      :value: None
+
+
+
+   .. py:attribute:: wall_recovery
       :value: None
 
 

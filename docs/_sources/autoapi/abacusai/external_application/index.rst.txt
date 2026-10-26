@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, createdAt=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isVirtualModel=None, isCustomizable=None, browserAgentTiers=None, browserAgentUnavailableMessage=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, createdAt=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isVirtualModel=None, isCustomizable=None, browserAgentTiers=None, browserAgentUnavailableMessage=None, browserAgentActionSafetyAvailable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None, channelHandle=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -62,6 +62,8 @@ Module Contents
    :type browserAgentTiers: list
    :param browserAgentUnavailableMessage: Why no browser extension agent tier is available, when browser_agent_tiers is empty.
    :type browserAgentUnavailableMessage: str
+   :param browserAgentActionSafetyAvailable: Whether the browser extension's Auto mode (a safety check on each page action) has a model the organization's policy permits. Only set when the listing is requested with browser_agent_tiers.
+   :type browserAgentActionSafetyAvailable: bool
    :param isDeprecated: Whether the external application is deprecated.
    :type isDeprecated: bool
    :param isVisible: Whether the external application should be shown in the dropdown.
@@ -88,6 +90,8 @@ Module Contents
    :type defaultDeepagentEffortMode: str
    :param deepagentDefaultFromGroup: Whether default_deepagent_effort_mode comes from an admin-set user group default, which seeds new conversations ahead of the user's remembered effort pick. Only applicable for super agent applications.
    :type deepagentDefaultFromGroup: bool
+   :param channelHandle: The @handle that reaches this application from a personal agent's messaging channel.
+   :type channelHandle: str
 
 
    .. py:attribute:: name
@@ -185,6 +189,11 @@ Module Contents
 
 
 
+   .. py:attribute:: browser_agent_action_safety_available
+      :value: None
+
+
+
    .. py:attribute:: is_deprecated
       :value: None
 
@@ -250,6 +259,11 @@ Module Contents
 
 
 
+   .. py:attribute:: channel_handle
+      :value: None
+
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -283,7 +297,7 @@ Module Contents
 
 
 
-   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None)
+   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None, channel_handle = None, reset_channel_handle = False)
 
       Updates an External Application.
 
@@ -301,6 +315,10 @@ Module Contents
       :type reset_retention_policy: bool
       :param voice_config: Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
       :type voice_config: dict
+      :param channel_handle: The @handle that reaches this application from a personal agent's messaging channels (2 to 24 letters, digits or underscores; unique in the organization).
+      :type channel_handle: str
+      :param reset_channel_handle: If true, the @handle is removed.
+      :type reset_channel_handle: bool
 
       :returns: The updated External Application.
       :rtype: ExternalApplication

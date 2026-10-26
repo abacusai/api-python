@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None)
+.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None, summary=None, deliverables=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,10 @@ Module Contents
    :type waiting: bool
    :param sentBack: Whether the run is working on a message its agent sent on its own (e.g. a result it rejected).
    :type sentBack: bool
+   :param summary: The latest finished turn's result as shown to the user (the run's final message, condensed when long); null while the run is mid-turn.
+   :type summary: str
+   :param deliverables: The files that turn declared, {path, url} each; empty while the run is mid-turn.
+   :type deliverables: list
 
 
    .. py:attribute:: task_id
@@ -99,6 +103,16 @@ Module Contents
 
 
    .. py:attribute:: sent_back
+      :value: None
+
+
+
+   .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: deliverables
       :value: None
 
 

@@ -21,7 +21,7 @@ class HealthSourceCatalogEntry(AbstractApiClass):
             primaryRank (int): Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
             comingSoon (bool): Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.
             deprecating (bool): Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
-            directUpload (bool): For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. Per org (health_healthkit_direct); always present, false for every other provider and for every org not on the rollout.
+            directUpload (bool): For a mobile_app provider, whether the app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health, false for every other provider; always present.
             mobileOnlyDetail (str): Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
     """
 

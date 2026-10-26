@@ -261,6 +261,7 @@ from .notebook_template import NotebookTemplate
 from .null_violation import NullViolation
 from .organization_external_application_settings import OrganizationExternalApplicationSettings
 from .organization_group import OrganizationGroup
+from .organization_ingress_policy import OrganizationIngressPolicy
 from .organization_network_policy import OrganizationNetworkPolicy
 from .organization_search_result import OrganizationSearchResult
 from .organization_secret import OrganizationSecret
@@ -375,4 +376,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.118"
+__version__ = "1.4.119"

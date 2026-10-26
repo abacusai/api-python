@@ -317,6 +317,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html">abacusai.null_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_external_application_settings/index.html">abacusai.organization_external_application_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html">abacusai.organization_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_ingress_policy/index.html">abacusai.organization_ingress_policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_network_policy/index.html">abacusai.organization_network_policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html">abacusai.organization_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html">abacusai.organization_secret</a></li>
@@ -1207,7 +1208,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.118'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.119'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2457,7 +2458,7 @@ and avoids execution of the further workflow.</p>
 <li><p><strong>service</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.ApplicationConnectorType" title="abacusai.api_class.enums.ApplicationConnectorType"><em>ApplicationConnectorType</em></a>) – The service name.</p></li>
 <li><p><strong>scopes</strong> (<em>List</em>) – The scopes to request for the connector.</p></li>
 <li><p><strong>generic_oauth_service</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – For GENERIC_OAUTH service, specify the OAuth provider (e.g., ‘spotify’).</p></li>
-<li><p><strong>config_connector</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The config connector id.</p></li>
+<li><p><strong>config_connector</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The config connector to use, by id or by the name it was configured under.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -6731,6 +6732,8 @@ If no scope found, will run in local.</p>
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.delete_api_key">
 <span class="sig-name descname"><span class="pre">delete_api_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.delete_api_key" title="Link to this definition"></a></dt>
 <dd><p>Delete a specified API key.</p>
+<p>An administrator may revoke any key of the organization, the platform’s own keys included; everyone else only
+their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>api_key_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The ID of the API key to delete.</p>
@@ -13214,7 +13217,7 @@ minutes (not synchronously).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.update_external_application">
-<span class="sig-name descname"><span class="pre">update_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external_application_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_retention_hours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_retention_policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voice_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_external_application" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external_application_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_retention_hours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_retention_policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voice_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_handle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_channel_handle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_external_application" title="Link to this definition"></a></dt>
 <dd><p>Updates an External Application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -13227,6 +13230,8 @@ minutes (not synchronously).</p>
 <li><p><strong>deployment_conversation_retention_hours</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The number of hours to retain the conversations for.</p></li>
 <li><p><strong>reset_retention_policy</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If true, the retention policy will be removed.</p></li>
 <li><p><strong>voice_config</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>) – Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider’s voice at call time).</p></li>
+<li><p><strong>channel_handle</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The &#64;handle that reaches this application from a personal agent’s messaging channels (2 to 24 letters, digits or underscores; unique in the organization).</p></li>
+<li><p><strong>reset_channel_handle</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If true, the &#64;handle is removed.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -13439,20 +13444,19 @@ minutes (not synchronously).</p>
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.search_web_for_llm">
 <span class="sig-name descname"><span class="pre">search_web_for_llm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_providers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">safe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8192</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convert_to_markdown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.search_web_for_llm" title="Link to this definition"></a></dt>
 <dd><p>Access web search providers to fetch content related to the queries for use in large language model inputs.</p>
-<p>This method can access multiple search providers and return information from them. If the provider supplies
-URLs for the results then this method also supports fetching the contents of those URLs, optionally converting
-them to markdown format, and returning them as part of the response. Set a token budget to limit the amount of
-content returned in the response.</p>
+<p>The search provider is chosen by the backend. If the provider supplies URLs for the results then this method also
+supports fetching the contents of those URLs, optionally converting them to markdown format, and returning them as
+part of the response. Set a token budget to limit the amount of content returned in the response.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>queries</strong> (<em>List</em>) – List of queries to send to the search providers. At most 10 queries each less than 512 characters.</p></li>
-<li><p><strong>search_providers</strong> (<em>List</em>) – Search providers to use for the search. If not provided a default provider is used. - BING - GOOGLE</p></li>
-<li><p><strong>max_results</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Maximum number of results to fetch per provider. Must be in [1, 100]. Defaults to 1 (I’m feeling lucky).</p></li>
+<li><p><strong>max_results</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Maximum number of results to fetch per query. Must be in [1, 100]. Defaults to 1 (I’m feeling lucky).</p></li>
 <li><p><strong>safe</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether content safety is enabled for these search request. Defaults to True.</p></li>
 <li><p><strong>fetch_content</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – If true fetches the content from the urls in the search results. Defailts to False.</p></li>
 <li><p><strong>max_page_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Maximum number of tokens to accumulate if fetching search result contents.</p></li>
 <li><p><strong>convert_to_markdown</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Whether content should be converted to markdown. Defaults to True.</p></li>
+<li><p><strong>search_providers</strong> (<em>List</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

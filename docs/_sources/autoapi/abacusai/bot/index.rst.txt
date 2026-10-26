@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None, taskEffort=None, timezone=None, workHours=None, channelHandle=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -96,6 +96,14 @@ Module Contents
    :type agentNetwork: dict
    :param pushNotificationsEnabled: Whether the agent may send mobile push notifications (the agent conversation's own switch); _describeBot only.
    :type pushNotificationsEnabled: bool
+   :param taskEffort: The effort (low/normal/high) of the Abacus AI Agent tasks the agent starts, set by its owner; normal leaves it to the agent; _describeBot only.
+   :type taskEffort: str
+   :param timezone: The agent's timezone (IANA), which its routines, quiet hours and working hours follow; _describeBot only.
+   :type timezone: str
+   :param workHours: The owner's working day {'start': 'HH:MM', 'end': 'HH:MM', 'days': [0-6, 0 = Sunday]} in the agent's timezone; None when not set; _describeBot only.
+   :type workHours: dict
+   :param channelHandle: The @handle that reaches this agent from another agent's messaging channel; None when not set; _describeBot only.
+   :type channelHandle: str
 
 
    .. py:attribute:: bot_id
@@ -274,6 +282,26 @@ Module Contents
 
 
    .. py:attribute:: push_notifications_enabled
+      :value: None
+
+
+
+   .. py:attribute:: task_effort
+      :value: None
+
+
+
+   .. py:attribute:: timezone
+      :value: None
+
+
+
+   .. py:attribute:: work_hours
+      :value: None
+
+
+
+   .. py:attribute:: channel_handle
       :value: None
 
 

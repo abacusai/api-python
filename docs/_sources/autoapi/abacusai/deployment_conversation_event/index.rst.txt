@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, midTurn=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44,6 +44,8 @@ Module Contents
    :type attachmentOnlyMessage: bool
    :param backgroundWake: Cloud CLI conversations only. Set on a user message the client sent to resume the agent for finished background tasks: `tasks` with each task's id, label, exit code, runtime and kind, so a transcript renders the message as task notices rather than as the person speaking.
    :type backgroundWake: dict
+   :param midTurn: Set on a user message the agent took into a turn that was still running (a message queued while it worked, or a background wake). The bot messages around it are one turn: only the last one carries the turn's whole spend.
+   :type midTurn: bool
    :param messageIndex: The index of the message in the conversation
    :type messageIndex: int
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
@@ -192,6 +194,11 @@ Module Contents
 
 
    .. py:attribute:: background_wake
+      :value: None
+
+
+
+   .. py:attribute:: mid_turn
       :value: None
 
 

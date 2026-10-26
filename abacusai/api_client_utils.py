@@ -1,5 +1,6 @@
 import importlib
 import json
+import logging
 import os
 import re
 import string
@@ -725,9 +726,11 @@ def try_abacus_internal_copy(src_suffix, dst_local, raise_exception=True):
         try:
             from abacus_internal.cloud_copy import copy_cloud_file_to_local
             copy_cloud_file_to_local(src_suffix, dst_local)
-        except Exception:
+        except Exception as e:
+            logging.getLogger(__name__).exception(
+                f'abacus_internal copy failed for {src_suffix}')
             if raise_exception:
                 raise Exception(
-                    'Something went wrong while executing in Abacus environment. Please contact support')
+                    'Something went wrong while executing in Abacus environment. Please contact support') from e
         return True
     return False

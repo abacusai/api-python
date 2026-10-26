@@ -274,6 +274,7 @@ Submodules
    /autoapi/abacusai/null_violation/index
    /autoapi/abacusai/organization_external_application_settings/index
    /autoapi/abacusai/organization_group/index
+   /autoapi/abacusai/organization_ingress_policy/index
    /autoapi/abacusai/organization_network_policy/index
    /autoapi/abacusai/organization_search_result/index
    /autoapi/abacusai/organization_secret/index
@@ -917,6 +918,7 @@ Classes
    abacusai.NullViolation
    abacusai.OrganizationExternalApplicationSettings
    abacusai.OrganizationGroup
+   abacusai.OrganizationIngressPolicy
    abacusai.OrganizationNetworkPolicy
    abacusai.OrganizationSearchResult
    abacusai.OrganizationSecret
@@ -9619,6 +9621,11 @@ Package Contents
 
 
 
+   .. py:attribute:: PLAID
+      :value: 'PLAID'
+
+
+
    .. py:attribute:: MYSQL
       :value: 'MYSQL'
 
@@ -10506,6 +10513,11 @@ Package Contents
 
 
 
+   .. py:attribute:: MINIMAX_M3_1_FLASH
+      :value: 'MINIMAX_M3_1_FLASH'
+
+
+
    .. py:attribute:: MUSE_SPARK_1_1
       :value: 'MUSE_SPARK_1_1'
 
@@ -10583,6 +10595,11 @@ Package Contents
 
    .. py:attribute:: KIMI_K3
       :value: 'KIMI_K3'
+
+
+
+   .. py:attribute:: KIMI_K3_1_PRO
+      :value: 'KIMI_K3_1_PRO'
 
 
 
@@ -13759,7 +13776,7 @@ Package Contents
    :type underprediction_weight: float
    :param disable_networks_without_analytic_quantiles: Disable neural networks, which quantile functions do not have analytic expressions (e.g, mixture models)
    :type disable_networks_without_analytic_quantiles: bool
-   :param initial_learning_rate: Initial learning rate.
+   :param initial_learning_rate: Initial learning rate. For the Multi Scale algorithms this is the peak learning rate of their one-cycle schedule.
    :type initial_learning_rate: float
    :param l2_regularization_factor: L2 regularization factor.
    :type l2_regularization_factor: float
@@ -16916,6 +16933,10 @@ Package Contents
 
       Delete a specified API key.
 
+      An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
+      their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
+
       :param api_key_id: The ID of the API key to delete.
       :type api_key_id: str
 
@@ -19737,7 +19758,7 @@ Package Contents
 
 
 
-.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None, taskEffort=None, timezone=None, workHours=None, channelHandle=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -19818,6 +19839,14 @@ Package Contents
    :type agentNetwork: dict
    :param pushNotificationsEnabled: Whether the agent may send mobile push notifications (the agent conversation's own switch); _describeBot only.
    :type pushNotificationsEnabled: bool
+   :param taskEffort: The effort (low/normal/high) of the Abacus AI Agent tasks the agent starts, set by its owner; normal leaves it to the agent; _describeBot only.
+   :type taskEffort: str
+   :param timezone: The agent's timezone (IANA), which its routines, quiet hours and working hours follow; _describeBot only.
+   :type timezone: str
+   :param workHours: The owner's working day {'start': 'HH:MM', 'end': 'HH:MM', 'days': [0-6, 0 = Sunday]} in the agent's timezone; None when not set; _describeBot only.
+   :type workHours: dict
+   :param channelHandle: The @handle that reaches this agent from another agent's messaging channel; None when not set; _describeBot only.
+   :type channelHandle: str
 
 
    .. py:attribute:: bot_id
@@ -19996,6 +20025,26 @@ Package Contents
 
 
    .. py:attribute:: push_notifications_enabled
+      :value: None
+
+
+
+   .. py:attribute:: task_effort
+      :value: None
+
+
+
+   .. py:attribute:: timezone
+      :value: None
+
+
+
+   .. py:attribute:: work_hours
+      :value: None
+
+
+
+   .. py:attribute:: channel_handle
       :value: None
 
 
@@ -22996,6 +23045,10 @@ Package Contents
    .. py:method:: delete_api_key(api_key_id)
 
       Delete a specified API key.
+
+      An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
+      their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
 
       :param api_key_id: The ID of the API key to delete.
       :type api_key_id: str
@@ -28605,7 +28658,7 @@ Package Contents
 
 
 
-   .. py:method:: update_external_application(external_application_id, name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None)
+   .. py:method:: update_external_application(external_application_id, name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None, channel_handle = None, reset_channel_handle = False)
 
       Updates an External Application.
 
@@ -28625,6 +28678,10 @@ Package Contents
       :type reset_retention_policy: bool
       :param voice_config: Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
       :type voice_config: dict
+      :param channel_handle: The @handle that reaches this application from a personal agent's messaging channels (2 to 24 letters, digits or underscores; unique in the organization).
+      :type channel_handle: str
+      :param reset_channel_handle: If true, the @handle is removed.
+      :type reset_channel_handle: bool
 
       :returns: The updated External Application.
       :rtype: ExternalApplication
@@ -28817,17 +28874,14 @@ Package Contents
 
       Access web search providers to fetch content related to the queries for use in large language model inputs.
 
-      This method can access multiple search providers and return information from them. If the provider supplies
-      URLs for the results then this method also supports fetching the contents of those URLs, optionally converting
-      them to markdown format, and returning them as part of the response. Set a token budget to limit the amount of
-      content returned in the response.
+      The search provider is chosen by the backend. If the provider supplies URLs for the results then this method also
+      supports fetching the contents of those URLs, optionally converting them to markdown format, and returning them as
+      part of the response. Set a token budget to limit the amount of content returned in the response.
 
 
       :param queries: List of queries to send to the search providers. At most 10 queries each less than 512 characters.
       :type queries: List
-      :param search_providers: Search providers to use for the search. If not provided a default provider is used. - BING - GOOGLE
-      :type search_providers: List
-      :param max_results: Maximum number of results to fetch per provider. Must be in [1, 100]. Defaults to 1 (I'm feeling lucky).
+      :param max_results: Maximum number of results to fetch per query. Must be in [1, 100]. Defaults to 1 (I'm feeling lucky).
       :type max_results: int
       :param safe: Whether content safety is enabled for these search request. Defaults to True.
       :type safe: bool
@@ -29900,7 +29954,7 @@ Package Contents
       :type scopes: List
       :param generic_oauth_service: For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
       :type generic_oauth_service: str
-      :param config_connector: The config connector id.
+      :param config_connector: The config connector to use, by id or by the name it was configured under.
       :type config_connector: str
 
       :returns: The application connector with the authentication details.
@@ -32502,7 +32556,7 @@ Package Contents
 
 
 
-.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None)
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None, wallRecovery=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32531,6 +32585,8 @@ Package Contents
    :type freeTierExpiresAt: str
    :param firstDaOffer: The "Your first task is on us" pack (cp, granted_at, expires_at; dconv_id / used_cp / used_at once used), if any
    :type firstDaOffer: dict
+   :param wallRecovery: The wall_recovery coin-toss marker (arm, state, claim_until; cp / used / expires_at once claimed), if any
+   :type wallRecovery: dict
 
 
    .. py:attribute:: updated_at
@@ -32579,6 +32635,11 @@ Package Contents
 
 
    .. py:attribute:: first_da_offer
+      :value: None
+
+
+
+   .. py:attribute:: wall_recovery
       :value: None
 
 
@@ -33122,7 +33183,7 @@ Package Contents
 
 
 
-.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None)
+.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None, summary=None, deliverables=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33153,6 +33214,10 @@ Package Contents
    :type waiting: bool
    :param sentBack: Whether the run is working on a message its agent sent on its own (e.g. a result it rejected).
    :type sentBack: bool
+   :param summary: The latest finished turn's result as shown to the user (the run's final message, condensed when long); null while the run is mid-turn.
+   :type summary: str
+   :param deliverables: The files that turn declared, {path, url} each; empty while the run is mid-turn.
+   :type deliverables: list
 
 
    .. py:attribute:: task_id
@@ -33206,6 +33271,16 @@ Package Contents
 
 
    .. py:attribute:: sent_back
+      :value: None
+
+
+
+   .. py:attribute:: summary
+      :value: None
+
+
+
+   .. py:attribute:: deliverables
       :value: None
 
 
@@ -37173,7 +37248,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, midTurn=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37202,6 +37277,8 @@ Package Contents
    :type attachmentOnlyMessage: bool
    :param backgroundWake: Cloud CLI conversations only. Set on a user message the client sent to resume the agent for finished background tasks: `tasks` with each task's id, label, exit code, runtime and kind, so a transcript renders the message as task notices rather than as the person speaking.
    :type backgroundWake: dict
+   :param midTurn: Set on a user message the agent took into a turn that was still running (a message queued while it worked, or a background wake). The bot messages around it are one turn: only the last one carries the turn's whole spend.
+   :type midTurn: bool
    :param messageIndex: The index of the message in the conversation
    :type messageIndex: int
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
@@ -37350,6 +37427,11 @@ Package Contents
 
 
    .. py:attribute:: background_wake
+      :value: None
+
+
+
+   .. py:attribute:: mid_turn
       :value: None
 
 
@@ -39700,7 +39782,7 @@ Package Contents
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, createdAt=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isVirtualModel=None, isCustomizable=None, browserAgentTiers=None, browserAgentUnavailableMessage=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, isAgent=None, createdAt=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None, predictionOverrides=None, isSystemCreated=None, isVirtualModel=None, isCustomizable=None, browserAgentTiers=None, browserAgentUnavailableMessage=None, browserAgentActionSafetyAvailable=None, isDeprecated=None, isVisible=None, hasThinkingOption=None, hasFastMode=None, hasEffortOption=None, availableEffortLevels=None, onlyImageGenEnabled=None, projectId=None, isCodellmChatmodeSupported=None, urlPath=None, deepagentEffortModes=None, defaultDeepagentEffortMode=None, deepagentDefaultFromGroup=None, channelHandle=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39747,6 +39829,8 @@ Package Contents
    :type browserAgentTiers: list
    :param browserAgentUnavailableMessage: Why no browser extension agent tier is available, when browser_agent_tiers is empty.
    :type browserAgentUnavailableMessage: str
+   :param browserAgentActionSafetyAvailable: Whether the browser extension's Auto mode (a safety check on each page action) has a model the organization's policy permits. Only set when the listing is requested with browser_agent_tiers.
+   :type browserAgentActionSafetyAvailable: bool
    :param isDeprecated: Whether the external application is deprecated.
    :type isDeprecated: bool
    :param isVisible: Whether the external application should be shown in the dropdown.
@@ -39773,6 +39857,8 @@ Package Contents
    :type defaultDeepagentEffortMode: str
    :param deepagentDefaultFromGroup: Whether default_deepagent_effort_mode comes from an admin-set user group default, which seeds new conversations ahead of the user's remembered effort pick. Only applicable for super agent applications.
    :type deepagentDefaultFromGroup: bool
+   :param channelHandle: The @handle that reaches this application from a personal agent's messaging channel.
+   :type channelHandle: str
 
 
    .. py:attribute:: name
@@ -39870,6 +39956,11 @@ Package Contents
 
 
 
+   .. py:attribute:: browser_agent_action_safety_available
+      :value: None
+
+
+
    .. py:attribute:: is_deprecated
       :value: None
 
@@ -39935,6 +40026,11 @@ Package Contents
 
 
 
+   .. py:attribute:: channel_handle
+      :value: None
+
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -39968,7 +40064,7 @@ Package Contents
 
 
 
-   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None)
+   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False, voice_config = None, channel_handle = None, reset_channel_handle = False)
 
       Updates an External Application.
 
@@ -39986,6 +40082,10 @@ Package Contents
       :type reset_retention_policy: bool
       :param voice_config: Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
       :type voice_config: dict
+      :param channel_handle: The @handle that reaches this application from a personal agent's messaging channels (2 to 24 letters, digits or underscores; unique in the organization).
+      :type channel_handle: str
+      :param reset_channel_handle: If true, the @handle is removed.
+      :type reset_channel_handle: bool
 
       :returns: The updated External Application.
       :rtype: ExternalApplication
@@ -44803,7 +44903,7 @@ Package Contents
    :type comingSoon: bool
    :param deprecating: Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
    :type deprecating: bool
-   :param directUpload: For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. Per org (health_healthkit_direct); always present, false for every other provider and for every org not on the rollout.
+   :param directUpload: For a mobile_app provider, whether the app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health, false for every other provider; always present.
    :type directUpload: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
    :type mobileOnlyDetail: str
@@ -45201,7 +45301,7 @@ Package Contents
    :type appllmBranch: str
    :param branches: Open (not yet merged) branch conversations of the app, each with its conversation id, name, git branch, latest checkpoint, preview hostnames and owner
    :type branches: list[dict]
-   :param projectMetadata: The metadata of the web app project
+   :param projectMetadata: The listing's slice of the web app project's metadata: api_documentation_path only
    :type projectMetadata: dict
    :param memoryGb: The memory in GB of the web app deployment
    :type memoryGb: float
@@ -45213,7 +45313,7 @@ Package Contents
    :type scDeployedUrls: list
    :param hasSupportAgent: Whether this app has a support agent linked
    :type hasSupportAgent: bool
-   :param appAccessOnly: The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open
+   :param appAccessOnly: The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open, and the row carries only name, the three ids, artifact_type, the timestamps, hostnames (hostname, deployment_tag, access_level, can_view_analytics, published_at), deployed_status, access_level, is_throttled, project_metadata, app_access_only and can_edit
    :type appAccessOnly: bool
    :param canEdit: Whether the caller passes the app's edit gate (rename, fork, memory, stop, deploy): owner, admin, editor, or a project/task/org-wide edit grant
    :type canEdit: bool
@@ -51719,6 +51819,67 @@ Package Contents
 
       :param organization_group_id: Unique string identifier of the Organization Group.
       :type organization_group_id: str
+
+
+
+.. py:class:: OrganizationIngressPolicy(client, available=None, enabled=None, groups=None, defaultGroupId=None, apps=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The organization's ingress policy: named network groups and where they apply (workspace ingress IP allowlist).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param available: Whether the feature is enabled for this organization and its cluster.
+   :type available: bool
+   :param enabled: Whether the policy is enforced.
+   :type enabled: bool
+   :param groups: The network groups: group_id, name, entries (cidr, label).
+   :type groups: list
+   :param defaultGroupId: The group pre-attached to every app in an IP mode unless the app opts out.
+   :type defaultGroupId: str
+   :param apps: Private hosted apps with their ingress access mode and attached groups.
+   :type apps: list
+
+
+   .. py:attribute:: available
+      :value: None
+
+
+
+   .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: groups
+      :value: None
+
+
+
+   .. py:attribute:: default_group_id
+      :value: None
+
+
+
+   .. py:attribute:: apps
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 
@@ -62548,6 +62709,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.118'
+   :value: '1.4.119'
 
 

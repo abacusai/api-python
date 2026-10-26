@@ -17,9 +17,10 @@ class ComputePointInfo(AbstractApiClass):
             freeTierTotal (int): The initial free tier compute point allocation
             freeTierExpiresAt (str): The ISO timestamp when the free tier expires
             firstDaOffer (dict): The "Your first task is on us" pack (cp, granted_at, expires_at; dconv_id / used_cp / used_at once used), if any
+            wallRecovery (dict): The wall_recovery coin-toss marker (arm, state, claim_until; cp / used / expires_at once claimed), if any
     """
 
-    def __init__(self, client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None):
+    def __init__(self, client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None, wallRecovery=None):
         super().__init__(client, None)
         self.updated_at = updatedAt
         self.last_24_hours_usage = last24HoursUsage
@@ -31,11 +32,12 @@ class ComputePointInfo(AbstractApiClass):
         self.free_tier_total = freeTierTotal
         self.free_tier_expires_at = freeTierExpiresAt
         self.first_da_offer = firstDaOffer
+        self.wall_recovery = wallRecovery
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'updated_at': repr(self.updated_at), f'last_24_hours_usage': repr(self.last_24_hours_usage), f'last_7_days_usage': repr(self.last_7_days_usage), f'curr_month_avail_points': repr(self.curr_month_avail_points), f'curr_month_usage': repr(
-            self.curr_month_usage), f'last_throttle_pop_up': repr(self.last_throttle_pop_up), f'always_display': repr(self.always_display), f'free_tier_total': repr(self.free_tier_total), f'free_tier_expires_at': repr(self.free_tier_expires_at), f'first_da_offer': repr(self.first_da_offer)}
+        repr_dict = {f'updated_at': repr(self.updated_at), f'last_24_hours_usage': repr(self.last_24_hours_usage), f'last_7_days_usage': repr(self.last_7_days_usage), f'curr_month_avail_points': repr(self.curr_month_avail_points), f'curr_month_usage': repr(self.curr_month_usage), f'last_throttle_pop_up': repr(
+            self.last_throttle_pop_up), f'always_display': repr(self.always_display), f'free_tier_total': repr(self.free_tier_total), f'free_tier_expires_at': repr(self.free_tier_expires_at), f'first_da_offer': repr(self.first_da_offer), f'wall_recovery': repr(self.wall_recovery)}
         class_name = "ComputePointInfo"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -49,5 +51,5 @@ class ComputePointInfo(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'updated_at': self.updated_at, 'last_24_hours_usage': self.last_24_hours_usage, 'last_7_days_usage': self.last_7_days_usage, 'curr_month_avail_points': self.curr_month_avail_points, 'curr_month_usage': self.curr_month_usage,
-                'last_throttle_pop_up': self.last_throttle_pop_up, 'always_display': self.always_display, 'free_tier_total': self.free_tier_total, 'free_tier_expires_at': self.free_tier_expires_at, 'first_da_offer': self.first_da_offer}
+                'last_throttle_pop_up': self.last_throttle_pop_up, 'always_display': self.always_display, 'free_tier_total': self.free_tier_total, 'free_tier_expires_at': self.free_tier_expires_at, 'first_da_offer': self.first_da_offer, 'wall_recovery': self.wall_recovery}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

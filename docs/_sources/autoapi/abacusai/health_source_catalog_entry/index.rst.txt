@@ -52,7 +52,7 @@ Module Contents
    :type comingSoon: bool
    :param deprecating: Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
    :type deprecating: bool
-   :param directUpload: For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. Per org (health_healthkit_direct); always present, false for every other provider and for every org not on the rollout.
+   :param directUpload: For a mobile_app provider, whether the app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health, false for every other provider; always present.
    :type directUpload: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
    :type mobileOnlyDetail: str

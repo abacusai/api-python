@@ -26,13 +26,13 @@ class HostedAppContainer(AbstractApiClass):
             parentConversationId (id): The ID of the parent conversation
             appllmBranch (str): Git branch of the newest checkpoint when it was saved from a branch conversation
             branches (list[dict]): Open (not yet merged) branch conversations of the app, each with its conversation id, name, git branch, latest checkpoint, preview hostnames and owner
-            projectMetadata (dict): The metadata of the web app project
+            projectMetadata (dict): The listing's slice of the web app project's metadata: api_documentation_path only
             memoryGb (float): The memory in GB of the web app deployment
             domainAliases (list): The domain aliases of the deployed app
             isThrottled (bool): Whether the app was stopped due to excessive resource usage
             scDeployedUrls (list): Live deployed URLs of a supercomputer conversation (tracked in conversation metadata)
             hasSupportAgent (bool): Whether this app has a support agent linked
-            appAccessOnly (bool): The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open
+            appAccessOnly (bool): The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open, and the row carries only name, the three ids, artifact_type, the timestamps, hostnames (hostname, deployment_tag, access_level, can_view_analytics, published_at), deployed_status, access_level, is_throttled, project_metadata, app_access_only and can_edit
             canEdit (bool): Whether the caller passes the app's edit gate (rename, fork, memory, stop, deploy): owner, admin, editor, or a project/task/org-wide edit grant
             versionCount (int): Number of saved versions (distinct checkpoints) of the app
     """

@@ -1,0 +1,78 @@
+abacusai.organization_ingress_policy
+====================================
+
+.. py:module:: abacusai.organization_ingress_policy
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.organization_ingress_policy.OrganizationIngressPolicy
+
+
+Module Contents
+---------------
+
+.. py:class:: OrganizationIngressPolicy(client, available=None, enabled=None, groups=None, defaultGroupId=None, apps=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The organization's ingress policy: named network groups and where they apply (workspace ingress IP allowlist).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param available: Whether the feature is enabled for this organization and its cluster.
+   :type available: bool
+   :param enabled: Whether the policy is enforced.
+   :type enabled: bool
+   :param groups: The network groups: group_id, name, entries (cidr, label).
+   :type groups: list
+   :param defaultGroupId: The group pre-attached to every app in an IP mode unless the app opts out.
+   :type defaultGroupId: str
+   :param apps: Private hosted apps with their ingress access mode and attached groups.
+   :type apps: list
+
+
+   .. py:attribute:: available
+      :value: None
+
+
+
+   .. py:attribute:: enabled
+      :value: None
+
+
+
+   .. py:attribute:: groups
+      :value: None
+
+
+
+   .. py:attribute:: default_group_id
+      :value: None
+
+
+
+   .. py:attribute:: apps
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

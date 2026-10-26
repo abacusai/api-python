@@ -58,6 +58,10 @@ class ApiKey(AbstractApiClass):
         """
         Delete a specified API key.
 
+        An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
+        their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
+
         Args:
             api_key_id (str): The ID of the API key to delete.
         """

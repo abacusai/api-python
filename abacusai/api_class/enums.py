@@ -471,6 +471,7 @@ class ApplicationConnectorType(ApiEnum):
     AZURECLOUD = 'AZURECLOUD'
     GCPCLOUD = 'GCPCLOUD'
     TELEGRAMBOT = 'TELEGRAMBOT'
+    PLAID = 'PLAID'
     MYSQL = 'MYSQL'
     DISCORD = 'DISCORD'
     TELEGRAM = 'TELEGRAM'
@@ -531,6 +532,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.AZURECLOUD,
             cls.GCPCLOUD,
             cls.TELEGRAMBOT,
+            cls.PLAID,
             cls.MYSQL,
         ]
 
@@ -604,7 +606,7 @@ class VectorStoreTextEncoder(ApiEnum):
 
 @deprecated_enums('OPENAI_GPT4_32K', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT',
                   'OPENAI_GPT4', 'OPENAI_GPT4_128K', 'OPENAI_GPT4_128K_LATEST',
-                  'OPENAI_O1_MINI',
+                  'OPENAI_O1_MINI', 'OPENAI_O3', 'OPENAI_O3_HIGH', 'OPENAI_O4_MINI', 'OPENAI_O4_MINI_HIGH', 'OPENAI_GPT4_1_NANO',
                   'GEMINI_1_5_PRO', 'GEMINI_1_5_FLASH', 'GEMINI_2_PRO', 'GEMINI_2_FLASH',
                   'GEMINI_2_5_PRO', 'GEMINI_3_PRO',
                   'XAI_GROK', 'XAI_GROK_3', 'XAI_GROK_3_MINI', 'XAI_GROK_4', 'XAI_GROK_4_2',
@@ -612,6 +614,8 @@ class VectorStoreTextEncoder(ApiEnum):
                   'CLAUDE_V4_SONNET', 'CLAUDE_V4_OPUS',
                   'LLAMA3_LARGE_CHAT', 'LLAMA3_1_405B', 'LLAMA3_1_70B', 'LLAMA3_1_8B', 'LLAMA3_3_70B', 'LLAMA4_MAVERICK',
                   'QWEN_2_5_32B_BASE', 'QWEN_2_5_32B', 'QWEN_2_5_72B', 'QWQ_32B',
+                  'QWEN3_32B', 'QWEN3_235B_A22B', 'QWEN3_CODER', 'QWEN3_6', 'QWEN3_6_27B', 'QWEN3_7_MAX',
+                  'MINIMAX_M2_7', 'MUSE_SPARK_1_1', 'XIAOMI_MIMO_V2_PRO',
                   'DEEPSEEK_V3_1', 'DEEPSEEK_R1',
                   'ZAI_GLM_5_1', 'OX_ALPHA', 'UNION_ALPHA', 'ABACUS_DRACARYS',
                   'CLAUDE_V5_5_OPUS_THINKING',
@@ -723,6 +727,7 @@ class LLMName(ApiEnum):
     DEEPSEEK_R1 = 'DEEPSEEK_R1'
     MINIMAX_M2_7 = 'MINIMAX_M2_7'
     MINIMAX_M3 = 'MINIMAX_M3'
+    MINIMAX_M3_1_FLASH = 'MINIMAX_M3_1_FLASH'
     MUSE_SPARK_1_1 = 'MUSE_SPARK_1_1'
     MUSE_SPARK_1_2 = 'MUSE_SPARK_1_2'
     MUSE_SPARK_1_3 = 'MUSE_SPARK_1_3'
@@ -739,6 +744,7 @@ class LLMName(ApiEnum):
     KIMI_K2_6 = 'KIMI_K2_6'
     KIMI_K2_7_CODE = 'KIMI_K2_7_CODE'
     KIMI_K3 = 'KIMI_K3'
+    KIMI_K3_1_PRO = 'KIMI_K3_1_PRO'
     INKLING = 'INKLING'
     OX_ALPHA = 'OX_ALPHA'
     UNION_ALPHA = 'UNION_ALPHA'

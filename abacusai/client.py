@@ -718,7 +718,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.118'
+    client_version = '1.4.119'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1692,7 +1692,7 @@ class ReadOnlyClient(BaseApiClient):
             service (ApplicationConnectorType): The service name.
             scopes (List): The scopes to request for the connector.
             generic_oauth_service (str): For GENERIC_OAUTH service, specify the OAuth provider (e.g., 'spotify').
-            config_connector (str): The config connector id.
+            config_connector (str): The config connector to use, by id or by the name it was configured under.
 
         Returns:
             UnifiedConnector: The application connector with the authentication details."""
@@ -5249,6 +5249,10 @@ class ApiClient(ReadOnlyClient):
 
     def delete_api_key(self, api_key_id: str):
         """Delete a specified API key.
+
+        An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
+        their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
 
         Args:
             api_key_id (str): The ID of the API key to delete."""
@@ -9323,7 +9327,7 @@ class ApiClient(ReadOnlyClient):
             ExternalApplication: The newly created External Application."""
         return self._call_api('createExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'description': description, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
 
-    def update_external_application(self, external_application_id: str, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False, voice_config: dict = None) -> ExternalApplication:
+    def update_external_application(self, external_application_id: str, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False, voice_config: dict = None, channel_handle: str = None, reset_channel_handle: bool = False) -> ExternalApplication:
         """Updates an External Application.
 
         Args:
@@ -9335,10 +9339,12 @@ class ApiClient(ReadOnlyClient):
             deployment_conversation_retention_hours (int): The number of hours to retain the conversations for.
             reset_retention_policy (bool): If true, the retention policy will be removed.
             voice_config (dict): Voice settings, merged into the stored settings; a key set to null is removed. Key: voice_style (an internal style id, 1 to 9, resolved to the active provider's voice at call time).
+            channel_handle (str): The @handle that reaches this application from a personal agent's messaging channels (2 to 24 letters, digits or underscores; unique in the organization).
+            reset_channel_handle (bool): If true, the @handle is removed.
 
         Returns:
             ExternalApplication: The updated External Application."""
-        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'description': description, 'theme': theme, 'deploymentConversationRetentionHours': deployment_conversation_retention_hours, 'resetRetentionPolicy': reset_retention_policy, 'voiceConfig': voice_config}, parse_type=ExternalApplication)
+        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'description': description, 'theme': theme, 'deploymentConversationRetentionHours': deployment_conversation_retention_hours, 'resetRetentionPolicy': reset_retention_policy, 'voiceConfig': voice_config, 'channelHandle': channel_handle, 'resetChannelHandle': reset_channel_handle}, parse_type=ExternalApplication)
 
     def delete_external_application(self, external_application_id: str):
         """Deletes an External Application.
@@ -9463,16 +9469,14 @@ class ApiClient(ReadOnlyClient):
     def search_web_for_llm(self, queries: List, search_providers: List = None, max_results: int = 1, safe: bool = True, fetch_content: bool = False, max_page_tokens: int = 8192, convert_to_markdown: bool = True) -> WebSearchResponse:
         """Access web search providers to fetch content related to the queries for use in large language model inputs.
 
-        This method can access multiple search providers and return information from them. If the provider supplies
-        URLs for the results then this method also supports fetching the contents of those URLs, optionally converting
-        them to markdown format, and returning them as part of the response. Set a token budget to limit the amount of
-        content returned in the response.
+        The search provider is chosen by the backend. If the provider supplies URLs for the results then this method also
+        supports fetching the contents of those URLs, optionally converting them to markdown format, and returning them as
+        part of the response. Set a token budget to limit the amount of content returned in the response.
 
 
         Args:
             queries (List): List of queries to send to the search providers. At most 10 queries each less than 512 characters.
-            search_providers (List): Search providers to use for the search. If not provided a default provider is used. - BING - GOOGLE
-            max_results (int): Maximum number of results to fetch per provider. Must be in [1, 100]. Defaults to 1 (I'm feeling lucky).
+            max_results (int): Maximum number of results to fetch per query. Must be in [1, 100]. Defaults to 1 (I'm feeling lucky).
             safe (bool): Whether content safety is enabled for these search request. Defaults to True.
             fetch_content (bool): If true fetches the content from the urls in the search results. Defailts to False.
             max_page_tokens (int): Maximum number of tokens to accumulate if fetching search result contents.

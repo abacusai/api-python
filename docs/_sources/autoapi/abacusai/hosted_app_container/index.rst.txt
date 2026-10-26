@@ -62,7 +62,7 @@ Module Contents
    :type appllmBranch: str
    :param branches: Open (not yet merged) branch conversations of the app, each with its conversation id, name, git branch, latest checkpoint, preview hostnames and owner
    :type branches: list[dict]
-   :param projectMetadata: The metadata of the web app project
+   :param projectMetadata: The listing's slice of the web app project's metadata: api_documentation_path only
    :type projectMetadata: dict
    :param memoryGb: The memory in GB of the web app deployment
    :type memoryGb: float
@@ -74,7 +74,7 @@ Module Contents
    :type scDeployedUrls: list
    :param hasSupportAgent: Whether this app has a support agent linked
    :type hasSupportAgent: bool
-   :param appAccessOnly: The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open
+   :param appAccessOnly: The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open, and the row carries only name, the three ids, artifact_type, the timestamps, hostnames (hostname, deployment_tag, access_level, can_view_analytics, published_at), deployed_status, access_level, is_throttled, project_metadata, app_access_only and can_edit
    :type appAccessOnly: bool
    :param canEdit: Whether the caller passes the app's edit gate (rename, fork, memory, stop, deploy): owner, admin, editor, or a project/task/org-wide edit grant
    :type canEdit: bool

@@ -122,6 +122,10 @@ Module Contents
 
       Delete a specified API key.
 
+      An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
+      their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
+
       :param api_key_id: The ID of the API key to delete.
       :type api_key_id: str
 

@@ -317,6 +317,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html">abacusai.null_violation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_external_application_settings/index.html">abacusai.organization_external_application_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html">abacusai.organization_group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_ingress_policy/index.html">abacusai.organization_ingress_policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_network_policy/index.html">abacusai.organization_network_policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html">abacusai.organization_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html">abacusai.organization_secret</a></li>
@@ -9480,6 +9481,11 @@ attributes – see the documentation for details.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.PLAID">
+<span class="sig-name descname"><span class="pre">PLAID</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PLAID'</span></span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.PLAID" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ApplicationConnectorType.MYSQL">
 <span class="sig-name descname"><span class="pre">MYSQL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MYSQL'</span></span><a class="headerlink" href="#abacusai.api_class.ApplicationConnectorType.MYSQL" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -10460,6 +10466,11 @@ attributes – see the documentation for details.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.MINIMAX_M3_1_FLASH">
+<span class="sig-name descname"><span class="pre">MINIMAX_M3_1_FLASH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MINIMAX_M3_1_FLASH'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.MINIMAX_M3_1_FLASH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.MUSE_SPARK_1_1">
 <span class="sig-name descname"><span class="pre">MUSE_SPARK_1_1</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MUSE_SPARK_1_1'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.MUSE_SPARK_1_1" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -10537,6 +10548,11 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.KIMI_K3">
 <span class="sig-name descname"><span class="pre">KIMI_K3</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'KIMI_K3'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.KIMI_K3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.KIMI_K3_1_PRO">
+<span class="sig-name descname"><span class="pre">KIMI_K3_1_PRO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'KIMI_K3_1_PRO'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.KIMI_K3_1_PRO" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -14191,7 +14207,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>loss_function</strong> (<a class="reference internal" href="#abacusai.api_class.ForecastingLossFunction" title="abacusai.api_class.ForecastingLossFunction"><em>ForecastingLossFunction</em></a>) – Loss function for training neural network.</p></li>
 <li><p><strong>underprediction_weight</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Weight for underpredictions</p></li>
 <li><p><strong>disable_networks_without_analytic_quantiles</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – Disable neural networks, which quantile functions do not have analytic expressions (e.g, mixture models)</p></li>
-<li><p><strong>initial_learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Initial learning rate.</p></li>
+<li><p><strong>initial_learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Initial learning rate. For the Multi Scale algorithms this is the peak learning rate of their one-cycle schedule.</p></li>
 <li><p><strong>l2_regularization_factor</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – L2 regularization factor.</p></li>
 <li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Dropout percentage rate.</p></li>
 <li><p><strong>recurrent_layers</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Number of recurrent layers to stack in network.</p></li>
