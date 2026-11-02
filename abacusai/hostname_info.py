@@ -10,18 +10,20 @@ class HostnameInfo(AbstractApiClass):
             hostname (str): IDN formatted hostname
             isRootDomain (bool): Whether the hostname is a root domain
             hasRootNameserversConfigured (bool): Whether the root domain has Abacus nameservers configured.
+            cloudflareOauthAvailable (bool): Whether the domain is hosted on Cloudflare and the Cloudflare OAuth flow is offered
     """
 
-    def __init__(self, client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None):
+    def __init__(self, client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None, cloudflareOauthAvailable=None):
         super().__init__(client, None)
         self.hostname = hostname
         self.is_root_domain = isRootDomain
         self.has_root_nameservers_configured = hasRootNameserversConfigured
+        self.cloudflare_oauth_available = cloudflareOauthAvailable
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'hostname': repr(self.hostname), f'is_root_domain': repr(
-            self.is_root_domain), f'has_root_nameservers_configured': repr(self.has_root_nameservers_configured)}
+        repr_dict = {f'hostname': repr(self.hostname), f'is_root_domain': repr(self.is_root_domain), f'has_root_nameservers_configured': repr(
+            self.has_root_nameservers_configured), f'cloudflare_oauth_available': repr(self.cloudflare_oauth_available)}
         class_name = "HostnameInfo"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -34,6 +36,6 @@ class HostnameInfo(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'hostname': self.hostname, 'is_root_domain': self.is_root_domain,
-                'has_root_nameservers_configured': self.has_root_nameservers_configured}
+        resp = {'hostname': self.hostname, 'is_root_domain': self.is_root_domain, 'has_root_nameservers_configured':
+                self.has_root_nameservers_configured, 'cloudflare_oauth_available': self.cloudflare_oauth_available}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

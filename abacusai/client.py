@@ -718,7 +718,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.119'
+    client_version = '1.4.120'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1313,7 +1313,10 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('describeFeatureGroupByTableName', 'GET', query_params={'tableName': table_name}, parse_type=FeatureGroup)
 
     def list_feature_groups(self, limit: int = 100, start_after_id: str = None, feature_group_template_id: str = None, is_including_detached_from_template: bool = False) -> List[FeatureGroup]:
-        """List all the feature groups
+        """List feature groups in the organization that the caller may access.
+
+        Excludes feature groups hidden by user-group permissions or usage-metrics restrictions.
+
 
         Args:
             limit (int): The number of feature groups to retrieve.
@@ -1322,7 +1325,7 @@ class ReadOnlyClient(BaseApiClient):
             is_including_detached_from_template (bool): When feature_group_template_id is specified, include feature groups that have been detached from that template ID.
 
         Returns:
-            list[FeatureGroup]: All the feature groups in the organization associated with the specified project."""
+            list[FeatureGroup]: Feature groups the caller may access, subject to the supplied filters and pagination."""
         return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'featureGroupTemplateId': feature_group_template_id, 'isIncludingDetachedFromTemplate': is_including_detached_from_template}, parse_type=FeatureGroup)
 
     def describe_project_feature_group(self, project_id: str, feature_group_id: str) -> ProjectFeatureGroup:
@@ -1337,7 +1340,7 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('describeProjectFeatureGroup', 'GET', query_params={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=ProjectFeatureGroup)
 
     def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None, limit: int = 100, start_after_id: str = None) -> List[ProjectFeatureGroup]:
-        """List all the feature groups associated with a project
+        """List the feature groups associated with a project that the caller can access.
 
         Args:
             project_id (str): The unique ID associated with the project.
@@ -1346,7 +1349,7 @@ class ReadOnlyClient(BaseApiClient):
             start_after_id (str): An offset parameter to exclude all feature groups up to a specified ID.
 
         Returns:
-            list[ProjectFeatureGroup]: All the Feature Groups in a project."""
+            list[ProjectFeatureGroup]: The feature groups in the project that the caller can access."""
         return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use, 'limit': limit, 'startAfterId': start_after_id}, parse_type=ProjectFeatureGroup)
 
     def list_python_function_feature_groups(self, name: str, limit: int = 100) -> List[FeatureGroup]:
@@ -1760,7 +1763,10 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('describeUpload', 'GET', query_params={'uploadId': upload_id}, parse_type=Upload)
 
     def list_datasets(self, limit: int = 100, start_after_id: str = None, exclude_streaming: bool = False) -> List[Dataset]:
-        """Retrieves a list of all datasets in the organization.
+        """Retrieves datasets in the organization that the caller may access.
+
+        Excludes datasets hidden by user-group permissions or usage-metrics restrictions.
+
 
         Args:
             limit (int): Maximum length of the list of datasets.
@@ -2957,7 +2963,7 @@ class ReadOnlyClient(BaseApiClient):
             user_group_id (str): The ID of the App User Group.
 
         Returns:
-            AppUserGroup: The App User Group."""
+            AppUserGroup: The App User Group. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to."""
         return self._call_api('getAppUserGroup', 'GET', query_params={'userGroupId': user_group_id}, parse_type=AppUserGroup)
 
     def get_app_user_group_from_name(self, name: str = None) -> AppUserGroup:
@@ -2967,7 +2973,7 @@ class ReadOnlyClient(BaseApiClient):
             name (str): The name of the app user group to retrieve.
 
         Returns:
-            AppUserGroup: The app user group with the specified name."""
+            AppUserGroup: The app user group with the specified name. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to."""
         return self._call_api('getAppUserGroupFromName', 'GET', query_params={'name': name}, parse_type=AppUserGroup)
 
     def describe_external_application(self, external_application_id: str) -> ExternalApplication:
@@ -5252,6 +5258,11 @@ class ApiClient(ReadOnlyClient):
 
         An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
         their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
+        Deliberately not behind disable_for_self_serve_org: revoking a key only removes access, and the desktop,
+        terminal and system key types a self-serve organization can hold are created on paths that never require
+        API metering, so gating the revoke left those keys listed (list_organization_api_keys is ungated for
+        administrators) but impossible to delete without first turning a billing feature on.
 
 
         Args:

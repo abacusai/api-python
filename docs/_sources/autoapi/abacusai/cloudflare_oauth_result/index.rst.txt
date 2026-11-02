@@ -1,0 +1,78 @@
+abacusai.cloudflare_oauth_result
+================================
+
+.. py:module:: abacusai.cloudflare_oauth_result
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.cloudflare_oauth_result.CloudflareOauthResult
+
+
+Module Contents
+---------------
+
+.. py:class:: CloudflareOauthResult(client, webAppDomainId=None, hostname=None, returnUrl=None, success=None, errorCode=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Outcome of a Cloudflare OAuth flow once Cloudflare sends the user back
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppDomainId: The ID of the web app domain
+   :type webAppDomainId: id
+   :param hostname: The domain that was configured
+   :type hostname: str
+   :param returnUrl: Where the user started the flow
+   :type returnUrl: str
+   :param success: Whether the records were written
+   :type success: bool
+   :param errorCode: A generic failure code when success is false
+   :type errorCode: str
+
+
+   .. py:attribute:: web_app_domain_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: return_url
+      :value: None
+
+
+
+   .. py:attribute:: success
+      :value: None
+
+
+
+   .. py:attribute:: error_code
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

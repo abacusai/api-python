@@ -47,6 +47,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">abacusai</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../abacus_api/index.html">abacusai.abacus_api</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../abacus_cloud_domain/index.html">abacusai.abacus_cloud_domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../abacus_cloud_domain_search_result/index.html">abacusai.abacus_cloud_domain_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ad_template/index.html">abacusai.ad_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../address/index.html">abacusai.address</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent/index.html">abacusai.agent</a></li>
@@ -82,11 +84,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../audio_gen_settings/index.html">abacusai.audio_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_calendar_events/index.html">abacusai.audio_listener_calendar_events</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_carry_over/index.html">abacusai.audio_listener_carry_over</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_desktop_link/index.html">abacusai.audio_listener_desktop_link</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_export_settings/index.html">abacusai.audio_listener_export_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_brief/index.html">abacusai.audio_listener_meeting_brief</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_session_page/index.html">abacusai.audio_listener_meeting_session_page</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_sessions/index.html">abacusai.audio_listener_meeting_sessions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_meeting_template/index.html">abacusai.audio_listener_meeting_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_screen/index.html">abacusai.audio_listener_screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio_listener_screens/index.html">abacusai.audio_listener_screens</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_search_term/index.html">abacusai.audio_listener_search_term</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_edits/index.html">abacusai.audio_listener_session_edits</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../audio_listener_session_feedback/index.html">abacusai.audio_listener_session_feedback</a></li>
@@ -124,6 +129,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_referral_invite/index.html">abacusai.chatllm_referral_invite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../chatllm_task/index.html">abacusai.chatllm_task</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../client/index.html">abacusai.client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cloudflare_oauth_result/index.html">abacusai.cloudflare_oauth_result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cloudflare_oauth_state/index.html">abacusai.cloudflare_oauth_state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cloudflare_oauth_url/index.html">abacusai.cloudflare_oauth_url</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_agent_response/index.html">abacusai.code_agent_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_edit_prediction_response/index.html">abacusai.code_autocomplete_edit_prediction_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../code_autocomplete_response/index.html">abacusai.code_autocomplete_response</a></li>
@@ -277,6 +285,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../mcp_config/index.html">abacusai.mcp_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mcp_server/index.html">abacusai.mcp_server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mcp_server_connection/index.html">abacusai.mcp_server_connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mcp_server_connection_with_oauth_config/index.html">abacusai.mcp_server_connection_with_oauth_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mcp_server_query_result/index.html">abacusai.mcp_server_query_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../media_artifact/index.html">abacusai.media_artifact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../media_project/index.html">abacusai.media_project</a></li>
@@ -1045,7 +1054,7 @@
 <td><p>The fraction of distinct values of the feature group to include in the sample.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._SamplingConfigFactory" title="abacusai.api_class._SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_SamplingConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.MergeConfig" title="abacusai.api_class.MergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MergeConfig</span></code></a></p></td>
 <td><p>An abstract class for the merge config of a feature group</p></td>
@@ -1057,7 +1066,7 @@
 <td><p>Merge rows within a given timewindow of the most recent timestamp</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class._MergeConfigFactory" title="abacusai.api_class._MergeConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_MergeConfigFactory</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.OperatorConfig" title="abacusai.api_class.OperatorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OperatorConfig</span></code></a></p></td>
 <td><p>Configuration for a template Feature Group Operation</p></td>
@@ -4037,7 +4046,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -4123,7 +4132,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -5935,7 +5944,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6105,7 +6114,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6171,7 +6180,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6357,7 +6366,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6458,7 +6467,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6514,7 +6523,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6570,7 +6579,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6626,7 +6635,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6692,7 +6701,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6758,7 +6767,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6814,7 +6823,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6910,7 +6919,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -6976,7 +6985,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7032,7 +7041,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7088,7 +7097,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7164,7 +7173,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7215,7 +7224,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7306,7 +7315,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7402,7 +7411,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7463,7 +7472,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7759,7 +7768,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7815,7 +7824,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7871,7 +7880,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -7962,7 +7971,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8048,7 +8057,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8144,7 +8153,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8220,7 +8229,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8351,7 +8360,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8432,7 +8441,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8493,7 +8502,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8554,7 +8563,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8610,7 +8619,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8666,7 +8675,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8727,7 +8736,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8803,7 +8812,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8874,7 +8883,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8940,7 +8949,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -8996,7 +9005,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -9057,7 +9066,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -9123,7 +9132,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -9549,7 +9558,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -9600,7 +9609,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -9721,7 +9730,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -9837,7 +9846,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -9918,7 +9927,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -10108,6 +10117,11 @@ attributes – see the documentation for details.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.OPENAI_GPT6_1_SOL">
 <span class="sig-name descname"><span class="pre">OPENAI_GPT6_1_SOL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI_GPT6_1_SOL'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.OPENAI_GPT6_1_SOL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.OPENAI_GPT6_1_TERRA">
+<span class="sig-name descname"><span class="pre">OPENAI_GPT6_1_TERRA</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI_GPT6_1_TERRA'</span></span><a class="headerlink" href="#abacusai.api_class.LLMName.OPENAI_GPT6_1_TERRA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -10599,7 +10613,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -10680,7 +10694,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -10761,7 +10775,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -10827,7 +10841,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -10893,7 +10907,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -10944,7 +10958,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11020,7 +11034,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11081,7 +11095,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11157,7 +11171,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11223,7 +11237,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11332,7 +11346,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11443,7 +11457,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11529,7 +11543,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11590,7 +11604,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11686,7 +11700,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11769,7 +11783,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11825,7 +11839,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11886,7 +11900,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -11947,7 +11961,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -12018,7 +12032,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -12119,7 +12133,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -12175,7 +12189,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -12316,7 +12330,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -12367,7 +12381,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -12428,7 +12442,7 @@ attributes – see the documentation for details.</p>
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>
@@ -12955,6 +12969,8 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class._SamplingConfigFactory">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">_SamplingConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class._SamplingConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class._SamplingConfigFactory.config_class_key">
 <span class="sig-name descname"><span class="pre">config_class_key</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sampling_method'</span></span><a class="headerlink" href="#abacusai.api_class._SamplingConfigFactory.config_class_key" title="Link to this definition"></a></dt>
@@ -13064,6 +13080,8 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class._MergeConfigFactory">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">_MergeConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class._MergeConfigFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class._MergeConfigFactory.config_class_key">
 <span class="sig-name descname"><span class="pre">config_class_key</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merge_mode'</span></span><a class="headerlink" href="#abacusai.api_class._MergeConfigFactory.config_class_key" title="Link to this definition"></a></dt>
@@ -15748,7 +15766,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </div>
 </li>
 <li><p>name lookup:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="p">[</span><span class="s1">'RED'</span><span class="p">]</span>
 <span class="go">&lt;Color.RED: 1&gt;</span>
 </pre></div>
 </div>

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: SessionSummary(client, summary=None, templateName=None, meetingType=None, meetingNotes=None, meeting=None, previousMeeting=None, feedback=None, summaryShared=None, transcriptShared=None, chatShared=None, shareParts=None, canEdit=None, editBlocked=None, edits=None, summarySeq=None, editedAt=None, summaryEdited=None, summaryKind=None, summaryAt=None, summaryHistory=None, canRewriteSummary=None)
+.. py:class:: SessionSummary(client, summary=None, templateName=None, meetingType=None, meetingNotes=None, meeting=None, previousMeeting=None, feedback=None, summaryShared=None, transcriptShared=None, chatShared=None, shareParts=None, canEdit=None, editBlocked=None, edits=None, summarySeq=None, editedAt=None, summaryEdited=None, summaryKind=None, summaryAt=None, summaryHistory=None, canRewriteSummary=None, screenCount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -66,6 +66,8 @@ Module Contents
    :type summaryHistory: list[dict]
    :param canRewriteSummary: Whether the owner may rewrite the summary with an instruction now; returned only to the owner.
    :type canRewriteSummary: bool
+   :param screenCount: How many key screens the session kept; returned only to the owner.
+   :type screenCount: int
 
 
    .. py:attribute:: summary
@@ -169,6 +171,11 @@ Module Contents
 
 
    .. py:attribute:: can_rewrite_summary
+      :value: None
+
+
+
+   .. py:attribute:: screen_count
       :value: None
 
 

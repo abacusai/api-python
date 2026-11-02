@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, deletedTrainingFeatureGroups=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58,6 +58,8 @@ Module Contents
    :type csvPredictionPrefix: str
    :param csvExplanationsPrefix: A prefix to prepend to the explanation columns, only applies when output format is CSV.
    :type csvExplanationsPrefix: str
+   :param deletedTrainingFeatureGroups: Table names of the feature groups whose versions the deployed model was trained on that have since been deleted. If set, the model must be retrained before this batch prediction can run.
+   :type deletedTrainingFeatureGroups: list
    :param outputIncludesMetadata: If true, output will contain columns including prediction start time, batch prediction version, and model version.
    :type outputIncludesMetadata: bool
    :param resultInputColumns: If present, will limit result files or feature groups to only include columns present in this list.
@@ -167,6 +169,11 @@ Module Contents
 
 
    .. py:attribute:: csv_explanations_prefix
+      :value: None
+
+
+
+   .. py:attribute:: deleted_training_feature_groups
       :value: None
 
 

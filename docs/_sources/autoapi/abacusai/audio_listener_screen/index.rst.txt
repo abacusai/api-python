@@ -1,0 +1,78 @@
+abacusai.audio_listener_screen
+==============================
+
+.. py:module:: abacusai.audio_listener_screen
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.audio_listener_screen.AudioListenerScreen
+
+
+Module Contents
+---------------
+
+.. py:class:: AudioListenerScreen(client, screenId=None, capturedAtMs=None, windowTitle=None, text=None, url=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A key screen of a Listener session: a frame the desktop app kept when the screen changed.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param screenId: The screen's id.
+   :type screenId: str
+   :param capturedAtMs: When it was on screen, in ms since the epoch.
+   :type capturedAtMs: int
+   :param windowTitle: The window in front then.
+   :type windowTitle: str
+   :param text: The start of the text the app read on it.
+   :type text: str
+   :param url: The image, for an hour.
+   :type url: str
+
+
+   .. py:attribute:: screen_id
+      :value: None
+
+
+
+   .. py:attribute:: captured_at_ms
+      :value: None
+
+
+
+   .. py:attribute:: window_title
+      :value: None
+
+
+
+   .. py:attribute:: text
+      :value: None
+
+
+
+   .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

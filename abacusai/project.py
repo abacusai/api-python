@@ -179,7 +179,7 @@ class Project(AbstractApiClass):
 
     def list_feature_groups(self, filter_feature_group_use: str = None, limit: int = 100, start_after_id: str = None):
         """
-        List all the feature groups associated with a project
+        List the feature groups associated with a project that the caller can access.
 
         Args:
             filter_feature_group_use (str): The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
@@ -187,7 +187,7 @@ class Project(AbstractApiClass):
             start_after_id (str): An offset parameter to exclude all feature groups up to a specified ID.
 
         Returns:
-            list[ProjectFeatureGroup]: All the Feature Groups in a project.
+            list[ProjectFeatureGroup]: The feature groups in the project that the caller can access.
         """
         return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use, limit, start_after_id)
 

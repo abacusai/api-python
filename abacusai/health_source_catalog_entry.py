@@ -19,13 +19,14 @@ class HealthSourceCatalogEntry(AbstractApiClass):
             attributionRequired (bool): The provider's brand terms require its name beside every view of its data, however many devices the user has (Garmin: "Garmin [device model]" adjacent to each data title). A client otherwise names the device only when there is more than one to tell apart; with any connected provider carrying this it names them always. Always present.
             connectMode (str): web_oauth (Terra's hosted OAuth from a browser) | mobile_app (on-device SDK only — the phone health stores). Derived from the same provider tuple the connect endpoint enforces, so a client that offers what this says can never be refused for offering the wrong thing.
             primaryRank (int): Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
-            comingSoon (bool): Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.
+            comingSoon (bool): Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS, lifted per org for a held provider this org connects directly — Garmin on our OAuth; for Health Connect, whose Terra path is retired, it is `not direct_upload`), so web and app agree on what has shipped.
             deprecating (bool): Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
-            directUpload (bool): For a mobile_app provider, whether the app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health, false for every other provider; always present.
+            closedToNew (bool): Takes no NEW users (source_catalog.CLOSED_TO_NEW_PROVIDERS): a user with no connected row of it is offered no tile and pointed at their phone's own store, while a user who holds one keeps it — syncing, reconnectable, disconnectable; once disconnected they are new again. Per provider, the same for every org; the client answers "is this user new to it" from the sources list, which is exactly the server's test (models.has_live_source). The connect endpoint refuses what a client still offers.
+            directUpload (bool): For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health; true for health_connect on an org on health_health_connect_direct; false for every other provider. Always present.
             mobileOnlyDetail (str): Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
     """
 
-    def __init__(self, client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, directUpload=None, mobileOnlyDetail=None):
+    def __init__(self, client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, directUpload=None, mobileOnlyDetail=None):
         super().__init__(client, None)
         self.provider = provider
         self.name = name
@@ -41,13 +42,14 @@ class HealthSourceCatalogEntry(AbstractApiClass):
         self.primary_rank = primaryRank
         self.coming_soon = comingSoon
         self.deprecating = deprecating
+        self.closed_to_new = closedToNew
         self.direct_upload = directUpload
         self.mobile_only_detail = mobileOnlyDetail
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'provider': repr(self.provider), f'name': repr(self.name), f'connect_name': repr(self.connect_name), f'category': repr(self.category), f'kind': repr(self.kind), f'color': repr(self.color), f'glyph': repr(self.glyph), f'icon_url': repr(self.icon_url), f'icon_style': repr(self.icon_style), f'attribution_required': repr(
-            self.attribution_required), f'connect_mode': repr(self.connect_mode), f'primary_rank': repr(self.primary_rank), f'coming_soon': repr(self.coming_soon), f'deprecating': repr(self.deprecating), f'direct_upload': repr(self.direct_upload), f'mobile_only_detail': repr(self.mobile_only_detail)}
+            self.attribution_required), f'connect_mode': repr(self.connect_mode), f'primary_rank': repr(self.primary_rank), f'coming_soon': repr(self.coming_soon), f'deprecating': repr(self.deprecating), f'closed_to_new': repr(self.closed_to_new), f'direct_upload': repr(self.direct_upload), f'mobile_only_detail': repr(self.mobile_only_detail)}
         class_name = "HealthSourceCatalogEntry"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -60,6 +62,6 @@ class HealthSourceCatalogEntry(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'provider': self.provider, 'name': self.name, 'connect_name': self.connect_name, 'category': self.category, 'kind': self.kind, 'color': self.color, 'glyph': self.glyph, 'icon_url': self.icon_url, 'icon_style': self.icon_style,
-                'attribution_required': self.attribution_required, 'connect_mode': self.connect_mode, 'primary_rank': self.primary_rank, 'coming_soon': self.coming_soon, 'deprecating': self.deprecating, 'direct_upload': self.direct_upload, 'mobile_only_detail': self.mobile_only_detail}
+        resp = {'provider': self.provider, 'name': self.name, 'connect_name': self.connect_name, 'category': self.category, 'kind': self.kind, 'color': self.color, 'glyph': self.glyph, 'icon_url': self.icon_url, 'icon_style': self.icon_style, 'attribution_required': self.attribution_required,
+                'connect_mode': self.connect_mode, 'primary_rank': self.primary_rank, 'coming_soon': self.coming_soon, 'deprecating': self.deprecating, 'closed_to_new': self.closed_to_new, 'direct_upload': self.direct_upload, 'mobile_only_detail': self.mobile_only_detail}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

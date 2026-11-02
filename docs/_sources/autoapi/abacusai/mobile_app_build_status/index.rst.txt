@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, logUrl=None, appVersion=None, buildNumber=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, inAppPurchases=None, logUrl=None, appVersion=None, buildNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,6 +50,8 @@ Module Contents
    :type createdAt: str
    :param testflight: Native Swift builds: what Apple reported about the uploaded build
    :type testflight: dict
+   :param inAppPurchases: Native Swift builds: {products, problems: [{product_id, problem}], sync_failed, notifications} for the app's in-app purchases in App Store Connect
+   :type inAppPurchases: dict
    :param logUrl: Native Swift builds: short-lived link to the archive log once the build finished
    :type logUrl: str
    :param appVersion: The release version the build shipped as (Android versionName, iOS CFBundleShortVersionString)
@@ -119,6 +121,11 @@ Module Contents
 
 
    .. py:attribute:: testflight
+      :value: None
+
+
+
+   .. py:attribute:: in_app_purchases
       :value: None
 
 

@@ -1,0 +1,99 @@
+abacusai.mcp_server_connection_with_oauth_config
+================================================
+
+.. py:module:: abacusai.mcp_server_connection_with_oauth_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.mcp_server_connection_with_oauth_config.McpServerConnectionWithOauthConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: McpServerConnectionWithOauthConfig(client, mcpServerConnectionId=None, name=None, config=None, authType=None, inactive=None, tools=None, errorMsg=None, metadata=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   McpServerConnection plus metadata.oauth_config, for getUserMcpConnection alone: the agent reads oauth_config.url there to
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mcpServerConnectionId: the id of the MCP server connection.
+   :type mcpServerConnectionId: id
+   :param name: The name of the MCP server.
+   :type name: str
+   :param config: a dictionary containing the config for the MCP server.
+   :type config: dict
+   :param authType: the auth type for the MCP server.
+   :type authType: str
+   :param inactive: whether the MCP server is inactive.
+   :type inactive: bool
+   :param tools: the tools for the MCP server, each with its name, title, description and annotations.
+   :type tools: list
+   :param errorMsg: the error message for the MCP server.
+   :type errorMsg: str
+   :param metadata: tool_permissions, the tools the user turned off, and oauth_config, the connection's OAuth setup.
+   :type metadata: dict
+
+
+   .. py:attribute:: mcp_server_connection_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: config
+      :value: None
+
+
+
+   .. py:attribute:: auth_type
+      :value: None
+
+
+
+   .. py:attribute:: inactive
+      :value: None
+
+
+
+   .. py:attribute:: tools
+      :value: None
+
+
+
+   .. py:attribute:: error_msg
+      :value: None
+
+
+
+   .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

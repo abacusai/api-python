@@ -28,9 +28,10 @@ class SessionSummary(AbstractApiClass):
             summaryAt (str): When that version was written.
             summaryHistory (list[dict]): The session's summary versions, newest first ({seq, at, kind, base_seq, instruction, preview, from_seq}); returned only to the owner.
             canRewriteSummary (bool): Whether the owner may rewrite the summary with an instruction now; returned only to the owner.
+            screenCount (int): How many key screens the session kept; returned only to the owner.
     """
 
-    def __init__(self, client, summary=None, templateName=None, meetingType=None, meetingNotes=None, meeting=None, previousMeeting=None, feedback=None, summaryShared=None, transcriptShared=None, chatShared=None, shareParts=None, canEdit=None, editBlocked=None, edits=None, summarySeq=None, editedAt=None, summaryEdited=None, summaryKind=None, summaryAt=None, summaryHistory=None, canRewriteSummary=None):
+    def __init__(self, client, summary=None, templateName=None, meetingType=None, meetingNotes=None, meeting=None, previousMeeting=None, feedback=None, summaryShared=None, transcriptShared=None, chatShared=None, shareParts=None, canEdit=None, editBlocked=None, edits=None, summarySeq=None, editedAt=None, summaryEdited=None, summaryKind=None, summaryAt=None, summaryHistory=None, canRewriteSummary=None, screenCount=None):
         super().__init__(client, None)
         self.summary = summary
         self.template_name = templateName
@@ -53,11 +54,12 @@ class SessionSummary(AbstractApiClass):
         self.summary_at = summaryAt
         self.summary_history = summaryHistory
         self.can_rewrite_summary = canRewriteSummary
+        self.screen_count = screenCount
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'summary': repr(self.summary), f'template_name': repr(self.template_name), f'meeting_type': repr(self.meeting_type), f'meeting_notes': repr(self.meeting_notes), f'meeting': repr(self.meeting), f'previous_meeting': repr(self.previous_meeting), f'feedback': repr(self.feedback), f'summary_shared': repr(self.summary_shared), f'transcript_shared': repr(self.transcript_shared), f'chat_shared': repr(self.chat_shared), f'share_parts': repr(
-            self.share_parts), f'can_edit': repr(self.can_edit), f'edit_blocked': repr(self.edit_blocked), f'edits': repr(self.edits), f'summary_seq': repr(self.summary_seq), f'edited_at': repr(self.edited_at), f'summary_edited': repr(self.summary_edited), f'summary_kind': repr(self.summary_kind), f'summary_at': repr(self.summary_at), f'summary_history': repr(self.summary_history), f'can_rewrite_summary': repr(self.can_rewrite_summary)}
+            self.share_parts), f'can_edit': repr(self.can_edit), f'edit_blocked': repr(self.edit_blocked), f'edits': repr(self.edits), f'summary_seq': repr(self.summary_seq), f'edited_at': repr(self.edited_at), f'summary_edited': repr(self.summary_edited), f'summary_kind': repr(self.summary_kind), f'summary_at': repr(self.summary_at), f'summary_history': repr(self.summary_history), f'can_rewrite_summary': repr(self.can_rewrite_summary), f'screen_count': repr(self.screen_count)}
         class_name = "SessionSummary"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -70,6 +72,6 @@ class SessionSummary(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'summary': self.summary, 'template_name': self.template_name, 'meeting_type': self.meeting_type, 'meeting_notes': self.meeting_notes, 'meeting': self.meeting, 'previous_meeting': self.previous_meeting, 'feedback': self.feedback, 'summary_shared': self.summary_shared, 'transcript_shared': self.transcript_shared, 'chat_shared': self.chat_shared,
-                'share_parts': self.share_parts, 'can_edit': self.can_edit, 'edit_blocked': self.edit_blocked, 'edits': self.edits, 'summary_seq': self.summary_seq, 'edited_at': self.edited_at, 'summary_edited': self.summary_edited, 'summary_kind': self.summary_kind, 'summary_at': self.summary_at, 'summary_history': self.summary_history, 'can_rewrite_summary': self.can_rewrite_summary}
+        resp = {'summary': self.summary, 'template_name': self.template_name, 'meeting_type': self.meeting_type, 'meeting_notes': self.meeting_notes, 'meeting': self.meeting, 'previous_meeting': self.previous_meeting, 'feedback': self.feedback, 'summary_shared': self.summary_shared, 'transcript_shared': self.transcript_shared, 'chat_shared': self.chat_shared, 'share_parts': self.share_parts,
+                'can_edit': self.can_edit, 'edit_blocked': self.edit_blocked, 'edits': self.edits, 'summary_seq': self.summary_seq, 'edited_at': self.edited_at, 'summary_edited': self.summary_edited, 'summary_kind': self.summary_kind, 'summary_at': self.summary_at, 'summary_history': self.summary_history, 'can_rewrite_summary': self.can_rewrite_summary, 'screen_count': self.screen_count}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

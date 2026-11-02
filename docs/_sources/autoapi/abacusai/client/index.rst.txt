@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.119'
+      :value: '1.4.120'
 
 
 
@@ -966,7 +966,10 @@ Module Contents
 
    .. py:method:: list_feature_groups(limit = 100, start_after_id = None, feature_group_template_id = None, is_including_detached_from_template = False)
 
-      List all the feature groups
+      List feature groups in the organization that the caller may access.
+
+      Excludes feature groups hidden by user-group permissions or usage-metrics restrictions.
+
 
       :param limit: The number of feature groups to retrieve.
       :type limit: int
@@ -977,7 +980,7 @@ Module Contents
       :param is_including_detached_from_template: When feature_group_template_id is specified, include feature groups that have been detached from that template ID.
       :type is_including_detached_from_template: bool
 
-      :returns: All the feature groups in the organization associated with the specified project.
+      :returns: Feature groups the caller may access, subject to the supplied filters and pagination.
       :rtype: list[FeatureGroup]
 
 
@@ -998,7 +1001,7 @@ Module Contents
 
    .. py:method:: list_project_feature_groups(project_id, filter_feature_group_use = None, limit = 100, start_after_id = None)
 
-      List all the feature groups associated with a project
+      List the feature groups associated with a project that the caller can access.
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
@@ -1009,7 +1012,7 @@ Module Contents
       :param start_after_id: An offset parameter to exclude all feature groups up to a specified ID.
       :type start_after_id: str
 
-      :returns: All the Feature Groups in a project.
+      :returns: The feature groups in the project that the caller can access.
       :rtype: list[ProjectFeatureGroup]
 
 
@@ -1547,7 +1550,10 @@ Module Contents
 
    .. py:method:: list_datasets(limit = 100, start_after_id = None, exclude_streaming = False)
 
-      Retrieves a list of all datasets in the organization.
+      Retrieves datasets in the organization that the caller may access.
+
+      Excludes datasets hidden by user-group permissions or usage-metrics restrictions.
+
 
       :param limit: Maximum length of the list of datasets.
       :type limit: int
@@ -3053,7 +3059,7 @@ Module Contents
       :param user_group_id: The ID of the App User Group.
       :type user_group_id: str
 
-      :returns: The App User Group.
+      :returns: The App User Group. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to.
       :rtype: AppUserGroup
 
 
@@ -3065,7 +3071,7 @@ Module Contents
       :param name: The name of the app user group to retrieve.
       :type name: str
 
-      :returns: The app user group with the specified name.
+      :returns: The app user group with the specified name. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to.
       :rtype: AppUserGroup
 
 
@@ -4857,6 +4863,11 @@ Module Contents
 
       An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
       their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
+      Deliberately not behind disable_for_self_serve_org: revoking a key only removes access, and the desktop,
+      terminal and system key types a self-serve organization can hold are created on paths that never require
+      API metering, so gating the revoke left those keys listed (list_organization_api_keys is ungated for
+      administrators) but impossible to delete without first turning a billing feature on.
 
 
       :param api_key_id: The ID of the API key to delete.

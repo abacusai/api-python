@@ -214,7 +214,7 @@ Module Contents
 
    .. py:method:: list_feature_groups(filter_feature_group_use = None, limit = 100, start_after_id = None)
 
-      List all the feature groups associated with a project
+      List the feature groups associated with a project that the caller can access.
 
       :param filter_feature_group_use: The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
       :type filter_feature_group_use: str
@@ -223,7 +223,7 @@ Module Contents
       :param start_after_id: An offset parameter to exclude all feature groups up to a specified ID.
       :type start_after_id: str
 
-      :returns: All the Feature Groups in a project.
+      :returns: The feature groups in the project that the caller can access.
       :rtype: list[ProjectFeatureGroup]
 
 

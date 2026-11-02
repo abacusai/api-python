@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, directUpload=None, mobileOnlyDetail=None)
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, directUpload=None, mobileOnlyDetail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48,11 +48,13 @@ Module Contents
    :type connectMode: str
    :param primaryRank: Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
    :type primaryRank: int
-   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.
+   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS, lifted per org for a held provider this org connects directly — Garmin on our OAuth; for Health Connect, whose Terra path is retired, it is `not direct_upload`), so web and app agree on what has shipped.
    :type comingSoon: bool
    :param deprecating: Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
    :type deprecating: bool
-   :param directUpload: For a mobile_app provider, whether the app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health, false for every other provider; always present.
+   :param closedToNew: Takes no NEW users (source_catalog.CLOSED_TO_NEW_PROVIDERS): a user with no connected row of it is offered no tile and pointed at their phone's own store, while a user who holds one keeps it — syncing, reconnectable, disconnectable; once disconnected they are new again. Per provider, the same for every org; the client answers "is this user new to it" from the sources list, which is exactly the server's test (models.has_live_source). The connect endpoint refuses what a client still offers.
+   :type closedToNew: bool
+   :param directUpload: For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health; true for health_connect on an org on health_health_connect_direct; false for every other provider. Always present.
    :type directUpload: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
    :type mobileOnlyDetail: str
@@ -124,6 +126,11 @@ Module Contents
 
 
    .. py:attribute:: deprecating
+      :value: None
+
+
+
+   .. py:attribute:: closed_to_new
       :value: None
 
 

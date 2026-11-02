@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None, userPreferences=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None, userPreferences=None, langRevert=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44,6 +44,8 @@ Module Contents
    :type expLi: str
    :param userPreferences: The requesting user's preferences for the active organization (e.g. chatLLM.HOMEPAGE_TILES_COLLAPSED), surfaced here so preference-driven UI state is known at first paint.
    :type userPreferences: dict
+   :param langRevert: lang_revert coin toss: the stored chatLLM.UI_LANGUAGE the UI must put back on English for this org, if any.
+   :type langRevert: str
 
 
    .. py:attribute:: api_endpoint
@@ -92,6 +94,11 @@ Module Contents
 
 
    .. py:attribute:: user_preferences
+      :value: None
+
+
+
+   .. py:attribute:: lang_revert
       :value: None
 
 

@@ -11,6 +11,8 @@ Submodules
    :maxdepth: 1
 
    /autoapi/abacusai/abacus_api/index
+   /autoapi/abacusai/abacus_cloud_domain/index
+   /autoapi/abacusai/abacus_cloud_domain_search_result/index
    /autoapi/abacusai/ad_template/index
    /autoapi/abacusai/address/index
    /autoapi/abacusai/agent/index
@@ -39,11 +41,14 @@ Submodules
    /autoapi/abacusai/audio_gen_settings/index
    /autoapi/abacusai/audio_listener_calendar_events/index
    /autoapi/abacusai/audio_listener_carry_over/index
+   /autoapi/abacusai/audio_listener_desktop_link/index
    /autoapi/abacusai/audio_listener_export_settings/index
    /autoapi/abacusai/audio_listener_meeting_brief/index
    /autoapi/abacusai/audio_listener_meeting_session_page/index
    /autoapi/abacusai/audio_listener_meeting_sessions/index
    /autoapi/abacusai/audio_listener_meeting_template/index
+   /autoapi/abacusai/audio_listener_screen/index
+   /autoapi/abacusai/audio_listener_screens/index
    /autoapi/abacusai/audio_listener_search_term/index
    /autoapi/abacusai/audio_listener_session_edits/index
    /autoapi/abacusai/audio_listener_session_feedback/index
@@ -81,6 +86,9 @@ Submodules
    /autoapi/abacusai/chatllm_referral_invite/index
    /autoapi/abacusai/chatllm_task/index
    /autoapi/abacusai/client/index
+   /autoapi/abacusai/cloudflare_oauth_result/index
+   /autoapi/abacusai/cloudflare_oauth_state/index
+   /autoapi/abacusai/cloudflare_oauth_url/index
    /autoapi/abacusai/code_agent_response/index
    /autoapi/abacusai/code_autocomplete_edit_prediction_response/index
    /autoapi/abacusai/code_autocomplete_response/index
@@ -234,6 +242,7 @@ Submodules
    /autoapi/abacusai/mcp_config/index
    /autoapi/abacusai/mcp_server/index
    /autoapi/abacusai/mcp_server_connection/index
+   /autoapi/abacusai/mcp_server_connection_with_oauth_config/index
    /autoapi/abacusai/mcp_server_query_result/index
    /autoapi/abacusai/media_artifact/index
    /autoapi/abacusai/media_project/index
@@ -417,6 +426,8 @@ Classes
 .. autoapisummary::
 
    abacusai.AbacusApi
+   abacusai.AbacusCloudDomain
+   abacusai.AbacusCloudDomainSearchResult
    abacusai.AdTemplate
    abacusai.Address
    abacusai.Agent
@@ -681,11 +692,14 @@ Classes
    abacusai.AudioGenSettings
    abacusai.AudioListenerCalendarEvents
    abacusai.AudioListenerCarryOver
+   abacusai.AudioListenerDesktopLink
    abacusai.AudioListenerExportSettings
    abacusai.AudioListenerMeetingBrief
    abacusai.AudioListenerMeetingSessionPage
    abacusai.AudioListenerMeetingSessions
    abacusai.AudioListenerMeetingTemplate
+   abacusai.AudioListenerScreen
+   abacusai.AudioListenerScreens
    abacusai.AudioListenerSearchTerm
    abacusai.AudioListenerSessionEdits
    abacusai.AudioListenerSessionFeedback
@@ -727,6 +741,9 @@ Classes
    abacusai.ClientOptions
    abacusai.ReadOnlyClient
    abacusai.ToolResponse
+   abacusai.CloudflareOauthResult
+   abacusai.CloudflareOauthState
+   abacusai.CloudflareOauthUrl
    abacusai.CodeAgentResponse
    abacusai.CodeAutocompleteEditPredictionResponse
    abacusai.CodeAutocompleteResponse
@@ -878,6 +895,7 @@ Classes
    abacusai.McpConfig
    abacusai.McpServer
    abacusai.McpServerConnection
+   abacusai.McpServerConnectionWithOauthConfig
    abacusai.McpServerQueryResult
    abacusai.MediaArtifact
    abacusai.MediaProject
@@ -1075,6 +1093,98 @@ Package Contents
 
 
    .. py:attribute:: score
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbacusCloudDomain(client, paid=None, claimable=None, maxRegisterCredits=None, domain={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The Abacus AI Cloud subscriber's free custom domain
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param paid: Whether the subscription has billed (a claim while trialing ends the trial and charges the first month that day)
+   :type paid: bool
+   :param claimable: Not yet claimed
+   :type claimable: bool
+   :param maxRegisterCredits: The highest registration price (credits) the free domain covers
+   :type maxRegisterCredits: int
+   :param domain: The claimed domain (absent until claimed)
+   :type domain: WebAppDomain
+
+
+   .. py:attribute:: paid
+      :value: None
+
+
+
+   .. py:attribute:: claimable
+      :value: None
+
+
+
+   .. py:attribute:: max_register_credits
+      :value: None
+
+
+
+   .. py:attribute:: domain
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AbacusCloudDomainSearchResult(client, domain=None, included=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A name the Abacus AI Cloud free domain search found available
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param domain: The domain name
+   :type domain: str
+   :param included: Whether the free domain covers it (standard-priced names only)
+   :type included: bool
+
+
+   .. py:attribute:: domain
+      :value: None
+
+
+
+   .. py:attribute:: included
       :value: None
 
 
@@ -1750,7 +1860,7 @@ Package Contents
    :type discoverable: bool
    :param orgHasOtherUsers: Whether the owner's org has other users (teammate controls are shown only then).
    :type orgHasOtherUsers: bool
-   :param ownAgents: The owner's other agents (bot_id/name/description); always reachable.
+   :param ownAgents: The owner's other agents (bot_id/name/description/channels); always reachable.
    :type ownAgents: list
    :param contacts: Other people's agents (bot_id/name/owner_user_id/owner_name/status/t/org_id/external); status is PENDING_IN, PENDING_OUT or ACCEPTED; external agents live in another org (org_id set) and may be on another cluster.
    :type contacts: list
@@ -10158,6 +10268,11 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT6_1_TERRA
+      :value: 'OPENAI_GPT6_1_TERRA'
+
+
+
    .. py:attribute:: CLAUDE_V3_HAIKU
       :value: 'CLAUDE_V3_HAIKU'
 
@@ -12483,6 +12598,10 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
@@ -12577,6 +12696,10 @@ Package Contents
 .. py:class:: _MergeConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
 
    .. py:attribute:: config_class_key
@@ -16730,7 +16853,7 @@ Package Contents
       :type:  str
 
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None, userPreferences=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None, hostingDomain=None, publicHostingDomain=None, expLi=None, userPreferences=None, langRevert=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -16759,6 +16882,8 @@ Package Contents
    :type expLi: str
    :param userPreferences: The requesting user's preferences for the active organization (e.g. chatLLM.HOMEPAGE_TILES_COLLAPSED), surfaced here so preference-driven UI state is known at first paint.
    :type userPreferences: dict
+   :param langRevert: lang_revert coin toss: the stored chatLLM.UI_LANGUAGE the UI must put back on English for this org, if any.
+   :type langRevert: str
 
 
    .. py:attribute:: api_endpoint
@@ -16807,6 +16932,11 @@ Package Contents
 
 
    .. py:attribute:: user_preferences
+      :value: None
+
+
+
+   .. py:attribute:: lang_revert
       :value: None
 
 
@@ -16935,6 +17065,11 @@ Package Contents
 
       An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
       their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
+      Deliberately not behind disable_for_self_serve_org: revoking a key only removes access, and the desktop,
+      terminal and system key types a self-serve organization can hold are created on paths that never require
+      API metering, so gating the revoke left those keys listed (list_organization_api_keys is ungated for
+      administrators) but impossible to delete without first turning a billing feature on.
 
 
       :param api_key_id: The ID of the API key to delete.
@@ -17419,6 +17554,46 @@ Package Contents
 
 
 
+.. py:class:: AudioListenerDesktopLink(client, email=None, sent=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The Listener desktop app's link, mailed to the signed-in user from the mobile app.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param email: The address the link was sent to.
+   :type email: str
+   :param sent: Whether the mail went out.
+   :type sent: bool
+
+
+   .. py:attribute:: email
+      :value: None
+
+
+
+   .. py:attribute:: sent
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None, isWebChatEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -17630,6 +17805,105 @@ Package Contents
    .. py:attribute:: template_id
       :value: None
 
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerScreen(client, screenId=None, capturedAtMs=None, windowTitle=None, text=None, url=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A key screen of a Listener session: a frame the desktop app kept when the screen changed.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param screenId: The screen's id.
+   :type screenId: str
+   :param capturedAtMs: When it was on screen, in ms since the epoch.
+   :type capturedAtMs: int
+   :param windowTitle: The window in front then.
+   :type windowTitle: str
+   :param text: The start of the text the app read on it.
+   :type text: str
+   :param url: The image, for an hour.
+   :type url: str
+
+
+   .. py:attribute:: screen_id
+      :value: None
+
+
+
+   .. py:attribute:: captured_at_ms
+      :value: None
+
+
+
+   .. py:attribute:: window_title
+      :value: None
+
+
+
+   .. py:attribute:: text
+      :value: None
+
+
+
+   .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: AudioListenerScreens(client, limit=None, screens={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The key screens of a Listener session, oldest first.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param limit: The most a session keeps.
+   :type limit: int
+   :param screens: The screens.
+   :type screens: AudioListenerScreen
+
+
+   .. py:attribute:: limit
+      :value: None
+
+
+
+   .. py:attribute:: screens
 
 
    .. py:attribute:: deprecated_keys
@@ -18863,7 +19137,7 @@ Package Contents
 
 
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, deletedTrainingFeatureGroups=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchPredictionArgsType=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -18906,6 +19180,8 @@ Package Contents
    :type csvPredictionPrefix: str
    :param csvExplanationsPrefix: A prefix to prepend to the explanation columns, only applies when output format is CSV.
    :type csvExplanationsPrefix: str
+   :param deletedTrainingFeatureGroups: Table names of the feature groups whose versions the deployed model was trained on that have since been deleted. If set, the model must be retrained before this batch prediction can run.
+   :type deletedTrainingFeatureGroups: list
    :param outputIncludesMetadata: If true, output will contain columns including prediction start time, batch prediction version, and model version.
    :type outputIncludesMetadata: bool
    :param resultInputColumns: If present, will limit result files or feature groups to only include columns present in this list.
@@ -19015,6 +19291,11 @@ Package Contents
 
 
    .. py:attribute:: csv_explanations_prefix
+      :value: None
+
+
+
+   .. py:attribute:: deleted_training_feature_groups
       :value: None
 
 
@@ -19315,7 +19596,7 @@ Package Contents
 
 
 
-.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, bpAcrossVersionsMonitorVersion=None, batchPredictionArgsType=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, bpAcrossVersionsMonitorVersion=None, batchPredictionArgsType=None, outputsDeleted=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -19398,6 +19679,8 @@ Package Contents
    :type bpAcrossVersionsMonitorVersion: str
    :param batchPredictionArgsType: The type of the batch prediction args
    :type batchPredictionArgsType: str
+   :param outputsDeleted: If true, this version's outputs have been deleted, so its results can no longer be downloaded or read
+   :type outputsDeleted: bool
    :param batchInputs: Inputs to the batch prediction
    :type batchInputs: PredictionInput
    :param inputFeatureGroups: List of prediction feature groups
@@ -19589,6 +19872,11 @@ Package Contents
 
 
    .. py:attribute:: batch_prediction_args_type
+      :value: None
+
+
+
+   .. py:attribute:: outputs_deleted
       :value: None
 
 
@@ -23048,6 +23336,11 @@ Package Contents
 
       An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
       their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
+
+      Deliberately not behind disable_for_self_serve_org: revoking a key only removes access, and the desktop,
+      terminal and system key types a self-serve organization can hold are created on paths that never require
+      API metering, so gating the revoke left those keys listed (list_organization_api_keys is ungated for
+      administrators) but impossible to delete without first turning a billing feature on.
 
 
       :param api_key_id: The ID of the API key to delete.
@@ -29458,7 +29751,10 @@ Package Contents
 
    .. py:method:: list_feature_groups(limit = 100, start_after_id = None, feature_group_template_id = None, is_including_detached_from_template = False)
 
-      List all the feature groups
+      List feature groups in the organization that the caller may access.
+
+      Excludes feature groups hidden by user-group permissions or usage-metrics restrictions.
+
 
       :param limit: The number of feature groups to retrieve.
       :type limit: int
@@ -29469,7 +29765,7 @@ Package Contents
       :param is_including_detached_from_template: When feature_group_template_id is specified, include feature groups that have been detached from that template ID.
       :type is_including_detached_from_template: bool
 
-      :returns: All the feature groups in the organization associated with the specified project.
+      :returns: Feature groups the caller may access, subject to the supplied filters and pagination.
       :rtype: list[FeatureGroup]
 
 
@@ -29490,7 +29786,7 @@ Package Contents
 
    .. py:method:: list_project_feature_groups(project_id, filter_feature_group_use = None, limit = 100, start_after_id = None)
 
-      List all the feature groups associated with a project
+      List the feature groups associated with a project that the caller can access.
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
@@ -29501,7 +29797,7 @@ Package Contents
       :param start_after_id: An offset parameter to exclude all feature groups up to a specified ID.
       :type start_after_id: str
 
-      :returns: All the Feature Groups in a project.
+      :returns: The feature groups in the project that the caller can access.
       :rtype: list[ProjectFeatureGroup]
 
 
@@ -30039,7 +30335,10 @@ Package Contents
 
    .. py:method:: list_datasets(limit = 100, start_after_id = None, exclude_streaming = False)
 
-      Retrieves a list of all datasets in the organization.
+      Retrieves datasets in the organization that the caller may access.
+
+      Excludes datasets hidden by user-group permissions or usage-metrics restrictions.
+
 
       :param limit: Maximum length of the list of datasets.
       :type limit: int
@@ -31545,7 +31844,7 @@ Package Contents
       :param user_group_id: The ID of the App User Group.
       :type user_group_id: str
 
-      :returns: The App User Group.
+      :returns: The App User Group. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to.
       :rtype: AppUserGroup
 
 
@@ -31557,7 +31856,7 @@ Package Contents
       :param name: The name of the app user group to retrieve.
       :type name: str
 
-      :returns: The app user group with the specified name.
+      :returns: The app user group with the specified name. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to.
       :rtype: AppUserGroup
 
 
@@ -31796,6 +32095,133 @@ Package Contents
 
 
 .. py:data:: _request_context
+
+.. py:class:: CloudflareOauthResult(client, webAppDomainId=None, hostname=None, returnUrl=None, success=None, errorCode=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Outcome of a Cloudflare OAuth flow once Cloudflare sends the user back
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppDomainId: The ID of the web app domain
+   :type webAppDomainId: id
+   :param hostname: The domain that was configured
+   :type hostname: str
+   :param returnUrl: Where the user started the flow
+   :type returnUrl: str
+   :param success: Whether the records were written
+   :type success: bool
+   :param errorCode: A generic failure code when success is false
+   :type errorCode: str
+
+
+   .. py:attribute:: web_app_domain_id
+      :value: None
+
+
+
+   .. py:attribute:: hostname
+      :value: None
+
+
+
+   .. py:attribute:: return_url
+      :value: None
+
+
+
+   .. py:attribute:: success
+      :value: None
+
+
+
+   .. py:attribute:: error_code
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CloudflareOauthState(client, returnOrigin=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Where a Cloudflare OAuth flow started, read from the signed state Cloudflare sent back
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param returnOrigin: The origin (scheme and host) of the page the flow started on
+   :type returnOrigin: str
+
+
+   .. py:attribute:: return_origin
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: CloudflareOauthUrl(client, url=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Cloudflare OAuth authorization URL
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param url: Cloudflare's consent page for the Abacus.AI OAuth client
+   :type url: str
+
+
+   .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
 
 .. py:class:: CodeAgentResponse(client, deploymentConversationId=None, messages=None, toolUseRequest=None)
 
@@ -36657,7 +37083,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36774,6 +37200,8 @@ Package Contents
    :type roleplayCharacter: dict
    :param loopType: For Media Studio conversations, the dedicated agentic loop the conversation is pinned to (e.g. ad_creation); null when unpinned or not Media Studio.
    :type loopType: str
+   :param hasOpenArtifactComments: Whether the conversation has a live unresolved artifact comment thread, i.e. one that can be handed to Abacus and come back as a server-started turn. Set only for SuperAgent conversations in orgs with artifact_comment_collaboration.
+   :type hasOpenArtifactComments: bool
    :param pendingTriggerType: Set while the conversation is paused waiting for a scheduled resume (e.g. TIMED); null once resumed.
    :type pendingTriggerType: str
    :param nextTriggerCheckTime: When the scheduler will next resume the paused conversation; null when not paused.
@@ -37054,6 +37482,11 @@ Package Contents
 
 
    .. py:attribute:: loop_type
+      :value: None
+
+
+
+   .. py:attribute:: has_open_artifact_comments
       :value: None
 
 
@@ -44866,7 +45299,7 @@ Package Contents
 
 
 
-.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, directUpload=None, mobileOnlyDetail=None)
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, directUpload=None, mobileOnlyDetail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -44899,11 +45332,13 @@ Package Contents
    :type connectMode: str
    :param primaryRank: Tie-break order when several connected devices report the SAME metric and are otherwise equally good witnesses — lower wins, unranked providers sort last. Served so the insight cards and a client's metrics view attribute a reading to the same device.
    :type primaryRank: int
-   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS), so web and app agree on what has shipped.
+   :param comingSoon: Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS, lifted per org for a held provider this org connects directly — Garmin on our OAuth; for Health Connect, whose Terra path is retired, it is `not direct_upload`), so web and app agree on what has shipped.
    :type comingSoon: bool
    :param deprecating: Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
    :type deprecating: bool
-   :param directUpload: For a mobile_app provider, whether the app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health, false for every other provider; always present.
+   :param closedToNew: Takes no NEW users (source_catalog.CLOSED_TO_NEW_PROVIDERS): a user with no connected row of it is offered no tile and pointed at their phone's own store, while a user who holds one keeps it — syncing, reconnectable, disconnectable; once disconnected they are new again. Per provider, the same for every org; the client answers "is this user new to it" from the sources list, which is exactly the server's test (models.has_live_source). The connect endpoint refuses what a client still offers.
+   :type closedToNew: bool
+   :param directUpload: For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health; true for health_connect on an org on health_health_connect_direct; false for every other provider. Always present.
    :type directUpload: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
    :type mobileOnlyDetail: str
@@ -44975,6 +45410,11 @@ Package Contents
 
 
    .. py:attribute:: deprecating
+      :value: None
+
+
+
+   .. py:attribute:: closed_to_new
       :value: None
 
 
@@ -45952,7 +46392,7 @@ Package Contents
 
 
 
-.. py:class:: HostnameInfo(client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None)
+.. py:class:: HostnameInfo(client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None, cloudflareOauthAvailable=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45967,6 +46407,8 @@ Package Contents
    :type isRootDomain: bool
    :param hasRootNameserversConfigured: Whether the root domain has Abacus nameservers configured.
    :type hasRootNameserversConfigured: bool
+   :param cloudflareOauthAvailable: Whether the domain is hosted on Cloudflare and the Cloudflare OAuth flow is offered
+   :type cloudflareOauthAvailable: bool
 
 
    .. py:attribute:: hostname
@@ -45980,6 +46422,11 @@ Package Contents
 
 
    .. py:attribute:: has_root_nameservers_configured
+      :value: None
+
+
+
+   .. py:attribute:: cloudflare_oauth_available
       :value: None
 
 
@@ -47189,54 +47636,34 @@ Package Contents
 
 
 
-.. py:class:: McpServerConnection(client, mcpServerConnectionId=None, createdAt=None, updatedAt=None, name=None, config=None, description=None, transport=None, authType=None, externalConnectionId=None, inactive=None, tools=None, errorMsg=None, metadata=None)
+.. py:class:: McpServerConnection(client, mcpServerConnectionId=None, name=None, config=None, authType=None, inactive=None, tools=None, errorMsg=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   Model Context Protocol Server Connection
+   Model Context Protocol Server Connection, as the MCP Servers page lists and edits it: the server, its sign-in kind, which
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
    :param mcpServerConnectionId: the id of the MCP server connection.
    :type mcpServerConnectionId: id
-   :param createdAt: the date and time the MCP server connection was created.
-   :type createdAt: str
-   :param updatedAt: the date and time the MCP server connection was updated.
-   :type updatedAt: str
    :param name: The name of the MCP server.
    :type name: str
    :param config: a dictionary containing the config for the MCP server.
    :type config: dict
-   :param description: description of what the MCP server does.
-   :type description: str
-   :param transport: the transport type for the MCP server.
-   :type transport: str
    :param authType: the auth type for the MCP server.
    :type authType: str
-   :param externalConnectionId: the external connection id for the MCP server.
-   :type externalConnectionId: id
    :param inactive: whether the MCP server is inactive.
    :type inactive: bool
-   :param tools: the tools for the MCP server.
+   :param tools: the tools for the MCP server, each with its name, title, description and annotations.
    :type tools: list
    :param errorMsg: the error message for the MCP server.
    :type errorMsg: str
-   :param metadata: the metadata for the MCP server.
+   :param metadata: tool_permissions, the tools the user turned off.
    :type metadata: dict
 
 
    .. py:attribute:: mcp_server_connection_id
-      :value: None
-
-
-
-   .. py:attribute:: created_at
-      :value: None
-
-
-
-   .. py:attribute:: updated_at
       :value: None
 
 
@@ -47251,22 +47678,89 @@ Package Contents
 
 
 
-   .. py:attribute:: description
-      :value: None
-
-
-
-   .. py:attribute:: transport
-      :value: None
-
-
-
    .. py:attribute:: auth_type
       :value: None
 
 
 
-   .. py:attribute:: external_connection_id
+   .. py:attribute:: inactive
+      :value: None
+
+
+
+   .. py:attribute:: tools
+      :value: None
+
+
+
+   .. py:attribute:: error_msg
+      :value: None
+
+
+
+   .. py:attribute:: metadata
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: McpServerConnectionWithOauthConfig(client, mcpServerConnectionId=None, name=None, config=None, authType=None, inactive=None, tools=None, errorMsg=None, metadata=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   McpServerConnection plus metadata.oauth_config, for getUserMcpConnection alone: the agent reads oauth_config.url there to
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param mcpServerConnectionId: the id of the MCP server connection.
+   :type mcpServerConnectionId: id
+   :param name: The name of the MCP server.
+   :type name: str
+   :param config: a dictionary containing the config for the MCP server.
+   :type config: dict
+   :param authType: the auth type for the MCP server.
+   :type authType: str
+   :param inactive: whether the MCP server is inactive.
+   :type inactive: bool
+   :param tools: the tools for the MCP server, each with its name, title, description and annotations.
+   :type tools: list
+   :param errorMsg: the error message for the MCP server.
+   :type errorMsg: str
+   :param metadata: tool_permissions, the tools the user turned off, and oauth_config, the connection's OAuth setup.
+   :type metadata: dict
+
+
+   .. py:attribute:: mcp_server_connection_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: config
+      :value: None
+
+
+
+   .. py:attribute:: auth_type
       :value: None
 
 
@@ -47977,7 +48471,7 @@ Package Contents
 
 
 
-.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, logUrl=None, appVersion=None, buildNumber=None)
+.. py:class:: MobileAppBuildStatus(client, status=None, buildUrl=None, mobileAppBuildId=None, hostname=None, requiredInput=None, providers=None, selectionType=None, phoneNumbers=None, error=None, expired=None, phase=None, createdAt=None, testflight=None, inAppPurchases=None, logUrl=None, appVersion=None, buildNumber=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48012,6 +48506,8 @@ Package Contents
    :type createdAt: str
    :param testflight: Native Swift builds: what Apple reported about the uploaded build
    :type testflight: dict
+   :param inAppPurchases: Native Swift builds: {products, problems: [{product_id, problem}], sync_failed, notifications} for the app's in-app purchases in App Store Connect
+   :type inAppPurchases: dict
    :param logUrl: Native Swift builds: short-lived link to the archive log once the build finished
    :type logUrl: str
    :param appVersion: The release version the build shipped as (Android versionName, iOS CFBundleShortVersionString)
@@ -48081,6 +48577,11 @@ Package Contents
 
 
    .. py:attribute:: testflight
+      :value: None
+
+
+
+   .. py:attribute:: in_app_purchases
       :value: None
 
 
@@ -55703,7 +56204,7 @@ Package Contents
 
    .. py:method:: list_feature_groups(filter_feature_group_use = None, limit = 100, start_after_id = None)
 
-      List all the feature groups associated with a project
+      List the feature groups associated with a project that the caller can access.
 
       :param filter_feature_group_use: The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
       :type filter_feature_group_use: str
@@ -55712,7 +56213,7 @@ Package Contents
       :param start_after_id: An offset parameter to exclude all feature groups up to a specified ID.
       :type start_after_id: str
 
-      :returns: All the Feature Groups in a project.
+      :returns: The feature groups in the project that the caller can access.
       :rtype: list[ProjectFeatureGroup]
 
 
@@ -58591,7 +59092,7 @@ Package Contents
 
 
 
-.. py:class:: SessionSummary(client, summary=None, templateName=None, meetingType=None, meetingNotes=None, meeting=None, previousMeeting=None, feedback=None, summaryShared=None, transcriptShared=None, chatShared=None, shareParts=None, canEdit=None, editBlocked=None, edits=None, summarySeq=None, editedAt=None, summaryEdited=None, summaryKind=None, summaryAt=None, summaryHistory=None, canRewriteSummary=None)
+.. py:class:: SessionSummary(client, summary=None, templateName=None, meetingType=None, meetingNotes=None, meeting=None, previousMeeting=None, feedback=None, summaryShared=None, transcriptShared=None, chatShared=None, shareParts=None, canEdit=None, editBlocked=None, edits=None, summarySeq=None, editedAt=None, summaryEdited=None, summaryKind=None, summaryAt=None, summaryHistory=None, canRewriteSummary=None, screenCount=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58642,6 +59143,8 @@ Package Contents
    :type summaryHistory: list[dict]
    :param canRewriteSummary: Whether the owner may rewrite the summary with an instruction now; returned only to the owner.
    :type canRewriteSummary: bool
+   :param screenCount: How many key screens the session kept; returned only to the owner.
+   :type screenCount: int
 
 
    .. py:attribute:: summary
@@ -58745,6 +59248,11 @@ Package Contents
 
 
    .. py:attribute:: can_rewrite_summary
+      :value: None
+
+
+
+   .. py:attribute:: screen_count
       :value: None
 
 
@@ -62709,6 +63217,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.119'
+   :value: '1.4.120'
 
 

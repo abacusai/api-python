@@ -61,6 +61,11 @@ class ApiKey(AbstractApiClass):
         An administrator may revoke any key of the organization, the platform's own keys included; everyone else only
         their own. Deleting the key a deployed agent or app signs its calls with breaks that app until it gets a new key.
 
+        Deliberately not behind disable_for_self_serve_org: revoking a key only removes access, and the desktop,
+        terminal and system key types a self-serve organization can hold are created on paths that never require
+        API metering, so gating the revoke left those keys listed (list_organization_api_keys is ungated for
+        administrators) but impossible to delete without first turning a billing feature on.
+
 
         Args:
             api_key_id (str): The ID of the API key to delete.

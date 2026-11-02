@@ -15,54 +15,34 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: McpServerConnection(client, mcpServerConnectionId=None, createdAt=None, updatedAt=None, name=None, config=None, description=None, transport=None, authType=None, externalConnectionId=None, inactive=None, tools=None, errorMsg=None, metadata=None)
+.. py:class:: McpServerConnection(client, mcpServerConnectionId=None, name=None, config=None, authType=None, inactive=None, tools=None, errorMsg=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
 
-   Model Context Protocol Server Connection
+   Model Context Protocol Server Connection, as the MCP Servers page lists and edits it: the server, its sign-in kind, which
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
    :param mcpServerConnectionId: the id of the MCP server connection.
    :type mcpServerConnectionId: id
-   :param createdAt: the date and time the MCP server connection was created.
-   :type createdAt: str
-   :param updatedAt: the date and time the MCP server connection was updated.
-   :type updatedAt: str
    :param name: The name of the MCP server.
    :type name: str
    :param config: a dictionary containing the config for the MCP server.
    :type config: dict
-   :param description: description of what the MCP server does.
-   :type description: str
-   :param transport: the transport type for the MCP server.
-   :type transport: str
    :param authType: the auth type for the MCP server.
    :type authType: str
-   :param externalConnectionId: the external connection id for the MCP server.
-   :type externalConnectionId: id
    :param inactive: whether the MCP server is inactive.
    :type inactive: bool
-   :param tools: the tools for the MCP server.
+   :param tools: the tools for the MCP server, each with its name, title, description and annotations.
    :type tools: list
    :param errorMsg: the error message for the MCP server.
    :type errorMsg: str
-   :param metadata: the metadata for the MCP server.
+   :param metadata: tool_permissions, the tools the user turned off.
    :type metadata: dict
 
 
    .. py:attribute:: mcp_server_connection_id
-      :value: None
-
-
-
-   .. py:attribute:: created_at
-      :value: None
-
-
-
-   .. py:attribute:: updated_at
       :value: None
 
 
@@ -77,22 +57,7 @@ Module Contents
 
 
 
-   .. py:attribute:: description
-      :value: None
-
-
-
-   .. py:attribute:: transport
-      :value: None
-
-
-
    .. py:attribute:: auth_type
-      :value: None
-
-
-
-   .. py:attribute:: external_connection_id
       :value: None
 
 
