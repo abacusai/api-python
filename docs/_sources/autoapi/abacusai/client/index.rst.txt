@@ -598,7 +598,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.120'
+      :value: '1.4.121'
 
 
 
@@ -1366,7 +1366,7 @@ Module Contents
 
 
 
-   .. py:method:: get_database_connector_object_schema(database_connector_id, object_name = None, fetch_raw_data = False)
+   .. py:method:: get_database_connector_object_schema(database_connector_id, object_name, fetch_raw_data = False)
 
       Get the schema of an object in an database connector.
 
@@ -3054,12 +3054,12 @@ Module Contents
 
    .. py:method:: get_app_user_group(user_group_id)
 
-      Gets an App User Group.
+      Gets an App User Group. For organization admins and holders of the INVITE_USERS permission.
 
       :param user_group_id: The ID of the App User Group.
       :type user_group_id: str
 
-      :returns: The App User Group. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to.
+      :returns: The App User Group, with its members and invited emails. A chat-only or app-only caller gets only the name, id, public flag and creation source of a group they belong to.
       :rtype: AppUserGroup
 
 

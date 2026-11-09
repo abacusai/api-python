@@ -71,6 +71,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html">abacusai.api_client_utils</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_endpoint/index.html">abacusai.api_endpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html">abacusai.api_key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../app_secret/index.html">abacusai.app_secret</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../app_template/index.html">abacusai.app_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../app_user_group/index.html">abacusai.app_user_group</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html">abacusai.application_connector</a></li>
@@ -148,6 +149,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../complete_user_info/index.html">abacusai.complete_user_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../compute_point_info/index.html">abacusai.compute_point_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html">abacusai.concatenation_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../connector_recommendation/index.html">abacusai.connector_recommendation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../constants_autocomplete_response/index.html">abacusai.constants_autocomplete_response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../conversation_and_project_search_results/index.html">abacusai.conversation_and_project_search_results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../conversation_credits/index.html">abacusai.conversation_credits</a></li>
@@ -195,6 +197,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html">abacusai.document_retriever_lookup_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_version/index.html">abacusai.document_retriever_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_version_logs/index.html">abacusai.document_retriever_version_logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../domain_connect_check/index.html">abacusai.domain_connect_check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../domain_connect_url/index.html">abacusai.domain_connect_url</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../domain_purchase_result/index.html">abacusai.domain_purchase_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../domain_search_result/index.html">abacusai.domain_search_result</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html">abacusai.drift_distribution</a></li>
@@ -399,6 +403,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../stt_gen_model_options/index.html">abacusai.stt_gen_model_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../stt_gen_settings/index.html">abacusai.stt_gen_settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../studio_gen_costs/index.html">abacusai.studio_gen_costs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../studio_showcase/index.html">abacusai.studio_showcase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../studio_showcase_item/index.html">abacusai.studio_showcase_item</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../template_node_details/index.html">abacusai.template_node_details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html">abacusai.test_point_predictions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../tone_details/index.html">abacusai.tone_details</a></li>
@@ -1217,7 +1223,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.120'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.121'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2337,7 +2343,7 @@ and avoids execution of the further workflow.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_database_connector_object_schema">
-<span class="sig-name descname"><span class="pre">get_database_connector_object_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_raw_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_database_connector_object_schema" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_database_connector_object_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_raw_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_database_connector_object_schema" title="Link to this definition"></a></dt>
 <dd><p>Get the schema of an object in an database connector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -4636,13 +4642,13 @@ Use with the conversation ID of a Deep Agent conversation to download all genera
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_app_user_group">
 <span class="sig-name descname"><span class="pre">get_app_user_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_group_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_app_user_group" title="Link to this definition"></a></dt>
-<dd><p>Gets an App User Group.</p>
+<dd><p>Gets an App User Group. For organization admins and holders of the INVITE_USERS permission.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>user_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The ID of the App User Group.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The App User Group. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to.</p>
+<dd class="field-even"><p>The App User Group, with its members and invited emails. A chat-only or app-only caller gets only the name, id, public flag and creation source of a group they belong to.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../app_user_group/index.html#abacusai.app_user_group.AppUserGroup" title="abacusai.app_user_group.AppUserGroup">AppUserGroup</a></p>

@@ -15,7 +15,7 @@ class StudioGenCosts(AbstractApiClass):
             videoOverhead (int): Credit overhead for video/lip-sync generations, used in place of overhead
             adOverhead (int): Credit overhead for a Studio ad, used in place of overhead (research + prompt writing)
             imageDisplayThreshold (int): FE hides image estimates below this many credits (pre-overhead)
-            autoVideoEstimateHidden (bool): The org is tossed into studio_driver_video_routing, where an Auto video's model is picked from the message after send: the composer shows no estimate for it
+            autoVideoEstimateHidden (bool): The org has studio_driver_video_routing on, where an Auto video's model is picked from the message after send: the composer shows no estimate for it
     """
 
     def __init__(self, client, videoCosts=None, imageCosts=None, lipSyncCosts=None, voiceDesignCredits=None, overhead=None, videoOverhead=None, adOverhead=None, imageDisplayThreshold=None, autoVideoEstimateHidden=None):

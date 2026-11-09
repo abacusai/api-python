@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None, summary=None, deliverables=None)
+.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None, summary=None, deliverables=None, plan=None, step=None, turnStartedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,6 +50,12 @@ Module Contents
    :type summary: str
    :param deliverables: The files that turn declared, {path, url} each; empty while the run is mid-turn.
    :type deliverables: list
+   :param plan: While the run works, its own plan for the current turn ({id, task, status} per step, status pending, in_progress or completed); null otherwise or before it writes one.
+   :type plan: list
+   :param step: While the run works, the step it is on; null otherwise.
+   :type step: str
+   :param turnStartedAt: ISO-8601 UTC time the run's current or latest turn started.
+   :type turnStartedAt: str
 
 
    .. py:attribute:: task_id
@@ -113,6 +119,21 @@ Module Contents
 
 
    .. py:attribute:: deliverables
+      :value: None
+
+
+
+   .. py:attribute:: plan
+      :value: None
+
+
+
+   .. py:attribute:: step
+      :value: None
+
+
+
+   .. py:attribute:: turn_started_at
       :value: None
 
 

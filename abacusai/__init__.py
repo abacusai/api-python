@@ -22,6 +22,7 @@ from .annotations_status import AnnotationsStatus
 from .api_class import *
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
+from .app_secret import AppSecret
 from .app_template import AppTemplate
 from .app_user_group import AppUserGroup
 from .application_connector import ApplicationConnector
@@ -92,6 +93,7 @@ from .codellm_embedding_constants import CodellmEmbeddingConstants
 from .complete_user_info import CompleteUserInfo
 from .compute_point_info import ComputePointInfo
 from .concatenation_config import ConcatenationConfig
+from .connector_recommendation import ConnectorRecommendation
 from .constants_autocomplete_response import ConstantsAutocompleteResponse
 from .conversation_and_project_search_results import ConversationAndProjectSearchResults
 from .conversation_credits import ConversationCredits
@@ -138,6 +140,8 @@ from .document_retriever import DocumentRetriever
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
 from .document_retriever_version import DocumentRetrieverVersion
 from .document_retriever_version_logs import DocumentRetrieverVersionLogs
+from .domain_connect_check import DomainConnectCheck
+from .domain_connect_url import DomainConnectUrl
 from .domain_purchase_result import DomainPurchaseResult
 from .domain_search_result import DomainSearchResult
 from .drift_distribution import DriftDistribution
@@ -341,6 +345,8 @@ from .stt_gen_model import SttGenModel
 from .stt_gen_model_options import SttGenModelOptions
 from .stt_gen_settings import SttGenSettings
 from .studio_gen_costs import StudioGenCosts
+from .studio_showcase import StudioShowcase
+from .studio_showcase_item import StudioShowcaseItem
 from .template_node_details import TemplateNodeDetails
 from .test_point_predictions import TestPointPredictions
 from .tone_details import ToneDetails
@@ -385,4 +391,4 @@ from .workflow_graph_node_details import WorkflowGraphNodeDetails
 from .workflow_node_template import WorkflowNodeTemplate
 
 
-__version__ = "1.4.120"
+__version__ = "1.4.121"

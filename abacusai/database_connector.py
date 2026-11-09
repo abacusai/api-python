@@ -59,7 +59,7 @@ class DatabaseConnector(AbstractApiClass):
         """
         return self.client.list_database_connector_objects(self.database_connector_id, fetch_raw_data)
 
-    def get_object_schema(self, object_name: str = None, fetch_raw_data: bool = False):
+    def get_object_schema(self, object_name: str, fetch_raw_data: bool = False):
         """
         Get the schema of an object in an database connector.
 

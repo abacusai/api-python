@@ -13,10 +13,11 @@ class OrganizationExternalApplicationSettings(AbstractApiClass):
             passwordsDisabled (bool): Whether or not passwords are disabled for this organization's domain.
             externalServiceForRoles (str): The external service that is managing the user roles.
             exp (str): The logged-out experiment arm assigned to the visitor, if any.
+            freeTierSignup (bool): Whether that arm grants the free tier at sign-up (not a paid-path sign-up).
             abacusaibotLiteSignup (bool): Whether AbacusAI Bot sign-ups go to the lightweight /app/signup page.
     """
 
-    def __init__(self, client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None, exp=None, abacusaibotLiteSignup=None):
+    def __init__(self, client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None, exp=None, freeTierSignup=None, abacusaibotLiteSignup=None):
         super().__init__(client, None)
         self.logo = logo
         self.theme = theme
@@ -24,12 +25,13 @@ class OrganizationExternalApplicationSettings(AbstractApiClass):
         self.passwords_disabled = passwordsDisabled
         self.external_service_for_roles = externalServiceForRoles
         self.exp = exp
+        self.free_tier_signup = freeTierSignup
         self.abacusaibot_lite_signup = abacusaibotLiteSignup
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'logo': repr(self.logo), f'theme': repr(self.theme), f'managed_user_service': repr(self.managed_user_service), f'passwords_disabled': repr(
-            self.passwords_disabled), f'external_service_for_roles': repr(self.external_service_for_roles), f'exp': repr(self.exp), f'abacusaibot_lite_signup': repr(self.abacusaibot_lite_signup)}
+        repr_dict = {f'logo': repr(self.logo), f'theme': repr(self.theme), f'managed_user_service': repr(self.managed_user_service), f'passwords_disabled': repr(self.passwords_disabled), f'external_service_for_roles': repr(
+            self.external_service_for_roles), f'exp': repr(self.exp), f'free_tier_signup': repr(self.free_tier_signup), f'abacusaibot_lite_signup': repr(self.abacusaibot_lite_signup)}
         class_name = "OrganizationExternalApplicationSettings"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -43,5 +45,5 @@ class OrganizationExternalApplicationSettings(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'logo': self.logo, 'theme': self.theme, 'managed_user_service': self.managed_user_service, 'passwords_disabled': self.passwords_disabled,
-                'external_service_for_roles': self.external_service_for_roles, 'exp': self.exp, 'abacusaibot_lite_signup': self.abacusaibot_lite_signup}
+                'external_service_for_roles': self.external_service_for_roles, 'exp': self.exp, 'free_tier_signup': self.free_tier_signup, 'abacusaibot_lite_signup': self.abacusaibot_lite_signup}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

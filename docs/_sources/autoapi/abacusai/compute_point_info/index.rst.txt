@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None, wallRecovery=None)
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None, wallRecovery=None, freeAppBuild=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,8 @@ Module Contents
    :type firstDaOffer: dict
    :param wallRecovery: The wall_recovery coin-toss marker (arm, state, claim_until; cp / used / expires_at once claimed), if any
    :type wallRecovery: dict
+   :param freeAppBuild: The "Build an app, it's on us" offer (state, cp, claim_until; used / dconv_id once claimed), if any
+   :type freeAppBuild: dict
 
 
    .. py:attribute:: updated_at
@@ -99,6 +101,11 @@ Module Contents
 
 
    .. py:attribute:: wall_recovery
+      :value: None
+
+
+
+   .. py:attribute:: free_app_build
       :value: None
 
 

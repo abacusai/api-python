@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, createdByEmail=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None, projectMode=None, coordinatorBotId=None, coordinatorDeploymentConversationId=None, coordinatorActiveRuns=None, coordinatorLastRunAt=None)
+.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, createdByEmail=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None, projectMode=None, coordinatorBotId=None, coordinatorDeploymentConversationId=None, coordinatorActiveRuns=None, coordinatorLastRunAt=None, listenerSessionCount=None, listenerLastSessionAt=None, listenerDocumentCount=None, fileCount=None, listenerOwnSessionCount=None, listenerOwnDocumentCount=None, listenerAutoFiles=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58,6 +58,20 @@ Module Contents
    :type coordinatorActiveRuns: int
    :param coordinatorLastRunAt: ISO-8601 UTC start time of the coordinator's most recent delegated run; None if it has none.
    :type coordinatorLastRunAt: str
+   :param listenerSessionCount: Listener sessions filed in the project that the caller can see; only when the list call asks for it (include_listener_stats).
+   :type listenerSessionCount: int
+   :param listenerLastSessionAt: When the newest of those sessions was last active, ISO-8601; None without one.
+   :type listenerLastSessionAt: str
+   :param listenerDocumentCount: Listener sessions whose summary and transcript are in the project's files.
+   :type listenerDocumentCount: int
+   :param fileCount: Files in the project.
+   :type fileCount: int
+   :param listenerOwnSessionCount: The caller's own Listener sessions filed in the project that can go in its files (something was recorded).
+   :type listenerOwnSessionCount: int
+   :param listenerOwnDocumentCount: Of those, the ones whose summary and transcript are in the project's files.
+   :type listenerOwnDocumentCount: int
+   :param listenerAutoFiles: Whether the caller adds their own Listener sessions to the project's files when they end.
+   :type listenerAutoFiles: bool
 
 
    .. py:attribute:: chatllm_project_id
@@ -141,6 +155,41 @@ Module Contents
 
 
    .. py:attribute:: coordinator_last_run_at
+      :value: None
+
+
+
+   .. py:attribute:: listener_session_count
+      :value: None
+
+
+
+   .. py:attribute:: listener_last_session_at
+      :value: None
+
+
+
+   .. py:attribute:: listener_document_count
+      :value: None
+
+
+
+   .. py:attribute:: file_count
+      :value: None
+
+
+
+   .. py:attribute:: listener_own_session_count
+      :value: None
+
+
+
+   .. py:attribute:: listener_own_document_count
+      :value: None
+
+
+
+   .. py:attribute:: listener_auto_files
       :value: None
 
 

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, directUpload=None, mobileOnlyDetail=None)
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, shutoffDate=None, shutOff=None, directUpload=None, mobileOnlyDetail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -54,6 +54,10 @@ Module Contents
    :type deprecating: bool
    :param closedToNew: Takes no NEW users (source_catalog.CLOSED_TO_NEW_PROVIDERS): a user with no connected row of it is offered no tile and pointed at their phone's own store, while a user who holds one keeps it — syncing, reconnectable, disconnectable; once disconnected they are new again. Per provider, the same for every org; the client answers "is this user new to it" from the sources list, which is exactly the server's test (models.has_live_source). The connect endpoint refuses what a client still offers.
    :type closedToNew: bool
+   :param shutoffDate: The UTC day this provider's connections are shut off here, ISO `YYYY-MM-DD` (models.SOURCE_SHUTOFF_DATE_BY_PROVIDER — Google Fit: 2026-12-01). Absent for a provider with no shutoff. A client's retiring notice names this day, formatted in the user's locale.
+   :type shutoffDate: str
+   :param shutOff: Whether that day has come, by the server's calendar: the provider's rows are being retired (disconnected) and the connect endpoint refuses it to everyone, owners included — so a client offers no Reconnect on its rows. Always present.
+   :type shutOff: bool
    :param directUpload: For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health; true for health_connect on an org on health_health_connect_direct; false for every other provider. Always present.
    :type directUpload: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
@@ -131,6 +135,16 @@ Module Contents
 
 
    .. py:attribute:: closed_to_new
+      :value: None
+
+
+
+   .. py:attribute:: shutoff_date
+      :value: None
+
+
+
+   .. py:attribute:: shut_off
       :value: None
 
 

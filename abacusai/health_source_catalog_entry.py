@@ -22,11 +22,13 @@ class HealthSourceCatalogEntry(AbstractApiClass):
             comingSoon (bool): Held back from launch — list it, but offer no way to connect it. Decided by the server alone (source_catalog.COMING_SOON_PROVIDERS, lifted per org for a held provider this org connects directly — Garmin on our OAuth; for Health Connect, whose Terra path is retired, it is `not direct_upload`), so web and app agree on what has shipped.
             deprecating (bool): Supported, but the provider is winding the integration down (Google Fit's REST API in favour of Health Connect) — best-effort.
             closedToNew (bool): Takes no NEW users (source_catalog.CLOSED_TO_NEW_PROVIDERS): a user with no connected row of it is offered no tile and pointed at their phone's own store, while a user who holds one keeps it — syncing, reconnectable, disconnectable; once disconnected they are new again. Per provider, the same for every org; the client answers "is this user new to it" from the sources list, which is exactly the server's test (models.has_live_source). The connect endpoint refuses what a client still offers.
+            shutoffDate (str): The UTC day this provider's connections are shut off here, ISO `YYYY-MM-DD` (models.SOURCE_SHUTOFF_DATE_BY_PROVIDER — Google Fit: 2026-12-01). Absent for a provider with no shutoff. A client's retiring notice names this day, formatted in the user's locale.
+            shutOff (bool): Whether that day has come, by the server's calendar: the provider's rows are being retired (disconnected) and the connect endpoint refuses it to everyone, owners included — so a client offers no Reconnect on its rows. Always present.
             directUpload (bool): For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health; true for health_connect on an org on health_health_connect_direct; false for every other provider. Always present.
             mobileOnlyDetail (str): Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
     """
 
-    def __init__(self, client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, directUpload=None, mobileOnlyDetail=None):
+    def __init__(self, client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, shutoffDate=None, shutOff=None, directUpload=None, mobileOnlyDetail=None):
         super().__init__(client, None)
         self.provider = provider
         self.name = name
@@ -43,13 +45,15 @@ class HealthSourceCatalogEntry(AbstractApiClass):
         self.coming_soon = comingSoon
         self.deprecating = deprecating
         self.closed_to_new = closedToNew
+        self.shutoff_date = shutoffDate
+        self.shut_off = shutOff
         self.direct_upload = directUpload
         self.mobile_only_detail = mobileOnlyDetail
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'provider': repr(self.provider), f'name': repr(self.name), f'connect_name': repr(self.connect_name), f'category': repr(self.category), f'kind': repr(self.kind), f'color': repr(self.color), f'glyph': repr(self.glyph), f'icon_url': repr(self.icon_url), f'icon_style': repr(self.icon_style), f'attribution_required': repr(
-            self.attribution_required), f'connect_mode': repr(self.connect_mode), f'primary_rank': repr(self.primary_rank), f'coming_soon': repr(self.coming_soon), f'deprecating': repr(self.deprecating), f'closed_to_new': repr(self.closed_to_new), f'direct_upload': repr(self.direct_upload), f'mobile_only_detail': repr(self.mobile_only_detail)}
+        repr_dict = {f'provider': repr(self.provider), f'name': repr(self.name), f'connect_name': repr(self.connect_name), f'category': repr(self.category), f'kind': repr(self.kind), f'color': repr(self.color), f'glyph': repr(self.glyph), f'icon_url': repr(self.icon_url), f'icon_style': repr(self.icon_style), f'attribution_required': repr(self.attribution_required), f'connect_mode': repr(
+            self.connect_mode), f'primary_rank': repr(self.primary_rank), f'coming_soon': repr(self.coming_soon), f'deprecating': repr(self.deprecating), f'closed_to_new': repr(self.closed_to_new), f'shutoff_date': repr(self.shutoff_date), f'shut_off': repr(self.shut_off), f'direct_upload': repr(self.direct_upload), f'mobile_only_detail': repr(self.mobile_only_detail)}
         class_name = "HealthSourceCatalogEntry"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -63,5 +67,5 @@ class HealthSourceCatalogEntry(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'provider': self.provider, 'name': self.name, 'connect_name': self.connect_name, 'category': self.category, 'kind': self.kind, 'color': self.color, 'glyph': self.glyph, 'icon_url': self.icon_url, 'icon_style': self.icon_style, 'attribution_required': self.attribution_required,
-                'connect_mode': self.connect_mode, 'primary_rank': self.primary_rank, 'coming_soon': self.coming_soon, 'deprecating': self.deprecating, 'closed_to_new': self.closed_to_new, 'direct_upload': self.direct_upload, 'mobile_only_detail': self.mobile_only_detail}
+                'connect_mode': self.connect_mode, 'primary_rank': self.primary_rank, 'coming_soon': self.coming_soon, 'deprecating': self.deprecating, 'closed_to_new': self.closed_to_new, 'shutoff_date': self.shutoff_date, 'shut_off': self.shut_off, 'direct_upload': self.direct_upload, 'mobile_only_detail': self.mobile_only_detail}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

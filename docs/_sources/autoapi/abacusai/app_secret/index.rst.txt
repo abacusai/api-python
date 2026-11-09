@@ -1,0 +1,85 @@
+abacusai.app_secret
+===================
+
+.. py:module:: abacusai.app_secret
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.app_secret.AppSecret
+
+
+Module Contents
+---------------
+
+.. py:class:: AppSecret(client, name=None, createdAt=None, updatedAt=None, createdByEmail=None, updatedByEmail=None, webAppProjectIds=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   An organization admin's app secret: an environment variable for web apps whose production value is write-only.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The environment variable name.
+   :type name: str
+   :param createdAt: When the secret was created.
+   :type createdAt: str
+   :param updatedAt: When the value last changed.
+   :type updatedAt: str
+   :param createdByEmail: Who created it.
+   :type createdByEmail: str
+   :param updatedByEmail: Who last changed a value.
+   :type updatedByEmail: str
+   :param webAppProjectIds: The web app projects it is attached to.
+   :type webAppProjectIds: list
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: created_by_email
+      :value: None
+
+
+
+   .. py:attribute:: updated_by_email
+      :value: None
+
+
+
+   .. py:attribute:: web_app_project_ids
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

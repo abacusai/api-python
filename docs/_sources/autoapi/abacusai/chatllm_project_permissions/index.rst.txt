@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatllmProjectPermissions(client, chatllmProjectId=None, accessLevel=None, userPermissions=None, userGroupPermissions=None)
+.. py:class:: ChatllmProjectPermissions(client, chatllmProjectId=None, accessLevel=None, userPermissions=None, userGroupPermissions=None, users=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,8 @@ Module Contents
    :type userPermissions: list
    :param userGroupPermissions: List of tuples containing (user_group_id, permission).
    :type userGroupPermissions: list
+   :param users: The users with a permission, as {user_id, name, email}; name and email are None for one the organization's directory no longer knows.
+   :type users: list
 
 
    .. py:attribute:: chatllm_project_id
@@ -50,6 +52,11 @@ Module Contents
 
 
    .. py:attribute:: user_group_permissions
+      :value: None
+
+
+
+   .. py:attribute:: users
       :value: None
 
 

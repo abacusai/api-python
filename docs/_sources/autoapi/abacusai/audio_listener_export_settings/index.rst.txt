@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None, isWebChatEnabled=None)
+.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None, isWebChatEnabled=None, format=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36,6 +36,8 @@ Module Contents
    :type isOrgEnabled: bool
    :param isWebChatEnabled: Whether the organization allows continuing a session as a chat on the web.
    :type isWebChatEnabled: bool
+   :param format: The file a connector destination gets: md, pdf, docx, json, or google_doc (Google Drive only). A Project always gets Markdown.
+   :type format: str
 
 
    .. py:attribute:: is_enabled
@@ -64,6 +66,11 @@ Module Contents
 
 
    .. py:attribute:: is_web_chat_enabled
+      :value: None
+
+
+
+   .. py:attribute:: format
       :value: None
 
 

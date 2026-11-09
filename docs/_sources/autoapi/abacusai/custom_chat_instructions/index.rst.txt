@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, experimentalFeatures=None, inheritsDefault=None)
+.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, hasAiBrain=None, experimentalFeatures=None, inheritsDefault=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -42,6 +42,8 @@ Module Contents
    :type enableMemoryConsolidation: bool
    :param hasLegacyChatllmMemories: Whether the user has content in either legacy memory store (ChatLLM /memories/preferences.txt or the DeepAgent explicit_user_preferences folder), so the memories UI keeps them on the old memories view instead of the AI Brain page.
    :type hasLegacyChatllmMemories: bool
+   :param hasAiBrain: Whether the user has an AI Brain right now (the Pro brain, or a Basic brain an activation trigger turned on), so the Customize page shows its Memory switch only to users who have one.
+   :type hasAiBrain: bool
    :param experimentalFeatures: Experimental features.
    :type experimentalFeatures: dict
    :param inheritsDefault: Nothing is set for this model or its app, so the values shown are the user's default instructions, which chat applies to it.
@@ -89,6 +91,11 @@ Module Contents
 
 
    .. py:attribute:: has_legacy_chatllm_memories
+      :value: None
+
+
+
+   .. py:attribute:: has_ai_brain
       :value: None
 
 

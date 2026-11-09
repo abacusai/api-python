@@ -11,19 +11,21 @@ class DeploymentStatistics(AbstractApiClass):
             latencySeries (list): A list of the latency in milliseconds for each request.
             dateLabels (list): A list of date labels for each point in the series.
             httpStatusSeries (list): A list of the HTTP status codes for each request.
+            responseSizeSeries (list): A list of the response size in bytes for each point in the series. Only present for deployments served by a modelserver.
     """
 
-    def __init__(self, client, requestSeries=None, latencySeries=None, dateLabels=None, httpStatusSeries=None):
+    def __init__(self, client, requestSeries=None, latencySeries=None, dateLabels=None, httpStatusSeries=None, responseSizeSeries=None):
         super().__init__(client, None)
         self.request_series = requestSeries
         self.latency_series = latencySeries
         self.date_labels = dateLabels
         self.http_status_series = httpStatusSeries
+        self.response_size_series = responseSizeSeries
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'request_series': repr(self.request_series), f'latency_series': repr(
-            self.latency_series), f'date_labels': repr(self.date_labels), f'http_status_series': repr(self.http_status_series)}
+        repr_dict = {f'request_series': repr(self.request_series), f'latency_series': repr(self.latency_series), f'date_labels': repr(
+            self.date_labels), f'http_status_series': repr(self.http_status_series), f'response_size_series': repr(self.response_size_series)}
         class_name = "DeploymentStatistics"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -36,6 +38,6 @@ class DeploymentStatistics(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'request_series': self.request_series, 'latency_series': self.latency_series,
-                'date_labels': self.date_labels, 'http_status_series': self.http_status_series}
+        resp = {'request_series': self.request_series, 'latency_series': self.latency_series, 'date_labels': self.date_labels,
+                'http_status_series': self.http_status_series, 'response_size_series': self.response_size_series}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

@@ -1,0 +1,127 @@
+abacusai.studio_showcase_item
+=============================
+
+.. py:module:: abacusai.studio_showcase_item
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.studio_showcase_item.StudioShowcaseItem
+
+
+Module Contents
+---------------
+
+.. py:class:: StudioShowcaseItem(client, id=None, title=None, modelName=None, modelId=None, type=None, aspectRatio=None, imageUrl=None, videoUrl=None, videoThumbUrl=None, prompt=None, format=None, adTemplateSlug=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Studio Showcase Item — one tile on Studio's Explore wall: a curated example generation, a Shorts format or an explainer template.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param id: Stable tile identifier
+   :type id: str
+   :param title: Display title
+   :type title: str
+   :param modelName: Display name of the model credited for the example
+   :type modelName: str
+   :param modelId: Gen-settings key of that model (`abacus_studio` when the example is attributed to Studio itself)
+   :type modelId: str
+   :param type: image or video
+   :type type: str
+   :param aspectRatio: CSS aspect ratio, e.g. "9 / 16"
+   :type aspectRatio: str
+   :param imageUrl: CDN URL of the still (the poster for a video tile)
+   :type imageUrl: str
+   :param videoUrl: CDN URL of the full video, video tiles only
+   :type videoUrl: str
+   :param videoThumbUrl: CDN URL of the compressed preview clip, video tiles only
+   :type videoThumbUrl: str
+   :param prompt: The prompt the example was generated with; empty for format and template tiles
+   :type prompt: str
+   :param format: short (a Shorts format) or explainer (an explainer template); absent for a plain example
+   :type format: str
+   :param adTemplateSlug: The Shorts format a short tile opens
+   :type adTemplateSlug: str
+
+
+   .. py:attribute:: id
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: model_name
+      :value: None
+
+
+
+   .. py:attribute:: model_id
+      :value: None
+
+
+
+   .. py:attribute:: type
+      :value: None
+
+
+
+   .. py:attribute:: aspect_ratio
+      :value: None
+
+
+
+   .. py:attribute:: image_url
+      :value: None
+
+
+
+   .. py:attribute:: video_url
+      :value: None
+
+
+
+   .. py:attribute:: video_thumb_url
+      :value: None
+
+
+
+   .. py:attribute:: prompt
+      :value: None
+
+
+
+   .. py:attribute:: format
+      :value: None
+
+
+
+   .. py:attribute:: ad_template_slug
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

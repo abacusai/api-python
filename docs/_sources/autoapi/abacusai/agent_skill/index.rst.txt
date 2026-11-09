@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, shareGroupCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -50,7 +50,7 @@ Module Contents
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
    :type updatedAt: str
-   :param accessLevel: Sharing audience of an owned user skill: PRIVATE, USER_GROUPS (specific people), or PUBLIC (anyone in the organization).
+   :param accessLevel: Sharing audience of an owned user skill: PRIVATE, USER_GROUPS (specific people or groups), or PUBLIC (anyone in the organization).
    :type accessLevel: str
    :param sharedSkill: Whether this skill is shared to the viewer by another user (use-only).
    :type sharedSkill: bool
@@ -58,6 +58,8 @@ Module Contents
    :type sharedByEmail: str
    :param shareCount: Number of people an owned skill is shared with.
    :type shareCount: int
+   :param shareGroupCount: Number of user groups an owned skill is shared with.
+   :type shareGroupCount: int
    :param sharedStoreDir: Directory name of the viewer's own copy of a shared skill, present once they opt in.
    :type sharedStoreDir: str
    :param hashedAgentSkillId: Hashed skill id used by skill share links.
@@ -149,6 +151,11 @@ Module Contents
 
 
    .. py:attribute:: share_count
+      :value: None
+
+
+
+   .. py:attribute:: share_group_count
       :value: None
 
 

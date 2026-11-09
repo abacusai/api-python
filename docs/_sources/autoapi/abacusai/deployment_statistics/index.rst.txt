@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentStatistics(client, requestSeries=None, latencySeries=None, dateLabels=None, httpStatusSeries=None)
+.. py:class:: DeploymentStatistics(client, requestSeries=None, latencySeries=None, dateLabels=None, httpStatusSeries=None, responseSizeSeries=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,8 @@ Module Contents
    :type dateLabels: list
    :param httpStatusSeries: A list of the HTTP status codes for each request.
    :type httpStatusSeries: list
+   :param responseSizeSeries: A list of the response size in bytes for each point in the series. Only present for deployments served by a modelserver.
+   :type responseSizeSeries: list
 
 
    .. py:attribute:: request_series
@@ -50,6 +52,11 @@ Module Contents
 
 
    .. py:attribute:: http_status_series
+      :value: None
+
+
+
+   .. py:attribute:: response_size_series
       :value: None
 
 

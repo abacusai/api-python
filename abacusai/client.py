@@ -718,7 +718,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.120'
+    client_version = '1.4.121'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1620,7 +1620,7 @@ class ReadOnlyClient(BaseApiClient):
             fetch_raw_data (bool): If true, return unfiltered objects."""
         return self._call_api('listDatabaseConnectorObjects', 'GET', query_params={'databaseConnectorId': database_connector_id, 'fetchRawData': fetch_raw_data})
 
-    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None, fetch_raw_data: bool = False) -> DatabaseConnectorSchema:
+    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str, fetch_raw_data: bool = False) -> DatabaseConnectorSchema:
         """Get the schema of an object in an database connector.
 
         Args:
@@ -2957,13 +2957,13 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('listUserGroupObjectPermissions', 'GET', query_params={}, parse_type=UserGroupObjectPermission)
 
     def get_app_user_group(self, user_group_id: str) -> AppUserGroup:
-        """Gets an App User Group.
+        """Gets an App User Group. For organization admins and holders of the INVITE_USERS permission.
 
         Args:
             user_group_id (str): The ID of the App User Group.
 
         Returns:
-            AppUserGroup: The App User Group. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to."""
+            AppUserGroup: The App User Group, with its members and invited emails. A chat-only or app-only caller gets only the name, id, public flag and creation source of a group they belong to."""
         return self._call_api('getAppUserGroup', 'GET', query_params={'userGroupId': user_group_id}, parse_type=AppUserGroup)
 
     def get_app_user_group_from_name(self, name: str = None) -> AppUserGroup:

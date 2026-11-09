@@ -11,19 +11,21 @@ class ChatllmProjectPermissions(AbstractApiClass):
             accessLevel (str): The access level of the chatllm project.
             userPermissions (list): List of tuples containing (user_id, permission).
             userGroupPermissions (list): List of tuples containing (user_group_id, permission).
+            users (list): The users with a permission, as {user_id, name, email}; name and email are None for one the organization's directory no longer knows.
     """
 
-    def __init__(self, client, chatllmProjectId=None, accessLevel=None, userPermissions=None, userGroupPermissions=None):
+    def __init__(self, client, chatllmProjectId=None, accessLevel=None, userPermissions=None, userGroupPermissions=None, users=None):
         super().__init__(client, None)
         self.chatllm_project_id = chatllmProjectId
         self.access_level = accessLevel
         self.user_permissions = userPermissions
         self.user_group_permissions = userGroupPermissions
+        self.users = users
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'chatllm_project_id': repr(self.chatllm_project_id), f'access_level': repr(
-            self.access_level), f'user_permissions': repr(self.user_permissions), f'user_group_permissions': repr(self.user_group_permissions)}
+        repr_dict = {f'chatllm_project_id': repr(self.chatllm_project_id), f'access_level': repr(self.access_level), f'user_permissions': repr(
+            self.user_permissions), f'user_group_permissions': repr(self.user_group_permissions), f'users': repr(self.users)}
         class_name = "ChatllmProjectPermissions"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -37,5 +39,5 @@ class ChatllmProjectPermissions(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'chatllm_project_id': self.chatllm_project_id, 'access_level': self.access_level,
-                'user_permissions': self.user_permissions, 'user_group_permissions': self.user_group_permissions}
+                'user_permissions': self.user_permissions, 'user_group_permissions': self.user_group_permissions, 'users': self.users}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

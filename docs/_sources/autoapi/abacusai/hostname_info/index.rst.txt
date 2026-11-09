@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostnameInfo(client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None, cloudflareOauthAvailable=None)
+.. py:class:: HostnameInfo(client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None, cloudflareOauthAvailable=None, domainConnectProvider=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,8 +30,10 @@ Module Contents
    :type isRootDomain: bool
    :param hasRootNameserversConfigured: Whether the root domain has Abacus nameservers configured.
    :type hasRootNameserversConfigured: bool
-   :param cloudflareOauthAvailable: Whether the domain is hosted on Cloudflare and the Cloudflare OAuth flow is offered
+   :param cloudflareOauthAvailable: Whether the Cloudflare OAuth flow is offered: the domain is hosted on Cloudflare and Domain Connect is not offered for it
    :type cloudflareOauthAvailable: bool
+   :param domainConnectProvider: Display name of the DNS provider when the domain can be configured through Domain Connect, else null. At most one of the two paths is offered
+   :type domainConnectProvider: str
 
 
    .. py:attribute:: hostname
@@ -50,6 +52,11 @@ Module Contents
 
 
    .. py:attribute:: cloudflare_oauth_available
+      :value: None
+
+
+
+   .. py:attribute:: domain_connect_provider
       :value: None
 
 

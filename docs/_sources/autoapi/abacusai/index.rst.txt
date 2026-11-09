@@ -35,6 +35,7 @@ Submodules
    /autoapi/abacusai/api_client_utils/index
    /autoapi/abacusai/api_endpoint/index
    /autoapi/abacusai/api_key/index
+   /autoapi/abacusai/app_secret/index
    /autoapi/abacusai/app_template/index
    /autoapi/abacusai/app_user_group/index
    /autoapi/abacusai/application_connector/index
@@ -105,6 +106,7 @@ Submodules
    /autoapi/abacusai/complete_user_info/index
    /autoapi/abacusai/compute_point_info/index
    /autoapi/abacusai/concatenation_config/index
+   /autoapi/abacusai/connector_recommendation/index
    /autoapi/abacusai/constants_autocomplete_response/index
    /autoapi/abacusai/conversation_and_project_search_results/index
    /autoapi/abacusai/conversation_credits/index
@@ -152,6 +154,8 @@ Submodules
    /autoapi/abacusai/document_retriever_lookup_result/index
    /autoapi/abacusai/document_retriever_version/index
    /autoapi/abacusai/document_retriever_version_logs/index
+   /autoapi/abacusai/domain_connect_check/index
+   /autoapi/abacusai/domain_connect_url/index
    /autoapi/abacusai/domain_purchase_result/index
    /autoapi/abacusai/domain_search_result/index
    /autoapi/abacusai/drift_distribution/index
@@ -356,6 +360,8 @@ Submodules
    /autoapi/abacusai/stt_gen_model_options/index
    /autoapi/abacusai/stt_gen_settings/index
    /autoapi/abacusai/studio_gen_costs/index
+   /autoapi/abacusai/studio_showcase/index
+   /autoapi/abacusai/studio_showcase_item/index
    /autoapi/abacusai/template_node_details/index
    /autoapi/abacusai/test_point_predictions/index
    /autoapi/abacusai/tone_details/index
@@ -686,6 +692,7 @@ Classes
    abacusai.DataframeResponseSection
    abacusai.ApiEndpoint
    abacusai.ApiKey
+   abacusai.AppSecret
    abacusai.AppTemplate
    abacusai.AppUserGroup
    abacusai.ApplicationConnector
@@ -760,6 +767,7 @@ Classes
    abacusai.CompleteUserInfo
    abacusai.ComputePointInfo
    abacusai.ConcatenationConfig
+   abacusai.ConnectorRecommendation
    abacusai.ConstantsAutocompleteResponse
    abacusai.ConversationAndProjectSearchResults
    abacusai.ConversationCredits
@@ -806,6 +814,8 @@ Classes
    abacusai.DocumentRetrieverLookupResult
    abacusai.DocumentRetrieverVersion
    abacusai.DocumentRetrieverVersionLogs
+   abacusai.DomainConnectCheck
+   abacusai.DomainConnectUrl
    abacusai.DomainPurchaseResult
    abacusai.DomainSearchResult
    abacusai.DriftDistribution
@@ -1007,6 +1017,8 @@ Classes
    abacusai.SttGenModelOptions
    abacusai.SttGenSettings
    abacusai.StudioGenCosts
+   abacusai.StudioShowcase
+   abacusai.StudioShowcaseItem
    abacusai.TemplateNodeDetails
    abacusai.TestPointPredictions
    abacusai.ToneDetails
@@ -1948,7 +1960,7 @@ Package Contents
 
 
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, shareGroupCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -1983,7 +1995,7 @@ Package Contents
    :type createdAt: str
    :param updatedAt: The timestamp when the skill was last updated.
    :type updatedAt: str
-   :param accessLevel: Sharing audience of an owned user skill: PRIVATE, USER_GROUPS (specific people), or PUBLIC (anyone in the organization).
+   :param accessLevel: Sharing audience of an owned user skill: PRIVATE, USER_GROUPS (specific people or groups), or PUBLIC (anyone in the organization).
    :type accessLevel: str
    :param sharedSkill: Whether this skill is shared to the viewer by another user (use-only).
    :type sharedSkill: bool
@@ -1991,6 +2003,8 @@ Package Contents
    :type sharedByEmail: str
    :param shareCount: Number of people an owned skill is shared with.
    :type shareCount: int
+   :param shareGroupCount: Number of user groups an owned skill is shared with.
+   :type shareGroupCount: int
    :param sharedStoreDir: Directory name of the viewer's own copy of a shared skill, present once they opt in.
    :type sharedStoreDir: str
    :param hashedAgentSkillId: Hashed skill id used by skill share links.
@@ -2082,6 +2096,11 @@ Package Contents
 
 
    .. py:attribute:: share_count
+      :value: None
+
+
+
+   .. py:attribute:: share_group_count
       :value: None
 
 
@@ -9666,6 +9685,11 @@ Package Contents
 
 
 
+   .. py:attribute:: DYNAMICS365
+      :value: 'DYNAMICS365'
+
+
+
    .. py:attribute:: AUTODESK
       :value: 'AUTODESK'
 
@@ -17077,6 +17101,74 @@ Package Contents
 
 
 
+.. py:class:: AppSecret(client, name=None, createdAt=None, updatedAt=None, createdByEmail=None, updatedByEmail=None, webAppProjectIds=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   An organization admin's app secret: an environment variable for web apps whose production value is write-only.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The environment variable name.
+   :type name: str
+   :param createdAt: When the secret was created.
+   :type createdAt: str
+   :param updatedAt: When the value last changed.
+   :type updatedAt: str
+   :param createdByEmail: Who created it.
+   :type createdByEmail: str
+   :param updatedByEmail: Who last changed a value.
+   :type updatedByEmail: str
+   :param webAppProjectIds: The web app projects it is attached to.
+   :type webAppProjectIds: list
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: updated_at
+      :value: None
+
+
+
+   .. py:attribute:: created_by_email
+      :value: None
+
+
+
+   .. py:attribute:: updated_by_email
+      :value: None
+
+
+
+   .. py:attribute:: web_app_project_ids
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: AppTemplate(client, templateId=None, templateType=None, name=None, description=None, longDescription=None, category=None, tags=None, techStack=None, thumbUrl=None, videoUrl=None, templateUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -17594,7 +17686,7 @@ Package Contents
 
 
 
-.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None, isWebChatEnabled=None)
+.. py:class:: AudioListenerExportSettings(client, isEnabled=None, service=None, folderId=None, chatllmProjectId=None, isOrgEnabled=None, isWebChatEnabled=None, format=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -17615,6 +17707,8 @@ Package Contents
    :type isOrgEnabled: bool
    :param isWebChatEnabled: Whether the organization allows continuing a session as a chat on the web.
    :type isWebChatEnabled: bool
+   :param format: The file a connector destination gets: md, pdf, docx, json, or google_doc (Google Drive only). A Project always gets Markdown.
+   :type format: str
 
 
    .. py:attribute:: is_enabled
@@ -17643,6 +17737,11 @@ Package Contents
 
 
    .. py:attribute:: is_web_chat_enabled
+      :value: None
+
+
+
+   .. py:attribute:: format
       :value: None
 
 
@@ -19596,7 +19695,7 @@ Package Contents
 
 
 
-.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, bpAcrossVersionsMonitorVersion=None, batchPredictionArgsType=None, outputsDeleted=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, bpAcrossVersionsMonitorVersion=None, batchPredictionArgsType=None, outputsDeleted=None, outputsDeletedAt=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -19679,8 +19778,10 @@ Package Contents
    :type bpAcrossVersionsMonitorVersion: str
    :param batchPredictionArgsType: The type of the batch prediction args
    :type batchPredictionArgsType: str
-   :param outputsDeleted: If true, this version's outputs have been deleted, so its results can no longer be downloaded or read
+   :param outputsDeleted: If true, this version's output files or output feature group version have been deleted, so its results can no longer be downloaded or read
    :type outputsDeleted: bool
+   :param outputsDeletedAt: When this version's output files were deleted, if they were
+   :type outputsDeletedAt: str
    :param batchInputs: Inputs to the batch prediction
    :type batchInputs: PredictionInput
    :param inputFeatureGroups: List of prediction feature groups
@@ -19881,6 +19982,11 @@ Package Contents
 
 
 
+   .. py:attribute:: outputs_deleted_at
+      :value: None
+
+
+
    .. py:attribute:: batch_inputs
 
 
@@ -20046,7 +20152,7 @@ Package Contents
 
 
 
-.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None, taskEffort=None, timezone=None, workHours=None, channelHandle=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, template=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None, taskEffort=None, timezone=None, workHours=None, channelHandle=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -20099,6 +20205,8 @@ Package Contents
    :type createdAt: int
    :param schedule: The bot's heartbeat schedule (frequency/time/day_of_week/timezone), if any.
    :type schedule: dict
+   :param template: The starter card the agent was created from, so a client can tell whether the user already has that agent; None for an agent built from scratch.
+   :type template: str
    :param tasks: The bot's named scheduled tasks (daemon_task_id/name/prompt/schedule; event tasks also carry webhook_url); _describeBot only.
    :type tasks: list
    :param numTasks: How many named scheduled tasks the bot has.
@@ -20243,6 +20351,11 @@ Package Contents
 
 
    .. py:attribute:: schedule
+      :value: None
+
+
+
+   .. py:attribute:: template
       :value: None
 
 
@@ -21105,7 +21218,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, createdByEmail=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None, projectMode=None, coordinatorBotId=None, coordinatorDeploymentConversationId=None, coordinatorActiveRuns=None, coordinatorLastRunAt=None)
+.. py:class:: ChatllmProject(client, chatllmProjectId=None, name=None, description=None, customInstructions=None, createdAt=None, updatedAt=None, createdByUserId=None, createdByEmail=None, accessLevel=None, verticalType=None, preferences=None, orchestratorDeploymentConversationId=None, projectMode=None, coordinatorBotId=None, coordinatorDeploymentConversationId=None, coordinatorActiveRuns=None, coordinatorLastRunAt=None, listenerSessionCount=None, listenerLastSessionAt=None, listenerDocumentCount=None, fileCount=None, listenerOwnSessionCount=None, listenerOwnDocumentCount=None, listenerAutoFiles=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -21148,6 +21261,20 @@ Package Contents
    :type coordinatorActiveRuns: int
    :param coordinatorLastRunAt: ISO-8601 UTC start time of the coordinator's most recent delegated run; None if it has none.
    :type coordinatorLastRunAt: str
+   :param listenerSessionCount: Listener sessions filed in the project that the caller can see; only when the list call asks for it (include_listener_stats).
+   :type listenerSessionCount: int
+   :param listenerLastSessionAt: When the newest of those sessions was last active, ISO-8601; None without one.
+   :type listenerLastSessionAt: str
+   :param listenerDocumentCount: Listener sessions whose summary and transcript are in the project's files.
+   :type listenerDocumentCount: int
+   :param fileCount: Files in the project.
+   :type fileCount: int
+   :param listenerOwnSessionCount: The caller's own Listener sessions filed in the project that can go in its files (something was recorded).
+   :type listenerOwnSessionCount: int
+   :param listenerOwnDocumentCount: Of those, the ones whose summary and transcript are in the project's files.
+   :type listenerOwnDocumentCount: int
+   :param listenerAutoFiles: Whether the caller adds their own Listener sessions to the project's files when they end.
+   :type listenerAutoFiles: bool
 
 
    .. py:attribute:: chatllm_project_id
@@ -21235,6 +21362,41 @@ Package Contents
 
 
 
+   .. py:attribute:: listener_session_count
+      :value: None
+
+
+
+   .. py:attribute:: listener_last_session_at
+      :value: None
+
+
+
+   .. py:attribute:: listener_document_count
+      :value: None
+
+
+
+   .. py:attribute:: file_count
+      :value: None
+
+
+
+   .. py:attribute:: listener_own_session_count
+      :value: None
+
+
+
+   .. py:attribute:: listener_own_document_count
+      :value: None
+
+
+
+   .. py:attribute:: listener_auto_files
+      :value: None
+
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -21250,7 +21412,7 @@ Package Contents
 
 
 
-.. py:class:: ChatllmProjectPermissions(client, chatllmProjectId=None, accessLevel=None, userPermissions=None, userGroupPermissions=None)
+.. py:class:: ChatllmProjectPermissions(client, chatllmProjectId=None, accessLevel=None, userPermissions=None, userGroupPermissions=None, users=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -21267,6 +21429,8 @@ Package Contents
    :type userPermissions: list
    :param userGroupPermissions: List of tuples containing (user_group_id, permission).
    :type userGroupPermissions: list
+   :param users: The users with a permission, as {user_id, name, email}; name and email are None for one the organization's directory no longer knows.
+   :type users: list
 
 
    .. py:attribute:: chatllm_project_id
@@ -21285,6 +21449,11 @@ Package Contents
 
 
    .. py:attribute:: user_group_permissions
+      :value: None
+
+
+
+   .. py:attribute:: users
       :value: None
 
 
@@ -30151,7 +30320,7 @@ Package Contents
 
 
 
-   .. py:method:: get_database_connector_object_schema(database_connector_id, object_name = None, fetch_raw_data = False)
+   .. py:method:: get_database_connector_object_schema(database_connector_id, object_name, fetch_raw_data = False)
 
       Get the schema of an object in an database connector.
 
@@ -31839,12 +32008,12 @@ Package Contents
 
    .. py:method:: get_app_user_group(user_group_id)
 
-      Gets an App User Group.
+      Gets an App User Group. For organization admins and holders of the INVITE_USERS permission.
 
       :param user_group_id: The ID of the App User Group.
       :type user_group_id: str
 
-      :returns: The App User Group. Its members and invited emails are included for callers who can manage user groups (organization admins and holders of the INVITE_USERS permission); other platform members get the group without them. A chat-only or app-only member gets only the name, id, public flag and creation source of a group they belong to.
+      :returns: The App User Group, with its members and invited emails. A chat-only or app-only caller gets only the name, id, public flag and creation source of a group they belong to.
       :rtype: AppUserGroup
 
 
@@ -32982,7 +33151,7 @@ Package Contents
 
 
 
-.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None, wallRecovery=None)
+.. py:class:: ComputePointInfo(client, updatedAt=None, last24HoursUsage=None, last7DaysUsage=None, currMonthAvailPoints=None, currMonthUsage=None, lastThrottlePopUp=None, alwaysDisplay=None, freeTierTotal=None, freeTierExpiresAt=None, firstDaOffer=None, wallRecovery=None, freeAppBuild=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33013,6 +33182,8 @@ Package Contents
    :type firstDaOffer: dict
    :param wallRecovery: The wall_recovery coin-toss marker (arm, state, claim_until; cp / used / expires_at once claimed), if any
    :type wallRecovery: dict
+   :param freeAppBuild: The "Build an app, it's on us" offer (state, cp, claim_until; used / dconv_id once claimed), if any
+   :type freeAppBuild: dict
 
 
    .. py:attribute:: updated_at
@@ -33070,6 +33241,11 @@ Package Contents
 
 
 
+   .. py:attribute:: free_app_build
+      :value: None
+
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -33120,6 +33296,53 @@ Package Contents
 
 
    .. py:attribute:: skip_materialize
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: ConnectorRecommendation(client, key=None, name=None, description=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One Ask-AI pick from the Connectors page's catalog, echoing the entry the page sent.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param key: The page's catalog key for the entry (`app:<connector>` or `server:<gallery key>`).
+   :type key: str
+   :param name: Display name.
+   :type name: str
+   :param description: What it does.
+   :type description: str
+
+
+   .. py:attribute:: key
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
       :value: None
 
 
@@ -33609,7 +33832,7 @@ Package Contents
 
 
 
-.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None, summary=None, deliverables=None)
+.. py:class:: CoordinatorRun(client, taskId=None, title=None, state=None, startedAt=None, deploymentConversationId=None, computePointsUsed=None, hasDeliverables=None, turns=None, maxTurns=None, waiting=None, sentBack=None, summary=None, deliverables=None, plan=None, step=None, turnStartedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33644,6 +33867,12 @@ Package Contents
    :type summary: str
    :param deliverables: The files that turn declared, {path, url} each; empty while the run is mid-turn.
    :type deliverables: list
+   :param plan: While the run works, its own plan for the current turn ({id, task, status} per step, status pending, in_progress or completed); null otherwise or before it writes one.
+   :type plan: list
+   :param step: While the run works, the step it is on; null otherwise.
+   :type step: str
+   :param turnStartedAt: ISO-8601 UTC time the run's current or latest turn started.
+   :type turnStartedAt: str
 
 
    .. py:attribute:: task_id
@@ -33707,6 +33936,21 @@ Package Contents
 
 
    .. py:attribute:: deliverables
+      :value: None
+
+
+
+   .. py:attribute:: plan
+      :value: None
+
+
+
+   .. py:attribute:: step
+      :value: None
+
+
+
+   .. py:attribute:: turn_started_at
       :value: None
 
 
@@ -34090,7 +34334,7 @@ Package Contents
 
 
 
-.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, experimentalFeatures=None, inheritsDefault=None)
+.. py:class:: CustomChatInstructions(client, userInformationInstructions=None, responseInstructions=None, enableCodeExecution=None, enableImageGeneration=None, enableWebSearch=None, enablePlayground=None, enableMemories=None, enableMemoryConsolidation=None, hasLegacyChatllmMemories=None, hasAiBrain=None, experimentalFeatures=None, inheritsDefault=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34117,6 +34361,8 @@ Package Contents
    :type enableMemoryConsolidation: bool
    :param hasLegacyChatllmMemories: Whether the user has content in either legacy memory store (ChatLLM /memories/preferences.txt or the DeepAgent explicit_user_preferences folder), so the memories UI keeps them on the old memories view instead of the AI Brain page.
    :type hasLegacyChatllmMemories: bool
+   :param hasAiBrain: Whether the user has an AI Brain right now (the Pro brain, or a Basic brain an activation trigger turned on), so the Customize page shows its Memory switch only to users who have one.
+   :type hasAiBrain: bool
    :param experimentalFeatures: Experimental features.
    :type experimentalFeatures: dict
    :param inheritsDefault: Nothing is set for this model or its app, so the values shown are the user's default instructions, which chat applies to it.
@@ -34164,6 +34410,11 @@ Package Contents
 
 
    .. py:attribute:: has_legacy_chatllm_memories
+      :value: None
+
+
+
+   .. py:attribute:: has_ai_brain
       :value: None
 
 
@@ -35215,7 +35466,7 @@ Package Contents
 
 
 
-   .. py:method:: get_object_schema(object_name = None, fetch_raw_data = False)
+   .. py:method:: get_object_schema(object_name, fetch_raw_data = False)
 
       Get the schema of an object in an database connector.
 
@@ -37083,7 +37334,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37208,6 +37459,8 @@ Package Contents
    :type nextTriggerCheckTime: str
    :param chatShared: Whether this viewer may read the chat of a Listener session (false when its owner shares the session without the chat).
    :type chatShared: bool
+   :param threadRuns: For a shared agent chat with threads, the thread turns in flight (thread_root_seq, request_id, user_id, user_name, started_at); absent otherwise.
+   :type threadRuns: list
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -37506,6 +37759,11 @@ Package Contents
 
 
 
+   .. py:attribute:: thread_runs
+      :value: None
+
+
+
    .. py:attribute:: history
 
 
@@ -37681,7 +37939,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, midTurn=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, midTurn=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, introChips=None, rightSizeChips=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None, threadRootSeq=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37766,6 +38024,10 @@ Package Contents
    :type routedLlm: str
    :param creditFallback: Whether this response was served on RouteLLM because the organization ran out of credits for the requested model.
    :type creditFallback: bool
+   :param introChips: Starter chips clients show under the welcome intro to a new subscriber's first message, in the user's language: dicts with `id`, `label` (the chip) and `message` (what a tap sends).
+   :type introChips: list
+   :param rightSizeChips: Ids of the one-tap reply-length chips ("shorter", "more_detail") clients show under this response.
+   :type rightSizeChips: list
    :param computePointsUsed: The number of compute points used for the message.
    :type computePointsUsed: int
    :param computerFiles: The list of files that were created by the computer agent.
@@ -37812,6 +38074,8 @@ Package Contents
    :type mentions: list
    :param teamMessage: Project coordinator chats only. Whether this user message was posted for teammates with no agent turn.
    :type teamMessage: bool
+   :param threadRootSeq: Shared agent chats with threads only. The main-chat message this message was posted under in a thread; absent for main-chat messages.
+   :type threadRootSeq: int
 
 
    .. py:attribute:: role
@@ -38004,6 +38268,16 @@ Package Contents
 
 
 
+   .. py:attribute:: intro_chips
+      :value: None
+
+
+
+   .. py:attribute:: right_size_chips
+      :value: None
+
+
+
    .. py:attribute:: compute_points_used
       :value: None
 
@@ -38119,6 +38393,11 @@ Package Contents
 
 
 
+   .. py:attribute:: thread_root_seq
+      :value: None
+
+
+
    .. py:attribute:: deprecated_keys
 
 
@@ -38174,7 +38453,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentStatistics(client, requestSeries=None, latencySeries=None, dateLabels=None, httpStatusSeries=None)
+.. py:class:: DeploymentStatistics(client, requestSeries=None, latencySeries=None, dateLabels=None, httpStatusSeries=None, responseSizeSeries=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38191,6 +38470,8 @@ Package Contents
    :type dateLabels: list
    :param httpStatusSeries: A list of the HTTP status codes for each request.
    :type httpStatusSeries: list
+   :param responseSizeSeries: A list of the response size in bytes for each point in the series. Only present for deployments served by a modelserver.
+   :type responseSizeSeries: list
 
 
    .. py:attribute:: request_series
@@ -38209,6 +38490,11 @@ Package Contents
 
 
    .. py:attribute:: http_status_series
+      :value: None
+
+
+
+   .. py:attribute:: response_size_series
       :value: None
 
 
@@ -38582,7 +38868,7 @@ Package Contents
 
 
 
-.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None, metadata=None)
+.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, vectorScore=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38593,8 +38879,10 @@ Package Contents
    :type client: ApiClient
    :param document: The document that was looked up.
    :type document: str
-   :param score: Score of the document with respect to the query.
+   :param score: Score of the document with respect to the query. With text search included, the rank fusion score relative to the top result.
    :type score: float
+   :param vectorScore: Vector similarity of the document to the query, before any rank fusion with text search.
+   :type vectorScore: float
    :param properties: Properties of the retrieved documents.
    :type properties: dict
    :param pages: Pages of the retrieved text from the original document.
@@ -38615,6 +38903,11 @@ Package Contents
 
 
    .. py:attribute:: score
+      :value: None
+
+
+
+   .. py:attribute:: vector_score
       :value: None
 
 
@@ -38866,6 +39159,79 @@ Package Contents
 
 
    .. py:attribute:: logs
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: DomainConnectCheck(client, configured=None, checked=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Whether the DNS provider has applied the Domain Connect records
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param configured: The domain's nameservers serve our records, and the domain is marked as configured
+   :type configured: bool
+   :param checked: Whether the nameservers answered; false when the lookup did not complete, so configured says nothing yet
+   :type checked: bool
+
+
+   .. py:attribute:: configured
+      :value: None
+
+
+
+   .. py:attribute:: checked
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: DomainConnectUrl(client, url=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Domain Connect apply URL
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param url: The DNS provider's consent page that applies our records to the domain
+   :type url: str
+
+
+   .. py:attribute:: url
       :value: None
 
 
@@ -45299,7 +45665,7 @@ Package Contents
 
 
 
-.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, directUpload=None, mobileOnlyDetail=None)
+.. py:class:: HealthSourceCatalogEntry(client, provider=None, name=None, connectName=None, category=None, kind=None, color=None, glyph=None, iconUrl=None, iconStyle=None, attributionRequired=None, connectMode=None, primaryRank=None, comingSoon=None, deprecating=None, closedToNew=None, shutoffDate=None, shutOff=None, directUpload=None, mobileOnlyDetail=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45338,6 +45704,10 @@ Package Contents
    :type deprecating: bool
    :param closedToNew: Takes no NEW users (source_catalog.CLOSED_TO_NEW_PROVIDERS): a user with no connected row of it is offered no tile and pointed at their phone's own store, while a user who holds one keeps it — syncing, reconnectable, disconnectable; once disconnected they are new again. Per provider, the same for every org; the client answers "is this user new to it" from the sources list, which is exactly the server's test (models.has_live_source). The connect endpoint refuses what a client still offers.
    :type closedToNew: bool
+   :param shutoffDate: The UTC day this provider's connections are shut off here, ISO `YYYY-MM-DD` (models.SOURCE_SHUTOFF_DATE_BY_PROVIDER — Google Fit: 2026-12-01). Absent for a provider with no shutoff. A client's retiring notice names this day, formatted in the user's locale.
+   :type shutoffDate: str
+   :param shutOff: Whether that day has come, by the server's calendar: the provider's rows are being retired (disconnected) and the connect endpoint refuses it to everyone, owners included — so a client offers no Reconnect on its rows. Always present.
+   :type shutOff: bool
    :param directUpload: For a mobile_app provider, whether THIS org's app connects it on our own pipeline — the app reads the phone's health store and uploads to _uploadHealthKitSamples — rather than through Terra's on-device SDK. True for apple_health; true for health_connect on an org on health_health_connect_direct; false for every other provider. Always present.
    :type directUpload: bool
    :param mobileOnlyDetail: Why a browser can't connect this one, for a web user. Present only when connect_mode is mobile_app.
@@ -45415,6 +45785,16 @@ Package Contents
 
 
    .. py:attribute:: closed_to_new
+      :value: None
+
+
+
+   .. py:attribute:: shutoff_date
+      :value: None
+
+
+
+   .. py:attribute:: shut_off
       :value: None
 
 
@@ -46392,7 +46772,7 @@ Package Contents
 
 
 
-.. py:class:: HostnameInfo(client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None, cloudflareOauthAvailable=None)
+.. py:class:: HostnameInfo(client, hostname=None, isRootDomain=None, hasRootNameserversConfigured=None, cloudflareOauthAvailable=None, domainConnectProvider=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46407,8 +46787,10 @@ Package Contents
    :type isRootDomain: bool
    :param hasRootNameserversConfigured: Whether the root domain has Abacus nameservers configured.
    :type hasRootNameserversConfigured: bool
-   :param cloudflareOauthAvailable: Whether the domain is hosted on Cloudflare and the Cloudflare OAuth flow is offered
+   :param cloudflareOauthAvailable: Whether the Cloudflare OAuth flow is offered: the domain is hosted on Cloudflare and Domain Connect is not offered for it
    :type cloudflareOauthAvailable: bool
+   :param domainConnectProvider: Display name of the DNS provider when the domain can be configured through Domain Connect, else null. At most one of the two paths is offered
+   :type domainConnectProvider: str
 
 
    .. py:attribute:: hostname
@@ -46427,6 +46809,11 @@ Package Contents
 
 
    .. py:attribute:: cloudflare_oauth_available
+      :value: None
+
+
+
+   .. py:attribute:: domain_connect_provider
       :value: None
 
 
@@ -52105,7 +52492,7 @@ Package Contents
 
 
 
-.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None, exp=None, abacusaibotLiteSignup=None)
+.. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None, exp=None, freeTierSignup=None, abacusaibotLiteSignup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -52126,6 +52513,8 @@ Package Contents
    :type externalServiceForRoles: str
    :param exp: The logged-out experiment arm assigned to the visitor, if any.
    :type exp: str
+   :param freeTierSignup: Whether that arm grants the free tier at sign-up (not a paid-path sign-up).
+   :type freeTierSignup: bool
    :param abacusaibotLiteSignup: Whether AbacusAI Bot sign-ups go to the lightweight /app/signup page.
    :type abacusaibotLiteSignup: bool
 
@@ -52156,6 +52545,11 @@ Package Contents
 
 
    .. py:attribute:: exp
+      :value: None
+
+
+
+   .. py:attribute:: free_tier_signup
       :value: None
 
 
@@ -60106,7 +60500,7 @@ Package Contents
    :type adOverhead: int
    :param imageDisplayThreshold: FE hides image estimates below this many credits (pre-overhead)
    :type imageDisplayThreshold: int
-   :param autoVideoEstimateHidden: The org is tossed into studio_driver_video_routing, where an Auto video's model is picked from the message after send: the composer shows no estimate for it
+   :param autoVideoEstimateHidden: The org has studio_driver_video_routing on, where an Auto video's model is picked from the message after send: the composer shows no estimate for it
    :type autoVideoEstimateHidden: bool
 
 
@@ -60151,6 +60545,157 @@ Package Contents
 
 
    .. py:attribute:: auto_video_estimate_hidden
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: StudioShowcase(client, featured={}, images={}, videos={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Studio Showcase — the Explore wall's three tabs, each in display order.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featured: The Featured tab
+   :type featured: StudioShowcaseItem
+   :param images: The Images tab
+   :type images: StudioShowcaseItem
+   :param videos: The Videos tab
+   :type videos: StudioShowcaseItem
+
+
+   .. py:attribute:: featured
+
+
+   .. py:attribute:: images
+
+
+   .. py:attribute:: videos
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: StudioShowcaseItem(client, id=None, title=None, modelName=None, modelId=None, type=None, aspectRatio=None, imageUrl=None, videoUrl=None, videoThumbUrl=None, prompt=None, format=None, adTemplateSlug=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Studio Showcase Item — one tile on Studio's Explore wall: a curated example generation, a Shorts format or an explainer template.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param id: Stable tile identifier
+   :type id: str
+   :param title: Display title
+   :type title: str
+   :param modelName: Display name of the model credited for the example
+   :type modelName: str
+   :param modelId: Gen-settings key of that model (`abacus_studio` when the example is attributed to Studio itself)
+   :type modelId: str
+   :param type: image or video
+   :type type: str
+   :param aspectRatio: CSS aspect ratio, e.g. "9 / 16"
+   :type aspectRatio: str
+   :param imageUrl: CDN URL of the still (the poster for a video tile)
+   :type imageUrl: str
+   :param videoUrl: CDN URL of the full video, video tiles only
+   :type videoUrl: str
+   :param videoThumbUrl: CDN URL of the compressed preview clip, video tiles only
+   :type videoThumbUrl: str
+   :param prompt: The prompt the example was generated with; empty for format and template tiles
+   :type prompt: str
+   :param format: short (a Shorts format) or explainer (an explainer template); absent for a plain example
+   :type format: str
+   :param adTemplateSlug: The Shorts format a short tile opens
+   :type adTemplateSlug: str
+
+
+   .. py:attribute:: id
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: model_name
+      :value: None
+
+
+
+   .. py:attribute:: model_id
+      :value: None
+
+
+
+   .. py:attribute:: type
+      :value: None
+
+
+
+   .. py:attribute:: aspect_ratio
+      :value: None
+
+
+
+   .. py:attribute:: image_url
+      :value: None
+
+
+
+   .. py:attribute:: video_url
+      :value: None
+
+
+
+   .. py:attribute:: video_thumb_url
+      :value: None
+
+
+
+   .. py:attribute:: prompt
+      :value: None
+
+
+
+   .. py:attribute:: format
+      :value: None
+
+
+
+   .. py:attribute:: ad_template_slug
       :value: None
 
 
@@ -63217,6 +63762,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.120'
+   :value: '1.4.121'
 
 

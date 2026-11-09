@@ -1,0 +1,57 @@
+abacusai.domain_connect_check
+=============================
+
+.. py:module:: abacusai.domain_connect_check
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.domain_connect_check.DomainConnectCheck
+
+
+Module Contents
+---------------
+
+.. py:class:: DomainConnectCheck(client, configured=None, checked=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Whether the DNS provider has applied the Domain Connect records
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param configured: The domain's nameservers serve our records, and the domain is marked as configured
+   :type configured: bool
+   :param checked: Whether the nameservers answered; false when the lookup did not complete, so configured says nothing yet
+   :type checked: bool
+
+
+   .. py:attribute:: configured
+      :value: None
+
+
+
+   .. py:attribute:: checked
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

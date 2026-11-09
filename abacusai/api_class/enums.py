@@ -458,6 +458,7 @@ class ApplicationConnectorType(ApiEnum):
     DOCUSIGN = 'DOCUSIGN'
     SMARTSHEET = 'SMARTSHEET'
     ONENOTE = 'ONENOTE'
+    DYNAMICS365 = 'DYNAMICS365'
     AUTODESK = 'AUTODESK'
     ZOOM = 'ZOOM'
     METAADS = 'METAADS'
@@ -519,6 +520,7 @@ class ApplicationConnectorType(ApiEnum):
             cls.DOCUSIGN,
             cls.SMARTSHEET,
             cls.ONENOTE,
+            cls.DYNAMICS365,
             cls.AUTODESK,
             cls.ZOOM,
             cls.METAADS,

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None, metadata=None)
+.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, vectorScore=None, properties=None, pages=None, boundingBoxes=None, documentSource=None, imageIds=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -26,8 +26,10 @@ Module Contents
    :type client: ApiClient
    :param document: The document that was looked up.
    :type document: str
-   :param score: Score of the document with respect to the query.
+   :param score: Score of the document with respect to the query. With text search included, the rank fusion score relative to the top result.
    :type score: float
+   :param vectorScore: Vector similarity of the document to the query, before any rank fusion with text search.
+   :type vectorScore: float
    :param properties: Properties of the retrieved documents.
    :type properties: dict
    :param pages: Pages of the retrieved text from the original document.
@@ -48,6 +50,11 @@ Module Contents
 
 
    .. py:attribute:: score
+      :value: None
+
+
+
+   .. py:attribute:: vector_score
       :value: None
 
 
