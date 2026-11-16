@@ -20,7 +20,7 @@ class VectorStoreConfig(ApiClass):
         use_document_summary (bool): If True, uses the summary of the document in addition to chunks of the document for indexing and querying.
         summary_instructions (str): Instructions for the LLM to generate the document summary.
         standalone_deployment (bool): If True, the document retriever will be deployed as a standalone deployment.
-        page_level (bool): If True, stores each page separately for paginated documents instead of chunking across pages. Default is False.
+        page_level (bool): If True, stores each page separately for paginated documents instead of chunking across pages. Defaults to True for GEMINI_EMBEDDING_2, which embeds each page's image, and False otherwise.
     """
     chunk_size: int = dataclasses.field(default=None)
     chunk_overlap_fraction: float = dataclasses.field(default=None)
@@ -32,7 +32,7 @@ class VectorStoreConfig(ApiClass):
     use_document_summary: bool = dataclasses.field(default=None)
     summary_instructions: str = dataclasses.field(default=None)
     standalone_deployment: bool = dataclasses.field(default=False)
-    page_level: bool = dataclasses.field(default=False)
+    page_level: bool = dataclasses.field(default=None)
 
 
 DocumentRetrieverConfig = VectorStoreConfig

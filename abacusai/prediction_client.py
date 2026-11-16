@@ -32,18 +32,18 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body=kwargs, server_override=prediction_url)
 
-    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict, limit_results: int = None, result_columns: list = None) -> Dict:
+    def lookup_features(self, deployment_id: str, query_data: dict, limit_results: int = None, result_columns: list = None) -> Dict:
         """Returns the feature group deployed in the feature store project.
 
+        Requires an API key (or signed-in session) of the organization that owns the deployment; a deployment token alone is not accepted.
+
+
         Args:
-            deployment_token (str): A deployment token used to authenticate access to created deployments. This token only authorizes predictions on deployments in this project, so it can be safely embedded inside an application or website.
             deployment_id (str): A unique identifier for a deployment created under the project.
             query_data (dict): A dictionary where the key is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the value is the unique value of the same entity.
             limit_results (int): If provided, will limit the number of results to the value specified.
             result_columns (list): If provided, will limit the columns present in each result to the columns specified in this list."""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
+        return self._call_api('lookupFeatures', 'POST', query_params={'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns})
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict = None, **kwargs) -> Dict:
         """Returns a prediction for Predictive Modeling

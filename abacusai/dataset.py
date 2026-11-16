@@ -282,6 +282,9 @@ class Dataset(AbstractApiClass):
         """
         Retrieves a list of all dataset versions for the specified dataset.
 
+        A version that has no data yet, such as an upload still in progress, is not listed.
+
+
         Args:
             limit (int): The maximum length of the list of all dataset versions.
             start_after_version (str): The ID of the version after which the list starts.

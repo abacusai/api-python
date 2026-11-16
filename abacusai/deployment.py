@@ -345,6 +345,20 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_realtime_monitor(self.deployment_id, realtime_monitor_schedule, lookback_time)
 
+    def lookup_features(self, query_data: dict, limit_results: int = None, result_columns: list = None):
+        """
+        Returns the feature group deployed in the feature store project.
+
+        Requires an API key (or signed-in session) of the organization that owns the deployment; a deployment token alone is not accepted.
+
+
+        Args:
+            query_data (dict): A dictionary where the key is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the value is the unique value of the same entity.
+            limit_results (int): If provided, will limit the number of results to the value specified.
+            result_columns (list): If provided, will limit the columns present in each result to the columns specified in this list.
+        """
+        return self.client.lookup_features(self.deployment_id, query_data, limit_results, result_columns)
+
     def get_conversation_response(self, message: str, deployment_token: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, doc_infos: list = None, user_info: dict = None, execute_usercode_tool: bool = False, exclude_thinking_segments: bool = False):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).

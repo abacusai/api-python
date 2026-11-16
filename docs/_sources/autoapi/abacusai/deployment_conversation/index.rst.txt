@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, ancestorTotalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -82,6 +82,8 @@ Module Contents
    :type filesystemStatus: str
    :param totalEvents: The total number of events in the deployment conversation.
    :type totalEvents: int
+   :param ancestorTotalEvents: Events in the conversations this one was forked from, summed up the parent chain; set on forked agent conversations.
+   :type ancestorTotalEvents: int
    :param firstVisibleEventIndex: The conversation_sequence_number of the first visible event, for FE pagination boundary.
    :type firstVisibleEventIndex: int
    :param contestNames: Names of contests that this deployment is a part of.
@@ -140,7 +142,7 @@ Module Contents
    :type nextTriggerCheckTime: str
    :param chatShared: Whether this viewer may read the chat of a Listener session (false when its owner shares the session without the chat).
    :type chatShared: bool
-   :param threadRuns: For a shared agent chat with threads, the thread turns in flight (thread_root_seq, request_id, user_id, user_name, started_at); absent otherwise.
+   :param threadRuns: For a shared agent chat with threads, the thread turns in flight (thread_root_seq, request_id, user_name, started_at, is_own: the caller's own message's turn); absent otherwise.
    :type threadRuns: list
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
@@ -291,6 +293,11 @@ Module Contents
 
 
    .. py:attribute:: total_events
+      :value: None
+
+
+
+   .. py:attribute:: ancestor_total_events
       :value: None
 
 

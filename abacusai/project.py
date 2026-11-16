@@ -608,18 +608,6 @@ class Project(AbstractApiClass):
         """
         return self.client.list_builtin_algorithms(self.project_id, feature_group_ids, training_config)
 
-    def create_chat_session(self, name: str = None):
-        """
-        Creates a chat session with Data Science Co-pilot.
-
-        Args:
-            name (str): The name of the chat session. Defaults to the project name.
-
-        Returns:
-            ChatSession: The chat session with Data Science Co-pilot
-        """
-        return self.client.create_chat_session(self.project_id, name)
-
     def create_agent(self, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = [], description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None, workflow_graph: Union[dict, WorkflowGraph] = None, agent_interface: Union[dict, AgentInterface] = AgentInterface.DEFAULT, included_modules: List = None, org_level_connectors: List = None, user_level_connectors: Dict = None, initialize_function_name: str = None, initialize_function_code: str = None, autonomous_trigger_type: Union[dict, AutonomousTriggerType] = None):
         """
         Creates a new AI agent using the given agent workflow graph definition.

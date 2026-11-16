@@ -78,7 +78,6 @@ Submodules
    /autoapi/abacusai/categorical_range_violation/index
    /autoapi/abacusai/chat_message/index
    /autoapi/abacusai/chat_segment_artifact/index
-   /autoapi/abacusai/chat_session/index
    /autoapi/abacusai/chatllm_computer/index
    /autoapi/abacusai/chatllm_computer_status/index
    /autoapi/abacusai/chatllm_memory/index
@@ -110,6 +109,7 @@ Submodules
    /autoapi/abacusai/constants_autocomplete_response/index
    /autoapi/abacusai/conversation_and_project_search_results/index
    /autoapi/abacusai/conversation_credits/index
+   /autoapi/abacusai/conversation_usage/index
    /autoapi/abacusai/coordinator_run/index
    /autoapi/abacusai/cowork_desktop_folder/index
    /autoapi/abacusai/cowork_dispatch_attachment/index
@@ -243,7 +243,6 @@ Submodules
    /autoapi/abacusai/llm_input/index
    /autoapi/abacusai/llm_parameters/index
    /autoapi/abacusai/llm_response/index
-   /autoapi/abacusai/mcp_config/index
    /autoapi/abacusai/mcp_server/index
    /autoapi/abacusai/mcp_server_connection/index
    /autoapi/abacusai/mcp_server_connection_with_oauth_config/index
@@ -253,6 +252,8 @@ Submodules
    /autoapi/abacusai/media_project_render_state/index
    /autoapi/abacusai/media_project_revision/index
    /autoapi/abacusai/media_project_revision_document/index
+   /autoapi/abacusai/meeting_bot/index
+   /autoapi/abacusai/meeting_bot_upcoming_meetings/index
    /autoapi/abacusai/memory_bucket/index
    /autoapi/abacusai/memory_options/index
    /autoapi/abacusai/messaging_connector_response/index
@@ -285,6 +286,8 @@ Submodules
    /autoapi/abacusai/news_search_result/index
    /autoapi/abacusai/nlp_chat_response/index
    /autoapi/abacusai/null_violation/index
+   /autoapi/abacusai/organization_chatllm_project/index
+   /autoapi/abacusai/organization_chatllm_project_page/index
    /autoapi/abacusai/organization_external_application_settings/index
    /autoapi/abacusai/organization_group/index
    /autoapi/abacusai/organization_ingress_policy/index
@@ -391,6 +394,7 @@ Submodules
    /autoapi/abacusai/web_app_deployment_permission_dict/index
    /autoapi/abacusai/web_app_development_cost/index
    /autoapi/abacusai/web_app_domain/index
+   /autoapi/abacusai/web_app_health_summary/index
    /autoapi/abacusai/web_app_issue/index
    /autoapi/abacusai/web_app_project/index
    /autoapi/abacusai/web_app_security_finding/index
@@ -472,7 +476,6 @@ Classes
    abacusai.WorkflowNodeTemplateConfig
    abacusai.WorkflowNodeTemplateInput
    abacusai.WorkflowNodeTemplateOutput
-   abacusai.HotkeyPrompt
    abacusai._ApiClassFactory
    abacusai.BatchPredictionArgs
    abacusai.ForecastingBatchPredictionArgs
@@ -735,7 +738,6 @@ Classes
    abacusai.CategoricalRangeViolation
    abacusai.ChatMessage
    abacusai.ChatSegmentArtifact
-   abacusai.ChatSession
    abacusai.ChatllmComputer
    abacusai.ChatllmComputerStatus
    abacusai.ChatllmMemory
@@ -771,6 +773,7 @@ Classes
    abacusai.ConstantsAutocompleteResponse
    abacusai.ConversationAndProjectSearchResults
    abacusai.ConversationCredits
+   abacusai.ConversationUsage
    abacusai.CoordinatorRun
    abacusai.CoworkDesktopFolder
    abacusai.CoworkDispatchAttachment
@@ -902,7 +905,6 @@ Classes
    abacusai.LlmInput
    abacusai.LlmParameters
    abacusai.LlmResponse
-   abacusai.McpConfig
    abacusai.McpServer
    abacusai.McpServerConnection
    abacusai.McpServerConnectionWithOauthConfig
@@ -912,6 +914,8 @@ Classes
    abacusai.MediaProjectRenderState
    abacusai.MediaProjectRevision
    abacusai.MediaProjectRevisionDocument
+   abacusai.MeetingBot
+   abacusai.MeetingBotUpcomingMeetings
    abacusai.MemoryBucket
    abacusai.MemoryOptions
    abacusai.MessagingConnectorResponse
@@ -944,6 +948,8 @@ Classes
    abacusai.NewsSearchResult
    abacusai.NlpChatResponse
    abacusai.NullViolation
+   abacusai.OrganizationChatllmProject
+   abacusai.OrganizationChatllmProjectPage
    abacusai.OrganizationExternalApplicationSettings
    abacusai.OrganizationGroup
    abacusai.OrganizationIngressPolicy
@@ -1048,6 +1054,7 @@ Classes
    abacusai.WebAppDeploymentPermissionDict
    abacusai.WebAppDevelopmentCost
    abacusai.WebAppDomain
+   abacusai.WebAppHealthSummary
    abacusai.WebAppIssue
    abacusai.WebAppProject
    abacusai.WebAppSecurityFinding
@@ -1960,7 +1967,7 @@ Package Contents
 
 
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, shareGroupCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, shareGroupCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None, environments=None, lastModifiedVia=None, lastModifiedClient=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -2013,6 +2020,12 @@ Package Contents
    :type userDisabled: bool
    :param usedByTasks: Whether any of the user's daemon tasks reference this skill, so disabling it will ask for confirmation.
    :type usedByTasks: bool
+   :param environments: The caller's "Use in" choice for this skill, ['cloud'] or ['local'], or null for auto (both).
+   :type environments: list
+   :param lastModifiedVia: Who last wrote the skill: web, device (published from a computer) or agent (the cloud agent's own skill tools); null before this was recorded.
+   :type lastModifiedVia: str
+   :param lastModifiedClient: The client label of that write, e.g. 'desktop 2.5.0 / Code', for a device publish.
+   :type lastModifiedClient: str
 
 
    .. py:attribute:: agent_skill_id
@@ -2121,6 +2134,21 @@ Package Contents
 
 
    .. py:attribute:: used_by_tasks
+      :value: None
+
+
+
+   .. py:attribute:: environments
+      :value: None
+
+
+
+   .. py:attribute:: last_modified_via
+      :value: None
+
+
+
+   .. py:attribute:: last_modified_client
       :value: None
 
 
@@ -4047,41 +4075,6 @@ Package Contents
 
    .. py:method:: from_dict(mapping)
       :classmethod:
-
-
-
-.. py:class:: HotkeyPrompt
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-
-   A config class for a Data Science Co-Pilot Hotkey
-
-   :param prompt: The prompt to send to Data Science Co-Pilot
-   :type prompt: str
-   :param title: A short, descriptive title for the prompt. If not provided, one will be automatically generated.
-   :type title: str
-
-
-   .. py:attribute:: prompt
-      :type:  str
-
-
-   .. py:attribute:: title
-      :type:  str
-      :value: None
-
-
-
-   .. py:attribute:: disable_problem_type_context
-      :type:  bool
-      :value: True
-
-
-
-   .. py:attribute:: ignore_history
-      :type:  bool
-      :value: None
 
 
 
@@ -6368,6 +6361,31 @@ Package Contents
 
 
 
+   .. py:attribute:: GEMINI_EMBEDDING_2
+      :value: 'GEMINI_EMBEDDING_2'
+
+
+
+   .. py:attribute:: QWEN3_EMBEDDING_8B
+      :value: 'QWEN3_EMBEDDING_8B'
+
+
+
+   .. py:attribute:: NEMOTRON_3_EMBED_8B
+      :value: 'NEMOTRON_3_EMBED_8B'
+
+
+
+   .. py:attribute:: BGE_M3_MULTI_8K
+      :value: 'BGE_M3_MULTI_8K'
+
+
+
+   .. py:attribute:: TITAN_EMBED_TEXT_V2
+      :value: 'TITAN_EMBED_TEXT_V2'
+
+
+
 .. py:class:: VectorStoreConfig
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -6395,7 +6413,7 @@ Package Contents
    :type summary_instructions: str
    :param standalone_deployment: If True, the document retriever will be deployed as a standalone deployment.
    :type standalone_deployment: bool
-   :param page_level: If True, stores each page separately for paginated documents instead of chunking across pages. Default is False.
+   :param page_level: If True, stores each page separately for paginated documents instead of chunking across pages. Defaults to True for GEMINI_EMBEDDING_2, which embeds each page's image, and False otherwise.
    :type page_level: bool
 
 
@@ -6461,7 +6479,7 @@ Package Contents
 
    .. py:attribute:: page_level
       :type:  bool
-      :value: False
+      :value: None
 
 
 
@@ -10402,6 +10420,11 @@ Package Contents
 
 
 
+   .. py:attribute:: CLAUDE_V5_2_FABLE
+      :value: 'CLAUDE_V5_2_FABLE'
+
+
+
    .. py:attribute:: GEMINI_1_5_PRO
       :value: 'GEMINI_1_5_PRO'
 
@@ -10439,6 +10462,16 @@ Package Contents
 
    .. py:attribute:: GEMINI_4_ARGON
       :value: 'GEMINI_4_ARGON'
+
+
+
+   .. py:attribute:: GEMINI_4_CARBON
+      :value: 'GEMINI_4_CARBON'
+
+
+
+   .. py:attribute:: GEMINI_4_HYDROGEN
+      :value: 'GEMINI_4_HYDROGEN'
 
 
 
@@ -12622,10 +12655,6 @@ Package Contents
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
 
@@ -12720,10 +12749,6 @@ Package Contents
 .. py:class:: _MergeConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
-
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
 
 
    .. py:attribute:: config_class_key
@@ -20932,144 +20957,6 @@ Package Contents
 
 
 
-.. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, name=None, createdAt=None, status=None, aiBuildingInProgress=None, notification=None, whiteboard=None, chatHistory={}, nextAiBuildingTask={})
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A chat session with Abacus Data Science Co-pilot.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param answer: The response from the chatbot
-   :type answer: str
-   :param chatSessionId: The chat session id
-   :type chatSessionId: str
-   :param projectId: The project id associated with the chat session
-   :type projectId: str
-   :param name: The name of the chat session
-   :type name: str
-   :param createdAt: The timestamp at which the chat session was created
-   :type createdAt: str
-   :param status: The status of the chat sessions
-   :type status: str
-   :param aiBuildingInProgress: Whether the AI building is in progress or not
-   :type aiBuildingInProgress: bool
-   :param notification: A warn/info message about the chat session. For example, a suggestion to create a new session if the current one is too old
-   :type notification: str
-   :param whiteboard: A set of whiteboard notes associated with the chat session
-   :type whiteboard: str
-   :param chatHistory: The chat history for the conversation
-   :type chatHistory: ChatMessage
-   :param nextAiBuildingTask: The next AI building task for the chat session
-   :type nextAiBuildingTask: AiBuildingTask
-
-
-   .. py:attribute:: answer
-      :value: None
-
-
-
-   .. py:attribute:: chat_session_id
-      :value: None
-
-
-
-   .. py:attribute:: project_id
-      :value: None
-
-
-
-   .. py:attribute:: name
-      :value: None
-
-
-
-   .. py:attribute:: created_at
-      :value: None
-
-
-
-   .. py:attribute:: status
-      :value: None
-
-
-
-   .. py:attribute:: ai_building_in_progress
-      :value: None
-
-
-
-   .. py:attribute:: notification
-      :value: None
-
-
-
-   .. py:attribute:: whiteboard
-      :value: None
-
-
-
-   .. py:attribute:: chat_history
-
-
-   .. py:attribute:: next_ai_building_task
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: get()
-
-      Gets a chat session from Data Science Co-pilot.
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-
-      :returns: The chat session with Data Science Co-pilot
-      :rtype: ChatSession
-
-
-
-   .. py:method:: delete_chat_message(message_index)
-
-      Deletes a message in a chat session and its associated response.
-
-      :param message_index: The index of the chat message within the UI.
-      :type message_index: int
-
-
-
-   .. py:method:: export()
-
-      Exports a chat session to an HTML file
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-
-
-
-   .. py:method:: rename(name)
-
-      Renames a chat session with Data Science Co-pilot.
-
-      :param name: The new name of the chat session.
-      :type name: str
-
-
-
 .. py:class:: ChatllmComputer(client, computerId=None, token=None, vncEndpoint=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -26722,12 +26609,13 @@ Package Contents
 
 
 
-   .. py:method:: lookup_features(deployment_token, deployment_id, query_data, limit_results = None, result_columns = None)
+   .. py:method:: lookup_features(deployment_id, query_data, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
-      :param deployment_token: A deployment token used to authenticate access to created deployments. This token only authorizes predictions on deployments in this project, so it can be safely embedded inside an application or website.
-      :type deployment_token: str
+      Requires an API key (or signed-in session) of the organization that owns the deployment; a deployment token alone is not accepted.
+
+
       :param deployment_id: A unique identifier for a deployment created under the project.
       :type deployment_id: str
       :param query_data: A dictionary where the key is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the value is the unique value of the same entity.
@@ -28778,51 +28666,6 @@ Package Contents
 
 
 
-   .. py:method:: create_chat_session(project_id = None, name = None)
-
-      Creates a chat session with Data Science Co-pilot.
-
-      :param project_id: The unique project identifier this chat session belongs to
-      :type project_id: str
-      :param name: The name of the chat session. Defaults to the project name.
-      :type name: str
-
-      :returns: The chat session with Data Science Co-pilot
-      :rtype: ChatSession
-
-
-
-   .. py:method:: delete_chat_message(chat_session_id, message_index)
-
-      Deletes a message in a chat session and its associated response.
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-      :param message_index: The index of the chat message within the UI.
-      :type message_index: int
-
-
-
-   .. py:method:: export_chat_session(chat_session_id)
-
-      Exports a chat session to an HTML file
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-
-
-
-   .. py:method:: rename_chat_session(chat_session_id, name)
-
-      Renames a chat session with Data Science Co-pilot.
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-      :param name: The new name of the chat session.
-      :type name: str
-
-
-
    .. py:method:: suggest_abacus_apis(query, verbosity = 1, limit = 5, include_scores = False)
 
       Suggests several Abacus APIs that are most relevant to the supplied natural language query.
@@ -30549,6 +30392,9 @@ Package Contents
 
       Retrieves a list of all dataset versions for the specified dataset.
 
+      A version that has no data yet, such as an upload still in progress, is not listed.
+
+
       :param dataset_id: The unique ID associated with the dataset.
       :type dataset_id: str
       :param limit: The maximum length of the list of all dataset versions.
@@ -31859,30 +31705,6 @@ Package Contents
 
 
 
-   .. py:method:: get_chat_session(chat_session_id)
-
-      Gets a chat session from Data Science Co-pilot.
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-
-      :returns: The chat session with Data Science Co-pilot
-      :rtype: ChatSession
-
-
-
-   .. py:method:: list_chat_sessions(most_recent_per_project = False)
-
-      Lists all chat sessions for the current user
-
-      :param most_recent_per_project: An optional parameter whether to only return the most recent chat session per project. Default False.
-      :type most_recent_per_project: bool
-
-      :returns: The chat sessions with Data Science Co-pilot
-      :rtype: ChatSession
-
-
-
    .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None, include_all_versions = False)
 
       Gets a deployment conversation.
@@ -31955,6 +31777,49 @@ Package Contents
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
+
+
+
+   .. py:method:: list_conversation_usage(start_date = None, end_date = None, deployment_conversation_id = None, chatllm_project_id = None, limit = 100, start_after_id = None)
+
+      Lists what each conversation in the organization spent, one row per conversation per UTC day. Organization admins only.
+
+      Spend is an estimate derived from conversation activity: it matches the per-conversation breakdown on the Usage page, not the invoice. Rows exist from 2026-08-10. A deleted conversation keeps its rows, name and project, so it is listed by date range and by project; by id it is not found.
+
+      Pages are whole conversations in id order: pass the last row's deployment_conversation_id as start_after_id until a page comes back empty.
+
+
+      :param start_date: First UTC day of the range, YYYY-MM-DD. Required unless deployment_conversation_id is given. The range may span at most 31 days.
+      :type start_date: str
+      :param end_date: Last UTC day of the range, inclusive.
+      :type end_date: str
+      :param deployment_conversation_id: Only this conversation. Without a range, its whole history.
+      :type deployment_conversation_id: str
+      :param chatllm_project_id: Only conversations in this ChatLLM project. A range is required with it.
+      :type chatllm_project_id: str
+      :param limit: Conversations per page, at most 1000.
+      :type limit: int
+      :param start_after_id: The deployment_conversation_id of the last row of the previous page.
+      :type start_after_id: str
+
+      :returns: The rows, ordered by conversation then day.
+      :rtype: list[ConversationUsage]
+
+
+
+   .. py:method:: list_organization_chatllm_projects(limit = 25, offset = 0, search = None)
+
+      Lists the organization's ChatLLM projects, newest first. Organization admins only.
+
+      :param limit: Projects per page.
+      :type limit: int
+      :param offset: Projects to skip. Step it by the page size until it reaches total_count.
+      :type offset: int
+      :param search: Only projects whose name, or whose creator's name or email, contains this text.
+      :type search: str
+
+      :returns: The page and the total number of matching projects.
+      :rtype: OrganizationChatllmProjectPage
 
 
 
@@ -32100,6 +31965,9 @@ Package Contents
    .. py:method:: search_feature_groups(text, num_results = 10, project_id = None, feature_group_ids = None)
 
       Search feature groups based on text and filters.
+
+      Feature groups are ranked by how well the text matches their table name, description and column names. A feature group whose table name appears in the text ranks first.
+
 
       :param text: Text to use for approximately matching feature groups.
       :type text: str
@@ -33808,6 +33676,109 @@ Package Contents
 
 
    .. py:attribute:: credits
+      :value: None
+
+
+
+   .. py:attribute:: turns
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: ConversationUsage(client, billDate=None, deploymentConversationId=None, name=None, conversationType=None, chatllmProjectId=None, chatllmProjectName=None, ownerUserId=None, isDeleted=None, unit=None, spend=None, turns=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One conversation's spend on one UTC day (listConversationUsage).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param billDate: The UTC day, YYYY-MM-DD.
+   :type billDate: str
+   :param deploymentConversationId: The conversation.
+   :type deploymentConversationId: id
+   :param name: The conversation title.
+   :type name: str
+   :param conversationType: The type of the conversation.
+   :type conversationType: str
+   :param chatllmProjectId: The ChatLLM project the conversation is in. Absent when it is in none, or has been deleted.
+   :type chatllmProjectId: id
+   :param chatllmProjectName: That project's name. Absent when the project no longer exists.
+   :type chatllmProjectName: str
+   :param ownerUserId: The member who owns the conversation.
+   :type ownerUserId: id
+   :param isDeleted: True when the conversation has been deleted; its spend survives.
+   :type isDeleted: bool
+   :param unit: 'usd' for enterprise organizations, 'credits' for self-serve: the unit `spend` is in.
+   :type unit: str
+   :param spend: Spend on that day. An estimate derived from conversation activity, not an invoice line.
+   :type spend: float
+   :param turns: Conversation events on that day.
+   :type turns: int
+
+
+   .. py:attribute:: bill_date
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: conversation_type
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_id
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_name
+      :value: None
+
+
+
+   .. py:attribute:: owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: is_deleted
+      :value: None
+
+
+
+   .. py:attribute:: unit
+      :value: None
+
+
+
+   .. py:attribute:: spend
       :value: None
 
 
@@ -36033,6 +36004,9 @@ Package Contents
 
       Retrieves a list of all dataset versions for the specified dataset.
 
+      A version that has no data yet, such as an upload still in progress, is not listed.
+
+
       :param limit: The maximum length of the list of all dataset versions.
       :type limit: int
       :param start_after_version: The ID of the version after which the list starts.
@@ -36993,6 +36967,22 @@ Package Contents
 
 
 
+   .. py:method:: lookup_features(query_data, limit_results = None, result_columns = None)
+
+      Returns the feature group deployed in the feature store project.
+
+      Requires an API key (or signed-in session) of the organization that owns the deployment; a deployment token alone is not accepted.
+
+
+      :param query_data: A dictionary where the key is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the value is the unique value of the same entity.
+      :type query_data: dict
+      :param limit_results: If provided, will limit the number of results to the value specified.
+      :type limit_results: int
+      :param result_columns: If provided, will limit the columns present in each result to the columns specified in this list.
+      :type result_columns: list
+
+
+
    .. py:method:: get_conversation_response(message, deployment_token, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, doc_infos = None, user_info = None, execute_usercode_tool = False, exclude_thinking_segments = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
@@ -37334,7 +37324,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, ancestorTotalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37401,6 +37391,8 @@ Package Contents
    :type filesystemStatus: str
    :param totalEvents: The total number of events in the deployment conversation.
    :type totalEvents: int
+   :param ancestorTotalEvents: Events in the conversations this one was forked from, summed up the parent chain; set on forked agent conversations.
+   :type ancestorTotalEvents: int
    :param firstVisibleEventIndex: The conversation_sequence_number of the first visible event, for FE pagination boundary.
    :type firstVisibleEventIndex: int
    :param contestNames: Names of contests that this deployment is a part of.
@@ -37459,7 +37451,7 @@ Package Contents
    :type nextTriggerCheckTime: str
    :param chatShared: Whether this viewer may read the chat of a Listener session (false when its owner shares the session without the chat).
    :type chatShared: bool
-   :param threadRuns: For a shared agent chat with threads, the thread turns in flight (thread_root_seq, request_id, user_id, user_name, started_at); absent otherwise.
+   :param threadRuns: For a shared agent chat with threads, the thread turns in flight (thread_root_seq, request_id, user_name, started_at, is_own: the caller's own message's turn); absent otherwise.
    :type threadRuns: list
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
@@ -37610,6 +37602,11 @@ Package Contents
 
 
    .. py:attribute:: total_events
+      :value: None
+
+
+
+   .. py:attribute:: ancestor_total_events
       :value: None
 
 
@@ -37939,7 +37936,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, midTurn=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, introChips=None, rightSizeChips=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None, threadRootSeq=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, midTurn=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, introChips=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None, threadRootSeq=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38026,8 +38023,6 @@ Package Contents
    :type creditFallback: bool
    :param introChips: Starter chips clients show under the welcome intro to a new subscriber's first message, in the user's language: dicts with `id`, `label` (the chip) and `message` (what a tap sends).
    :type introChips: list
-   :param rightSizeChips: Ids of the one-tap reply-length chips ("shorter", "more_detail") clients show under this response.
-   :type rightSizeChips: list
    :param computePointsUsed: The number of compute points used for the message.
    :type computePointsUsed: int
    :param computerFiles: The list of files that were created by the computer agent.
@@ -38070,9 +38065,9 @@ Package Contents
    :type turnTotalRuntimeSecs: int
    :param turnStopped: DeepAgent turns only. Whether the user stopped the turn before it finished.
    :type turnStopped: bool
-   :param mentions: Project coordinator chats only. Display names of the teammates this user message @mentions.
+   :param mentions: Project agent chats only. Display names of the teammates this user message @mentions.
    :type mentions: list
-   :param teamMessage: Project coordinator chats only. Whether this user message was posted for teammates with no agent turn.
+   :param teamMessage: Project agent chats only. Whether this user message was posted for teammates with no agent turn.
    :type teamMessage: bool
    :param threadRootSeq: Shared agent chats with threads only. The main-chat message this message was posted under in a thread; absent for main-chat messages.
    :type threadRootSeq: int
@@ -38269,11 +38264,6 @@ Package Contents
 
 
    .. py:attribute:: intro_chips
-      :value: None
-
-
-
-   .. py:attribute:: right_size_chips
       :value: None
 
 
@@ -47908,39 +47898,6 @@ Package Contents
 
 
 
-.. py:class:: McpConfig(client, mcpConfig=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Model Context Protocol Config
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param mcpConfig: The MCP configuration for the current user
-   :type mcpConfig: dict
-
-
-   .. py:attribute:: mcp_config
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
 .. py:class:: McpServer(client, name=None, description=None, envVars=None, config=None, envVarInstructions=None, url=None, isActive=None, metadata=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -48639,6 +48596,191 @@ Package Contents
 
 
    .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MeetingBot(client, daemonTaskId=None, state=None, title=None, meetingUrl=None, platform=None, startAtMs=None, endAtMs=None, createdAtMs=None, sessionDeploymentConversationId=None, sessionName=None, webChatPath=None, leftReason=None, error=None, account=None, botEmail=None, invited=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A meeting the user sent the notetaker to (cluster_proxy/meeting_bot.py).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param daemonTaskId: The id of the task that runs the notetaker.
+   :type daemonTaskId: str
+   :param state: scheduled, joining, waiting_for_admission, in_meeting, finished, not_admitted, denied, failed or cancelled.
+   :type state: str
+   :param title: The meeting's title, when known.
+   :type title: str
+   :param meetingUrl: The meeting link.
+   :type meetingUrl: str
+   :param platform: The meeting app (meet).
+   :type platform: str
+   :param startAtMs: When the meeting starts, epoch milliseconds.
+   :type startAtMs: int
+   :param endAtMs: When the meeting ends, epoch milliseconds, when known.
+   :type endAtMs: int
+   :param createdAtMs: When the notetaker was booked, epoch milliseconds.
+   :type createdAtMs: int
+   :param sessionDeploymentConversationId: The Listener session the recap is in.
+   :type sessionDeploymentConversationId: str
+   :param sessionName: The session's name, as the Listener named it.
+   :type sessionName: str
+   :param webChatPath: The session's web chat, once it was opened.
+   :type webChatPath: str
+   :param leftReason: Why the notetaker left (meeting_ended, removed, alone, scheduled_end, cancelled, max_duration).
+   :type leftReason: str
+   :param error: What went wrong, for a failed one.
+   :type error: str
+   :param account: How the notetaker was in the call: bot (its Google account) or guest, once it ran.
+   :type account: str
+   :param botEmail: The notetaker's Google account, the address to invite to a meeting; absent when it joins as a guest.
+   :type botEmail: str
+   :param invited: On booking from a calendar event: whether the notetaker's account was put on the event's guest list.
+   :type invited: bool
+
+
+   .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: state
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: meeting_url
+      :value: None
+
+
+
+   .. py:attribute:: platform
+      :value: None
+
+
+
+   .. py:attribute:: start_at_ms
+      :value: None
+
+
+
+   .. py:attribute:: end_at_ms
+      :value: None
+
+
+
+   .. py:attribute:: created_at_ms
+      :value: None
+
+
+
+   .. py:attribute:: session_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: session_name
+      :value: None
+
+
+
+   .. py:attribute:: web_chat_path
+      :value: None
+
+
+
+   .. py:attribute:: left_reason
+      :value: None
+
+
+
+   .. py:attribute:: error
+      :value: None
+
+
+
+   .. py:attribute:: account
+      :value: None
+
+
+
+   .. py:attribute:: bot_email
+      :value: None
+
+
+
+   .. py:attribute:: invited
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: MeetingBotUpcomingMeetings(client, providers=None, events=None, botEmail=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The next week's calendar meetings the notetaker can join.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param providers: Each calendar provider (google, outlook): whether it is connected, and an error if it could not be read.
+   :type providers: list
+   :param events: The meetings with a supported link, by start time.
+   :type events: list
+   :param botEmail: The notetaker's Google account, the address to invite to a meeting; absent when it joins as a guest.
+   :type botEmail: str
+
+
+   .. py:attribute:: providers
+      :value: None
+
+
+
+   .. py:attribute:: events
+      :value: None
+
+
+
+   .. py:attribute:: bot_email
       :value: None
 
 
@@ -52492,6 +52634,112 @@ Package Contents
 
 
 
+.. py:class:: OrganizationChatllmProject(client, chatllmProjectId=None, name=None, description=None, createdByUserId=None, createdAt=None, accessLevel=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A ChatLLM project in the organization, as its admins list them (listOrganizationChatllmProjects).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param chatllmProjectId: The project.
+   :type chatllmProjectId: id
+   :param name: The project name.
+   :type name: str
+   :param description: The project description.
+   :type description: str
+   :param createdByUserId: The member who created the project.
+   :type createdByUserId: id
+   :param createdAt: When the project was created.
+   :type createdAt: str
+   :param accessLevel: Who in the organization can open the project.
+   :type accessLevel: str
+
+
+   .. py:attribute:: chatllm_project_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: created_by_user_id
+      :value: None
+
+
+
+   .. py:attribute:: created_at
+      :value: None
+
+
+
+   .. py:attribute:: access_level
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: OrganizationChatllmProjectPage(client, totalCount=None, items={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One page of the organization's ChatLLM projects (listOrganizationChatllmProjects).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param totalCount: How many projects match in all, so a caller knows when `offset` has reached the end.
+   :type totalCount: int
+   :param items: The projects on this page, newest first.
+   :type items: OrganizationChatllmProject
+
+
+   .. py:attribute:: total_count
+      :value: None
+
+
+
+   .. py:attribute:: items
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: OrganizationExternalApplicationSettings(client, logo=None, theme=None, managedUserService=None, passwordsDisabled=None, externalServiceForRoles=None, exp=None, freeTierSignup=None, abacusaibotLiteSignup=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54582,12 +54830,13 @@ Package Contents
 
 
 
-   .. py:method:: lookup_features(deployment_token, deployment_id, query_data, limit_results = None, result_columns = None)
+   .. py:method:: lookup_features(deployment_id, query_data, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
-      :param deployment_token: A deployment token used to authenticate access to created deployments. This token only authorizes predictions on deployments in this project, so it can be safely embedded inside an application or website.
-      :type deployment_token: str
+      Requires an API key (or signed-in session) of the organization that owns the deployment; a deployment token alone is not accepted.
+
+
       :param deployment_id: A unique identifier for a deployment created under the project.
       :type deployment_id: str
       :param query_data: A dictionary where the key is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the value is the unique value of the same entity.
@@ -57113,18 +57362,6 @@ Package Contents
 
       :returns: List of applicable builtin algorithms.
       :rtype: list[Algorithm]
-
-
-
-   .. py:method:: create_chat_session(name = None)
-
-      Creates a chat session with Data Science Co-pilot.
-
-      :param name: The name of the chat session. Defaults to the project name.
-      :type name: str
-
-      :returns: The chat session with Data Science Co-pilot
-      :rtype: ChatSession
 
 
 
@@ -62773,6 +63010,74 @@ Package Contents
 
 
 
+.. py:class:: WebAppHealthSummary(client, webAppProjectId=None, selfHealingEnabled=None, selfHealingIntervalHours=None, lastSecurityScanAt=None, securityScanOnDeploy=None, securityScanIntervalHours=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Self-healing and security-scan status of a web app project (_getWebAppProjectsHealth).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID.
+   :type webAppProjectId: id
+   :param selfHealingEnabled: Whether self-healing is turned on for the app.
+   :type selfHealingEnabled: bool
+   :param selfHealingIntervalHours: Hours between self-healing error scans of the app (8, 24 or 168).
+   :type selfHealingIntervalHours: int
+   :param lastSecurityScanAt: When the app's last security scan completed. Omitted when it never had one.
+   :type lastSecurityScanAt: str
+   :param securityScanOnDeploy: Whether the app is scanned after a production deploy. Omitted when scan-on-deploy is unavailable to the org.
+   :type securityScanOnDeploy: bool
+   :param securityScanIntervalHours: Hours after a scan before a deploy scans the app again; 0 scans after every deploy. Omitted like security_scan_on_deploy.
+   :type securityScanIntervalHours: int
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: self_healing_enabled
+      :value: None
+
+
+
+   .. py:attribute:: self_healing_interval_hours
+      :value: None
+
+
+
+   .. py:attribute:: last_security_scan_at
+      :value: None
+
+
+
+   .. py:attribute:: security_scan_on_deploy
+      :value: None
+
+
+
+   .. py:attribute:: security_scan_interval_hours
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
 .. py:class:: WebAppIssue(client, webAppIssueId=None, summary=None, severity=None, source=None, sampleTrace=None, occurrenceCount=None, status=None, lastSeen=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -63762,6 +64067,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.121'
+   :value: '1.4.122'
 
 

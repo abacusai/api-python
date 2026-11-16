@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, shareGroupCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None)
+.. py:class:: AgentSkill(client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, shareGroupCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None, environments=None, lastModifiedVia=None, lastModifiedClient=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -68,6 +68,12 @@ Module Contents
    :type userDisabled: bool
    :param usedByTasks: Whether any of the user's daemon tasks reference this skill, so disabling it will ask for confirmation.
    :type usedByTasks: bool
+   :param environments: The caller's "Use in" choice for this skill, ['cloud'] or ['local'], or null for auto (both).
+   :type environments: list
+   :param lastModifiedVia: Who last wrote the skill: web, device (published from a computer) or agent (the cloud agent's own skill tools); null before this was recorded.
+   :type lastModifiedVia: str
+   :param lastModifiedClient: The client label of that write, e.g. 'desktop 2.5.0 / Code', for a device publish.
+   :type lastModifiedClient: str
 
 
    .. py:attribute:: agent_skill_id
@@ -176,6 +182,21 @@ Module Contents
 
 
    .. py:attribute:: used_by_tasks
+      :value: None
+
+
+
+   .. py:attribute:: environments
+      :value: None
+
+
+
+   .. py:attribute:: last_modified_via
+      :value: None
+
+
+
+   .. py:attribute:: last_modified_client
       :value: None
 
 

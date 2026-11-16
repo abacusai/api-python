@@ -1,0 +1,85 @@
+abacusai.web_app_health_summary
+===============================
+
+.. py:module:: abacusai.web_app_health_summary
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.web_app_health_summary.WebAppHealthSummary
+
+
+Module Contents
+---------------
+
+.. py:class:: WebAppHealthSummary(client, webAppProjectId=None, selfHealingEnabled=None, selfHealingIntervalHours=None, lastSecurityScanAt=None, securityScanOnDeploy=None, securityScanIntervalHours=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Self-healing and security-scan status of a web app project (_getWebAppProjectsHealth).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webAppProjectId: The project ID.
+   :type webAppProjectId: id
+   :param selfHealingEnabled: Whether self-healing is turned on for the app.
+   :type selfHealingEnabled: bool
+   :param selfHealingIntervalHours: Hours between self-healing error scans of the app (8, 24 or 168).
+   :type selfHealingIntervalHours: int
+   :param lastSecurityScanAt: When the app's last security scan completed. Omitted when it never had one.
+   :type lastSecurityScanAt: str
+   :param securityScanOnDeploy: Whether the app is scanned after a production deploy. Omitted when scan-on-deploy is unavailable to the org.
+   :type securityScanOnDeploy: bool
+   :param securityScanIntervalHours: Hours after a scan before a deploy scans the app again; 0 scans after every deploy. Omitted like security_scan_on_deploy.
+   :type securityScanIntervalHours: int
+
+
+   .. py:attribute:: web_app_project_id
+      :value: None
+
+
+
+   .. py:attribute:: self_healing_enabled
+      :value: None
+
+
+
+   .. py:attribute:: self_healing_interval_hours
+      :value: None
+
+
+
+   .. py:attribute:: last_security_scan_at
+      :value: None
+
+
+
+   .. py:attribute:: security_scan_on_deploy
+      :value: None
+
+
+
+   .. py:attribute:: security_scan_interval_hours
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

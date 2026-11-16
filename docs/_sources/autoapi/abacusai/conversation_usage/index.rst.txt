@@ -1,0 +1,120 @@
+abacusai.conversation_usage
+===========================
+
+.. py:module:: abacusai.conversation_usage
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.conversation_usage.ConversationUsage
+
+
+Module Contents
+---------------
+
+.. py:class:: ConversationUsage(client, billDate=None, deploymentConversationId=None, name=None, conversationType=None, chatllmProjectId=None, chatllmProjectName=None, ownerUserId=None, isDeleted=None, unit=None, spend=None, turns=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   One conversation's spend on one UTC day (listConversationUsage).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param billDate: The UTC day, YYYY-MM-DD.
+   :type billDate: str
+   :param deploymentConversationId: The conversation.
+   :type deploymentConversationId: id
+   :param name: The conversation title.
+   :type name: str
+   :param conversationType: The type of the conversation.
+   :type conversationType: str
+   :param chatllmProjectId: The ChatLLM project the conversation is in. Absent when it is in none, or has been deleted.
+   :type chatllmProjectId: id
+   :param chatllmProjectName: That project's name. Absent when the project no longer exists.
+   :type chatllmProjectName: str
+   :param ownerUserId: The member who owns the conversation.
+   :type ownerUserId: id
+   :param isDeleted: True when the conversation has been deleted; its spend survives.
+   :type isDeleted: bool
+   :param unit: 'usd' for enterprise organizations, 'credits' for self-serve: the unit `spend` is in.
+   :type unit: str
+   :param spend: Spend on that day. An estimate derived from conversation activity, not an invoice line.
+   :type spend: float
+   :param turns: Conversation events on that day.
+   :type turns: int
+
+
+   .. py:attribute:: bill_date
+      :value: None
+
+
+
+   .. py:attribute:: deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: name
+      :value: None
+
+
+
+   .. py:attribute:: conversation_type
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_id
+      :value: None
+
+
+
+   .. py:attribute:: chatllm_project_name
+      :value: None
+
+
+
+   .. py:attribute:: owner_user_id
+      :value: None
+
+
+
+   .. py:attribute:: is_deleted
+      :value: None
+
+
+
+   .. py:attribute:: unit
+      :value: None
+
+
+
+   .. py:attribute:: spend
+      :value: None
+
+
+
+   .. py:attribute:: turns
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

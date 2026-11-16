@@ -1,0 +1,155 @@
+abacusai.meeting_bot
+====================
+
+.. py:module:: abacusai.meeting_bot
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.meeting_bot.MeetingBot
+
+
+Module Contents
+---------------
+
+.. py:class:: MeetingBot(client, daemonTaskId=None, state=None, title=None, meetingUrl=None, platform=None, startAtMs=None, endAtMs=None, createdAtMs=None, sessionDeploymentConversationId=None, sessionName=None, webChatPath=None, leftReason=None, error=None, account=None, botEmail=None, invited=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   A meeting the user sent the notetaker to (cluster_proxy/meeting_bot.py).
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param daemonTaskId: The id of the task that runs the notetaker.
+   :type daemonTaskId: str
+   :param state: scheduled, joining, waiting_for_admission, in_meeting, finished, not_admitted, denied, failed or cancelled.
+   :type state: str
+   :param title: The meeting's title, when known.
+   :type title: str
+   :param meetingUrl: The meeting link.
+   :type meetingUrl: str
+   :param platform: The meeting app (meet).
+   :type platform: str
+   :param startAtMs: When the meeting starts, epoch milliseconds.
+   :type startAtMs: int
+   :param endAtMs: When the meeting ends, epoch milliseconds, when known.
+   :type endAtMs: int
+   :param createdAtMs: When the notetaker was booked, epoch milliseconds.
+   :type createdAtMs: int
+   :param sessionDeploymentConversationId: The Listener session the recap is in.
+   :type sessionDeploymentConversationId: str
+   :param sessionName: The session's name, as the Listener named it.
+   :type sessionName: str
+   :param webChatPath: The session's web chat, once it was opened.
+   :type webChatPath: str
+   :param leftReason: Why the notetaker left (meeting_ended, removed, alone, scheduled_end, cancelled, max_duration).
+   :type leftReason: str
+   :param error: What went wrong, for a failed one.
+   :type error: str
+   :param account: How the notetaker was in the call: bot (its Google account) or guest, once it ran.
+   :type account: str
+   :param botEmail: The notetaker's Google account, the address to invite to a meeting; absent when it joins as a guest.
+   :type botEmail: str
+   :param invited: On booking from a calendar event: whether the notetaker's account was put on the event's guest list.
+   :type invited: bool
+
+
+   .. py:attribute:: daemon_task_id
+      :value: None
+
+
+
+   .. py:attribute:: state
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: meeting_url
+      :value: None
+
+
+
+   .. py:attribute:: platform
+      :value: None
+
+
+
+   .. py:attribute:: start_at_ms
+      :value: None
+
+
+
+   .. py:attribute:: end_at_ms
+      :value: None
+
+
+
+   .. py:attribute:: created_at_ms
+      :value: None
+
+
+
+   .. py:attribute:: session_deployment_conversation_id
+      :value: None
+
+
+
+   .. py:attribute:: session_name
+      :value: None
+
+
+
+   .. py:attribute:: web_chat_path
+      :value: None
+
+
+
+   .. py:attribute:: left_reason
+      :value: None
+
+
+
+   .. py:attribute:: error
+      :value: None
+
+
+
+   .. py:attribute:: account
+      :value: None
+
+
+
+   .. py:attribute:: bot_email
+      :value: None
+
+
+
+   .. py:attribute:: invited
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

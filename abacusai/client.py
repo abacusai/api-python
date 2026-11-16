@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+import socket
 import string
 import sys
 import tarfile
@@ -20,6 +21,7 @@ import pandas as pd
 import requests
 from packaging import version
 from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.connection import HTTPConnection
 from requests.packages.urllib3.util.retry import Retry
 
 from .abacus_api import AbacusApi
@@ -65,7 +67,7 @@ from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
-from .chat_session import ChatSession
+from .conversation_usage import ConversationUsage
 from .custom_loss_function import CustomLossFunction
 from .custom_metric import CustomMetric
 from .custom_metric_version import CustomMetricVersion
@@ -147,6 +149,7 @@ from .module import Module
 from .monitor_alert import MonitorAlert
 from .monitor_alert_version import MonitorAlertVersion
 from .natural_language_explanation import NaturalLanguageExplanation
+from .organization_chatllm_project_page import OrganizationChatllmProjectPage
 from .organization_group import OrganizationGroup
 from .organization_network_policy import OrganizationNetworkPolicy
 from .organization_search_result import OrganizationSearchResult
@@ -286,6 +289,24 @@ async def sse_asynchronous_generator_with_files(endpoint: str, headers: dict, bo
                                 pass
 
 
+# Probe idle connections every 60s, well under the 350s after which AWS NAT gateways silently drop idle flows. Without it a
+# long sync call (getDeepAgentResponse waits up to 4500s) never receives a response the server did send. Linux only.
+_TCP_KEEPALIVE_SOCKET_OPTIONS = [
+    (socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1),
+    (socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 60),
+    (socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 60),
+    (socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 5),
+] if sys.platform.startswith('linux') else []
+
+
+class _KeepAliveHTTPAdapter(HTTPAdapter):
+    def init_poolmanager(self, *args, **kwargs):
+        """Adds TCP keepalive to urllib3's default socket options for every pooled connection."""
+        kwargs['socket_options'] = HTTPConnection.default_socket_options + \
+            _TCP_KEEPALIVE_SOCKET_OPTIONS
+        super().init_poolmanager(*args, **kwargs)
+
+
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 503, 504), session=None, retry_500: bool = False):
     session = session or requests.Session()
     if retry_500:
@@ -297,7 +318,7 @@ def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502
         backoff_factor=backoff_factor,
         status_forcelist=status_forcelist
     )
-    adapter = HTTPAdapter(max_retries=retry)
+    adapter = _KeepAliveHTTPAdapter(max_retries=retry)
     session.mount('https://', adapter)
     session.mount('http://', adapter)
     return session
@@ -718,7 +739,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.121'
+    client_version = '1.4.122'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1800,6 +1821,9 @@ class ReadOnlyClient(BaseApiClient):
     def list_dataset_versions(self, dataset_id: str, limit: int = 100, start_after_version: str = None) -> List[DatasetVersion]:
         """Retrieves a list of all dataset versions for the specified dataset.
 
+        A version that has no data yet, such as an upload still in progress, is not listed.
+
+
         Args:
             dataset_id (str): The unique ID associated with the dataset.
             limit (int): The maximum length of the list of all dataset versions.
@@ -2845,26 +2869,6 @@ class ReadOnlyClient(BaseApiClient):
             NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s)."""
         return self._call_api('generateNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, parse_type=NaturalLanguageExplanation)
 
-    def get_chat_session(self, chat_session_id: str) -> ChatSession:
-        """Gets a chat session from Data Science Co-pilot.
-
-        Args:
-            chat_session_id (str): Unique ID of the chat session.
-
-        Returns:
-            ChatSession: The chat session with Data Science Co-pilot"""
-        return self._call_api('getChatSession', 'GET', query_params={'chatSessionId': chat_session_id}, parse_type=ChatSession)
-
-    def list_chat_sessions(self, most_recent_per_project: bool = False) -> ChatSession:
-        """Lists all chat sessions for the current user
-
-        Args:
-            most_recent_per_project (bool): An optional parameter whether to only return the most recent chat session per project. Default False.
-
-        Returns:
-            ChatSession: The chat sessions with Data Science Co-pilot"""
-        return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
-
     def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, filter_intermediate_conversation_events: bool = True, get_unused_document_uploads: bool = False, start: int = None, limit: int = None, include_all_versions: bool = False) -> DeploymentConversation:
         """Gets a deployment conversation.
 
@@ -2916,6 +2920,38 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[DeploymentConversation]: The deployment conversations."""
         return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id, 'externalApplicationId': external_application_id, 'conversationType': conversation_type, 'fetchLastLlmInfo': fetch_last_llm_info, 'limit': limit, 'search': search, 'includeOrgLevelConversations': include_org_level_conversations}, parse_type=DeploymentConversation, is_sync=True)
+
+    def list_conversation_usage(self, start_date: str = None, end_date: str = None, deployment_conversation_id: str = None, chatllm_project_id: str = None, limit: int = 100, start_after_id: str = None) -> List[ConversationUsage]:
+        """Lists what each conversation in the organization spent, one row per conversation per UTC day. Organization admins only.
+
+        Spend is an estimate derived from conversation activity: it matches the per-conversation breakdown on the Usage page, not the invoice. Rows exist from 2026-08-10. A deleted conversation keeps its rows, name and project, so it is listed by date range and by project; by id it is not found.
+
+        Pages are whole conversations in id order: pass the last row's deployment_conversation_id as start_after_id until a page comes back empty.
+
+
+        Args:
+            start_date (str): First UTC day of the range, YYYY-MM-DD. Required unless deployment_conversation_id is given. The range may span at most 31 days.
+            end_date (str): Last UTC day of the range, inclusive.
+            deployment_conversation_id (str): Only this conversation. Without a range, its whole history.
+            chatllm_project_id (str): Only conversations in this ChatLLM project. A range is required with it.
+            limit (int): Conversations per page, at most 1000.
+            start_after_id (str): The deployment_conversation_id of the last row of the previous page.
+
+        Returns:
+            list[ConversationUsage]: The rows, ordered by conversation then day."""
+        return self._proxy_request('listConversationUsage', 'GET', query_params={'startDate': start_date, 'endDate': end_date, 'deploymentConversationId': deployment_conversation_id, 'chatllmProjectId': chatllm_project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=ConversationUsage, is_sync=True)
+
+    def list_organization_chatllm_projects(self, limit: int = 25, offset: int = 0, search: str = None) -> OrganizationChatllmProjectPage:
+        """Lists the organization's ChatLLM projects, newest first. Organization admins only.
+
+        Args:
+            limit (int): Projects per page.
+            offset (int): Projects to skip. Step it by the page size until it reaches total_count.
+            search (str): Only projects whose name, or whose creator's name or email, contains this text.
+
+        Returns:
+            OrganizationChatllmProjectPage: The page and the total number of matching projects."""
+        return self._proxy_request('listOrganizationChatllmProjects', 'GET', query_params={'limit': limit, 'offset': offset, 'search': search}, parse_type=OrganizationChatllmProjectPage, is_sync=True)
 
     def export_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None) -> DeploymentConversationExport:
         """Export a Deployment Conversation.
@@ -3031,6 +3067,9 @@ class ReadOnlyClient(BaseApiClient):
 
     def search_feature_groups(self, text: str, num_results: int = 10, project_id: str = None, feature_group_ids: List = None) -> List[OrganizationSearchResult]:
         """Search feature groups based on text and filters.
+
+        Feature groups are ranked by how well the text matches their table name, description and column names. A feature group whose table name appears in the text ranks first.
+
 
         Args:
             text (str): Text to use for approximately matching feature groups.
@@ -7548,18 +7587,18 @@ class ApiClient(ReadOnlyClient):
             RefreshPolicy: Updated refresh policy."""
         return self._call_api('updateRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id, 'name': name, 'cron': cron, 'featureGroupExportConfig': feature_group_export_config}, parse_type=RefreshPolicy)
 
-    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict, limit_results: int = None, result_columns: list = None) -> Dict:
+    def lookup_features(self, deployment_id: str, query_data: dict, limit_results: int = None, result_columns: list = None) -> Dict:
         """Returns the feature group deployed in the feature store project.
 
+        Requires an API key (or signed-in session) of the organization that owns the deployment; a deployment token alone is not accepted.
+
+
         Args:
-            deployment_token (str): A deployment token used to authenticate access to created deployments. This token only authorizes predictions on deployments in this project, so it can be safely embedded inside an application or website.
             deployment_id (str): A unique identifier for a deployment created under the project.
             query_data (dict): A dictionary where the key is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the value is the unique value of the same entity.
             limit_results (int): If provided, will limit the number of results to the value specified.
             result_columns (list): If provided, will limit the columns present in each result to the columns specified in this list."""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
+        return self._call_api('lookupFeatures', 'POST', query_params={'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns})
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict = None, **kwargs) -> Dict:
         """Returns a prediction for Predictive Modeling
@@ -9086,40 +9125,6 @@ class ApiClient(ReadOnlyClient):
             feature_group_version (str): A unique string identifier associated with the Feature Group Version.
             model_id (str): A unique string identifier associated with the Model."""
         return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id})
-
-    def create_chat_session(self, project_id: str = None, name: str = None) -> ChatSession:
-        """Creates a chat session with Data Science Co-pilot.
-
-        Args:
-            project_id (str): The unique project identifier this chat session belongs to
-            name (str): The name of the chat session. Defaults to the project name.
-
-        Returns:
-            ChatSession: The chat session with Data Science Co-pilot"""
-        return self._call_api('createChatSession', 'POST', query_params={}, body={'projectId': project_id, 'name': name}, parse_type=ChatSession)
-
-    def delete_chat_message(self, chat_session_id: str, message_index: int):
-        """Deletes a message in a chat session and its associated response.
-
-        Args:
-            chat_session_id (str): Unique ID of the chat session.
-            message_index (int): The index of the chat message within the UI."""
-        return self._call_api('deleteChatMessage', 'DELETE', query_params={'chatSessionId': chat_session_id, 'messageIndex': message_index})
-
-    def export_chat_session(self, chat_session_id: str):
-        """Exports a chat session to an HTML file
-
-        Args:
-            chat_session_id (str): Unique ID of the chat session."""
-        return self._call_api('exportChatSession', 'POST', query_params={}, body={'chatSessionId': chat_session_id})
-
-    def rename_chat_session(self, chat_session_id: str, name: str):
-        """Renames a chat session with Data Science Co-pilot.
-
-        Args:
-            chat_session_id (str): Unique ID of the chat session.
-            name (str): The new name of the chat session."""
-        return self._call_api('renameChatSession', 'POST', query_params={}, body={'chatSessionId': chat_session_id, 'name': name})
 
     def suggest_abacus_apis(self, query: str, verbosity: int = 1, limit: int = 5, include_scores: bool = False) -> List[AbacusApi]:
         """Suggests several Abacus APIs that are most relevant to the supplied natural language query.

@@ -11,6 +11,7 @@ Attributes
 
    abacusai.client.DEFAULT_SERVER
    abacusai.client._request_context
+   abacusai.client._TCP_KEEPALIVE_SOCKET_OPTIONS
    abacusai.client._cached_endpoints
 
 
@@ -48,6 +49,7 @@ Classes
 
 .. autoapisummary::
 
+   abacusai.client._KeepAliveHTTPAdapter
    abacusai.client.AgentResponse
    abacusai.client.ToolResponse
    abacusai.client.ClientOptions
@@ -98,6 +100,45 @@ Module Contents
 
 .. py:function:: sse_asynchronous_generator_with_files(endpoint, headers, body, attachments = None)
    :async:
+
+
+.. py:data:: _TCP_KEEPALIVE_SOCKET_OPTIONS
+
+.. py:class:: _KeepAliveHTTPAdapter(pool_connections=DEFAULT_POOLSIZE, pool_maxsize=DEFAULT_POOLSIZE, max_retries=DEFAULT_RETRIES, pool_block=DEFAULT_POOLBLOCK)
+
+   Bases: :py:obj:`requests.adapters.HTTPAdapter`
+
+
+   The built-in HTTP Adapter for urllib3.
+
+   Provides a general-case interface for Requests sessions to contact HTTP and
+   HTTPS urls by implementing the Transport Adapter interface. This class will
+   usually be created by the :class:`Session <Session>` class under the
+   covers.
+
+   :param pool_connections: The number of urllib3 connection pools to cache.
+   :param pool_maxsize: The maximum number of connections to save in the pool.
+   :param max_retries: The maximum number of retries each connection
+       should attempt. Note, this applies only to failed DNS lookups, socket
+       connections and connection timeouts, never to requests where data has
+       made it to the server. By default, Requests does not retry failed
+       connections. If you need granular control over the conditions under
+       which we retry a request, import urllib3's ``Retry`` class and pass
+       that instead.
+   :param pool_block: Whether the connection pool should block for connections.
+
+   Usage::
+
+     >>> import requests
+     >>> s = requests.Session()
+     >>> a = requests.adapters.HTTPAdapter(max_retries=3)
+     >>> s.mount('http://', a)
+
+
+   .. py:method:: init_poolmanager(*args, **kwargs)
+
+      Adds TCP keepalive to urllib3's default socket options for every pooled connection.
+
 
 
 .. py:function:: _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 503, 504), session=None, retry_500 = False)
@@ -598,7 +639,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.121'
+      :value: '1.4.122'
 
 
 
@@ -1594,6 +1635,9 @@ Module Contents
    .. py:method:: list_dataset_versions(dataset_id, limit = 100, start_after_version = None)
 
       Retrieves a list of all dataset versions for the specified dataset.
+
+      A version that has no data yet, such as an upload still in progress, is not listed.
+
 
       :param dataset_id: The unique ID associated with the dataset.
       :type dataset_id: str
@@ -2905,30 +2949,6 @@ Module Contents
 
 
 
-   .. py:method:: get_chat_session(chat_session_id)
-
-      Gets a chat session from Data Science Co-pilot.
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-
-      :returns: The chat session with Data Science Co-pilot
-      :rtype: ChatSession
-
-
-
-   .. py:method:: list_chat_sessions(most_recent_per_project = False)
-
-      Lists all chat sessions for the current user
-
-      :param most_recent_per_project: An optional parameter whether to only return the most recent chat session per project. Default False.
-      :type most_recent_per_project: bool
-
-      :returns: The chat sessions with Data Science Co-pilot
-      :rtype: ChatSession
-
-
-
    .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, filter_intermediate_conversation_events = True, get_unused_document_uploads = False, start = None, limit = None, include_all_versions = False)
 
       Gets a deployment conversation.
@@ -3001,6 +3021,49 @@ Module Contents
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
+
+
+
+   .. py:method:: list_conversation_usage(start_date = None, end_date = None, deployment_conversation_id = None, chatllm_project_id = None, limit = 100, start_after_id = None)
+
+      Lists what each conversation in the organization spent, one row per conversation per UTC day. Organization admins only.
+
+      Spend is an estimate derived from conversation activity: it matches the per-conversation breakdown on the Usage page, not the invoice. Rows exist from 2026-08-10. A deleted conversation keeps its rows, name and project, so it is listed by date range and by project; by id it is not found.
+
+      Pages are whole conversations in id order: pass the last row's deployment_conversation_id as start_after_id until a page comes back empty.
+
+
+      :param start_date: First UTC day of the range, YYYY-MM-DD. Required unless deployment_conversation_id is given. The range may span at most 31 days.
+      :type start_date: str
+      :param end_date: Last UTC day of the range, inclusive.
+      :type end_date: str
+      :param deployment_conversation_id: Only this conversation. Without a range, its whole history.
+      :type deployment_conversation_id: str
+      :param chatllm_project_id: Only conversations in this ChatLLM project. A range is required with it.
+      :type chatllm_project_id: str
+      :param limit: Conversations per page, at most 1000.
+      :type limit: int
+      :param start_after_id: The deployment_conversation_id of the last row of the previous page.
+      :type start_after_id: str
+
+      :returns: The rows, ordered by conversation then day.
+      :rtype: list[ConversationUsage]
+
+
+
+   .. py:method:: list_organization_chatllm_projects(limit = 25, offset = 0, search = None)
+
+      Lists the organization's ChatLLM projects, newest first. Organization admins only.
+
+      :param limit: Projects per page.
+      :type limit: int
+      :param offset: Projects to skip. Step it by the page size until it reaches total_count.
+      :type offset: int
+      :param search: Only projects whose name, or whose creator's name or email, contains this text.
+      :type search: str
+
+      :returns: The page and the total number of matching projects.
+      :rtype: OrganizationChatllmProjectPage
 
 
 
@@ -3146,6 +3209,9 @@ Module Contents
    .. py:method:: search_feature_groups(text, num_results = 10, project_id = None, feature_group_ids = None)
 
       Search feature groups based on text and filters.
+
+      Feature groups are ranked by how well the text matches their table name, description and column names. A feature group whose table name appears in the text ranks first.
+
 
       :param text: Text to use for approximately matching feature groups.
       :type text: str
@@ -8080,12 +8146,13 @@ Module Contents
 
 
 
-   .. py:method:: lookup_features(deployment_token, deployment_id, query_data, limit_results = None, result_columns = None)
+   .. py:method:: lookup_features(deployment_id, query_data, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
-      :param deployment_token: A deployment token used to authenticate access to created deployments. This token only authorizes predictions on deployments in this project, so it can be safely embedded inside an application or website.
-      :type deployment_token: str
+      Requires an API key (or signed-in session) of the organization that owns the deployment; a deployment token alone is not accepted.
+
+
       :param deployment_id: A unique identifier for a deployment created under the project.
       :type deployment_id: str
       :param query_data: A dictionary where the key is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the value is the unique value of the same entity.
@@ -10133,51 +10200,6 @@ Module Contents
       :type feature_group_version: str
       :param model_id: A unique string identifier associated with the Model.
       :type model_id: str
-
-
-
-   .. py:method:: create_chat_session(project_id = None, name = None)
-
-      Creates a chat session with Data Science Co-pilot.
-
-      :param project_id: The unique project identifier this chat session belongs to
-      :type project_id: str
-      :param name: The name of the chat session. Defaults to the project name.
-      :type name: str
-
-      :returns: The chat session with Data Science Co-pilot
-      :rtype: ChatSession
-
-
-
-   .. py:method:: delete_chat_message(chat_session_id, message_index)
-
-      Deletes a message in a chat session and its associated response.
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-      :param message_index: The index of the chat message within the UI.
-      :type message_index: int
-
-
-
-   .. py:method:: export_chat_session(chat_session_id)
-
-      Exports a chat session to an HTML file
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-
-
-
-   .. py:method:: rename_chat_session(chat_session_id, name)
-
-      Renames a chat session with Data Science Co-pilot.
-
-      :param chat_session_id: Unique ID of the chat session.
-      :type chat_session_id: str
-      :param name: The new name of the chat session.
-      :type name: str
 
 
 

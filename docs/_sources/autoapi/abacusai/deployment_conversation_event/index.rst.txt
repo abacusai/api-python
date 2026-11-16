@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, midTurn=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, introChips=None, rightSizeChips=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None, threadRootSeq=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, isDaemonResumeReply=None, isTriggered=None, triggerSource=None, agentTaskId=None, isNoopReply=None, attachmentOnlyMessage=None, backgroundWake=None, midTurn=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, agentWorkflowNodeId=None, nextAgentWorkflowNodeId=None, chatType=None, agentResponse=None, error=None, segments=None, streamedData=None, streamedSectionData=None, highlights=None, llmDisplayName=None, deepagentMode=None, llmBotIcon=None, formResponse=None, routedLlm=None, creditFallback=None, introChips=None, computePointsUsed=None, computerFiles=None, toolUseRequest=None, toolUseResult=None, verificationSummary=None, attachedUserFileNames=None, parallelToolResponses=None, oldFileContent=None, allVersions=None, selectedVersionIndex=None, totalVersions=None, isLastMessage=None, allowTaskAutomation=None, mediaStudioContext=None, sceneImages=None, savedMemoryBuckets=None, recalledMemoryBuckets=None, memoryFeedback=None, turnRuntimeSecs=None, turnTotalRuntimeSecs=None, turnStopped=None, mentions=None, teamMessage=None, threadRootSeq=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -102,8 +102,6 @@ Module Contents
    :type creditFallback: bool
    :param introChips: Starter chips clients show under the welcome intro to a new subscriber's first message, in the user's language: dicts with `id`, `label` (the chip) and `message` (what a tap sends).
    :type introChips: list
-   :param rightSizeChips: Ids of the one-tap reply-length chips ("shorter", "more_detail") clients show under this response.
-   :type rightSizeChips: list
    :param computePointsUsed: The number of compute points used for the message.
    :type computePointsUsed: int
    :param computerFiles: The list of files that were created by the computer agent.
@@ -146,9 +144,9 @@ Module Contents
    :type turnTotalRuntimeSecs: int
    :param turnStopped: DeepAgent turns only. Whether the user stopped the turn before it finished.
    :type turnStopped: bool
-   :param mentions: Project coordinator chats only. Display names of the teammates this user message @mentions.
+   :param mentions: Project agent chats only. Display names of the teammates this user message @mentions.
    :type mentions: list
-   :param teamMessage: Project coordinator chats only. Whether this user message was posted for teammates with no agent turn.
+   :param teamMessage: Project agent chats only. Whether this user message was posted for teammates with no agent turn.
    :type teamMessage: bool
    :param threadRootSeq: Shared agent chats with threads only. The main-chat message this message was posted under in a thread; absent for main-chat messages.
    :type threadRootSeq: int
@@ -345,11 +343,6 @@ Module Contents
 
 
    .. py:attribute:: intro_chips
-      :value: None
-
-
-
-   .. py:attribute:: right_size_chips
       :value: None
 
 

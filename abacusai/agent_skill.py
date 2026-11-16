@@ -29,9 +29,12 @@ class AgentSkill(AbstractApiClass):
             hashedAgentSkillId (str): Hashed skill id used by skill share links.
             userDisabled (bool): Whether this system skill, or (in a project listing) this linked user skill, was explicitly disabled in the listed scope, keeping it listed instead of returning it to the import library.
             usedByTasks (bool): Whether any of the user's daemon tasks reference this skill, so disabling it will ask for confirmation.
+            environments (list): The caller's "Use in" choice for this skill, ['cloud'] or ['local'], or null for auto (both).
+            lastModifiedVia (str): Who last wrote the skill: web, device (published from a computer) or agent (the cloud agent's own skill tools); null before this was recorded.
+            lastModifiedClient (str): The client label of that write, e.g. 'desktop 2.5.0 / Code', for a device publish.
     """
 
-    def __init__(self, client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, shareGroupCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None):
+    def __init__(self, client, agentSkillId=None, skillName=None, description=None, skillDirectoryName=None, chatllmProjectId=None, systemCreated=None, enabled=None, default=None, display=None, globalSkill=None, owned=None, createdAt=None, updatedAt=None, accessLevel=None, sharedSkill=None, sharedByEmail=None, shareCount=None, shareGroupCount=None, sharedStoreDir=None, hashedAgentSkillId=None, userDisabled=None, usedByTasks=None, environments=None, lastModifiedVia=None, lastModifiedClient=None):
         super().__init__(client, agentSkillId)
         self.agent_skill_id = agentSkillId
         self.skill_name = skillName
@@ -55,11 +58,14 @@ class AgentSkill(AbstractApiClass):
         self.hashed_agent_skill_id = hashedAgentSkillId
         self.user_disabled = userDisabled
         self.used_by_tasks = usedByTasks
+        self.environments = environments
+        self.last_modified_via = lastModifiedVia
+        self.last_modified_client = lastModifiedClient
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'agent_skill_id': repr(self.agent_skill_id), f'skill_name': repr(self.skill_name), f'description': repr(self.description), f'skill_directory_name': repr(self.skill_directory_name), f'chatllm_project_id': repr(self.chatllm_project_id), f'system_created': repr(self.system_created), f'enabled': repr(self.enabled), f'default': repr(self.default), f'display': repr(self.display), f'global_skill': repr(self.global_skill), f'owned': repr(self.owned), f'created_at': repr(
-            self.created_at), f'updated_at': repr(self.updated_at), f'access_level': repr(self.access_level), f'shared_skill': repr(self.shared_skill), f'shared_by_email': repr(self.shared_by_email), f'share_count': repr(self.share_count), f'share_group_count': repr(self.share_group_count), f'shared_store_dir': repr(self.shared_store_dir), f'hashed_agent_skill_id': repr(self.hashed_agent_skill_id), f'user_disabled': repr(self.user_disabled), f'used_by_tasks': repr(self.used_by_tasks)}
+        repr_dict = {f'agent_skill_id': repr(self.agent_skill_id), f'skill_name': repr(self.skill_name), f'description': repr(self.description), f'skill_directory_name': repr(self.skill_directory_name), f'chatllm_project_id': repr(self.chatllm_project_id), f'system_created': repr(self.system_created), f'enabled': repr(self.enabled), f'default': repr(self.default), f'display': repr(self.display), f'global_skill': repr(self.global_skill), f'owned': repr(self.owned), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'access_level': repr(
+            self.access_level), f'shared_skill': repr(self.shared_skill), f'shared_by_email': repr(self.shared_by_email), f'share_count': repr(self.share_count), f'share_group_count': repr(self.share_group_count), f'shared_store_dir': repr(self.shared_store_dir), f'hashed_agent_skill_id': repr(self.hashed_agent_skill_id), f'user_disabled': repr(self.user_disabled), f'used_by_tasks': repr(self.used_by_tasks), f'environments': repr(self.environments), f'last_modified_via': repr(self.last_modified_via), f'last_modified_client': repr(self.last_modified_client)}
         class_name = "AgentSkill"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -72,6 +78,6 @@ class AgentSkill(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'agent_skill_id': self.agent_skill_id, 'skill_name': self.skill_name, 'description': self.description, 'skill_directory_name': self.skill_directory_name, 'chatllm_project_id': self.chatllm_project_id, 'system_created': self.system_created, 'enabled': self.enabled, 'default': self.default, 'display': self.display, 'global_skill': self.global_skill, 'owned': self.owned, 'created_at': self.created_at,
-                'updated_at': self.updated_at, 'access_level': self.access_level, 'shared_skill': self.shared_skill, 'shared_by_email': self.shared_by_email, 'share_count': self.share_count, 'share_group_count': self.share_group_count, 'shared_store_dir': self.shared_store_dir, 'hashed_agent_skill_id': self.hashed_agent_skill_id, 'user_disabled': self.user_disabled, 'used_by_tasks': self.used_by_tasks}
+        resp = {'agent_skill_id': self.agent_skill_id, 'skill_name': self.skill_name, 'description': self.description, 'skill_directory_name': self.skill_directory_name, 'chatllm_project_id': self.chatllm_project_id, 'system_created': self.system_created, 'enabled': self.enabled, 'default': self.default, 'display': self.display, 'global_skill': self.global_skill, 'owned': self.owned, 'created_at': self.created_at, 'updated_at': self.updated_at, 'access_level': self.access_level,
+                'shared_skill': self.shared_skill, 'shared_by_email': self.shared_by_email, 'share_count': self.share_count, 'share_group_count': self.share_group_count, 'shared_store_dir': self.shared_store_dir, 'hashed_agent_skill_id': self.hashed_agent_skill_id, 'user_disabled': self.user_disabled, 'used_by_tasks': self.used_by_tasks, 'environments': self.environments, 'last_modified_via': self.last_modified_via, 'last_modified_client': self.last_modified_client}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

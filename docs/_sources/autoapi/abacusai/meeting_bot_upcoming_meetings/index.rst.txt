@@ -1,0 +1,64 @@
+abacusai.meeting_bot_upcoming_meetings
+======================================
+
+.. py:module:: abacusai.meeting_bot_upcoming_meetings
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.meeting_bot_upcoming_meetings.MeetingBotUpcomingMeetings
+
+
+Module Contents
+---------------
+
+.. py:class:: MeetingBotUpcomingMeetings(client, providers=None, events=None, botEmail=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   The next week's calendar meetings the notetaker can join.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param providers: Each calendar provider (google, outlook): whether it is connected, and an error if it could not be read.
+   :type providers: list
+   :param events: The meetings with a supported link, by start time.
+   :type events: list
+   :param botEmail: The notetaker's Google account, the address to invite to a meeting; absent when it joins as a guest.
+   :type botEmail: str
+
+
+   .. py:attribute:: providers
+      :value: None
+
+
+
+   .. py:attribute:: events
+      :value: None
+
+
+
+   .. py:attribute:: bot_email
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
