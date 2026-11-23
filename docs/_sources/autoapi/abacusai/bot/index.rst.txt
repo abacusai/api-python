@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, template=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None, taskEffort=None, timezone=None, workHours=None, channelHandle=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, template=None, tasks=None, numTasks=None, taskPreviews=None, numScheduledTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None, taskEffort=None, timezone=None, workHours=None, channelHandle=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -74,6 +74,10 @@ Module Contents
    :type tasks: list
    :param numTasks: How many named scheduled tasks the bot has.
    :type numTasks: int
+   :param taskPreviews: The first two named scheduled tasks still scheduled, for an agent card: name, lifecycle, and schedule_info (the task's live schedule, _listBots) or schedule (the bot's stored copy, elsewhere). The rest are counted by num_tasks.
+   :type taskPreviews: list
+   :param numScheduledTasks: How many of them are still scheduled (a finished one-off left out, _listBots), for the agent card's count beside task_previews.
+   :type numScheduledTasks: int
    :param channels: The bot's configured messaging channels keyed by channel name; secret values are masked.
    :type channels: dict
    :param channelNames: Names of the messaging channels configured on the bot (telegram, whatsapp, ...).
@@ -229,6 +233,16 @@ Module Contents
 
 
    .. py:attribute:: num_tasks
+      :value: None
+
+
+
+   .. py:attribute:: task_previews
+      :value: None
+
+
+
+   .. py:attribute:: num_scheduled_tasks
       :value: None
 
 

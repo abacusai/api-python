@@ -72,6 +72,7 @@ Submodules
    /autoapi/abacusai/batch_prediction_version_logs/index
    /autoapi/abacusai/bot/index
    /autoapi/abacusai/bot_channel_options/index
+   /autoapi/abacusai/bot_creation_block/index
    /autoapi/abacusai/bot_info/index
    /autoapi/abacusai/bot_routine_catalog/index
    /autoapi/abacusai/bot_template_catalog/index
@@ -188,9 +189,6 @@ Submodules
    /autoapi/abacusai/feature_group_lineage/index
    /autoapi/abacusai/feature_group_refresh_export_config/index
    /autoapi/abacusai/feature_group_row/index
-   /autoapi/abacusai/feature_group_row_process/index
-   /autoapi/abacusai/feature_group_row_process_logs/index
-   /autoapi/abacusai/feature_group_row_process_summary/index
    /autoapi/abacusai/feature_group_template/index
    /autoapi/abacusai/feature_group_template_variable_options/index
    /autoapi/abacusai/feature_group_version/index
@@ -732,6 +730,7 @@ Classes
    abacusai.BatchPredictionVersionLogs
    abacusai.Bot
    abacusai.BotChannelOptions
+   abacusai.BotCreationBlock
    abacusai.BotInfo
    abacusai.BotRoutineCatalog
    abacusai.BotTemplateCatalog
@@ -851,9 +850,6 @@ Classes
    abacusai.FeatureGroupLineage
    abacusai.FeatureGroupRefreshExportConfig
    abacusai.FeatureGroupRow
-   abacusai.FeatureGroupRowProcess
-   abacusai.FeatureGroupRowProcessLogs
-   abacusai.FeatureGroupRowProcessSummary
    abacusai.FeatureGroupTemplate
    abacusai.FeatureGroupTemplateVariableOptions
    abacusai.FeatureGroupVersion
@@ -9778,6 +9774,11 @@ Package Contents
 
 
 
+   .. py:attribute:: LINKAGENTWALLET
+      :value: 'LINKAGENTWALLET'
+
+
+
    .. py:attribute:: MYSQL
       :value: 'MYSQL'
 
@@ -10295,6 +10296,11 @@ Package Contents
 
 
 
+   .. py:attribute:: OPENAI_GPT6_2_ASTRA
+      :value: 'OPENAI_GPT6_2_ASTRA'
+
+
+
    .. py:attribute:: OPENAI_GPT6_SOL
       :value: 'OPENAI_GPT6_SOL'
 
@@ -10307,6 +10313,11 @@ Package Contents
 
    .. py:attribute:: OPENAI_GPT6_1_SOL
       :value: 'OPENAI_GPT6_1_SOL'
+
+
+
+   .. py:attribute:: OPENAI_GPT6_2_SOL
+      :value: 'OPENAI_GPT6_2_SOL'
 
 
 
@@ -10472,6 +10483,11 @@ Package Contents
 
    .. py:attribute:: GEMINI_4_HYDROGEN
       :value: 'GEMINI_4_HYDROGEN'
+
+
+
+   .. py:attribute:: GEMINI_4_NEON
+      :value: 'GEMINI_4_NEON'
 
 
 
@@ -10662,6 +10678,11 @@ Package Contents
 
    .. py:attribute:: QWEN3_8_27B
       :value: 'QWEN3_8_27B'
+
+
+
+   .. py:attribute:: QWEN4_MAX
+      :value: 'QWEN4_MAX'
 
 
 
@@ -20177,7 +20198,7 @@ Package Contents
 
 
 
-.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, template=None, tasks=None, numTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None, taskEffort=None, timezone=None, workHours=None, channelHandle=None)
+.. py:class:: Bot(client, botId=None, ownerUserId=None, isOwner=None, canEdit=None, ownerEmail=None, name=None, description=None, instructions=None, personality=None, memory=None, avatar=None, status=None, lifecycle=None, role=None, deploymentConversationId=None, chatllmProjectId=None, externalApplicationId=None, lastMessagePreview=None, lastMessageAt=None, unreadCount=None, createdAt=None, schedule=None, template=None, tasks=None, numTasks=None, taskPreviews=None, numScheduledTasks=None, channels=None, channelNames=None, learnedPersonality=None, learnedInstructions=None, profileHistory=None, selfReview=None, playbooks=None, proactiveBudget=None, chattyGreetings=None, quietHours=None, agentNetwork=None, pushNotificationsEnabled=None, taskEffort=None, timezone=None, workHours=None, channelHandle=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -20236,6 +20257,10 @@ Package Contents
    :type tasks: list
    :param numTasks: How many named scheduled tasks the bot has.
    :type numTasks: int
+   :param taskPreviews: The first two named scheduled tasks still scheduled, for an agent card: name, lifecycle, and schedule_info (the task's live schedule, _listBots) or schedule (the bot's stored copy, elsewhere). The rest are counted by num_tasks.
+   :type taskPreviews: list
+   :param numScheduledTasks: How many of them are still scheduled (a finished one-off left out, _listBots), for the agent card's count beside task_previews.
+   :type numScheduledTasks: int
    :param channels: The bot's configured messaging channels keyed by channel name; secret values are masked.
    :type channels: dict
    :param channelNames: Names of the messaging channels configured on the bot (telegram, whatsapp, ...).
@@ -20395,6 +20420,16 @@ Package Contents
 
 
 
+   .. py:attribute:: task_previews
+      :value: None
+
+
+
+   .. py:attribute:: num_scheduled_tasks
+      :value: None
+
+
+
    .. py:attribute:: channels
       :value: None
 
@@ -20525,6 +20560,46 @@ Package Contents
 
 
    .. py:attribute:: slack_workspace
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
+.. py:class:: BotCreationBlock(client, reason=None, maxAgents=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Why creating a personal agent would be refused for the user right now
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param reason: credits (out of credits: add credits or upgrade), credits_upgrade (out of credits on a tier that must upgrade), agent_limit (the plan's active-agent limit is reached), or None when a create would go through.
+   :type reason: str
+   :param maxAgents: The active-agent limit of a capped plan.
+   :type maxAgents: int
+
+
+   .. py:attribute:: reason
+      :value: None
+
+
+
+   .. py:attribute:: max_agents
       :value: None
 
 
@@ -27590,7 +27665,7 @@ Package Contents
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Checked for legacy autonomous agents, and for any call made without an API key or signed-in session; a daemon-based workflow started by its own organization does not check it.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
@@ -27894,76 +27969,6 @@ Package Contents
       :type feature_group_id: str
       :param primary_key: The primary key value for which to delete the feature group row
       :type primary_key: str
-
-
-
-   .. py:method:: describe_feature_group_row_process_by_key(deployment_id, primary_key_value)
-
-      Gets the feature group row process.
-
-      :param deployment_id: The deployment id
-      :type deployment_id: str
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the feature group row process
-      :rtype: FeatureGroupRowProcess
-
-
-
-   .. py:method:: list_feature_group_row_processes(deployment_id, limit = None, status = None)
-
-      Gets a list of feature group row processes.
-
-      :param deployment_id: The deployment id for the process
-      :type deployment_id: str
-      :param limit: The maximum number of processes to return. Defaults to None.
-      :type limit: int
-      :param status: The status of the processes to return. Defaults to None.
-      :type status: str
-
-      :returns: A list of object representing the feature group row process
-      :rtype: list[FeatureGroupRowProcess]
-
-
-
-   .. py:method:: get_feature_group_row_process_summary(deployment_id)
-
-      Gets a summary of the statuses of the individual feature group processes.
-
-      :param deployment_id: The deployment id for the process
-      :type deployment_id: str
-
-      :returns: An object representing the summary of the statuses of the individual feature group processes
-      :rtype: FeatureGroupRowProcessSummary
-
-
-
-   .. py:method:: reset_feature_group_row_process_by_key(deployment_id, primary_key_value)
-
-      Resets a feature group row process so that it can be reprocessed
-
-      :param deployment_id: The deployment id
-      :type deployment_id: str
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the feature group row process.
-      :rtype: FeatureGroupRowProcess
-
-
-
-   .. py:method:: get_feature_group_row_process_logs_by_key(deployment_id, primary_key_value)
-
-      Gets the logs for a feature group row process
-
-      :param deployment_id: The deployment id
-      :type deployment_id: str
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the logs for the feature group row process
-      :rtype: FeatureGroupRowProcessLogs
 
 
 
@@ -28855,7 +28860,7 @@ Package Contents
       :type user_group_id: str
       :param emails: The email addresses to invite to your user group.
       :type emails: List
-      :param role: The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the organization default when unset.
+      :param role: The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the role of the email's pending invite to this organization, else the organization default.
       :type role: str
 
       :returns: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not.
@@ -29255,20 +29260,6 @@ Package Contents
       :type agent_interface: AgentInterface
       :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
-
-
-
-   .. py:method:: get_llm_app_response(llm_app_name, prompt)
-
-      Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
-
-      :param llm_app_name: The name of the LLM App to use for generation.
-      :type llm_app_name: str
-      :param prompt: The prompt to use for generation.
-      :type prompt: str
-
-      :returns: The response from the LLM App.
-      :rtype: LlmResponse
 
 
 
@@ -30190,7 +30181,7 @@ Package Contents
 
 
 
-   .. py:method:: query_database_connector_datallm(database_connector_id, query)
+   .. py:method:: query_database_connector_datallm(database_connector_id, query, role = None)
 
       Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
 
@@ -30201,6 +30192,8 @@ Package Contents
       :type database_connector_id: str
       :param query: The query to be run in the database connector (must be read-only).
       :type query: str
+      :param role: User-level Snowflake connections only: the role to run the query as. Defaults to the role the connection logs in as (the organization's Snowflake connector role, or the user's default role).
+      :type role: str
 
 
 
@@ -35487,7 +35480,7 @@ Package Contents
 
 
 
-   .. py:method:: query_datallm(query)
+   .. py:method:: query_datallm(query, role = None)
 
       Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
 
@@ -35496,6 +35489,8 @@ Package Contents
 
       :param query: The query to be run in the database connector (must be read-only).
       :type query: str
+      :param role: User-level Snowflake connections only: the role to run the query as. Defaults to the role the connection logs in as (the organization's Snowflake connector role, or the user's default role).
+      :type role: str
 
 
 
@@ -36468,7 +36463,7 @@ Package Contents
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, isSystemCreated=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, isSystemCreated=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -36525,8 +36520,6 @@ Package Contents
    :type predictionOperatorVersion: str
    :param pendingPredictionOperatorVersion: The prediction operator version ID that the deployment is switching to, or being stopped.
    :type pendingPredictionOperatorVersion: str
-   :param onlineFeatureGroupId: The online feature group ID that the deployment is running on
-   :type onlineFeatureGroupId: id
    :param outputOnlineFeatureGroupId: The online feature group ID that the deployment is outputting results to
    :type outputOnlineFeatureGroupId: id
    :param realtimeMonitorId: The realtime monitor ID of the realtime-monitor that is associated with the deployment
@@ -36659,11 +36652,6 @@ Package Contents
 
 
    .. py:attribute:: pending_prediction_operator_version
-      :value: None
-
-
-
-   .. py:attribute:: online_feature_group_id
       :value: None
 
 
@@ -37099,68 +37087,6 @@ Package Contents
 
 
 
-   .. py:method:: describe_feature_group_row_process_by_key(primary_key_value)
-
-      Gets the feature group row process.
-
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the feature group row process
-      :rtype: FeatureGroupRowProcess
-
-
-
-   .. py:method:: list_feature_group_row_processes(limit = None, status = None)
-
-      Gets a list of feature group row processes.
-
-      :param limit: The maximum number of processes to return. Defaults to None.
-      :type limit: int
-      :param status: The status of the processes to return. Defaults to None.
-      :type status: str
-
-      :returns: A list of object representing the feature group row process
-      :rtype: list[FeatureGroupRowProcess]
-
-
-
-   .. py:method:: get_feature_group_row_process_summary()
-
-      Gets a summary of the statuses of the individual feature group processes.
-
-      :param deployment_id: The deployment id for the process
-      :type deployment_id: str
-
-      :returns: An object representing the summary of the statuses of the individual feature group processes
-      :rtype: FeatureGroupRowProcessSummary
-
-
-
-   .. py:method:: reset_feature_group_row_process_by_key(primary_key_value)
-
-      Resets a feature group row process so that it can be reprocessed
-
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the feature group row process.
-      :rtype: FeatureGroupRowProcess
-
-
-
-   .. py:method:: get_feature_group_row_process_logs_by_key(primary_key_value)
-
-      Gets the logs for a feature group row process
-
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the logs for the feature group row process
-      :rtype: FeatureGroupRowProcessLogs
-
-
-
    .. py:method:: create_conversation(name = None, external_application_id = None)
 
       Creates a deployment conversation.
@@ -37324,7 +37250,7 @@ Package Contents
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, ancestorTotalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, ancestorTotalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, botDeleted=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, threadMarks=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37403,6 +37329,8 @@ Package Contents
    :type sourceDaemonTaskId: str
    :param daemonTaskRunNumber: The 1-based run number of this conversation within its daemon task, set only for conversations holding a single run.
    :type daemonTaskRunNumber: int
+   :param botDeleted: Whether the agent (bot) whose scheduled task ran in this conversation has since been deleted; set only on such run conversations.
+   :type botDeleted: bool
    :param parentDeploymentConversationId: The parent deployment conversation id associated with the deployment conversation.
    :type parentDeploymentConversationId: str
    :param sourceDeploymentConversationId: The conversation this one was forked from; also set for parallel/workspace copies, which have no parent conversation.
@@ -37453,6 +37381,8 @@ Package Contents
    :type chatShared: bool
    :param threadRuns: For a shared agent chat with threads, the thread turns in flight (thread_root_seq, request_id, user_name, started_at, is_own: the caller's own message's turn); absent otherwise.
    :type threadRuns: list
+   :param threadMarks: For a shared agent chat with threads, the caller's own marks on the threads they asked a delegated task for work in (thread_root_seq, seen_seq, dismissed_seq); absent otherwise.
+   :type threadMarks: list
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -37636,6 +37566,11 @@ Package Contents
 
 
 
+   .. py:attribute:: bot_deleted
+      :value: None
+
+
+
    .. py:attribute:: parent_deployment_conversation_id
       :value: None
 
@@ -37757,6 +37692,11 @@ Package Contents
 
 
    .. py:attribute:: thread_runs
+      :value: None
+
+
+
+   .. py:attribute:: thread_marks
       :value: None
 
 
@@ -43501,263 +43441,6 @@ Package Contents
 
 
 
-.. py:class:: FeatureGroupRowProcess(client, featureGroupId=None, deploymentId=None, primaryKeyValue=None, featureGroupRowProcessId=None, createdAt=None, updatedAt=None, startedAt=None, completedAt=None, timeoutAt=None, retriesRemaining=None, totalAttemptsAllowed=None, status=None, error=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A feature group row process
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param featureGroupId: The ID of the feature group this row that was processed belongs to.
-   :type featureGroupId: str
-   :param deploymentId: The ID of the deployment that processed this row.
-   :type deploymentId: str
-   :param primaryKeyValue: Value of the primary key for this row.
-   :type primaryKeyValue: str
-   :param featureGroupRowProcessId: The ID of the feature group row process.
-   :type featureGroupRowProcessId: str
-   :param createdAt: The timestamp this feature group row was created in ISO-8601 format.
-   :type createdAt: str
-   :param updatedAt: The timestamp when this feature group row was last updated in ISO-8601 format.
-   :type updatedAt: str
-   :param startedAt: The timestamp when this feature group row process was started in ISO-8601 format.
-   :type startedAt: str
-   :param completedAt: The timestamp when this feature group row was completed.
-   :type completedAt: str
-   :param timeoutAt: The time the feature group row process will timeout.
-   :type timeoutAt: str
-   :param retriesRemaining: The number of retries remaining for this feature group row process.
-   :type retriesRemaining: int
-   :param totalAttemptsAllowed: The total number of attempts allowed for this feature group row process.
-   :type totalAttemptsAllowed: int
-   :param status: The status of the feature group row process.
-   :type status: str
-   :param error: The error message if the status is FAILED.
-   :type error: str
-
-
-   .. py:attribute:: feature_group_id
-      :value: None
-
-
-
-   .. py:attribute:: deployment_id
-      :value: None
-
-
-
-   .. py:attribute:: primary_key_value
-      :value: None
-
-
-
-   .. py:attribute:: feature_group_row_process_id
-      :value: None
-
-
-
-   .. py:attribute:: created_at
-      :value: None
-
-
-
-   .. py:attribute:: updated_at
-      :value: None
-
-
-
-   .. py:attribute:: started_at
-      :value: None
-
-
-
-   .. py:attribute:: completed_at
-      :value: None
-
-
-
-   .. py:attribute:: timeout_at
-      :value: None
-
-
-
-   .. py:attribute:: retries_remaining
-      :value: None
-
-
-
-   .. py:attribute:: total_attempts_allowed
-      :value: None
-
-
-
-   .. py:attribute:: status
-      :value: None
-
-
-
-   .. py:attribute:: error
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-   .. py:method:: wait_for_process(timeout=1200)
-
-      A waiting call until model monitor version is ready.
-
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-      :type timeout: int
-
-
-
-   .. py:method:: get_status()
-
-      Gets the status of the feature group row process.
-
-      :returns: A string describing the status of the feature group row process
-      :rtype: str
-
-
-
-.. py:class:: FeatureGroupRowProcessLogs(client, logs=None, featureGroupId=None, deploymentId=None, primaryKeyValue=None, featureGroupRowProcessId=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   Logs for the feature group row process.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param logs: The logs for both stdout and stderr of the step
-   :type logs: str
-   :param featureGroupId: The ID of the feature group this row that was processed belongs to.
-   :type featureGroupId: str
-   :param deploymentId: The ID of the deployment that processed this row.
-   :type deploymentId: str
-   :param primaryKeyValue: Value of the primary key for this row.
-   :type primaryKeyValue: str
-   :param featureGroupRowProcessId: The ID of the feature group row process.
-   :type featureGroupRowProcessId: str
-
-
-   .. py:attribute:: logs
-      :value: None
-
-
-
-   .. py:attribute:: feature_group_id
-      :value: None
-
-
-
-   .. py:attribute:: deployment_id
-      :value: None
-
-
-
-   .. py:attribute:: primary_key_value
-      :value: None
-
-
-
-   .. py:attribute:: feature_group_row_process_id
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
-.. py:class:: FeatureGroupRowProcessSummary(client, totalProcesses=None, pendingProcesses=None, processingProcesses=None, completeProcesses=None, failedProcesses=None)
-
-   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
-
-
-   A summary of the feature group processes for a deployment.
-
-   :param client: An authenticated API Client instance
-   :type client: ApiClient
-   :param totalProcesses: The total number of processes
-   :type totalProcesses: int
-   :param pendingProcesses: The number of pending processes
-   :type pendingProcesses: int
-   :param processingProcesses: The number of processes currently processing
-   :type processingProcesses: int
-   :param completeProcesses: The number of complete processes
-   :type completeProcesses: int
-   :param failedProcesses: The number of failed processes
-   :type failedProcesses: int
-
-
-   .. py:attribute:: total_processes
-      :value: None
-
-
-
-   .. py:attribute:: pending_processes
-      :value: None
-
-
-
-   .. py:attribute:: processing_processes
-      :value: None
-
-
-
-   .. py:attribute:: complete_processes
-      :value: None
-
-
-
-   .. py:attribute:: failed_processes
-      :value: None
-
-
-
-   .. py:attribute:: deprecated_keys
-
-
-   .. py:method:: __repr__()
-
-
-   .. py:method:: to_dict()
-
-      Get a dict representation of the parameters in this class
-
-      :returns: The dict value representation of the class parameters
-      :rtype: dict
-
-
-
 .. py:class:: FeatureGroupTemplate(client, featureGroupTemplateId=None, description=None, featureGroupId=None, isSystemTemplate=None, name=None, templateSql=None, templateVariables=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -46064,7 +45747,7 @@ Package Contents
 
 
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None, versionCount=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, ownerRemoved=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None, versionCount=None, previewImageUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46081,6 +45764,8 @@ Package Contents
    :type userId: id
    :param email: The email of the creation user
    :type email: str
+   :param ownerRemoved: The creation user left the organization (org admins only)
+   :type ownerRemoved: bool
    :param createdAt: Creation timestamp
    :type createdAt: str
    :param updatedAt: Last update timestamp
@@ -46129,6 +45814,8 @@ Package Contents
    :type canEdit: bool
    :param versionCount: Number of saved versions (distinct checkpoints) of the app
    :type versionCount: int
+   :param previewImageUrl: Screenshot of the newest checkpoint that captured one, for tiling the app in listings
+   :type previewImageUrl: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -46147,6 +45834,11 @@ Package Contents
 
 
    .. py:attribute:: email
+      :value: None
+
+
+
+   .. py:attribute:: owner_removed
       :value: None
 
 
@@ -46267,6 +45959,11 @@ Package Contents
 
 
    .. py:attribute:: version_count
+      :value: None
+
+
+
+   .. py:attribute:: preview_image_url
       :value: None
 
 
@@ -48615,7 +48312,7 @@ Package Contents
 
 
 
-.. py:class:: MeetingBot(client, daemonTaskId=None, state=None, title=None, meetingUrl=None, platform=None, startAtMs=None, endAtMs=None, createdAtMs=None, sessionDeploymentConversationId=None, sessionName=None, webChatPath=None, leftReason=None, error=None, account=None, botEmail=None, invited=None)
+.. py:class:: MeetingBot(client, daemonTaskId=None, state=None, title=None, meetingUrl=None, platform=None, startAtMs=None, endAtMs=None, createdAtMs=None, sessionDeploymentConversationId=None, sessionName=None, webChatPath=None, hasTranscript=None, leftReason=None, error=None, account=None, botEmail=None, invited=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -48646,6 +48343,8 @@ Package Contents
    :type sessionName: str
    :param webChatPath: The session's web chat, once it was opened.
    :type webChatPath: str
+   :param hasTranscript: Whether the session recorded any transcript line, i.e. there is a recap to open.
+   :type hasTranscript: bool
    :param leftReason: Why the notetaker left (meeting_ended, removed, alone, scheduled_end, cancelled, max_duration).
    :type leftReason: str
    :param error: What went wrong, for a failed one.
@@ -48709,6 +48408,11 @@ Package Contents
 
 
    .. py:attribute:: web_chat_path
+      :value: None
+
+
+
+   .. py:attribute:: has_transcript
       :value: None
 
 
@@ -55795,7 +55499,7 @@ Package Contents
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Checked for legacy autonomous agents, and for any call made without an API key or signed-in session; a daemon-based workflow started by its own organization does not check it.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
@@ -59256,7 +58960,7 @@ Package Contents
 
 
 
-.. py:class:: RegenerateLlmOption(client, name=None, llmBotIcon=None, llmName=None)
+.. py:class:: RegenerateLlmOption(client, name=None, llmBotIcon=None, llmName=None, locked=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -59271,6 +58975,8 @@ Package Contents
    :type llmBotIcon: str
    :param llmName: The external name of the LLM (ie OPENAI_GPT5)
    :type llmName: str
+   :param locked: The plan does not include the LLM; the option opens the upgrade instead of regenerating.
+   :type locked: bool
 
 
    .. py:attribute:: name
@@ -59284,6 +58990,11 @@ Package Contents
 
 
    .. py:attribute:: llm_name
+      :value: None
+
+
+
+   .. py:attribute:: locked
       :value: None
 
 
@@ -60842,7 +60553,7 @@ Package Contents
 
 
 
-.. py:class:: StudioShowcaseItem(client, id=None, title=None, modelName=None, modelId=None, type=None, aspectRatio=None, imageUrl=None, videoUrl=None, videoThumbUrl=None, prompt=None, format=None, adTemplateSlug=None)
+.. py:class:: StudioShowcaseItem(client, id=None, title=None, modelName=None, modelId=None, type=None, aspectRatio=None, imageUrl=None, videoUrl=None, videoThumbUrl=None, prompt=None, format=None, adTemplateSlug=None, tag=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -60865,9 +60576,9 @@ Package Contents
    :type aspectRatio: str
    :param imageUrl: CDN URL of the still (the poster for a video tile)
    :type imageUrl: str
-   :param videoUrl: CDN URL of the full video, video tiles only
+   :param videoUrl: CDN URL of the full video, video and GIF tiles only
    :type videoUrl: str
-   :param videoThumbUrl: CDN URL of the compressed preview clip, video tiles only
+   :param videoThumbUrl: CDN URL of the compressed preview clip (a GIF tile's loop), video and GIF tiles only
    :type videoThumbUrl: str
    :param prompt: The prompt the example was generated with; empty for format and template tiles
    :type prompt: str
@@ -60875,6 +60586,8 @@ Package Contents
    :type format: str
    :param adTemplateSlug: The Shorts format a short tile opens
    :type adTemplateSlug: str
+   :param tag: GIF for an image tile made with GIF output; absent otherwise
+   :type tag: str
 
 
    .. py:attribute:: id
@@ -60933,6 +60646,11 @@ Package Contents
 
 
    .. py:attribute:: ad_template_slug
+      :value: None
+
+
+
+   .. py:attribute:: tag
       :value: None
 
 
@@ -63268,7 +62986,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppSecurityFinding(client, webAppSecurityFindingId=None, category=None, severity=None, title=None, detail=None, filePath=None, recommendation=None, status=None, lastSeen=None, createdAt=None)
+.. py:class:: WebAppSecurityFinding(client, webAppSecurityFindingId=None, category=None, severity=None, title=None, detail=None, filePath=None, recommendation=None, fixAction=None, status=None, lastSeen=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -63291,6 +63009,8 @@ Package Contents
    :type filePath: str
    :param recommendation: Suggested remediation
    :type recommendation: str
+   :param fixAction: The action that remedies it instead of a code fix: nextjs_upgrade (the Next.js 16 upgrade, one click or the last step of a fix batch that includes it), when any
+   :type fixAction: str
    :param status: OPEN | ACKNOWLEDGED | RESOLVED | WONT_FIX
    :type status: str
    :param lastSeen: When the finding was last confirmed by a scan
@@ -63334,6 +63054,11 @@ Package Contents
 
 
 
+   .. py:attribute:: fix_action
+      :value: None
+
+
+
    .. py:attribute:: status
       :value: None
 
@@ -63364,7 +63089,7 @@ Package Contents
 
 
 
-.. py:class:: WebAppSecurityScanInfo(client, webAppProjectId=None, appName=None, deploymentConversationId=None, isDeployed=None, scanStatus=None, scanStartedAt=None, scanCompletedAt=None, scanError=None, settings=None, findings={})
+.. py:class:: WebAppSecurityScanInfo(client, webAppProjectId=None, appName=None, deploymentConversationId=None, isDeployed=None, scanStatus=None, scanStartedAt=None, scanCompletedAt=None, scanError=None, settings=None, nextjsUpgradeAvailable=None, findings={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -63391,6 +63116,8 @@ Package Contents
    :type scanError: str
    :param settings: The project's security_scan settings (notify_recipients)
    :type settings: dict
+   :param nextjsUpgradeAvailable: Whether the app can take the one-click Next.js 16 upgrade (_askAgentToUpgradeNextjs)
+   :type nextjsUpgradeAvailable: bool
    :param findings: The project's findings
    :type findings: WebAppSecurityFinding
 
@@ -63436,6 +63163,11 @@ Package Contents
 
 
    .. py:attribute:: settings
+      :value: None
+
+
+
+   .. py:attribute:: nextjs_upgrade_available
       :value: None
 
 
@@ -64067,6 +63799,6 @@ Package Contents
 
 
 .. py:data:: __version__
-   :value: '1.4.122'
+   :value: '1.4.123'
 
 

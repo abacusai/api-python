@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None, versionCount=None)
+.. py:class:: HostedAppContainer(client, deploymentConversationId=None, name=None, userId=None, email=None, ownerRemoved=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None, versionCount=None, previewImageUrl=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -32,6 +32,8 @@ Module Contents
    :type userId: id
    :param email: The email of the creation user
    :type email: str
+   :param ownerRemoved: The creation user left the organization (org admins only)
+   :type ownerRemoved: bool
    :param createdAt: Creation timestamp
    :type createdAt: str
    :param updatedAt: Last update timestamp
@@ -80,6 +82,8 @@ Module Contents
    :type canEdit: bool
    :param versionCount: Number of saved versions (distinct checkpoints) of the app
    :type versionCount: int
+   :param previewImageUrl: Screenshot of the newest checkpoint that captured one, for tiling the app in listings
+   :type previewImageUrl: str
 
 
    .. py:attribute:: deployment_conversation_id
@@ -98,6 +102,11 @@ Module Contents
 
 
    .. py:attribute:: email
+      :value: None
+
+
+
+   .. py:attribute:: owner_removed
       :value: None
 
 
@@ -218,6 +227,11 @@ Module Contents
 
 
    .. py:attribute:: version_count
+      :value: None
+
+
+
+   .. py:attribute:: preview_image_url
       :value: None
 
 

@@ -163,7 +163,7 @@ Module Contents
 
 
 
-   .. py:method:: query_datallm(query)
+   .. py:method:: query_datallm(query, role = None)
 
       Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
 
@@ -172,6 +172,8 @@ Module Contents
 
       :param query: The query to be run in the database connector (must be read-only).
       :type query: str
+      :param role: User-level Snowflake connections only: the role to run the query as. Defaults to the role the connection logs in as (the organization's Snowflake connector role, or the user's default role).
+      :type role: str
 
 
 

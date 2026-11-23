@@ -109,9 +109,6 @@ from .feature_group_export import FeatureGroupExport
 from .feature_group_export_config import FeatureGroupExportConfig
 from .feature_group_export_download_url import FeatureGroupExportDownloadUrl
 from .feature_group_row import FeatureGroupRow
-from .feature_group_row_process import FeatureGroupRowProcess
-from .feature_group_row_process_logs import FeatureGroupRowProcessLogs
-from .feature_group_row_process_summary import FeatureGroupRowProcessSummary
 from .feature_group_template import FeatureGroupTemplate
 from .feature_group_version import FeatureGroupVersion
 from .feature_group_version_logs import FeatureGroupVersionLogs
@@ -739,7 +736,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.4.122'
+    client_version = '1.4.123'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False, include_tb: bool = False):
         self.api_key = api_key
@@ -1661,7 +1658,7 @@ class ReadOnlyClient(BaseApiClient):
             query (str): The query to be run in the database connector."""
         return self._proxy_request('queryDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query}, is_sync=True)
 
-    def query_database_connector_datallm(self, database_connector_id: str, query: str) -> list:
+    def query_database_connector_datallm(self, database_connector_id: str, query: str, role: str = None) -> list:
         """Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
 
         and enforces read-only access with user-specific access control.
@@ -1669,8 +1666,9 @@ class ReadOnlyClient(BaseApiClient):
 
         Args:
             database_connector_id (str): A unique string identifier for the database connector.
-            query (str): The query to be run in the database connector (must be read-only)."""
-        return self._proxy_request('queryDatabaseConnectorDatallm', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query}, is_sync=True)
+            query (str): The query to be run in the database connector (must be read-only).
+            role (str): User-level Snowflake connections only: the role to run the query as. Defaults to the role the connection logs in as (the organization's Snowflake connector role, or the user's default role)."""
+        return self._proxy_request('queryDatabaseConnectorDatallm', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query, 'role': role}, is_sync=True)
 
     def get_database_connector_auth(self, database_connector_id: str) -> DatabaseConnector:
         """Get the authentication details for a given database connector.
@@ -8338,7 +8336,7 @@ class ApiClient(ReadOnlyClient):
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
+            deployment_token (str): The deployment token used to authenticate access to created deployments. Checked for legacy autonomous agents, and for any call made without an API key or signed-in session; a daemon-based workflow started by its own organization does not check it.
             deployment_id (str): A unique string identifier for the deployment created under the project.
             arguments (list): Positional arguments to the agent execute function.
             keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
@@ -8565,61 +8563,6 @@ class ApiClient(ReadOnlyClient):
             feature_group_id (str): The unique ID associated with the feature group.
             primary_key (str): The primary key value for which to delete the feature group row"""
         return self._call_api('deleteData', 'DELETE', query_params={'featureGroupId': feature_group_id, 'primaryKey': primary_key})
-
-    def describe_feature_group_row_process_by_key(self, deployment_id: str, primary_key_value: str) -> FeatureGroupRowProcess:
-        """Gets the feature group row process.
-
-        Args:
-            deployment_id (str): The deployment id
-            primary_key_value (str): The primary key value
-
-        Returns:
-            FeatureGroupRowProcess: An object representing the feature group row process"""
-        return self._call_api('describeFeatureGroupRowProcessByKey', 'POST', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcess)
-
-    def list_feature_group_row_processes(self, deployment_id: str, limit: int = None, status: str = None) -> List[FeatureGroupRowProcess]:
-        """Gets a list of feature group row processes.
-
-        Args:
-            deployment_id (str): The deployment id for the process
-            limit (int): The maximum number of processes to return. Defaults to None.
-            status (str): The status of the processes to return. Defaults to None.
-
-        Returns:
-            list[FeatureGroupRowProcess]: A list of object representing the feature group row process"""
-        return self._call_api('listFeatureGroupRowProcesses', 'POST', query_params={'deploymentId': deployment_id}, body={'limit': limit, 'status': status}, parse_type=FeatureGroupRowProcess)
-
-    def get_feature_group_row_process_summary(self, deployment_id: str) -> FeatureGroupRowProcessSummary:
-        """Gets a summary of the statuses of the individual feature group processes.
-
-        Args:
-            deployment_id (str): The deployment id for the process
-
-        Returns:
-            FeatureGroupRowProcessSummary: An object representing the summary of the statuses of the individual feature group processes"""
-        return self._call_api('getFeatureGroupRowProcessSummary', 'POST', query_params={'deploymentId': deployment_id}, body={}, parse_type=FeatureGroupRowProcessSummary)
-
-    def reset_feature_group_row_process_by_key(self, deployment_id: str, primary_key_value: str) -> FeatureGroupRowProcess:
-        """Resets a feature group row process so that it can be reprocessed
-
-        Args:
-            deployment_id (str): The deployment id
-            primary_key_value (str): The primary key value
-
-        Returns:
-            FeatureGroupRowProcess: An object representing the feature group row process."""
-        return self._call_api('resetFeatureGroupRowProcessByKey', 'PATCH', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcess)
-
-    def get_feature_group_row_process_logs_by_key(self, deployment_id: str, primary_key_value: str) -> FeatureGroupRowProcessLogs:
-        """Gets the logs for a feature group row process
-
-        Args:
-            deployment_id (str): The deployment id
-            primary_key_value (str): The primary key value
-
-        Returns:
-            FeatureGroupRowProcessLogs: An object representing the logs for the feature group row process"""
-        return self._call_api('getFeatureGroupRowProcessLogsByKey', 'POST', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcessLogs)
 
     def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: List = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP', description: str = None, examples: dict = None, user_level_connectors: Dict = None, org_level_connectors: List = None, output_variable_mappings: List = None, timeout: int = None) -> PythonFunction:
         """Creates a custom Python function that is reusable.
@@ -9263,7 +9206,7 @@ class ApiClient(ReadOnlyClient):
         Args:
             user_group_id (str): The ID of the App User Group to invite the user to.
             emails (List): The email addresses to invite to your user group.
-            role (str): The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the organization default when unset.
+            role (str): The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the role of the email's pending invite to this organization, else the organization default.
 
         Returns:
             ExternalInvite: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not."""
@@ -9542,17 +9485,6 @@ class ApiClient(ReadOnlyClient):
             agent_interface (AgentInterface): The interface that the agent will be deployed with.
             package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']."""
         return self._call_api('extractAgentWorkflowInformation', 'POST', query_params={}, body={'workflowGraph': workflow_graph, 'agentInterface': agent_interface, 'packageRequirements': package_requirements})
-
-    def get_llm_app_response(self, llm_app_name: str, prompt: str) -> LlmResponse:
-        """Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
-
-        Args:
-            llm_app_name (str): The name of the LLM App to use for generation.
-            prompt (str): The prompt to use for generation.
-
-        Returns:
-            LlmResponse: The response from the LLM App."""
-        return self._call_api('getLLMAppResponse', 'POST', query_params={}, body={'llmAppName': llm_app_name, 'prompt': prompt}, parse_type=LlmResponse)
 
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, VectorStoreConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.

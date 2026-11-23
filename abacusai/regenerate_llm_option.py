@@ -10,18 +10,20 @@ class RegenerateLlmOption(AbstractApiClass):
             name (str): The display name of the LLM (ie GPT-5)
             llmBotIcon (str): The bot icon of the LLM.
             llmName (str): The external name of the LLM (ie OPENAI_GPT5)
+            locked (bool): The plan does not include the LLM; the option opens the upgrade instead of regenerating.
     """
 
-    def __init__(self, client, name=None, llmBotIcon=None, llmName=None):
+    def __init__(self, client, name=None, llmBotIcon=None, llmName=None, locked=None):
         super().__init__(client, None)
         self.name = name
         self.llm_bot_icon = llmBotIcon
         self.llm_name = llmName
+        self.locked = locked
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'llm_bot_icon': repr(
-            self.llm_bot_icon), f'llm_name': repr(self.llm_name)}
+            self.llm_bot_icon), f'llm_name': repr(self.llm_name), f'locked': repr(self.locked)}
         class_name = "RegenerateLlmOption"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -35,5 +37,5 @@ class RegenerateLlmOption(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'name': self.name, 'llm_bot_icon': self.llm_bot_icon,
-                'llm_name': self.llm_name}
+                'llm_name': self.llm_name, 'locked': self.locked}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

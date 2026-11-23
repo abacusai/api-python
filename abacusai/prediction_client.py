@@ -758,7 +758,7 @@ class PredictionClient(BaseApiClient):
         """Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
         Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
+            deployment_token (str): The deployment token used to authenticate access to created deployments. Checked for legacy autonomous agents, and for any call made without an API key or signed-in session; a daemon-based workflow started by its own organization does not check it.
             deployment_id (str): A unique string identifier for the deployment created under the project.
             arguments (list): Positional arguments to the agent execute function.
             keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.

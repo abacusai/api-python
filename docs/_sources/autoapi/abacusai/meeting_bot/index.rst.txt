@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: MeetingBot(client, daemonTaskId=None, state=None, title=None, meetingUrl=None, platform=None, startAtMs=None, endAtMs=None, createdAtMs=None, sessionDeploymentConversationId=None, sessionName=None, webChatPath=None, leftReason=None, error=None, account=None, botEmail=None, invited=None)
+.. py:class:: MeetingBot(client, daemonTaskId=None, state=None, title=None, meetingUrl=None, platform=None, startAtMs=None, endAtMs=None, createdAtMs=None, sessionDeploymentConversationId=None, sessionName=None, webChatPath=None, hasTranscript=None, leftReason=None, error=None, account=None, botEmail=None, invited=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -46,6 +46,8 @@ Module Contents
    :type sessionName: str
    :param webChatPath: The session's web chat, once it was opened.
    :type webChatPath: str
+   :param hasTranscript: Whether the session recorded any transcript line, i.e. there is a recap to open.
+   :type hasTranscript: bool
    :param leftReason: Why the notetaker left (meeting_ended, removed, alone, scheduled_end, cancelled, max_duration).
    :type leftReason: str
    :param error: What went wrong, for a failed one.
@@ -109,6 +111,11 @@ Module Contents
 
 
    .. py:attribute:: web_chat_path
+      :value: None
+
+
+
+   .. py:attribute:: has_transcript
       :value: None
 
 

@@ -108,6 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot/index.html">abacusai.bot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_channel_options/index.html">abacusai.bot_channel_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_creation_block/index.html">abacusai.bot_creation_block</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_info/index.html">abacusai.bot_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_routine_catalog/index.html">abacusai.bot_routine_catalog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_template_catalog/index.html">abacusai.bot_template_catalog</a></li>
@@ -224,9 +225,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html">abacusai.feature_group_lineage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_refresh_export_config/index.html">abacusai.feature_group_refresh_export_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_row/index.html">abacusai.feature_group_row</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process/index.html">abacusai.feature_group_row_process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process_logs/index.html">abacusai.feature_group_row_process_logs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process_summary/index.html">abacusai.feature_group_row_process_summary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html">abacusai.feature_group_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html">abacusai.feature_group_template_variable_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html">abacusai.feature_group_version</a></li>
@@ -500,7 +498,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.regenerate_llm_option.RegenerateLlmOption">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.regenerate_llm_option.</span></span><span class="sig-name descname"><span class="pre">RegenerateLlmOption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmBotIcon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.regenerate_llm_option.RegenerateLlmOption" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abacusai.regenerate_llm_option.</span></span><span class="sig-name descname"><span class="pre">RegenerateLlmOption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmBotIcon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llmName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locked</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.regenerate_llm_option.RegenerateLlmOption" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>An option that specifies an LLM user can regenerate with in RouteLLM.</p>
 <dl class="field-list simple">
@@ -510,6 +508,7 @@
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The display name of the LLM (ie GPT-5)</p></li>
 <li><p><strong>llmBotIcon</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The bot icon of the LLM.</p></li>
 <li><p><strong>llmName</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The external name of the LLM (ie OPENAI_GPT5)</p></li>
+<li><p><strong>locked</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – The plan does not include the LLM; the option opens the upgrade instead of regenerating.</p></li>
 </ul>
 </dd>
 </dl>
@@ -526,6 +525,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.regenerate_llm_option.RegenerateLlmOption.llm_name">
 <span class="sig-name descname"><span class="pre">llm_name</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.regenerate_llm_option.RegenerateLlmOption.llm_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.regenerate_llm_option.RegenerateLlmOption.locked">
+<span class="sig-name descname"><span class="pre">locked</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#abacusai.regenerate_llm_option.RegenerateLlmOption.locked" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

@@ -39,7 +39,6 @@ class Deployment(AbstractApiClass):
             predictionOperatorId (str): The prediction operator ID that is currently deployed.
             predictionOperatorVersion (str): The prediction operator version ID that is currently deployed.
             pendingPredictionOperatorVersion (str): The prediction operator version ID that the deployment is switching to, or being stopped.
-            onlineFeatureGroupId (id): The online feature group ID that the deployment is running on
             outputOnlineFeatureGroupId (id): The online feature group ID that the deployment is outputting results to
             realtimeMonitorId (id): The realtime monitor ID of the realtime-monitor that is associated with the deployment
             runtimeConfigs (dict): The runtime configurations of a deployment which is used by some of the usecases during prediction.
@@ -49,7 +48,7 @@ class Deployment(AbstractApiClass):
             defaultPredictionArguments (PredictionArguments): The default prediction arguments for prediction APIs
     """
 
-    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, isSystemCreated=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={}):
+    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, isSystemCreated=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={}):
         super().__init__(client, deploymentId)
         self.deployment_id = deploymentId
         self.name = name
@@ -75,7 +74,6 @@ class Deployment(AbstractApiClass):
         self.prediction_operator_id = predictionOperatorId
         self.prediction_operator_version = predictionOperatorVersion
         self.pending_prediction_operator_version = pendingPredictionOperatorVersion
-        self.online_feature_group_id = onlineFeatureGroupId
         self.output_online_feature_group_id = outputOnlineFeatureGroupId
         self.realtime_monitor_id = realtimeMonitorId
         self.runtime_configs = runtimeConfigs
@@ -89,8 +87,8 @@ class Deployment(AbstractApiClass):
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'deployment_id': repr(self.deployment_id), f'name': repr(self.name), f'status': repr(self.status), f'description': repr(self.description), f'deployed_at': repr(self.deployed_at), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'feature_group_id': repr(self.feature_group_id), f'feature_group_version': repr(self.feature_group_version), f'calls_per_second': repr(self.calls_per_second), f'auto_deploy': repr(self.auto_deploy), f'skip_metrics_check': repr(self.skip_metrics_check), f'algo_name': repr(self.algo_name), f'regions': repr(self.regions), f'error': repr(self.error), f'batch_streaming_updates': repr(self.batch_streaming_updates), f'algorithm': repr(self.algorithm), f'pending_model_version': repr(
-            self.pending_model_version), f'model_deployment_config': repr(self.model_deployment_config), f'prediction_operator_id': repr(self.prediction_operator_id), f'prediction_operator_version': repr(self.prediction_operator_version), f'pending_prediction_operator_version': repr(self.pending_prediction_operator_version), f'online_feature_group_id': repr(self.online_feature_group_id), f'output_online_feature_group_id': repr(self.output_online_feature_group_id), f'realtime_monitor_id': repr(self.realtime_monitor_id), f'runtime_configs': repr(self.runtime_configs), f'is_system_created': repr(self.is_system_created), f'refresh_schedules': repr(self.refresh_schedules), f'feature_group_export_config': repr(self.feature_group_export_config), f'default_prediction_arguments': repr(self.default_prediction_arguments)}
+        repr_dict = {f'deployment_id': repr(self.deployment_id), f'name': repr(self.name), f'status': repr(self.status), f'description': repr(self.description), f'deployed_at': repr(self.deployed_at), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'feature_group_id': repr(self.feature_group_id), f'feature_group_version': repr(self.feature_group_version), f'calls_per_second': repr(self.calls_per_second), f'auto_deploy': repr(self.auto_deploy), f'skip_metrics_check': repr(self.skip_metrics_check), f'algo_name': repr(self.algo_name), f'regions': repr(self.regions), f'error': repr(self.error), f'batch_streaming_updates': repr(self.batch_streaming_updates), f'algorithm': repr(
+            self.algorithm), f'pending_model_version': repr(self.pending_model_version), f'model_deployment_config': repr(self.model_deployment_config), f'prediction_operator_id': repr(self.prediction_operator_id), f'prediction_operator_version': repr(self.prediction_operator_version), f'pending_prediction_operator_version': repr(self.pending_prediction_operator_version), f'output_online_feature_group_id': repr(self.output_online_feature_group_id), f'realtime_monitor_id': repr(self.realtime_monitor_id), f'runtime_configs': repr(self.runtime_configs), f'is_system_created': repr(self.is_system_created), f'refresh_schedules': repr(self.refresh_schedules), f'feature_group_export_config': repr(self.feature_group_export_config), f'default_prediction_arguments': repr(self.default_prediction_arguments)}
         class_name = "Deployment"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -103,8 +101,8 @@ class Deployment(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'skip_metrics_check': self.skip_metrics_check, 'algo_name': self.algo_name, 'regions': self.regions, 'error': self.error, 'batch_streaming_updates': self.batch_streaming_updates, 'algorithm': self.algorithm, 'pending_model_version': self.pending_model_version, 'model_deployment_config': self.model_deployment_config,
-                'prediction_operator_id': self.prediction_operator_id, 'prediction_operator_version': self.prediction_operator_version, 'pending_prediction_operator_version': self.pending_prediction_operator_version, 'online_feature_group_id': self.online_feature_group_id, 'output_online_feature_group_id': self.output_online_feature_group_id, 'realtime_monitor_id': self.realtime_monitor_id, 'runtime_configs': self.runtime_configs, 'is_system_created': self.is_system_created, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config), 'default_prediction_arguments': self._get_attribute_as_dict(self.default_prediction_arguments)}
+        resp = {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'skip_metrics_check': self.skip_metrics_check, 'algo_name': self.algo_name, 'regions': self.regions, 'error': self.error, 'batch_streaming_updates': self.batch_streaming_updates, 'algorithm': self.algorithm, 'pending_model_version': self.pending_model_version,
+                'model_deployment_config': self.model_deployment_config, 'prediction_operator_id': self.prediction_operator_id, 'prediction_operator_version': self.prediction_operator_version, 'pending_prediction_operator_version': self.pending_prediction_operator_version, 'output_online_feature_group_id': self.output_online_feature_group_id, 'realtime_monitor_id': self.realtime_monitor_id, 'runtime_configs': self.runtime_configs, 'is_system_created': self.is_system_created, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config), 'default_prediction_arguments': self._get_attribute_as_dict(self.default_prediction_arguments)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def create_webhook(self, endpoint: str, webhook_event_type: str, payload_template: dict = None):
@@ -437,67 +435,6 @@ class Deployment(AbstractApiClass):
             DeploymentStatistics: Object describing Time series data of the number of requests and latency over the specified time period.
         """
         return self.client.get_deployment_statistics_over_time(self.deployment_id, start_date, end_date)
-
-    def describe_feature_group_row_process_by_key(self, primary_key_value: str):
-        """
-        Gets the feature group row process.
-
-        Args:
-            primary_key_value (str): The primary key value
-
-        Returns:
-            FeatureGroupRowProcess: An object representing the feature group row process
-        """
-        return self.client.describe_feature_group_row_process_by_key(self.deployment_id, primary_key_value)
-
-    def list_feature_group_row_processes(self, limit: int = None, status: str = None):
-        """
-        Gets a list of feature group row processes.
-
-        Args:
-            limit (int): The maximum number of processes to return. Defaults to None.
-            status (str): The status of the processes to return. Defaults to None.
-
-        Returns:
-            list[FeatureGroupRowProcess]: A list of object representing the feature group row process
-        """
-        return self.client.list_feature_group_row_processes(self.deployment_id, limit, status)
-
-    def get_feature_group_row_process_summary(self):
-        """
-        Gets a summary of the statuses of the individual feature group processes.
-
-        Args:
-            deployment_id (str): The deployment id for the process
-
-        Returns:
-            FeatureGroupRowProcessSummary: An object representing the summary of the statuses of the individual feature group processes
-        """
-        return self.client.get_feature_group_row_process_summary(self.deployment_id)
-
-    def reset_feature_group_row_process_by_key(self, primary_key_value: str):
-        """
-        Resets a feature group row process so that it can be reprocessed
-
-        Args:
-            primary_key_value (str): The primary key value
-
-        Returns:
-            FeatureGroupRowProcess: An object representing the feature group row process.
-        """
-        return self.client.reset_feature_group_row_process_by_key(self.deployment_id, primary_key_value)
-
-    def get_feature_group_row_process_logs_by_key(self, primary_key_value: str):
-        """
-        Gets the logs for a feature group row process
-
-        Args:
-            primary_key_value (str): The primary key value
-
-        Returns:
-            FeatureGroupRowProcessLogs: An object representing the logs for the feature group row process
-        """
-        return self.client.get_feature_group_row_process_logs_by_key(self.deployment_id, primary_key_value)
 
     def create_conversation(self, name: str = None, external_application_id: str = None):
         """

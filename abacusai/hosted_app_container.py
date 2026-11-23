@@ -11,6 +11,7 @@ class HostedAppContainer(AbstractApiClass):
             name (str): The name of the app
             userId (id): The ID of the creation user
             email (str): The email of the creation user
+            ownerRemoved (bool): The creation user left the organization (org admins only)
             createdAt (str): Creation timestamp
             updatedAt (str): Last update timestamp
             isDeployable (bool): Can this version be deployed
@@ -35,14 +36,16 @@ class HostedAppContainer(AbstractApiClass):
             appAccessOnly (bool): The app is listed only because the caller can load a deployment of it, not through any of its conversations; its hostnames are then just the ones they can open, and the row carries only name, the three ids, artifact_type, the timestamps, hostnames (hostname, deployment_tag, access_level, can_view_analytics, published_at), deployed_status, access_level, is_throttled, project_metadata, app_access_only and can_edit
             canEdit (bool): Whether the caller passes the app's edit gate (rename, fork, memory, stop, deploy): owner, admin, editor, or a project/task/org-wide edit grant
             versionCount (int): Number of saved versions (distinct checkpoints) of the app
+            previewImageUrl (str): Screenshot of the newest checkpoint that captured one, for tiling the app in listings
     """
 
-    def __init__(self, client, deploymentConversationId=None, name=None, userId=None, email=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None, versionCount=None):
+    def __init__(self, client, deploymentConversationId=None, name=None, userId=None, email=None, ownerRemoved=None, createdAt=None, updatedAt=None, isDeployable=None, deployedStatus=None, accessLevel=None, hostnames=None, llmArtifactId=None, artifactType=None, deployedLlmArtifactId=None, hasDatabase=None, hasStorage=None, webAppProjectId=None, parentConversationId=None, appllmBranch=None, branches=None, projectMetadata=None, memoryGb=None, domainAliases=None, isThrottled=None, scDeployedUrls=None, hasSupportAgent=None, appAccessOnly=None, canEdit=None, versionCount=None, previewImageUrl=None):
         super().__init__(client, None)
         self.deployment_conversation_id = deploymentConversationId
         self.name = name
         self.user_id = userId
         self.email = email
+        self.owner_removed = ownerRemoved
         self.created_at = createdAt
         self.updated_at = updatedAt
         self.is_deployable = isDeployable
@@ -67,11 +70,12 @@ class HostedAppContainer(AbstractApiClass):
         self.app_access_only = appAccessOnly
         self.can_edit = canEdit
         self.version_count = versionCount
+        self.preview_image_url = previewImageUrl
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'user_id': repr(self.user_id), f'email': repr(self.email), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'is_deployable': repr(self.is_deployable), f'deployed_status': repr(self.deployed_status), f'access_level': repr(self.access_level), f'hostnames': repr(self.hostnames), f'llm_artifact_id': repr(self.llm_artifact_id), f'artifact_type': repr(self.artifact_type), f'deployed_llm_artifact_id': repr(self.deployed_llm_artifact_id), f'has_database': repr(self.has_database), f'has_storage': repr(
-            self.has_storage), f'web_app_project_id': repr(self.web_app_project_id), f'parent_conversation_id': repr(self.parent_conversation_id), f'appllm_branch': repr(self.appllm_branch), f'branches': repr(self.branches), f'project_metadata': repr(self.project_metadata), f'memory_gb': repr(self.memory_gb), f'domain_aliases': repr(self.domain_aliases), f'is_throttled': repr(self.is_throttled), f'sc_deployed_urls': repr(self.sc_deployed_urls), f'has_support_agent': repr(self.has_support_agent), f'app_access_only': repr(self.app_access_only), f'can_edit': repr(self.can_edit), f'version_count': repr(self.version_count)}
+        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'user_id': repr(self.user_id), f'email': repr(self.email), f'owner_removed': repr(self.owner_removed), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'is_deployable': repr(self.is_deployable), f'deployed_status': repr(self.deployed_status), f'access_level': repr(self.access_level), f'hostnames': repr(self.hostnames), f'llm_artifact_id': repr(self.llm_artifact_id), f'artifact_type': repr(self.artifact_type), f'deployed_llm_artifact_id': repr(self.deployed_llm_artifact_id), f'has_database': repr(self.has_database), f'has_storage': repr(
+            self.has_storage), f'web_app_project_id': repr(self.web_app_project_id), f'parent_conversation_id': repr(self.parent_conversation_id), f'appllm_branch': repr(self.appllm_branch), f'branches': repr(self.branches), f'project_metadata': repr(self.project_metadata), f'memory_gb': repr(self.memory_gb), f'domain_aliases': repr(self.domain_aliases), f'is_throttled': repr(self.is_throttled), f'sc_deployed_urls': repr(self.sc_deployed_urls), f'has_support_agent': repr(self.has_support_agent), f'app_access_only': repr(self.app_access_only), f'can_edit': repr(self.can_edit), f'version_count': repr(self.version_count), f'preview_image_url': repr(self.preview_image_url)}
         class_name = "HostedAppContainer"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -84,6 +88,6 @@ class HostedAppContainer(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'user_id': self.user_id, 'email': self.email, 'created_at': self.created_at, 'updated_at': self.updated_at, 'is_deployable': self.is_deployable, 'deployed_status': self.deployed_status, 'access_level': self.access_level, 'hostnames': self.hostnames, 'llm_artifact_id': self.llm_artifact_id, 'artifact_type': self.artifact_type, 'deployed_llm_artifact_id': self.deployed_llm_artifact_id, 'has_database': self.has_database,
-                'has_storage': self.has_storage, 'web_app_project_id': self.web_app_project_id, 'parent_conversation_id': self.parent_conversation_id, 'appllm_branch': self.appllm_branch, 'branches': self.branches, 'project_metadata': self.project_metadata, 'memory_gb': self.memory_gb, 'domain_aliases': self.domain_aliases, 'is_throttled': self.is_throttled, 'sc_deployed_urls': self.sc_deployed_urls, 'has_support_agent': self.has_support_agent, 'app_access_only': self.app_access_only, 'can_edit': self.can_edit, 'version_count': self.version_count}
+        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'user_id': self.user_id, 'email': self.email, 'owner_removed': self.owner_removed, 'created_at': self.created_at, 'updated_at': self.updated_at, 'is_deployable': self.is_deployable, 'deployed_status': self.deployed_status, 'access_level': self.access_level, 'hostnames': self.hostnames, 'llm_artifact_id': self.llm_artifact_id, 'artifact_type': self.artifact_type, 'deployed_llm_artifact_id': self.deployed_llm_artifact_id, 'has_database': self.has_database, 'has_storage': self.has_storage,
+                'web_app_project_id': self.web_app_project_id, 'parent_conversation_id': self.parent_conversation_id, 'appllm_branch': self.appllm_branch, 'branches': self.branches, 'project_metadata': self.project_metadata, 'memory_gb': self.memory_gb, 'domain_aliases': self.domain_aliases, 'is_throttled': self.is_throttled, 'sc_deployed_urls': self.sc_deployed_urls, 'has_support_agent': self.has_support_agent, 'app_access_only': self.app_access_only, 'can_edit': self.can_edit, 'version_count': self.version_count, 'preview_image_url': self.preview_image_url}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

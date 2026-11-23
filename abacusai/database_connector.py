@@ -108,7 +108,7 @@ class DatabaseConnector(AbstractApiClass):
         """
         return self.client.query_database_connector(self.database_connector_id, query)
 
-    def query_datallm(self, query: str):
+    def query_datallm(self, query: str, role: str = None):
         """
         Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
 
@@ -117,8 +117,9 @@ class DatabaseConnector(AbstractApiClass):
 
         Args:
             query (str): The query to be run in the database connector (must be read-only).
+            role (str): User-level Snowflake connections only: the role to run the query as. Defaults to the role the connection logs in as (the organization's Snowflake connector role, or the user's default role).
         """
-        return self.client.query_database_connector_datallm(self.database_connector_id, query)
+        return self.client.query_database_connector_datallm(self.database_connector_id, query, role)
 
     def get_auth(self):
         """

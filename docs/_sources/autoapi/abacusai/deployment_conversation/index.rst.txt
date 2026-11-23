@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, ancestorTotalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, ownerUserId=None, ownerOrgId=None, createdAt=None, lastEventCreatedAt=None, hasHistory=None, externalSessionId=None, regenerateAttempt=None, externalApplicationId=None, unusedDocumentUploadIds=None, humanizeInstructions=None, conversationWarning=None, conversationType=None, metadata=None, hasAppCheckpoints=None, predictionOverrides=None, llmDisplayName=None, llmBotIcon=None, searchSuggestions=None, chatllmTaskId=None, chatllmProjectId=None, chatllmProjectAccessible=None, verticalType=None, conversationStatus=None, computerStatus=None, filesystemStatus=None, totalEvents=None, ancestorTotalEvents=None, firstVisibleEventIndex=None, contestNames=None, daemonTaskId=None, sourceDaemonTaskId=None, daemonTaskRunNumber=None, botDeleted=None, parentDeploymentConversationId=None, sourceDeploymentConversationId=None, sharedHomeDirectory=None, introMessage=None, previewInfo=None, latestContext=None, shareType=None, isShared=None, isArchived=None, pushNotificationsEnabled=None, platform=None, agentType=None, agentLifecycle=None, orchestratorDeploymentConversationId=None, projectCreditsUsed=None, webAppProjectId=None, personalAgentComputerId=None, scDeployedUrls=None, roleplayCharacter=None, loopType=None, hasOpenArtifactComments=None, pendingTriggerType=None, nextTriggerCheckTime=None, chatShared=None, threadRuns=None, threadMarks=None, history={}, hostedArtifacts={}, mobileBuildInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -94,6 +94,8 @@ Module Contents
    :type sourceDaemonTaskId: str
    :param daemonTaskRunNumber: The 1-based run number of this conversation within its daemon task, set only for conversations holding a single run.
    :type daemonTaskRunNumber: int
+   :param botDeleted: Whether the agent (bot) whose scheduled task ran in this conversation has since been deleted; set only on such run conversations.
+   :type botDeleted: bool
    :param parentDeploymentConversationId: The parent deployment conversation id associated with the deployment conversation.
    :type parentDeploymentConversationId: str
    :param sourceDeploymentConversationId: The conversation this one was forked from; also set for parallel/workspace copies, which have no parent conversation.
@@ -144,6 +146,8 @@ Module Contents
    :type chatShared: bool
    :param threadRuns: For a shared agent chat with threads, the thread turns in flight (thread_root_seq, request_id, user_name, started_at, is_own: the caller's own message's turn); absent otherwise.
    :type threadRuns: list
+   :param threadMarks: For a shared agent chat with threads, the caller's own marks on the threads they asked a delegated task for work in (thread_root_seq, seen_seq, dismissed_seq); absent otherwise.
+   :type threadMarks: list
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
    :param hostedArtifacts: Artifacts that have been deployed by this conversation.
@@ -327,6 +331,11 @@ Module Contents
 
 
 
+   .. py:attribute:: bot_deleted
+      :value: None
+
+
+
    .. py:attribute:: parent_deployment_conversation_id
       :value: None
 
@@ -448,6 +457,11 @@ Module Contents
 
 
    .. py:attribute:: thread_runs
+      :value: None
+
+
+
+   .. py:attribute:: thread_marks
       :value: None
 
 

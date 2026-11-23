@@ -3,15 +3,15 @@ from .return_class import AbstractApiClass
 
 class NotebookCompletion(AbstractApiClass):
     """
-        The result of a notebook code completion request
+        A cell a notebook completion proposes (getNotebookCellCompletion).
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            cellType (str): The type of the cell, either CODE or MARKDOWN
+            cellType (str): CODE or MARKDOWN
             content (str): The content of the cell
-            mode (str): Either UPDATE or INSERT to dictate whether the completion will insert a new cell or update the last cell
-            index (int): The index of the cell to insert after/ update
-            prompts (list): The prompt(s) used to generate the completion
+            mode (str): UPDATE or INSERT: whether the completion updates the last cell or inserts a new one
+            index (int): The index of the cell to insert after, or to update
+            prompts (list): The prompt(s) the completion was generated from
     """
 
     def __init__(self, client, cellType=None, content=None, mode=None, index=None, prompts=None):

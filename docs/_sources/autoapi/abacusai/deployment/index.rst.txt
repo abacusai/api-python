@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, isSystemCreated=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, runtimeConfigs=None, isSystemCreated=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -72,8 +72,6 @@ Module Contents
    :type predictionOperatorVersion: str
    :param pendingPredictionOperatorVersion: The prediction operator version ID that the deployment is switching to, or being stopped.
    :type pendingPredictionOperatorVersion: str
-   :param onlineFeatureGroupId: The online feature group ID that the deployment is running on
-   :type onlineFeatureGroupId: id
    :param outputOnlineFeatureGroupId: The online feature group ID that the deployment is outputting results to
    :type outputOnlineFeatureGroupId: id
    :param realtimeMonitorId: The realtime monitor ID of the realtime-monitor that is associated with the deployment
@@ -206,11 +204,6 @@ Module Contents
 
 
    .. py:attribute:: pending_prediction_operator_version
-      :value: None
-
-
-
-   .. py:attribute:: online_feature_group_id
       :value: None
 
 
@@ -643,68 +636,6 @@ Module Contents
 
       :returns: Object describing Time series data of the number of requests and latency over the specified time period.
       :rtype: DeploymentStatistics
-
-
-
-   .. py:method:: describe_feature_group_row_process_by_key(primary_key_value)
-
-      Gets the feature group row process.
-
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the feature group row process
-      :rtype: FeatureGroupRowProcess
-
-
-
-   .. py:method:: list_feature_group_row_processes(limit = None, status = None)
-
-      Gets a list of feature group row processes.
-
-      :param limit: The maximum number of processes to return. Defaults to None.
-      :type limit: int
-      :param status: The status of the processes to return. Defaults to None.
-      :type status: str
-
-      :returns: A list of object representing the feature group row process
-      :rtype: list[FeatureGroupRowProcess]
-
-
-
-   .. py:method:: get_feature_group_row_process_summary()
-
-      Gets a summary of the statuses of the individual feature group processes.
-
-      :param deployment_id: The deployment id for the process
-      :type deployment_id: str
-
-      :returns: An object representing the summary of the statuses of the individual feature group processes
-      :rtype: FeatureGroupRowProcessSummary
-
-
-
-   .. py:method:: reset_feature_group_row_process_by_key(primary_key_value)
-
-      Resets a feature group row process so that it can be reprocessed
-
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the feature group row process.
-      :rtype: FeatureGroupRowProcess
-
-
-
-   .. py:method:: get_feature_group_row_process_logs_by_key(primary_key_value)
-
-      Gets the logs for a feature group row process
-
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the logs for the feature group row process
-      :rtype: FeatureGroupRowProcessLogs
 
 
 

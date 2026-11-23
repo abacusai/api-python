@@ -108,6 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot/index.html">abacusai.bot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_channel_options/index.html">abacusai.bot_channel_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_creation_block/index.html">abacusai.bot_creation_block</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_info/index.html">abacusai.bot_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_routine_catalog/index.html">abacusai.bot_routine_catalog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_template_catalog/index.html">abacusai.bot_template_catalog</a></li>
@@ -231,9 +232,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html">abacusai.feature_group_lineage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_refresh_export_config/index.html">abacusai.feature_group_refresh_export_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_row/index.html">abacusai.feature_group_row</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process/index.html">abacusai.feature_group_row_process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process_logs/index.html">abacusai.feature_group_row_process_logs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process_summary/index.html">abacusai.feature_group_row_process_summary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html">abacusai.feature_group_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html">abacusai.feature_group_template_variable_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html">abacusai.feature_group_version</a></li>
@@ -1278,7 +1276,7 @@ and avoids execution of the further workflow.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.122'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.4.123'</span></span><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2436,7 +2434,7 @@ and avoids execution of the further workflow.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.query_database_connector_datallm">
-<span class="sig-name descname"><span class="pre">query_database_connector_datallm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.query_database_connector_datallm" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">query_database_connector_datallm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.query_database_connector_datallm" title="Link to this definition"></a></dt>
 <dd><p>Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM</p>
 <p>and enforces read-only access with user-specific access control.</p>
 <dl class="field-list simple">
@@ -2444,6 +2442,7 @@ and avoids execution of the further workflow.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – A unique string identifier for the database connector.</p></li>
 <li><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The query to be run in the database connector (must be read-only).</p></li>
+<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – User-level Snowflake connections only: the role to run the query as. Defaults to the role the connection logs in as (the organization’s Snowflake connector role, or the user’s default role).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -11612,7 +11611,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.</p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. Checked for legacy autonomous agents, and for any call made without an API key or signed-in session; a daemon-based workflow started by its own organization does not check it.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
 <li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – Positional arguments to the agent execute function.</p></li>
 <li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the parameter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
@@ -11967,104 +11966,6 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The unique ID associated with the feature group.</p></li>
 <li><p><strong>primary_key</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The primary key value for which to delete the feature group row</p></li>
 </ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.describe_feature_group_row_process_by_key">
-<span class="sig-name descname"><span class="pre">describe_feature_group_row_process_by_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_key_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.describe_feature_group_row_process_by_key" title="Link to this definition"></a></dt>
-<dd><p>Gets the feature group row process.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment id</p></li>
-<li><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The primary key value</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An object representing the feature group row process</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group_row_process/index.html#abacusai.feature_group_row_process.FeatureGroupRowProcess" title="abacusai.feature_group_row_process.FeatureGroupRowProcess">FeatureGroupRowProcess</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.list_feature_group_row_processes">
-<span class="sig-name descname"><span class="pre">list_feature_group_row_processes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.list_feature_group_row_processes" title="Link to this definition"></a></dt>
-<dd><p>Gets a list of feature group row processes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment id for the process</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – The maximum number of processes to return. Defaults to None.</p></li>
-<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The status of the processes to return. Defaults to None.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of object representing the feature group row process</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)">list</a>[<a class="reference internal" href="../feature_group_row_process/index.html#abacusai.feature_group_row_process.FeatureGroupRowProcess" title="abacusai.feature_group_row_process.FeatureGroupRowProcess">FeatureGroupRowProcess</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_feature_group_row_process_summary">
-<span class="sig-name descname"><span class="pre">get_feature_group_row_process_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_feature_group_row_process_summary" title="Link to this definition"></a></dt>
-<dd><p>Gets a summary of the statuses of the individual feature group processes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment id for the process</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An object representing the summary of the statuses of the individual feature group processes</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group_row_process_summary/index.html#abacusai.feature_group_row_process_summary.FeatureGroupRowProcessSummary" title="abacusai.feature_group_row_process_summary.FeatureGroupRowProcessSummary">FeatureGroupRowProcessSummary</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.reset_feature_group_row_process_by_key">
-<span class="sig-name descname"><span class="pre">reset_feature_group_row_process_by_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_key_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.reset_feature_group_row_process_by_key" title="Link to this definition"></a></dt>
-<dd><p>Resets a feature group row process so that it can be reprocessed</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment id</p></li>
-<li><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The primary key value</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An object representing the feature group row process.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group_row_process/index.html#abacusai.feature_group_row_process.FeatureGroupRowProcess" title="abacusai.feature_group_row_process.FeatureGroupRowProcess">FeatureGroupRowProcess</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_feature_group_row_process_logs_by_key">
-<span class="sig-name descname"><span class="pre">get_feature_group_row_process_logs_by_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_key_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_feature_group_row_process_logs_by_key" title="Link to this definition"></a></dt>
-<dd><p>Gets the logs for a feature group row process</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The deployment id</p></li>
-<li><p><strong>primary_key_value</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The primary key value</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An object representing the logs for the feature group row process</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group_row_process_logs/index.html#abacusai.feature_group_row_process_logs.FeatureGroupRowProcessLogs" title="abacusai.feature_group_row_process_logs.FeatureGroupRowProcessLogs">FeatureGroupRowProcessLogs</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -13112,7 +13013,7 @@ minutes (not synchronously).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The ID of the App User Group to invite the user to.</p></li>
 <li><p><strong>emails</strong> (<em>List</em>) – The email addresses to invite to your user group.</p></li>
-<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The role to assign the invited users. One of ‘chatOnly’, ‘developer’, or ‘appOnly’. Defaults to the organization default when unset.</p></li>
+<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The role to assign the invited users. One of ‘chatOnly’, ‘developer’, or ‘appOnly’. Defaults to the role of the email’s pending invite to this organization, else the organization default.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -13573,26 +13474,6 @@ part of the response. Set a token budget to limit the amount of content returned
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_llm_app_response">
-<span class="sig-name descname"><span class="pre">get_llm_app_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_llm_app_response" title="Link to this definition"></a></dt>
-<dd><p>Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service’s API.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>llm_app_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The name of the LLM App to use for generation.</p></li>
-<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The prompt to use for generation.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The response from the LLM App.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../index.html#abacusai.LlmResponse" title="abacusai.LlmResponse">LlmResponse</a></p>
 </dd>
 </dl>
 </dd></dl>

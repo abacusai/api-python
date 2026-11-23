@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: RegenerateLlmOption(client, name=None, llmBotIcon=None, llmName=None)
+.. py:class:: RegenerateLlmOption(client, name=None, llmBotIcon=None, llmName=None, locked=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -30,6 +30,8 @@ Module Contents
    :type llmBotIcon: str
    :param llmName: The external name of the LLM (ie OPENAI_GPT5)
    :type llmName: str
+   :param locked: The plan does not include the LLM; the option opens the upgrade instead of regenerating.
+   :type locked: bool
 
 
    .. py:attribute:: name
@@ -43,6 +45,11 @@ Module Contents
 
 
    .. py:attribute:: llm_name
+      :value: None
+
+
+
+   .. py:attribute:: locked
       :value: None
 
 

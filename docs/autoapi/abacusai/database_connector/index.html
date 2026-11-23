@@ -108,6 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version_logs/index.html">abacusai.batch_prediction_version_logs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot/index.html">abacusai.bot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_channel_options/index.html">abacusai.bot_channel_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bot_creation_block/index.html">abacusai.bot_creation_block</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_info/index.html">abacusai.bot_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_routine_catalog/index.html">abacusai.bot_routine_catalog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bot_template_catalog/index.html">abacusai.bot_template_catalog</a></li>
@@ -228,9 +229,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html">abacusai.feature_group_lineage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_refresh_export_config/index.html">abacusai.feature_group_refresh_export_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_row/index.html">abacusai.feature_group_row</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process/index.html">abacusai.feature_group_row_process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process_logs/index.html">abacusai.feature_group_row_process_logs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../feature_group_row_process_summary/index.html">abacusai.feature_group_row_process_summary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html">abacusai.feature_group_template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html">abacusai.feature_group_template_variable_options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html">abacusai.feature_group_version</a></li>
@@ -665,12 +663,15 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.database_connector.DatabaseConnector.query_datallm">
-<span class="sig-name descname"><span class="pre">query_datallm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.database_connector.DatabaseConnector.query_datallm" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">query_datallm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.database_connector.DatabaseConnector.query_datallm" title="Link to this definition"></a></dt>
 <dd><p>Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM</p>
 <p>and enforces read-only access with user-specific access control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The query to be run in the database connector (must be read-only).</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The query to be run in the database connector (must be read-only).</p></li>
+<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – User-level Snowflake connections only: the role to run the query as. Defaults to the role the connection logs in as (the organization’s Snowflake connector role, or the user’s default role).</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

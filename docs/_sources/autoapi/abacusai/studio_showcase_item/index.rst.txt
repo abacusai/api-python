@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: StudioShowcaseItem(client, id=None, title=None, modelName=None, modelId=None, type=None, aspectRatio=None, imageUrl=None, videoUrl=None, videoThumbUrl=None, prompt=None, format=None, adTemplateSlug=None)
+.. py:class:: StudioShowcaseItem(client, id=None, title=None, modelName=None, modelId=None, type=None, aspectRatio=None, imageUrl=None, videoUrl=None, videoThumbUrl=None, prompt=None, format=None, adTemplateSlug=None, tag=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,9 +38,9 @@ Module Contents
    :type aspectRatio: str
    :param imageUrl: CDN URL of the still (the poster for a video tile)
    :type imageUrl: str
-   :param videoUrl: CDN URL of the full video, video tiles only
+   :param videoUrl: CDN URL of the full video, video and GIF tiles only
    :type videoUrl: str
-   :param videoThumbUrl: CDN URL of the compressed preview clip, video tiles only
+   :param videoThumbUrl: CDN URL of the compressed preview clip (a GIF tile's loop), video and GIF tiles only
    :type videoThumbUrl: str
    :param prompt: The prompt the example was generated with; empty for format and template tiles
    :type prompt: str
@@ -48,6 +48,8 @@ Module Contents
    :type format: str
    :param adTemplateSlug: The Shorts format a short tile opens
    :type adTemplateSlug: str
+   :param tag: GIF for an image tile made with GIF output; absent otherwise
+   :type tag: str
 
 
    .. py:attribute:: id
@@ -106,6 +108,11 @@ Module Contents
 
 
    .. py:attribute:: ad_template_slug
+      :value: None
+
+
+
+   .. py:attribute:: tag
       :value: None
 
 

@@ -1004,7 +1004,7 @@ Module Contents
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Checked for legacy autonomous agents, and for any call made without an API key or signed-in session; a daemon-based workflow started by its own organization does not check it.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str

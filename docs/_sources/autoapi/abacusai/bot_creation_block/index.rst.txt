@@ -1,0 +1,57 @@
+abacusai.bot_creation_block
+===========================
+
+.. py:module:: abacusai.bot_creation_block
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   abacusai.bot_creation_block.BotCreationBlock
+
+
+Module Contents
+---------------
+
+.. py:class:: BotCreationBlock(client, reason=None, maxAgents=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+
+   Why creating a personal agent would be refused for the user right now
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param reason: credits (out of credits: add credits or upgrade), credits_upgrade (out of credits on a tier that must upgrade), agent_limit (the plan's active-agent limit is reached), or None when a create would go through.
+   :type reason: str
+   :param maxAgents: The active-agent limit of a capped plan.
+   :type maxAgents: int
+
+
+   .. py:attribute:: reason
+      :value: None
+
+
+
+   .. py:attribute:: max_agents
+      :value: None
+
+
+
+   .. py:attribute:: deprecated_keys
+
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

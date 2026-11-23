@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: WebAppSecurityFinding(client, webAppSecurityFindingId=None, category=None, severity=None, title=None, detail=None, filePath=None, recommendation=None, status=None, lastSeen=None, createdAt=None)
+.. py:class:: WebAppSecurityFinding(client, webAppSecurityFindingId=None, category=None, severity=None, title=None, detail=None, filePath=None, recommendation=None, fixAction=None, status=None, lastSeen=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -38,6 +38,8 @@ Module Contents
    :type filePath: str
    :param recommendation: Suggested remediation
    :type recommendation: str
+   :param fixAction: The action that remedies it instead of a code fix: nextjs_upgrade (the Next.js 16 upgrade, one click or the last step of a fix batch that includes it), when any
+   :type fixAction: str
    :param status: OPEN | ACKNOWLEDGED | RESOLVED | WONT_FIX
    :type status: str
    :param lastSeen: When the finding was last confirmed by a scan
@@ -77,6 +79,11 @@ Module Contents
 
 
    .. py:attribute:: recommendation
+      :value: None
+
+
+
+   .. py:attribute:: fix_action
       :value: None
 
 

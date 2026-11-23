@@ -14,12 +14,13 @@ class WebAppSecurityFinding(AbstractApiClass):
             detail (str): Detailed description of the vulnerability
             filePath (str): The affected file, when applicable
             recommendation (str): Suggested remediation
+            fixAction (str): The action that remedies it instead of a code fix: nextjs_upgrade (the Next.js 16 upgrade, one click or the last step of a fix batch that includes it), when any
             status (str): OPEN | ACKNOWLEDGED | RESOLVED | WONT_FIX
             lastSeen (str): When the finding was last confirmed by a scan
             createdAt (str): When the finding was first detected
     """
 
-    def __init__(self, client, webAppSecurityFindingId=None, category=None, severity=None, title=None, detail=None, filePath=None, recommendation=None, status=None, lastSeen=None, createdAt=None):
+    def __init__(self, client, webAppSecurityFindingId=None, category=None, severity=None, title=None, detail=None, filePath=None, recommendation=None, fixAction=None, status=None, lastSeen=None, createdAt=None):
         super().__init__(client, webAppSecurityFindingId)
         self.web_app_security_finding_id = webAppSecurityFindingId
         self.category = category
@@ -28,14 +29,15 @@ class WebAppSecurityFinding(AbstractApiClass):
         self.detail = detail
         self.file_path = filePath
         self.recommendation = recommendation
+        self.fix_action = fixAction
         self.status = status
         self.last_seen = lastSeen
         self.created_at = createdAt
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'web_app_security_finding_id': repr(self.web_app_security_finding_id), f'category': repr(self.category), f'severity': repr(self.severity), f'title': repr(self.title), f'detail': repr(
-            self.detail), f'file_path': repr(self.file_path), f'recommendation': repr(self.recommendation), f'status': repr(self.status), f'last_seen': repr(self.last_seen), f'created_at': repr(self.created_at)}
+        repr_dict = {f'web_app_security_finding_id': repr(self.web_app_security_finding_id), f'category': repr(self.category), f'severity': repr(self.severity), f'title': repr(self.title), f'detail': repr(self.detail), f'file_path': repr(
+            self.file_path), f'recommendation': repr(self.recommendation), f'fix_action': repr(self.fix_action), f'status': repr(self.status), f'last_seen': repr(self.last_seen), f'created_at': repr(self.created_at)}
         class_name = "WebAppSecurityFinding"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -49,5 +51,5 @@ class WebAppSecurityFinding(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'web_app_security_finding_id': self.web_app_security_finding_id, 'category': self.category, 'severity': self.severity, 'title': self.title, 'detail': self.detail,
-                'file_path': self.file_path, 'recommendation': self.recommendation, 'status': self.status, 'last_seen': self.last_seen, 'created_at': self.created_at}
+                'file_path': self.file_path, 'recommendation': self.recommendation, 'fix_action': self.fix_action, 'status': self.status, 'last_seen': self.last_seen, 'created_at': self.created_at}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

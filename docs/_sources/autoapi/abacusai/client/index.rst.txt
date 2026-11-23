@@ -639,7 +639,7 @@ Module Contents
 
 
    .. py:attribute:: client_version
-      :value: '1.4.122'
+      :value: '1.4.123'
 
 
 
@@ -1434,7 +1434,7 @@ Module Contents
 
 
 
-   .. py:method:: query_database_connector_datallm(database_connector_id, query)
+   .. py:method:: query_database_connector_datallm(database_connector_id, query, role = None)
 
       Runs a read-only query in the specified database connector. This API is specifically designed for DataLLM
 
@@ -1445,6 +1445,8 @@ Module Contents
       :type database_connector_id: str
       :param query: The query to be run in the database connector (must be read-only).
       :type query: str
+      :param role: User-level Snowflake connections only: the role to run the query as. Defaults to the role the connection logs in as (the organization's Snowflake connector role, or the user's default role).
+      :type role: str
 
 
 
@@ -9127,7 +9129,7 @@ Module Contents
 
       Starts a deployed Autonomous agent associated with the given deployment_conversation_id using the arguments and keyword arguments as inputs for execute function of trigger node.
 
-      :param deployment_token: The deployment token used to authenticate access to created deployments. Required for legacy autonomous agents, optional for daemon-based workflows.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. Checked for legacy autonomous agents, and for any call made without an API key or signed-in session; a daemon-based workflow started by its own organization does not check it.
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
@@ -9431,76 +9433,6 @@ Module Contents
       :type feature_group_id: str
       :param primary_key: The primary key value for which to delete the feature group row
       :type primary_key: str
-
-
-
-   .. py:method:: describe_feature_group_row_process_by_key(deployment_id, primary_key_value)
-
-      Gets the feature group row process.
-
-      :param deployment_id: The deployment id
-      :type deployment_id: str
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the feature group row process
-      :rtype: FeatureGroupRowProcess
-
-
-
-   .. py:method:: list_feature_group_row_processes(deployment_id, limit = None, status = None)
-
-      Gets a list of feature group row processes.
-
-      :param deployment_id: The deployment id for the process
-      :type deployment_id: str
-      :param limit: The maximum number of processes to return. Defaults to None.
-      :type limit: int
-      :param status: The status of the processes to return. Defaults to None.
-      :type status: str
-
-      :returns: A list of object representing the feature group row process
-      :rtype: list[FeatureGroupRowProcess]
-
-
-
-   .. py:method:: get_feature_group_row_process_summary(deployment_id)
-
-      Gets a summary of the statuses of the individual feature group processes.
-
-      :param deployment_id: The deployment id for the process
-      :type deployment_id: str
-
-      :returns: An object representing the summary of the statuses of the individual feature group processes
-      :rtype: FeatureGroupRowProcessSummary
-
-
-
-   .. py:method:: reset_feature_group_row_process_by_key(deployment_id, primary_key_value)
-
-      Resets a feature group row process so that it can be reprocessed
-
-      :param deployment_id: The deployment id
-      :type deployment_id: str
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the feature group row process.
-      :rtype: FeatureGroupRowProcess
-
-
-
-   .. py:method:: get_feature_group_row_process_logs_by_key(deployment_id, primary_key_value)
-
-      Gets the logs for a feature group row process
-
-      :param deployment_id: The deployment id
-      :type deployment_id: str
-      :param primary_key_value: The primary key value
-      :type primary_key_value: str
-
-      :returns: An object representing the logs for the feature group row process
-      :rtype: FeatureGroupRowProcessLogs
 
 
 
@@ -10392,7 +10324,7 @@ Module Contents
       :type user_group_id: str
       :param emails: The email addresses to invite to your user group.
       :type emails: List
-      :param role: The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the organization default when unset.
+      :param role: The role to assign the invited users. One of 'chatOnly', 'developer', or 'appOnly'. Defaults to the role of the email's pending invite to this organization, else the organization default.
       :type role: str
 
       :returns: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not.
@@ -10792,20 +10724,6 @@ Module Contents
       :type agent_interface: AgentInterface
       :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
-
-
-
-   .. py:method:: get_llm_app_response(llm_app_name, prompt)
-
-      Queries the specified LLM App to generate a response to the prompt. LLM Apps are LLMs tailored to achieve a specific task like code generation for a specific service's API.
-
-      :param llm_app_name: The name of the LLM App to use for generation.
-      :type llm_app_name: str
-      :param prompt: The prompt to use for generation.
-      :type prompt: str
-
-      :returns: The response from the LLM App.
-      :rtype: LlmResponse
 
 
 
